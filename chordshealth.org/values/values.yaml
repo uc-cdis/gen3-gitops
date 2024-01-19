@@ -1,0 +1,127 @@
+global:
+  dev: false
+  # uncomment once we cutover, so we can use shared ALB
+  #environment: "unfunded"
+  hostname: "chordshealth.org"
+  aws: 
+    enabled: true
+    useLocalSecret:
+        enabled: true
+        localSecretName: external-secrets-chords-secret 
+        localSecretNamespace: default
+  revproxyArn: arn:aws:acm:us-east-1:048463324059:certificate/b85556ab-b13b-45bf-afd3-1a70b9234b6e
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/chords-health-dictionary/0.1.0/schema.json"
+  postgres:
+    dbCreate: false
+    externalSecret: "chords_aurora-master-password"
+  externalSecrets:
+    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
+    deploy: true
+
+arborist:
+  enabled: true
+  externalSecrets:
+    dbcreds: "chords_chords-arborist-db-creds"
+  image: 
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
+    tag: 2023.12
+
+aws-es-proxy:
+  esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
+  externalSecrets:
+    awsCreds: "chordsprod-aws-es-proxy-creds"
+  enabled: true
+  image:
+    repository: quay.io/cdis/aws-es-proxy
+    tag: v1.3.1
+
+indexd:
+  defaultPrefix: "dg.C78ch/"
+  externalSecrets:
+    dbcreds: "chords_chords-indexd-db-creds" 
+    serviceCreds: "chordsprod-indexd-service-creds"
+  
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
+    tag: 2023.12
+
+peregrine:
+  externalSecrets:
+    dbcreds: "chords_chords-peregrine-db-creds" 
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: feat_jq-audience 
+    pullPolicy: Always
+
+pidgin:
+  enabled: false
+
+revproxy:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    tag: 2023.12
+
+sheepdog:
+  externalSecrets:
+    dbcreds: "chords_chords-sheepdog-db-creds" 
+  enabled: true
+  volumeMounts:
+    - name: "config-volume"
+      readOnly: true
+      mountPath: "/var/www/sheepdog/settings.py"
+      subPath: "wsgi.py"
+
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
+    tag: 2023.12
+
+manifestservice:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
+    tag: 2023.12
+
+etl:
+  enabled: true
+  spark:
+    image:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
+      tag: 2023.12
+  tube:
+    image:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
+      tag: 2023.12
+
+sower:
+  enabled: false
+
+ssjdispatcher:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
+    tag: 2023.12
+
+metadata:
+  externalSecrets:
+    dbcreds: "chords_chords-metadata-db-creds"
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    tag: 2023.12
+
+# disabling workspace services
+ambassador:
+  enabled: false
+wts:
+  externalSecrets:
+    dbcreds: "chords_chords-wts-db-creds"
+  enabled: false
+hatchery:
+  enabled: false
+
+# disabling audit service
+audit:
+  enabled: false
