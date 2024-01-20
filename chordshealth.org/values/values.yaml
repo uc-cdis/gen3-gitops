@@ -84,17 +84,6 @@ manifestservice:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
     tag: 2023.12
 
-etl:
-  enabled: true
-  spark:
-    image:
-      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2023.12
-  tube:
-    image:
-      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      tag: 2023.12
-
 sower:
   enabled: false
 

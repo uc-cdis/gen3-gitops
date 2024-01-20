@@ -13,3 +13,4 @@ guppy:
       type: geospatial_tool_resource
   configIndex: chordsprod_array-config 
   authFilterField: auth_resource_path
+  esEndpoint: elasticsearch:9200
