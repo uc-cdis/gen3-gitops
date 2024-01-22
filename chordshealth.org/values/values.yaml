@@ -94,12 +94,14 @@ ssjdispatcher:
     tag: 2023.12
 
 metadata:
+  useAggMds: False
   externalSecrets:
     dbcreds: "chords_chords-metadata-db-creds"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: 2023.12
+    esEndpoint: http://elasticsearch:9200
 
 # disabling workspace services
 ambassador:
