@@ -1,0 +1,79 @@
+singleNamespace: true
+crds:
+  install: false
+artifactRepository:
+  archiveLogs: true
+  s3:
+    accessKeySecret:
+      key: AccessKeyId
+      name: argo-s3-creds
+    bucket: gen3-argo-199578515826-vhdcprod
+    endpoint: s3.amazonaws.com
+    secretKeySecret:
+      key: SecretAccessKey
+      name: argo-s3-creds
+controller:
+  affinity: {}
+  metricsConfig:
+    enabled: true
+    servicePort: 9090
+  nodeSelector:
+    kubernetes.io/os: linux
+  parallelism: 5
+  persistence:
+    archive: true
+    archiveLabelSelector:
+      matchLabels:
+        workflows.argoproj.io/archive-strategy: "true"
+    connectionPool:
+      connMaxLifetime: 300s
+      maxIdleConns: 100
+      maxOpenConns: 0
+    nodeStatusOffLoad: true
+    postgresql:
+      database: argo_default_va_testing_2024
+      host: { { .Values.argoWorkflows.persistenceDBHost } }
+      passwordSecret:
+        key: db_password
+        name: argo-db-creds
+      port: 5432
+      tableName: argo_workflows
+      userNameSecret:
+        key: db_username
+        name: argo-db-creds
+  podAnnotations:
+    ad.datadoghq.com/controller.checks:
+      "{\n  \"openmetrics\": {\n    \"init_config\":
+      {},\n    \"instances\": [\n      {\n        \"openmetrics_endpoint\": \"http://%%host%%:%%port%%/metrics
+      \",\n        \"namespace\": \"argo\",\n        \"metrics\": [\"*\"]\n      }\n
+      \   ]\n  }\n}  \n"
+    prometheus.io/path: /metrics
+    prometheus.io/port: "9090"
+    prometheus.io/scrape: "true"
+  priorityClassName: ""
+  resourceRateLimit:
+    burst: 4
+    limit: 40
+  resources:
+    limits:
+      memory: 8Gi
+    requests:
+      memory: 2Gi
+  tolerations: []
+  workflowDefaults:
+    spec:
+      archiveLogs: true
+server:
+  baseHref: /argo/
+  extraArgs:
+    - --auth-mode=server
+    - --auth-mode=client
+  extraEnv:
+    - name: ARGO_HTTP1
+      value: "true"
+  resources:
+    limits:
+      memory: 8Gi
+    requests:
+      memory: 2Gi
+useDefaultArtifactRepo: true

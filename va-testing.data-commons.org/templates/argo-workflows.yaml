@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argo-workflows-va-testing
+  namespace: argocd
+spec:
+  project: default
+  sources:
+  - repoURL: 'https://argoproj.github.io/argo-helm'
+    helm:
+      valueFiles:
+        - $values/va-testing.data-commons.org/values/argo-workflows.yaml
+    chart: 'argo-workflows'
+    version: {{ .Values.argoWorkflows.helmChartVersion }}
+  - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+    targetRevision: "feat/va-argo-workflows"
+    ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argo-va-testing
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true

@@ -1,0 +1,3 @@
+argoWorkflows:
+  helmChartVersion: "0.29.1"
+  persistenceDBHost: "hostname"
