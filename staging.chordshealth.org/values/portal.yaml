@@ -10,1079 +10,1097 @@ portal:
   gitops:
     css: |
       :root {
-        --primary-color: #99286B;
-        --secondary-color: #402264;
-      
-        --primary-color_light: #E0C4D2;
-        --secondary-color_light: #C2BACD;
-      
-        --g3-color__bg-cloud: #F5F5F5;
-        --g3-color__bg-coal: #4A4A4A;
-        --g3-color__gray: #606060;
-        --g3-color__lightgray: #9B9B9B;
-        --g3-color__smoke: #D1D1D1;
-        --g3-color__silver: #E7E7E7;
-        --g3-color__black: #000000;
-        --g3-color__white: #FFFFFF;
-      
-        --g3-primary-btn__color: var(--g3-color__white);
-        --g3-primary-btn__bg-color: var(--secondary-color);
-        --g3-primary-btn__bg-color--hover: var(--secondary-color_light);
-        --g3-primary-btn__border-color: var(--g3-color__lightgray);
-        --g3-primary-btn__border-color--hover: var(--g3-color__gray);
-        --g3-primary-btn__border-color--active: var(--g3-color__lightgray);
-      
-        --g3-secondary-btn__color: var(--g3-color__white);
-        --g3-secondary-btn__bg-color: var(--secondary-color);
-        --g3-secondary-btn__bg-color--hover: var(--secondary-color_light);
-        --g3-secondary-btn__border-color: var(--g3-color__lightgray);
-        --g3-secondary-btn__border-color--hover: var(--g3-color__gray);
-        --g3-secondary-btn__border-color--active: var(--g3-color__lightgray);
-      
-        --g3-default-btn__color: var(--g3-color__gray);
-        --g3-default-btn__color--hover: var(--g3-color__black);
-        --g3-default-btn__color--active: var(--g3-color_lightgray);
-        --g3-default-btn__bg-color: var(--g3-color__white);
-        --g3-default-btn__border-color: var(--g3-color__gray);
-        --g3-default-btn__border-color--hover: var(--g3-color__black);
-      
-        --g3-disabled-btn__color: var(--g3-color__lightgray);
-        --g3-disabled-btn__bg-color: var(--g3-color__white);
-        --g3-disabled-btn__border-color: var(--g3-color__silver);
-      
-        --g3-dropdown-item__bg-color: var(--g3-color__gray);
-        --g3-dropdown-item__color: var(--g3-color__white);
-        --g3-dropdown-menu__border-color: var(--g3-color__gray);
-      
-        --g3-footer-color: var(--g3-color__bg-coal);
-        --g3-font__medium-weight: 500;
-        --g3-font__semi-bold-weight: 600;
-      }
-      
-      h1, h2, h3, h4,
-      body,
-      .caption,
-      .form-h1, .form-h2, .form-caption,
-      .introduction,
-      .body,
-      .special-number,
-      .form-body,
-      .form-special-number {
-          font-family: 'Montserrat';
-      }
-      
-      /* Buttons */
-      
-      .data-dictionary__switch-button--active,
-      .popup__title {
-        background-color: var(--secondary-color);
-      }
-      
-      .g3-button--primary:hover,
-      .g3-dropdown-button__button--primary:hover,
-      .data-dictionary__switch-button:hover,
-      .button-primary-orange:hover {
-        background-color: var(--primary-color)
-      }
-      
-      .g3-button--default:active,
-      .g3-button--default:active svg path {
-        border: 1px solid var(--secondary-color);
-        color: 1px solid var(--secondary-color);
-        fill: 1px solid var(--secondary-color);
-      }
-      
-      /* Discovery page specs */
-      .discovery-header__stat-number {
-        color: #99286B;
-        font-size: 40px;
-        line-height: 50px;
-      }
-      
-      .discovery-search {
-        border-color: rgb(139, 51, 105);
-      }
-      
-      .discovery-modal__close-button {
-        color: rgb(139, 51, 105);
-      }
-      
-      .discovery-adv-filter-button {
-        color: rgb(139, 51, 105);
-      }
-      
-      .discovery-action-bar-button {
-        color: rgb(139, 51, 105);
-        border-color: rgb(139, 51, 105);
-      }
-      
-      .discovery-action-bar-button:hover {
-        color: #fff;
-        border-color: #fff;
-        background-color: var(--primary-color);
-      }
-      
-      .discovery-header__dropdown-tags-control-button  {
-        color: rgb(139, 51, 105);
-        border-color: rgb(139, 51, 105);
-      }
-      
-      .discovery-modal__attribute {
-        background-color: #dfe3e2;
-        border-radius: 4px;
-      }
-      
-      .ant-table-thead {
-        font-weight: 900;
-      }
-      
-      .discovery-filters-control-button {
-        color: rgb(139, 51, 105);
-        border-color: rgb(139, 51, 105);
-      }
-      
-      /* Nav Bars and Footer */
-      
-      .top-bar,
-      .top-bar__header,
-      .top-icon-button.body-typo {
-        background-color: var(--secondary-color);
-      }
-      
-      .top-bar__link {
-        border-right: 2px solid #fff;
-      }
-      
-      .nav-button:hover,
-      .button-active {
-        border-bottom: 3px solid var(--primary-color);
-      }
-      
-      .nav-bar__logo {
-        padding: 15px 0;
-      }
-      
-      .nav-bar__logo-img {
-        height: 50px;
-      }
-      
-      .footer__version-area {
-        display: none;
-      }
-      
-      .footer {
-        background-color: #373a3c;
-      }
-      
-      .footer-container {
-        align-items: center;
-        background-color: #373a3c;
-      }
-      
-      .footer__nav {
-        align-items: center;
-        background-color: #373a3c;
-      }
-      
-      .footer__link-area {
-        font-size: 0.625rem;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: auto;
-        margin: auto;
-      }
-      
-      /* Data Explorer */
-      
-      .filter-group__tab,
-      .g3-filter-group__tab {
-        border-top: 1px solid var(--primary-color);
-        border-right: 1px solid var(--primary-color);
-        border-left: 1px solid var(--primary-color);
-        color: var(--primary-color);
-      }
-      
-      .tier-access-selector__radio-input:checked+.tier-access-selector__customized-radio-input::after {
-        background-color: var(--primary-color);
-      }
-      
-      .filter-group__tab--selected,
-      .g3-filter-group__tab--selected {
-        background-color: var(--secondary-color);
-        color: #fff;
-      }
-      
-      .aggregation-card .bucket-item .bucket-count {
-        color: var(--secondary-color);
-      }
-      
-      .aggregation-card input[type='checkbox']:checked {
-        background: var(--secondary-color);
-      }
-      
-      .g3-single-select-filter__checkbox:checked {
-        background: var(--primary-color);
-      }
-      
-      .input-range__track--active,
-      .rc-slider-track,
-      .g3-single-select-filter__count .g3-icon--under {
-        background-color: var(--secondary-color);
-      }
-      
-      
-      /* .input-range__track--active,
-      .rc-slider-track,
-      .g3-single-select-filter__count .g3-icon--under {
-        background-color: var(--primary-color);
-      } */
-      
-      /* Charts */
-      
-      tspan.special-number,
-      .special-number,
-      .form-special-number,
-      .g3-single-select-filter__count {
-        color: var(--primary-color);
-      }
-      
-      .special-number {
-        fill: var(--primary-color);
-      }
-      
-      .data-explorer__charts tspan.special-number,
-      .data-explorer__charts .special-number,
-      .data-explorer__charts .form-special-number {
-        color: var(--secondary-color);
-      }
-      
-      .data-explorer__charts .special-number {
-        fill: var(--secondary-color);
-      }
-      
-      /* Index Changes inherited from MIDRC */
-      
-      .introduction__icon {
-        display: none;
-      }
-      
-      .index-button-bar {
-        width: 100%;
-        background-color: var(--g3-color__white);
-      }
-      
-      .index-button-bar__thumbnail-button {
-        background-color: inherit;
-        border: none;
-      }
-      
-      .index-button-bar__thumbnail-title {
-        display: none;
-      }
-      
-      @media screen and (max-width: 1170px) {
-        .index-button-bar {
-          padding: 0 10%;
-        }
-      }
-    json: |
-        {
-            "graphql": {
-            "boardCounts": [
-                {
-                "graphql": "_geospatial_data_resource_count",
-                "name": "Geospatial Data Resource",
-                "plural": "Geospatial Data Resources"
-                },
-                {
-                "graphql": "_population_data_resource_count",
-                "name": "Population Data Resource",
-                "plural": "Population Data Resources"
-                }
-        
-            ],
-            "chartCounts": [
-                {
-                "graphql": "_geospatial_data_resource_count",
-                "name": "Geospatial Data Resource",
-                "plural": "Geospatial Data Resources"
-                },
-                {
-                "graphql": "_population_data_resource_count",
-                "name": "Population Data Resource",
-                "plural": "Population Data Resources"
-                }
-            ],
-            "projectDetails": "boardCounts",
-            "chartNodesExcludeFiles": true
-            },
-            "components": {
-            "appName": "CHORDS Resource Catalog",
-            "homepageHref": "https://staging.chordshealth.org/",
-            "index": {
-                "introduction": {
-                "heading": "CHORDS Resource Catalog",
-                "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In vitae tellus eu est sagittis sagittis. Nulla consectetur lorem ante, nec rutrum dolor laoreet sit amet. Etiam eu dapibus dolor, vel vestibulum arcu. Quisque vel eleifend urna. In hac habitasse platea dictumst. Cras fermentum tincidunt odio, eu ultricies risus ultrices ac. Praesent at turpis et mauris vehicula ornare. Fusce ornare aliquam rutrum. Nam dignissim diam orci, a scelerisque ligula gravida vitae. Donec vitae nulla interdum, placerat augue quis, scelerisque ligula. Aenean quis eros mauris. Donec eget nunc ac elit feugiat luctus sed quis turpis. Curabitur condimentum ligula cursus ligula tempus suscipit. Etiam tempus ornare odio. Fusce a diam ac eros suscipit condimentum id eu urna. Donec consectetur porttitor nibh nec sagittis.",
-                "link": "/submission"
-                },
-                "buttons": [
-                
-                ]
-            },
-            "navigation": {
-                "items": [
-                {
-                    "icon": "query",
-                    "link": "/discovery",
-                    "name": "Discovery",
-                    "tooltip": "Use free-text search and tags to rapidly find relevant studies."
-                },
-                {
-                    "name": "Exploration",
-                    "link": "/explorer",
-                    "icon": "exploration",
-                    "tooltip": "The Exploration Page enables discovery of the climate related resources"
-                },
-                {
-                    "icon": "dictionary",
-                    "link": "/DD",
-                    "color": "#a2a2a2",
-                    "name": "Dictionary",
-                    "tooltip": "The CHORDS Catalog employs a data model to power queries and data submissions. Study the dictionary to send GraphQL queries or format your data submissions."
-                },
-                {
-                    "name": "Query",
-                    "link": "/query",
-                    "icon": "query",
-                    "tooltip": "Query the databases using GraphQL."
-                },
-                {
-                    "icon": "profile",
-                    "link": "/identity",
-                    "color": "#a2a2a2",
-                    "name": "Profile"
-                }
-                ]
-            },
-            "login": {
-                "title": "CHORDS Catalog",
-                "subTitle": "Explore, Analyze, and Share Climate and Health Resources",
-                "text": "",
-                "contact": "If you have any questions about access or the registration process, please contact ",
-                "email": "mike.conway@nih.gov"
-            },
-        
-            "systemUse" : { 
-            "systemUseTitle" : "CHORDS Catalog Policy", 
-            "systemUseText" : ["You are accessing a U.S. Government System. System usage may be monitored, recorded, and subject to audit. Use of the system indicates consent to monitoring and recording.\n\nUnauthorized use of the system is prohibited and subject to criminal and civil penalties.\n\nThis system includes links to external resources, and may be used by the public and by researchers as an aid to locate data relevant to climate and public health. NIEHS is not responsible for information that is hosted on these external data resources."], 
-            "expireUseMsgDays" : 0
-            },
-        
-            "categorical9Colors": ["#B02F34", "#421C52", "#AEEBF2", "#E0DD10", "#40476D", "#FFA630", "#AE8799", "#035C94", "#462255"],
-            "footerLogos": [
-                {
-                "src": "/src/img/gen3.png",
-                "href": "https://ctds.uchicago.edu/gen3",
-                "alt": "CHORDS Health Data Commons"
-                }
-            ]
-            },
-            "featureFlags": {
-            "explorer": true,
-            "analysis": false,
-            "explorerPublic": true,
-            "discovery": true
-            },
-            "requiredCerts": [ ],
-            "discoveryConfig":{
-            "requireLogin": false,
-            "public": true,
-            "features": {
-                "pageTitle": {
-                "enabled": true,
-                "text": "CHORDS Data Resources"
-                },
-                "search": {
-                "searchBar": {
-                    "enabled": true,
-                    "inputSubtitle": "CHORDS Resource Search",
-                    "placeholder": "Search climate and health resources by keyword",
-                    "searchableTextFields": ["name", "long_name", "description", "domain", "program_name"]
-        
-                },
-                "tagSearchDropdown": { 
-                    "enabled": true,
-                    "collapseOnDefault": true, 
-                    "collapsibleButtonText": "Resource Characteristics" 
-                }
-                },
-                "advSearchFilters": {
-                "enabled": true,
-                "field": "advSearchFilters",
-                "displayName": "Filters",
-                "filters": [
-                    {
-                    "key": "Resource Type"
-                    },
-                    {
-                    "key": "Program"
-                    },
-                    {
-                    "key": "Domain"
-                    },
-                    {
-                    "key": "Measures"
-                    },
-                    {
-                    "key": "Exposures"
-                    },
-                    {
-                    "key": "Population"
-                    }
-        
-                ]
-                },
-                "tagsColumn": {
-                "enabled": false
-                },
-                "tagsInDescription": {
-                "enabled": true
-                },
-                "authorization": {
-                "enabled": false
-                }
-            },
-            "aggregations": [
-                {
-                "name": "Resources",
-                "field": "resource_id",
-                "type": "count"
-                }
-            ],
-            "tagSelector": {
-                "title": "Tags by category"
-            },
-            "studyColumns":[
-            {
-                "name": "Resource Type",
-                "field": "type",
-                "errorIfNotAvailable": false,
-                "valueIfNotAvailable": "n/a"
-            }, 
-            {
-                "name": "Resource Name",
-                "field": "name",
-                "errorIfNotAvailable": false,
-                "valueIfNotAvailable": "n/a"
-            },
-            {
-                "name": "Program Name",
-                "field": "program_name",
-                "errorIfNotAvailable": false,
-                "valueIfNotAvailable": "n/a"
-            }
-            ],
-            "studyPreviewField": {
-                "name": "Description",
-                "field": "description",
-                "contentType": "block",
-                "includeName": false,
-                "includeIfNotAvailable": true,
-                "valueIfNotAvailable": ""
-            },
-            "detailView": {
-                "headerField": "name",
-                "tabs": [
-                    {
-                    "tabName": "Summary",
-                    "groups": [
-                        {
-                        "header": "Description",
-                        "fields": [
-                            {
-                            "type": "block",
-                            "sourceField": "description"
-                            }
-                        ]
-                        },
-                        {
-                        "header": "Details",
-                        "fields": [
-                            {
-                            "type": "block",
-                            "sourceField": "comment"
-                            }
-                        ]
-                        },
-                        {
-                        "header": "Program Name",
-                        "fields": [
-                            {
-                            "type": "string",
-                            "label": "Program Name",
-                            "sourceField": "program_name",
-                            "default": "n/a"
-        
-                            } 
-                        ]
-                        },
-                        {
-                            "header": "Project",
-                            "fields": [
-                            {
-                                "type": "text",
-                                "label": "Project Name",
-                                "sourceField": "project_name",
-                                "default": "n/a"
-        
-                            },
-                            {
-                                "type": "link",
-                                "label": "Project Link",
-                                "sourceField": "project_url",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "text",
-                                "sourceField": "project_description",
-                                "default": "n/a"
-            
-                            }
-                        ]
-                        },
-                        {
-                        "header": "Details",
-                        "fields": [
-                            {
-                            "type": "text",
-                            "label": "Domain",
-                            "sourceField": "domain",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Has API",
-                            "sourceField": "has_api",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Has Visualization Tool",
-                            "sourceField": "has_visualization_tool",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Citizen Collected?",
-                            "sourceField": "is_citizen_collected",
-                            "default": "n/a"
-        
-                            }
-                        ]
-                        },
-        
-                        {
-                        "header": "Resource Links",
-                        "fields": [
-                            {
-                            "type": "link",
-                            "label": "Resource URL",
-                            "sourceField": "resource_url",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "License Type",
-                            "sourceField": "license_type",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "License Text",
-                            "sourceField": "license_text",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Citation",
-                            "sourceField": "citation",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Subject to Data Usage Agreement",
-                            "sourceField": "resource_use_agreement",
-                            "default": "n/a"
-        
-                            },
-                            {
-                            "type": "text",
-                            "label": "Resource Contact",
-                            "sourceField": "resource_contact",
-                            "default": "n/a"
-        
-                            }
-                        ]
-                        }
-                    ]
-                    },
-                    {
-                        "tabName": "Source",
-                        "groups": [
-                        {
-                            "header": "Source Information",
-                            "fields": [
-                            {
-                                "type": "text",
-                                "label": "Support Source",
-                                "sourceField": "support_source",
-                                "default": "n/a"
-                            
-                            },
-                            {
-                                "type": "text",
-                                "label": "Investigator Name",
-                                "sourceField": "investigator_name",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "text",
-                                "label": "Investigator Affiliation",
-                                "sourceField": "investigator_affiliation",
-                                "default": "n/a"
-                            }
-                            ]
-                        },
-                        {
-                            "header": "Resource Links",
-                            "fields": [
-                            {
-                                "type": "link",
-                                "label": "Resource URL",
-                                "sourceField": "resource_url",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "text",
-                                "label": "License Type",
-                                "sourceField": "license_type",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "block",
-                                "label": "License Text",
-                                "sourceField": "license_text",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "block",
-                                "label": "Citation",
-                                "sourceField": "citation",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "text",
-                                "label": "Resource Use Agreement?",
-                                "sourceField": "resource_use_agreement",
-                                "default": "n/a"
-                            },
-                            {
-                                "type": "text",
-                                "label": "Resource Contact",
-                                "sourceField": "resource_contact",
-                                "default": "n/a"
-                            }
-                            ]
-                        }
-                        ]
-                        }
-                ]
-            },
-            "minimalFieldMapping": {
-                "tagsListFieldName": "tags",
-                "uid": "resource_id"
-            },
-            "tagCategories": [
-                {
-                "name": "Program",
-                "color": "rgba(71, 130, 195, 1)",
-                "display": true
-                },
-                {
-                "name": "Keyword",
-                "color": "rgba(81, 175, 195, 1)",
-                "display": true
-                },
-                {
-                "name": "Domain",
-                "color": "rgba(81, 100, 54, 1)",
-                "display": true
-                },
-                {
-                "name": "Resource Type",
-                "color": "rgba(121, 112, 103, 1)",
-                "display": true
-                }
-        
-            ]
-            },
-            "analysisTools": [ ],
-            "explorerConfig": [
-            {
-                "tabTitle": "Geospatial Data Resources",
-                "charts": {
-                "project_investigator_affiliation": {
-                    "chartType": "bar",
-                    "title": "Investigator Affiliation"
-                }
-                },
-                "filters": {
-                "tabs": [
-                    {
-                    "title": "Geospatial Data Resources",
-                    "fields":[
-                    
-                        "includes_citizen_collected",
-                        "measures",
-                        "domain",
-                        "keywords",
-                        "exposure_media",
-                        "model_methods",
-                        "has_api",
-                        "has_visualization_tool",
-                        "resource_use_agreement",
-                        "payment_required"
-                    ]
-                    },
-                    {
-                    "title": "Temporal/Spatial Details",
-                    "fields":[
-                        "spatial_resolution",
-                        "spatial_coverage",
-                        "geometry_type",
-                        "geometry_source",
-                        "geographic_feature",
-                        "time_extent_start",
-                        "time_extent_end",
-                        "temporal_resolution"
-                    ]
-                    },
-                    {
-                    "title": "Project/Program Details",
-                    "fields":[
-                        "program_name",
-                        "project_name"
-                    ]
-                    }
-                ]
-                },
-                "table": {
-                "enabled": true,
-                "fields": [
-                    "resource_name",
-                    "resource_description",
-                    "measures",
-                    "exposure_media",
-                    "time_extent_start",
-                    "time_extent_end",
-                    "resource_description",
-                    "spatial_resolution",
-                    "spatial_coverage",
-                    "resource_url"
-                ],
-                "linkFields": [
-                    "resource_url"
-                ]
-                },
-                "dropdowns": {
-                "download-table": {
-                    "title": "Download Dataset Table"
-                }
-                },
-                "buttons": [
-                {
-                    "enabled": true,
-                    "type": "data-json",
-                    "title": "JSON",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.json"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-tsv",
-                    "title": "TSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.tsv"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-csv",
-                    "title": "CSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.csv"
-                }
-                ],
-                "loginForDownload": true,
-                "guppyConfig": {
-                "dataType": "geospatial_data_resource",
-                "nodeCountTitle": "Geospatial Data Resources",
-                "fieldMapping": [
-                    {
-                    "field": "project_id",
-                    "name": "Dataset ID"
-                    },
-                    {
-                    "field": "submitter_id",
-                    "name": "Dataset Name"
-                    }
-                ],
-                "accessibleFieldCheckList": ["project_id"],
-                "accessibleValidationField": "project_id"
-                }
-            },
-            {
-                "tabTitle": "Population Data Resources",
-                "charts": {
-                "project_investigator_affiliation": {
-                    "chartType": "bar",
-                    "title": "Investigator Affiliation"
-                }
-                },
-                "filters": {
-                "tabs": [
-                    {
-                    "title": "Population Data Resources",
-                    "fields":[
-                        "domain",
-                        "keywords",
-                        "exposures",
-                        "outcomes",
-                        "outcomes_other",
-                        "exposure_media",
-                        "population_studied",
-                        "population_studied_other"
-                    ]
-                    },
-                    {
-                    "title": "Temporal/Spatial Details",
-                    "fields":[
-                        "time_extent_start",
-                        "time_extent_end",
-                        "temporal_resolution",
-                        "spatial_resolution",
-                        "spatial_resolution_other",
-                        "spatial_coverage",
-                        "geometry_type",
-                        "geometry_source"
-                    ]
-                    },
-                    {
-                    "title": "Project/Program Details",
-                    "fields":[
-                        "program_name",
-                        "project_name",
-                        "project_investigator_affiliation"
-                    ]
-                    }
-                ]
-                },
-                "table": {
-                "enabled": true,
-                "fields": [
-                    "resource_name",
-                    "resource_description",
-                    "comments",
-                    "intended_use",
-                    "exposures",
-                    "outcomes",
-                    "population_studied",
-                    "population_studied_other",
-                    "resource_url"
-                ],
-                "linkFields": [
-                    "resource_url"
-                ]
-                },
-                "dropdowns": {
-                "download-table": {
-                    "title": "Download Dataset Table"
-                }
-                },
-                "buttons": [
-                {
-                    "enabled": true,
-                    "type": "data-json",
-                    "title": "JSON",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.json"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-tsv",
-                    "title": "TSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.tsv"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-csv",
-                    "title": "CSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.csv"
-                }
-                ],
-                "loginForDownload": true,
-                "guppyConfig": {
-                "dataType": "population_data_resource",
-                "nodeCountTitle": "Population Data Resources",
-                "fieldMapping": [
-                    {
-                    "field": "project_id",
-                    "name": "Dataset ID"
-                    },
-                    {
-                    "field": "submitter_id",
-                    "name": "Dataset Name"
-                    }
-                ],
-                "accessibleFieldCheckList": ["project_id"],
-                "accessibleValidationField": "project_id"
-                }
-            },
-            {
-                "tabTitle": "Geospatial Tool Resources",
-                "charts": {
-                "project_investigator_affiliation": {
-                    "chartType": "bar",
-                    "title": "Investigator Affiliation"
-                }
-                },
-                "filters": {
-                "tabs": [
-                    {
-                    "title": "Geospatial Tool Resources",
-                    "fields":[
-                        "program_name",
-                        "project_id",
-                        "tool_type",
-                        "usage_type",
-                        "operating_system",
-                        "languages",
-                        "input_formats",
-                        "output_formats",
-                        "domain",
-                        "model_methods"
-                    ]
-                    },
-                    {
-                    "title": "Temporal/Spatial Details",
-                    "fields":[
-                        "time_extent_start",
-                        "time_extent_end",
-                        "temporal_resolution",
-                        "spatial_resolution",
-                        "spatial_coverage",
-                        "geometry_type",
-                        "geometry_source"
-                    ]
-                    },
-                    {
-                    "title": "Project/Program Details",
-                    "fields":[
-                        "program_name",
-                        "project_name"
-                    ]
-                    }
-                ]
-                },
-                "table": {
-                "enabled": true,
-                "fields": [
-                    "resource_name",
-                    "resource_description",
-                    "tool_type",
-                    "usage_type",
-                    "resource_url"
-                ],
-                "linkFields": [
-                    "resource_url"
-                ]
-                },
-                "dropdowns": {
-                "download-table": {
-                    "title": "Download Dataset Table"
-                }
-                },
-                "buttons": [
-                {
-                    "enabled": true,
-                    "type": "data-json",
-                    "title": "JSON",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.json"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-tsv",
-                    "title": "TSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.tsv"
-                },
-                {
-                    "enabled": true,
-                    "type": "data-csv",
-                    "title": "CSV",
-                    "dropdownId": "download-table",
-                    "leftIcon": "datafile",
-                    "rightIcon": "download",
-                    "fileName": "datasets_table.csv"
-                }
-                ],
-                "loginForDownload": true,
-                "guppyConfig": {
-                "dataType": "geospatial_tool_resource",
-                "nodeCountTitle": "Geospatial Tool Resources",
-                "fieldMapping": [
-                    {
-                    "field": "project_id",
-                    "name": "Dataset ID"
-                    },
-                    {
-                    "field": "submitter_id",
-                    "name": "Dataset Name"
-                    }
-                ],
-                "accessibleFieldCheckList": ["project_id"],
-                "accessibleValidationField": "project_id"
-                }
-            }
-            ],
-            "connectSrcCSPWhitelist": [
-            "https://gen3-dev.niehs.nih.gov", "https://gen3.niehs.nih.gov", "https://localhost", "https://staging.chordshealth.org", "https://staging.staging.chordshealth.org"
-            ]
-        }
+        --primary-color: #225C7A;
+          --secondary-color: #518611;
 
+          --primary-color_light: #7db3cb;
+          --secondary-color_light: #77a22c;
+
+          --g3-color__bg-cloud: #ebebeb;
+          --g3-color__bg-coal: #333333;
+          --g3-color__gray: #cccccc;
+          --g3-color__lightgray: #ebebeb;
+          --g3-color__smoke: #afad83;
+          --g3-color__silver: #72898D;
+          --g3-color__black: #000000;
+          --g3-color__white: #FFFFFF;
+          --g3-color__purple: #56608B;
+
+          --g3-primary-btn__color: var(--g3-color__white);
+          --g3-primary-btn__bg-color: var(--secondary-color);
+          --g3-primary-btn__bg-color--hover: var(--secondary-color_light);
+          --g3-primary-btn__border-color: var(--g3-color__lightgray);
+          --g3-primary-btn__border-color--hover: var(--g3-color__gray);
+          --g3-primary-btn__border-color--active: var(--g3-color__lightgray);
+
+          --g3-secondary-btn__color: var(--g3---secondary-color);
+          --g3-secondary-btn__bg-color: var(--secondary-color);
+          --g3-secondary-btn__bg-color--hover: var(--secondary-color_light);
+          --g3-secondary-btn__border-color: var(--g3-color__lightgray);
+          --g3-secondary-btn__border-color--hover: var(--g3-color__gray);
+          --g3-secondary-btn__border-color--active: var(--g3-color__lightgray);
+
+          --g3-default-btn__color: var(--g3-color__gray);
+          --g3-default-btn__color--hover: var(--g3-color__black);
+          --g3-default-btn__color--active: var(--g3-color_lightgray);
+          --g3-default-btn__bg-color: var(--g3-color__white);
+          --g3-default-btn__border-color: var(--g3-color__gray);
+          --g3-default-btn__border-color--hover: var(--g3-color__black);
+
+          --g3-disabled-btn__color: var(--g3-color__lightgray);
+          --g3-disabled-btn__bg-color: var(--secondary-color_light);
+          --g3-disabled-btn__border-color: var(--g3-color__silver);
+
+          --g3-dropdown-item__bg-color: var(--g3-color__gray);
+          --g3-dropdown-item__color: var(--g3-color__white);
+          --g3-dropdown-menu__border-color: var(--g3-color__gray);
+
+          --g3-footer-color: var(--g3-color__bg-coal);
+          --g3-font__medium-weight: 500;
+          --g3-font__semi-bold-weight: 600;
+          }
+
+          h1, h2, h3, h4,
+          body,
+          .caption,
+          .form-h1, .form-h2, .form-caption,
+          .introduction,
+          .body,
+          .special-number,
+          .form-body,
+          .form-special-number {
+              font-family: 'Arial';
+              color: var(--g3-color__black);
+          }
+
+          /* Buttons */
+
+          .data-dictionary__switch-button--active,
+          .popup__title {
+            background-color: var(--secondary-color);
+          }
+
+          .g3-button--primary:hover,
+          .g3-dropdown-button__button--primary:hover,
+          .data-dictionary__switch-button:hover,
+          .button-primary-orange:hover {
+            background-color: var(--primary-color)
+          }
+
+          .g3-filter-section__options {
+            color: var(--g3-color__black);
+          }
+
+          .g3-button--default:active,
+          .g3-button--default:active svg path {
+            border: 1px solid var(--secondary-color);
+            color: 1px solid var(--secondary-color);
+            fill: 1px solid var(--secondary-color);
+          }
+
+          /* Discovery page specs */
+          .discovery-header__stat-number {
+            color: var(--secondary-color);
+            font-size: 40px;
+            line-height: 50px;
+          }
+
+          .discovery-search {
+            border-color: var(--secondary-color);
+          }
+
+          .discovery-modal__close-button {
+            color: var(--secondary-color);
+          }
+
+          .discovery-adv-filter-button {
+            color:var(--secondary-color);
+          }
+
+          .discovery-action-bar-button {
+            color:var(--secondary-color);
+            border-color:var(--secondary-color);
+          }
+
+          .discovery-action-bar-button:hover {
+            color: var(--primary-color_light);
+            border-color: var(--primary-color_light);
+            background-color: var(--primary-color);
+          }
+
+          .discovery-header__dropdown-tags-control-button  {
+            color:var(--secondary-color);
+            border-color:var(--secondary-color);
+          }
+
+          .discovery-modal__attribute {
+            background-color: var(--g3-color__lightgray);
+            border-radius: 4px;
+          }
+
+          .ant-table-thead {
+            font-weight: 900;
+          }
+
+          .discovery-filters-control-button {
+            color:var(--primary-color);
+            border-color:var(--primary-color);
+          }
+
+          /* Nav Bars and Footer */
+
+          .top-bar,
+          .top-bar__header,
+          .top-icon-button.body-typo {
+            background-color: var(--secondary-color);
+          }
+
+          .top-bar__link {
+            border-right: 2px solid var(--g3-color__lightgray);
+          }
+
+          .nav-button:hover,
+          .button-active {
+            border-bottom: 3px solid var(--primary-color);
+          }
+
+          .nav-bar__logo {
+            padding: 15px 0;
+          }
+
+          .nav-bar__logo-img {
+            height: 50px;
+          }
+
+          .footer__version-area {
+            display: none;
+          }
+
+          .footer {
+            background-color: var(--g3-color__bg-coal);
+          }
+
+          .footer-container {
+            align-items: center;
+            background-color: var(--g3-color__bg-coal);
+          }
+
+          .footer__nav {
+            align-items: center;
+            background-color: var(--g3-color__bg-coal);
+          }
+
+          .footer__link-area {
+            font-size: 0.625rem;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: auto;
+            margin: auto;
+          }
+
+          /* Data Explorer */
+
+          .filter-group__tab,
+          .g3-filter-group__tab {
+            border-top: 1px solid var(--primary-color);
+            border-right: 1px solid var(--primary-color);
+            border-left: 1px solid var(--primary-color);
+            color: var(--primary-color);
+          }
+
+          .tier-access-selector__radio-input:checked+.tier-access-selector__customized-radio-input::after {
+            background-color: var(--primary-color);
+          }
+
+          .filter-group__tab--selected,
+          .g3-filter-group__tab--selected {
+            background-color: var(--secondary-color);
+            color: var(--g3-color__lightgray);
+          }
+
+          .aggregation-card .bucket-item .bucket-count {
+            color: var(--secondary-color);
+          }
+
+          .aggregation-card input[type='checkbox']:checked {
+            background: var(--secondary-color);
+          }
+
+          .g3-single-select-filter__checkbox:checked {
+            background: var(--primary-color);
+          }
+
+          .g3-single-select-filter__checkbox {
+            border: 1px solid var(--g3-color__black)
+          }
+
+          .input-range__track--active,
+          .rc-slider-track,
+          .g3-single-select-filter__count .g3-icon--under {
+            background-color: var(--secondary-color);
+          }
+
+
+          /* Charts */
+
+          tspan.special-number,
+          .special-number,
+          .form-special-number,
+          .g3-single-select-filter__count {
+            color: var(--primary-color);
+          }
+
+          .special-number {
+            fill: var(--primary-color);
+          }
+
+          .data-explorer__charts tspan.special-number,
+          .data-explorer__charts .special-number,
+          .data-explorer__charts .form-special-number {
+            color: var(--secondary-color);
+          }
+
+          .data-explorer__charts .special-number {
+            fill: var(--secondary-color);
+          }
+
+          /* Index Changes inherited from MIDRC */
+
+          .introduction__icon {
+            display: none;
+          }
+
+          .index-button-bar {
+            width: 100%;
+            background-color: var(--g3-color__white);
+          }
+
+          .index-button-bar__thumbnail-button {
+            background-color: inherit;
+            border: none;
+          }
+
+          .index-button-bar__thumbnail-title {
+            display: none;
+          }
+
+          @media screen and (max-width: 1170px) {
+            .index-button-bar {
+              padding: 0 10%;
+            }
+          }
+
+          #externalFooter {
+            display: block !important;
+            width: 100% !important;
+            height: 350px !important;
+          }
+
+          .nav-bar__logo-img {
+            height: 100px;
+          }
+    json: {
+  "graphql": {
+    "boardCounts": [
+      {
+        "graphql": "_geospatial_data_resource_count",
+        "name": "Geospatial Data Resource",
+        "plural": "Geospatial Data Resources"
+      },
+      {
+        "graphql": "_population_data_resource_count",
+        "name": "Population Data Resource",
+        "plural": "Population Data Resources"
+      },
+      {
+        "graphql": "_geospatial_tool_resource_count",
+        "name": "Geospatial Tool Resource",
+        "plural": "Geospatial Tool Resources"
+      }
+    ],
+    "chartCounts": [
+      {
+        "graphql": "_geospatial_data_resource_count",
+        "name": "Geospatial Data Resource",
+        "plural": "Geospatial Data Resources"
+      },
+      {
+        "graphql": "_population_data_resource_count",
+        "name": "Population Data Resource",
+        "plural": "Population Data Resources"
+      },
+      {
+        "graphql": "_geospatial_tool_resource_count",
+        "name": "Geospatial Tool Resource",
+        "plural": "Geospatial Tool Resources"
+      }
+    ],
+    "projectDetails": "boardCounts",
+    "chartNodesExcludeFiles": true
+  },
+  "components": {
+    "appName": "CHORDS",
+    "homepageHref": "https://chords.niehs.nih.gov/",
+    "index": {
+      "introduction": {
+        "heading": "CHORDS - Climate and Health Outcomes Research Data Systems",
+        "text": "The CHORDS Platform provides resources aimed at making it easier for researchers to study the effects of external, place based environmental exposures on health outcomes as well as supporting research into the impact of health interventions on well-being. Place-based exposures are varied and can include pollution from land, air, and water source; natural phenomena such as the heat, humidity, and pollen; extreme events such as drought and wildfires; as well as factors such as crime and the availability of green space that result from our social and built environment. The CHORDS Platform emphasizes research into the impacts of climate change, with a focus on wildfires, although many of the resources provided here are applicable across a breadth of scenarios.",
+        "link": "/submission"
+      },
+      "buttons": [
+
+      ]
+    },
+    "navigation": {
+      "items": [
+        {
+          "icon": "query",
+          "link": "/discovery",
+          "name": "CHORDS Catalog",
+          "tooltip": "Free-text search and tags to rapidly find relevant resources."
+        },
+        {
+          "name": "Data Explorer",
+          "link": "/explorer",
+          "icon": "exploration",
+          "tooltip": "Fine grained search and discovery for specific resource types."
+        },
+        {
+          "icon": "dictionary",
+          "link": "/DD",
+          "color": "#a2a2a2",
+          "name": "Dictionary",
+          "tooltip": "The CHORDS Catalog employs a data model to power queries and data submissions. Study the dictionary to send GraphQL queries or format your data submissions."
+        },
+        {
+          "name": "Catalog Query",
+          "link": "/query",
+          "icon": "query",
+          "tooltip": "Query CHORDS Resources with GraphQL."
+        },
+        {
+          "name": "CHORDS Tools",
+          "link": "/resource-browser",
+          "icon": "query"
+        },
+        {
+          "icon": "profile",
+          "link": "/identity",
+          "color": "#a2a2a2",
+          "name": "Profile"
+        }
+      ]
+    },
+    "login": {
+      "title": "CHORDS - Climate and Health Outcomes Research Data Systems",
+      "subTitle": "Explore, Analyze, and Share Climate and Health Resources",
+      "text": "",
+      "contact": "If you have any questions about access or the registration process, please contact ",
+      "email": "mike.conway@nih.gov"
+    },
+    "systemUse" : {
+      "systemUseTitle" : "CHORDS Catalog Policy",
+      "systemUseText" : ["You are accessing a U.S. Government System. System usage may be monitored, recorded, and subject to audit. Use of the system indicates consent to monitoring and recording.\n\nUnauthorized use of the system is prohibited and subject to criminal and civil penalties.\n\nThis system includes links to external resources, and may be used by the public and by researchers as an aid to locate data relevant to climate and public health. NIEHS is not responsible for information that is hosted on these external data resources."],
+      "expireUseMsgDays" : 0
+    },
+    "footer": {
+      "externalURL": "https://rstudio.niehs.nih.gov/content/c0a3fbb4-5309-46c1-a7f9-3a36e7e4b5f1/",
+      "links": [
+        {
+          "text": "About CHORDS",
+          "href": "https://www.niehs.nih.gov/research/programs/chords"
+        }
+      ]
+    },
+    "footerLogos": [
+      {
+        "src": "/src/img/createdby.png",
+        "href": "https://ctds.uchicago.edu/",
+        "alt": "Center for Translational Data Science at the University of Chicago"
+      }
+    ]
+  },
+  "resourceBrowser": {
+    "title": "CHORDS Tools and Resources",
+    "description": "A collection of custom jupyter notebooks and other resources",
+    "public": true,
+    "resources": [
+      {
+        "title": "Tox21 Correlation Browser",
+        "category": "Notebooks",
+        "description": "This can be used to provide insight into specific Tox21 chemicals, or to generate sets of similar chemicals to be used in subsequent read across or enrichment type analysis.",
+        "link": "https://rstudio.niehs.nih.gov/correlation-browser/",
+        "imageUrl": "custom/tox21.jpg"
+      },
+      {
+        "title": "CHORDS Toolkit book",
+        "category": "Tutorial books html",
+        "description": "The CHORDS Toolkit for Health and Geospatial Exposures Research.",
+        "link": "https://sandbox-staging.ntp.niehs.nih.gov/rsconnect/CHORDS_Toolkit_dev/",
+        "imageUrl": "custom/chordstk.jpg"
+      }
+    ]
+  },
+  "featureFlags": {
+    "explorer": true,
+    "analysis": false,
+    "explorerPublic": true,
+    "discovery": true
+  },
+  "requiredCerts": [],
+  "discoveryConfig": {
+    "requireLogin": false,
+    "public": true,
+    "features": {
+      "pageTitle": {
+        "enabled": true,
+        "text": "CHORDS Data Resources"
+      },
+      "search": {
+        "searchBar": {
+          "enabled": true,
+          "inputSubtitle": "CHORDS Resource Search",
+          "placeholder": "Try keywords such as wildfire, smoke, pm2.5",
+          "searchableTextFields": [
+            "project_short_name",
+            "project_name",
+            "name",
+            "description",
+            "domain",
+            "keywords",
+            "project_description",
+            "project_sponsor"
+          ]
+        },
+        "tagSearchDropdown": {
+          "enabled": true,
+          "collapseOnDefault": true,
+          "collapsibleButtonText": "Show keyword search"
+        }
+      },
+      "advSearchFilters": {
+        "enabled": true,
+        "field": "advSearchFilters",
+        "displayName": "Show Search Filters",
+        "filters": [
+          {
+            "key": "Resource Type"
+          },
+          {
+            "key": "Project Sponsor"
+          },
+          {
+            "key": "Project"
+          },
+          {
+            "key": "Variables"
+          },
+          {
+            "key": "Domain"
+          }
+        ]
+      },
+      "tagsColumn": {
+        "enabled": true
+      },
+      "tagsInDescription": {
+        "enabled": false
+      },
+      "authorization": {
+        "enabled": false
+      }
+    },
+    "aggregations": [
+      {
+        "name": "Resources",
+        "field": "resource_id",
+        "type": "count"
+      }
+    ],
+    "tagSelector": {
+      "title": "Tags by category"
+    },
+    "studyColumns": [
+      {
+        "name": "Resource Type",
+        "field": "type",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      },
+      {
+        "name": "Resource Name",
+        "field": "name",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      },
+      {
+        "name": "Project Name",
+        "field": "project_name",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      },
+      {
+        "name": "Project Sponsor",
+        "field": "project_sponsor",
+        "errorIfNotAvailable": false,
+        "valueIfNotAvailable": "n/a"
+      }
+    ],
+    "studyPreviewField": {
+      "name": "Description",
+      "field": "description",
+      "contentType": "block",
+      "includeName": false,
+      "includeIfNotAvailable": true,
+      "valueIfNotAvailable": ""
+    },
+    "detailView": {
+      "headerField": "name",
+      "tabs": [
+        {
+          "tabName": "Summary",
+          "groups": [
+            {
+              "header": "Description",
+              "fields": [
+                {
+                  "type": "block",
+                  "sourceField": "description"
+                }
+              ]
+            },
+            {
+              "header": "Details",
+              "fields": [
+                {
+                  "type": "text",
+                  "label": "Comment",
+                  "sourceField": "comment",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Reference",
+                  "sourceField": "resource_reference",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "publication 1",
+                  "sourceField": "publications_1",
+                  "default": ""
+                },
+                {
+                  "type": "text",
+                  "label": "publication 2",
+                  "sourceField": "publications_2",
+                  "default": ""
+                },
+                {
+                  "type": "text",
+                  "label": "publication 3",
+                  "sourceField": "publications_3",
+                  "default": ""
+                }
+              ]
+            },
+            {
+              "header": "Project Sponsor",
+              "fields": [
+                 {
+                  "type": "string",
+                  "label": "Project Name",
+                  "sourceField": "project_name",
+                  "default": "n/a"
+                },
+                {
+                  "type": "string",
+                  "label": "Project Sponsor",
+                  "sourceField": "project_sponsor",
+                  "default": "n/a"
+                },
+                {
+                  "type": "string",
+                  "label": "Project Sponsor Type",
+                  "sourceField": "project_sponsor_type",
+                  "default": "n/a"
+                },
+                {
+                  "type": "link",
+                  "label": "Project URL",
+                  "sourceField": "project_url",
+                  "default": "n/a"
+                }
+              ]
+            },
+            {
+              "header": "Project",
+              "fields": [
+                {
+                  "type": "text",
+                  "label": "Project Name",
+                  "sourceField": "project_short_name",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Project Sponsor",
+                  "sourceField": "project_sponsor",
+                  "default": "n/a"
+                },
+                {
+                  "type": "link",
+                  "label": "Project Link",
+                  "sourceField": "project_url",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "sourceField": "project_description",
+                  "default": "n/a"
+                }
+              ]
+            },
+            {
+              "header": "Data Details",
+              "fields": [
+                {
+                  "type": "text",
+                  "label": "Domain",
+                  "sourceField": "domain",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Has API",
+                  "sourceField": "has_api",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Has Visualization Tool",
+                  "sourceField": "has_visualization_tool",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Citizen Collected?",
+                  "sourceField": "is_citizen_collected",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Data Formats",
+                  "sourceField": "data_formats",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Tool Type",
+                  "sourceField": "tool_type",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Payment Required?",
+                  "sourceField": "payment_required",
+                  "default": "n/a"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tabName": "Source",
+          "groups": [
+            {
+              "header": "Source Information",
+              "fields": [
+                {
+                  "type": "text",
+                  "label": "Support Source",
+                  "sourceField": "support_source",
+                  "default": "n/a"
+                }
+              ]
+            },
+            {
+              "header": "Resource Links",
+              "fields": [
+                {
+                  "type": "link",
+                  "label": "Resource URL",
+                  "sourceField": "resource_url",
+                  "default": "n/a"
+                },
+                {
+                  "type": "text",
+                  "label": "Resource Use Agreement",
+                  "sourceField": "resource_use_agreement",
+                  "default": "n/a"
+                },
+                {
+                  "type": "link",
+                  "label": "Dataset Location 1",
+                  "sourceField": "data_location_1",
+                  "default": "n/a"
+                },
+                {
+                  "type": "link",
+                  "label": "Dataset Location 2",
+                  "sourceField": "data_location_2",
+                  "default": "n/a"
+                },
+                {
+                  "type": "link",
+                  "label": "Dataset Location 3",
+                  "sourceField": "data_location_3",
+                  "default": "n/a"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "minimalFieldMapping": {
+      "tagsListFieldName": "tags",
+      "uid": "resource_id"
+    },
+    "tagCategories": [
+      {
+        "name": "Project Sponsor",
+        "color": "rgba(34, 92, 122, 1)",
+        "display": true
+      },
+      {
+        "name": "Keyword",
+        "color": "rgba(81, 134, 17, 1)",
+        "display": true
+      },
+      {
+        "name": "Domain",
+        "color": "rgba(122, 83, 34, 1)",
+        "display": true
+      },
+      {
+        "name": "Resource Type",
+        "color": "rgba(153, 200, 224, 1)",
+        "display": true
+      },
+      {
+        "name": "Variables",
+        "color": "rgba(250, 225, 195, 1)",
+        "display": true
+      }
+    ]
+  },
+  "analysisTools": [],
+  "explorerConfig": [
+    {
+      "tabTitle": "Geospatial Data Resources",
+      "charts": {
+        "domain": {
+          "chartType": "bar",
+          "title": "Domain"
+        }
+      },
+      "filters": {
+        "tabs": [
+          {
+            "title": "Search Facets",
+            "fields": [
+              "project_sponsor",
+              "project_sponsor_type",
+              "domain",
+              "access_type",
+              "has_api",
+              "measures",
+              "time_extent_start",
+              "time_extent_end",
+              "temporal_resolution",
+              "spatial_resolution",
+              "spatial_coverage",
+              "exposure_media"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "project_sponsor",
+          "resource_name",
+          "resource_short_name",
+          "resource_description",
+          "domain",
+          "keywords",
+          "intended_use",
+          "measures",
+          "time_extent_start",
+          "time_extent_end",
+          "spatial_coverage",
+          "spatial_coverage_specific_regions",
+          "resource_url"
+        ],
+        "linkFields": [
+          "resource_url"
+        ]
+      },
+      "dropdowns": {
+        "download-table": {
+          "title": "Download Dataset Table"
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.json"
+        },
+        {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.tsv"
+        },
+        {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.csv"
+        }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+        "dataType": "geospatial_data_resource",
+        "nodeCountTitle": "Geospatial Data Resources",
+        "fieldMapping": [
+          {
+            "field": "project_id",
+            "name": "Dataset ID"
+          },
+          {
+            "field": "submitter_id",
+            "name": "Dataset Name"
+          }
+        ],
+        "accessibleFieldCheckList": [
+          "project_id"
+        ],
+        "accessibleValidationField": "project_id"
+      }
+    },
+    {
+      "tabTitle": "Population Data Resources",
+      "charts": {
+        "domain": {
+          "chartType": "bar",
+          "title": "Domain"
+        }
+      },
+      "filters": {
+        "tabs": [
+          {
+            "title": "Search Facets",
+            "fields": [
+              "project_sponsor",
+              "project_sponsor_type",
+              "domain",
+              "access_type",
+              "has_api",
+              "measures",
+              "time_extent_start",
+              "time_extent_end",
+              "temporal_resolution",
+              "spatial_resolution",
+              "spatial_coverage"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "project_sponsor",
+          "resource_name",
+          "resource_short_name",
+          "resource_description",
+          "domain",
+          "keywords",
+          "intended_use",
+          "measures",
+          "time_extent_start",
+          "time_extent_end",
+          "spatial_coverage",
+          "spatial_coverage_specific_regions",
+          "resource_url"
+          ],
+        "linkFields": [
+          "resource_url"
+        ]
+      },
+      "dropdowns": {
+        "download-table": {
+          "title": "Download Dataset Table"
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.json"
+        },
+        {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.tsv"
+        },
+        {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.csv"
+        }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+        "dataType": "population_data_resource",
+        "nodeCountTitle": "Population Data Resources",
+        "fieldMapping": [
+          {
+            "field": "project_id",
+            "name": "Dataset ID"
+          },
+          {
+            "field": "submitter_id",
+            "name": "Dataset Name"
+          }
+        ],
+        "accessibleFieldCheckList": [
+          "project_id"
+        ],
+        "accessibleValidationField": "project_id"
+      }
+    },
+    {
+      "tabTitle": "Geospatial Tool Resources",
+      "charts": {
+        "domain": {
+          "chartType": "bar",
+          "title": "Domain"
+        }
+      },
+      "filters": {
+        "tabs": [
+          {
+            "title": "Search Facets",
+            "fields": [
+              "project_sponsor",
+              "project_sponsor_type",
+              "domain",
+              "keywords",
+              "tool_type",
+              "operating_system",
+              "languages"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "project_sponsor",
+          "project_sponsor_type",
+          "domain",
+          "keywords",
+          "access_type",
+          "tool_type",
+          "operating_system",
+          "languages",
+          "payment_required"
+        ],
+        "linkFields": [
+          "resource_url"
+        ]
+      },
+      "dropdowns": {
+        "download-table": {
+          "title": "Download Dataset Table"
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.json"
+        },
+        {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.tsv"
+        },
+        {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_table.csv"
+        }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+        "dataType": "geospatial_tool_resource",
+        "nodeCountTitle": "Geospatial Tool Resources",
+        "fieldMapping": [
+          {
+            "field": "project_id",
+            "name": "Dataset ID"
+          },
+          {
+            "field": "submitter_id",
+            "name": "Dataset Name"
+          }
+        ],
+        "accessibleFieldCheckList": [
+          "project_id"
+        ],
+        "accessibleValidationField": "project_id"
+      }
+    }
+  ],
+  "connectSrcCSPWhitelist": [
+    "https://gen3.niehs.nih.gov", "https://chords.niehs.nih.gov", "https://localhost", "https://chords-health.org", "https://staging.chordshealth.org/", "https://www.niehs.nih.gov", "https://rstudio.niehs.nih.gov"
+  ] }

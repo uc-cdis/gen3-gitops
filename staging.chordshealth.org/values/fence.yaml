@@ -9,7 +9,305 @@ fence:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/staging-chords-health/user.yaml
 
-  USER_YAML:
+  USER_YAML: |
+    authz:
+      # policies automatically given to anyone, even if they are not authenticated
+      anonymous_policies:
+      - open_data_reader
+
+      # policies automatically given to authenticated users (in addition to their other policies)
+      all_users_policies: []
+
+      groups:
+      # can CRUD programs and projects and upload data files
+      - name: data_submitters
+        policies:
+        - services.sheepdog-admin
+        - data_upload
+        - CHORDS_submitter
+        users:
+        - test@example.com
+        - test
+
+      # can create/update/delete indexd records
+      - name: indexd_admins
+        policies:
+        - indexd_admin
+        users:
+        - test@example.com
+
+      resources:
+      - name: 'mds_gateway'
+        description: 'commons /mds-admin'
+      - name: workspace
+      - name: data_file
+      - name: services
+        subresources:
+        - name: sheepdog
+          subresources:
+          - name: submission
+            subresources:
+            - name: program
+            - name: project
+      - name: open
+      - name: programs
+        subresources:
+        - name: CHORDS
+          subresources:
+          - name: projects
+            subresources:
+            - name: ACS
+            - name: AQPathfinder
+            - name: AQS
+            - name: BenMAP-CE
+            - name: CDC-ATSDR
+            - name: CRE
+            - name: DiseasePathfinder
+            - name: EJI
+            - name: EJScreen
+            - name: FireWeather
+            - name: FIRMS
+            - name: GHGPathfinder
+            - name: HCUP
+            - name: HeatPathfinder
+            - name: HMS
+            - name: HumanImpactPathFinder
+            - name: InciWeb
+            - name: KP
+            - name: MODIS
+            - name: MTBS
+            - name: NDI
+            - name: NHANES
+            - name: NIFC
+            - name: PLACES
+            - name: PM2.5
+            - name: PurpleAir
+            - name: TrackingNetwork
+            - name: USFA
+            - name: WA-APCD
+            - name: WFSmokeExp
+            - name: WildfirePathfinder
+            - name: WONDER
+
+
+      policies:
+      - id: 'mds_admin'
+        description: 'be able to use metadata service'
+        resource_paths: ['/mds_gateway']
+        role_ids: ['mds_user']
+      - id: workspace
+        description: be able to use workspace
+        resource_paths:
+        - /workspace
+        role_ids:
+        - workspace_user
+      - id: data_upload
+        description: upload raw data files to S3
+        role_ids:
+        - file_uploader
+        resource_paths:
+        - /data_file
+      - id: services.sheepdog-admin
+        description: CRUD access to programs and projects
+        role_ids:
+          - sheepdog_admin
+        resource_paths:
+          - /services/sheepdog/submission/program
+          - /services/sheepdog/submission/project
+      - id: indexd_admin
+        description: full access to indexd API
+        role_ids:
+          - indexd_admin
+        resource_paths:
+          - /programs
+      - id: open_data_reader
+        role_ids:
+          - reader
+          - storage_reader
+        resource_paths:
+        - /open
+        - /programs/CHORDS/projects/ACS
+        - /programs/CHORDS/projects/AQPathfinder
+        - /programs/CHORDS/projects/AQS
+        - /programs/CHORDS/projects/BenMAP-CE
+        - /programs/CHORDS/projects/CDC-ATSDR
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/DiseasePathfinder
+        - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EJScreen
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/FIRMS
+        - /programs/CHORDS/projects/GHGPathfinder
+        - /programs/CHORDS/projects/HCUP
+        - /programs/CHORDS/projects/HeatPathfinder
+        - /programs/CHORDS/projects/HMS
+        - /programs/CHORDS/projects/HumanImpactPathFinder
+        - /programs/CHORDS/projects/InciWeb
+        - /programs/CHORDS/projects/KP
+        - /programs/CHORDS/projects/MODIS
+        - /programs/CHORDS/projects/MTBS
+        - /programs/CHORDS/projects/NDI
+        - /programs/CHORDS/projects/NHANES
+        - /programs/CHORDS/projects/NIFC
+        - /programs/CHORDS/projects/PLACES
+        - /programs/CHORDS/projects/PM2.5
+        - /programs/CHORDS/projects/PurpleAir
+        - /programs/CHORDS/projects/TrackingNetwork
+        - /programs/CHORDS/projects/USFA
+        - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WFSmokeExp
+        - /programs/CHORDS/projects/WildfirePathfinder
+        - /programs/CHORDS/projects/WONDER
+
+      - id: all_programs_reader
+        role_ids:
+        - reader
+        - storage_reader
+        resource_paths:
+        - /programs
+      - id: CHORDS_submitter
+        role_ids:
+        - reader
+        - creator
+        - updater
+        - deleter
+        - storage_reader
+        - storage_writer
+        resource_paths:
+        - /programs/CHORDS/projects/ACS
+        - /programs/CHORDS/projects/AQPathfinder
+        - /programs/CHORDS/projects/AQS
+        - /programs/CHORDS/projects/BenMAP-CE
+        - /programs/CHORDS/projects/CDC-ATSDR
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/DiseasePathfinder
+        - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EJScreen
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/FIRMS
+        - /programs/CHORDS/projects/GHGPathfinder
+        - /programs/CHORDS/projects/HCUP
+        - /programs/CHORDS/projects/HeatPathfinder
+        - /programs/CHORDS/projects/HMS
+        - /programs/CHORDS/projects/HumanImpactPathFinder
+        - /programs/CHORDS/projects/InciWeb
+        - /programs/CHORDS/projects/KP
+        - /programs/CHORDS/projects/MODIS
+        - /programs/CHORDS/projects/MTBS
+        - /programs/CHORDS/projects/NDI
+        - /programs/CHORDS/projects/NHANES
+        - /programs/CHORDS/projects/NIFC
+        - /programs/CHORDS/projects/PLACES
+        - /programs/CHORDS/projects/PM2.5
+        - /programs/CHORDS/projects/PurpleAir
+        - /programs/CHORDS/projects/TrackingNetwork
+        - /programs/CHORDS/projects/USFA
+        - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WFSmokeExp
+        - /programs/CHORDS/projects/WildfirePathfinder
+        - /programs/CHORDS/projects/WONDER
+
+      roles:
+      - id: 'mds_user'
+        permissions:
+        - id: 'mds_access'
+          action:
+            service: 'mds_gateway'
+            method: 'access'
+      - id: file_uploader
+        permissions:
+        - id: file_upload
+          action:
+            service: fence
+            method: file_upload
+      - id: workspace_user
+        permissions:
+        - id: workspace_access
+          action:
+            service: jupyterhub
+            method: access
+      - id: sheepdog_admin
+        description: CRUD access to programs and projects
+        permissions:
+        - id: sheepdog_admin_action
+          action:
+            service: sheepdog
+            method: '*'
+      - id: indexd_admin
+        description: full access to indexd API
+        permissions:
+        - id: indexd_admin
+          action:
+            service: indexd
+            method: '*'
+      - id: admin
+        permissions:
+          - id: admin
+            action:
+              service: '*'
+              method: '*'
+      - id: creator
+        permissions:
+          - id: creator
+            action:
+              service: '*'
+              method: create
+      - id: reader
+        permissions:
+          - id: reader
+            action:
+              service: '*'
+              method: read
+      - id: updater
+        permissions:
+          - id: updater
+            action:
+              service: '*'
+              method: update
+      - id: deleter
+        permissions:
+          - id: deleter
+            action:
+              service: '*'
+              method: delete
+      - id: storage_writer
+        permissions:
+          - id: storage_creator
+            action:
+              service: '*'
+              method: write-storage
+      - id: storage_reader
+        permissions:
+          - id: storage_reader
+            action:
+              service: '*'
+              method: read-storage
+
+    clients:
+      wts:
+        policies:
+        - all_programs_reader
+        - open_data_reader
+
+    users:
+      test@example.com:
+        tags:
+          name: Test User
+    #     email: johndoe@gmail.com
+        policies:
+          - CHORDS_submitter
+          - mds_admin
+          - data_upload
+          - services.sheepdog-admin
+      test:
+        tags:
+          name: Test User
+    #     email: johndoe@gmail.com
+        policies:
+          - CHORDS_submitter
+          - mds_admin
+          - data_upload
+          - services.sheepdog-admin
 
   # -- (map) External Secrets settings.
   externalSecrets:
