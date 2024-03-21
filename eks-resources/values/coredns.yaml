@@ -11,6 +11,8 @@ resources:
     memory: 256Mi
 
 autoscaler:
+  coresPerReplica: 128
+  nodesPerReplica: 5
   enabled: true
   replicas: 2
   resources:
