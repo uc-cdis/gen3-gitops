@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   sources:
-    - path: helm/karpeneter-templates
+    - path: helm/karpenter-templates
       repoURL: https://github.com/uc-cdis/gen3-helm
       targetRevision: feat/karpenter-templates
       helm:
