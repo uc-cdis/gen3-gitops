@@ -3,3 +3,4 @@ originalMatchLabels: true
 env:
   ANNOTATE_POD_IP: "true"
   ENABLE_PREFIX_DELEGATION: "true"
+  WARM_PREFIX_TARGET: "1"
