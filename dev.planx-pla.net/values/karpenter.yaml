@@ -1,0 +1,26 @@
+version: "0.32.0"
+
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::707767160287:role/gen3_service/karpenter-controller-role-devplanetv2"
+
+settings:
+  clusterName: "devplanetv2"
+  interruptionQueue: "devplanetv2--default--karpenter-sqs"
+  clusterEndpoint: "https://F057519C0E32B7DE2580904C4007BB21.gr7.us-east-1.eks.amazonaws.com"
+
+serviceAccount:
+  name: karpenter
+  create: false
+
+conroller:
+  env:
+    - name: AWS_REGION
+      value: us-east-1
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "2"
+    limits:
+      memory: "2Gi"
+      cpu: "2" 

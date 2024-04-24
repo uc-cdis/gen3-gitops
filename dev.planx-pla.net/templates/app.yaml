@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-devplanetv2
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/karpeneter-templates
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: feat/karpenter-templates
+      helm:
+        releaseName: karpenter
+        valueFiles:
+          - $values/dev.planx-pla.net/values/karpenter-templates.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/karpenter-chart
+      ref: values
+    - repoURL: 'oci://public.ecr.aws'
+      chart: karpenter/karpenter
+      targetRevision: 0.32.0
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: karpenter
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
