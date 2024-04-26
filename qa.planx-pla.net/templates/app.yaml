@@ -19,17 +19,12 @@ spec:
       targetRevision: feat/karpenter-qav1
       ref: values
     - repoURL: 'https://github.com/aws/karpenter-provider-aws'
-      targetRevision: v0.32.0
+      targetRevision: v0.32.1
       path: charts/karpenter
       helm:
         releaseName: karpenter
         valueFiles:
-          - $values/qa.planx-pla.net/values/karpenter.yaml
-    - repoURL: 'https://github.com/aws/karpenter-provider-aws'
-      targetRevision: v0.32.0
-      path: charts/karpenter-crd
-      helm:
-        releaseName: karpenter-crd      
+          - $values/qa.planx-pla.net/values/karpenter.yaml  
 
   destination:
     server: "https://kubernetes.default.svc"
