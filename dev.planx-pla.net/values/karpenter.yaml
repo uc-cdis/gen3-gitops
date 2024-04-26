@@ -19,8 +19,8 @@ conroller:
       value: us-east-1
   resources:
     requests:
-      memory: "2Gi"
+      memory: "3Gi"
       cpu: "2"
     limits:
-      memory: "2Gi"
+      memory: "3Gi"
       cpu: "2" 
