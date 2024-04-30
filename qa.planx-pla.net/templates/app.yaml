@@ -19,7 +19,7 @@ spec:
       targetRevision: feat/karpenter-qav1
       ref: values
     - repoURL: 'https://github.com/aws/karpenter-provider-aws'
-      targetRevision: v0.32.1
+      targetRevision: v0.32.9
       path: charts/karpenter
       helm:
         releaseName: karpenter
