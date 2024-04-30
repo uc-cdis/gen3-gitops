@@ -12,6 +12,8 @@ serviceAccount:
   create: false
 
 controller:
+  image:
+    tag: "v0.32.9"
   env:
     - name: AWS_REGION
       value: us-east-1
