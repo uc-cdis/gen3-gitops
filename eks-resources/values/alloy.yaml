@@ -1,0 +1,22 @@
+controller:
+  type: "deployment"
+alloy:
+  stabilityLevel: "public-preview"
+  uiPathPrefix: /alloy
+  # -- Extra ports to expose on the Alloy container.
+  extraPorts:
+    - name: "otel-grpc"
+      port: 4317
+      targetPort: 4317
+      protocol: "TCP"
+    - name: "otel-http"
+      port: 4318
+      targetPort: 4318
+      protocol: "TCP"
+  clustering:
+    enabled: true
+  # mounts:
+  #   varlog: true
+  configMap:
+    name: alloy-gen3
+    key: config
