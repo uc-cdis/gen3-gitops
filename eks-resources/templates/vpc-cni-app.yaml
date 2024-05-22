@@ -16,7 +16,7 @@ spec:
         valueFiles:
           - $values/eks-resources/values/vpc-cni.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: feat/coredns-prometheus
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
