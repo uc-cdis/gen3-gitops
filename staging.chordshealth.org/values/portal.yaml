@@ -330,7 +330,7 @@ portal:
         background: inherit;
         margin-top: -25px;
         cursor: pointer;
-        height: 90px  !important;
+        height: 140px  !important;
         width: 100%;
         overflow: hidden;
         padding: 0 16px 0 16px  !important;
@@ -357,6 +357,30 @@ portal:
         font-weight: bold  !important;
         overflow: visible;
         position: relative;
+      }
+
+      .discovery-table__row--hover {
+        cursor: pointer;
+        font-weight: bolder !important;
+        overflow: visible;
+        position: relative;
+      }
+
+      .discovery-modal__fieldtext {
+        text-align: left 9m !important;
+      }
+
+      .discovery-table__expanded-row {
+        border-color: #dfe3e2;
+        background: #dfe3e2;
+        font-size: 12px;
+        padding: 0;
+        border-bottom: 3px solid var(--g3-color__bg-coal) !important;
+      }
+
+      .discovery-table__row-horizontal-content {
+
+        background-color: var();
       }
     json: |
       {
@@ -403,7 +427,7 @@ portal:
         "homepageHref": "https://chords.niehs.nih.gov/",
         "index": {
           "introduction": {
-            "heading": "CHORDS - Climate and Health Outcomes Research Data Systems",
+            "heading": "CHORDS - Climate and Health Outcomes Research Data Systems Catalog",
             "text": "The CHORDS project aims to build and strengthen data infrastructure for patient-centered outcomes research on climate change and health. We will achieve this goal by providing accessible, timely, harmonized, interoperable, and linkable data on environmental factors, exposures, and health outcomes. The project also provides analytical and educational resources that will allow not only researchers, but also health practitioners, public health officials, and communities to assess the health effects associated with climate-related events, create and evaluate evidence-based interventions to protect communities, and anticipate and respond to potential adverse health outcomes resulting from these events.​",
             "link": "/submission"
           },
@@ -426,24 +450,6 @@ portal:
               "tooltip": "Fine grained search and discovery for specific resource types."
             },
             {
-              "icon": "dictionary",
-              "link": "/DD",
-              "color": "#a2a2a2",
-              "name": "Dictionary",
-              "tooltip": "The CHORDS Catalog employs a data model to power queries and data submissions. Study the dictionary to send GraphQL queries or format your data submissions."
-            },
-            {
-              "name": "Catalog Query",
-              "link": "/query",
-              "icon": "query",
-              "tooltip": "Query CHORDS Resources with GraphQL."
-            },
-            {
-              "name": "CHORDS Tools",
-              "link": "/resource-browser",
-              "icon": "query"
-            },
-            {
               "icon": "profile",
               "link": "/identity",
               "color": "#a2a2a2",
@@ -459,6 +465,19 @@ portal:
               "name": "Submit Data"
             },
             {
+              "icon": "dictionary",
+              "link": "/DD",
+              "color": "#a2a2a2",
+              "name": "Dictionary",
+              "tooltip": "The CHORDS Catalog employs a data model to power queries and data submissions. Study the dictionary to send GraphQL queries or format your data submissions."
+            },
+            {
+              "name": "Catalog Query",
+              "link": "/query",
+              "icon": "query",
+              "tooltip": "Query CHORDS Resources with GraphQL."
+            },
+            {
               "link": "https://gen3.org/resources/user/",
               "name": "Documentation"
             },
@@ -466,7 +485,6 @@ portal:
               "link": "https://www.niehs.nih.gov/research/programs/chords",
               "name": "About"
             }
-
           ]
       },
         "useProfileDropdown": false,
@@ -489,30 +507,9 @@ portal:
             "alt": "Center for Translational Data Science at the University of Chicago"
           },
           {
-            "src": "custom/images/ospcortf_logo.jpg",
+            "src": "custom/ospcortf_logo.jpg",
             "href": "https://aspe.hhs.gov/enhancing-patient-centered-outcomes-research-pcor-creating-national-small-area-social-determinants",
             "alt": "Patient-Centered Outcomes Research Trust Fund"
-          }
-        ]
-      },
-      "resourceBrowser": {
-        "title": "CHORDS Tools and Resources",
-        "description": "A collection of custom jupyter notebooks and other resources",
-        "public": true,
-        "resources": [
-          {
-            "title": "Examples",
-            "category": "Notebooks",
-            "description": "Example literature use cases linking climate and health",
-            "link": "https://niehs.github.io/CHORDSLiteratureExamples/",
-            "imageUrl": "custom/images/lit.jpeg"
-          },
-          {
-            "title": "Tools",
-            "category": "Tutorial books html",
-            "description": "The CHORDS Toolkit for Health and Geospatial Exposures Research.",
-            "link": "https://niehs.github.io/PCOR_bookdown_tools/",
-            "imageUrl": "custom/images/chordstk.jpg"
           }
         ]
       },
@@ -544,7 +541,10 @@ portal:
                 "domain",
                 "keywords",
                 "project_description",
-                "project_sponsor"
+                "project_sponsor",
+                "measures_parent_category",
+                "measures_subcategory_major",
+                "measures_subcategory_minor"
               ]
             },
             "tagSearchDropdown": {
@@ -562,11 +562,30 @@ portal:
                 "key": "Project Sponsor"
               },
               {
-                "key": "Variables"
+                "key": "Measures(category)"
               },
               {
-                "key": "Domain"
+                "key": "Measures(subcategory 2)"
+              },
+              {
+                "key": "Population Studied"
+              },
+              {
+                "key": "Tool Type"
+              },
+              {
+                "key": "Is Open"
+              },
+              {
+                "key": "Operating System"
+              },
+              {
+                "key": "Language"
+              },
+              {
+                "key": "License Type"
               }
+
             ]
           },
           "tagsColumn": {
@@ -597,13 +616,7 @@ portal:
             "valueIfNotAvailable": "n/a"
           },
           {
-            "name": "Project Sponsor",
-            "field": "project_sponsor",
-            "errorIfNotAvailable": false,
-            "valueIfNotAvailable": "n/a"
-          },
-          {
-            "name": "Domain",
+            "name": "Domains",
             "field": "domain",
             "errorIfNotAvailable": false,
             "valueIfNotAvailable": "n/a"
@@ -634,53 +647,42 @@ portal:
                   ]
                 },
                 {
-                  "header": "Details",
+                  "header": "Reference",
                   "fields": [
                     {
                       "type": "block",
                       "sourceField": "comment",
-                      "default": "n/a"
+                      "default": ""
                     },
                     {
-                      "type": "text",
-                      "label": "Reference",
-                      "sourceField": "resource_reference",
-                      "default": "n/a"
+                      "type": "link",
+                      "label": "Reference 1",
+                      "sourceField": "resource_reference_1",
+                      "default": ""
                     },
                     {
-                      "type": "text",
-                      "label": "publication 1",
+                      "type": "link",
+                      "label": "Reference 2",
+                      "sourceField": "resource_reference_2",
+                      "default": ""
+                    },
+                    {
+                      "type": "link",
+                      "label": "Publication 1",
                       "sourceField": "publications_1",
                       "default": ""
                     },
                     {
-                      "type": "text",
-                      "label": "publication 2",
+                      "type": "link",
+                      "label": "Publication 2",
                       "sourceField": "publications_2",
                       "default": ""
                     },
                     {
-                      "type": "text",
-                      "label": "publication 3",
+                      "type": "link",
+                      "label": "Publication 3",
                       "sourceField": "publications_3",
                       "default": ""
-                    }
-                  ]
-                },
-                {
-                  "header": "Project Sponsor",
-                  "fields": [
-                    {
-                      "type": "string",
-                      "label": "Project Sponsor",
-                      "sourceField": "project_sponsor",
-                      "default": "n/a"
-                    },
-                    {
-                      "type": "string",
-                      "label": "Project Sponsor Type",
-                      "sourceField": "project_sponsor_type",
-                      "default": "n/a"
                     }
                   ]
                 },
@@ -700,14 +702,15 @@ portal:
                       "default": "n/a"
                     },
                     {
-                      "type": "link",
-                      "label": "Project Link",
-                      "sourceField": "project_url",
+                      "type": "string",
+                      "label": "Project Sponsor Type",
+                      "sourceField": "project_sponsor_type",
                       "default": "n/a"
                     },
                     {
-                      "type": "text",
-                      "sourceField": "project_description",
+                      "type": "link",
+                      "label": "Project Link",
+                      "sourceField": "project_url",
                       "default": "n/a"
                     }
                   ]
@@ -759,6 +762,12 @@ portal:
                     },
                     {
                       "type": "text",
+                      "label": "Temporal Resolution",
+                      "sourceField": "temporal_resolution",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
                       "label": "Time Extent Start",
                       "sourceField": "time_extent_start",
                       "default": ""
@@ -771,6 +780,12 @@ portal:
                     },
                     {
                       "type": "text",
+                      "label": "Time available",
+                      "sourceField": "time_available_comment",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
                       "label": "Spatial Resolution",
                       "sourceField": "spatial_resolution",
                       "default": ""
@@ -779,6 +794,12 @@ portal:
                       "type": "text",
                       "label": "Spatial Coverage",
                       "sourceField": "spatial_coverage",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
+                      "label": "Geometry Type",
+                      "sourceField": "geometry_type",
                       "default": ""
                     }
                   ]
@@ -844,11 +865,6 @@ portal:
         },
         "tagCategories": [
           {
-            "name": "Project Sponsor",
-            "color": "rgba(34, 92, 122, 1)",
-            "display": true
-          },
-          {
             "name": "Keyword",
             "color": "rgba(81, 134, 17, 1)",
             "display": true
@@ -859,13 +875,13 @@ portal:
             "display": true
           },
           {
-            "name": "Resource Type",
-            "color": "rgba(153, 200, 224, 1)",
+            "name": "Measures(subcategory 1)",
+            "color": "rgba(250, 225, 195, 1)",
             "display": true
           },
           {
-            "name": "Variables",
-            "color": "rgba(250, 225, 195, 1)",
+            "name": "Measures(subcategory 2)",
+            "color": "rgba(230, 220, 180, 1)",
             "display": true
           }
         ]
@@ -910,12 +926,10 @@ portal:
             "fields": [
               "project_sponsor",
               "resource_name",
-              "resource_short_name",
               "resource_description",
               "domain",
               "keywords",
               "intended_use",
-              "measures_parent_category",
               "measures",
               "time_extent_start",
               "time_extent_end",
@@ -1018,12 +1032,10 @@ portal:
             "fields": [
               "project_sponsor",
               "resource_name",
-              "resource_short_name",
               "resource_description",
               "domain",
               "keywords",
               "intended_use",
-              "measures_parent_category",
               "measures",
               "time_extent_start",
               "time_extent_end",
@@ -1117,14 +1129,14 @@ portal:
             "enabled": true,
             "fields": [
               "project_sponsor",
-              "project_sponsor_type",
+              "resource_name",
+              "resource_description",
               "domain",
               "keywords",
               "access_type",
               "tool_type",
               "operating_system",
-              "languages",
-              "payment_required"
+              "languages"
             ],
             "linkFields": [
               "resource_url"

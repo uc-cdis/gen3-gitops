@@ -59,27 +59,25 @@ fence:
             subresources:
             - name: ACS
             - name: AirNow
-            - name: AQPathfinder
+            - name: AQ-Pathfinder
             - name: AQS
             - name: BenMAP-CE
-            - name: CDC-ATSDR
+            - name: BioEco-Pathfinder
+            - name: CDC-ATSDR-SVI
             - name: CSL
-            - name: CRE-032224
-            - name: DiseasePathfinder
+            - name: CRE
+            - name: Dz-Pathfinder
             - name: EJI
+            - name: EnviroAtlas
             - name: EJScreen
-            - name: EPA-AirNow
-            - name: EPA-EnviroAtlas
-            - name: EPA-SS
-            - name: FireWeather
             - name: FIRMS
-            - name: GHGPathfinder
-            - name: HCUP
-            - name: HeatPathfinder
+            - name: FireWeather
+            - name: GHG-Pathfinder
+            - name: Heat-Pathfinder
             - name: HMS
-            - name: HumanImpactPathFinder
+            - name: HCUP
             - name: InciWeb
-            - name: KP
+            - name: KPRB
             - name: LANDFIRE
             - name: MODIS
             - name: MTBS
@@ -89,15 +87,15 @@ fence:
             - name: NIFC
             - name: OpenAQ
             - name: PLACES
-            - name: PM2.5
             - name: PurpleAir
             - name: RAP
             - name: SDOH
-            - name: TrackingNetwork
+            - name: SmokeSense
+            - name: U.S.-PM2.5
             - name: USFA
             - name: WA-APCD
+            - name: WF-Pathfinder
             - name: WFSmokeExp
-            - name: WildfirePathfinder
             - name: WONDER
 
       policies:
@@ -148,45 +146,43 @@ fence:
         - /open
         - /programs/CHORDS/projects/ACS
         - /programs/CHORDS/projects/AirNow
-        - /programs/CHORDS/projects/AQPathfinder
+        - /programs/CHORDS/projects/AQ-Pathfinder
         - /programs/CHORDS/projects/AQS
         - /programs/CHORDS/projects/BenMAP-CE
-        - /programs/CHORDS/projects/CDC-ATSDR
+        - /programs/CHORDS/projects/BioEco-Pathfinder
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI
         - /programs/CHORDS/projects/CSL
-        - /programs/CHORDS/projects/CRE-032224
-        - /programs/CHORDS/projects/DiseasePathfinder
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/Dz-Pathfinder
         - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EnviroAtlas
         - /programs/CHORDS/projects/EJScreen
-        - /programs/CHORDS/projects/EPA-AirNow
-        - /programs/CHORDS/projects/EPA-EnviroAtlas
-        - /programs/CHORDS/projects/EPA-SS
-        - /programs/CHORDS/projects/FireWeather
         - /programs/CHORDS/projects/FIRMS
-        - /programs/CHORDS/projects/GHGPathfinder
-        - /programs/CHORDS/projects/HCUP
-        - /programs/CHORDS/projects/HeatPathfinder
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/GHG-Pathfinder
+        - /programs/CHORDS/projects/Heat-Pathfinder
         - /programs/CHORDS/projects/HMS
-        - /programs/CHORDS/projects/HumanImpactPathFinder
+        - /programs/CHORDS/projects/HCUP
         - /programs/CHORDS/projects/InciWeb
-        - /programs/CHORDS/projects/KP
+        - /programs/CHORDS/projects/KPRB
+        - /programs/CHORDS/projects/LANDFIRE
         - /programs/CHORDS/projects/MODIS
         - /programs/CHORDS/projects/MTBS
         - /programs/CHORDS/projects/NDI
         - /programs/CHORDS/projects/NEPHTN
         - /programs/CHORDS/projects/NHANES
-        - /programs/CHORDS/projects/LANDFIRE
         - /programs/CHORDS/projects/NIFC
         - /programs/CHORDS/projects/OpenAQ
         - /programs/CHORDS/projects/PLACES
-        - /programs/CHORDS/projects/PM2.5
-        - /programs/CHORDS/projects/RAP
         - /programs/CHORDS/projects/PurpleAir
+        - /programs/CHORDS/projects/RAP
         - /programs/CHORDS/projects/SDOH
-        - /programs/CHORDS/projects/TrackingNetwork
+        - /programs/CHORDS/projects/SmokeSense
+        - /programs/CHORDS/projects/U.S.-PM2.5
         - /programs/CHORDS/projects/USFA
         - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WF-Pathfinder
         - /programs/CHORDS/projects/WFSmokeExp
-        - /programs/CHORDS/projects/WildfirePathfinder
         - /programs/CHORDS/projects/WONDER
 
       - id: all_programs_reader
@@ -211,27 +207,25 @@ fence:
         resource_paths:
         - /programs/CHORDS/projects/ACS
         - /programs/CHORDS/projects/AirNow
-        - /programs/CHORDS/projects/AQPathfinder
+        - /programs/CHORDS/projects/AQ-Pathfinder
         - /programs/CHORDS/projects/AQS
         - /programs/CHORDS/projects/BenMAP-CE
-        - /programs/CHORDS/projects/CDC-ATSDR
+        - /programs/CHORDS/projects/BioEco-Pathfinder
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI
         - /programs/CHORDS/projects/CSL
-        - /programs/CHORDS/projects/CRE-032224
-        - /programs/CHORDS/projects/DiseasePathfinder
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/Dz-Pathfinder
         - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EnviroAtlas
         - /programs/CHORDS/projects/EJScreen
-        - /programs/CHORDS/projects/EPA-AirNow
-        - /programs/CHORDS/projects/EPA-EnviroAtlas
-        - /programs/CHORDS/projects/EPA-SS
-        - /programs/CHORDS/projects/FireWeather
         - /programs/CHORDS/projects/FIRMS
-        - /programs/CHORDS/projects/GHGPathfinder
-        - /programs/CHORDS/projects/HCUP
-        - /programs/CHORDS/projects/HeatPathfinder
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/GHG-Pathfinder
+        - /programs/CHORDS/projects/Heat-Pathfinder
         - /programs/CHORDS/projects/HMS
-        - /programs/CHORDS/projects/HumanImpactPathFinder
+        - /programs/CHORDS/projects/HCUP
         - /programs/CHORDS/projects/InciWeb
-        - /programs/CHORDS/projects/KP
+        - /programs/CHORDS/projects/KPRB
         - /programs/CHORDS/projects/LANDFIRE
         - /programs/CHORDS/projects/MODIS
         - /programs/CHORDS/projects/MTBS
@@ -241,15 +235,15 @@ fence:
         - /programs/CHORDS/projects/NIFC
         - /programs/CHORDS/projects/OpenAQ
         - /programs/CHORDS/projects/PLACES
-        - /programs/CHORDS/projects/PM2.5
         - /programs/CHORDS/projects/PurpleAir
         - /programs/CHORDS/projects/RAP
         - /programs/CHORDS/projects/SDOH
-        - /programs/CHORDS/projects/TrackingNetwork
+        - /programs/CHORDS/projects/SmokeSense
+        - /programs/CHORDS/projects/U.S.-PM2.5
         - /programs/CHORDS/projects/USFA
         - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WF-Pathfinder
         - /programs/CHORDS/projects/WFSmokeExp
-        - /programs/CHORDS/projects/WildfirePathfinder
         - /programs/CHORDS/projects/WONDER
 
 

@@ -7,7 +7,9 @@ etl:
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      tag: 2024.05
+      #tag: 2024.05
+      # patch to flatten nested array
+      tag: "1.0.4"
   esEndpoint: elasticsearch
 
   etlMapping:
@@ -45,7 +47,7 @@ etl:
           - name: operating_system
           - name: languages
         parent_props:
-          - path: resources[domain, keywords, access_type, payment_required].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_name:long_name, resource_description:description, domain, keywords, access_type, payment_required].projects[project_sponsor, project_sponsor_type]
       - name: chordstaging_population_data_resource
         doc_type: population_data_resource
         type: aggregator
