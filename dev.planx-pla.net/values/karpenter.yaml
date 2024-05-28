@@ -14,7 +14,7 @@ serviceAccount:
   create: false
 
 podAnnotations:
-  prometheus.io/scrape: true
+  prometheus.io/scrape: "true"
   prometheus.io/port: "8000"
 
 controller:
