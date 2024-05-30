@@ -6,8 +6,8 @@ global:
   aws:
     enabled: true
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-canine-secret
+      enabled: true
+      localSecretName: external-secrets-canine-secret
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/5874502e-5b67-415f-80ee-dcb814d2883f
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json"
   postgres:
@@ -34,6 +34,9 @@ aws-es-proxy:
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: 0.8
+  serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/opensearch-access-role
 
 indexd:
   defaultPrefix: "dg.C78ne/"
