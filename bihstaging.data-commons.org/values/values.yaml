@@ -1,0 +1,205 @@
+global:
+  aws:
+    enabled: true
+    account: 533267425233
+    hatchery_role: arn:aws:iam::533267425233:role/gen3-service/bihprod-bihstaging-hatchery-sa
+
+  dev: false
+  postgres:
+    dbCreate: false
+  environment: "bihprod"
+  hostname: "bihstaging.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:533267425233:certificate/ee917704-e7c3-4a25-8317-ef1e9e250747"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: 100
+  netPolicy: false
+  dispatcherJobNum: "10"
+  frontendRoot: "gen3ff"
+  ddEnabled: false
+  externalSecrets:
+    deploy: true
+
+ambassador:
+  enabled: true
+
+arborist:
+  enabled: true
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-arborist-creds"
+
+argo-wrapper:
+  enabled: true
+
+audit:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::533267425233:role/gen3-service/bihprod-bihstaging-audit-sa"
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-audit-creds"
+    createK8sAuditSecret: true
+
+aws-es-proxy:
+  enabled: true
+  esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
+  externalSecrets:
+    awsCreds: "bihprod_aws-es-proxy-aws-credentials"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-dicom-viewer-creds"
+
+fence:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::533267425233:role/gen3-service/bihprod-bihstaging-fence-sa"
+
+  externalSecrets:
+    fenceJwtKeys: ""
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sJwtKeysSecret: true
+    createK8sGoogleAppSecrets: true
+    dbcreds: "bihprod_bihstaging-fence-creds"
+    fenceConfig: "bihprod_bihstaging-fence-config"
+
+
+  USER_YAML: |
+    {}
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/midrc-bih/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+guppy:
+  enabled: true
+
+hatchery:
+  enabled: true
+
+  hatchery:
+    sidecarContainer:
+      cpu-limit: '0.1'
+      memory-limit: 256Mi
+      image: quay.io/cdis/ecs-ws-sidecar:master
+      env:
+        NAMESPACE: "{{ .Release.Namespace }}"
+        HOSTNAME: "{{ .Values.global.hostname }}"
+      args: []
+      command:
+      - "/bin/bash"
+      - "./sidecar.sh"
+      lifecycle-pre-stop:
+      - su
+      - "-c"
+      - echo test
+      - "-s"
+      - "/bin/sh"
+      - root
+    containers:
+      -
+        target-port: 8888
+        cpu-limit: '1.0'
+        memory-limit: 2Gi
+        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
+        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
+        env:
+          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
+        args:
+        - "--NotebookApp.base_url=/lw-workspace/proxy/"
+        - "--NotebookApp.default_url=/lab"
+        - "--NotebookApp.password=''"
+        - "--NotebookApp.token=''"
+        - "--NotebookApp.shutdown_no_activity_timeout=5400"
+        - "--NotebookApp.quit_button=False"
+        command:
+        - start-notebook.sh
+        path-rewrite: "/lw-workspace/proxy/"
+        use-tls: 'false'
+        ready-probe: "/lw-workspace/proxy/"
+        lifecycle-post-start:
+        - "/bin/sh"
+        - "-c"
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+          ln -s /data /home/$IAM/pd/; true
+        user-uid: 1000
+        fs-gid: 100
+        user-volume-location: "/home/jovyan/pd"
+        gen3-volume-location: "/home/jovyan/.gen3"
+
+frontend-framework:
+  enabled: true
+  image:
+    repository: quay.io/cdis/bih-data-commons
+    tag: main
+
+indexd:
+  enabled: true
+  defaultPrefix: dg.XXXX/
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  enabled: true
+  externalSecrets:
+     createK8sManifestServiceSecret: true
+
+metadata:
+  enabled: true
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  enabled: true
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: true
+  gitops:
+  json: |
+    {}
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-requestor-creds"
+
+revproxy:
+  enabled: true
+
+sheepdog:
+  enabled: true
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: true
+
+wts:
+  enabled: true
+  externalSecrets:
+    dbcreds: "bihprod_bihstaging-wts-creds"
+
+sower:
+  enabled: true
