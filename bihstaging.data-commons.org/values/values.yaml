@@ -10,7 +10,7 @@ global:
   environment: "bihprod"
   hostname: "bihstaging.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:533267425233:certificate/ee917704-e7c3-4a25-8317-ef1e9e250747"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.1.0/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
