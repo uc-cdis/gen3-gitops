@@ -13,8 +13,7 @@ global:
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.1.0/schema.json"
   portalApp: gitops
   publicDataSets: false
-  tierAccessLevel: "private"
-  tierAccessLimit: 100
+  tierAccessLevel: "libre"
   netPolicy: false
   dispatcherJobNum: "10"
   frontendRoot: "gen3ff"
