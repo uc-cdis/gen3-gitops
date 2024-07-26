@@ -3,7 +3,12 @@ fence:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 2024.04
+    tag: master
+
+  # -- (map) Annotations to add to the pod
+  podAnnotations:
+    prometheus.io/path: /metrics
+    prometheus.io/scrape: "true"
 
   usersync:
     # -- (bool) Whether to run Fence usersync or not.
@@ -28,3 +33,8 @@ fence:
     fenceConfig: "oadc-fence-config"
     # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
     dbcreds: "oadc-fence-db-creds"
+
+  # -- (map) Public configuration settings for Fence app
+  FENCE_CONFIG_PUBLIC:
+    ENABLE_PROMETHEUS_METRICS: true
+    ENABLE_DB_MIGRATION: true

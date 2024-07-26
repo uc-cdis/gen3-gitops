@@ -2,7 +2,12 @@ fence:
   enabled: true
   image:
     repository: quay.io/cdis/fence
-    tag: 2023.12
+    tag: master
+
+  # -- (map) Annotations to add to the pod
+  podAnnotations:
+    prometheus.io/path: /metrics
+    prometheus.io/scrape: "true"
 
   usersync:
     # -- (bool) Whether to run Fence usersync or not.
@@ -25,3 +30,8 @@ fence:
     fenceConfig: "microbiome-fence-config"
     # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
     dbcreds: "microbiome-fence-db-creds"
+
+  # -- (map) Public configuration settings for Fence app
+  FENCE_CONFIG_PUBLIC:
+    ENABLE_PROMETHEUS_METRICS: true
+    ENABLE_DB_MIGRATION: true
