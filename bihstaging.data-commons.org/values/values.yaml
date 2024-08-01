@@ -82,11 +82,9 @@ etl:
           - name: Modality
           - name: SeriesDescription
           - name: SeriesInstanceUID
-          - name: StudyDescription
-          - name: StudyInstanceUID
           - name: dicom_viewer_url
         parent_props:
-          - path: imaging_studies[PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[commons_name,collection_id,primary_site,disease_type]          - path: imaging_studies[PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[commons_name,collection_id,primary_site,disease_type]
+          - path: imaging_studies[StudyDescription,StudyInstanceUID,PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[commons_name,collection_id,primary_site,disease_type]
 
 fence:
   enabled: true
@@ -117,6 +115,11 @@ fence:
 
 guppy:
   enabled: true
+  esEndpoint: elasticsearch:9200
+  configIndex: "bih_array-config"
+  indices:
+   - index: bih_imaging_series
+     type: "imaging_series"
 
 hatchery:
   enabled: true
