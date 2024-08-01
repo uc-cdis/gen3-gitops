@@ -57,6 +57,35 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "bihprod_bihstaging-dicom-viewer-creds"
 
+etl:
+  enabled: true
+  image:
+    spark:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
+      tag: 2024.07
+    tube:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
+      tag: 1.0.5
+  esEndpoint: elasticsearch
+  etlMapping:
+    mappings:
+      - name: bih_imaging_series
+        doc_type: imaging_series
+        type: aggregator
+        root: imaging_series
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: object_ids
+          - name: BodyPartExamined
+          - name: Manufacturer
+          - name: Modality
+          - name: SeriesDescription
+          - name: SeriesInstanceUID
+          - name: dicom_viewer_url
+        parent_props:
+          - path: imaging_studies[StudyDescription,StudyInstanceUID,PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[commons_name,collection_id,primary_site,disease_type]
+
 fence:
   enabled: true
   serviceAccount:
@@ -86,6 +115,11 @@ fence:
 
 guppy:
   enabled: true
+  esEndpoint: elasticsearch:9200
+  configIndex: "bih_array-config"
+  indices:
+   - index: bih_imaging_series
+     type: "imaging_series"
 
 hatchery:
   enabled: true
