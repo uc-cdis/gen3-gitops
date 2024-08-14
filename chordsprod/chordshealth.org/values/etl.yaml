@@ -1,0 +1,108 @@
+etl:
+  enabled: true
+  spark:
+    image:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
+      tag: 2024.05
+  tube:
+    image:
+      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
+      #tag: 2024.05
+      # patch to flatten nested array
+      tag: "1.0.4"
+  esEndpoint: elasticsearch
+
+  etlMapping:
+    mappings:
+      - name: chordprod_geospatial_data_resource
+        doc_type: geospatial_data_resource
+        type: aggregator
+        root: geospatial_data_resource
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: has_api
+          - name: measures_parent_category
+          - name: measures_subcategory_major
+          - name: measures_subcategory_minor
+          - name: measures
+          - name: time_extent_start_year
+            src:  time_extent_start_yyyy
+          - name: time_extent_end_year
+            src:  time_extent_end_yyyy
+          - name: temporal_resolution
+          - name: spatial_resolution
+          - name: spatial_coverage
+          - name: spatial_coverage_specific_regions
+          - name: exposure_media
+        parent_props:
+          - path: resources[resource_name:long_name, resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, intended_use, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+      - name: chordprod_geospatial_tool_resource
+        doc_type: geospatial_tool_resource
+        type: aggregator
+        root: geospatial_tool_resource
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: tool_type
+          - name: operating_system
+          - name: languages
+        parent_props:
+          - path: resources[resource_name:long_name, resource_description:description, domain, keywords, access_type, payment_required, intended_use, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+      - name: chordprod_population_data_resource
+        doc_type: population_data_resource
+        type: aggregator
+        root: population_data_resource
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: has_api
+          - name: measures_parent_category
+          - name: measures_subcategory_major
+          - name: measures_subcategory_minor
+          - name: measures
+          - name: time_extent_start_year
+            src:  time_extent_start_yyyy
+          - name: time_extent_end_year
+            src:  time_extent_end_yyyy
+          - name: temporal_resolution
+          - name: spatial_resolution
+          - name: spatial_coverage
+          - name: spatial_coverage_specific_regions
+          - name: geometry_type
+          - name: geometry_source
+          - name: exposures
+          - name: outcomes
+          - name: exposure_media
+          - name: model_methods
+          - name: population_studied
+        parent_props:
+          - path: resources[resource_name:long_name, resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, intended_use, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+      - name: chordprod_key_dataset_resource
+        doc_type: key_data_resource
+        type: aggregator
+        root: key_data_resource
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: comments
+          - name: measures_parent_category
+          - name: measures_subcategory_major
+          - name: measures_subcategory_minor
+          - name: measures
+          - name: time_extent_start_year
+            src:  time_extent_start_yyyy
+          - name: time_extent_end_year
+            src:  time_extent_end_yyyy
+          - name: time_available_comment
+          - name: temporal_resolution
+          - name: spatial_resolution
+          - name: spatial_coverage
+          - name: spatial_coverage_specific_regions
+          - name: geometry_type
+          - name: model_methods
+          - name: metrics_derived_from_data_set
+          - name: data_formats
+          - name: data_location
+        parent_props:
+          - path: resources[resource_name:long_name, resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, intended_use, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]

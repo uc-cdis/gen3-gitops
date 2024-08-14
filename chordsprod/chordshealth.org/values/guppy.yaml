@@ -1,0 +1,19 @@
+guppy:
+  enabled: true
+  dbRestore: false
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: 2024.05
+  esEndpoint: elasticsearch:9200
+
+  indices:
+    - index: chordprod_geospatial_data_resource
+      type: geospatial_data_resource
+    - index: chordprod_population_data_resource
+      type: population_data_resource
+    - index: chordprod_geospatial_tool_resource
+      type: geospatial_tool_resource
+    - index: chordprod_key_dataset_resource
+      type: key_data_resource
+  configIndex: chordprod_array-config
+  authFilterField: auth_resource_path

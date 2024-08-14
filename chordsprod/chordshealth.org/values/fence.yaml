@@ -1,0 +1,433 @@
+fence:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
+    tag: 2024.05
+
+  usersync:
+     #-- (bool) Whether to run Fence usersync or not.
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/chords-health/user.yaml
+
+  USER_YAML: |
+    authz:
+      # policies automatically given to anyone, even if they are not authenticated
+      anonymous_policies:
+      - open_data_reader
+
+      # policies automatically given to authenticated users (in addition to their other policies)
+      all_users_policies: []
+
+      groups:
+      # can CRUD programs and projects and upload data files
+      - name: data_submitters
+        policies:
+        - services.sheepdog-admin
+        - data_upload
+        - CHORDS_submitter
+        users:
+        - test@example.com
+        - test
+
+      # can create/update/delete indexd records
+      - name: indexd_admins
+        policies:
+        - indexd_admin
+        users:
+        - test@example.com
+
+      resources:
+      - name: 'mds_gateway'
+        description: 'commons /mds-admin'
+      - name: workspace
+      - name: data_file
+      - name: services
+        subresources:
+        - name: sheepdog
+          subresources:
+          - name: submission
+            subresources:
+            - name: program
+            - name: project
+      - name: open
+      - name: programs
+        subresources:
+        - name: CHORDS
+          subresources:
+          - name: projects
+            subresources:
+            - name: ACAG
+            - name: ACS
+            - name: ADIP
+            - name: AirNow
+            - name: AQ-Pathfinder
+            - name: AQS
+            - name: BenMAP-CE
+            - name: BioEco-Pathfinder
+            - name: CACES
+            - name: CDC-ATSDR-SVI
+            - name: CellularTowers
+            - name: CSL
+            - name: CRE
+            - name: Dz-Pathfinder
+            - name: EJI
+            - name: EnviroAtlas
+            - name: EJScreen
+            - name: FIRMS
+            - name: FireWeather
+            - name: GHG-Pathfinder
+            - name: Heat-Pathfinder
+            - name: HMS
+            - name: HCUP
+            - name: InciWeb
+            - name: KPRB
+            - name: LANDFIRE
+            - name: MODIS
+            - name: MTBS
+            - name: NDI
+            - name: NEPHTN
+            - name: NHANES
+            - name: NIFC
+            - name: OpenAQ
+            - name: PLACES
+            - name: PurpleAir
+            - name: RAP
+            - name: SDOH
+            - name: SmokeSense
+            - name: U.S.-PM2.5
+            - name: USFA
+            - name: WA-APCD
+            - name: WF-Pathfinder
+            - name: WFSmokeExp
+            - name: WONDER
+
+      policies:
+      - id: 'mds_admin'
+        description: 'be able to use metadata service'
+        resource_paths: ['/mds_gateway']
+        role_ids: ['mds_user']
+      - id: workspace
+        description: be able to use workspace
+        resource_paths:
+        - /workspace
+        role_ids:
+        - workspace_user
+      - id: data_upload
+        description: upload raw data files to S3
+        role_ids:
+        - file_uploader
+        resource_paths:
+        - /data_file
+      - id: services.sheepdog-admin
+        description: CRUD access to programs and projects
+        role_ids:
+          - sheepdog_admin
+        resource_paths:
+          - /services/sheepdog/submission/program
+          - /services/sheepdog/submission/project
+      - id: indexd_admin
+        description: full access to indexd API
+        role_ids:
+          - indexd_admin
+        resource_paths:
+          - /programs
+          # mc revise
+      - id: open_data_reader
+        role_ids:
+          # - 'reader' # remove
+          # - 'storage_reader' # remove
+          - 'guppy_reader'
+          - 'fence_reader'
+          - 'peregrine_reader'
+          - 'sheepdog_reader'
+
+          # for dicom viewer / server
+          - 'dicom-viewer_reader'
+          - 'orthanc_reader'
+          - 'ohif-viewer_reader'
+        resource_paths:
+        - /open
+        - /programs/CHORDS/projects/ACS
+        - /programs/CHORDS/projects/ACAG
+        - /programs/CHORDS/projects/ADIP
+        - /programs/CHORDS/projects/AirNow
+        - /programs/CHORDS/projects/AQ-Pathfinder
+        - /programs/CHORDS/projects/AQS
+        - /programs/CHORDS/projects/BenMAP-CE
+        - /programs/CHORDS/projects/BioEco-Pathfinder
+        - /programs/CHORDS/projects/CACES
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI
+        - /programs/CHORDS/projects/CellularTowers
+        - /programs/CHORDS/projects/CSL
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/Dz-Pathfinder
+        - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EnviroAtlas
+        - /programs/CHORDS/projects/EJScreen
+        - /programs/CHORDS/projects/FIRMS
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/GHG-Pathfinder
+        - /programs/CHORDS/projects/Heat-Pathfinder
+        - /programs/CHORDS/projects/HMS
+        - /programs/CHORDS/projects/HCUP
+        - /programs/CHORDS/projects/InciWeb
+        - /programs/CHORDS/projects/KPRB
+        - /programs/CHORDS/projects/LANDFIRE
+        - /programs/CHORDS/projects/MODIS
+        - /programs/CHORDS/projects/MTBS
+        - /programs/CHORDS/projects/NDI
+        - /programs/CHORDS/projects/NEPHTN
+        - /programs/CHORDS/projects/NHANES
+        - /programs/CHORDS/projects/NIFC
+        - /programs/CHORDS/projects/OpenAQ
+        - /programs/CHORDS/projects/PLACES
+        - /programs/CHORDS/projects/PurpleAir
+        - /programs/CHORDS/projects/RAP
+        - /programs/CHORDS/projects/SDOH
+        - /programs/CHORDS/projects/SmokeSense
+        - /programs/CHORDS/projects/U.S.-PM2.5
+        - /programs/CHORDS/projects/USFA
+        - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WF-Pathfinder
+        - /programs/CHORDS/projects/WFSmokeExp
+        - /programs/CHORDS/projects/WONDER
+
+      - id: all_programs_reader
+        role_ids:
+        - 'guppy_reader'
+        - 'fence_reader'
+        - 'peregrine_reader'
+        - 'sheepdog_reader'
+        resource_paths:
+        - /programs
+      - id: CHORDS_submitter
+        role_ids:
+        - 'guppy_reader'
+        - 'fence_reader'
+        - 'peregrine_reader'
+        - 'sheepdog_reader'
+        - creator
+        - updater
+        - deleter
+        - storage_reader
+        - storage_writer
+        resource_paths:
+        - /programs/CHORDS/projects/ACAG
+        - /programs/CHORDS/projects/ACS
+        - /programs/CHORDS/projects/ADIP
+        - /programs/CHORDS/projects/AirNow
+        - /programs/CHORDS/projects/AQ-Pathfinder
+        - /programs/CHORDS/projects/AQS
+        - /programs/CHORDS/projects/BenMAP-CE
+        - /programs/CHORDS/projects/BioEco-Pathfinder
+        - /programs/CHORDS/projects/CACES
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI
+        - /programs/CHORDS/projects/CellularTowers
+        - /programs/CHORDS/projects/CSL
+        - /programs/CHORDS/projects/CRE
+        - /programs/CHORDS/projects/Dz-Pathfinder
+        - /programs/CHORDS/projects/EJI
+        - /programs/CHORDS/projects/EnviroAtlas
+        - /programs/CHORDS/projects/EJScreen
+        - /programs/CHORDS/projects/FIRMS
+        - /programs/CHORDS/projects/FireWeather
+        - /programs/CHORDS/projects/GHG-Pathfinder
+        - /programs/CHORDS/projects/Heat-Pathfinder
+        - /programs/CHORDS/projects/HMS
+        - /programs/CHORDS/projects/HCUP
+        - /programs/CHORDS/projects/InciWeb
+        - /programs/CHORDS/projects/KPRB
+        - /programs/CHORDS/projects/LANDFIRE
+        - /programs/CHORDS/projects/MODIS
+        - /programs/CHORDS/projects/MTBS
+        - /programs/CHORDS/projects/NDI
+        - /programs/CHORDS/projects/NEPHTN
+        - /programs/CHORDS/projects/NHANES
+        - /programs/CHORDS/projects/NIFC
+        - /programs/CHORDS/projects/OpenAQ
+        - /programs/CHORDS/projects/PLACES
+        - /programs/CHORDS/projects/PurpleAir
+        - /programs/CHORDS/projects/RAP
+        - /programs/CHORDS/projects/SDOH
+        - /programs/CHORDS/projects/SmokeSense
+        - /programs/CHORDS/projects/U.S.-PM2.5
+        - /programs/CHORDS/projects/USFA
+        - /programs/CHORDS/projects/WA-APCD
+        - /programs/CHORDS/projects/WF-Pathfinder
+        - /programs/CHORDS/projects/WFSmokeExp
+        - /programs/CHORDS/projects/WONDER
+
+
+      roles:
+      - id: 'mds_user'
+        permissions:
+        - id: 'mds_access'
+          action:
+            service: 'mds_gateway'
+            method: 'access'
+      - id: file_uploader
+        permissions:
+        - id: file_upload
+          action:
+            service: fence
+            method: file_upload
+      - id: workspace_user
+        permissions:
+        - id: workspace_access
+          action:
+            service: jupyterhub
+            method: access
+      - id: sheepdog_admin
+        description: CRUD access to programs and projects
+        permissions:
+        - id: sheepdog_admin_action
+          action:
+            service: sheepdog
+            method: '*'
+      - id: indexd_admin
+        description: full access to indexd API
+        permissions:
+        - id: indexd_admin
+          action:
+            service: indexd
+            method: '*'
+      - id: admin
+        permissions:
+          - id: admin
+            action:
+              service: '*'
+              method: '*'
+      - id: creator
+        permissions:
+          - id: creator
+            action:
+              service: '*'
+              method: create
+      - id: 'guppy_reader'
+        description: ''
+        permissions:
+        - id: 'guppy_reader'
+          action:
+            method: read
+            service: 'guppy'
+      - id: 'fence_reader'
+        description: ''
+        permissions:
+        - id: 'fence-reader'
+          action:
+            method: read
+            service: 'fence'
+        - id: 'fence_storage_reader'
+          action:
+            method: read-storage
+            service: 'fence'
+      - id: 'peregrine_reader'
+        description: ''
+        permissions:
+        - id: 'peregrine_reader'
+          action:
+            method: read
+            service: 'peregrine'
+      - id: 'sheepdog_reader'
+        description: ''
+        permissions:
+        - id: 'sheepdog_reader'
+          action:
+            method: read
+            service: 'sheepdog'
+      - id: 'dicom-viewer_reader'
+        description: ''
+        permissions:
+        - id: 'dicom-viewer_reader'
+          action:
+            method: read
+            service: 'dicom-viewer'
+      - id: 'orthanc_reader'
+        description: ''
+        permissions:
+        - id: 'orthanc_reader'
+          action:
+            method: read
+            service: 'orthanc'
+      - id: 'ohif-viewer_reader'
+        description: ''
+        permissions:
+        - id: 'ohif-viewer_reader'
+          action:
+            method: read
+            service: 'ohif-viewer'
+      - id: updater
+        permissions:
+          - id: updater
+            action:
+              service: '*'
+              method: update
+      - id: deleter
+        permissions:
+          - id: deleter
+            action:
+              service: '*'
+              method: delete
+      - id: storage_writer
+        permissions:
+          - id: storage_creator
+            action:
+              service: '*'
+              method: write-storage
+      - id: storage_reader
+        permissions:
+          - id: storage_reader
+            action:
+              service: 'fence'
+              method: read-storage
+          - id: storage_reader_perigrine
+            action:
+              service: 'perigrine'
+              method: read
+          - id: storage_reader_guppy
+            action:
+              service: 'guppy'
+              method: read
+    clients:
+      wts:
+        policies:
+        - all_programs_reader
+        - open_data_reader
+
+    users:
+      test@example.com:
+        tags:
+          name: Test User
+    #     email: johndoe@gmail.com
+        policies:
+          - CHORDS_submitter
+          - mds_admin
+          - data_upload
+          - services.sheepdog-admin
+      test:
+        tags:
+          name: Test User
+    #     email: johndoe@gmail.com
+        policies:
+          - CHORDS_submitter
+          - mds_admin
+          - data_upload
+          - services.sheepdog-admin
+
+  # -- (map) External Secrets settings.
+  externalSecrets:
+    # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
+    createK8sJwtKeysSecret: false
+    # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
+    createK8sGoogleAppSecrets: true
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
+    fenceJwtKeys: "chordprod-fence-jwt"
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
+    fenceGoogleAppCredsSecret:
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
+    fenceGoogleStorageCredsSecret:
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-config"
+    fenceConfig: "chordsprod-fence-config"
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
+    dbcreds: "chords_chords-fence-db-creds"

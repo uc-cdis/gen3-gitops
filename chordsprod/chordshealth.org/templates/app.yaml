@@ -1,0 +1,32 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-chordsprod
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: "master"
+      helm:
+        releaseName: chordsprodargo
+        valueFiles:
+          - $values/chordsprod/chordshealth.org/values/etl.yaml
+          - $values/chordsprod/chordshealth.org/values/values.yaml
+          - $values/chordsprod/chordshealth.org/values/fence.yaml
+          - $values/chordsprod/chordshealth.org/values/portal.yaml
+          - $values/chordsprod/chordshealth.org/values/guppy.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: master
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true
