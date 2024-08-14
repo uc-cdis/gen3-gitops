@@ -1,9 +1,0 @@
-# The name of the cluster this configuration is going to. This should match the name of the directory configuration
-# is stored in
-cluster: kidsfirst-skfqa
-project: kidsfirst
-
-grafana-alloy:
-  enabled: true
-  configuration:
-    enabled: false
