@@ -179,8 +179,6 @@ portal:
     json: |
       {
         "gaTrackingId": "G-WM3JV9YMW3",
-        "ddEnv": "bihprod",
-        "ddUrl": "ddog-gov.com",
         "graphql": {
           "boardCounts": [],
           "chartCounts": [],
