@@ -15,8 +15,6 @@ fence:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/canine/user.yaml
 
-  USER_YAML:
-
   # -- (map) External Secrets settings.
   externalSecrets:
     # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
