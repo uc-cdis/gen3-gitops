@@ -24,7 +24,6 @@ global:
   pdb: true
   netpolicy:
     enabled: true
-    #TODO We already got burned by not making this a list, so go ahead and do that
     dbSubnets:
       - 172.25.160.128/25
       - 172.25.160.0/25
