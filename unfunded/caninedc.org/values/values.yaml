@@ -22,7 +22,7 @@ global:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
-  netpolicy:
+  netPolicy:
     enabled: true
     dbSubnets:
       - 172.25.160.128/25
