@@ -16,8 +16,12 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/5874502e-5b67-415f-80ee-dcb814d2883f
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json"
   postgres:
-    dbCreate: false
-    externalSecret: "pg-master" # pragma: allowlist secret
+    dbCreate: true
+    master:
+      username: postgres
+      password: dsF8favHu9CKlfPBrcsS #pragma: allowlist secret
+      host: devplanetv2-aurora-cluster-instance.cwvizkxhzjt8.us-east-1.rds.amazonaws.com
+
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
@@ -25,8 +29,8 @@ global:
   netPolicy:
     enabled: true
     dbSubnets:
-      - 172.25.160.128/25
-      - 172.25.160.0/25
+      - 172.27.128.128/25
+      - 172.27.128.0/25
 
 arborist:
   enabled: true
