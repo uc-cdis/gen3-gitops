@@ -2,3 +2,7 @@ enableNetworkPolicy: false
 originalMatchLabels: true
 env:
   ANNOTATE_POD_IP: "true"
+
+podAnnotations:
+  prometheus.io/scrape: true
+  prometheus.io/port: 61678
