@@ -13,12 +13,6 @@ configuration:
 # Individual service toggles and customization
 #=============================================
 
-aws-s3-mountpoint:
-  enabled: false
-  targetRevision: 1.8.0
-  configuration:
-    enabled: false
-
 calico:
   enabled: false
   targetRevision: v3.27.0
