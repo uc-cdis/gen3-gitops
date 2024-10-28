@@ -1,6 +1,6 @@
 # The name of the cluster this configuration is going to. This should match the name of the directory configuration
 # is stored in
-cluster: &cluster "unfunded"
+cluster: "unfunded"
 project: unfunded
 
 # This is universal for all of our configuration, we assume that all of the configuration (i.e. values files)
@@ -8,6 +8,12 @@ project: unfunded
 configuration:
   configurationRepo: https://github.com/uc-cdis/gen3-gitops
   configurationRevision: master
+
+aws-s3-mountpoint:
+  enabled: false
+  targetRevision: 1.8.0
+  configuration:
+    enabled: false
 
 calico:
   enabled: false
