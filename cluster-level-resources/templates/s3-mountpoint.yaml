@@ -1,0 +1,33 @@
+{{ if index .Values "vpc-cni" "enabled" }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-s3-mountpoint
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - chart: aws-mountpoint-s3-csi-driver
+      repoURL: https://awslabs.github.io/mountpoint-s3-csi-driver
+      targetRevision: {{ index .Values "aws-s3-mountpoint" "targetRevision" }}
+      helm:
+        releaseName: vpc-cni
+      {{- if index .Values "aws-s3-mountpoint" "configuration" "enabled" }}
+        valueFiles:
+          - $values/{{ .Values.cluster }}/cluster-values/aws-s3-mountpoint.yaml
+    - repoURL: {{ .Values.configuration.configurationRepo }}
+      targetRevision: master
+      ref: values
+      {{- else }}
+      # TODO get config in. We need a default, and to support VA's stuff
+      #-f ~/aws-s3-csi-driver/values.yaml   --set node.serviceAccount.annotations."eks\.amazonaws\.com/role-arn"="arn:aws:iam::199578515826:role/argo-s3-mountpoint-role"
+      {{- end }}
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true
+{{ end }}
