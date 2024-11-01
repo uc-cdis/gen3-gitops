@@ -22,7 +22,7 @@ spec:
     httpProtocolIPv6: disabled
     httpPutResponseHopLimit: 2
     httpTokens: optional
-  role: eks_{{ .Values.cluster }}_workers_role
+  role: eks_{{ index .Values "karpenter-crds" "selectorTag" }}_workers_role
 
   securityGroupSelectorTerms:
   - tags:
