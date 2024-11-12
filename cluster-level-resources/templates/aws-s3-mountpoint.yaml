@@ -21,6 +21,11 @@ spec:
       {{- else }}
       # TODO get config in. We need a default, and to support VA's stuff
       #-f ~/aws-s3-csi-driver/values.yaml   --set node.serviceAccount.annotations."eks\.amazonaws\.com/role-arn"="arn:aws:iam::199578515826:role/argo-s3-mountpoint-role"
+      values: |
+        node:
+          serviceAccount:
+            annotations:
+              eks.amazonaws.com/role-arn="arn:aws:iam::{{ .Values.accountNumber }}:role/argo-s3-mountpoint-role"
       {{- end }}
   destination:
     server: "https://kubernetes.default.svc"
