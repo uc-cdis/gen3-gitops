@@ -7,5 +7,7 @@ grafana-alloy:
     enabled: false
 
 karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
   selectorTag: dcfprod
+  migration: true

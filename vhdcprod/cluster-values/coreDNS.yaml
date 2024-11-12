@@ -1,0 +1,42 @@
+service:
+  clusterIP: "10.100.0.10"
+  name: "kube-dns"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi
+
+autoscaler:
+  coresPerReplica: 128
+  nodesPerReplica: 5
+  enabled: true
+  replicas: 2
+  resources:
+    requests:
+      cpu: "200m"
+      memory: "100Mi"
+    limits:
+      cpu: "200m"
+      memory: "100Mi"
+
+k8sAppLabelOverride: "kube-dns"
+
+deployment:
+  name: "coredns-argo"
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: k8s-app
+                operator: In
+                values:
+                  - kube-dns
+          topologyKey: kubernetes.io/hostname

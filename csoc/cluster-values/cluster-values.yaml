@@ -7,3 +7,9 @@ grafana-alloy:
   enabled: true
   configuration:
     enabled: false
+
+karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
+  enabled: true
+  selectorTag: csoc_main_vpc
+  migration: true

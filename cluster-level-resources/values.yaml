@@ -42,7 +42,9 @@ karpenter-templates:
 karpenter-crds:
   enabled: false
   targetRevision: master
+  amiSelectorName: "EKS-FIPS*"
   selectorTag: ""
+  migration: false
   default:
     enabled: true
     consolidation: true
@@ -58,7 +60,7 @@ kube-state-metrics:
   enabled: false
   configuration:
     enabled: false
-  targetRevision: 4.0.4
+  targetRevision: 4.2.13
 
 vpc-cni:
   enabled: false
