@@ -26,8 +26,10 @@ karpenter:
     enabled: true
 
 karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
   selectorTag: unfunded
+  migration: true
 
 vpc-cni:
   enabled: true

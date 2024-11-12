@@ -1,0 +1,13 @@
+cluster: bloodv2
+project: bloodv2
+
+grafana-alloy:
+  enabled: true
+  configuration:
+    enabled: false
+
+karpenter-crds:
+  migration: true
+  enabled: true
+  selectorTag: bloodv2
+  amiSelectorName: "1-31-EKS-FIPS*"
