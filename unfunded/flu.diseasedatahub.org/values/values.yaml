@@ -134,7 +134,7 @@ wts:
       cpu: "15m"
   externalSecrets:
     dbcreds: "flu-wts-db-creds"
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/cdis/workspace-token-service
     tag: 2024.09
