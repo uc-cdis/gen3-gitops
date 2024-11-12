@@ -1,4 +1,9 @@
 fence:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   replicaCount: 2
   image:
