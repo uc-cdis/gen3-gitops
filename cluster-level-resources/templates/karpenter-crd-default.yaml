@@ -62,7 +62,7 @@ metadata:
 spec:
   disruption:
     consolidateAfter: 30s
-    consolidationPolicy: WhenEmpty
+    consolidationPolicy: WhenEmptyOrUnderutilized
     expireAfter: 168h
   limits:
     cpu: "1000"
