@@ -11,7 +11,7 @@ spec:
       repoURL: https://awslabs.github.io/mountpoint-s3-csi-driver
       targetRevision: {{ index .Values "aws-s3-mountpoint" "targetRevision" }}
       helm:
-        releaseName: vpc-cni
+        releaseName: aws-s3-mountpoint
       {{- if index .Values "aws-s3-mountpoint" "configuration" "enabled" }}
         valueFiles:
           - $values/{{ .Values.cluster }}/cluster-values/aws-s3-mountpoint.yaml
