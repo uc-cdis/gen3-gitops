@@ -10,6 +10,7 @@ spec:
     - repoURL: 'public.ecr.aws/karpenter'
       targetRevision: {{ .Values.karpenter.targetRevision }}
       path: karpenter
+      chart: karpenter
       helm:
         releaseName: karpenter
       {{- if index .Values "karpenter" "configuration" "enabled" }}
