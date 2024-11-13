@@ -1,6 +1,11 @@
 cluster: va-testing
 project: va
 
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: true
+
 coreDNS:
   enabled: true
   configuration:
