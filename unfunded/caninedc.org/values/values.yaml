@@ -24,6 +24,11 @@ global:
   pdb: true
 
 arborist:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   externalSecrets:
     dbcreds: "canineprod-arborist"
@@ -32,6 +37,11 @@ arborist:
     tag: 2024.09
 
 aws-es-proxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "canineprod-aws-es-proxy-creds"
@@ -41,18 +51,26 @@ aws-es-proxy:
     tag: 0.8
 
 indexd:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   defaultPrefix: "dg.C78ne/"
-
   externalSecrets:
     dbcreds: "canineprod-indexd"
     serviceCreds: "canineprod-indexd-service-creds"
-
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: 2024.09
 
 peregrine:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "canineprod-peregrine"
   enabled: true
@@ -62,6 +80,11 @@ peregrine:
     pullPolicy: Always
 
 revproxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   replicaCount: 2
   image:
@@ -69,6 +92,11 @@ revproxy:
     tag: 2024.09
 
 sheepdog:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "canineprod-sheepdog"
   enabled: true
@@ -77,6 +105,11 @@ sheepdog:
     tag: 2024.09
 
 manifestservice:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
@@ -96,6 +129,11 @@ etl:
       tag: 2024.09
 
 sower:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
@@ -104,12 +142,26 @@ sower:
     pelicanserviceG3auto: "canine-pelicanservice-g3auto"
 
 ssjdispatcher:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: 2024.09
 
 metadata:
+  # Lower cost
+  initResources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "canineprod-metadata"
     metadataG3auto: "canine-metadata-g3auto"
@@ -121,7 +173,7 @@ metadata:
 
 # disabling workspace services
 ambassador:
-  enabled: true
+  enabled: false
 wts:
   enabled: false
 hatchery:

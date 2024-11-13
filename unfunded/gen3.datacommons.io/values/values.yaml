@@ -24,6 +24,11 @@ global:
   pdb: true
 
 arborist:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   externalSecrets:
     dbcreds: "oadc-arborist-db-creds"
@@ -32,6 +37,11 @@ arborist:
     tag: 2024.09
 
 aws-es-proxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "oadc-aws-es-proxy-creds"
@@ -41,6 +51,11 @@ aws-es-proxy:
     tag: 0.8
 
 indexd:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   defaultPrefix: "dg.C78ne/"
 
   externalSecrets:
@@ -53,6 +68,11 @@ indexd:
     tag: 2024.09
 
 peregrine:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "oadc-peregrine-db-creds"
   enabled: true
@@ -62,6 +82,11 @@ peregrine:
     pullPolicy: Always
 
 revproxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   replicaCount: 2
   image:
@@ -69,6 +94,11 @@ revproxy:
     tag: 2024.09
 
 sheepdog:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "oadc-sheepdog-db-creds"
   enabled: true
@@ -77,6 +107,11 @@ sheepdog:
     tag: 2024.09
 
 manifestservice:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
@@ -85,6 +120,11 @@ manifestservice:
     manifestserviceG3auto: "oadc-manifestservice-g3auto"
 
 sower:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
@@ -93,12 +133,22 @@ sower:
     pelicanserviceG3auto: "oadc-pelicanservice-g3auto"
 
 ssjdispatcher:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: 2024.09
 
 metadata:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   externalSecrets:
     dbcreds: "oadc-metadata-db-creds"
     metadataG3auto: "oadc-metadata-g3auto"
@@ -120,4 +170,4 @@ hatchery:
 audit:
   enabled: false
 pidgin:
-  enabled: fals
+  enabled: false

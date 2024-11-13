@@ -1,4 +1,9 @@
 guppy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   dbRestore: false
   image:
