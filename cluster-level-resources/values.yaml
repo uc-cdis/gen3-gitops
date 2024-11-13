@@ -3,6 +3,9 @@
 cluster: "unfunded"
 project: unfunded
 
+# AWS account number that this cluster lives in
+accountNumber: "xxxxxxxxxxxx"
+
 # This is universal for all of our configuration, we assume that all of the configuration (i.e. values files)
 # live in the same repo, on the same branch
 configuration:

@@ -1,6 +1,8 @@
 cluster: va-testing
 project: va
 
+accountNumber: "199578515826"
+
 aws-s3-mountpoint:
   enabled: true
   configuration:
