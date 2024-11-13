@@ -3,6 +3,9 @@ project: va
 
 accountNumber: "199578515826"
 
+configuration:
+  configurationRevision: feat/s3-mountpoint
+
 aws-s3-mountpoint:
   enabled: true
   configuration:
