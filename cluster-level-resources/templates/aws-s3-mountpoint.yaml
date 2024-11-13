@@ -23,7 +23,7 @@ spec:
           node:
             serviceAccount:
               annotations:
-                eks.amazonaws.com/role-arn="arn:aws:iam::{{ .Values.accountNumber }}:role/AmazonEKS_S3_CSI_DriverRole-{{ .Values.cluster }}"
+                "eks.amazonaws.com/role-arn": "arn:aws:iam::{{ .Values.accountNumber }}:role/AmazonEKS_S3_CSI_DriverRole-{{ .Values.cluster }}"
       {{- end }}
   destination:
     server: "https://kubernetes.default.svc"
