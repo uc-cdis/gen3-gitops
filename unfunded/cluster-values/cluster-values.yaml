@@ -3,9 +3,6 @@ project: unfunded
 
 accountNumber: "662843554732"
 
-aws-s3-mountpoint:
-  enabled: true
-
 calico:
   enabled: true
   targetRevision: v3.27.0
