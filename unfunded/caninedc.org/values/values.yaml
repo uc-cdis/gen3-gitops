@@ -1,5 +1,6 @@
 global:
   dev: false
+  frontendRoot: portal
   # uncomment once we cutover, so we can use shared ALB
   #environment: "unfunded"
   hostname: "caninedc.org"
@@ -170,6 +171,14 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: 2024.09
+
+
+# gen3 frontend framework
+frontend-framework:
+  enabled: true
+  image:
+    repository: quay.io/cdis/canine-data-commons
+    tag: canine_basepath_ff
 
 # disabling workspace services
 ambassador:
