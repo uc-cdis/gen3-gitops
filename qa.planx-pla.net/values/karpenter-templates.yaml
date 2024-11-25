@@ -2,4 +2,4 @@ cluster:
   name: "qaplanetv1"
 
 ami:
-  id: ami-099b88a94875fe56d
+  id: ami-0fbd0256117848e04
