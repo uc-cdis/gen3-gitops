@@ -13,7 +13,7 @@ karpenter:
     enabled: true
 
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "Quick-Start-1-31-EKS-FIPS*"
   enabled: true
   selectorTag: "devplanetv2"
   migration: true
