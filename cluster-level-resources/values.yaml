@@ -30,6 +30,12 @@ coreDNS:
   configuration:
     enabled: false
 
+ebs-csi-driver:
+  enabled: false
+  targetRevision: tbd
+  configuration:
+    enabled: false
+
 grafana-alloy:
   enabled: false
   targetRevision: 0.4.0
