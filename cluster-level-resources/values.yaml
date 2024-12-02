@@ -32,7 +32,7 @@ coreDNS:
 
 ebs-csi-driver:
   enabled: false
-  targetRevision: tbd
+  targetRevision: v1.37.0
   configuration:
     enabled: false
 
