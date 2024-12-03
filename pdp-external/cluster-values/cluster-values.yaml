@@ -1,0 +1,13 @@
+cluster: externalgen3
+project: pdp
+
+grafana-alloy:
+  enabled: true
+  configuration:
+    enabled: false
+
+karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
+  enabled: true
+  selectorTag: externalgen3
+  migration: true
