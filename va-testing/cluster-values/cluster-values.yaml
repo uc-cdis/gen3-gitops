@@ -13,6 +13,11 @@ coreDNS:
   configuration:
     enabled: false
 
+ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: true
+
 grafana-alloy:
   enabled: true
   configuration:
