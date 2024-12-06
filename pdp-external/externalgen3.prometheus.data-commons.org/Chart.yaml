@@ -1,6 +1,6 @@
 apiVersion: v2
-name: caninedc.org
-description: caninedc.org argo application
+name: externalgen3.prometheus.data-commons.org
+description: externalgen3.prometheus.data-commons.org
 
 # A chart can be either an 'application' or a 'library' chart.
 #
