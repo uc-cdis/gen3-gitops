@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gen3-canine
+  name: gen3-pdp-external
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
