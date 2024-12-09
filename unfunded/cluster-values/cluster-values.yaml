@@ -5,13 +5,13 @@ accountNumber: "662843554732"
 
 calico:
   enabled: true
-  targetRevision: v3.27.0
+  targetRevision: v3.30.0
   configuration:
     enabled: false
 
 coreDNS:
   enabled: true
-  targetRevision: v1.29.0
+  targetRevision: v1.36.2
   configuration:
     enabled: false
 
@@ -35,6 +35,6 @@ karpenter-crds:
 
 vpc-cni:
   enabled: true
-  targetRevision: v1.16.2
+  targetRevision: v1.19.0
   configuration:
     enabled: false
