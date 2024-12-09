@@ -1,0 +1,5 @@
+node:
+  tolerateAllTaints: true
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::199578515826:role/argo-s3-mountpoint-role"
