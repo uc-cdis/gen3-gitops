@@ -32,7 +32,7 @@ coreDNS:
 
 ebs-csi-driver:
   enabled: false
-  targetRevision: v1.37.0
+  targetRevision: 2.36.0
   configuration:
     enabled: false
 
@@ -63,12 +63,21 @@ karpenter-crds:
   default:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
   jupyter:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
   workflow:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
     sgSelector: ""
 
 kube-state-metrics:

@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   sources:
-    - chart: ebs-csi-driver
+    - chart: aws-ebs-csi-driver
       repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
       targetRevision: {{ index .Values "ebs-csi-driver" "targetRevision" }}
       helm:
