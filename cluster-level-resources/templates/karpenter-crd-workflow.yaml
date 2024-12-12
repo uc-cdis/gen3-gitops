@@ -65,9 +65,11 @@ metadata:
   name: workflow
 spec:
   disruption:
-    consolidateAfter: 30s
-    consolidationPolicy: WhenEmpty
-    expireAfter: 168h
+    {{ if eq (index .Values "karpenter-crds" "workflow" "consolidationPolicy" ) "whenEmpty" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "workflow" "consolidateAfter" }}
+    {{ end }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "workflow" "consolidationPolicy" }}
+    expireAfter: {{ index .Values "karpenter-crds" "workflow" "expireAfter" }}
   limits:
     cpu: "1000"
     memory: 1000Gi

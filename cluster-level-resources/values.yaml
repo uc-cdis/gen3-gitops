@@ -75,12 +75,21 @@ karpenter-crds:
   default:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
   jupyter:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
   workflow:
     enabled: true
     consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "whenEmpty"
+    expireAfter: "168h"
     sgSelector: ""
 
 kube-state-metrics:

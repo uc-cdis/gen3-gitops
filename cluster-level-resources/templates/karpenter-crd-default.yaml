@@ -61,9 +61,11 @@ metadata:
   name: default
 spec:
   disruption:
-    consolidateAfter: 30s
-    consolidationPolicy: WhenEmpty
-    expireAfter: 168h
+    {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "whenEmpty" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
+    {{ end }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
+    expireAfter: {{ index .Values "karpenter-crds" "default" "expireAfter" }}
   limits:
     cpu: "1000"
     memory: 1000Gi
