@@ -13,7 +13,7 @@ configuration:
   configurationRevision: master
 
 alb-controller:
-  enabled: true
+  enabled: false
   targetRevision: 1.7.1
   configuration:
     enabled: false
