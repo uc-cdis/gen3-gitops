@@ -3,6 +3,12 @@ project: stanfordaimi
 
 accountNumber: "084375550014"
 
+configuration
+  configurationRevision: fear/adding-stanfordaimi
+
+alb-controller:
+  enabled: true
+
 calico:
   enabled: true
   targetRevision: v3.27.0
