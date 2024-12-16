@@ -17,5 +17,9 @@ karpenter-crds:
   enabled: true
   selectorTag: "devplanetv2"
   migration: true
+  default:
+    consolidation: true
+    consolidationPolicy: "whenUnderutilized"
+    expireAfter: "168h"
   workflow:
     sgSelector: devplanetv2

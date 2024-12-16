@@ -61,9 +61,11 @@ metadata:
   name: jupyter
 spec:
   disruption:
-    consolidateAfter: 30s
-    consolidationPolicy: WhenEmpty
-    expireAfter: 168h
+    {{ if eq (index .Values "karpenter-crds" "jupyter" "consolidationPolicy" ) "whenEmpty" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "jupyter" "consolidateAfter" }}
+    {{ end }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "jupyter" "consolidationPolicy" }}
+    expireAfter: {{ index .Values "karpenter-crds" "jupyter" "expireAfter" }}
   limits:
     cpu: "1000"
     memory: 1000Gi
