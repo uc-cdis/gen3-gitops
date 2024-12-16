@@ -15,10 +15,6 @@ spec:
         releaseName: stanfordaimi
         valueFiles:
           - $values/stanfordaimi/stanfordaimi.data-commons.org/values/values.yaml
-          - $values/stanfordaimi/stanfordaimi.data-commons.org/values/fence.yaml
-          - $values/stanfordaimi/stanfordaimi.data-commons.org/values/portal.yaml
-          - $values/stanfordaimi/stanfordaimi.data-commons.org/values/guppy.yaml
-          - $values/stanfordaimi/stanfordaimi.data-commons.org/values/etl.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
       targetRevision: master
       ref: values
