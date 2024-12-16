@@ -76,19 +76,19 @@ karpenter-crds:
     enabled: true
     consolidation: true
     consolidateAfter: "30s"
-    consolidationPolicy: "whenEmpty"
+    consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
   jupyter:
     enabled: true
     consolidation: true
     consolidateAfter: "30s"
-    consolidationPolicy: "whenEmpty"
+    consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
   workflow:
     enabled: true
     consolidation: true
     consolidateAfter: "30s"
-    consolidationPolicy: "whenEmpty"
+    consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
     sgSelector: ""
 
