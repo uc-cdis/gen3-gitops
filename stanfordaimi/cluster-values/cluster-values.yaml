@@ -3,7 +3,7 @@ project: stanfordaimi
 
 accountNumber: "084375550014"
 
-configuration
+configuration:
   configurationRevision: fear/adding-stanfordaimi
 
 alb-controller:
