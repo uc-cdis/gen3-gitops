@@ -27,6 +27,11 @@ karpenter-crds:
   selectorTag: vhdcprod
   migration: true
 
+vpc-cni:
+  enabled: true
+  configuration:
+    enabled: true
+
 alloy-configmap-data: |
   logging {
     level    = "info"
