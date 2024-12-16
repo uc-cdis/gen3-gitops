@@ -171,7 +171,22 @@ portal:
     gen3Bundle: workspace
     json: |
       {
-       "navigation": {
+        "graphql": {
+          "boardCounts": [],
+          "chartCounts": [],
+          "projectDetails": "boardCounts"
+        },
+        "components": {
+          "appName": "Stanford AIMI Data Commons",
+          "index": {
+            "introduction": {
+              "heading": "Stanford AIMI Data Commons",
+              "text": "Stanford AIMI Data Commons",
+              "link": "/identity"
+            },
+            "buttons": []
+          },
+          "navigation": {
             "items": [
               {
                 "icon": "profile",
@@ -180,8 +195,22 @@ portal:
                 "name": "Profile"
               }
             ]
+          },
+          "login": {
+            "title": "Stanford AIMI Data Commons",
+            "subTitle": "explore share research data",
+            "text": "Stanford AIMI Data Commons",
+            "contact": "If you have any questions about access or the registration process, please contact ",
+            "email": "support@gen3.org"
           }
-        }
+        },
+        "featureFlags": {
+          "explorer": false,
+          "explorerPublic": false
+        },
+        "showArboristAuthzOnProfile": true,
+        "showFenceAuthzOnProfile": true
+      }
 
 requestor:
   enabled: false
