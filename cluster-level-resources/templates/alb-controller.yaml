@@ -22,7 +22,7 @@ spec:
         values: |
           clusterName: {{ .Values.eksClusterName | default .Values.cluster }}
           serviceAccount:
-            create: false
+            create: true
             name: aws-load-balancer-controller
       {{- end }}
   destination:
