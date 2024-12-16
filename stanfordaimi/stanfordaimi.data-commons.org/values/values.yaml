@@ -1,27 +1,33 @@
 global:
-  dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "caninedc.org"
   aws:
     enabled: true
-    useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-canine-secret # pragma: allowlist secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
+    account: 084375550014
+    hatchery_role: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-hatchery-sa
+    secretStoreServiceAccount:
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
-  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/5874502e-5b67-415f-80ee-dcb814d2883f
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json"
+      roleArn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-external-secrets-sa
+  dev: false
+  externalSecrets:
+    deploy: true
   postgres:
     dbCreate: false
-    externalSecret: "pg-master" # pragma: allowlist secret
-  externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
-    deploy: true
-  pdb: true
+    externalSecret: "stanfordaimi_aurora-master-password"
+  environment: "stanfordaimi"
+  hostname: "stanfordaimi.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:084375550014:certificate/d8ab66fd-7e9c-47eb-ae4a-ecf239ce66e5"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: 100
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "portal"
+  ddEnabled: false
+
+ambassador:
+  enabled: false
 
 arborist:
   # Lower cost
@@ -31,24 +37,93 @@ arborist:
       cpu: "15m"
   enabled: true
   externalSecrets:
-    dbcreds: "canineprod-arborist"
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2024.09
+    dbcreds: "stanfordaimi_default-arborist-creds"
 
-aws-es-proxy:
+argo-wrapper:
+  enabled: false
+
+audit:
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
-  externalSecrets:
-    awsCreds: "canineprod-aws-es-proxy-creds"
   enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-audit-sa
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-es-proxy:
+  enabled: false
+  esEndpoint:
+  externalSecrets:
+    awsCreds: "stanfordaimi_default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-dicom-viewer-creds"
+
+external-secrets:
+  enabled: false
+
+fence:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-fence-sa
+
+  externalSecrets:
+    fenceJwtKeys: ""
+    fenceConfig: stanfordaimi_default-fence-config
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sJwtKeysSecret: true
+    createK8sGoogleAppSecrets: true
+    createK8sFenceConfigSecret: true
+    dbcreds: "stanfordaimi_default-fence-creds"
+
+
+  USER_YAML: |
+    {}
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: false
   image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: 0.8
+    repository: quay.io/cdis/frontend-framework
+    tag: main
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: false
+
 
 indexd:
   # Lower cost
@@ -56,28 +131,49 @@ indexd:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  defaultPrefix: "dg.C78ne/"
-  externalSecrets:
-    dbcreds: "canineprod-indexd"
-    serviceCreds: "canineprod-indexd-service-creds"
   enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2024.09
+  defaultPrefix: dg.AIMI/
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-indexd-creds"
+    createK8sServiceCredsSecret: true
 
-peregrine:
+
+manifestservice:
+  enabled: false
+
+metadata:
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  externalSecrets:
-    dbcreds: "canineprod-peregrine"
   enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: 2024.09
-    pullPolicy: Always
+  externalSecrets:
+    createK8sMetadataSecret: true
+    dbcreds: "stanfordaimi_default-metadata-creds"
+
+peregrine:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  # lower cost for workspace bundle portal
+  resources:
+    requests:
+      memory: "300Mi"
+      cpu: "200m"
+  enabled: true
+  gitops:
+    gen3Bundle: workspace
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-requestor-creds"
 
 revproxy:
   # Lower cost
@@ -86,99 +182,22 @@ revproxy:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
-  replicaCount: 2
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2024.09
-
-sheepdog:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
-  externalSecrets:
-    dbcreds: "canineprod-sheepdog"
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 2024.09
-
-manifestservice:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2024.09
-  externalSecrets:
-    manifestserviceG3auto: "canine-manifestservice-g3auto"
-
-etl:
-  enabled: true
-  spark:
-    image:
-      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2024.09
-  tube:
-    image:
-      repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      tag: 2024.09
 
 sower:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
+  enabled: false
+
+s3-mountpoint:
   enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: 2024.09
+
+sheepdog:
+  enabled: false
   externalSecrets:
-    pelicanserviceG3auto: "canine-pelicanservice-g3auto"
+    dbcreds: "stanfordaimi_default-sheepdog-creds"
 
 ssjdispatcher:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2024.09
-
-metadata:
-  # Lower cost
-  initResources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
-  externalSecrets:
-    dbcreds: "canineprod-metadata"
-    metadataG3auto: "canine-metadata-g3auto"
-  enabled: true
-  esEndpoint: http://elasticsearch:9200
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2024.09
-
-# disabling workspace services
-ambassador:
   enabled: false
+
 wts:
   enabled: false
-hatchery:
-  enabled: false
-
-# disabling audit service
-audit:
-  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-wts-creds"
