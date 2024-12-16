@@ -61,7 +61,7 @@ metadata:
   name: jupyter
 spec:
   disruption:
-    {{ if eq (index .Values "karpenter-crds" "jupyter" "consolidationPolicy" ) "whenEmpty" }}
+    {{ if eq (index .Values "karpenter-crds" "jupyter" "consolidationPolicy" ) "WhenEmpty" }}
     consolidateAfter: {{ index .Values "karpenter-crds" "jupyter" "consolidateAfter" }}
     {{ end }}
     consolidationPolicy: {{ index .Values "karpenter-crds" "jupyter" "consolidationPolicy" }}
