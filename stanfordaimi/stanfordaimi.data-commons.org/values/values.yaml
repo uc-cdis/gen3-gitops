@@ -169,6 +169,19 @@ portal:
   enabled: true
   gitops:
     gen3Bundle: workspace
+    json: |
+      {
+       "navigation": {
+            "items": [
+              {
+                "icon": "profile",
+                "link": "/identity",
+                "color": "#a2a2a2",
+                "name": "Profile"
+              }
+            ]
+          }
+        }
 
 requestor:
   enabled: false
