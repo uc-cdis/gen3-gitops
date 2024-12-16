@@ -30,6 +30,11 @@ ambassador:
   enabled: false
 
 arborist:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   externalSecrets:
     dbcreds: "stanfordaimi_default-arborist-creds"
@@ -38,6 +43,11 @@ argo-wrapper:
   enabled: false
 
 audit:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   serviceAccount:
     annotations:
@@ -67,6 +77,11 @@ external-secrets:
   enabled: false
 
 fence:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   serviceAccount:
     annotations:
@@ -111,6 +126,11 @@ hatchery:
 
 
 indexd:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   defaultPrefix: dg.AIMI/
   externalSecrets:
@@ -122,6 +142,11 @@ manifestservice:
   enabled: false
 
 metadata:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   externalSecrets:
     createK8sMetadataSecret: true
@@ -136,6 +161,11 @@ pidgin:
   enabled: false
 
 portal:
+  # lower cost for workspace bundle portal
+  resources:
+    requests:
+      memory: "300Mi"
+      cpu: "200m"
   enabled: true
   gitops:
     gen3Bundle: workspace
@@ -146,7 +176,13 @@ requestor:
     dbcreds: "stanfordaimi_default-requestor-creds"
 
 revproxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
+
 sower:
   enabled: false
 
