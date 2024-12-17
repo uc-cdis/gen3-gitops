@@ -28,6 +28,12 @@ karpenter-crds:
   enabled: true
   selectorTag: va-testing
   migration: true
+  default:
+    consolidationPolicy: "WhenUnderutilized"
+  jupyter:
+    consolidationPolicy: "WhenUnderutilized"
+  workflow:
+    enabled: false
 
 kube-state-metrics:
   enabled: true
