@@ -1,0 +1,155 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cortex-agent
+  namespace: cortex-xdr
+  labels:
+    app.kubernetes.io/name: cortex-agent
+    app.kubernetes.io/part-of: cortex
+    app.kubernetes.io/component: agent
+    app.kubernetes.io/version: "latest"
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cortex-agent
+
+  updateStrategy:
+    type: RollingUpdate
+
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cortex-agent
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/cortex-agent: unconfined
+
+    spec:
+      serviceAccountName: xdr-agent-user
+
+      nodeSelector:
+        kubernetes.io/os: linux
+
+      hostNetwork: true
+      hostPID: true
+      hostIPC: true
+
+      tolerations:
+        - operator: Exists
+          effect: NoSchedule
+        - operator: Exists
+          effect: PreferNoSchedule
+        - operator: Exists
+          effect: NoExecute
+
+      containers:
+        - name: cortex-agent
+          image: us-central1-docker.pkg.dev/xdr-fr-1993487238578/agent-docker/cortex-agent:latest
+
+          securityContext:
+            appArmorProfile:
+              type: Unconfined
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - SYSLOG
+                - SYS_CHROOT
+                - SYS_MODULE
+                - SYS_PTRACE
+                - SYS_RESOURCE
+                - SYS_RAWIO
+                - DAC_OVERRIDE
+                - DAC_READ_SEARCH
+                - NET_ADMIN
+                - NET_RAW
+                - IPC_LOCK
+                - FOWNER
+                - KILL
+                - SETGID
+                - SETUID
+
+          env:
+            - name: XDR_HOST_ROOT
+              value: "/host-fs"
+            - name: XDR_POD_INFO
+              value: "/var/run/pod-info"
+            - name: XDR_CLUSTER_NAME_URL
+              value: "metadata2"
+            - name: XDR_CLUSTER_NAME
+              value: ""
+            - name: XDR_VAR_LOG_HOST_PATH
+              value: "/var/log"
+
+          volumeMounts:
+            - name: host-fs
+              mountPath: /host-fs
+              readOnly: true
+
+            - name: var-log
+              mountPath: /var/log
+
+            - name: host-km-directory
+              mountPath: /lib/modules
+
+            - name: pod-info
+              mountPath: /var/run/pod-info
+              readOnly: true
+
+            - name: agent-ids
+              mountPath: /etc/traps
+
+            - name: deployment-secrets
+              mountPath: /opt/traps/config/deployment
+              readOnly: true
+
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "600Mi"
+            limits:
+              cpu: "1500m"
+              memory: "2Gi"
+
+      terminationGracePeriodSeconds: 90
+
+      volumes:
+        - name: host-fs
+          hostPath:
+            path: /
+            type: Directory
+
+        - name: var-log
+          hostPath:
+            path: "/var/log"
+            type: DirectoryOrCreate
+
+        - name: host-km-directory
+          hostPath:
+            path: /lib/modules
+
+        - name: pod-info
+          downwardAPI:
+            items:
+              - path: uid
+                fieldRef:
+                  fieldPath: metadata.uid
+              - path: name
+                fieldRef:
+                  fieldPath: metadata.name
+              - path: labels
+                fieldRef:
+                  fieldPath: metadata.labels
+              - path: annotations
+                fieldRef:
+                  fieldPath: metadata.annotations
+        - name: agent-ids
+          hostPath:
+            path: /etc/traps
+            type: DirectoryOrCreate
+
+        - name: deployment-secrets
+          secret:
+            secretName: xdr-agent-deployment #pragma: allowlist secret
+
+      imagePullSecrets:
+        - name: cortex-docker-secret

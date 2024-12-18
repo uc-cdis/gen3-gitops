@@ -36,6 +36,10 @@ coreDNS:
   configuration:
     enabled: false
 
+# NOTE: This reaches out to manifests in this repo. If you need to modify what it points to, use the `configuration` block above
+cortexXDR:
+  enabled: false
+
 ebs-csi-driver:
   enabled: false
   targetRevision: 2.36.0

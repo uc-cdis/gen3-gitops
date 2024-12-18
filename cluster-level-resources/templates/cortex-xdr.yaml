@@ -1,0 +1,21 @@
+{{ if index .Values "cortex-xdr" "enabled" }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cortex-xdr
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: {{ .Values.configuration.configurationRepo }}
+      path: cluster-level-resources/cortex-xdr-manifests
+      targetRevision: {{ .Values.configuration.configurationRevision }}
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: cortex-xdr
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true
+{{ end }}
