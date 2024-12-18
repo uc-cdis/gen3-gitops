@@ -1,0 +1,5 @@
+controller:
+  extraVolumeTags:
+    "vadc:environment-type": "production"
+    "vadc:usage-type": "data"
+    "vadc:cost-type": "fixed"

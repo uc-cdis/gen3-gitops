@@ -1,0 +1,245 @@
+global:
+  aws:
+    enabled: true
+    account: 084375550014
+    hatchery_role: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-hatchery-sa
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-external-secrets-sa
+  dev: false
+  externalSecrets:
+    deploy: true
+  postgres:
+    dbCreate: false
+    externalSecret: "stanfordaimi_aurora-master-password"
+  environment: "stanfordaimi"
+  hostname: "stanfordaimi.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:084375550014:certificate/d8ab66fd-7e9c-47eb-ae4a-ecf239ce66e5"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: 100
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "portal"
+  ddEnabled: false
+
+ambassador:
+  enabled: false
+
+arborist:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-audit-sa
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-es-proxy:
+  enabled: false
+  esEndpoint:
+  externalSecrets:
+    awsCreds: "stanfordaimi_default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-dicom-viewer-creds"
+
+external-secrets:
+  enabled: false
+
+fence:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::084375550014:role/gen3-service/stanfordaimi-default-fence-sa
+
+  externalSecrets:
+    fenceJwtKeys: ""
+    fenceConfig: stanfordaimi_default-fence-config
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sJwtKeysSecret: true
+    createK8sGoogleAppSecrets: true
+    createK8sFenceConfigSecret: true
+    dbcreds: "stanfordaimi_default-fence-creds"
+
+
+  USER_YAML: |
+    {}
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: false
+  image:
+    repository: quay.io/cdis/frontend-framework
+    tag: main
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: false
+
+
+indexd:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  defaultPrefix: dg.AIMI/
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  enabled: false
+
+metadata:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  externalSecrets:
+    createK8sMetadataSecret: true
+    dbcreds: "stanfordaimi_default-metadata-creds"
+
+peregrine:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  # lower cost for workspace bundle portal
+  resources:
+    requests:
+      memory: "300Mi"
+      cpu: "200m"
+  enabled: true
+  gitops:
+    gen3Bundle: workspace
+    json: |
+      {
+        "graphql": {
+          "boardCounts": [],
+          "chartCounts": [],
+          "projectDetails": "boardCounts"
+        },
+        "components": {
+          "appName": "Stanford AIMI Data Commons",
+          "index": {
+            "introduction": {
+              "heading": "Stanford AIMI Data Commons",
+              "text": "Stanford AIMI Data Commons",
+              "link": "/identity"
+            },
+            "buttons": []
+          },
+          "navigation": {
+            "items": [
+              {
+                "icon": "profile",
+                "link": "/identity",
+                "color": "#a2a2a2",
+                "name": "Profile"
+              }
+            ]
+          },
+          "login": {
+            "title": "Stanford AIMI Data Commons",
+            "subTitle": "explore share research data",
+            "text": "Stanford AIMI Data Commons",
+            "contact": "If you have any questions about access or the registration process, please contact ",
+            "email": "support@gen3.org"
+          }
+        },
+        "featureFlags": {
+          "explorer": false,
+          "explorerPublic": false
+        },
+        "showArboristAuthzOnProfile": true,
+        "showFenceAuthzOnProfile": true
+      }
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-requestor-creds"
+
+revproxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+
+sower:
+  enabled: false
+
+s3-mountpoint:
+  enabled: true
+
+sheepdog:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+wts:
+  enabled: false
+  externalSecrets:
+    dbcreds: "stanfordaimi_default-wts-creds"

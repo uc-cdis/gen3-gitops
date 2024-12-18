@@ -1,0 +1,46 @@
+cluster: stanfordaimi
+project: stanfordaimi
+
+accountNumber: "084375550014"
+
+configuration:
+  configurationRevision: fear/adding-stanfordaimi
+
+alb-controller:
+  enabled: true
+
+calico:
+  enabled: true
+  targetRevision: v3.27.0
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  targetRevision: v1.29.0
+  configuration:
+    enabled: false
+
+grafana-alloy:
+  enabled: true
+  targetRevision: 0.4.0
+  configuration:
+    enabled: false
+
+karpenter:
+  enabled: true
+  targetRevision: v0.32.9
+  configuration:
+    enabled: true
+
+karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
+  enabled: true
+  selectorTag: stanfordaimi
+  migration: true
+
+vpc-cni:
+  enabled: true
+  targetRevision: v1.16.2
+  configuration:
+    enabled: false
