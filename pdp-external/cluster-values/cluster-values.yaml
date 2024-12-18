@@ -1,7 +1,7 @@
-cluster: stanfordaimi
-project: stanfordaimi
+cluster: externalgen3
+project: externalgen3
 
-accountNumber: "637423560817"
+accountNumber: "084375550014"
 
 configuration:
   configurationRevision: master
@@ -36,7 +36,7 @@ karpenter:
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
-  selectorTag: stanfordaimi
+  selectorTag: externalgen3
   migration: true
 
 vpc-cni:
