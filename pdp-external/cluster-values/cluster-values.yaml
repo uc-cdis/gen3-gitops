@@ -30,8 +30,6 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: v0.32.9
-  configuration:
-    enabled: true
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
