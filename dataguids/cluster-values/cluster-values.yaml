@@ -11,3 +11,6 @@ karpenter-crds:
   enabled: true
   selectorTag: dataguids
   migration: true
+  default:
+    consolidationPolicy: "WhenUnderutilized"
+    consolidateAfter: ""
