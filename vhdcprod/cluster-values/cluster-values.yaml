@@ -26,6 +26,12 @@ karpenter-crds:
   enabled: true
   selectorTag: vhdcprod
   migration: true
+  default:
+    consolidationPolicy: "WhenUnderutilized"
+  jupyter:
+    consolidationPolicy: "WhenUnderutilized"
+  workflow:
+    enabled: false
 
 vpc-cni:
   enabled: true
