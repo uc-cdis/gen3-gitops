@@ -143,6 +143,10 @@ manifestservice:
 
 metadata:
   # Lower cost
+  initResources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
   resources:
     requests:
       memory: "105Mi"
@@ -153,9 +157,14 @@ metadata:
     dbcreds: "stanfordaimi_default-metadata-creds"
 
 peregrine:
-  enabled: false
+ # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
   externalSecrets:
-    dbcreds: "stanfordaimi_default-sheepdg-creds"
+    dbcreds: "stanfordaimi_default-sheepdog-creds"
 
 pidgin:
   enabled: false
@@ -232,7 +241,12 @@ s3-mountpoint:
   enabled: true
 
 sheepdog:
-  enabled: false
+ # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
   externalSecrets:
     dbcreds: "stanfordaimi_default-sheepdog-creds"
 

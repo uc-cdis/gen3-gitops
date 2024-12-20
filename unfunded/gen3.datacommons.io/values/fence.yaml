@@ -18,7 +18,7 @@ fence:
   usersync:
     # -- (bool) Whether to run Fence usersync or not.
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/oadc/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/g3dh/user.yaml
 
   USER_YAML:
 

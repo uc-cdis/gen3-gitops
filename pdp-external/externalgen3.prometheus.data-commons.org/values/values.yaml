@@ -1,0 +1,313 @@
+global:
+  aws:
+    enabled: true
+    account: 637423560817
+    hatchery_role: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-hatchery-sa
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-external-secrets-sa
+
+  dev: false
+  postgres:
+    dbCreate: false
+    externalSecret: "externalgen3_aurora-master-password"
+  environment: "externalgen3"
+  externalSecrets:
+    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
+    deploy: true
+  hostname: "externalgen3.prometheus.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: 100
+  dispatcherJobNum: "10"
+  frontendRoot: "portal"
+  ddEnabled: false
+
+arborist:
+  enabled: true
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  externalSecrets:
+    dbcreds: "externalgen3_default-arborist-creds"
+  image:
+    repository: quay.io/cdis/arborist
+    tag: 2024.11
+
+audit:
+  # Enabled. We do want to track audit events in this environment.
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
+  externalSecrets:
+    dbcreds: "externalgen3_default-audit-creds"
+    createK8sAuditSecret: true
+
+aws-es-proxy:
+  # Disabled. We don't use this service in this environment.
+  enabled: false
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
+  externalSecrets:
+    awsCreds: "externalgen3_default-aws-es-proxy-creds"
+
+frontend-framework:
+  enabled: true
+  port: 3000
+  image:
+    repository: quay.io/cdis/prometheus-data-platform
+    tag: main
+
+
+fence:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: quay.io/cdis/fence
+    tag: master
+
+  # -- (map) Annotations to add to the pod
+  podAnnotations:
+    prometheus.io/path: /metrics
+    prometheus.io/scrape: "true"
+
+  usersync:
+    # -- (bool) Whether to run Fence usersync or not.
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/externalgen3-pdp/user.yaml
+
+  USER_YAML:
+
+  # -- (map) External Secrets settings.
+  externalSecrets:
+    fenceJwtKeys: ""
+    fenceConfig: externalgen3_default-fence-config
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sJwtKeysSecret: true
+    createK8sGoogleAppSecrets: true
+    createK8sFenceConfigSecret: true
+    dbcreds: "externalgen3_default-fence-creds"
+
+  # -- (map) Public configuration settings for Fence app
+  FENCE_CONFIG_PUBLIC:
+    APP_NAME: 'Gen3 Data Commons'
+    # Where fence microservice is deployed
+    BASE_URL: 'https://externalgen3.prometheus.data-commons.org/user'
+
+    # The number of seconds after an access token is issued until it expires.
+    ACCESS_TOKEN_EXPIRES_IN: 1200
+
+    # The number of seconds after a refresh token is issued until it expires.
+    REFRESH_TOKEN_EXPIRES_IN: 2592000
+
+    # The maximum session lifetime in seconds.
+    SESSION_LIFETIME: 28800
+
+    # The number of seconds after a pre-signed url is issued until it expires.
+    MAX_PRESIGNED_URL_TTL: 3600
+
+    S3_BUCKETS:
+      # Name of the actual s3 bucket
+      externalgen3-data-bucket:
+        cred: 'fence-bot'
+        region: us-east-1
+
+    dbGaP:
+      parent_to_child_studies_mapping: {}
+
+    # `DATA_UPLOAD_BUCKET` specifies an S3 bucket to which data files are uploaded,
+    # using the `/data/upload` endpoint. This must be one of the first keys under
+    # `S3_BUCKETS` (since these are the buckets fence has credentials for).
+    DATA_UPLOAD_BUCKET: 'externalgen3-data-bucket'
+
+
+    ENABLE_PROMETHEUS_METRICS: true
+    ENABLE_DB_MIGRATION: true
+
+
+
+indexd:
+  enabled: true
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+
+
+  defaultPrefix: dg.PR03/
+  externalSecrets:
+    createK8sServiceCredsSecret: true
+    dbcreds: "externalgen3_default-indexd-creds"
+
+  image:
+    repository: quay.io/cdis/indexd
+    tag: 2024.11
+
+portal:
+  # # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  replicaCount: 1
+  image:
+    repository: quay.io/cdis/data-portal
+    tag: 2024.11
+
+  # GitOps config for portal
+  gitops:
+    gen3Bundle: workspace
+    json: |
+      {
+        "graphql": {
+          "boardCounts": [],
+          "chartCounts": [
+          ],
+          "projectDetails": "boardCounts"
+        },
+        "components": {
+          "appName": "Prometheus External Data Commons",
+          "index": {
+            "introduction": {
+              "heading": "Prometheus External Data Commons",
+              "text": "Prometheus External Data Commons",
+              "link": "/submission"
+            },
+            "buttons": [
+            ]
+          },
+          "navigation": {
+            "items": [
+              {
+                "icon": "files",
+                "link": "/files",
+                "color": "#a2a2a2",
+                "name": "Files"
+              },
+              {
+                "icon": "profile",
+                "link": "/identity",
+                "color": "#a2a2a2",
+                "name": "Profile"
+              }
+            ]
+          },
+          "login": {
+            "title": "External Prometheus Data Commons",
+            "subTitle": "explore share research data",
+            "text": "External Prometheus Data Commons",
+            "contact": "If you have any questions about access or the registration process, please contact ",
+            "email": "support@gen3.org"
+          }
+        },
+        "featureFlags": {
+          "explorer": false,
+          "explorerPublic": false
+        },
+        "showArboristAuthzOnProfile": true,
+        "showFenceAuthzOnProfile": true
+      }
+
+
+
+revproxy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: quay.io/cdis/nginx
+    tag: 2024.11
+
+sheepdog:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  externalSecrets:
+    dbcreds: "externalgen3_default-sheepdog-creds"
+  enabled: true
+  image:
+    repository: quay.io/cdis/sheepdog
+    tag: 2024.11
+
+metadata:
+  useAggMds: false
+  enabled: true
+
+  # Lower cost
+  initResources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+
+  externalSecrets:
+    createK8sMetadataSecret: true
+    dbcreds: "externalgen3_default-metadata-creds"
+
+  image:
+    repository: quay.io/cdis/metadata-service
+    tag: 2024.11
+
+# Disabled services
+
+ambassador:
+  enabled: false
+
+etl:
+  enabled: false
+
+hatchery:
+  enabled: false
+
+manifestservice:
+  enabled: false
+
+peregrine:
+  enabled: false
+  externalSecrets:
+    dbcreds: "externalgen3_default-sheepdg-creds"
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "externalgen3_default-requestor-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  enabled: false
+  externalSecrets:
+    dbcreds: "externalgen3_default-wts-creds"

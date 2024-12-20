@@ -1,10 +1,10 @@
-cluster: stanfordaimi
-project: stanfordaimi
+cluster: externalgen3
+project: externalgen3
 
-accountNumber: "084375550014"
+accountNumber: "637423560817"
 
 configuration:
-  configurationRevision: fear/adding-stanfordaimi
+  configurationRevision: master
 
 alb-controller:
   enabled: true
@@ -30,13 +30,11 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: v0.32.9
-  configuration:
-    enabled: true
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
-  selectorTag: stanfordaimi
+  selectorTag: externalgen3
   migration: true
   default:
     consolidationPolicy: "WhenUnderutilized"
