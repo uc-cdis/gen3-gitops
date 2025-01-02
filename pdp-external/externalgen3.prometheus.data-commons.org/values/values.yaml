@@ -18,7 +18,7 @@ global:
     deploy: true
   hostname: "externalgen3.prometheus.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.3/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
