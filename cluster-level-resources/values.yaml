@@ -56,6 +56,7 @@ grafana-alloy:
 
 karpenter:
   enabled: false
+  awsRegion: "us-east-1"
   targetRevision: v0.32.9
   configuration:
     enabled: false
@@ -70,12 +71,6 @@ karpenter:
     image:
       tag: "v0.32.9"
       digest: "sha256:0c142050d872cb0ac7b30a188ec36aa765b449718cde0c7e49f7495b28f47c29"
-
-karpenter-templates:
-  enabled: false
-  targetRevision: feat/karpenter-templates
-  configuration:
-    enabled: false
 
 karpenter-crds:
   enabled: false
