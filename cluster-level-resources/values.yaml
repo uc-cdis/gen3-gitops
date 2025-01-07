@@ -57,7 +57,7 @@ grafana-alloy:
 karpenter:
   enabled: false
   awsRegion: "us-east-1"
-  targetRevision: v0.32.9
+  targetRevision: v0.37.6
   configuration:
     enabled: false
   resources:
