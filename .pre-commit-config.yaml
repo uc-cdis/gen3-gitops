@@ -1,14 +1,16 @@
 repos:
--   repo: git@github.com:Yelp/detect-secrets
-    rev: v1.4.0
-    hooks:
-    -   id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
-        exclude: poetry.lock
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
-    hooks:
-    -   id: trailing-whitespace
-    -   id: end-of-file-fixer
-    -   id: no-commit-to-branch
-        args: [--branch, master]
+    - repo: git@github.com:Yelp/detect-secrets
+      rev: v1.4.0
+      hooks:
+          - id: detect-secrets
+            args: ["--baseline", ".secrets.baseline"]
+            exclude: poetry.lock
+            additional_dependencies:
+                - gibberish_detector
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.0.1
+      hooks:
+          - id: trailing-whitespace
+          - id: end-of-file-fixer
+          - id: no-commit-to-branch
+            args: [--branch, master]

@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://charts.bitnami.com/bitnami
+    - repoURL: https://prometheus-community.github.io/helm-charts
       chart: kube-state-metrics
       targetRevision: {{ index .Values "kube-state-metrics" "targetRevision" }}
       helm:
