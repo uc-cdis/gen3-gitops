@@ -20,7 +20,7 @@ spec:
       ref: values
       {{- else}}
         values: |
-          annotations:
+          podAnnotations:
             prometheus.io/path: "/metrics"
             prometheus.io/scrape: "true"
             # prometheus.io/port: "8080"
