@@ -18,6 +18,12 @@ spec:
     - repoURL: {{ .Values.configuration.configurationRepo }}
       targetRevision: {{ .Values.configuration.configurationRevision }}
       ref: values
+      {{- else}}
+        values: |
+          annotations:
+            prometheus.io/path: /metrics
+            prometheus.io/scrape: true
+            prometheus.io/port: 8080
       {{- end }}
   syncPolicy:
     syncOptions:
