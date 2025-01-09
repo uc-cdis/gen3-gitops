@@ -26,7 +26,7 @@ aws-s3-mountpoint:
 
 calico:
   enabled: false
-  targetRevision: v3.27.0
+  targetRevision: v3.29.1
   configuration:
     enabled: false
 
