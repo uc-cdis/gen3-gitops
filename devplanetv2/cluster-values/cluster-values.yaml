@@ -56,7 +56,7 @@ karpenter-crds:
   migration: true
   default:
     consolidation: true
-    consolidationPolicy: "whenUnderutilized"
+    consolidationPolicy: "WhenUnderutilized"
     expireAfter: "168h"
   workflow:
     sgSelector: devplanetv2
