@@ -1,6 +1,16 @@
 cluster: vhdcprod
 project: va
 
+alb-controller:
+  enabled: true
+  configuration:
+    enabled: false
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
 aws-s3-mountpoint:
   enabled: true
   configuration:
@@ -15,6 +25,11 @@ ebs-csi-driver:
   enabled: true
   configuration:
     enabled: true
+
+fluentd:
+  enabled: true
+  configuration:
+    enabled: false
 
 grafana-alloy:
   enabled: true
@@ -31,6 +46,11 @@ karpenter-crds:
   jupyter:
     consolidationPolicy: "WhenUnderutilized"
   workflow:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
+  configuration:
     enabled: false
 
 vpc-cni:

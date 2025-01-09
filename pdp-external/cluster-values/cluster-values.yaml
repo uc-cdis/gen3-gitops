@@ -9,6 +9,11 @@ configuration:
 alb-controller:
   enabled: true
 
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: false
+
 calico:
   enabled: true
   targetRevision: v3.27.0
@@ -18,6 +23,21 @@ calico:
 coreDNS:
   enabled: true
   targetRevision: v1.29.0
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: false
+  configuration:
+    enabled: false
+
+fluentd:
+  enabled: true
+  configuration:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
   configuration:
     enabled: false
 

@@ -11,19 +11,16 @@ alb-controller:
 
 calico:
   enabled: true
-  targetRevision: v3.27.0
   configuration:
     enabled: false
 
 coreDNS:
   enabled: true
-  targetRevision: v1.29.0
   configuration:
     enabled: false
 
 grafana-alloy:
   enabled: true
-  targetRevision: 0.4.0
   configuration:
     enabled: false
 
@@ -44,6 +41,5 @@ karpenter-crds:
 
 vpc-cni:
   enabled: true
-  targetRevision: v1.16.2
   configuration:
     enabled: false
