@@ -6,6 +6,10 @@ grafana-alloy:
   configuration:
     enabled: false
 
+calico:
+  enabled: true
+  
+
 karpenter:
   enabled: true
   targetRevision: v0.32.9
