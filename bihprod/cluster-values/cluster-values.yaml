@@ -1,6 +1,7 @@
 cluster: bihprod
 project: bih
 
+accountNumber: "533267425233"
 
 alb-controller:
   enabled: true

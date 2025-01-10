@@ -1,6 +1,8 @@
 cluster: healprod
 project: heal
 
+accountNumber: "205252583234"
+
 alb-controller:
   enabled: true
   configuration:

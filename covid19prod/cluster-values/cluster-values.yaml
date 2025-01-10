@@ -1,6 +1,8 @@
 cluster: covid19prod
 project: covid19
 
+accountNumber: "236714345101"
+
 alb-controller:
   enabled: true
   configuration:

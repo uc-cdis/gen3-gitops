@@ -1,6 +1,8 @@
 cluster: niaiddata
 project: niaiddata
 
+accountNumber: "636151780898"
+
 alb-controller:
   enabled: true
   configuration:

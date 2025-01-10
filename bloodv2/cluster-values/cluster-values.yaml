@@ -1,6 +1,8 @@
 cluster: bloodv2
 project: bloodv2
 
+accountNumber: "562749638216"
+
 alb-controller:
   enabled: true
   configuration:

@@ -3,6 +3,8 @@
 cluster: qaplanetv1
 project: qa
 
+accountNumber: "707767160287"
+
 alb-controller:
   enabled: true
   configuration:

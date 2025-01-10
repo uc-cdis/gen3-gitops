@@ -1,6 +1,8 @@
 cluster: chordsprod
 project: chords
 
+accountNumber: "922467707295"
+
 alb-controller:
   enabled: true
   configuration:

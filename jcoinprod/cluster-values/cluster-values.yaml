@@ -1,6 +1,8 @@
 cluster: jcoinprod
 project: jcoin
 
+accountNumber: "258867494168"
+
 alb-controller:
   enabled: true
   configuration:

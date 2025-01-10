@@ -1,6 +1,8 @@
 cluster: pdp-commons
 project: pdp
 
+accountNumber: "851725307933"
+
 alb-controller:
   enabled: true
   configuration:

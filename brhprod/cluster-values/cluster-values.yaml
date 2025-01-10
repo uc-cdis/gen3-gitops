@@ -1,6 +1,8 @@
 cluster: brhprod
 project: brh
 
+accountNumber: "885078588865"
+
 alb-controller:
   enabled: true
   configuration:

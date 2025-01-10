@@ -1,6 +1,8 @@
 cluster: pcdcprod
 project: pcdc
 
+accountNumber: "242397368788"
+
 alb-controller:
   enabled: true
   configuration:
