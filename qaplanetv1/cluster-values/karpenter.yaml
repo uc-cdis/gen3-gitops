@@ -1,0 +1,24 @@
+serviceAccount:
+  name: karpenter
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::707767160287:role/gen3_service/karpenter-controller-role-qaplanetv1"
+
+settings:
+  clusterName: "qaplanetv1"
+  clusterEndpoint: "https://CC02898351A01FE1B43EFDA3F3796737.gr7.us-east-1.eks.amazonaws.com"
+
+controller:
+  image:
+    tag: "v0.32.9"
+    digest: "sha256:0c142050d872cb0ac7b30a188ec36aa765b449718cde0c7e49f7495b28f47c29"
+  env:
+    - name: AWS_REGION
+      value: us-east-1
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "2"
+    limits:
+      memory: "2Gi"
+      cpu: "2"
