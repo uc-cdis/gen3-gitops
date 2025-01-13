@@ -1,0 +1,27 @@
+cluster: emalinowskiv1
+project: dev
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+karpenter:
+  enabled: true
+  targetRevision: v0.32.9
+  configuration:
+    enabled: true
+
+karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
+  enabled: true
+  selectorTag: "emalinowskiv1"
+  default:
+    consolidation: true
+    consolidationPolicy: "whenUnderutilized"
+    expireAfter: "168h"
+  workflow:
+    sgSelector: emalinowskiv1
+
+vpc-cni:
+  enabled: true
