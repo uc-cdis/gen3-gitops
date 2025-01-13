@@ -27,6 +27,7 @@ spec:
               eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountNumber }}:role/karpenter-controller-role-{{ .Values.eksClusterName | default .Values.cluster }}"
           settings:
             clusterName: {{ .Values.eksClusterName | default .Values.cluster }}
+            clusterEndpoint: {{ .Values.eksClusterEndpoint }}
           controller:
             image:
               tag: {{ .Values.karpenter.controller.image.tag | default .Values.karpenter.targetRevision }}
