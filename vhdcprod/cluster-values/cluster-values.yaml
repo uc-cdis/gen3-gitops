@@ -16,7 +16,7 @@ calico:
 aws-s3-mountpoint:
   enabled: true
   configuration:
-    enabled: true
+    enabled: false
 
 coreDNS:
   enabled: true
