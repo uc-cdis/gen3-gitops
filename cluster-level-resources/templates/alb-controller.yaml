@@ -16,7 +16,7 @@ spec:
         valueFiles:
           - $values/{{ .Values.cluster }}/cluster-values/alb-controller.yaml
     - repoURL: {{ .Values.configuration.configurationRepo }}
-      targetRevision: {{ .Values.configurationRevision }}
+      targetRevision: {{ .Values.configuration.configurationRevision }}
       ref: values
       {{- else }}
         values: |
