@@ -10,7 +10,7 @@ eksClusterEndpoint: https://CC02898351A01FE1B43EFDA3F3796737.gr7.us-east-1.eks.a
 alb-controller:
   enabled: true
   configuration:
-    enabled: false
+    enabled: true
 
 aws-s3-mountpoint:
   enabled: true
