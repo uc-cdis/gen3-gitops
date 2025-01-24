@@ -1,0 +1,5 @@
+node:
+  tolerateAllTaints: true
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::707767160287:role/AmazonEKS_S3_CSI_DriverRole-devplanetv2"
