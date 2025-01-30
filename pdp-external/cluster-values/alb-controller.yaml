@@ -1,0 +1,6 @@
+clusterName: externalgen3
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-aws-load-balancer-controller-sa
+  name: aws-load-balancer-controller

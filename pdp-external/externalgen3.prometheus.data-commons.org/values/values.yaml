@@ -18,7 +18,7 @@ global:
     deploy: true
   hostname: "externalgen3.prometheus.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.3/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.4/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -97,13 +97,13 @@ fence:
 
   # -- (map) External Secrets settings.
   externalSecrets:
-    fenceJwtKeys: ""
+    fenceJwtKeys: externalgen3_default-fence-jwt-keys
     fenceConfig: externalgen3_default-fence-config
     fenceGoogleAppCredsSecret: ""
     fenceGoogleStorageCredsSecret: ""
-    createK8sJwtKeysSecret: true
+    createK8sJwtKeysSecret: false
     createK8sGoogleAppSecrets: true
-    createK8sFenceConfigSecret: true
+    createK8sFenceConfigSecret: false
     dbcreds: "externalgen3_default-fence-creds"
 
   # -- (map) Public configuration settings for Fence app

@@ -6,6 +6,8 @@ project: unfunded
 # AWS account number that this cluster lives in
 accountNumber: "xxxxxxxxxxxx"
 
+eksClusterEndpoint: ""
+
 # This is universal for all of our configuration, we assume that all of the configuration (i.e. values files)
 # live in the same repo, on the same branch
 configuration:
@@ -14,31 +16,31 @@ configuration:
 
 alb-controller:
   enabled: false
-  targetRevision: 1.7.1
+  targetRevision: "1.11.0"
   configuration:
     enabled: false
 
 aws-s3-mountpoint:
   enabled: false
-  targetRevision: 1.8.0
+  targetRevision: "1.11.0"
   configuration:
     enabled: false
 
 calico:
   enabled: false
-  targetRevision: v3.27.0
+  targetRevision: "v3.29.1"
   configuration:
     enabled: false
 
 coreDNS:
   enabled: false
-  targetRevision: v1.29.0
+  targetRevision: "v1.37.0"
   configuration:
     enabled: false
 
 ebs-csi-driver:
   enabled: false
-  targetRevision: 2.36.0
+  targetRevision: "2.38.1"
   configuration:
     enabled: false
 
@@ -102,7 +104,7 @@ kube-state-metrics:
   enabled: false
   configuration:
     enabled: false
-  targetRevision: 4.2.13
+  targetRevision: 5.28.0
 
 vpc-cni:
   enabled: false

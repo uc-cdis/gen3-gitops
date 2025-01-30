@@ -1,6 +1,43 @@
 cluster: pdp-commons
 project: pdp
 
+accountNumber: "851725307933"
+
+alb-controller:
+  enabled: true
+  configuration:
+    enabled: false
+
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: false
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: false
+
+fluentd:
+  enabled: false
+  configuration:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
+  configuration:
+    enabled: false
+
 grafana-alloy:
   enabled: true
   configuration:
@@ -11,3 +48,8 @@ karpenter-crds:
   enabled: true
   selectorTag: pdp-commons
   migration: true
+
+vpc-cni:
+  enabled: true
+  configuration:
+    enabled: false

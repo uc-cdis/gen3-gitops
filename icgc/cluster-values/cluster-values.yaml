@@ -1,6 +1,43 @@
 cluster: icgc
 project: genomel
 
+accountNumber: "446046036926"
+
+alb-controller:
+  enabled: true
+  configuration:
+    enabled: false
+
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: false
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: false
+  configuration:
+    enabled: false
+
+fluentd:
+  enabled: false
+  configuration:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
+  configuration:
+    enabled: false
+
 grafana-alloy:
   enabled: true
   configuration:
@@ -9,3 +46,8 @@ grafana-alloy:
 karpenter-crds:
   enabled: true
   selectorTag: icgc
+
+vpc-cni:
+  enabled: true
+  configuration:
+    enabled: false
