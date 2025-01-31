@@ -1,7 +1,7 @@
 cluster: chordsprod
 project: chords
 
-accountNumber: "922467707295"
+accountNumber: "048463324059"
 
 alb-controller:
   enabled: true
