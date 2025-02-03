@@ -1,6 +1,8 @@
 cluster: prodv1
 project: kidsfirst
 
+eksClusterName: prodv1
+
 accountNumber: "053927701465"
 
 alb-controller:
