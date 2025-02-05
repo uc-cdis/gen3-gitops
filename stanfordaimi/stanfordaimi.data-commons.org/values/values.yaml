@@ -113,7 +113,7 @@ frontend-framework:
   enabled: false
   image:
     repository: quay.io/cdis/frontend-framework
-    tag: main
+    tag: develop
 
 grafana:
   enabled: false
@@ -173,11 +173,10 @@ portal:
   # lower cost for workspace bundle portal
   resources:
     requests:
-      memory: "300Mi"
-      cpu: "200m"
+      memory: "2Gi"
+      cpu: "2"
   enabled: true
   gitops:
-    gen3Bundle: workspace
     json: |
       {
         "graphql": {
