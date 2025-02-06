@@ -18,7 +18,7 @@ global:
     deploy: true
   hostname: "externalgen3.prometheus.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.4/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -63,7 +63,7 @@ aws-es-proxy:
     awsCreds: "externalgen3_default-aws-es-proxy-creds"
 
 frontend-framework:
-  enabled: true
+  enabled: false
   port: 3000
   image:
     repository: quay.io/cdis/prometheus-data-platform
@@ -166,8 +166,8 @@ portal:
   # # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: "205Mi"
+      cpu: "80m"
   enabled: true
   replicaCount: 1
   image:
