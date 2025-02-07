@@ -1,6 +1,8 @@
 cluster: emalinowskiv1
 project: dev
 
+eksClusterEndpoint: https://EB79B7D4FA4D4A079F34EB81F27110C2.gr7.us-east-1.eks.amazonaws.com
+
 accountNumber: "707767160287"
 
 configuration:
@@ -49,6 +51,8 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: v1.0.8
+  configuration:
+    enabled: true
   controller:
     image:
       tag: "0.37.0"
