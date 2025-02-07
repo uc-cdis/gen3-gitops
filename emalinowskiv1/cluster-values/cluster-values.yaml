@@ -49,6 +49,10 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: v1.0.8
+  controller:
+    image:
+      tag: "0.37.0"
+      digest: "sha256:157f478f5db1fe999f5e2d27badcc742bf51cc470508b3cebe78224d0947674f"
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
