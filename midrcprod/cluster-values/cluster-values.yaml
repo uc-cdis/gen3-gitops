@@ -1,6 +1,9 @@
 cluster: midrcprod
 project: midrc
 
+configuration:
+  configurationRevision: calico-dev
+
 accountNumber: "813684607867"
 
 alb-controller:
