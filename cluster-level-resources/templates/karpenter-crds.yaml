@@ -12,6 +12,9 @@ spec:
       path: charts/karpenter-crd
       helm:
         releaseName: karpenter-crds
+        values: |
+          webhook:
+            serviceNamespace: "karpenter"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: karpenter
