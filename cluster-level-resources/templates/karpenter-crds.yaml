@@ -12,8 +12,10 @@ spec:
       path: charts/karpenter-crd
       helm:
         releaseName: karpenter-crds
+        # TODO consider how we want to approach the webhook problem. We're definitely disabling for now
         values: |
           webhook:
+            enabled: false
             serviceNamespace: "karpenter"
   destination:
     server: "https://kubernetes.default.svc"

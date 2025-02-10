@@ -52,7 +52,7 @@ karpenter:
   enabled: true
   targetRevision: v1.0.8
   configuration:
-    enabled: false
+    enabled: true
   controller:
     image:
       tag: "0.37.0"
