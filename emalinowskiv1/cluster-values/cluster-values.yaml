@@ -6,7 +6,7 @@ eksClusterEndpoint: https://EB79B7D4FA4D4A079F34EB81F27110C2.gr7.us-east-1.eks.a
 accountNumber: "707767160287"
 
 configuration:
-  configurationRevision: calico-dev
+  configurationRevision: feat/karpenter-1-0
 
 alb-controller:
   enabled: true
