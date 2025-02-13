@@ -15,7 +15,7 @@ global:
   environment: "stanfordaimi"
   hostname: "stanfordaimi.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:084375550014:certificate/d8ab66fd-7e9c-47eb-ae4a-ecf239ce66e5"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.1.1/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -23,7 +23,7 @@ global:
   netPolicy:
     enabled: false
   dispatcherJobNum: "10"
-  frontendRoot: "portal"
+  frontendRoot: "gen3ff"
   ddEnabled: false
 
 ambassador:
@@ -105,12 +105,12 @@ fence:
     usersync: true
     schedule: "*/30 * * * *"
     syncFromDbgap: false
-    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    userYamlS3Path: "s3://cdis-gen3-users/stanford-aimi/user.yaml"
     slack_webhook: ""
     slack_send_dbgap: false
 
 frontend-framework:
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/cdis/frontend-framework
     tag: develop
@@ -175,7 +175,7 @@ portal:
     requests:
       memory: "2Gi"
       cpu: "2"
-  enabled: true
+  enabled: false
   gitops:
     json: |
       {

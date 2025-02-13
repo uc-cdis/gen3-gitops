@@ -91,12 +91,14 @@ karpenter-crds:
     consolidateAfter: "30s"
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
+    additionalTags: {}
   jupyter:
     enabled: true
     consolidation: true
     consolidateAfter: "30s"
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
+    additionalTags: {}
   workflow:
     enabled: true
     consolidation: true
@@ -104,6 +106,7 @@ karpenter-crds:
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
     sgSelector: ""
+    additionalTags: {}
 
 kube-state-metrics:
   enabled: false
