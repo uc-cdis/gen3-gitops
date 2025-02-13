@@ -50,13 +50,13 @@ karpenter-crds:
     consolidationPolicy: "WhenUnderutilized"
     additionalTags:
       "vadc:cost-type": "usage-based-variable"
-      "vadc:environment-type": "testing"
+      "vadc:environment-type": "production"
       "vadc:usage-type": "user-infrastructure"
   jupyter:
     consolidationPolicy: "WhenUnderutilized"
     additionalTags:
       "vadc:cost-type": "usage-based-variable"
-      "vadc:environment-type": "testing"
+      "vadc:environment-type": "production"
       "vadc:usage-type": "user-infrastructure"
   workflow:
     enabled: false
