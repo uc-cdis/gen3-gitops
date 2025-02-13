@@ -1,6 +1,46 @@
 cluster: midrcprod
 project: midrc
 
+configuration:
+  configurationRevision: calico-dev
+
+accountNumber: "813684607867"
+
+alb-controller:
+  enabled: true
+  configuration:
+    enabled: false
+
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: true
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: false
+
+fluentd:
+  enabled: false
+  configuration:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
+  configuration:
+    enabled: false
+
 grafana-alloy:
   enabled: true
   configuration:
@@ -11,3 +51,10 @@ karpenter-crds:
   enabled: true
   selectorTag: midrcprod
   migration: true
+  workflow:
+    sgSelector: midrcprod
+
+vpc-cni:
+  enabled: true
+  configuration:
+    enabled: false

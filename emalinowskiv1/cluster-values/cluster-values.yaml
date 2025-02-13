@@ -1,15 +1,18 @@
-cluster: chords
-project: chords
+cluster: emalinowskiv1
+project: dev
 
-accountNumber: "048463324059"
+accountNumber: "707767160287"
+
+configuration:
+  configurationRevision: calico-dev
 
 alb-controller:
   enabled: true
   configuration:
-    enabled: false
+    enabled: true
 
 aws-s3-mountpoint:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
@@ -24,7 +27,7 @@ coreDNS:
     enabled: false
 
 ebs-csi-driver:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
@@ -34,19 +37,22 @@ fluentd:
     enabled: false
 
 kube-state-metrics:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
 grafana-alloy:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
+
+karpenter:
+  enabled: true
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
-  selectorTag: chords
+  selectorTag: emalinowskiv1
   migration: true
 
 vpc-cni:

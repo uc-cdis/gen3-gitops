@@ -3,7 +3,67 @@
 cluster: qaplanetv1
 project: qa
 
+accountNumber: "707767160287"
+
+eksClusterEndpoint: https://CC02898351A01FE1B43EFDA3F3796737.gr7.us-east-1.eks.amazonaws.com
+
+configuration:
+  configurationRevision: calico-dev
+
+alb-controller:
+  enabled: true
+  configuration:
+    enabled: true
+
+aws-s3-mountpoint:
+  enabled: true
+  configuration:
+    enabled: false
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: false
+
+fluentd:
+  enabled: false
+  configuration:
+    enabled: false
+
+kube-state-metrics:
+  enabled: true
+  configuration:
+    enabled: false
+
 grafana-alloy:
+  enabled: true
+  configuration:
+    enabled: false
+
+karpenter:
+  enabled: true
+  targetRevision: v0.32.9
+
+karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
+  enabled: true
+  selectorTag: qaplanetv1
+  migration: true
+  default:
+    consolidationPolicy: "WhenEmpty"
+    consolidateAfter: ""
+
+vpc-cni:
   enabled: true
   configuration:
     enabled: false

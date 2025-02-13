@@ -1,0 +1,6 @@
+clusterName: brhprod
+serviceAccount:
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--default--ingress
+  name: aws-load-balancer-controller
