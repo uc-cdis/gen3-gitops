@@ -124,6 +124,9 @@ spec:
     Environment: {{ .Values.cluster }}
     Name: eks-{{ .Values.cluster }}-karpenter
     purpose: default
+    {{- with index .Values "karpenter-crds" "default" "additionalTags" -}}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
   metadataOptions:
     httpEndpoint: enabled
     httpProtocolIPv6: disabled
