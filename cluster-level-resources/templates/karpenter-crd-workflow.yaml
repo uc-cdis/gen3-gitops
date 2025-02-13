@@ -41,6 +41,9 @@ spec:
     Name: eks-{{ .Values.cluster }}-karpenter
     karpenter.sh/discovery: {{ index .Values "karpenter-crds" "selectorTag" }}
     purpose: workflow
+    {{- with index .Values "karpenter-crds" "workflow" "additionalTags" -}}
+    {{ toYaml . | nindent 4 }}
+    {{- end }}
 
   userData: |
     MIME-Version: 1.0
