@@ -8,9 +8,6 @@ settings:
   clusterName: emalinowskiv1
   clusterEndpoint: https://EB79B7D4FA4D4A079F34EB81F27110C2.gr7.us-east-1.eks.amazonaws.com
 controller:
-  # image:
-  #   tag: 0.37.0
-  #   digest: sha256:157f478f5db1fe999f5e2d27badcc742bf51cc470508b3cebe78224d0947674f
   env:
     - name: AWS_REGION
       value: us-east-1
