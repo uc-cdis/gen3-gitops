@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: oci://public.ecr.aws/karpenter
+    - repoURL: public.ecr.aws/karpenter
       targetRevision: {{ .Values.karpenter.targetRevision }}
       path: karpenter
       helm:
