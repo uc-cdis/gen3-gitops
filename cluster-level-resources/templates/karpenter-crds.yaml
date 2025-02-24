@@ -7,9 +7,9 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: 'https://github.com/aws/karpenter-provider-aws'
+    - repoURL: 'public.ecr.aws/karpenter/karpenter-crd'
       targetRevision: {{ .Values.karpenter.targetRevision }}
-      path: charts/karpenter-crd
+      path: karpenter-crd
       helm:
         releaseName: karpenter-crds
         # TODO consider how we want to approach the webhook problem. We're definitely disabling for now
