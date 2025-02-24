@@ -1,7 +1,7 @@
 cluster: emalinowskiv1
 project: dev
 
-eksClusterEndpoint: https://D593510942408447DE83F479C3C2B5E3.gr7.us-east-1.eks.amazonaws.com
+eksClusterEndpoint: https://60E5A0594C0DD93E53A5D1DC91CD0C07.gr7.us-east-1.eks.amazonaws.com
 
 accountNumber: "707767160287"
 
