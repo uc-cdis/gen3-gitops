@@ -7,7 +7,7 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: public.ecr.aws/karpenter
+    - repoURL: https://github.com/aws/karpenter-provider-aws
       targetRevision: {{ .Values.karpenter.targetRevision }}
       path: karpenter
       helm:
@@ -32,10 +32,10 @@ spec:
           settings:
             clusterName: {{ .Values.eksClusterName | default .Values.cluster }}
             clusterEndpoint: {{ .Values.eksClusterEndpoint }}
-          # controller:
-          #   image:
-          #     tag: {{ .Values.karpenter.controller.image.tag | default .Values.karpenter.targetRevision }}
-          #     digest: {{ .Values.karpenter.controller.image.digest }}
+          controller:
+            image:
+              tag: {{ .Values.karpenter.controller.image.tag | default .Values.karpenter.targetRevision }}
+              digest: {{ .Values.karpenter.controller.image.digest }}
             env:
               - name: AWS_REGION
                 value: {{ .Values.karpenter.awsRegion }}
