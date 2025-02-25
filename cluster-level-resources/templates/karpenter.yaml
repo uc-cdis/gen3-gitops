@@ -33,9 +33,6 @@ spec:
             clusterName: {{ .Values.eksClusterName | default .Values.cluster }}
             clusterEndpoint: {{ .Values.eksClusterEndpoint }}
           controller:
-            image:
-              tag: {{ .Values.karpenter.controller.image.tag | default .Values.karpenter.targetRevision }}
-              digest: {{ .Values.karpenter.controller.image.digest }}
             env:
               - name: AWS_REGION
                 value: {{ .Values.karpenter.awsRegion }}
