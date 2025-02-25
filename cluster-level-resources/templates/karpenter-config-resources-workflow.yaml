@@ -58,6 +58,62 @@ spec:
 
     --BOUNDARY--
 ---
+{{- if eq .Values.karpenter.targetRevision "1.0.8" }}
+apiVersion: karpenter.sh/v1beta1
+kind: NodePool
+metadata:
+  name: workflow
+spec:
+  disruption:
+    {{ if eq (index .Values "karpenter-crds" "workflow" "consolidationPolicy" ) "WhenEmpty" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "workflow" "consolidateAfter" }}
+    {{ end }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "workflow" "consolidationPolicy" }}
+    expireAfter: {{ index .Values "karpenter-crds" "workflow" "expireAfter" }}
+  limits:
+    cpu: "1000"
+    memory: 1000Gi
+  template:
+    metadata:
+      labels:
+        role: workflow
+    spec:
+      kubelet:
+        evictionHard:
+          memory.available: 5%
+        evictionSoft:
+          memory.available: 10%
+        evictionSoftGracePeriod:
+          memory.available: 5m
+        kubeReserved:
+          cpu: 480m
+          ephemeral-storage: 3Gi
+          memory: 1632Mi
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: workflow
+      requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+        - on-demand
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+        - amd64
+      - key: karpenter.k8s.aws/instance-category
+        operator: In
+        values:
+        - c
+        - m
+        - r
+        - t
+      taints:
+      - effect: NoSchedule
+        key: role
+        value: workflow
+{{- else }}
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
 metadata:
@@ -112,4 +168,5 @@ spec:
       - effect: NoSchedule
         key: role
         value: workflow
+{{- end }}
 {{ end }}
