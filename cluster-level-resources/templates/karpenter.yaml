@@ -15,15 +15,14 @@ spec:
       {{- if index .Values "karpenter" "configuration" "enabled" }}
         valueFiles:
           - "$values/{{ .Values.cluster }}/cluster-values/karpenter.yaml"
-      skipCrds: true
+        skipCrds: true
     - repoURL: {{ .Values.configuration.configurationRepo }}
       targetRevision: {{ .Values.configuration.configurationRevision }}
       ref: values
       {{- else }}
         values: |
           webhook:
-            enabled: false
-          skipCrds: true
+            enabled: falsex
           serviceAccount:
             name: karpenter
             create: true
