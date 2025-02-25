@@ -62,6 +62,18 @@ metadata:
 spec:
   template:
     spec:
+      disruption:
+        {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "WhenEmpty" }}
+        consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
+        {{ end }}
+        consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
+        expireAfter: {{ index .Values "karpenter-crds" "default" "expireAfter" }}
+        budgets:
+        - nodes: 10%
+
+      limits:
+        cpu: "1000"
+        memory: 1000Gi
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
@@ -85,19 +97,6 @@ spec:
             - m
             - r
             - t
-
-  disruption:
-    {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "WhenEmpty" }}
-    consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
-    {{ end }}
-    consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
-    expireAfter: {{ index .Values "karpenter-crds" "default" "expireAfter" }}
-    budgets:
-    - nodes: 10%
-
-  limits:
-    cpu: "1000"
-    memory: 1000Gi
 {{- else }}
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
