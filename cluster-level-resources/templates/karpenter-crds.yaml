@@ -9,7 +9,7 @@ spec:
   sources:
     - repoURL: public.ecr.aws/karpenter
       targetRevision: {{ .Values.karpenter.targetRevision }}
-      path: karpenter-crd
+      chart: karpenter-crd
       helm:
         releaseName: karpenter-crds
         # TODO consider how we want to approach the webhook problem. We're definitely disabling for now
