@@ -12,10 +12,10 @@ spec:
       chart: karpenter
       helm:
         releaseName: karpenter
+        skipCrds: true
       {{- if index .Values "karpenter" "configuration" "enabled" }}
         valueFiles:
           - "$values/{{ .Values.cluster }}/cluster-values/karpenter.yaml"
-        skipCrds: true
     - repoURL: {{ .Values.configuration.configurationRepo }}
       targetRevision: {{ .Values.configuration.configurationRevision }}
       ref: values
