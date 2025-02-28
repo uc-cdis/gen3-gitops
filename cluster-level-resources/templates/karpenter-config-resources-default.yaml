@@ -89,18 +89,6 @@ spec:
             - r
             - t
 
-  kubelet:
-    evictionHard:
-      memory.available: 5%
-    evictionSoft:
-      memory.available: 10%
-    evictionSoftGracePeriod:
-      memory.available: 5m
-    kubeReserved:
-      cpu: 480m
-      ephemeral-storage: 3Gi
-      memory: 1632Mi
-
   disruption:
     {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "WhenEmpty" }}
     consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
