@@ -12,7 +12,9 @@ spec:
       chart: karpenter
       helm:
         releaseName: karpenter
+      {{- if eq (index .Values "karpenter" "targetRevision") "1.0.8" }}
         skipCrds: true
+      {{- end }}
       {{- if index .Values "karpenter" "configuration" "enabled" }}
         valueFiles:
           - "$values/{{ .Values.cluster }}/cluster-values/karpenter.yaml"
