@@ -54,60 +54,67 @@ spec:
     --BOUNDARY--
 ---
 {{- if eq .Values.karpenter.targetRevision "1.0.8" }}
-apiVersion: karpenter.sh/v1beta1
+apiVersion: karpenter.sh/v1
 kind: NodePool
 metadata:
   name: jupyter
 spec:
-  disruption:
-    {{ if eq (index .Values "karpenter-crds" "jupyter" "consolidationPolicy" ) "WhenEmpty" }}
-    consolidateAfter: {{ index .Values "karpenter-crds" "jupyter" "consolidateAfter" }}
-    {{ end }}
-    consolidationPolicy: {{ index .Values "karpenter-crds" "jupyter" "consolidationPolicy" }}
-    expireAfter: {{ index .Values "karpenter-crds" "jupyter" "expireAfter" }}
-  limits:
-    cpu: "1000"
-    memory: 1000Gi
   template:
     metadata:
       labels:
         role: jupyter
     spec:
-      kubelet:
-        evictionHard:
-          memory.available: 5%
-        evictionSoft:
-          memory.available: 10%
-        evictionSoftGracePeriod:
-          memory.available: 5m
-        kubeReserved:
-          cpu: 480m
-          ephemeral-storage: 3Gi
-          memory: 1632Mi
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
         name: jupyter
+      expireAfter: 168h
+      terminationGracePeriod: 48h
       requirements:
-      - key: karpenter.sh/capacity-type
-        operator: In
-        values:
-        - on-demand
-      - key: kubernetes.io/arch
-        operator: In
-        values:
-        - amd64
-      - key: karpenter.k8s.aws/instance-category
-        operator: In
-        values:
-        - c
-        - m
-        - r
-        - t
-      taints:
-      - effect: NoSchedule
-        key: role
-        value: jupyter
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values:
+            - on-demand
+        - key: kubernetes.io/arch
+          operator: In
+          values:
+            - amd64
+        - key: karpenter.k8s.aws/instance-category
+          operator: In
+          values:
+            - c
+            - m
+            - r
+            - t
+
+  kubelet:
+    evictionHard:
+      memory.available: 5%
+    evictionSoft:
+      memory.available: 10%
+    evictionSoftGracePeriod:
+      memory.available: 5m
+    kubeReserved:
+      cpu: 480m
+      ephemeral-storage: 3Gi
+      memory: 1632Mi
+
+  disruption:
+    {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "WhenEmpty" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
+    {{ end }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
+    budgets:
+    - nodes: 10%
+
+  limits:
+    cpu: "1000"
+    memory: 1000Gi
+
+  taints:
+  - effect: NoSchedule
+    key: role
+    value: jupyter
 {{- else }}
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
