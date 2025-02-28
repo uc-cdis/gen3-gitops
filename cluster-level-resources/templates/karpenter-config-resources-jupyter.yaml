@@ -64,6 +64,10 @@ spec:
       labels:
         role: jupyter
     spec:
+      taints:
+        - effect: NoSchedule
+          key: role
+          value: jupyter
       nodeClassRef:
         group: karpenter.k8s.aws
         kind: EC2NodeClass
@@ -98,11 +102,6 @@ spec:
   limits:
     cpu: "1000"
     memory: 1000Gi
-
-  taints:
-  - effect: NoSchedule
-    key: role
-    value: jupyter
 {{- else }}
 apiVersion: karpenter.sh/v1beta1
 kind: NodePool
