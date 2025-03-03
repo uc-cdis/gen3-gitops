@@ -57,7 +57,7 @@ spec:
     sudo yum update -y
 
     --BOUNDARY--
-
+{{- if eq .Values.karpenter.targetRevision "1.0.8" }}
   kubelet:
     evictionHard:
       memory.available: 5%
@@ -69,6 +69,7 @@ spec:
       cpu: 480m
       ephemeral-storage: 3Gi
       memory: 1632Mi
+{{- end }}
 ---
 {{- if eq .Values.karpenter.targetRevision "1.0.8" }}
 apiVersion: karpenter.sh/v1
