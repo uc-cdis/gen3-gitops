@@ -1,4 +1,0 @@
-enableNetworkPolicy: false
-originalMatchLabels: true
-env:
-  ANNOTATE_POD_IP: "true"
