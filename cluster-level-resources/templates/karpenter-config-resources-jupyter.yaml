@@ -1,5 +1,9 @@
 {{ if and (index .Values "karpenter-crds" "enabled") (index .Values "karpenter-crds" "jupyter" "enabled") }}
+{{- if eq .Values.karpenter.targetRevision "1.0.8" }}
 apiVersion: karpenter.k8s.aws/v1
+{{- else }}
+apiVersion: karpenter.k8s.aws/v1beta1
+{{- end }}
 kind: EC2NodeClass
 metadata:
   name: jupyter
