@@ -1,6 +1,8 @@
 cluster: kidsfirst-kfqa2
 project: kidsfirst
 
+eksClusterName: kfqa2
+
 accountNumber: "222487244010"
 
 alb-controller:

@@ -57,114 +57,122 @@ fence:
           subresources:
           - name: projects
             subresources:
-            - name: ACAG
-            - name: ACS
-            - name: ADIP
-            - name: AirNow
-            - name: AQ-Pathfinder
-            - name: AQS
-            - name: BenMAP-CE
-            - name: BioEco-Pathfinder
-            - name: CACES
-            - name: CDC-ATSDR-SVI
-            - name: CellularTowers
-            - name: CSL
-            - name: CRE
-            - name: Dz-Pathfinder
-            - name: EJI
-            - name: EnviroAtlas
-            - name: EJScreen
-            - name: FIRMS
-            - name: FireWeather
-            - name: GHG-Pathfinder
-            - name: Heat-Pathfinder
-            - name: HMS
-            - name: HCUP
-            - name: InciWeb
-            - name: KPRB
-            - name: LANDFIRE
-            - name: MODIS
-            - name: MTBS
-            - name: NDI
-            - name: NEPHTN
-            - name: NHANES
-            - name: NIFC
-            - name: OpenAQ
-            - name: PLACES
-            - name: PurpleAir
-            - name: RAP
-            - name: SDOH
-            - name: SmokeSense
-            - name: U.S.-PM2.5
-            - name: USFA
-            - name: WA-APCD
-            - name: WF-Pathfinder
-            - name: WFSmokeExp
-            - name: WONDER
-            - name: PM2.5-ACAG-07102024-NA
-            - name: PM2.5-ACAG-07102024-GL
-            - name: CACES-050224
+            - name: ACS-022525
             - name: ADIP-07102024
-            - name: CellularTowers-07102024
-            - name: SEDAC-07102024
-            - name: TRI-071724
-            - name: CDC-ATSDR-SVI-071924
-            - name: NASA-AQS-PM2.5-071924
-            - name: NASA-AQS-NO2-071924
-            - name: NASA-AQS-O3-071924
-            - name: NASA-AQS-AP-071924
-            - name: OpenAQ-071924
-            - name: EPA-AQS-071924
-            - name: FAQSD-071924
-            - name: DeGAUSS-071824
+            - name: AQ-Pathfinder-022525
+            - name: AQS-022525
+            - name: AgRisk-070924
+            - name: AirNow-022525
+            - name: ArboNET-022025
+            - name: BRFSS-092624
+            - name: BenMAP-CE-022525
+            - name: BioEco-Pathfinder-022525
+            - name: CACES-050224
+            - name: CASTNET-052224
+            - name: CDC-ATSDR-SVI-022525
             - name: CDI-071824
-            - name: TIGER-Line-071824
-            - name: MOD13Q1-071824
-            - name: NLCD-ImAY-071724
-            - name: NLCD-LC-AY-071524
+            - name: CMAQ-051324
             - name: CONUS-TC-071524
-            - name: NARR-071524
-            - name: HPMS-071524
+            - name: CRE-022525
+            - name: CSL-022525
+            - name: CanClim_NA-071124
+            - name: CellularTowers-07102024
+            - name: DeGAUSS-071824
+            - name: Dz-Pathfinder-022525
+            - name: EA-EFM-07112024
+            - name: ECDS-111524
+            - name: EJI-022525
+            - name: EJScreen-022525
+            - name: EnviroAtlas-022525
+            - name: FAQSD-071924
+            - name: FIRMS-022525
+            - name: FireWeather-022525
+            - name: GEOS-CF-071224
+            - name: GFCC-071224
+            - name: GHG-Pathfinder-022525
             - name: GMTED2010-071524
-            - name: MOD11A1-071524
-            - name: MOD06_L2-071524
-            - name: MCD19A2-071524
-            - name: MOD09GA-071224
-            - name: VNP46A2-07
+            - name: GPW_v4-071224
+            - name: GRASP-022525
+            - name: GSUHI-071124
+            - name: HCUP-022525
+            - name: HMS-022525
+            - name: HMS-071224
+            - name: HPMS-071524
+            - name: Heat-Pathfinder-022525
+            - name: InciWeb-022525
+            - name: K-GCCM-071224
+            - name: KPRB-022525
+            - name: L-C2-RSI-071224
+            - name: L-C2-ST-071224
+            - name: LANDFIRE-022525
+            - name: LCZ_Map-071124
+            - name: Landslide-090624
             - name: M2I3NVAER-071224
             - name: M2T1NXAER-071224
-            - name: M2TMNXSLV-071224
-            - name: M2TMNXAER-071224
             - name: M2TMNXADG-071224
+            - name: M2TMNXAER-071224
             - name: M2TMNXCHM-071224
             - name: M2TMNXFLX-071224
             - name: M2TMNXINT-071224
             - name: M2TMNXLND-071224
             - name: M2TMNXRAD-071224
-            - name: K-GCCM-071224
-            - name: GPW_v4-071224
-            - name: HMS-071224
-            - name: GEOS-CF-071224
-            - name: PRISM-071224
-            - name: L-C2-RSI-071224
-            - name: L-C2-ST-071224
-            - name: GFCC-071224
-            - name: OSM-071124
-            - name: Nightime_Lights_v4-071124
-            - name: LCZ_Map-071124
-            - name: UVE_NA-071124
-            - name: CanClim_NA-071124
-            - name: NLDAS_FORA0125_H-071124
-            - name: NEPHTN-T-071124
-            - name: NEPHTN-P-071124
+            - name: M2TMNXSLV-071224
+            - name: MCD19A2-071524
+            - name: MOD06_L2-071524
+            - name: MOD09GA-071224
+            - name: MOD11A1-071524
+            - name: MOD13Q1-071824
+            - name: MODIS-022525
+            - name: MTBS-022525
+            - name: NARR-071524
+            - name: NASA-AQS-AP-071924
+            - name: NASA-AQS-NO2-071924
+            - name: NASA-AQS-O3-071924
+            - name: NASA-AQS-PM2.5-071924
+            - name: NDI-022525
+            - name: NEI-052424
+            - name: NEPHTN-022525
             - name: NEPHTN-F-071124
-            - name: GSUHI-071124
-            - name: Storm_Events-0711-24
-            - name: EA-EFM-07112024
+            - name: NEPHTN-P-071124
+            - name: NEPHTN-T-071124
             - name: NFHL-070924
-            - name: NRI-070924
-            - name: AgRisk-070924
+            - name: NHANES-022525
+            - name: NHIS-092524
+            - name: NIAID-DEP-120124
+            - name: NIFC-022525
+            - name: NLCD-ImAY-071724
+            - name: NLCD-LC-AY-071524
             - name: NLCD-TC-071524
+            - name: NLDAS_FORA0125_H-071124
+            - name: NRI-070924
+            - name: Nightime_Lights_v4-071124
+            - name: OSM-071124
+            - name: OSPO-AP-102924
+            - name: OSPO-AP-110724
+            - name: OneStop-092624
+            - name: OpenAQ-022525
+            - name: PLACES-022525
+            - name: PM2.5-ACAG-07102024-GL
+            - name: PM2.5-ACAG-07102024-NA
+            - name: PRISM-071224
+            - name: PurpleAir-022525
+            - name: RAP-022525
+            - name: SDOH-022525
+            - name: SEDAC-07102024
+            - name: SmokeSense-022525
+            - name: Storm_Events-0711-24
+            - name: TIGER-Line-071824
+            - name: TRI-071724
+            - name: U.S.-PM2.5-022525
+            - name: USFA-022525
+            - name: USGSP-121624
+            - name: UVE_NA-071124
+            - name: VNP46A2-07
+            - name: WA-APCD-022525
+            - name: WF-Pathfinder-022525
+            - name: WFSmokeExp-022525
+            - name: WONDER-022525
+            - name: iPUMS-013125
       policies:
       - id: 'mds_admin'
         description: 'be able to use metadata service'
@@ -211,114 +219,123 @@ fence:
           - 'ohif-viewer_reader'
         resource_paths:
         - /open
-        - /programs/CHORDS/projects/ACS
-        - /programs/CHORDS/projects/ACAG
-        - /programs/CHORDS/projects/ADIP
-        - /programs/CHORDS/projects/AirNow
-        - /programs/CHORDS/projects/AQ-Pathfinder
-        - /programs/CHORDS/projects/AQS
-        - /programs/CHORDS/projects/BenMAP-CE
-        - /programs/CHORDS/projects/BioEco-Pathfinder
-        - /programs/CHORDS/projects/CACES
-        - /programs/CHORDS/projects/CDC-ATSDR-SVI
-        - /programs/CHORDS/projects/CellularTowers
-        - /programs/CHORDS/projects/CSL
-        - /programs/CHORDS/projects/CRE
-        - /programs/CHORDS/projects/Dz-Pathfinder
-        - /programs/CHORDS/projects/EJI
-        - /programs/CHORDS/projects/EnviroAtlas
-        - /programs/CHORDS/projects/EJScreen
-        - /programs/CHORDS/projects/FIRMS
-        - /programs/CHORDS/projects/FireWeather
-        - /programs/CHORDS/projects/GHG-Pathfinder
-        - /programs/CHORDS/projects/Heat-Pathfinder
-        - /programs/CHORDS/projects/HMS
-        - /programs/CHORDS/projects/HCUP
-        - /programs/CHORDS/projects/InciWeb
-        - /programs/CHORDS/projects/KPRB
-        - /programs/CHORDS/projects/LANDFIRE
-        - /programs/CHORDS/projects/MODIS
-        - /programs/CHORDS/projects/MTBS
-        - /programs/CHORDS/projects/NDI
-        - /programs/CHORDS/projects/NEPHTN
-        - /programs/CHORDS/projects/NHANES
-        - /programs/CHORDS/projects/NIFC
-        - /programs/CHORDS/projects/OpenAQ
-        - /programs/CHORDS/projects/PLACES
-        - /programs/CHORDS/projects/PurpleAir
-        - /programs/CHORDS/projects/RAP
-        - /programs/CHORDS/projects/SDOH
-        - /programs/CHORDS/projects/SmokeSense
-        - /programs/CHORDS/projects/U.S.-PM2.5
-        - /programs/CHORDS/projects/USFA
-        - /programs/CHORDS/projects/WA-APCD
-        - /programs/CHORDS/projects/WF-Pathfinder
-        - /programs/CHORDS/projects/WFSmokeExp
-        - /programs/CHORDS/projects/WONDER
-        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-NA
-        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-GL
-        - /programs/CHORDS/projects/CACES-050224
+        - /programs/CHORDS/projects/ACS-022525
         - /programs/CHORDS/projects/ADIP-07102024
-        - /programs/CHORDS/projects/CellularTowers-07102024
-        - /programs/CHORDS/projects/SEDAC-07102024
-        - /programs/CHORDS/projects/TRI-071724
-        - /programs/CHORDS/projects/CDC-ATSDR-SVI-071924
-        - /programs/CHORDS/projects/NASA-AQS-PM2.5-071924
-        - /programs/CHORDS/projects/NASA-AQS-NO2-071924
-        - /programs/CHORDS/projects/NASA-AQS-O3-071924
-        - /programs/CHORDS/projects/NASA-AQS-AP-071924
-        - /programs/CHORDS/projects/OpenAQ-071924
-        - /programs/CHORDS/projects/EPA-AQS-071924
-        - /programs/CHORDS/projects/FAQSD-071924
-        - /programs/CHORDS/projects/DeGAUSS-071824
+        - /programs/CHORDS/projects/AQ-Pathfinder-022525
+        - /programs/CHORDS/projects/AQS-022525
+        - /programs/CHORDS/projects/AgRisk-070924
+        - /programs/CHORDS/projects/AirNow-022525
+        - /programs/CHORDS/projects/ArboNET-022025
+        - /programs/CHORDS/projects/BRFSS-092624
+        - /programs/CHORDS/projects/BenMAP-CE-022525
+        - /programs/CHORDS/projects/BioEco-Pathfinder-022525
+        - /programs/CHORDS/projects/CACES-050224
+        - /programs/CHORDS/projects/CASTNET-052224
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI-022525
         - /programs/CHORDS/projects/CDI-071824
-        - /programs/CHORDS/projects/TIGER-Line-071824
-        - /programs/CHORDS/projects/MOD13Q1-071824
-        - /programs/CHORDS/projects/NLCD-ImAY-071724
-        - /programs/CHORDS/projects/NLCD-LC-AY-071524
+        - /programs/CHORDS/projects/CMAQ-051324
         - /programs/CHORDS/projects/CONUS-TC-071524
-        - /programs/CHORDS/projects/NARR-071524
-        - /programs/CHORDS/projects/HPMS-071524
+        - /programs/CHORDS/projects/CRE-022525
+        - /programs/CHORDS/projects/CSL-022525
+        - /programs/CHORDS/projects/CanClim_NA-071124
+        - /programs/CHORDS/projects/CellularTowers-07102024
+        - /programs/CHORDS/projects/DeGAUSS-071824
+        - /programs/CHORDS/projects/Dz-Pathfinder-022525
+        - /programs/CHORDS/projects/EA-EFM-07112024
+        - /programs/CHORDS/projects/ECDS-111524
+        - /programs/CHORDS/projects/EJI-022525
+        - /programs/CHORDS/projects/EJScreen-022525
+        - /programs/CHORDS/projects/EnviroAtlas-022525
+        - /programs/CHORDS/projects/FAQSD-071924
+        - /programs/CHORDS/projects/FIRMS-022525
+        - /programs/CHORDS/projects/FireWeather-022525
+        - /programs/CHORDS/projects/GEOS-CF-071224
+        - /programs/CHORDS/projects/GFCC-071224
+        - /programs/CHORDS/projects/GHG-Pathfinder-022525
         - /programs/CHORDS/projects/GMTED2010-071524
-        - /programs/CHORDS/projects/MOD11A1-071524
-        - /programs/CHORDS/projects/MOD06_L2-071524
-        - /programs/CHORDS/projects/MCD19A2-071524
-        - /programs/CHORDS/projects/MOD09GA-071224
-        - /programs/CHORDS/projects/VNP46A2-07
+        - /programs/CHORDS/projects/GPW_v4-071224
+        - /programs/CHORDS/projects/GRASP-022525
+        - /programs/CHORDS/projects/GSUHI-071124
+        - /programs/CHORDS/projects/HCUP-022525
+        - /programs/CHORDS/projects/HMS-022525
+        - /programs/CHORDS/projects/HMS-071224
+        - /programs/CHORDS/projects/HPMS-071524
+        - /programs/CHORDS/projects/Heat-Pathfinder-022525
+        - /programs/CHORDS/projects/InciWeb-022525
+        - /programs/CHORDS/projects/K-GCCM-071224
+        - /programs/CHORDS/projects/KPRB-022525
+        - /programs/CHORDS/projects/L-C2-RSI-071224
+        - /programs/CHORDS/projects/L-C2-ST-071224
+        - /programs/CHORDS/projects/LANDFIRE-022525
+        - /programs/CHORDS/projects/LCZ_Map-071124
+        - /programs/CHORDS/projects/Landslide-090624
         - /programs/CHORDS/projects/M2I3NVAER-071224
         - /programs/CHORDS/projects/M2T1NXAER-071224
-        - /programs/CHORDS/projects/M2TMNXSLV-071224
-        - /programs/CHORDS/projects/M2TMNXAER-071224
         - /programs/CHORDS/projects/M2TMNXADG-071224
+        - /programs/CHORDS/projects/M2TMNXAER-071224
         - /programs/CHORDS/projects/M2TMNXCHM-071224
         - /programs/CHORDS/projects/M2TMNXFLX-071224
         - /programs/CHORDS/projects/M2TMNXINT-071224
         - /programs/CHORDS/projects/M2TMNXLND-071224
         - /programs/CHORDS/projects/M2TMNXRAD-071224
-        - /programs/CHORDS/projects/K-GCCM-071224
-        - /programs/CHORDS/projects/GPW_v4-071224
-        - /programs/CHORDS/projects/HMS-071224
-        - /programs/CHORDS/projects/GEOS-CF-071224
-        - /programs/CHORDS/projects/PRISM-071224
-        - /programs/CHORDS/projects/L-C2-RSI-071224
-        - /programs/CHORDS/projects/L-C2-ST-071224
-        - /programs/CHORDS/projects/GFCC-071224
-        - /programs/CHORDS/projects/OSM-071124
-        - /programs/CHORDS/projects/Nightime_Lights_v4-071124
-        - /programs/CHORDS/projects/LCZ_Map-071124
-        - /programs/CHORDS/projects/UVE_NA-071124
-        - /programs/CHORDS/projects/CanClim_NA-071124
-        - /programs/CHORDS/projects/NLDAS_FORA0125_H-071124
-        - /programs/CHORDS/projects/NEPHTN-T-071124
-        - /programs/CHORDS/projects/NEPHTN-P-071124
+        - /programs/CHORDS/projects/M2TMNXSLV-071224
+        - /programs/CHORDS/projects/MCD19A2-071524
+        - /programs/CHORDS/projects/MOD06_L2-071524
+        - /programs/CHORDS/projects/MOD09GA-071224
+        - /programs/CHORDS/projects/MOD11A1-071524
+        - /programs/CHORDS/projects/MOD13Q1-071824
+        - /programs/CHORDS/projects/MODIS-022525
+        - /programs/CHORDS/projects/MTBS-022525
+        - /programs/CHORDS/projects/NARR-071524
+        - /programs/CHORDS/projects/NASA-AQS-AP-071924
+        - /programs/CHORDS/projects/NASA-AQS-NO2-071924
+        - /programs/CHORDS/projects/NASA-AQS-O3-071924
+        - /programs/CHORDS/projects/NASA-AQS-PM2.5-071924
+        - /programs/CHORDS/projects/NDI-022525
+        - /programs/CHORDS/projects/NEI-052424
+        - /programs/CHORDS/projects/NEPHTN-022525
         - /programs/CHORDS/projects/NEPHTN-F-071124
-        - /programs/CHORDS/projects/GSUHI-071124
-        - /programs/CHORDS/projects/Storm_Events-0711-24
-        - /programs/CHORDS/projects/EA-EFM-07112024
+        - /programs/CHORDS/projects/NEPHTN-P-071124
+        - /programs/CHORDS/projects/NEPHTN-T-071124
         - /programs/CHORDS/projects/NFHL-070924
-        - /programs/CHORDS/projects/NRI-070924
-        - /programs/CHORDS/projects/AgRisk-070924
+        - /programs/CHORDS/projects/NHANES-022525
+        - /programs/CHORDS/projects/NHIS-092524
+        - /programs/CHORDS/projects/NIAID-DEP-120124
+        - /programs/CHORDS/projects/NIFC-022525
+        - /programs/CHORDS/projects/NLCD-ImAY-071724
+        - /programs/CHORDS/projects/NLCD-LC-AY-071524
         - /programs/CHORDS/projects/NLCD-TC-071524
+        - /programs/CHORDS/projects/NLDAS_FORA0125_H-071124
+        - /programs/CHORDS/projects/NRI-070924
+        - /programs/CHORDS/projects/Nightime_Lights_v4-071124
+        - /programs/CHORDS/projects/OSM-071124
+        - /programs/CHORDS/projects/OSPO-AP-102924
+        - /programs/CHORDS/projects/OSPO-AP-110724
+        - /programs/CHORDS/projects/OneStop-092624
+        - /programs/CHORDS/projects/OpenAQ-022525
+        - /programs/CHORDS/projects/PLACES-022525
+        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-GL
+        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-NA
+        - /programs/CHORDS/projects/PRISM-071224
+        - /programs/CHORDS/projects/PurpleAir-022525
+        - /programs/CHORDS/projects/RAP-022525
+        - /programs/CHORDS/projects/SDOH-022525
+        - /programs/CHORDS/projects/SEDAC-07102024
+        - /programs/CHORDS/projects/SmokeSense-022525
+        - /programs/CHORDS/projects/Storm_Events-0711-24
+        - /programs/CHORDS/projects/TIGER-Line-071824
+        - /programs/CHORDS/projects/TRI-071724
+        - /programs/CHORDS/projects/U.S.-PM2.5-022525
+        - /programs/CHORDS/projects/USFA-022525
+        - /programs/CHORDS/projects/USGSP-121624
+        - /programs/CHORDS/projects/UVE_NA-071124
+        - /programs/CHORDS/projects/VNP46A2-07
+        - /programs/CHORDS/projects/WA-APCD-022525
+        - /programs/CHORDS/projects/WF-Pathfinder-022525
+        - /programs/CHORDS/projects/WFSmokeExp-022525
+        - /programs/CHORDS/projects/WONDER-022525
+        - /programs/CHORDS/projects/iPUMS-013125
+
       - id: all_programs_reader
         role_ids:
         - 'guppy_reader'
@@ -339,114 +356,123 @@ fence:
         - storage_reader
         - storage_writer
         resource_paths:
-        - /programs/CHORDS/projects/ACAG
-        - /programs/CHORDS/projects/ACS
-        - /programs/CHORDS/projects/ADIP
-        - /programs/CHORDS/projects/AirNow
-        - /programs/CHORDS/projects/AQ-Pathfinder
-        - /programs/CHORDS/projects/AQS
-        - /programs/CHORDS/projects/BenMAP-CE
-        - /programs/CHORDS/projects/BioEco-Pathfinder
-        - /programs/CHORDS/projects/CACES
-        - /programs/CHORDS/projects/CDC-ATSDR-SVI
-        - /programs/CHORDS/projects/CellularTowers
-        - /programs/CHORDS/projects/CSL
-        - /programs/CHORDS/projects/CRE
-        - /programs/CHORDS/projects/Dz-Pathfinder
-        - /programs/CHORDS/projects/EJI
-        - /programs/CHORDS/projects/EnviroAtlas
-        - /programs/CHORDS/projects/EJScreen
-        - /programs/CHORDS/projects/FIRMS
-        - /programs/CHORDS/projects/FireWeather
-        - /programs/CHORDS/projects/GHG-Pathfinder
-        - /programs/CHORDS/projects/Heat-Pathfinder
-        - /programs/CHORDS/projects/HMS
-        - /programs/CHORDS/projects/HCUP
-        - /programs/CHORDS/projects/InciWeb
-        - /programs/CHORDS/projects/KPRB
-        - /programs/CHORDS/projects/LANDFIRE
-        - /programs/CHORDS/projects/MODIS
-        - /programs/CHORDS/projects/MTBS
-        - /programs/CHORDS/projects/NDI
-        - /programs/CHORDS/projects/NEPHTN
-        - /programs/CHORDS/projects/NHANES
-        - /programs/CHORDS/projects/NIFC
-        - /programs/CHORDS/projects/OpenAQ
-        - /programs/CHORDS/projects/PLACES
-        - /programs/CHORDS/projects/PurpleAir
-        - /programs/CHORDS/projects/RAP
-        - /programs/CHORDS/projects/SDOH
-        - /programs/CHORDS/projects/SmokeSense
-        - /programs/CHORDS/projects/U.S.-PM2.5
-        - /programs/CHORDS/projects/USFA
-        - /programs/CHORDS/projects/WA-APCD
-        - /programs/CHORDS/projects/WF-Pathfinder
-        - /programs/CHORDS/projects/WFSmokeExp
-        - /programs/CHORDS/projects/WONDER
-        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-NA
-        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-GL
-        - /programs/CHORDS/projects/CACES-050224
+        - /programs/CHORDS/projects/ACS-022525
         - /programs/CHORDS/projects/ADIP-07102024
-        - /programs/CHORDS/projects/CellularTowers-07102024
-        - /programs/CHORDS/projects/SEDAC-07102024
-        - /programs/CHORDS/projects/TRI-071724
-        - /programs/CHORDS/projects/CDC-ATSDR-SVI-071924
-        - /programs/CHORDS/projects/NASA-AQS-PM2.5-071924
-        - /programs/CHORDS/projects/NASA-AQS-NO2-071924
-        - /programs/CHORDS/projects/NASA-AQS-O3-071924
-        - /programs/CHORDS/projects/NASA-AQS-AP-071924
-        - /programs/CHORDS/projects/OpenAQ-071924
-        - /programs/CHORDS/projects/EPA-AQS-071924
-        - /programs/CHORDS/projects/FAQSD-071924
-        - /programs/CHORDS/projects/DeGAUSS-071824
+        - /programs/CHORDS/projects/AQ-Pathfinder-022525
+        - /programs/CHORDS/projects/AQS-022525
+        - /programs/CHORDS/projects/AgRisk-070924
+        - /programs/CHORDS/projects/AirNow-022525
+        - /programs/CHORDS/projects/ArboNET-022025
+        - /programs/CHORDS/projects/BRFSS-092624
+        - /programs/CHORDS/projects/BenMAP-CE-022525
+        - /programs/CHORDS/projects/BioEco-Pathfinder-022525
+        - /programs/CHORDS/projects/CACES-050224
+        - /programs/CHORDS/projects/CASTNET-052224
+        - /programs/CHORDS/projects/CDC-ATSDR-SVI-022525
         - /programs/CHORDS/projects/CDI-071824
-        - /programs/CHORDS/projects/TIGER-Line-071824
-        - /programs/CHORDS/projects/MOD13Q1-071824
-        - /programs/CHORDS/projects/NLCD-ImAY-071724
-        - /programs/CHORDS/projects/NLCD-LC-AY-071524
+        - /programs/CHORDS/projects/CMAQ-051324
         - /programs/CHORDS/projects/CONUS-TC-071524
-        - /programs/CHORDS/projects/NARR-071524
-        - /programs/CHORDS/projects/HPMS-071524
+        - /programs/CHORDS/projects/CRE-022525
+        - /programs/CHORDS/projects/CSL-022525
+        - /programs/CHORDS/projects/CanClim_NA-071124
+        - /programs/CHORDS/projects/CellularTowers-07102024
+        - /programs/CHORDS/projects/DeGAUSS-071824
+        - /programs/CHORDS/projects/Dz-Pathfinder-022525
+        - /programs/CHORDS/projects/EA-EFM-07112024
+        - /programs/CHORDS/projects/ECDS-111524
+        - /programs/CHORDS/projects/EJI-022525
+        - /programs/CHORDS/projects/EJScreen-022525
+        - /programs/CHORDS/projects/EnviroAtlas-022525
+        - /programs/CHORDS/projects/FAQSD-071924
+        - /programs/CHORDS/projects/FIRMS-022525
+        - /programs/CHORDS/projects/FireWeather-022525
+        - /programs/CHORDS/projects/GEOS-CF-071224
+        - /programs/CHORDS/projects/GFCC-071224
+        - /programs/CHORDS/projects/GHG-Pathfinder-022525
         - /programs/CHORDS/projects/GMTED2010-071524
-        - /programs/CHORDS/projects/MOD11A1-071524
-        - /programs/CHORDS/projects/MOD06_L2-071524
-        - /programs/CHORDS/projects/MCD19A2-071524
-        - /programs/CHORDS/projects/MOD09GA-071224
-        - /programs/CHORDS/projects/VNP46A2-07
+        - /programs/CHORDS/projects/GPW_v4-071224
+        - /programs/CHORDS/projects/GRASP-022525
+        - /programs/CHORDS/projects/GSUHI-071124
+        - /programs/CHORDS/projects/HCUP-022525
+        - /programs/CHORDS/projects/HMS-022525
+        - /programs/CHORDS/projects/HMS-071224
+        - /programs/CHORDS/projects/HPMS-071524
+        - /programs/CHORDS/projects/Heat-Pathfinder-022525
+        - /programs/CHORDS/projects/InciWeb-022525
+        - /programs/CHORDS/projects/K-GCCM-071224
+        - /programs/CHORDS/projects/KPRB-022525
+        - /programs/CHORDS/projects/L-C2-RSI-071224
+        - /programs/CHORDS/projects/L-C2-ST-071224
+        - /programs/CHORDS/projects/LANDFIRE-022525
+        - /programs/CHORDS/projects/LCZ_Map-071124
+        - /programs/CHORDS/projects/Landslide-090624
         - /programs/CHORDS/projects/M2I3NVAER-071224
         - /programs/CHORDS/projects/M2T1NXAER-071224
-        - /programs/CHORDS/projects/M2TMNXSLV-071224
-        - /programs/CHORDS/projects/M2TMNXAER-071224
         - /programs/CHORDS/projects/M2TMNXADG-071224
+        - /programs/CHORDS/projects/M2TMNXAER-071224
         - /programs/CHORDS/projects/M2TMNXCHM-071224
         - /programs/CHORDS/projects/M2TMNXFLX-071224
         - /programs/CHORDS/projects/M2TMNXINT-071224
         - /programs/CHORDS/projects/M2TMNXLND-071224
         - /programs/CHORDS/projects/M2TMNXRAD-071224
-        - /programs/CHORDS/projects/K-GCCM-071224
-        - /programs/CHORDS/projects/GPW_v4-071224
-        - /programs/CHORDS/projects/HMS-071224
-        - /programs/CHORDS/projects/GEOS-CF-071224
-        - /programs/CHORDS/projects/PRISM-071224
-        - /programs/CHORDS/projects/L-C2-RSI-071224
-        - /programs/CHORDS/projects/L-C2-ST-071224
-        - /programs/CHORDS/projects/GFCC-071224
-        - /programs/CHORDS/projects/OSM-071124
-        - /programs/CHORDS/projects/Nightime_Lights_v4-071124
-        - /programs/CHORDS/projects/LCZ_Map-071124
-        - /programs/CHORDS/projects/UVE_NA-071124
-        - /programs/CHORDS/projects/CanClim_NA-071124
-        - /programs/CHORDS/projects/NLDAS_FORA0125_H-071124
-        - /programs/CHORDS/projects/NEPHTN-T-071124
-        - /programs/CHORDS/projects/NEPHTN-P-071124
+        - /programs/CHORDS/projects/M2TMNXSLV-071224
+        - /programs/CHORDS/projects/MCD19A2-071524
+        - /programs/CHORDS/projects/MOD06_L2-071524
+        - /programs/CHORDS/projects/MOD09GA-071224
+        - /programs/CHORDS/projects/MOD11A1-071524
+        - /programs/CHORDS/projects/MOD13Q1-071824
+        - /programs/CHORDS/projects/MODIS-022525
+        - /programs/CHORDS/projects/MTBS-022525
+        - /programs/CHORDS/projects/NARR-071524
+        - /programs/CHORDS/projects/NASA-AQS-AP-071924
+        - /programs/CHORDS/projects/NASA-AQS-NO2-071924
+        - /programs/CHORDS/projects/NASA-AQS-O3-071924
+        - /programs/CHORDS/projects/NASA-AQS-PM2.5-071924
+        - /programs/CHORDS/projects/NDI-022525
+        - /programs/CHORDS/projects/NEI-052424
+        - /programs/CHORDS/projects/NEPHTN-022525
         - /programs/CHORDS/projects/NEPHTN-F-071124
-        - /programs/CHORDS/projects/GSUHI-071124
-        - /programs/CHORDS/projects/Storm_Events-0711-24
-        - /programs/CHORDS/projects/EA-EFM-07112024
+        - /programs/CHORDS/projects/NEPHTN-P-071124
+        - /programs/CHORDS/projects/NEPHTN-T-071124
         - /programs/CHORDS/projects/NFHL-070924
-        - /programs/CHORDS/projects/NRI-070924
-        - /programs/CHORDS/projects/AgRisk-070924
+        - /programs/CHORDS/projects/NHANES-022525
+        - /programs/CHORDS/projects/NHIS-092524
+        - /programs/CHORDS/projects/NIAID-DEP-120124
+        - /programs/CHORDS/projects/NIFC-022525
+        - /programs/CHORDS/projects/NLCD-ImAY-071724
+        - /programs/CHORDS/projects/NLCD-LC-AY-071524
         - /programs/CHORDS/projects/NLCD-TC-071524
+        - /programs/CHORDS/projects/NLDAS_FORA0125_H-071124
+        - /programs/CHORDS/projects/NRI-070924
+        - /programs/CHORDS/projects/Nightime_Lights_v4-071124
+        - /programs/CHORDS/projects/OSM-071124
+        - /programs/CHORDS/projects/OSPO-AP-102924
+        - /programs/CHORDS/projects/OSPO-AP-110724
+        - /programs/CHORDS/projects/OneStop-092624
+        - /programs/CHORDS/projects/OpenAQ-022525
+        - /programs/CHORDS/projects/PLACES-022525
+        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-GL
+        - /programs/CHORDS/projects/PM2.5-ACAG-07102024-NA
+        - /programs/CHORDS/projects/PRISM-071224
+        - /programs/CHORDS/projects/PurpleAir-022525
+        - /programs/CHORDS/projects/RAP-022525
+        - /programs/CHORDS/projects/SDOH-022525
+        - /programs/CHORDS/projects/SEDAC-07102024
+        - /programs/CHORDS/projects/SmokeSense-022525
+        - /programs/CHORDS/projects/Storm_Events-0711-24
+        - /programs/CHORDS/projects/TIGER-Line-071824
+        - /programs/CHORDS/projects/TRI-071724
+        - /programs/CHORDS/projects/U.S.-PM2.5-022525
+        - /programs/CHORDS/projects/USFA-022525
+        - /programs/CHORDS/projects/USGSP-121624
+        - /programs/CHORDS/projects/UVE_NA-071124
+        - /programs/CHORDS/projects/VNP46A2-07
+        - /programs/CHORDS/projects/WA-APCD-022525
+        - /programs/CHORDS/projects/WF-Pathfinder-022525
+        - /programs/CHORDS/projects/WFSmokeExp-022525
+        - /programs/CHORDS/projects/WONDER-022525
+        - /programs/CHORDS/projects/iPUMS-013125
+
       roles:
       - id: 'mds_user'
         permissions:
@@ -602,6 +628,7 @@ fence:
           - mds_admin
           - data_upload
           - services.sheepdog-admin
+
 
   # -- (map) External Secrets settings.
   externalSecrets:

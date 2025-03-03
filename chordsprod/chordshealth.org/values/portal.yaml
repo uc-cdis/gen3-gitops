@@ -411,11 +411,6 @@ portal:
             "plural": "Population Data Resources"
           },
           {
-            "graphql": "_geospatial_tool_resource_count",
-            "name": "Geospatial Tool Resource",
-            "plural": "Geospatial Tool Resources"
-          },
-          {
             "graphql": "_key_data_resource_count",
             "name": "Key Dataset",
             "plural": "Key Datasets"
@@ -433,11 +428,6 @@ portal:
             "plural": "Population Data Resources"
           },
           {
-            "graphql": "_geospatial_tool_resource_count",
-            "name": "Geospatial Tool Resource",
-            "plural": "Geospatial Tool Resources"
-          },
-          {
             "graphql": "_key_data_resource_count",
             "name": "Key Dataset",
             "plural": "Key Datasets"
@@ -451,8 +441,8 @@ portal:
         "homepageHref": "https://chordshealth.org/",
         "index": {
           "introduction": {
-            "heading": "CHORDS - Climate and Health Outcomes Research Data Systems Catalog",
-            "text": "The CHORDS project aims to build and strengthen data infrastructure for patient-centered outcomes research on climate change and health. We will achieve this goal by providing accessible, timely, harmonized, interoperable, and linkable data on environmental factors, exposures, and health outcomes. The project also provides analytical and educational resources that will allow not only researchers, but also health practitioners, public health officials, and communities to assess the health effects associated with climate-related events, create and evaluate evidence-based interventions to protect communities, and anticipate and respond to potential adverse health outcomes resulting from these events.​",
+            "heading": "CHORDS - Connecting Health Outcomes Research Data Systems Catalog",
+            "text": "The CHORDS project aims to build and strengthen data infrastructure for patient-centered outcomes research on environment and health. We will achieve this goal by providing accessible, timely, harmonized, interoperable, and linkable data on environmental factors, exposures, and health outcomes. The project also provides analytical and educational resources that will allow not only researchers, but also health practitioners, public health officials, and communities to assess the health effects associated with environment-related events, create and evaluate evidence-based interventions to protect communities, and anticipate and respond to potential adverse health outcomes resulting from these events.​",
             "link": "/submission"
           },
           "buttons": [
@@ -508,15 +498,15 @@ portal:
       },
         "useProfileDropdown": false,
         "login": {
-          "title": "CHORDS - Climate and Health Outcomes Research Data Systems",
-          "subTitle": "Explore, Analyze, and Share Climate and Health Resources",
+          "title": "CHORDS - Connecting Health Outcomes Research Data Systems",
+          "subTitle": "Explore, Analyze, and Share Environmental and Health Resources",
           "text": "",
           "contact": "If you have any questions about access or the registration process, please contact ",
           "email": "mike.conway@nih.gov"
         },
         "systemUse" : {
           "systemUseTitle" : "CHORDS Catalog Policy",
-          "systemUseText" : ["You are accessing a U.S. Government System. System usage may be monitored, recorded, and subject to audit. Use of the system indicates consent to monitoring and recording.\n\nUnauthorized use of the system is prohibited and subject to criminal and civil penalties.\n\nThis system includes links to external resources, and may be used by the public and by researchers as an aid to locate data relevant to climate and public health. NIEHS is not responsible for information that is hosted on these external data resources."],
+          "systemUseText" : ["You are accessing a U.S. Government System. System usage may be monitored, recorded, and subject to audit. Use of the system indicates consent to monitoring and recording.\n\nUnauthorized use of the system is prohibited and subject to criminal and civil penalties.\n\nThis system includes links to external resources, and may be used by the public and by researchers as an aid to locate data relevant to environment and public health. NIEHS is not responsible for information that is hosted on these external data resources."],
           "expireUseMsgDays" : 0
         },
         "footerLogos": [
@@ -551,7 +541,7 @@ portal:
             "searchBar": {
               "enabled": true,
               "inputSubtitle": "CHORDS Resource Search",
-              "placeholder": "Try searches such as 'Air quality', 'General exposure', 'Climate hazard'",
+              "placeholder": "Try searches such as 'Air quality', 'General exposure'",
               "searchableTextFields": [
                 "project_short_name",
                 "project_name",
@@ -689,7 +679,7 @@ portal:
                   "fields": [
                     {
                       "type": "block",
-                      "sourceField": "comment"
+                      "sourceField": "intended_use"
                     }
                   ]
                 },
@@ -786,6 +776,12 @@ portal:
                     },
                     {
                       "type": "text",
+                      "label": "Domain Other",
+                      "sourceField": "domain_other",
+                      "default": "n/a"
+                    },
+                    {
+                      "type": "text",
                       "label": "Has API",
                       "sourceField": "has_api",
                       "default": "n/a"
@@ -840,20 +836,38 @@ portal:
                     },
                     {
                       "type": "text",
-                      "label": "Spatial Resolution",
-                      "sourceField": "spatial_resolution",
-                      "default": ""
-                    },
-                    {
-                      "type": "text",
                       "label": "Temporal Resolution",
                       "sourceField": "temporal_resolution",
                       "default": ""
                     },
                     {
                       "type": "text",
+                      "label": "Temporal Resolution Other",
+                      "sourceField": "temporal_resolution_other",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
+                      "label": "Spatial Resolution",
+                      "sourceField": "spatial_resolution",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
+                      "label": "Spatial Resolution Other",
+                      "sourceField": "spatial_resolution_other",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
                       "label": "Spatial Coverage",
                       "sourceField": "spatial_coverage",
+                      "default": ""
+                    },
+                    {
+                      "type": "text",
+                      "label": "Spatial Coverage Other",
+                      "sourceField": "spatial_coverage_other",
                       "default": ""
                     },
                     {
@@ -890,27 +904,51 @@ portal:
                       "default": "n/a"
                     },
                     {
-                      "type": "link",
+                      "type": "text",
                       "label": "Resource Use Agreement",
                       "sourceField": "resource_use_agreement",
                       "default": "n/a"
                     },
-                    {
+                     {
                       "type": "link",
+                      "label": "Resource Use Agreement Link",
+                      "sourceField": "resource_use_agreement_link",
+                      "default": "n/a"
+                    },
+                    {
+                      "type": "text",
                       "label": "Dataset Location 1",
-                      "sourceField": "data_location_1",
+                      "sourceField": "data_location_text_1",
                       "default": "n/a"
                     },
                     {
                       "type": "link",
+                      "label": "Dataset Location link 1 ",
+                      "sourceField": "data_location_link_1",
+                      "default": "n/a"
+                    },
+                    {
+                      "type": "text",
                       "label": "Dataset Location 2",
-                      "sourceField": "data_location_2",
+                      "sourceField": "data_location_text_2",
                       "default": "n/a"
                     },
                     {
                       "type": "link",
+                      "label": "Dataset Location link 2 ",
+                      "sourceField": "data_location_link_2",
+                      "default": "n/a"
+                    },
+                    {
+                      "type": "text",
                       "label": "Dataset Location 3",
-                      "sourceField": "data_location_3",
+                      "sourceField": "data_location_text_3",
+                      "default": "n/a"
+                    },
+                    {
+                      "type": "link",
+                      "label": "Dataset Location link 3 ",
+                      "sourceField": "data_location_link_3",
                       "default": "n/a"
                     }
                   ]
@@ -985,7 +1023,7 @@ portal:
             "enabled": true,
             "fields": [
               "project_sponsor",
-              "resource_name",
+              "resource_short_name",
               "resource_description",
               "domain",
               "keywords",
@@ -994,7 +1032,6 @@ portal:
               "time_extent_start_year",
               "time_extent_end_year",
               "spatial_coverage",
-              "spatial_coverage_specific_regions",
               "resource_url"
             ],
             "linkFields": [
@@ -1091,7 +1128,7 @@ portal:
             "enabled": true,
             "fields": [
               "project_sponsor",
-              "resource_name",
+              "resource_short_name",
               "resource_description",
               "domain",
               "keywords",
@@ -1100,7 +1137,6 @@ portal:
               "time_extent_start_year",
               "time_extent_end_year",
               "spatial_coverage",
-              "spatial_coverage_specific_regions",
               "resource_url"
               ],
             "linkFields": [
@@ -1161,102 +1197,6 @@ portal:
             "accessibleValidationField": "project_id"
           }
         },
-
-        {
-          "tabTitle": "Geospatial Tool Resources",
-          "charts": {
-            "domain": {
-              "chartType": "count",
-              "title": "Domain"
-            }
-          },
-          "filters": {
-            "tabs": [
-              {
-                "title": "Search Facets",
-                "fields": [
-                  "project_sponsor",
-                  "project_sponsor_type",
-                  "domain",
-                  "keywords",
-                  "tool_type",
-                  "operating_system",
-                  "languages"
-                ]
-              }
-            ]
-          },
-          "table": {
-            "enabled": true,
-            "fields": [
-              "project_sponsor",
-              "resource_name",
-              "resource_description",
-              "domain",
-              "keywords",
-              "access_type",
-              "tool_type",
-              "operating_system",
-              "languages"
-            ],
-            "linkFields": [
-              "resource_url"
-            ]
-          },
-          "dropdowns": {
-            "download-table": {
-              "title": "Download Dataset Table"
-            }
-          },
-          "buttons": [
-            {
-              "enabled": true,
-              "type": "data-json",
-              "title": "JSON",
-              "dropdownId": "download-table",
-              "leftIcon": "datafile",
-              "rightIcon": "download",
-              "fileName": "datasets_table.json"
-            },
-            {
-              "enabled": true,
-              "type": "data-tsv",
-              "title": "TSV",
-              "dropdownId": "download-table",
-              "leftIcon": "datafile",
-              "rightIcon": "download",
-              "fileName": "datasets_table.tsv"
-            },
-            {
-              "enabled": true,
-              "type": "data-csv",
-              "title": "CSV",
-              "dropdownId": "download-table",
-              "leftIcon": "datafile",
-              "rightIcon": "download",
-              "fileName": "datasets_table.csv"
-            }
-          ],
-          "loginForDownload": true,
-          "guppyConfig": {
-            "dataType": "geospatial_tool_resource",
-            "nodeCountTitle": "Geospatial Tool Resources",
-            "fieldMapping": [
-              {
-                "field": "project_id",
-                "name": "Dataset ID"
-              },
-              {
-                "field": "submitter_id",
-                "name": "Dataset Name"
-              }
-            ],
-            "accessibleFieldCheckList": [
-              "project_id"
-            ],
-            "accessibleValidationField": "project_id"
-          }
-        },
         {
           "tabTitle": "Key Data Resources",
           "charts": {
@@ -1291,18 +1231,17 @@ portal:
             "enabled": true,
             "fields": [
               "project_sponsor",
-              "resource_name",
+              "resource_short_name",
               "resource_description",
               "keywords",
               "domain",
               "comments",
-              "metrics_derived_from_data_set",
               "data_formats",
-              "data_location"
+              "data_location_text"
 
             ],
             "linkFields": [
-              "data_location"
+              "data_location_text"
             ]
           },
           "dropdowns": {
@@ -1359,7 +1298,6 @@ portal:
             "accessibleValidationField": "project_id"
           }
         }
-
       ],
       "connectSrcCSPWhitelist": [
         "https://gen3.niehs.nih.gov", "https://chords.niehs.nih.gov", "https://localhost", "https://chords-health.org", "https://staging.chordshealth.org/", "https://www.niehs.nih.gov", "https://rstudio.niehs.nih.gov"

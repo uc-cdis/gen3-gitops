@@ -1,7 +1,11 @@
-cluster: chordsprod
+cluster: chords
 project: chords
 
+<<<<<<< HEAD
 accountNumber: "922467707295"
+=======
+accountNumber: "048463324059"
+>>>>>>> origin
 
 alb-controller:
   enabled: true

@@ -48,6 +48,8 @@ karpenter-crds:
   enabled: true
   selectorTag: midrcvalidate
   migration: true
+  workflow:
+    sgSelector: midrcvalidate
 
 vpc-cni:
   enabled: true

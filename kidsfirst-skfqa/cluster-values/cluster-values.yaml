@@ -1,6 +1,8 @@
 cluster: kidsfirst-skfqa
 project: kidsfirst
 
+eksClusterName: skfqa
+
 accountNumber: "222487244010"
 
 alb-controller:

@@ -1,0 +1,5 @@
+node:
+  tolerateAllTaints: true
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::813684607867:role/AmazonEKS_S3_CSI_DriverRole-midrcprod"

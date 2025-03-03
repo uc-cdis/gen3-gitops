@@ -48,6 +48,8 @@ karpenter-crds:
   enabled: true
   selectorTag: dcfprod
   migration: true
+  workflow:
+    sgSelector: dcfprod
 
 vpc-cni:
   enabled: true
