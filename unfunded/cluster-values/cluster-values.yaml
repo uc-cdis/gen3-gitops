@@ -42,7 +42,7 @@ karpenter:
   enabled: true
   targetRevision: 1.0.8
   configuration:
-    enabled: true
+    enabled: false
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
