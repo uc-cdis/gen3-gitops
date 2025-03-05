@@ -1,9 +1,6 @@
 cluster: unfunded
 project: unfunded
 
-configuration:
-  configurationRevision: "chore/unfunded-karpenter-update"
-
 accountNumber: "662843554732"
 
 alb-controller:
