@@ -12,6 +12,8 @@ settings:
 webhook:
   enabled: false
 
+dnsPolicy: Default
+
 controller:
   env:
     - name: AWS_REGION
