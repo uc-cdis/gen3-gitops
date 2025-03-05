@@ -23,7 +23,7 @@ spec:
       {{- else }}
         values: |
           webhook:
-            enabled: falsex
+            enabled: false
           serviceAccount:
             name: karpenter
             create: true
