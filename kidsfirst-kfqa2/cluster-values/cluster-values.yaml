@@ -5,6 +5,8 @@ eksClusterName: kfqa2
 
 accountNumber: "222487244010"
 
+eksClusterEndpoint: "https://0390EC57790D396E90741AA0EAA3F54B.sk1.us-east-1.eks.amazonaws.com"
+
 alb-controller:
   enabled: true
   configuration:
