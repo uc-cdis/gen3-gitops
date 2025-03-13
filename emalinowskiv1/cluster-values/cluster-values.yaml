@@ -4,7 +4,7 @@ project: dev
 accountNumber: "707767160287"
 
 configuration:
-  configurationRevision: feat/karpenter-1-0
+  configurationRevision: feat/no-cluster-endpoint-needed
 
 alb-controller:
   enabled: true
