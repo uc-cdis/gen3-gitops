@@ -29,7 +29,11 @@ spec:
             name: karpenter
             create: true
             annotations:
+              {{- if eq .Values.karpenter.targetRevision "1.0.8" }}
+              eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountNumber }}:role/gen3_service/{{ .Values.eksClusterName | default .Values.cluster }}-karpenter-sa"
+              {{- else }}
               eks.amazonaws.com/role-arn: "arn:aws:iam::{{ .Values.accountNumber }}:role/gen3_service/karpenter-controller-role-{{ .Values.eksClusterName | default .Values.cluster }}"
+              {{- end }}
           settings:
             clusterName: {{ .Values.eksClusterName | default .Values.cluster }}
             clusterEndpoint: {{ .Values.eksClusterEndpoint }}
