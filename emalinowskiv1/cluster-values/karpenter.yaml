@@ -3,10 +3,9 @@ serviceAccount:
   name: karpenter
   create: true
   annotations:
-    eks.amazonaws.com/role-arn: "arn:aws:iam::707767160287:role/gen3_service/karpenter-controller-role-emalinowskiv1"
+    eks.amazonaws.com/role-arn: "arn:aws:iam::707767160287:role/emalinowskiv1-karpenter-sa"
 settings:
   clusterName: emalinowskiv1
-  clusterEndpoint: https://60E5A0594C0DD93E53A5D1DC91CD0C07.gr7.us-east-1.eks.amazonaws.com
 controller:
   env:
     - name: AWS_REGION
