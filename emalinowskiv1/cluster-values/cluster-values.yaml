@@ -1,8 +1,6 @@
 cluster: emalinowskiv1
 project: dev
 
-eksClusterEndpoint: https://60E5A0594C0DD93E53A5D1DC91CD0C07.gr7.us-east-1.eks.amazonaws.com
-
 accountNumber: "707767160287"
 
 configuration:
@@ -52,7 +50,7 @@ karpenter:
   enabled: true
   targetRevision: "1.0.8"
   configuration:
-    enabled: false
+    enabled: true
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
