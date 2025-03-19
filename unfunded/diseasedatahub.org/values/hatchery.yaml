@@ -9,7 +9,7 @@ hatchery:
     command:
     - "/bin/bash"
     - "/sidecarDockerrun.sh"
-  
+
 # -- (list) Notebook configuration.
   containers:
     - target-port: 8888
