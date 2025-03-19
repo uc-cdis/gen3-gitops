@@ -20,6 +20,7 @@ spec:
       ref: values
       {{- else}}
         values: |
+          prometheusScrape: false
           podAnnotations:
             prometheus.io/path: "/metrics"
             prometheus.io/scrape: "true"
