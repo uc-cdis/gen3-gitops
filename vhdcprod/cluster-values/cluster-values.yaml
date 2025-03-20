@@ -12,12 +12,12 @@ alb-controller:
     enabled: true
 
 calico:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
 aws-s3-mountpoint:
-  enabled: true
+  enabled: false
   configuration:
     enabled: true
 
@@ -27,7 +27,7 @@ coreDNS:
     enabled: true
 
 ebs-csi-driver:
-  enabled: true
+  enabled: false
   configuration:
     enabled: true
 
@@ -37,7 +37,7 @@ fluentd:
     enabled: false
 
 grafana-alloy:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
@@ -53,6 +53,7 @@ karpenter-crds:
       "vadc:environment-type": "production"
       "vadc:usage-type": "user-infrastructure"
   jupyter:
+    enabled: false
     consolidationPolicy: "WhenUnderutilized"
     additionalTags:
       "vadc:cost-type": "usage-based-variable"
@@ -62,7 +63,7 @@ karpenter-crds:
     enabled: false
 
 kube-state-metrics:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
