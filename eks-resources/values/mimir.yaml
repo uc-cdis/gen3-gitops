@@ -1,0 +1,28 @@
+mimir:
+  minio:
+    enabled: false
+  serviceAccount:
+    # -- Whether to create a service account or not. In case 'create' is false, do set 'name' to an existing service account name.
+    create: false
+    # -- Override for the generated service account name.
+    name: observability
+  ingester:
+    persistentVolume:
+      size: 50Gi
+  mimir:
+    structuredConfig:
+      limits:
+        max_global_series_per_user: 0
+      common:
+        storage:
+          backend: s3
+          s3:
+            endpoint: s3.us-east-1.amazonaws.com
+            region: us-east-1
+            bucket_name: CURRENT_ENV-observability-bucket
+      blocks_storage:
+        storage_prefix: blocks
+      alertmanager_storage:
+        storage_prefix: alertmanager
+      ruler_storage:
+        storage_prefix: ruler

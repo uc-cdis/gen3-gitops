@@ -1,0 +1,47 @@
+tempo:
+  global_overrides:
+    metrics_generator_processors: [service-graphs, span-metrics]
+  enabled: true
+  metricsGenerator:
+    enabled:
+      true
+    config:
+      # Specifies which processors to use.
+      # Configures where the store for metrics is located.
+      storage:
+        # WAL for metrics generation.
+        path: /var/tempo/generator/wal
+        # Where to remote write metrics to.
+        remote_write:
+          - url: http://monitoring-mimir-nginx.monitoring:80/api/v1/push  # URL of locally running Mimir instance.
+            send_exemplars: true # Send exemplars along with their metrics.
+      traces_storage:
+        path: /var/tempo/generator/traces
+      processor:
+        # Span metrics create metrics based on span type, duration, name and service.
+        span_metrics:
+            # Configure extra dimensions to add as metric labels.
+            dimensions:
+              - http.method
+              - http.target
+              - http.status_code
+              - service.version
+        # Service graph metrics create node and edge metrics for determinng service interactions.
+        service_graphs:
+
+            # Configure extra dimensions to add as metric labels.
+            dimensions:
+              - http.method
+              - http.target
+              - http.status_code
+              - service.version
+  distributor:
+    config:
+      log_received_spans:
+        enabled: false
+  traces:
+    otlp:
+      http:
+        enabled: true
+      grpc:
+        enabled: true
