@@ -44,6 +44,12 @@ ebs-csi-driver:
   configuration:
     enabled: false
 
+external-secrets:
+  enabled: false
+  targetRevision: "0.9.13"
+  configuration:
+    enabled: false
+
 fluentd:
   enabled: false
   targetRevision: "0.5.2"
