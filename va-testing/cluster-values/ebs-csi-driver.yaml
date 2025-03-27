@@ -1,5 +1,0 @@
-controller:
-  extraVolumeTags:
-    "vadc:environment-type": "testing"
-    "vadc:usage-type": "data"
-    "vadc:cost-type": "fixed"

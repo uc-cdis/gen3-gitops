@@ -1,5 +1,0 @@
-enableNetworkPolicy: false
-originalMatchLabels: true
-env:
-  ANNOTATE_POD_IP: "true"
-  ADDITIONAL_ENI_TAGS: '{"vadc:environment-type": "testing", "vadc:usage-type": "infrastructure", "vadc:cost-type": "semi-fixed"}'

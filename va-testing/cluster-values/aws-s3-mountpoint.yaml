@@ -1,5 +1,0 @@
-node:
-  tolerateAllTaints: true
-  serviceAccount:
-    annotations:
-      "eks.amazonaws.com/role-arn": "arn:aws:iam::199578515826:role/AmazonEKS_S3_CSI_DriverRole-va-testing"
