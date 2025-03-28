@@ -1,26 +1,11 @@
 portal:
-  enabled: true
-  replicaCount: 2
-  image:
-    repository: "quay.io/cdis/data-portal"
-    tag: "master"
-    # repository: quay.io/cdis/data-portal-prebuilt
-    # tag: gen3.datacommons.io-prebuilt-prc
-
   resources:
-    # -- (map) The amount of resources that the container requests
     requests:
-      cpu: 1000m
-      memory: 2Gi
-    limits:
-      memory: 5Gi
-
-  # Extra images to pull in to serve in portal container
-  extraImages:
-    # - url: https://raw.githubusercontent.com/uc-cdis/gen3-gitops/master/unfunded/gen3.datacommons.io/values/extraImages/notebook_canine.png
-    # - url: https://raw.githubusercontent.com/uc-cdis/cdis-manifest/master/gen3.datacommons.io/dashboard/Public/notebooks/notebook_gene.png
-
-  # GitOps config for portal
+      cpu: "0.2"
+      memory: 100Mi
+  image:
+    repository: quay.io/cdis/data-portal
+    tag: master
   gitops:
     json: |
       {

@@ -4,43 +4,77 @@ fence:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: true
-  replicaCount: 2
   image:
-    repository: "quay.io/cdis/fence"
-    tag: "master"
+    repository: quay.io/cdis/fence
+    pullPolicy: IfNotPresent
+    tag: '2025.01'
 
   # -- (map) Annotations to add to the pod
    ## TODO ## Do we need this?
-  podAnnotations:
-    prometheus.io/path: /metrics
-    prometheus.io/scrape: "true"
+  # podAnnotations:
+  #   prometheus.io/path: /metrics
+  #   prometheus.io/scrape: "true"
 
   usersync:
-    # -- (bool) Whether to run Fence usersync or not.
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml
+    userYamlS3Path: s3://local-helm-testing/user.yaml
+    # we do not want usersync to interrupt test flow
+    # so it is set to run on the 1st of January if it is a Monday
+    schedule: '0 0 1 1 1'
+    syncFromDbgap: false
+    env:
+      - name: AWS_ACCESS_KEY_ID
+        value: test
+      - name: AWS_SECRET_ACCESS_KEY
+        value: test
+      - name: AWS_ENDPOINT_URL
+        value: 'http://localstack.localstack.svc.cluster.local:4566'
+      - name: AWS_DEFAULT_REGION
+        value: 'us-east-1'
 
-  USER_YAML:
+  # # -- (map) Public configuration settings for Fence app
+  # FENCE_CONFIG_PUBLIC:
+  #   ENABLE_PROMETHEUS_METRICS: true
+  #   ENABLE_DB_MIGRATION: true
 
-  # -- (map) External Secrets settings.
-  externalSecrets:
-    # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
-    createK8sJwtKeysSecret: false
-    # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
-    createK8sGoogleAppSecrets: true
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
-    fenceJwtKeys: "ci-fence-jwt"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
-    fenceGoogleAppCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
-    fenceGoogleStorageCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-config"
-    fenceConfig: "ci-fence-config"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
-    dbcreds: "ci-fence-db-creds"
-
-  # -- (map) Public configuration settings for Fence app
-  FENCE_CONFIG_PUBLIC:
-    ENABLE_PROMETHEUS_METRICS: true
-    ENABLE_DB_MIGRATION: true
+  FENCE_CONFIG:
+    ENABLE_AUDIT_LOGS:
+      presigned_url: true
+      login: true
+    LOGIN_REDIRECT_WHITELIST: [".", "/login"]
+    PUSH_AUDIT_LOGS_CONFIG:
+      type: aws_sqs
+      aws_sqs_config:
+        sqs_url: http://localstack.localstack.svc.cluster.local:4566/000000000000/audit-service-sqs
+        region: us-east-1
+        aws_cred: 'cdistest'
+    AWS_CREDENTIALS:
+      cdistest:
+        aws_access_key_id: test
+        aws_secret_access_key: test #pragma: allowlist secret
+    S3_BUCKETS:
+      cdis-presigned-url-test:
+        region: 'us-east-1'
+        cred: 'cdistest'
+        endpoint_url: 'http://localstack.localstack.svc.cluster.local:4566'
+      gen3-helm-data-upload-bucket:
+        region: 'us-east-1'
+        cred: 'cdistest'
+        endpoint_url: 'http://localstack.localstack.svc.cluster.local:4566'
+    DATA_UPLOAD_BUCKET: 'gen3-helm-data-upload-bucket'
+    LOGIN_OPTIONS:
+    - name: 'Login from Google'
+      desc: 'description'
+      idp: google
+      #secondary: True
+    - name: 'RAS Login'
+      idp: ras
+    MOCK_GOOGLE_AUTH: true
+    HTTP_PROXY:
+      host: 'cloud-proxy.internal.io'
+      port: 3128
+    ENABLED_IDENTITY_PROVIDERS:
+      default: google
+      providers:
+        google:
+          name: Login from Google

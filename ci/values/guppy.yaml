@@ -26,4 +26,3 @@ guppy:
       type: imaging_study
   configIndex: ci_configs_alias
   authFilterField: auth_resource_path
-  esEndpoint: http://elasticsearch:9200

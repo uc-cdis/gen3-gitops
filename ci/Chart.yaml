@@ -1,6 +1,6 @@
 apiVersion: v2
 name: ci
-description: ci argo application
+description: ci default setup
 
 # A chart can be either an 'application' or a 'library' chart.
 #

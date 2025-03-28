@@ -9,10 +9,9 @@ etl:
     image:
       repository: "quay.io/cdis/tube"
       tag: "master"
-  esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - name: ci.planx-pla.net_subject
+      - name: ci.planx-ci.io_subject
         doc_type: subject
         type: aggregator
         root: subject
@@ -110,7 +109,7 @@ etl:
           - path: projects[project_dbgap_consent_text:dbgap_consent_text]
           - path: projects[project_short_name:short_name]
           - path: projects[project_dbgap_accession_number:dbgap_accession_number]
-      - name: ci.planx-pla.net_file
+      - name: ci.planx-ci.io_file
         doc_type: file
         type: collector
         root: None
