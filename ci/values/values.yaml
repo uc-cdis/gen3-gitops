@@ -1,6 +1,6 @@
 global:
-  dev: false
-  hostname: "ci.datacommons.io"
+  dev: true
+  hostname:
   aws:
     enabled: true
     useLocalSecret:

@@ -1,6 +1,6 @@
 apiVersion: v2
-name: ci.datacommons.org
-description: ci.datacommons.org argo application
+name: ci
+description: ci argo application
 
 # A chart can be either an 'application' or a 'library' chart.
 #
