@@ -1,0 +1,29 @@
+guppy:
+  # Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  dbRestore: false
+  image:
+    repository: quay.io/cdis/guppy
+    tag: master
+  indices:
+    - index: ci_subject_alias
+      type: subject
+    - index: ci_file_alias
+      type: file
+    - index: ci_cmc_alias
+      type: clinical_trials
+    - index: ci_midrc_dataset_alias
+      type: dataset
+    - index: ci_midrc_case_alias
+      type: case
+    - index: ci_midrc_imaging_data_file_alias
+      type: imaging_data_file
+    - index: ci_midrc_imaging_study_alias
+      type: imaging_study
+  configIndex: ci_configs_alias
+  authFilterField: auth_resource_path
+  esEndpoint: http://elasticsearch:9200

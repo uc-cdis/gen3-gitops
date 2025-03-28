@@ -1,0 +1,183 @@
+global:
+  dev: false
+  hostname: "ci.datacommons.io"
+  aws:
+    enabled: true
+    useLocalSecret:
+        enabled: true
+        localSecretName: external-secrets-ci-secret # pragma: allowlist secret
+  revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json"
+  postgres:
+    dbCreate: false
+    externalSecret: "pg-master" # pragma: allowlist secret
+  externalSecrets:
+    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
+    deploy: true
+  pdb: true
+
+arborist:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  externalSecrets:
+    dbcreds: "ci-arborist-db-creds"
+  image:
+    repository: "quay.io/cdis/arborist"
+    tag: "master"
+
+aws-es-proxy:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  ## TODO ## Whats the endpoint gonna be?
+  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
+  externalSecrets:
+    awsCreds: "ci-aws-es-proxy-creds"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/aws-es-proxy"
+    tag: "v1.3.1"
+
+indexd:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  defaultPrefix: ""
+  externalSecrets:
+    dbcreds: "ci-indexd-db-creds"
+    serviceCreds: "ci-indexd-service-creds"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/indexd"
+    tag: "master"
+
+peregrine:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  externalSecrets:
+    dbcreds: "ci-peregrine-db-creds"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/peregrine"
+    tag: "master"
+    pullPolicy: Always
+
+revproxy:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: "quay.io/cdis/nginx"
+    tag: "master"
+
+sheepdog:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  externalSecrets:
+    dbcreds: "ci-sheepdog-db-creds"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/sheepdog"
+    tag: "master"
+
+manifestservice:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/manifestservice"
+    tag: "master"
+  externalSecrets:
+    manifestserviceG3auto: "ci-manifestservice-g3auto"
+
+sower:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/sower"
+    tag: "master"
+  externalSecrets:
+    pelicanserviceG3auto: "ci-pelicanservice-g3auto"
+
+ssjdispatcher:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/ssjdispatcher"
+    tag: "master"
+
+metadata:
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  externalSecrets:
+    dbcreds: "ci-metadata-db-creds"
+    metadataG3auto: "ci-metadata-g3auto"
+  enabled: true
+  esEndpoint: http://elasticsearch:9200
+  image:
+    repository: "quay.io/cdis/metadata-service"
+    tag: "master"
+
+ambassador:
+  enabled: true
+  image:
+    repository: "quay.io/datawire/ambassador"
+    tag: "1.4.2"
+
+wts:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/workspace-token-service"
+    tag: "master"
+
+hatchery:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/hatchery"
+    tag: "master"
+
+audit:
+  enabled: true
+  ifmage:
+    repository: "quay.io/cdis/audit-service"
+    tag: "2025.01"
+
+requestor:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/audit-service"
+    tag: "master"
+
+dicom-viewer:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/ohif-viewer"
+    tag: "master"
+
+dicom-server:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/gen3-orthanc"
+    tag: "master"
