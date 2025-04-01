@@ -113,9 +113,7 @@ spec:
 
 
   disruption:
-    {{ if eq (index .Values "karpenter-crds" "default" "consolidationPolicy" ) "WhenEmpty" }}
     consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
-    {{ end }}
     consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
     budgets:
     - nodes: 10%

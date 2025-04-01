@@ -43,14 +43,24 @@ grafana-alloy:
   configuration:
     enabled: false
 
+karpenter:
+  enabled: true
+  targetRevision: "1.0.8"
+
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
   selectorTag: dataguids
   migration: true
   default:
-    consolidationPolicy: "WhenUnderutilized"
-    consolidateAfter: ""
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "10m"
+  jupyter:
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "10m"
+  workflow:
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "10m"
 
 vpc-cni:
   enabled: true
