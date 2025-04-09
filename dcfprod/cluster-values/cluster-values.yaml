@@ -56,7 +56,7 @@ karpenter-crds:
     sgSelector: dcfprod
   default:
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: ""
+    consolidateAfter: "5m"
 
 vpc-cni:
   enabled: true
