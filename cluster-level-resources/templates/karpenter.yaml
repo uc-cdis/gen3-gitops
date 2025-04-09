@@ -77,7 +77,7 @@ spec:
         values: |
           podAnnotations:
             prometheus.io/scrape: "true"
-            prometheus.io/port: "8000"
+            prometheus.io/port: "8080"
             prometheus.io/path: "/metrics"
             prometheus.io/scheme: "http"
           serviceAccount:
