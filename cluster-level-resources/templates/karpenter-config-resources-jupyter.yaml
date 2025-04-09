@@ -106,8 +106,8 @@ spec:
             - t
 
   disruption:
-    consolidateAfter: {{ index .Values "karpenter-crds" "default" "consolidateAfter" }}
-    consolidationPolicy: {{ index .Values "karpenter-crds" "default" "consolidationPolicy" }}
+    consolidateAfter: {{ index .Values "karpenter-crds" "jupyter" "consolidateAfter" }}
+    consolidationPolicy: {{ index .Values "karpenter-crds" "jupyter" "consolidationPolicy" }}
     budgets:
     - nodes: 10%
 
