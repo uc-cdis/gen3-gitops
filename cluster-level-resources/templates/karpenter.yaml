@@ -75,6 +75,11 @@ spec:
       ref: values
       {{- else }}
         values: |
+          podAnnotations:
+            prometheus.io/scrape: "true"
+            prometheus.io/port: "8000"
+            prometheus.io/path: "/metrics"
+            prometheus.io/scheme: "http"
           serviceAccount:
             name: karpenter
             create: true
