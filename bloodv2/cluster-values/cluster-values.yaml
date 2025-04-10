@@ -43,6 +43,10 @@ grafana-alloy:
   configuration:
     enabled: false
 
+karpenter:
+  enabled: true
+  targetRevision: "1.0.8"
+
 karpenter-crds:
   migration: true
   enabled: true
