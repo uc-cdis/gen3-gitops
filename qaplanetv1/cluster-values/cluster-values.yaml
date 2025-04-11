@@ -33,7 +33,7 @@ ebs-csi-driver:
     enabled: false
 
 fluentd:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
