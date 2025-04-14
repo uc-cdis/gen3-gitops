@@ -60,6 +60,7 @@ karpenter-crds:
   selectorTag: qaplanetv1
   migration: true
   default:
+    enabled: false
     consolidationPolicy: "WhenEmpty"
     consolidateAfter: "30s"
 
