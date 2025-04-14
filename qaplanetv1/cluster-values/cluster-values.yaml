@@ -61,7 +61,7 @@ karpenter-crds:
   migration: true
   default:
     consolidationPolicy: "WhenEmpty"
-    consolidateAfter: ""
+    consolidateAfter: "30s"
 
 vpc-cni:
   enabled: true
