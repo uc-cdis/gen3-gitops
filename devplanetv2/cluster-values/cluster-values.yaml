@@ -47,7 +47,7 @@ karpenter:
   enabled: true
   targetRevision: "1.0.8"
   configuration:
-    enabled: true
+    enabled: false
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
@@ -56,7 +56,7 @@ karpenter-crds:
   migration: true
   default:
     consolidation: true
-    consolidationPolicy: "WhenUnderutilized"
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
     expireAfter: "168h"
   workflow:
     sgSelector: devplanetv2
