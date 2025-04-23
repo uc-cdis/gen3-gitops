@@ -1,10 +1,9 @@
-cluster: externalgen3
+cluster: pdp-external
 project: externalgen3
 
-accountNumber: "637423560817"
+eksClusterName: externalgen3
 
-configuration:
-  configurationRevision: calico-dev
+accountNumber: "637423560817"
 
 alb-controller:
   enabled: true
