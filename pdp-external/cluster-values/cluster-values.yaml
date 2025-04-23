@@ -59,7 +59,7 @@ karpenter-crds:
   selectorTag: externalgen3
   migration: true
   default:
-    consolidationPolicy: "WhenUnderutilized"
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: ""
 
 vpc-cni:
