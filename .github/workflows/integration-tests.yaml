@@ -12,6 +12,7 @@ jobs:
     uses: uc-cdis/gen3-code-vigil/.github/workflows/helm_integration_tests.yaml@feat/GPE-1747
     with:
       TEST_REPO_BRANCH: feat/GPE-1747
+      HELM_BRANCH: feat/ci-fixes
     secrets:
       CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
       CI_AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_AWS_SECRET_ACCESS_KEY }}
