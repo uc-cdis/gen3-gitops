@@ -47,6 +47,8 @@ indexd:
     tag: 2025.03
 
 peregrine:
+  # temporarily run 3 replicas of peregrine
+  replicaCount: 3
   externalSecrets:
     dbcreds: "chords_chords-peregrine-db-creds"
   enabled: true
@@ -71,7 +73,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 2025.03
+    tag: 5.2.2
   fenceUrl: https://chordshealth.org/user
 
 manifestservice:

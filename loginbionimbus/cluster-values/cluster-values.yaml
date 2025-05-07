@@ -50,6 +50,7 @@ karpenter:
 karpenter-crds:
   enabled: true
   selectorTag: loginbionimbus
+  amiSelectorName: "1-31-EKS-FIPS*"
 
 vpc-cni:
   enabled: true
