@@ -22,6 +22,8 @@ global:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
+  manifestGlobalExtraValues:
+    fence_url: https://caninedc.org/user
 
 arborist:
   # Lower cost
