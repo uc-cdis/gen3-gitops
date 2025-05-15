@@ -37,7 +37,7 @@ arborist:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "16m"
   enabled: true
   externalSecrets:
     dbcreds: "charlie-arborist-db-creds"
