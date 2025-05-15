@@ -55,9 +55,25 @@ karpenter-crds:
   selectorTag: "devplanetv2"
   migration: true
   default:
-    consolidation: true
-    consolidationPolicy: "WhenEmpty"
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
     expireAfter: "168h"
+    consolidateAfter: "5m"
+    requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values:
+      - on-demand
+      - spot
+    - key: kubernetes.io/arch
+      operator: In
+      values:
+      - amd64
+    - key: karpenter.k8s.aws/instance-category
+      operator: In
+      values:
+      - r
+
+
   workflow:
     sgSelector: devplanetv2
 

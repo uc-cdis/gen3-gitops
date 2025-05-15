@@ -55,9 +55,22 @@ karpenter-crds:
   selectorTag: qaplanetv1
   migration: true
   default:
-    consolidationPolicy: "WhenEmpty"
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "5m"
-
+    requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values:
+      - on-demand
+      - spot
+    - key: kubernetes.io/arch
+      operator: In
+      values:
+      - amd64
+    - key: karpenter.k8s.aws/instance-category
+      operator: In
+      values:
+      - r
 vpc-cni:
   enabled: true
   configuration:
