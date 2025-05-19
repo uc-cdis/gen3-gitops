@@ -35,6 +35,8 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: "2025.01"
+manifestservice:
+  enabled: false
 metadata:
   enabled: true
   image:
@@ -102,3 +104,5 @@ fluentd:
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
+wts:
+  enabled: false
