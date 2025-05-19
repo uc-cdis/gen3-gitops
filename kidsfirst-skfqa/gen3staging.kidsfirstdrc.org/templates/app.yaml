@@ -15,8 +15,8 @@ spec:
         releaseName: gen3-skfqa
         valueFiles:
           - $values/kidsfirst-skfqa/gen3staging.kidsfirstdrc.org/values/values.yaml
-          - $values/kidsfirst-skfqa/gen3staging.kidsfirstdrc.org/values/fence.yaml
-          - $values/kidsfirst-skfqa/gen3staging.kidsfirstdrc.org/values/portal.yaml
+          # - $values/kidsfirst-skfqa/gen3staging.kidsfirstdrc.org/values/fence.yaml
+          # - $values/kidsfirst-skfqa/gen3staging.kidsfirstdrc.org/values/portal.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
       targetRevision: master
       ref: values
