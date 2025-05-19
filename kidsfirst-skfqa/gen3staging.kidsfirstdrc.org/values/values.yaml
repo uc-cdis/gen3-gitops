@@ -49,6 +49,9 @@ global:
     account: '222487244010'
     awsEsProxyRole: skfqa--default--es-access
     enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::222487244010:role/skfqa-external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/kf-dictionary/develop/schema.json
   environment: skfqa
