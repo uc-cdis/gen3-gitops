@@ -12,9 +12,9 @@ spec:
       helm:
         releaseName: gen3-qa-mickey
         valueFiles:
-          - $values/devplanetv2/qa-mickey.planx-pla.net/values/values.yaml
-          - $values/devplanetv2/qa-mickey.planx-pla.net/values/fence.yaml
-          - $values/devplanetv2/qa-mickey.planx-pla.net/values/portal.yaml
+          - $values/qaplanetv1/qa-mickey.planx-pla.net/values/values.yaml
+          - $values/qaplanetv1/qa-mickey.planx-pla.net/values/fence.yaml
+          - $values/qaplanetv1/qa-mickey.planx-pla.net/values/portal.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
       targetRevision: master
       ref: values
