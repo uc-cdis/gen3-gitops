@@ -2,7 +2,7 @@ ambassador:
   enabled: true
   image:
     repository: quay.io/datawire/ambassador
-    tag: 1.14.4
+    tag: 1.4.2
 arborist:
   autoscaling:
     enabled: true
