@@ -101,7 +101,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
-  revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/239b7c0f-c1f6-4e55-8118-8d78e2519f5f
+  revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/520ede2f-fc82-4bb9-af96-4b4af7deabbd
 guppy:
   authFilterField: auth_resource_path
   configIndex: etl_mickey_array-config
