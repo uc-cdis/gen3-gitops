@@ -78,6 +78,9 @@ global:
     account: '707767160287'
     awsEsProxyRole: qaplanetv1--qa-mickey--es-access
     enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::707767160287:role/qa-mickey-external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.4.2/schema.json
   dispatcherJobNum: '10'
@@ -119,6 +122,8 @@ indexd:
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
+  externalSecrets:
+    serviceCreds: qa-mickey-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.04'
@@ -136,6 +141,8 @@ metadata:
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
+  externalSecrets:
+    metadataG3auto: qa-mickey-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.04'
@@ -185,7 +192,7 @@ portal:
       \ 24px;\n}\n\n.login-page .login-page__separator {\n  display: none;\n}\n\n\
       .login-page .body-typo {\n  margin-top: 16px;\n}\n\n\n.login-page .login-page__entries\
       \ {\n  width: 200px;\n  margin: 40px auto;\n}\n\n.login-page .login-page__entry-button\
-      \ {\n  width: 200px;\n}\n\n"
+      \ {\n  width: 200px;\n}\n"
     favicon: AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAABILAAASCwAAAAAAAAAAAABgOkXmMyRp7zEja/AwIWrwY1mM887M0vTf39303t7d9N7e3fTe3t303t7d9ODg3vTBv8rzPzJ08DAiavIxI2uwkVIc+F85RfwyJGr+MCNr/zMlbP9wZ5X/paG3/6Wht/+lobf/paG3/6Wht/+morj/kYuq/zotcf8wImv/MSNru5dUF/mTUhv+XzlF+zIkav4wI2v/MCJq/zMlbP8zJWz/MyVs/zMlbP8zJWz/MyVs/zIlbP8xI2v/MSNr/zEja7uWVBj5l1QY/5NSG/5fOUX7MiRq/jEja/8xI2v/MSNr/zAiav8uIGn/LiBp/y4gaf8vIGn/MSNr/zEja/8xI2u7llQY+ZZUGP+XVBj/k1Ib/l85RfsyJGr+MSNr/zAia/9CNnb/ZFqM/2RajP9kWo3/W1CH/zUnbv8xI2v/MSNru5ZUGPmWVBj/llMX/5ZUFv+TUhv+XzlF+zIkav4wImv/QDN1/6Gdtf/a2tr/29vb/726x/8+MXT/MCJq/zEja7uWVBj5llMX/6FqN/+fZDD/llMV/5NSG/5fOUX7MiRq/i8hav9ANHX/o562/+Dg3v/Avsn/PjJ0/zAiav8xI2u7llQY+ZVSFf+wh2H/ybal/59lMP+WUxX/k1Ib/l85RfsyJGr+LyFq/z8ydP+inrX/wL7J/z8ydP8wImr/MSNru5ZUGPmVUhX/sIZg/97e3f/Jt6b/n2Uw/5ZTFf+TUhv+XzlF+zIkav4vIWr/QDN1/4F6oP8+MXT/MCJr/zEja7uWVBj5lVIV/7CGYP/d3dz/3t7e/8q4p/+fZTH/llMV/5NSG/5fOUX7MiRq/jAia/80J23/MyVs/zEja/8xI2u7llQY+ZVSFf+whmD/3d3c/93d3P/e3t7/yrio/59mMf+WUxX/k1Ib/l85RfsyJGr+MCNr/zEja/8xI2v/MSNru5ZUGPmVUhX/sIZg/93d3P/d3dz/3d3c/97e3v/Kuaj/n2Yy/5ZTFf+TUhv+XzlG+zIkav4xI2v/MSNr/zEja7uWVBj5lVIV/7CGYP/d3dz/3d3c/93d3P/d3dz/3t7e/8u6qf+gZzP/llMV/5NSG/5fOUb7MiRq/jEja/8xI2u7llQY+ZVSFf+whmD/3d3c/93d3P/d3dz/3d3c/93d3P/e3t7/y7qq/6BnM/+WUxX/k1Ib/l85RvsyJGr/MCNsu5ZUGPmVUhX/sIZg/93d3P/d3dz/3d3c/93d3P/d3dz/3d3c/97f3v/Mu6z/oWk2/5ZUF/+TUhv/XzlG/zUlaLuWVBjElVIVybCGX8vb2NXP29nWz9vZ1s/b2dbP29nWz9vZ1s/b2dbP3NvZz8Oqk8+ZWiDKl1QXyY9RHslfOkWQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
     json: "{\n    \"gaTrackingId\": \"UA-119127212-3\",\n    \"grafanaFaroConfig\"\
       : {\n        \"grafanaFaroEnable\": true,\n        \"grafanaFaroNamespace\"\
@@ -294,6 +301,9 @@ revproxy:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
     tag: '2025.04'
+  ingress:
+    aws:
+      group: qa-mickey-helm
 sheepdog:
   autoscaling:
     enabled: true
