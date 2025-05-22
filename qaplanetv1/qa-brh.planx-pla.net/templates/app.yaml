@@ -8,7 +8,7 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: chore/argocd-degraded
       helm:
         releaseName: gen3-qa-brh
         valueFiles:
