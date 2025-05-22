@@ -415,6 +415,7 @@ wts:
   externalSecrets:
     wtsG3auto: qa-brh-wts-g3auto
     wtsOidcClient: qa-brh-wts-client-secret
+    createWtsOidcClientSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: "2025.03"
