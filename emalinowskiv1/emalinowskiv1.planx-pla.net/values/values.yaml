@@ -1,0 +1,340 @@
+ambassador:
+  enabled: true
+  image:
+    repository: quay.io/datawire/ambassador
+    tag: 1.4.2
+arborist:
+  enabled: true
+  image:
+    repository: quay.io/cdis/arborist
+    tag: master
+audit:
+  enabled: true
+  externalSecrets:
+    auditG3auto: emalinowskiv1-audit-g3auto
+  image:
+    repository: quay.io/cdis/audit-service
+    tag: feat_GPE-1113
+aws-es-proxy:
+  enabled: true
+  image:
+    repository: quay.io/cdis/aws-es-proxy
+    tag: test_distroless
+dashboard:
+  enabled: true
+  image:
+    repository: quay.io/cdis/gen3-statics
+    tag: master
+fence:
+  enabled: true
+  externalSecrets:
+    createK8sGoogleAppSecrets: true
+    fenceConfig: emalinowskiv1-fence-config
+    fenceJwtKeys: emalinowskiv1-fence-jwt
+  image:
+    repository: quay.io/cdis/fence
+    tag: '2024.12'
+fluentd:
+  enabled: true
+  image:
+    repository: fluent/fluentd-kubernetes-daemonset
+    tag: v1.15.3-debian-cloudwatch-1.0
+global:
+  aws:
+    account: '707767160287'
+    awsEsProxyRole: emalinowskiv1--default--es-access
+    enabled: true
+  dev: false
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
+  environment: emalinowskiv1
+  externalSecrets:
+    deploy: true
+  hostname: emalinowskiv1.planx-pla.net
+  manifestGlobalExtraValues:
+    backupEsDomain: devplanetv2-gen3-metadata-3
+    kube_bucket: kube-emalinowskiv1-gen3
+    logs_bucket: logs-emalinowskiv1-gen3
+    sync_from_dbgap: 'False'
+    useryaml_s3path: s3://cdis-gen3-users/dev/user.yaml
+  portalApp: gitops
+  postgres:
+    dbCreate: false
+  revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
+guppy:
+  enabled: true
+  guppy:
+    authFilterField: auth_resource_path
+    configIndex: dev_case-array-config
+    indices:
+    - index: dev_case
+      type: case
+    - index: dev_file
+      type: file
+  image:
+    repository: quay.io/cdis/guppy
+    tag: feat_es7
+hatchery:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2023.04'
+indexd:
+  enabled: true
+  image:
+    repository: quay.io/cdis/indexd
+    tag: feat_GPE-788
+jupyterhub:
+  enabled: true
+  image:
+    repository: quay.io/occ_data/jupyterhub
+    tag: master
+manifestservice:
+  enabled: true
+  externalSecrets:
+    manifestserviceG3auto: emalinowskiv1-manifestservice-g3auto
+  image:
+    repository: quay.io/cdis/manifestservice
+    tag: feat_al2-image
+metadata:
+  enabled: true
+  image:
+    repository: quay.io/cdis/metadata-service
+    tag: feat_GPE-1115
+peregrine:
+  enabled: true
+  image:
+    repository: quay.io/cdis/peregrine
+    tag: feat_gunicorn
+pidgin:
+  enabled: true
+  image:
+    repository: quay.io/cdis/pidgin
+    tag: master
+portal:
+  enabled: true
+  gitops:
+    json: "{\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
+      : \"_case_count\",\n        \"name\": \"Case\",\n        \"plural\": \"Cases\"\
+      \n      },\n      {\n        \"graphql\": \"_aliquot_count\",\n        \"name\"\
+      : \"Aliquot\",\n        \"plural\": \"Aliquots\"\n      }\n    ],\n    \"chartCounts\"\
+      : [\n      {\n        \"graphql\": \"_case_count\",\n        \"name\": \"Case\"\
+      \n      },\n      {\n        \"graphql\": \"_aliquot_count\",\n        \"name\"\
+      : \"Aliquot\"\n      }\n    ],\n    \"projectDetails\": \"boardCounts\"\n  },\n\
+      \  \"components\": {\n    \"appName\": \"Generic Data Commons Portal\",\n  \
+      \  \"index\": {\n      \"introduction\": {\n        \"heading\": \"Data Commons\"\
+      ,\n        \"text\": \"The Generic Data Commons supports the management, analysis\
+      \ and sharing of data for the research community.\",\n        \"link\": \"/submission\"\
+      \n      },\n      \"buttons\": [\n        {\n          \"name\": \"Define Data\
+      \ Field\",\n          \"icon\": \"data-field-define\",\n          \"body\":\
+      \ \"The Generic Data Commons define the data in a general way. Please study\
+      \ the dictionary before you start browsing.\",\n          \"link\": \"/DD\"\
+      ,\n          \"label\": \"Learn more\"\n        },\n        {\n          \"\
+      name\": \"Explore Data\",\n          \"icon\": \"data-explore\",\n         \
+      \ \"body\": \"The Exploration Page gives you insights and a clear overview under\
+      \ selected factors.\",\n          \"link\": \"/explorer\",\n          \"label\"\
+      : \"Explore data\"\n        },\n        {\n          \"name\": \"Access Data\"\
+      ,\n          \"icon\": \"data-access\",\n          \"body\": \"Use our selected\
+      \ tool to filter out the data you need.\",\n          \"link\": \"/query\",\n\
+      \          \"label\": \"Query data\"\n        },\n        {\n          \"name\"\
+      : \"Submit Data\",\n          \"icon\": \"data-submit\",\n          \"body\"\
+      : \"Submit Data based on the dictionary.\",\n          \"link\": \"/submission\"\
+      ,\n          \"label\": \"Submit data\"\n        }\n      ]\n    },\n    \"\
+      navigation\": {\n      \"title\": \"Generic Data Commons\",\n      \"items\"\
+      : [\n        {\n          \"icon\": \"dictionary\",\n          \"link\": \"\
+      /DD\",\n          \"color\": \"#a2a2a2\",\n          \"name\": \"Dictionary\"\
+      \n        },\n        {\n          \"icon\": \"exploration\",\n          \"\
+      link\": \"/explorer\",\n          \"color\": \"#a2a2a2\",\n          \"name\"\
+      : \"Exploration\"\n        },\n        {\n          \"icon\": \"query\",\n \
+      \         \"link\": \"/query\",\n          \"color\": \"#a2a2a2\",\n       \
+      \   \"name\": \"Query\"\n        },\n        {\n          \"icon\": \"workspace\"\
+      ,\n          \"link\": \"/workspace\",\n          \"color\": \"#a2a2a2\",\n\
+      \          \"name\": \"Workspace\"\n        },\n        {\n          \"icon\"\
+      : \"profile\",\n          \"link\": \"/identity\",\n          \"color\": \"\
+      #a2a2a2\",\n          \"name\": \"Profile\"\n        }\n      ]\n    },\n  \
+      \  \"topBar\": {\n      \"items\": [\n        {\n          \"icon\": \"upload\"\
+      ,\n          \"link\": \"/submission\",\n          \"name\": \"Submit Data\"\
+      \n        },\n        {\n          \"link\": \"https://gen3.org/resources/user\"\
+      ,\n          \"name\": \"Documentation\"\n        }\n      ]\n    },\n    \"\
+      login\": {\n      \"title\": \"Generic Data Commons\",\n      \"subTitle\":\
+      \ \"Explore, Analyze, and Share Data\",\n      \"text\": \"This website supports\
+      \ the management, analysis and sharing of human disease data for the research\
+      \ community and aims to advance basic understanding of the genetic basis of\
+      \ complex traits and accelerate discovery and development of therapies, diagnostic\
+      \ tests, and other technologies for diseases like cancer.\",\n      \"contact\"\
+      : \"If you have any questions about access or the registration process, please\
+      \ contact \",\n      \"email\": \"support@datacommons.io\"\n    },\n    \"certs\"\
+      : {},\n    \"footerLogos\": [\n      {\n        \"src\": \"/src/img/gen3.png\"\
+      ,\n        \"href\": \"https://ctds.uchicago.edu/gen3\",\n        \"alt\": \"\
+      Gen3 Data Commons\"\n      },\n      {\n        \"src\": \"/src/img/createdby.png\"\
+      ,\n        \"href\": \"https://ctds.uchicago.edu/\",\n        \"alt\": \"Center\
+      \ for Translational Data Science at the University of Chicago\"\n      }\n \
+      \   ]\n  },\n  \"requiredCerts\": [],\n  \"featureFlags\": {\n    \"explorer\"\
+      : true,\n    \"noIndex\": true,\n    \"analysis\": false,\n    \"discovery\"\
+      : false,\n    \"discoveryUseAggMDS\": false,\n    \"studyRegistration\": false\n\
+      \  },\n  \"dataExplorerConfig\": {\n    \"charts\": {\n      \"project_id\"\
+      : {\n        \"chartType\": \"count\",\n        \"title\": \"Projects\"\n  \
+      \    },\n      \"_case_id\": {\n        \"chartType\": \"count\",\n        \"\
+      title\": \"Cases\"\n      },\n      \"gender\": {\n        \"chartType\": \"\
+      pie\",\n        \"title\": \"Gender\"\n      },\n      \"race\": {\n       \
+      \ \"chartType\": \"bar\",\n        \"title\": \"Race\"\n      }\n    },\n  \
+      \  \"filters\": {\n      \"tabs\": [\n        {\n          \"title\": \"Case\"\
+      ,\n          \"fields\":[\n            \"project_id\",\n            \"gender\"\
+      ,\n            \"race\",\n            \"ethnicity\"\n          ]\n        }\n\
+      \      ]\n    },\n    \"table\": {\n      \"enabled\": false\n    },\n    \"\
+      dropdowns\": {},\n    \"buttons\": [\t\n      {\t\n        \"enabled\": true,\t\
+      \n        \"type\": \"data\",\t\n        \"title\": \"Download All Clinical\"\
+      ,\t\n        \"leftIcon\": \"user\",\t\n        \"rightIcon\": \"download\"\
+      ,\t\n        \"fileName\": \"clinical.json\",\t\n        \"dropdownId\": \"\
+      download\",\t\n        \"tooltipText\": \"You have not selected any cases to\
+      \ download. Please use the checkboxes on the left to select specific cases you\
+      \ would like to download.\"\t\n      },\t\n      {\t\n        \"enabled\": false,\t\
+      \n        \"type\": \"manifest\",\t\n        \"title\": \"Download Manifest\"\
+      ,\t\n        \"leftIcon\": \"datafile\",\t\n        \"rightIcon\": \"download\"\
+      ,\t\n        \"fileName\": \"manifest.json\",\t\n        \"dropdownId\": \"\
+      download\"\t\n      },\t\n      {\t\n        \"enabled\": true,\t\n        \"\
+      type\": \"export\",\t\n        \"title\": \"Export All to Terra\",\t\n     \
+      \   \"rightIcon\": \"external-link\",\t\n        \"tooltipText\": \"You have\
+      \ not selected any cases to export. Please use the checkboxes on the left to\
+      \ select specific cases you would like to export.\"\t\n      },\t\n      {\t\
+      \n        \"enabled\": true,\t\n        \"type\": \"export-to-pfb\",\t\n   \
+      \     \"title\": \"Export to PFB\",\t\n        \"leftIcon\": \"datafile\",\t\
+      \n        \"rightIcon\": \"download\"\t\n      },\t\n      {\t\n        \"enabled\"\
+      : true,\t\n        \"type\": \"export-to-workspace\",\t\n        \"title\":\
+      \ \"Export to Workspace\",\t\n        \"leftIcon\": \"datafile\",\t\n      \
+      \  \"rightIcon\": \"download\"\t\n      }\t\n    ],    \n    \"guppyConfig\"\
+      : {\n      \"dataType\": \"case\",\n      \"nodeCountTitle\": \"Cases\",\n \
+      \     \"fieldMapping\": [\n        { \"field\": \"disease_type\", \"name\":\
+      \ \"Disease type\" },\n        { \"field\": \"primary_site\", \"name\": \"Site\
+      \ where samples were collected\"}\n      ],\n      \"manifestMapping\": {\n\
+      \        \"resourceIndexType\": \"file\",\n        \"resourceIdField\": \"object_id\"\
+      ,\n        \"referenceIdFieldInResourceIndex\": \"_case_id\",\n        \"referenceIdFieldInDataIndex\"\
+      : \"_case_id\"\n      },\n      \"accessibleFieldCheckList\": [\"project_id\"\
+      ],\n      \"accessibleValidationField\": \"project_id\"\n    }\n  },\n  \"fileExplorerConfig\"\
+      : {\n    \"charts\": {\n      \"data_type\": {\n        \"chartType\": \"stackedBar\"\
+      ,\n        \"title\": \"File Type\"\n      },\n      \"data_format\": {\n  \
+      \      \"chartType\": \"stackedBar\",\n        \"title\": \"File Format\"\n\
+      \      }\n    },\n    \"filters\": {\n      \"tabs\": [\n        {\n       \
+      \   \"title\": \"File\",\n          \"fields\": [\n            \"project_id\"\
+      ,\n            \"data_type\",\n            \"data_format\"\n          ]\n  \
+      \      }\n      ]\n    },\n    \"table\": {\n      \"enabled\": true,\n    \
+      \  \"fields\": [\n        \"project_id\",\n        \"file_name\",\n        \"\
+      file_size\",\n        \"object_id\"\n      ]\n    },\n    \"dropdowns\": {},\n\
+      \    \"guppyConfig\": {\n      \"dataType\": \"file\",\n      \"fieldMapping\"\
+      : [\n        { \"field\": \"object_id\", \"name\": \"GUID\" }\n      ],\n  \
+      \    \"nodeCountTitle\": \"Files\",\n      \"manifestMapping\": {\n        \"\
+      resourceIndexType\": \"case\",\n        \"resourceIdField\": \"_case_id\",\n\
+      \        \"referenceIdFieldInResourceIndex\": \"object_id\",\n        \"referenceIdFieldInDataIndex\"\
+      : \"object_id\"\n      },\n      \"accessibleFieldCheckList\": [\"project_id\"\
+      ],\n      \"accessibleValidationField\": \"project_id\",\n      \"downloadAccessor\"\
+      : \"object_id\"\n    }\n  }\n}\n"
+  image:
+    repository: quay.io/cdis/data-portal
+    tag: '2024.12'
+requestor:
+  enabled: true
+  image:
+    repository: quay.io/cdis/requestor
+    tag: feat_al2
+revproxy:
+  enabled: true
+  image:
+    repository: quay.io/cdis/nginx
+    tag: '2024.12'
+sheepdog:
+  enabled: true
+  image:
+    repository: quay.io/cdis/sheepdog
+    tag: test_docker-bash
+sower:
+  enabled: true
+  externalSecrets:
+    pelicanserviceG3auto: emalinowskiv1-pelicanservice-g3auto
+    sowerjobsG3auto: emalinowskiv1-sower-jobs-g3auto
+  image:
+    repository: quay.io/cdis/sower
+    tag: master
+  sowerConfig:
+  - action: export
+    container:
+      cpu-limit: '1'
+      env:
+      - name: DICTIONARY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: dictionary_url
+            name: manifest-global
+      - name: GEN3_HOSTNAME
+        valueFrom:
+          configMapKeyRef:
+            key: hostname
+            name: manifest-global
+      - name: ROOT_NODE
+        value: case
+      image: quay.io/cdis/pelican-export:master
+      memory-limit: 4Gi
+      name: job-task
+      pull_policy: Always
+      volumeMounts:
+      - mountPath: /pelican-creds.json
+        name: pelican-creds-volume
+        readOnly: true
+        subPath: config.json
+      - mountPath: /peregrine-creds.json
+        name: peregrine-creds-volume
+        readOnly: true
+        subPath: creds.json
+    name: pelican-export
+    restart_policy: Never
+    volumes:
+    - name: pelican-creds-volume
+      secret:
+        secretName: pelicanservice-g3auto
+    - name: peregrine-creds-volume
+      secret:
+        secretName: peregrine-creds
+  - action: import
+    container:
+      cpu-limit: '1'
+      env:
+      - name: DICTIONARY_URL
+        valueFrom:
+          configMapKeyRef:
+            key: dictionary_url
+            name: manifest-global
+      - name: GEN3_HOSTNAME
+        valueFrom:
+          configMapKeyRef:
+            key: hostname
+            name: manifest-global
+      image: quay.io/cdis/pelican-import:master
+      memory-limit: 4Gi
+      name: job-task
+      pull_policy: Always
+      volumeMounts:
+      - mountPath: /sheepdog-creds.json
+        name: sheepdog-creds-volume
+        readOnly: true
+        subPath: creds.json
+    name: pelican-import
+    restart_policy: Never
+    volumes:
+    - name: sheepdog-creds-volume
+      secret:
+        secretName: sheepdog-creds
+spark:
+  enabled: true
+  image:
+    repository: quay.io/cdis/gen3-spark
+    tag: master
+tube:
+  enabled: true
+  image:
+    repository: quay.io/cdis/tube
+    tag: feat_new-es-7
+wts:
+  enabled: true
+  externalSecrets:
+    wtsG3auto: emalinowskiv1-wts-g3auto
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
+    tag: feat_al2
