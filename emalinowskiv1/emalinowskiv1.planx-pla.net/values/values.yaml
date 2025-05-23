@@ -20,6 +20,10 @@ aws-es-proxy:
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: test_distroless
+crossplane:
+  enabled: true
+  accountId: '707767160287'
+  oidcProviderUrl: 'oidc.eks.us-east-1.amazonaws.com/id/D79BA5D8294157CA35BF638307C55D92'
 dashboard:
   enabled: true
   image:
