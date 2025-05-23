@@ -28,12 +28,17 @@ coreDNS:
 
 crossplane:
   enabled: true
-  
+
 crossplane-crds:
   enabled: true
   iamRoleName: "crossplane-test-role"
-  
+
 ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: false
+
+external-secrets:
   enabled: true
   configuration:
     enabled: false
@@ -52,7 +57,7 @@ grafana-alloy:
   enabled: false
   configuration:
     enabled: false
-  
+
 karpenter:
   enabled: true
   targetRevision: "1.0.8"
