@@ -57,6 +57,7 @@ karpenter-crds:
   default:
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "5m"
+    volumeSize: 80Gi
     requirements:
     - key: karpenter.sh/capacity-type
       operator: In
@@ -71,6 +72,11 @@ karpenter-crds:
       operator: In
       values:
       - r
+  workflow:
+    volumeSize: 80Gi
+  jupyter:
+    volumeSize: 80Gi
+
 vpc-cni:
   enabled: true
   configuration:
