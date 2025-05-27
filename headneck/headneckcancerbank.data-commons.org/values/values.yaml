@@ -116,7 +116,7 @@ fence:
     usersync: true
     schedule: "*/30 * * * *"
     syncFromDbgap: false
-    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    userYamlS3Path: "s3://cdis-gen3-users/hnc/user.yaml"
     slack_webhook: ""
     slack_send_dbgap: false
 
