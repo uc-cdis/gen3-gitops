@@ -70,6 +70,9 @@ karpenter-crds:
   selectorTag: emalinowskiv1
   migration: true
 
+kube-proxy:
+  enabled: true
+
 vpc-cni:
   enabled: true
   configuration:
