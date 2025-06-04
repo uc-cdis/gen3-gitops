@@ -31,6 +31,9 @@ ebs-csi-driver:
   configuration:
     enabled: false
 
+external-secrets:
+  enabled: true
+
 fluentd:
   enabled: false
   configuration:
