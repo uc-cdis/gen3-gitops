@@ -28,6 +28,9 @@ ebs-csi-driver:
   configuration:
     enabled: false
 
+external-secrets:
+  enabled: true
+
 fluentd:
   enabled: false
   configuration:
@@ -43,9 +46,15 @@ grafana-alloy:
   configuration:
     enabled: false
 
+karpenter:
+  enabled: true
+  targetRevision: "1.0.8"
+
 karpenter-crds:
+  amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
   selectorTag: stagingdatastage
+  migration: true
 
 vpc-cni:
   enabled: true
