@@ -25,6 +25,13 @@ dashboard:
   image:
     repository: quay.io/cdis/gen3-statics
     tag: master
+  dashboardConfig:
+    bucket: dashboard-707767160287-devplanetv1-gen3
+    prefix: emalinowskiv1.planx-pla.net
+
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::707767160287:role/gen3_service/emalinowskiv1--default--dashboard"
 fence:
   enabled: true
   externalSecrets:
