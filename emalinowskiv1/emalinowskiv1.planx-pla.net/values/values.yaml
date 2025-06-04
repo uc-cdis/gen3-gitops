@@ -104,6 +104,8 @@ metadata:
   image:
     repository: quay.io/cdis/metadata-service
     tag: feat_GPE-1115
+mutatingWebhook:
+  enabled: true
 peregrine:
   enabled: true
   image:
