@@ -16,6 +16,7 @@ audit:
     repository: quay.io/cdis/audit-service
     tag: feat_GPE-1113
 aws-es-proxy:
+  esEndpoint: vpc-emalinowskiv1-gen3-metadata-cvhtoib3otdalqlsw2adldg2vy.us-east-1.es.amazonaws.com
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
@@ -40,7 +41,7 @@ fence:
     fenceJwtKeys: emalinowskiv1-fence-jwt
   image:
     repository: quay.io/cdis/fence
-    tag: '2024.12'
+    tag: "2024.12"
 fluentd:
   enabled: true
   image:
@@ -48,13 +49,13 @@ fluentd:
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
   aws:
-    account: '707767160287'
+    account: "707767160287"
     awsEsProxyRole: emalinowskiv1--default--es-access
     enabled: true
   crossplane:
     enabled: true
-    accountId: '707767160287'
-    oidcProviderUrl: 'oidc.eks.us-east-1.amazonaws.com/id/D79BA5D8294157CA35BF638307C55D92'
+    accountId: "707767160287"
+    oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/D79BA5D8294157CA35BF638307C55D92"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   environment: emalinowskiv1
@@ -65,18 +66,18 @@ global:
     backupEsDomain: devplanetv2-gen3-metadata-3
     kube_bucket: kube-emalinowskiv1-gen3
     logs_bucket: logs-emalinowskiv1-gen3
-    sync_from_dbgap: 'False'
+    sync_from_dbgap: "False"
     useryaml_s3path: s3://cdis-gen3-users/dev/user.yaml
   portalApp: gitops
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
 guppy:
+  esEndpoint: elasticsearch:9200
   enabled: true
-  guppy:
-    authFilterField: auth_resource_path
-    configIndex: dev_case-array-config
-    indices:
+  authFilterField: auth_resource_path
+  configIndex: dev_case-array-config
+  indices:
     - index: dev_case
       type: case
     - index: dev_file
@@ -88,7 +89,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2023.04'
+    tag: "2023.04"
 indexd:
   enabled: true
   image:
@@ -126,7 +127,8 @@ pidgin:
 portal:
   enabled: true
   gitops:
-    json: "{\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
+    json:
+      "{\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
       : \"_case_count\",\n        \"name\": \"Case\",\n        \"plural\": \"Cases\"\
       \n      },\n      {\n        \"graphql\": \"_aliquot_count\",\n        \"name\"\
       : \"Aliquot\",\n        \"plural\": \"Aliquots\"\n      }\n    ],\n    \"chartCounts\"\
@@ -242,7 +244,7 @@ portal:
       : \"object_id\"\n    }\n  }\n}\n"
   image:
     repository: quay.io/cdis/data-portal
-    tag: '2024.12'
+    tag: "2024.12"
 requestor:
   enabled: true
   image:
@@ -252,7 +254,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: '2024.12'
+    tag: "2024.12"
 sheepdog:
   enabled: true
   image:
@@ -267,73 +269,73 @@ sower:
     repository: quay.io/cdis/sower
     tag: master
   sowerConfig:
-  - action: export
-    container:
-      cpu-limit: '1'
-      env:
-      - name: DICTIONARY_URL
-        valueFrom:
-          configMapKeyRef:
-            key: dictionary_url
-            name: manifest-global
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      - name: ROOT_NODE
-        value: case
-      image: quay.io/cdis/pelican-export:master
-      memory-limit: 4Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /pelican-creds.json
-        name: pelican-creds-volume
-        readOnly: true
-        subPath: config.json
-      - mountPath: /peregrine-creds.json
-        name: peregrine-creds-volume
-        readOnly: true
-        subPath: creds.json
-    name: pelican-export
-    restart_policy: Never
-    volumes:
-    - name: pelican-creds-volume
-      secret:
-        secretName: pelicanservice-g3auto
-    - name: peregrine-creds-volume
-      secret:
-        secretName: peregrine-creds
-  - action: import
-    container:
-      cpu-limit: '1'
-      env:
-      - name: DICTIONARY_URL
-        valueFrom:
-          configMapKeyRef:
-            key: dictionary_url
-            name: manifest-global
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      image: quay.io/cdis/pelican-import:master
-      memory-limit: 4Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /sheepdog-creds.json
-        name: sheepdog-creds-volume
-        readOnly: true
-        subPath: creds.json
-    name: pelican-import
-    restart_policy: Never
-    volumes:
-    - name: sheepdog-creds-volume
-      secret:
-        secretName: sheepdog-creds
+    - action: export
+      container:
+        cpu-limit: "1"
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                key: dictionary_url
+                name: manifest-global
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+          - name: ROOT_NODE
+            value: case
+        image: quay.io/cdis/pelican-export:master
+        memory-limit: 4Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /pelican-creds.json
+            name: pelican-creds-volume
+            readOnly: true
+            subPath: config.json
+          - mountPath: /peregrine-creds.json
+            name: peregrine-creds-volume
+            readOnly: true
+            subPath: creds.json
+      name: pelican-export
+      restart_policy: Never
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto
+        - name: peregrine-creds-volume
+          secret:
+            secretName: peregrine-creds
+    - action: import
+      container:
+        cpu-limit: "1"
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                key: dictionary_url
+                name: manifest-global
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+        image: quay.io/cdis/pelican-import:master
+        memory-limit: 4Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /sheepdog-creds.json
+            name: sheepdog-creds-volume
+            readOnly: true
+            subPath: creds.json
+      name: pelican-import
+      restart_policy: Never
+      volumes:
+        - name: sheepdog-creds-volume
+          secret:
+            secretName: sheepdog-creds
 spark:
   enabled: true
   image:
