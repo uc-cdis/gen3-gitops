@@ -43,7 +43,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: 1.1.12
+    tag: 1.2.1
 global:
   aws:
     account: '533267425233'
@@ -204,7 +204,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 5.2.1
+    tag: 2025.05
 spark:
   enabled: true
   image:
