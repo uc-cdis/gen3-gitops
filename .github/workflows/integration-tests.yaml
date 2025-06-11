@@ -2,10 +2,6 @@ name: Integration Tests
 
 on: pull_request
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
-
 permissions:
   id-token: write
   contents: read
@@ -15,9 +11,10 @@ permissions:
 jobs:
   integration_tests:
     name: Integration tests
-    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
+    uses: uc-cdis/gen3-code-vigil/.github/workflows/shared_integration_tests.yaml@feat/GPE-1747
     with:
       TEST_REPO_BRANCH: feat/GPE-1747
+      GEN3_INSTANCE_TYPE: HELM_LOCAL
       WORKING_DIR: gen3-code-vigil/gen3-integration-tests
     secrets:
       CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
