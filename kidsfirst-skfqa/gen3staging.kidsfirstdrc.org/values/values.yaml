@@ -7,7 +7,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.01"
+    tag: "2025.04"
 audit:
   enabled: true
   externalSecrets:
