@@ -10,7 +10,7 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/fixing-hpa-type
+      targetRevision: feat/deployment-canary
       helm:
         releaseName: gen3-skfqa
         valueFiles:
@@ -25,6 +25,6 @@ spec:
     namespace: skfqa-helm
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true

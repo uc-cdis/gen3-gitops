@@ -28,6 +28,9 @@ ebs-csi-driver:
   configuration:
     enabled: false
 
+external-secrets:
+  enabled: true
+
 fluentd:
   enabled: false
   configuration:
@@ -50,7 +53,6 @@ karpenter-crds:
   migration: true
   workflow:
     sgSelector: midrcvalidate
-
 
 karpenter:
   enabled: true

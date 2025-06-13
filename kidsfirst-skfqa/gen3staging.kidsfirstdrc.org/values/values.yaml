@@ -86,6 +86,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: "2025.01"
 revproxy:
+  ingress:
+    aws:
+      group: skfqa
   autoscaling:
     enabled: true
     maxReplicas: 1

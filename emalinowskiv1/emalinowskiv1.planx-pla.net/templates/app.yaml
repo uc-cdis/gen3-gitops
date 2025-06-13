@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-emalinowskiv1
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: master
+      helm:
+        releaseName: emalinowskiv1
+        valueFiles:
+          - $values/emalinowskiv1/emalinowskiv1.planx-pla.net/values/values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: master
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: emalinowskiv1-helm
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true

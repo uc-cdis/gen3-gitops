@@ -27,6 +27,6 @@ spec:
     namespace: charliehelm
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true

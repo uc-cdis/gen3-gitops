@@ -38,6 +38,15 @@ cohort-middleware:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
     tag: feat_add_filter_and_transformation_to_remaining_endpoints
 dashboard:
+  dashboardConfig:
+    gitopsRepo: "https://github.com/uc-cdis/gitops-qa"
+    bucket: dashboard-707767160287-devplanetv1-gen3
+    prefix: qa-mickey.planx-pla.net
+
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::707767160287:role/gen3_service/qaplanetv1--qa-mickey--dashboard"
+
   autoscaling:
     enabled: true
     maxReplicas: 1

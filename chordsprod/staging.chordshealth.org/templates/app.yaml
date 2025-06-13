@@ -27,6 +27,6 @@ spec:
     namespace: chordstaginghelm
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true

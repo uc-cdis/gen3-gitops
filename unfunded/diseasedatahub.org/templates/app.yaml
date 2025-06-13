@@ -28,6 +28,6 @@ spec:
     namespace: diseasedatahub
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true

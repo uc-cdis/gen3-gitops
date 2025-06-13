@@ -27,6 +27,6 @@ spec:
     namespace: fluhelm
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true

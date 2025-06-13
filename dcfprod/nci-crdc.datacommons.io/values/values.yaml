@@ -1,0 +1,302 @@
+arborist:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
+    tag: '2025.04'
+audit:
+  enabled: true
+  externalSecrets:
+    auditG3auto: dcfprod-audit-g3auto
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
+    tag: '2025.04'
+aws-es-proxy:
+  enabled: true
+  image:
+    repository: quay.io/cdis/aws-es-proxy
+    tag: '0.8'
+dashboard:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
+    tag: '2025.04'
+datareplicate:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
+    tag: 2.0.0
+fence:
+  autoscaling:
+    enabled: true
+    maxReplicas: 15
+    minReplicas: 5
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  externalSecrets:
+    createK8sGoogleAppSecrets: false
+    fenceConfig: dcfprod-fence-config
+    fenceGoogleAppCredsSecret: dcfprod-fence-google-app-creds
+    fenceGoogleStorageCredsSecret: dcfprod-fence-google-storage-creds
+    fenceJwtKeys: dcfprod-fence-jwt
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
+    tag: '2025.04'
+fluentd:
+  enabled: true
+  image:
+    repository: fluent/fluentd-kubernetes-daemonset
+    tag: v1.15.3-debian-cloudwatch-1.0
+global:
+  aws:
+    account: '584476192960'
+    awsEsProxyRole: dcfprod--default--es-access
+    enabled: true
+  dev: false
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
+  dispatcherJobNum: '10'
+  environment: dcfprod
+  externalSecrets:
+    deploy: true
+  hostname: nci-crdc.datacommons.io
+  manifestGlobalExtraValues:
+    indexd_single_table: 'true'
+    kube_bucket: kube-dcfprod-gen3
+    logs_bucket: logs-dcfprod-gen3
+    sync_from_dbgap: 'True'
+    useryaml_s3path: s3://cdis-gen3-users/ncicrdc/user.yaml
+  portalApp: gitops
+  postgres:
+    dbCreate: false
+  revproxyArn: arn:aws:acm:us-east-1:584476192960:certificate/4173b316-0510-4216-8043-3f9234570475
+guppy: {}
+indexd:
+  autoscaling:
+    enabled: true
+    maxReplicas: 18
+    minReplicas: 6
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
+    tag: '2025.04'
+metadata:
+  autoscaling:
+    enabled: true
+    maxReplicas: 5
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    tag: '2025.04'
+peregrine:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: '2025.04'
+portal:
+  enabled: true
+  gitops:
+    css: "/* Hide Data Dictionary information */\n.footer__version-area > div:nth-child(1)\
+      \ {\n  display: none;\n}\n"
+    json: "{\n  \"gaTrackingId\": \"undefined\",\n  \"grafanaFaroConfig\": {\n   \
+      \ \"grafanaFaroEnable\": true,\n    \"grafanaFaroNamespace\": \"dcfprod\"\n\
+      \  },\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
+      : \"_case_count\",\n        \"name\": \"Case\",\n        \"plural\": \"Cases\"\
+      \n      },\n      {\n        \"graphql\": \"_experiment_count\",\n        \"\
+      name\": \"Experiment\",\n        \"plural\": \"Experiments\"\n      },\n   \
+      \   {\n        \"graphql\": \"_aliquot_count\",\n        \"name\": \"Aliquot\"\
+      ,\n        \"plural\": \"Aliquots\"\n      }\n    ],\n    \"chartCounts\": [\n\
+      \      {\n        \"graphql\": \"_case_count\",\n        \"name\": \"Case\"\n\
+      \      },\n      {\n        \"graphql\": \"_experiment_count\",\n        \"\
+      name\": \"Experiment\"\n      },\n      {\n        \"graphql\": \"_aliquot_count\"\
+      ,\n        \"name\": \"Aliquot\"\n      }\n    ],\n    \"projectDetails\": \"\
+      boardCounts\"\n  },\n  \"components\": {\n    \"appName\": \"NCI Data Commons\
+      \ Framework Services\",\n    \"index\": {\n      \"introduction\": {\n     \
+      \   \"heading\": \"Data Commons\",\n        \"text\": \"The NCI Data Commons\
+      \ Framework Services supports the management, analysis and sharing of data for\
+      \ the research community.\",\n        \"link\": \"/submission\"\n      },\n\
+      \      \"buttons\": [\n        {\n          \"name\": \"Access Data\",\n   \
+      \       \"icon\": \"data-access\",\n          \"body\": \"Use our selected tool\
+      \ to filter out the data you need.\",\n          \"link\": \"/query\",\n   \
+      \       \"label\": \"Query data\"\n        },\n        {\n          \"name\"\
+      : \"Submit Data\",\n          \"icon\": \"data-submit\",\n          \"body\"\
+      : \"Submit Data based on the dictionary.\",\n          \"link\": \"/submission\"\
+      ,\n          \"label\": \"Submit data\"\n        }\n      ]\n    },\n    \"\
+      navigation\": {\n      \"title\": \"NCI Data Commons Framework Services\",\n\
+      \      \"items\": [\n        {\n          \"icon\": \"profile\",\n         \
+      \ \"link\": \"/identity\",\n          \"name\": \"Profile\",\n          \"tooltip\"\
+      : \"\"\n        }\n      ]\n    },\n    \"topBar\": {\n      \"items\": [\n\
+      \        {\n          \"icon\": \"upload\",\n          \"link\": \"/submission\"\
+      ,\n          \"name\": \"Submit Data\"\n        },\n        {\n          \"\
+      link\": \"https://nci-crdc.datacommons.io/dashboard/Public/docs/redir_gen3.html\"\
+      ,\n          \"name\": \"Documentation\"\n        }\n      ]\n    },\n    \"\
+      login\": {\n      \"title\": \"NCI Data Commons Framework Services\",\n    \
+      \  \"subTitle\": \"Explore, Analyze, and Share Data\",\n      \"text\": \"The\
+      \ vision of DCFS is to make it easier to develop, operate, and interoperate\
+      \ data commons, data clouds, knowledge bases, and other resources for managing,\
+      \ analyzing, and sharing research data that can be part of a large data commons\
+      \ ecosystem.\",\n      \"contact\": \"If you have any questions about access\
+      \ or the registration process, please contact \",\n      \"email\": \"dcf-support@gen3.org\"\
+      \n    },\n    \"certs\": {\n      \"security_quiz\": {\n        \"title\": \"\
+      BloodPAC User agreement\",\n        \"description\": \"The agreement on what\
+      \ you can and need to do in a Commons.\",\n        \"questions\": [\n      \
+      \    {\n            \"name\": \"Things you can do after registration\",\n  \
+      \          \"question\": \"As a registered user, I can do the following things\
+      \ without any problem. Is it true or not:\",\n            \"options\": [\n \
+      \             \"Browse public Project\",\n              \"Upload file\",\n \
+      \             \"Download file\",\n              \"Invite people\"\n        \
+      \    ],\n            \"answer\": 0,\n            \"hint\": \"Some information\
+      \ about this question\"\n          },\n          {\n            \"name\": \"\
+      Things you need to do to become the registered user\",\n            \"question\"\
+      : \"In order to be a register user, I must do the following things otherwise:\"\
+      ,\n            \"options\": [\n              \"Agree the user agreement\",\n\
+      \              \"Accept a consent\",\n              \"None of them\",\n    \
+      \          \"Both of them\"\n            ],\n            \"answer\": 2,\n  \
+      \          \"hint\": \"Some information about this question\"\n          },\n\
+      \          {\n            \"name\": \"Things you can do with data\",\n     \
+      \       \"question\": \"How can I share data with other people according to\
+      \ the policy of the commons\",\n            \"options\": [\n              \"\
+      I can not share data\",\n              \"I can only share data with BPA memebers\"\
+      ,\n              \"I can share data with family\",\n              \"I can share\
+      \ data with my wife\"\n            ],\n            \"answer\": 1,\n        \
+      \    \"hint\": \"Some information about this question\"\n          }\n     \
+      \   ]\n      }\n    },\n    \"footerLogos\": [\n      {\n        \"src\": \"\
+      /src/img/gen3.png\",\n        \"href\": \"https://nci-crdc.datacommons.io/dashboard/Public/docs/redir_gen3_ctds.html\"\
+      ,\n        \"alt\": \"Gen3 Data Commons\"\n      },\n      {\n        \"src\"\
+      : \"/src/img/createdby.png\",\n        \"href\": \"https://nci-crdc.datacommons.io/dashboard/Public/docs/redir_ctds.html\"\
+      ,\n        \"alt\": \"Center for Translational Data Science at the University\
+      \ of Chicago\"\n      }\n    ],\n    \"privacyPolicy\": {\n      \"text\": \"\
+      \",\n      \"routeHref\": \"\",\n      \"footerHref\": \"\",\n      \"file\"\
+      : \"\"\n    },\n    \"footer\": {\n      \"links\": [\n        {\n         \
+      \ \"text\": \"HHS Responsible Disclosure Form\",\n          \"href\": \"https://www.hhs.gov/vulnerability-disclosure-policy/index.html\"\
+      \n        }\n      ]\n    }\n  },\n  \"requiredCerts\": [],\n  \"featureFlags\"\
+      : {\n    \"explorer\": true,\n    \"analysis\": false\n  },\n  \"dataExplorerConfig\"\
+      : {\n    \"arrangerConfig\": {\n      \"projectId\": \"search\",\n      \"graphqlField\"\
+      : \"subject\",\n      \"index\": \"\",\n      \"nodeCountField\": \"node_id\"\
+      \n    },\n    \"charts\": {\n      \"project\": {\n        \"chartType\": \"\
+      count\",\n        \"title\": \"Projects\"\n      },\n      \"study\": {\n  \
+      \      \"chartType\": \"count\",\n        \"title\": \"Studies\"\n      },\n\
+      \      \"file_type\": {\n        \"chartType\": \"count\",\n        \"title\"\
+      : \"File Types\"\n      },\n      \"ethnicity\": {\n        \"chartType\": \"\
+      stackedBar\",\n        \"title\": \"Ethnicity\"\n      },\n      \"gender\"\
+      : {\n        \"chartType\": \"pie\",\n        \"title\": \"Gender\"\n      },\n\
+      \      \"race\": {\n        \"chartType\": \"pie\",\n        \"title\": \"Race\"\
+      \n      },\n      \"vital_status\": {\n        \"chartType\": \"bar\",\n   \
+      \     \"title\": \"Vital Status\"\n      }\n    },\n    \"filters\": {\n   \
+      \   \"tabs\": [\n        {\n          \"title\": \"Project\",\n          \"\
+      fields\": [\n            \"project\",\n            \"study\"\n          ]\n\
+      \        },\n        {\n          \"title\": \"Subject\",\n          \"fields\"\
+      : [\n            \"race\",\n            \"ethnicity\",\n            \"gender\"\
+      ,\n            \"vital_status\"\n          ]\n        },\n        {\n      \
+      \    \"title\": \"File\",\n          \"fields\": [\n            \"file_type\"\
+      \n          ]\n        }\n      ]\n    },\n    \"buttons\": [\n      {\n   \
+      \     \"enabled\": true,\n        \"type\": \"data\",\n        \"title\": \"\
+      Download All Data\",\n        \"leftIcon\": \"user\",\n        \"rightIcon\"\
+      : \"download\",\n        \"fileName\": \"data.json\"\n      },\n      {\n  \
+      \      \"enabled\": true,\n        \"type\": \"manifest\",\n        \"title\"\
+      : \"Download Manifest\",\n        \"leftIcon\": \"datafile\",\n        \"rightIcon\"\
+      : \"download\",\n        \"fileName\": \"manifest.json\"\n      }\n    ],\n\
+      \    \"table\": {\n      \"enabled\": true,\n      \"fields\": [\n        \"\
+      project\",\n        \"study\",\n        \"race\",\n        \"ethnicity\",\n\
+      \        \"gender\",\n        \"vital_status\",\n        \"whatever_lab_result_value\"\
+      ,\n        \"file_count\",\n        \"file_type\",\n        \"file_format\"\n\
+      \      ]\n    },\n    \"terraExportURL\": null,\n    \"sevenBridgesExportURL\"\
+      : null\n  },\n  \"useArboristUI\": false,\n  \"showArboristAuthzOnProfile\"\
+      : false,\n  \"showFenceAuthzOnProfile\": true,\n  \"componentToResourceMapping\"\
+      : {},\n  \"ddUrl\": \"ddog-gov.com\"\n}\n"
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
+    tag: '2025.04'
+revproxy:
+  ingress:
+    aws:
+      group: dcfprod-helm
+  autoscaling:
+    enabled: true
+    maxReplicas: 12
+    minReplicas: 4
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    tag: '2025.04'
+sheepdog:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
+    tag: '2025.04'
+sower:
+  enabled: true
+  externalSecrets:
+    pelicanserviceG3auto: dcfprod-pelicanservice-g3auto
+    sowerjobsG3auto: dcfprod-sower-jobs-g3auto
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
+    tag: '2025.04'
+  sowerConfig:
+  - action: index-object-manifest
+    activeDeadlineSeconds: 86400
+    container:
+      cpu-limit: '1'
+      env:
+      - name: GEN3_HOSTNAME
+        valueFrom:
+          configMapKeyRef:
+            key: hostname
+            name: manifest-global
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.04
+      memory-limit: 1Gi
+      name: job-task
+      pull_policy: Always
+      volumeMounts:
+      - mountPath: /creds.json
+        name: sower-jobs-creds-volume
+        readOnly: true
+        subPath: creds.json
+    name: manifest-indexing
+    restart_policy: Never
+    serviceAccountName: jobs-nci-crdc-datacommons-io
+    volumes:
+    - name: sower-jobs-creds-volume
+      secret:
+        secretName: sower-jobs-g3auto
+  - action: download-indexd-manifest
+    activeDeadlineSeconds: 86400
+    container:
+      cpu-limit: '1'
+      env:
+      - name: GEN3_HOSTNAME
+        valueFrom:
+          configMapKeyRef:
+            key: hostname
+            name: manifest-global
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.04
+      memory-limit: 1Gi
+      name: job-task
+      pull_policy: Always
+      volumeMounts:
+      - mountPath: /creds.json
+        name: sower-jobs-creds-volume
+        readOnly: true
+        subPath: creds.json
+    name: indexd-manifest
+    restart_policy: Never
+    serviceAccountName: jobs-nci-crdc-datacommons-io
+    volumes:
+    - name: sower-jobs-creds-volume
+      secret:
+        secretName: sower-jobs-g3auto
+ssjdispatcher:
+  enabled: true
+  externalSecrets:
+    credsFile: dcfprod-ssjdispatcher-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
+    tag: '2025.04'
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04

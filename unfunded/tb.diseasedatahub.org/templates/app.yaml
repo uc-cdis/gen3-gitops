@@ -27,6 +27,6 @@ spec:
     namespace: tbhelm
   syncPolicy:
     syncOptions:
-    - CreateNamespace=false
+    - CreateNamespace=true
     automated:
       selfHeal: true
