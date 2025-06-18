@@ -18,6 +18,8 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-cloudauto-helm--audit-sqs-receiver
+manifestservice:
+  enabled: false
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
@@ -122,12 +124,12 @@ frontend-framework:
 global:
   aws:
     account: '533267425233'
-    awsEsProxyRole: bihprod--bihstaging-cloudauto-helm--es-access
+    awsEsProxyRole: bihprod--bihstaging-helm--es-access
     enabled: true
     hatchery_role: bihprod--bihstaging-cloudauto-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::533267425233:role/bihstaging-cloudauto-external-secrets-sa
+      roleArn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.2.1/schema.json
   dispatcherJobNum: '10'
@@ -192,8 +194,6 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.05'
   useAggMds: true
-mutatingWebhook:
-  enabled: true
 peregrine:
   enabled: true
   image:
