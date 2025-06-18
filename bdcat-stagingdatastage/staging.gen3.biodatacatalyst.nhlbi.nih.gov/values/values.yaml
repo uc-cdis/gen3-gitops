@@ -3,6 +3,9 @@ access-backend:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
     tag: "2025.06"
+  externalSecrets:
+    accessBackendG3auto: stagingdatastage-access-backend-g3auto
+    dbcreds: stagingdatastage-access-backend-dbcreds
 arborist:
   autoscaling:
     enabled: true
