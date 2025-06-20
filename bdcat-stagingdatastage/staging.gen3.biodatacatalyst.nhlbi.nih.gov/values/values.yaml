@@ -233,6 +233,7 @@ gen3-user-data-library:
     tag: "2025.06"
   externalSecrets:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
+    gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
 global:
   aws:
     account: "895962626746"
