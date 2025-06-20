@@ -1270,6 +1270,26 @@ sower:
       container:
         cpu-limit: "1"
         env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: database
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: password
           - name: DICTIONARY_URL
             valueFrom:
               configMapKeyRef:
@@ -1308,6 +1328,26 @@ sower:
       container:
         cpu-limit: "1"
         env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: database
+          - name: DB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: peregrine-dbcreds
+                key: password
           - name: DICTIONARY_URL
             valueFrom:
               configMapKeyRef:
