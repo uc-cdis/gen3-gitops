@@ -230,7 +230,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: "2025.06"
+    tag: main
   externalSecrets:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
