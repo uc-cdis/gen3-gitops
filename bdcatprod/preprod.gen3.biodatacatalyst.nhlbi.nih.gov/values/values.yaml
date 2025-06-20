@@ -281,7 +281,7 @@ global:
     hatchery_role: bdcatprod--bdcat-internalstaging-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::895962626746:role/bdcat-internalstaging-external-secrets-sa
+      roleArn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
   dispatcherJobNum: "10"
