@@ -1262,6 +1262,7 @@ sower:
   externalSecrets:
     pelicanserviceG3auto: bdcat-internalstaging-pelicanservice-g3auto
     sowerjobsG3auto: bdcat-internalstaging-sower-jobs-g3auto
+    peregrineRawSecret: bdcat-internalstaging-peregrine-creds-raw
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: "2025.04"
