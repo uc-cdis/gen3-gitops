@@ -1270,7 +1270,7 @@ sower:
             subPath: creds.json
       name: pelican-export
       restart_policy: Never
-      serviceAccountName: jobs-staging-gen3-biodatacatalyst-nhlbi-nih-gov
+      serviceAccountName: default
       volumes:
         - name: pelican-creds-volume
           secret:
@@ -1339,7 +1339,7 @@ sower:
             subPath: creds.json
       name: manifest-indexing
       restart_policy: Never
-      serviceAccountName: jobs-staging-gen3-biodatacatalyst-nhlbi-nih-gov
+      serviceAccountName: default
       volumes:
         - name: sower-jobs-creds-volume
           secret:
