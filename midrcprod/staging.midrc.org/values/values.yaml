@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: midrcstaging
+  jupyterNamespace: jupyter-pods-midrcstaging
 arborist:
   autoscaling:
     enabled: true
@@ -530,6 +530,7 @@ guppy:
     type: imaging_study
 hatchery:
   enabled: true
+  jupyterNamespace: jupyter-pods-midrcstaging
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.05'
@@ -568,8 +569,6 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.05'
-mutatingWebhook:
-  enabled: true
 ohif-viewer:
   enabled: true
   image:
