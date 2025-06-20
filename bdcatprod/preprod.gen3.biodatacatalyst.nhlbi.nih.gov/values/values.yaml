@@ -538,8 +538,6 @@ metadata-delete-expired-objects:
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
     tag: "2025.04"
-mutatingWebhook:
-  enabled: true
 peregrine:
   autoscaling:
     enabled: true
