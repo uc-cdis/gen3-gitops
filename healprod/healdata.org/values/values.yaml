@@ -47,7 +47,7 @@ dashboard:
     tag: '2025.05'
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--dashboard-access
+      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--dashboard-access
 etl:
   esEndpoint: elasticsearch
   mappings:
@@ -140,7 +140,7 @@ frontend-framework:
 global:
   aws:
     account: '205252583234'
-    awsEsProxyRole: healprod--healprod-helm--es-access
+    awsEsProxyRole: healprod--healpreprod-helm--es-access
     enabled: true
     hatchery_role: healprod--healprod-helm--hatchery-sa
     secretStoreServiceAccount:
