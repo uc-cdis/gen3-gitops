@@ -1833,6 +1833,10 @@ portal:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.04'
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "2"
 requestor:
   enabled: true
   image:
@@ -1852,7 +1856,7 @@ sheepdog:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.04'
 ssjdispatcher:
-  enabled: true
+  enabled: false
   externalSecrets:
     credsFile: pdp-commons-ssjdispatcher-creds
   image:
