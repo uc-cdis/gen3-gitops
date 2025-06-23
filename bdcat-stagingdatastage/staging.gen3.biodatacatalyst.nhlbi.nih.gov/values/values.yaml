@@ -1235,6 +1235,7 @@ sower:
   externalSecrets:
     pelicanserviceG3auto: stagingdatastage-pelicanservice-g3auto
     sowerjobsG3auto: stagingdatastage-sower-jobs-g3auto
+    peregrineRawSecret: stagingdatastage-peregrine-creds-raw
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: "2025.06"
