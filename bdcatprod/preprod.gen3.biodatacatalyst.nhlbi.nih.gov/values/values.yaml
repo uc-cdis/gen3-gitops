@@ -6,6 +6,9 @@ access-backend:
   externalSecrets:
     accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto
     dbcreds: bdcat-internalstaging-access-backend-dbcreds
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/gen3_service/bdcatprod--bdcat-internalstaging--access-backend
 arborist:
   autoscaling:
     enabled: true
