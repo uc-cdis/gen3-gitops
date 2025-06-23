@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: ""
+  jupyterNamespace: "jupyter-pods"
 arborist:
   enabled: true
   image:
@@ -60,7 +60,7 @@ global:
     hatchery_role: pdp-commons--pdp-commons-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::851725307933:role/pdp-commons-external-secrets-sa
+      roleArn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
   dispatcherJobNum: '10'
