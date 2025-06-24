@@ -11,6 +11,7 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.03'
 audit:
+  enabled: false
   externalSecrets:
     auditG3auto: bloodv2-audit-g3auto
   serviceAccount:
@@ -413,7 +414,7 @@ global:
     hatchery_role: bloodv2--bloodv2-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::562749638216:role/bloodv2-external-secrets-sa
+      roleArn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.8/schema.json
   dispatcherJobNum: '10'

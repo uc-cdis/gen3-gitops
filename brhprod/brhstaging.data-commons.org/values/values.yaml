@@ -1,5 +1,7 @@
 ambassador:
-  jupyterNamespace: brhstaging
+  jupyterNamespace: jupyter-pods-brhstaging-helm
+access-backend:
+  enabled: false
 arborist:
   autoscaling:
     enabled: true
@@ -11,6 +13,7 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.05'
 audit:
+  enabled: false
   externalSecrets:
     auditG3auto: brhstaging-audit-g3auto
   serviceAccount:
@@ -34,6 +37,9 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--dashboard-access
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/brh/user.yaml
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -65,11 +71,11 @@ global:
     hatchery_role: brhprod--brhstaging-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::885078588865:role/brhstaging-external-secrets-sa
+      roleArn: arn:aws:iam::885078588865:role/brhprod-external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.0.6/schema.json
   dispatcherJobNum: '10'
-  environment: brhstaging
+  environment: brhprod
   externalSecrets:
     deploy: true
   hostname: brhstaging.data-commons.org
@@ -84,6 +90,7 @@ global:
     tier_access_level: regular
     tier_access_limit: 50
     useryaml_s3path: s3://cdis-gen3-users/brh/user.yaml
+    fence_url: https://brhstaging.data-commons.org/user
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -95,7 +102,7 @@ hatchery:
     tag: '2025.05'
   json: |-
     {
-      "user-namespace": "jupyter-pods-brhstaging",
+      "user-namespace": "jupyter-pods-brhstaging-helm",
       "sub-dir": "/lw-workspace",
       "user-volume-size": "10Gi",
       "default-pay-model": {
@@ -108,7 +115,7 @@ hatchery:
         "memory-limit": "256Mi",
         "image": "quay.io/cdis/ecs-ws-sidecar:2025.05",
         "env": {
-          "NAMESPACE": "brhstaging",
+          "NAMESPACE": "brhstaging-helm",
           "HOSTNAME": "brhstaging.data-commons.org"
         },
         "args": [],
@@ -450,7 +457,7 @@ metadata:
     \ \"path:study_url\",\n\t\t\t\t\"_subjects_count\" : {\"path\":\"_subjects_count\"\
     , \"default\" : 0 },\n\t\t\t\t\"__manifest\": \"path:__manifest\",\n\t\t\t\t\"\
     commons_url\" : \"gen3.datacommons.io\"\n\t\t\t}\n\t\t}\n\n\t}\n}\n"
-  aggMdsNamespace: brhstaging
+  aggMdsNamespace: brhstaging-helm
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -480,7 +487,7 @@ portal:
         "gaTrackingId": "G-CRDLB4FGKF",
         "grafanaFaroConfig": {
           "grafanaFaroEnable": true,
-          "grafanaFaroNamespace": "brhstaging"
+          "grafanaFaroNamespace": "brhstaging-helm"
         },
         "graphql": {
           "boardCounts": [],
@@ -1045,6 +1052,7 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.05'
+  fenceUrl: https://brhstaging.data-commons.org/user
 wts:
   enabled: true
   externalSecrets:

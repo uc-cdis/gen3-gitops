@@ -427,7 +427,7 @@ global:
     hatchery_role: midrcvalidate--validatestaging-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::813684607867:role/validatestaging-external-secrets-sa
+      roleArn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.7/schema.json
   dispatcherJobNum: '10'
