@@ -8,7 +8,7 @@ access-backend:
     dbcreds: bdcat-internalstaging-access-backend-dbcreds
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/gen3_service/bdcatprod--bdcat-internalstaging--access-backend
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--access-backend-sa
 arborist:
   autoscaling:
     enabled: true
