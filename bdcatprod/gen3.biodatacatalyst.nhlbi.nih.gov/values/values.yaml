@@ -273,6 +273,9 @@ gen3-user-data-library:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: 1.0.1
+  externalSecrets:
+    dbcreds: bdcatprod-gen3userdatalibrary-creds
+    gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
 global:
   aws:
     account: "895962626746"
