@@ -401,6 +401,9 @@ etl:
     root: None
     type: collector
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 4
@@ -445,6 +448,7 @@ global:
     sync_from_dbgap: 'False'
     tier_access_level: private
     useryaml_s3path: s3://cdis-gen3-users/midrcvalidate/user.yaml
+  tierAccessLevel: private
   portalApp: gitops
   postgres:
     dbCreate: false
