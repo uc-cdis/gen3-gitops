@@ -17,7 +17,7 @@ audit:
     tag: '2025.05'
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-cloudauto-helm--audit-sqs-receiver
+      eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
