@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: ""
+  jupyterNamespace: "jupyter-pods"
 arborist:
   enabled: true
   image:
@@ -25,6 +25,10 @@ dashboard:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
     tag: '2025.04'
+  podSecurityContext:
+    fsGroup: 1001
+  securityContext:
+    {}
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--dashboard-access
@@ -57,7 +61,10 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: 1.1.0
+    tag: main
+  externalSecrets:
+    dbcreds: pdp-commons-gen3userdatalibrary-creds
+    gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
 global:
   aws:
     account: '851725307933'
@@ -66,7 +73,7 @@ global:
     hatchery_role: pdp-commons--pdp-commons-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::851725307933:role/pdp-commons-external-secrets-sa
+      roleArn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
   dispatcherJobNum: '10'
@@ -92,81 +99,82 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
-  revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/94dc6b22-6ad2-481f-aff5-59ad7381e9c6
+  revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
 hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.04'
-  json: |
-    {
-        "user-namespace": "jupyter-pods",
-        "sub-dir": "/lw-workspace",
-        "user-volume-size": "10Gi",
-        "default-pay-model": {
-            "workspace_type": "Trial Workspace",
-            "local": true
-        },
-        "sidecar": {
-            "cpu-limit": "1.0",
-            "memory-limit": "256Mi",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
-            "env": {
-                "NAMESPACE": "default",
-                "HOSTNAME": "mc2dp.data-commons.org"
+  hatchery:
+    json: |
+        {
+            "user-namespace": "jupyter-pods",
+            "sub-dir": "/lw-workspace",
+            "user-volume-size": "10Gi",
+            "default-pay-model": {
+                "workspace_type": "Trial Workspace",
+                "local": true
             },
-            "args": [],
-            "command": [
-                "/bin/bash",
-                "./sidecar.sh"
-            ],
-            "lifecycle-pre-stop": [
-                "su",
-                "-c",
-                "echo test",
-                "-s",
-                "/bin/sh",
-                "root"
-            ]
-        },
-        "containers": [
-            {
-                "target-port": 8888,
-                "cpu-limit": "2.0",
-                "memory-limit": "8Gi",
-                "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
+            "sidecar": {
+                "cpu-limit": "1.0",
+                "memory-limit": "256Mi",
+                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
                 "env": {
-                    "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                    "NAMESPACE": "default",
+                    "HOSTNAME": "mc2dp.data-commons.org"
                 },
-                "args": [
-                    "--NotebookApp.base_url=/lw-workspace/proxy/",
-                    "--NotebookApp.default_url=/lab",
-                    "--NotebookApp.password=''",
-                    "--NotebookApp.token=''",
-                    "--NotebookApp.ip='*'",
-                    "--NotebookApp.notebook_dir='/home/jovyan'",
-                    "--NotebookApp.shutdown_no_activity_timeout=5400",
-                    "--NotebookApp.quit_button=False"
-                ],
+                "args": [],
                 "command": [
-                    "start-notebook.sh"
+                    "/bin/bash",
+                    "./sidecar.sh"
                 ],
-                "path-rewrite": "/lw-workspace/proxy/",
-                "use-tls": "false",
-                "ready-probe": "/lw-workspace/proxy/",
-                "lifecycle-post-start": [
-                    "/bin/sh",
+                "lifecycle-pre-stop": [
+                    "su",
                     "-c",
-                    "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                ],
-                "user-uid": 1000,
-                "fs-gid": 100,
-                "user-volume-location": "/home/jovyan/pd",
-                "gen3-volume-location": "/home/jovyan/.gen3"
-            }
-        ]
-    }
+                    "echo test",
+                    "-s",
+                    "/bin/sh",
+                    "root"
+                ]
+            },
+            "containers": [
+                {
+                    "target-port": 8888,
+                    "cpu-limit": "2.0",
+                    "memory-limit": "8Gi",
+                    "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+                    "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
+                    "env": {
+                        "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                    },
+                    "args": [
+                        "--NotebookApp.base_url=/lw-workspace/proxy/",
+                        "--NotebookApp.default_url=/lab",
+                        "--NotebookApp.password=''",
+                        "--NotebookApp.token=''",
+                        "--NotebookApp.ip='*'",
+                        "--NotebookApp.notebook_dir='/home/jovyan'",
+                        "--NotebookApp.shutdown_no_activity_timeout=5400",
+                        "--NotebookApp.quit_button=False"
+                    ],
+                    "command": [
+                        "start-notebook.sh"
+                    ],
+                    "path-rewrite": "/lw-workspace/proxy/",
+                    "use-tls": "false",
+                    "ready-probe": "/lw-workspace/proxy/",
+                    "lifecycle-post-start": [
+                        "/bin/sh",
+                        "-c",
+                        "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                    ],
+                    "user-uid": 1000,
+                    "fs-gid": 100,
+                    "user-volume-location": "/home/jovyan/pd",
+                    "gen3-volume-location": "/home/jovyan/.gen3"
+                }
+            ]
+        }
 indexd:
   enabled: true
   externalSecrets:
@@ -1840,6 +1848,10 @@ portal:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.04'
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "2"
 requestor:
   enabled: true
   image:
@@ -1859,7 +1871,7 @@ sheepdog:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.04'
 ssjdispatcher:
-  enabled: true
+  enabled: false
   externalSecrets:
     credsFile: pdp-commons-ssjdispatcher-creds
   image:
