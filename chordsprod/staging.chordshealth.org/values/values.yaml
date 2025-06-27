@@ -47,7 +47,7 @@ indexd:
     tag: 2025.03
 
 peregrine:
-  # temporarily scaling up peregrine so it can handle the extra load without giving a 502. 
+  # temporarily scaling up peregrine so it can handle the extra load without giving a 502.
   replicaCount: 3
   externalSecrets:
     dbcreds: "chords_staging-peregrine-db-creds"
@@ -89,6 +89,8 @@ ssjdispatcher:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: 2025.03
+  externalSecrets:
+    createK8sSsjdispatcherSecret: true
 
 metadata:
   useAggMds: False

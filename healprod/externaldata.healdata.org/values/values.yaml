@@ -71,6 +71,7 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
 indexd:
+  defaultPrefix: dg.H35L/
   autoscaling:
     enabled: true
     maxReplicas: 1

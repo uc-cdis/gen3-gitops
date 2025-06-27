@@ -8,6 +8,10 @@ arborist:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.06'
+manifestservice:
+  enabled: false
+wts:
+  enabled: false
 audit:
   enabled: true
   externalSecrets:
@@ -37,6 +41,9 @@ datareplicate:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
     tag: 2.0.0
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 4
@@ -52,6 +59,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.06'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/dcfstaging-users/user.yaml
 fluentd:
   enabled: true
   image:
@@ -72,6 +82,8 @@ global:
   environment: dcf-staging
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "dcf-staging-slack-webhook"
   hostname: nci-crdc-staging.datacommons.io
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
@@ -422,8 +434,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: dcf-staging-pelicanservice-g3auto
+    createK8sPelicanServiceSecret: true
     sowerjobsG3auto: dcf-staging-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.06'

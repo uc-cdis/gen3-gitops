@@ -599,6 +599,7 @@ hatchery:
       ]
     }
 indexd:
+  defaultPrefix: dg.63D5/
   autoscaling:
     enabled: true
     maxReplicas: 8
@@ -1513,8 +1514,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: covid19prod-pelicanservice-g3auto
-    sowerjobsG3auto: covid19prod-sower-jobs-g3auto
+    createK8sPelicanServiceSecret: true
+    # pelicanserviceG3auto: covid19prod-pelicanservice-g3auto
+    createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.05'
@@ -1535,6 +1537,31 @@ sower:
             name: manifest-global
       - name: ROOT_NODE
         value: subject
+      - name: DB_HOST
+        valueFrom:
+          secretKeyRef:
+            name: sheepdog-dbcreds
+            key: host
+      - name: DB_DATABASE
+        valueFrom:
+          secretKeyRef:
+            name: sheepdog-dbcreds
+            key: database
+      - name: DB_USER
+        valueFrom:
+          secretKeyRef:
+            name: sheepdog-dbcreds
+            key: username
+      - name: DB_PASS
+        valueFrom:
+          secretKeyRef:
+            name: sheepdog-dbcreds
+            key: password
+      - name: SHEEPDOG
+        valueFrom:
+          secretKeyRef:
+            name: indexd-service-creds
+            key: sheepdog
       image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.05
       memory-limit: 4Gi
       name: job-task
@@ -1544,26 +1571,12 @@ sower:
         name: pelican-creds-volume
         readOnly: true
         subPath: config.json
-      - mountPath: /peregrine-creds.json
-        name: peregrine-creds-volume
-        readOnly: true
-        subPath: creds.json
-      - mountPath: /indexd-creds.json
-        name: indexd-creds-volume
-        readOnly: true
-        subPath: creds.json
     name: pelican-export
     restart_policy: Never
     volumes:
     - name: pelican-creds-volume
       secret:
         secretName: pelicanservice-g3auto
-    - name: peregrine-creds-volume
-      secret:
-        secretName: peregrine-creds
-    - name: indexd-creds-volume
-      secret:
-        secretName: indexd-creds
 spark:
   enabled: true
   image:

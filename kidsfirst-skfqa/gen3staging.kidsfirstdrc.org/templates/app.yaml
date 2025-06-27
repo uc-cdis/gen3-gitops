@@ -24,6 +24,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: skfqa-helm
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=true
     automated:

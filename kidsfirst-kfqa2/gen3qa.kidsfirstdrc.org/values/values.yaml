@@ -18,6 +18,10 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::222487244010:role/kfqa2--kfqa2-helm--audit-sqs-receiver
+manifestservice:
+  enabled: false
+wts:
+  enabled: false
 awshelper:
   enabled: true
   image:

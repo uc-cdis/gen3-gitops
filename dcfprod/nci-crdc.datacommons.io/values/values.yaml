@@ -8,6 +8,14 @@ arborist:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.04'
+ambassador:
+  enabled: false
+hatchery:
+  enabled: false
+manifestservice:
+  enabled: false
+wts:
+  enabled: false
 audit:
   enabled: true
   externalSecrets:
@@ -40,6 +48,12 @@ datareplicate:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
     tag: 2.0.0
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-sender
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/ncicrdc/user.yaml
   autoscaling:
     enabled: true
     maxReplicas: 15
@@ -68,13 +82,15 @@ global:
     hatchery_role: dcfprod--dcfprod-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::584476192960:role/dcfprod-external-secrets-sa
+      roleArn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   dispatcherJobNum: '10'
   environment: dcfprod
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "dcfprod-slack-webhook"
   hostname: nci-crdc.datacommons.io
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
@@ -82,6 +98,7 @@ global:
     logs_bucket: logs-dcfprod-gen3
     sync_from_dbgap: 'True'
     useryaml_s3path: s3://cdis-gen3-users/ncicrdc/user.yaml
+    fence_url: https://nci-crdc.datacommons.io/user
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -425,11 +442,13 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.04'
+  fenceUrl: https://nci-crdc.datacommons.io/user
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: dcfprod-pelicanservice-g3auto
+    createK8sPelicanServiceSecret: true
     sowerjobsG3auto: dcfprod-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.04'

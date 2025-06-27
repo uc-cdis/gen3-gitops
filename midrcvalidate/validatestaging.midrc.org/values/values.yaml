@@ -414,6 +414,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.05'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/midrcvalidate/user.yaml
 fluentd:
   enabled: true
   image:
@@ -427,13 +430,15 @@ global:
     hatchery_role: midrcvalidate--validatestaging-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::813684607867:role/validatestaging-external-secrets-sa
+      roleArn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.7/schema.json
   dispatcherJobNum: '10'
   environment: validatestaging
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "validatestaging-slack-webhook"
   hostname: validatestaging.midrc.org
   manifestGlobalExtraValues:
     es7: true
@@ -479,6 +484,7 @@ hatchery:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.05'
 indexd:
+  defaultPrefix: dg.MD1R/
   autoscaling:
     enabled: true
     maxReplicas: 10
@@ -1601,8 +1607,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: validatestaging-pelicanservice-g3auto
+    createK8sPelicanServiceSecret: true
     sowerjobsG3auto: validatestaging-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.05'

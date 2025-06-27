@@ -358,6 +358,7 @@ hatchery:
       ]
     }
 indexd:
+  defaultPrefix: dg.H34L/
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -2255,8 +2256,8 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: healpreprod-pelicanservice-g3auto
-    sowerjobsG3auto: healpreprod-sower-jobs-g3auto
+    createK8sPelicanServiceSecret: true
+    createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.05'

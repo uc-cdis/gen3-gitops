@@ -20,8 +20,11 @@ spec:
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: midrcvalidate-helm
+    namespace: validatestaging-helm
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=true
     automated:

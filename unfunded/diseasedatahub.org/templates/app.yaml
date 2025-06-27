@@ -27,6 +27,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: diseasedatahub
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=true
     automated:

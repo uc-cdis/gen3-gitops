@@ -75,7 +75,7 @@ global:
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.0.6/schema.json
   dispatcherJobNum: '10'
-  environment: brhstaging
+  environment: brhprod
   externalSecrets:
     deploy: true
   hostname: brhstaging.data-commons.org

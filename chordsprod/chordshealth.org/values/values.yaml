@@ -89,6 +89,8 @@ ssjdispatcher:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: 2025.03
+  externalSecrets:
+    createK8sSsjdispatcherSecret: true
 
 metadata:
   useAggMds: False

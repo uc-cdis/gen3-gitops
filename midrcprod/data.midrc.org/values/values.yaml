@@ -533,6 +533,7 @@ hatchery:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.05'
 indexd:
+  defaultPrefix: dg.MD1R/
   autoscaling:
     enabled: true
     maxReplicas: 10
@@ -1728,8 +1729,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: midrcprod-pelicanservice-g3auto
+    createK8sPelicanServiceSecret: true
     sowerjobsG3auto: midrcprod-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.05'

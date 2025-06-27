@@ -24,6 +24,8 @@ global:
   pdb: true
   manifestGlobalExtraValues:
     fence_url: https://caninedc.org/user
+  tierAccessLevel: libre
+  tierAccessLimit: 50    
 
 arborist:
   # Lower cost

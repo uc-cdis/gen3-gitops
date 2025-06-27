@@ -166,6 +166,7 @@ guppy:
   - index: bih_imaging_series
     type: imaging_series
 indexd:
+  defaultPrefix: dg.MD1RBIH/
   autoscaling:
     enabled: true
     maxReplicas: 1

@@ -378,6 +378,7 @@ hatchery:
         ]
     }
 indexd:
+  defaultPrefix: dg.F738/
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -812,7 +813,8 @@ sower:
   enabled: true
   externalSecrets:
     pelicanserviceG3auto: vadcprod-pelicanservice-g3auto
-    sowerjobsG3auto: vadcprod-sower-jobs-g3auto
+    # sowerjobsG3auto: vadcprod-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.04'
