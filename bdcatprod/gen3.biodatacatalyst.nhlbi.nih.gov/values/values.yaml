@@ -1,14 +1,14 @@
 access-backend:
   enabled: true
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend-sa
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
     tag: "2025.04"
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     dbcreds: bdcatprod-access-backend-dbcreds
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/gen3_service/bdcatprod--bdcatprod-helm--access-backend
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/gen3_service/bdcatprod--bdcatprod-helm--access-backend-sa
 arborist:
   autoscaling:
     enabled: true
