@@ -265,7 +265,7 @@ fence:
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/bdcat-internalstaging/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/datastageinternalstaging/user.yaml
 fluentd:
   enabled: true
   image:
