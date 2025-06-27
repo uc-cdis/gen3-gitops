@@ -243,6 +243,9 @@ etl:
       root: None
       type: collector
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/stageprod/user.yaml
   googleCronJobs:
     enabled: true
   serviceAccount:
