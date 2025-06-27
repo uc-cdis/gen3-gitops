@@ -243,6 +243,8 @@ etl:
       root: None
       type: collector
 fence:
+  googleCronJobs:
+    enabled: true
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-sender
