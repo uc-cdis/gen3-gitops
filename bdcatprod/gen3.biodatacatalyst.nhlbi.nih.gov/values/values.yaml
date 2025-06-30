@@ -245,6 +245,7 @@ etl:
 fence:
   usersync:
     usersync: true
+    syncFromDbgap: true
     userYamlS3Path: s3://cdis-gen3-users/stageprod/user.yaml
   googleCronJobs:
     enabled: true
