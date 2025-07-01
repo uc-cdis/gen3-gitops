@@ -1183,7 +1183,7 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.04'
 portal:
-  enabled: true
+  enabled: false
   gitops:
     gen3Bundle: ecosystem
     json: |
