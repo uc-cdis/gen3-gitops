@@ -3,9 +3,7 @@ ambassador:
 arborist:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
@@ -13,9 +11,7 @@ arborist:
 audit:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   externalSecrets:
     auditG3auto: pdp-commons-audit-g3auto
   serviceAccount:
@@ -25,9 +21,7 @@ aws-es-proxy:
   enabled: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   esEndpoint: vpc-pdp-commons-gen3-metadata-2-uxeiendqin66xtsv6p4h3upv5u.us-east-1.es.amazonaws.com
   image:
     repository: quay.io/cdis/aws-es-proxy
@@ -50,9 +44,7 @@ dashboard:
 fence:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-sender
@@ -75,9 +67,7 @@ fluentd:
 frontend-framework:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: quay.io/cdis/prometheus-data-platform
@@ -86,9 +76,7 @@ gen3-user-data-library:
   enabled: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: main
@@ -134,9 +122,7 @@ hatchery:
   enabled: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.04'
@@ -213,9 +199,7 @@ hatchery:
 indexd:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     serviceCreds: pdp-commons-indexd-service-creds
@@ -225,9 +209,7 @@ indexd:
 manifestservice:
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
@@ -1222,18 +1204,14 @@ metadata:
   useAggMds: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.04'
@@ -1260,9 +1238,7 @@ sheepdog:
     tag: '2025.04'
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
 ssjdispatcher:
   enabled: false
   externalSecrets:
@@ -1275,9 +1251,7 @@ wts:
   enabled: true
   autoscaling:
     enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   externalSecrets:
     createWtsOidcClientSecret: false
     wtsG3auto: pdp-commons-wts-g3auto
