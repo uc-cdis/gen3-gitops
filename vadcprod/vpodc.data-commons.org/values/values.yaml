@@ -9,7 +9,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.04'
+    tag: '2025.05'
 audit:
   externalSecrets:
     auditG3auto: vadcprod-audit-g3auto
