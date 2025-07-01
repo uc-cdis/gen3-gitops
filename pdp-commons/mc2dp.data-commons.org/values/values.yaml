@@ -1,11 +1,21 @@
 ambassador:
   jupyterNamespace: "jupyter-pods"
 arborist:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.04'
 audit:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   externalSecrets:
     auditG3auto: pdp-commons-audit-g3auto
   serviceAccount:
@@ -13,6 +23,11 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
 aws-es-proxy:
   enabled: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   esEndpoint: vpc-pdp-commons-gen3-metadata-2-uxeiendqin66xtsv6p4h3upv5u.us-east-1.es.amazonaws.com
   image:
     repository: quay.io/cdis/aws-es-proxy
@@ -33,6 +48,11 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--dashboard-access
 fence:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-sender
@@ -53,12 +73,22 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   enabled: true
   image:
     repository: quay.io/cdis/prometheus-data-platform
     tag: main
 gen3-user-data-library:
   enabled: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: main
@@ -102,6 +132,11 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
 hatchery:
   enabled: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.04'
@@ -176,6 +211,11 @@ hatchery:
             ]
         }
 indexd:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
     serviceCreds: pdp-commons-indexd-service-creds
@@ -183,6 +223,11 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.04'
 manifestservice:
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
@@ -1175,10 +1220,20 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: master
   useAggMds: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.04'
@@ -1203,6 +1258,11 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.04'
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
 ssjdispatcher:
   enabled: false
   externalSecrets:
@@ -1213,6 +1273,11 @@ ssjdispatcher:
   indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04
 wts:
   enabled: true
+  autoscaling:
+    enabled: true
+    maxReplicas: 4
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
   externalSecrets:
     createWtsOidcClientSecret: false
     wtsG3auto: pdp-commons-wts-g3auto
