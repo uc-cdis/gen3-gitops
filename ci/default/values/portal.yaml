@@ -1,11 +1,8 @@
 portal:
-  # replicaCount: 2
   resources:
-    limits:
-      memory: 6Gi
     requests:
-      cpu: 4
-      memory: 6Gi
+      cpu: "0.2"
+      memory: 100Mi
   image:
     repository: quay.io/cdis/data-portal
     tag: master
@@ -654,7 +651,6 @@ portal:
               "rightIcon": "download"
             }
           ],
-          "loginForDownload": true,
           "guppyConfig": {
             "dataType": "subject",
             "nodeCountTitle": "Subjects",
@@ -720,7 +716,6 @@ portal:
               "file_size",
               "object_id"      ]
           },
-          "loginForDownload": true,
           "guppyConfig": {
             "dataType": "file",
             "fieldMapping": [
