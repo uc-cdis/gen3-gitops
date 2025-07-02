@@ -3053,7 +3053,8 @@ revproxy:
     tag: "2025.04"
   ingress:
     aws:
-      group: bdcat-internalstaging-helm
+      group: bdcatprod
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
 sheepdog:
   autoscaling:
     enabled: true
