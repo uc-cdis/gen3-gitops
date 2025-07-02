@@ -1234,7 +1234,7 @@ revproxy:
     tag: "2025.06"
   ingress:
     aws:
-      group: stagingdatastage-helm
+      group: stagingdatastage
 sheepdog:
   autoscaling:
     enabled: true
