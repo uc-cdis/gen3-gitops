@@ -62,6 +62,9 @@ arborist:
   autoscaling:
     enabled: true
 
+audit:
+  enabled: false
+
 indexd:
   replicaCount: 2
   resources:
