@@ -258,6 +258,7 @@ fence:
     fenceGoogleAppCredsSecret: bdcat-internalstaging-fence-google-app-creds
     fenceGoogleStorageCredsSecret: bdcat-internalstaging-fence-google-storage-creds
     fenceJwtKeys: bdcat-internalstaging-fence-jwt
+    fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: "2025.04"
@@ -2052,10 +2053,10 @@ fence:
         cred: fence-bot
         region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
-
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/datastageinternalstaging/user.yaml
+    syncFromDbgap: true
 fluentd:
   enabled: true
   image:
