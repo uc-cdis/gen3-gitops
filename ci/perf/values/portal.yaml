@@ -9,6 +9,10 @@ portal:
   image:
     repository: quay.io/cdis/data-portal
     tag: master
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 2
   gitops:
     json: |
       {

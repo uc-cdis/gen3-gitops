@@ -28,3 +28,5 @@ guppy:
       type: imaging_study
   configIndex: ci_configs_alias
   authFilterField: auth_resource_path
+  autoscaling:
+    enabled: true

@@ -11,6 +11,8 @@ fence:
   fenceDeleteExpiredClients:
     schedule: "0 0 * * *"
   replicaCount: 2
+  autoscaling:
+    enabled: true
   image:
     repository: quay.io/cdis/fence
     pullPolicy: IfNotPresent
