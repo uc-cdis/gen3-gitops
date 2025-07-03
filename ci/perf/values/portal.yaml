@@ -568,35 +568,6 @@ portal:
             }
           ]
         },
-        "studyViewerConfig": [
-          {
-          "dataType": "subject",
-          "title": "Studies",
-          "titleField": "project_id",
-          "rowAccessor": "submitter_id",
-          "listItemConfig": {
-            "blockFields": ["project_id"],
-            "tableFields": ["data_type"]
-          },
-          "fieldMapping": [
-            { "field": "category", "name": "Study Type"},
-            { "field": "project_id", "name": "Project_ID"},
-            { "field": "data_type", "name": "Data_Type"},
-            { "field": "condition", "name": "Condition"}
-          ],
-          "openMode": "close-all",
-          "buttons": [
-            {
-              "type": "download"
-            },
-            {
-              "type": "request_access",
-              "resourceDisplayNameField": "title",
-              "accessRequestedText": "DAR In Progress",
-              "accessRequestedTooltipText": "Your recently submitted DAR is being reviewed by NIAID"
-            }]
-          }
-        ],
         "explorerConfig": [
         {
           "tabTitle": "Data",
