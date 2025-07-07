@@ -13,6 +13,9 @@ global:
       enabled: true
       # -- (string) ARN for the WAFv2 ACL.
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::662843554732:role/unfunded--oadchelm--external-secrets-sa
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/42215b51-29cc-47de-b189-c51bb2e07d97
   dictionaryUrl: "http://s3.amazonaws.com/dictionary-artifacts/openaccess_dictionary/0.3.0/schema.json"
   postgres:
@@ -21,9 +24,6 @@ global:
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
-    secretStoreServiceAccount:
-      enabled: true
-      roleArn: arn:aws:iam::662843554732:role/unfunded--oadchelm--external-secrets-sa
   pdb: true
 
 arborist:
