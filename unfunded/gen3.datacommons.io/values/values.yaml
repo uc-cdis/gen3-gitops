@@ -6,7 +6,7 @@ global:
   aws:
     enabled: true
     useLocalSecret:
-      enabled: true
+      enabled: false
       localSecretName: external-secrets-oadc-secret # pragma: allowlist secret
     wafv2:
       # -- (bool) Set to true if using AWS WAFv2
