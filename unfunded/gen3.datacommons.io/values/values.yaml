@@ -6,8 +6,8 @@ global:
   aws:
     enabled: true
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-oadc-secret # pragma: allowlist secret
+      enabled: true
+      localSecretName: external-secrets-oadc-secret # pragma: allowlist secret
     wafv2:
       # -- (bool) Set to true if using AWS WAFv2
       enabled: true
@@ -21,6 +21,9 @@ global:
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::662843554732:role/unfunded--oadchelm--external-secrets-sa
   pdb: true
 
 arborist:
