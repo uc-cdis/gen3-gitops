@@ -68,7 +68,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2024.09
+    tag: 2025.06
 
 peregrine:
   # Lower cost
