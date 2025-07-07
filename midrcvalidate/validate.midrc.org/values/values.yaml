@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: ""
+  jupyterNamespace: "jupyter-pods"
 arborist:
   autoscaling:
     enabled: true
@@ -570,7 +570,7 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.05'
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   autoscaling:
     enabled: true
@@ -2630,7 +2630,7 @@ revproxy:
     tag: '2025.05'
   ingress:
     aws:
-      group: midrcvalidate-helm
+      group: midrcvalidate
 sheepdog:
   autoscaling:
     enabled: true
