@@ -1,4 +1,6 @@
 etl:
+  suspendCronjob: false
+  schedule: "*/3 * * * *"
   enabled: true
   spark:
     image:
