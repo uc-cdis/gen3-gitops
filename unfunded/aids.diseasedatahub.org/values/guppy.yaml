@@ -18,4 +18,4 @@ guppy:
       type: file
   configIndex: daids_array-config
   authFilterField: auth_resource_path
-  esEndpoint: http://elasticsearch:9200
+  esEndpoint: "gen3-elasticsearch-master:9200"
