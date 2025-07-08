@@ -48,6 +48,14 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--dashboard-access
 etl:
+resources:
+  tube:
+    requests:
+      cpu: 2
+      memory: 10Gi
+  spark:
+    requests:
+      memory: 2Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
