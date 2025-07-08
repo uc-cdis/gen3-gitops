@@ -3054,7 +3054,7 @@ revproxy:
     tag: "2025.04"
   ingress:
     aws:
-      group: bdcat-internalstaging-helm
+      group: bdcatprod
 sheepdog:
   autoscaling:
     enabled: true
