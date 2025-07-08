@@ -55,8 +55,7 @@ resources:
       memory: 10Gi
   spark:
     requests:
-      cpu: 2
-      memory: 10Gi
+      memory: 2Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
