@@ -16,7 +16,7 @@ arborist:
   enabled: true
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.09
+    tag: 2025.06
 
 aws-es-proxy:
   # Lower cost
@@ -36,11 +36,10 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   # defaultPrefix: "dg.C78ch/"
-
   enabled: true
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.09
+    tag: 2025.06
 
 peregrine:
   # Lower cost
@@ -63,7 +62,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.09
+    tag: 2025.06
 
 sheepdog:
   # Lower cost
@@ -74,7 +73,7 @@ sheepdog:
   enabled: true
   image:
     repository: quay.io/cdis/sheepdog
-    tag: 2024.09
+    tag: 2025.06
 
 manifestservice:
   # Lower cost
@@ -85,7 +84,7 @@ manifestservice:
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
-    tag: 2024.09
+    tag: 2025.06
 
 wts:
   # Lower cost
@@ -96,7 +95,7 @@ wts:
   enabled: true
   image:
     repository: quay.io/cdis/workspace-token-service
-    tag: 2024.09
+    tag: 2025.06
 
 # Disabled services
 ambassador:

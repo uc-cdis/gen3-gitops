@@ -20,7 +20,7 @@ spec:
           - $values/unfunded/aids.diseasedatahub.org/values/guppy.yaml
           - $values/unfunded/aids.diseasedatahub.org/values/etl.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: 'chore/local-deployment'
       ref: values
   destination:
     server: "https://kubernetes.default.svc"

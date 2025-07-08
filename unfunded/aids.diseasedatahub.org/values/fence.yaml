@@ -7,7 +7,7 @@ fence:
   enabled: true
   image:
     repository: quay.io/cdis/fence
-    tag: 10.2.0
+    tag: 2025.06
 
   # -- (map) Annotations to add to the pod
   podAnnotations:
