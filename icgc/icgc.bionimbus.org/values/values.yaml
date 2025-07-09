@@ -98,6 +98,9 @@ etl:
     root: None
     type: collector
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::446046036926:role/icgc--icgc-helm--audit-sqs-sender
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -106,6 +109,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.06'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/icgc/user.yaml
 fluentd:
   enabled: true
   image:
@@ -119,13 +125,15 @@ global:
     hatchery_role: icgc--icgc-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::446046036926:role/icgc-external-secrets-sa
+      roleArn: arn:aws:iam::446046036926:role/icgc--icgc-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/tcga_dictionary/1.0.3/schema.json
   dispatcherJobNum: 10
   environment: icgc
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "icgc-slack-webhook" #pragma: allowlist secret
   hostname: icgc.bionimbus.org
   manifestGlobalExtraValues:
     es7: true
@@ -137,6 +145,8 @@ global:
     tier_access_level: libre
     tier_access_limit: 50
     useryaml_s3path: s3://cdis-gen3-users/icgc/user.yaml
+  tierAccessLevel: libre
+  tierAccessLimit: 50
   portalApp: gitops
   postgres:
     dbCreate: false

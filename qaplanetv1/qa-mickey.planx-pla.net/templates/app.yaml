@@ -22,6 +22,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: qa-mickey-helm
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=false
     automated:

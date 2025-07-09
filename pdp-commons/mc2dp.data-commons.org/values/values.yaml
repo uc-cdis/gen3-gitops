@@ -29,6 +29,9 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--dashboard-access
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-sender
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -37,6 +40,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.04'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
 fluentd:
   enabled: true
   image:
@@ -67,6 +73,8 @@ global:
   environment: pdp-commons
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "pdp-commons-slack-webhook"
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
   manifestGlobalExtraValues:
@@ -79,6 +87,8 @@ global:
     tier_access_level: regular
     tier_access_limit: 50
     useryaml_s3path: s3://cdis-gen3-users/pdp/user.yaml
+  tierAccessLevel: regular
+  tierAccessLimit: 50
   portalApp: gitops
   postgres:
     dbCreate: false

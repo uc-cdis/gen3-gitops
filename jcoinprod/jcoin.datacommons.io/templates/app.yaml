@@ -22,6 +22,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: jcoinprod-helm
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=true
     automated:

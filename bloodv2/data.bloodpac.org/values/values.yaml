@@ -1974,8 +1974,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    pelicanserviceG3auto: bloodv2-pelicanservice-g3auto
+    createK8sPelicanServiceSecret: true
     sowerjobsG3auto: bloodv2-sower-jobs-g3auto
+    createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: '2025.03'

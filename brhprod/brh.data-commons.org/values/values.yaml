@@ -1,4 +1,5 @@
 ambassador:
+  jupyterNamespace: "jupyter-pods"
   enabled: true
   image:
     repository: quay.io/datawire/ambassador
@@ -12,12 +13,16 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2024.08'
+    tag: '2025.05'
 audit:
   externalSecrets:
     auditG3auto: brhprod-audit-g3auto
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/brhprod--brhprod-helm--audit-sqs-receiver
 aws-es-proxy:
   enabled: true
+  esEndpoint: vpc-brhprod-gen3-metadata-2-vpold55e7rswbkftejcwsxsrma.us-east-1.es.amazonaws.com
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
@@ -25,8 +30,14 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2024.08'
+    tag: '2025.05'
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/brhprod--brhprod-helm--audit-sqs-sender
+  usersync:
+      usersync: true
+      userYamlS3Path: s3://cdis-gen3-users/brh/user.yaml
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -39,23 +50,31 @@ fence:
     fenceJwtKeys: brhprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 10.2.0
+    tag: 2025.05
 fluentd:
   enabled: true
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
+audit:
+  enabled: false
 global:
   aws:
     account: '885078588865'
-    awsEsProxyRole: brhprod--default--es-access
+    awsEsProxyRole: brhprod--brhprod-helm--es-access
+    hatchery_role: brhprod--brhprod-helm--hatchery-sa
     enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::885078588865:role/brhprod-external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.0.6/schema.json
   dispatcherJobNum: '10'
   environment: brhprod
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "brhprod-slack-webhook" #pragma: allowlist secret
   hostname: brh.data-commons.org
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
@@ -68,6 +87,9 @@ global:
     tier_access_level: regular
     tier_access_limit: 50
     useryaml_s3path: s3://cdis-gen3-users/brh/user.yaml
+    fence_url: https://brh.data-commons.org/user
+  tierAccessLevel: regular
+  tierAccessLimit: 50
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -78,6 +100,229 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: 2.2.0
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "default-pay-model": {
+          "workspace_type": "Trial Workspace",
+          "local": true
+        },
+        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-34AAJOR7A5AG",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.05",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "brh.data-commons.org"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
+        "nextflow-global": {
+          "s3-objects-expiration-days": 60,
+          "sample-config-public-image": "public.ecr.aws/u5x5h6w3/nextflow-approved/public:amazonlinux-base",
+          "imagebuilder-reader-role-arn": "arn:aws:iam::143731057154:role/nextflow-imagebuilder-reader"
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "memory-limit": "8Gi",
+            "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__778d8a22ce33935263d7eb85ef2a7a89c164a2a2",
+            "env": {
+              "FRAME_ANCESTORS": "https://brh.data-commons.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "memory-limit": "8Gi",
+            "name": "(Tutorials) Example Analysis Jupyter Notebooks",
+            "image": "quay.io/cdis/brh-notebooks:combined_demos__8c8c45ded1964148365bf209cbbfb26f72448d3d",
+            "env": {
+              "FRAME_ANCESTORS": "https://brh.data-commons.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "memory-limit": "10Gi",
+            "name": "(Beta) Nextflow with CPU instances",
+            "image": "quay.io/cdis/jupyter-notebook:nextflow-1.3.5",
+            "env": {
+              "FRAME_ANCESTORS": "https://brh.data-commons.org"
+            },
+            "args": [
+              "--NotebookApp.base_url=/lw-workspace/proxy/",
+              "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
+              "--NotebookApp.password=''",
+              "--NotebookApp.token=''",
+              "--NotebookApp.shutdown_no_activity_timeout=5400",
+              "--NotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "authz": {
+              "version": 0.1,
+              "or": [
+                {
+                  "pay_models": [
+                    "Direct Pay"
+                  ]
+                },
+                {
+                  "resource_paths": [
+                    "/workspace/jupyter-nextflow"
+                  ]
+                }
+              ]
+            },
+            "nextflow": {
+              "enabled": true,
+              "job-image-whitelist": [
+                "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*",
+                "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{{username}}:*"
+              ],
+              "s3-bucket-whitelist": [],
+              "compute-environment-type": "SPOT",
+              "instance-ami-builder-arn": "arn:aws:imagebuilder:us-east-1:143731057154:image-pipeline/nextflow-fips",
+              "instance-type": "optimal",
+              "instance-min-vcpus": 0,
+              "instance-max-vcpus": 9
+            }
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "memory-limit": "10Gi",
+            "name": "(Beta) Nextflow with GPU instances",
+            "image": "quay.io/cdis/jupyter-notebook:nextflow-1.3.5",
+            "env": {
+              "FRAME_ANCESTORS": "https://brh.data-commons.org"
+            },
+            "args": [
+              "--NotebookApp.base_url=/lw-workspace/proxy/",
+              "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
+              "--NotebookApp.password=''",
+              "--NotebookApp.token=''",
+              "--NotebookApp.shutdown_no_activity_timeout=5400",
+              "--NotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "authz": {
+              "version": 0.1,
+              "or": [
+                {
+                  "pay_models": [
+                    "Direct Pay"
+                  ]
+                },
+                {
+                  "resource_paths": [
+                    "/workspace/jupyter-nextflow"
+                  ]
+                }
+              ]
+            },
+            "nextflow": {
+              "enabled": true,
+              "job-image-whitelist": [
+                "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*",
+                "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{{username}}:*"
+              ],
+              "s3-bucket-whitelist": [],
+              "compute-environment-type": "SPOT",
+              "instance-ami-builder-arn": "arn:aws:imagebuilder:us-east-1:143731057154:image-pipeline/nextflow-gpu-ami",
+              "instance-type": "g4dn.xlarge",
+              "instance-min-vcpus": 0,
+              "instance-max-vcpus": 9
+            }
+          }
+        ]
+      }
 indexd:
   autoscaling:
     enabled: true
@@ -85,31 +330,274 @@ indexd:
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
+  externalSecrets:
+    serviceCreds: brhprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2024.08'
+    tag: '2025.05'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: brhprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2024.08'
+    tag: '2025.05'
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--manifest-service-sa
 metadata:
+  externalSecrets:
+    metadataG3auto: brhprod-metadata-g3auto
+  aggMdsNamespace: brhprod
+  useAggMds: true
+  aggMdsConfig: |-
+    {
+      "configuration": {
+        "schema": {
+          "_subjects_count": {
+            "type": "integer"
+          },
+          "__manifest": {
+            "type": "array",
+            "properties": {
+              "file_name": {
+                "type": "string"
+              },
+              "file_size": {
+                "type": "integer"
+              }
+            }
+          },
+          "tags": {
+            "type": "array"
+          },
+          "_unique_id": {},
+          "study_description": {},
+          "study_id": {},
+          "study_url": {},
+          "project_id": {},
+          "short_name": {},
+          "full_name": {},
+          "commons_url": {},
+          "commons" : {},
+          "authz": {
+            "type": "string"
+          }
+        },
+        "settings" : {
+          "cache_drs" : true
+        }
+      },
+      "adapter_commons": {
+        "BioData Catalyst": {
+          "mds_url": "https://gen3.biodatacatalyst.nhlbi.nih.gov/",
+          "commons_url" : "gen3.biodatacatalyst.nhlbi.nih.gov",
+          "adapter": "gen3",
+          "config" : {
+            "guid_type": "discovery_metadata",
+            "study_field": "gen3_discovery"
+          },
+          "keep_original_fields": false,
+          "field_mappings" : {
+            "authz": "path:authz",
+            "tags": "path:tags",
+            "_unique_id": "path:study_id",
+            "study_id": "path:study_id",
+            "study_description": "path:study_description",
+            "full_name": "path:full_name",
+            "short_name": "path:short_name",
+            "commons": "BioData Catalyst",
+            "study_url": "path:dbgap_url",
+            "_subjects_count" : {"path":"_subjects_count", "default" : 0 },
+            "__manifest": "path:__manifest",
+            "commons_url" : "gen3.biodatacatalyst.nhlbi.nih.gov"
+          }
+        },
+        "MIDRC": {
+          "mds_url": "https://data.midrc.org/",
+          "commons_url" : "data.midrc.org",
+          "adapter": "gen3",
+          "config" : {
+            "guid_type": "discovery_metadata",
+            "study_field": "gen3_discovery"
+          },
+          "keep_original_fields": false,
+          "field_mappings" : {
+            "authz": "path:authz",
+            "tags": "path:tags",
+            "_unique_id": "path:_unique_id",
+            "study_id": "path:_unique_id",
+            "study_description": "path:data_description",
+            "full_name": "path:full_name",
+            "short_name": "path:short_name",
+            "commons": "Medical Imaging and Data Resource Center (MIDRC)",
+            "study_url": "path:data_url",
+            "_subjects_count" : {"path":"cases_count", "default" : 0 },
+            "__manifest": "path:__manifest",
+            "commons_url" : "data.midrc.org"
+          }
+        },
+        "JCOIN": {
+          "mds_url": "https://jcoin.datacommons.io/",
+          "commons_url" : "jcoin.datacommons.io",
+          "adapter": "gen3",
+          "keep_original_fields": false,
+          "field_mappings" : {
+            "authz": "path:authz",
+            "tags": "path:tags",
+            "_unique_id": "path:project_number",
+            "study_id": "path:project_number",
+            "study_description": "path:study_description_summary",
+            "full_name": "path:project_title",
+            "short_name": "path:study_name_title",
+            "commons": "JCOIN",
+            "study_url": "path:publications",
+            "data_availability": "path:data_availability",
+            "_subjects_count" : { "path":"subjects", "default": 0 },
+            "__manifest": "path:__manifest",
+            "commons_url" : "jcoin.datacommons.io"
+          }
+        },
+        "CRDC Genomic Data Commons": {
+          "mds_url": "https://api.gdc.cancer.gov/projects",
+          "commons_url": "https://gdc.cancer.gov/",
+          "adapter": "gdc",
+          "filters": {
+            "size" : 1000
+          },
+          "keep_original_fields": false,
+          "field_mappings": {
+            "commons": "CRDC Genomic Data Commons",
+            "short_name": "path:id",
+            "full_name": "path:name",
+            "disease_type": "path:disease_type",
+            "primary_site": "path:primary_site",
+            "_unique_id": "path:id",
+            "tags": [],
+            "project_id": "path:id",
+            "study_title": "path:id",
+            "accession_number": "path:id",
+            "study_description": "path:description",
+            "funding": "",
+            "source": "",
+            "dbgap_accession_number": "path:dbgap_accession_number",
+            "_subjects_count" : "path:summary.case_count",
+            "subjects_count" : "path:summary.case_count",
+            "files_count" : "path:summary.file_count"
+          }
+        },
+        "CRDC Proteomic Data Commons": {
+          "mds_url": "https://proteomic.datacommons.cancer.gov/graphql",
+          "commons_url": "https://pdc.cancer.gov/pdc/",
+          "adapter": "pdc",
+          "filters": {"batchSize": 5},
+          "keep_original_fields": false,
+          "field_mappings": {
+            "commons": "CRDC Proteomic Data Commons",
+            "_unique_id": "path:pdc_study_id",
+            "study_title": "path:pdc_study_id",
+            "accession_number": "path:pdc_study_id",
+            "short_name": "path:study_shortname",
+            "full_name": "path:study_name",
+            "disease_type" : "path:disease_type",
+            "primary_site" : "path:primary_site",
+            "analytical_fraction" : "path:analytical_fraction",
+            "experiment_type" : "path:experiment_type",
+            "_subjects_count" : "path:cases_count",
+            "program_name" : "path:program_name",
+            "project_name" : "path:project_name",
+            "description": "",
+            "files_count": {"path" : "filesCount", "filters" : ["aggregate_pdc_file_count"]},
+            "tags": []
+          }
+        },
+        "CRDC Cancer Imaging Data Commons": {
+          "mds_url": "https://api.imaging.datacommons.cancer.gov/v1/collections",
+          "commons_url": "https://portal.imaging.datacommons.cancer.gov/collections/",
+          "adapter": "cidc",
+          "filters": {},
+          "keep_original_fields": false,
+          "field_mappings": {
+            "commons": "CRDC Cancer Imaging Data Commons",
+            "_unique_id": "path:collection_id",
+            "study_title": "path:collection_id",
+            "accession_number": "path:collection_id",
+            "short_name": {"path" : "collection_id", "filters": [ "uppercase" ]},
+            "full_name": {"path" :"collection_id", "filters": [ "uppercase" ]},
+            "dbgap_accession_number": {"path" :"collection_id", "filters": [ "uppercase" ]},
+            "study_description": {"path" :"description", "filters": [ "strip_html", "prepare_cidc_description" ]},
+            "image_types": "path:image_types",
+            "_subjects_count" : "path:subject_count",
+            "doi" : {"path" :"doi", "filters": [ "uppercase" ]},
+            "species" : "path:species",
+            "disease_type" : "path:cancer_type",
+            "data_type" : "path:supporting_data",
+            "primary_site": "path:location",
+            "tags": []
+          }
+        },
+        "CRDC Integrated Canine Data Commons": {
+          "mds_url": "https://caninecommons.cancer.gov/v1/graphql/",
+          "commons_url": "nci-crdc.datacommons.io",
+          "adapter": "icdc",
+          "filters": {},
+          "keep_original_fields": false,
+          "field_mappings": {
+            "authz": "/open",
+            "tags": [],
+            "_unique_id": "path:accession_id",
+            "study_id": "path:clinical_study_designation",
+            "study_description": "",
+            "full_name": "path:clinical_study_name",
+            "short_name": "N/A",
+            "commons": "CRDC Integrated Canine Data Commons",
+            "study_url": "N/A",
+            "_subjects_count" : {"path":"numberOfCases", "default" : 0 },
+            "commons_url" : "nci-crdc.datacommons.io"
+          }
+        },
+        "Open Access Data Commons": {
+          "mds_url": "https://gen3.datacommons.io/",
+          "commons_url" : "gen3.datacommons.io",
+          "adapter": "gen3",
+          "config" : {
+            "guid_type": "discovery_metadata",
+            "study_field": "gen3_discovery"
+          },
+          "keep_original_fields": false,
+          "field_mappings" : {
+            "authz": "path:authz",
+            "tags": "path:tags",
+            "_unique_id": "path:study_id",
+            "study_id": "path:study_id",
+            "study_description": "path:study_description",
+            "full_name": "path:full_name",
+            "short_name": "path:short_name",
+            "commons": "Open Access Data Commons",
+            "study_url": "path:study_url",
+            "_subjects_count" : {"path":"_subjects_count", "default" : 0 },
+            "__manifest": "path:__manifest",
+            "commons_url" : "gen3.datacommons.io"
+          }
+        }
+
+      }
+    }
   autoscaling:
     enabled: true
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
+  esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2024.08'
+    tag: '2025.05'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2024.08'
+    tag: '2025.05'
 portal:
   enabled: true
   gitops:
@@ -439,7 +927,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2024.08'
+    tag: '2025.05'
 revproxy:
   autoscaling:
     enabled: true
@@ -449,7 +937,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2024.08'
+    tag: '2025.05'
   ingress:
     aws:
       group: brhprod-helm
@@ -457,11 +945,25 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2024.08'
+    tag: '2025.05'
+  fenceUrl: https://brh.data-commons.org/user
 wts:
   enabled: true
   externalSecrets:
+    createWtsOidcClientSecret: false
     wtsG3auto: brhprod-wts-g3auto
+    wtsOidcClient: brhprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2024.08'
+    tag: '2025.05'
+dashboard:
+  dashboardConfig:
+    bucket: dashboard-885078588865-brhdemo-gen3
+    prefix: brh.data-commons.org
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
+    tag: '2025.05'
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--dashboard-access

@@ -22,6 +22,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: icgc-helm
   syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
     syncOptions:
     - CreateNamespace=true
     automated:

@@ -2041,6 +2041,7 @@ hatchery:
       ]
     }
 indexd:
+  defaultPrefix: dg.4503/
   autoscaling:
     enabled: true
     maxReplicas: 8
@@ -2801,8 +2802,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
+    createK8sPelicanServiceSecret: false
     pelicanserviceG3auto: bdcatprod-pelicanservice-g3auto
-    sowerjobsG3auto: bdcatprod-sower-jobs-g3auto
+    createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: "2025.04"
@@ -2863,6 +2865,31 @@ sower:
             value: file
           - name: EXTRA_NODES
             value: ""
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
+          - name: SHEEPDOG
+            valueFrom:
+              secretKeyRef:
+                name: indexd-service-creds
+                key: sheepdog
         image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.04
         memory-limit: 12Gi
         name: job-task
