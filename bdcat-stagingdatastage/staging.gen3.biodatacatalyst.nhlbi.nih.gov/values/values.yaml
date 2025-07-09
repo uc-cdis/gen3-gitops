@@ -204,9 +204,6 @@ etl:
       root: None
       type: collector
 fence:
-  serviceAccount:
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/stagingdatastage--stagingdatastage-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 15
@@ -224,11 +221,6 @@ fence:
     tag: "2025.06"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
-  FENCE_CONFIG_PUBLIC:
-    PRIVACY_POLICY_URL: "https://biodatacatalyst.nhlbi.nih.gov/privacy/"
-  usersync:
-    usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/stagingdatastage/user.yaml
 fluentd:
   enabled: true
   image:
@@ -262,8 +254,6 @@ global:
   environment: stagingdatastage
   externalSecrets:
     deploy: true
-    createSlackWebhookSecret: true
-    slackWebhookSecretName: "stagingdatastage-slack-webhook"
   frontendRoot: portal
   hostname: staging.gen3.biodatacatalyst.nhlbi.nih.gov
   manifestGlobalExtraValues:
@@ -276,8 +266,6 @@ global:
     tier_access_level: regular
     tier_access_limit: 50
     useryaml_s3path: s3://cdis-gen3-users/stagingdatastage/user.yaml
-  tierAccessLevel: regular
-  tierAccessLimit: 50
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -478,7 +466,6 @@ hatchery:
       ]
     }
 indexd:
-  defaultPrefix: dg.4503/
   autoscaling:
     enabled: true
     maxReplicas: 8
@@ -1237,7 +1224,7 @@ revproxy:
     tag: "2025.06"
   ingress:
     aws:
-      group: stagingdatastage
+      group: stagingdatastage-helm
 sheepdog:
   autoscaling:
     enabled: true
@@ -1251,10 +1238,9 @@ sheepdog:
 sower:
   enabled: true
   externalSecrets:
-    createK8sPelicanServiceSecret: false
     pelicanserviceG3auto: stagingdatastage-pelicanservice-g3auto
     sowerjobsG3auto: stagingdatastage-sower-jobs-g3auto
-    createK8sSowerJobsSecret: false
+    peregrineRawSecret: stagingdatastage-peregrine-creds-raw
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
     tag: "2025.06"
@@ -1275,31 +1261,6 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-          - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: host
-          - name: DB_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: database
-          - name: DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: username
-          - name: DB_PASS
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: password
-          - name: SHEEPDOG
-            valueFrom:
-              secretKeyRef:
-                name: indexd-service-creds
-                key: sheepdog
         image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.06
         memory-limit: 12Gi
         name: job-task
@@ -1341,31 +1302,6 @@ sower:
             value: file
           - name: EXTRA_NODES
             value: ""
-          - name: DB_HOST
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: host
-          - name: DB_DATABASE
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: database
-          - name: DB_USER
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: username
-          - name: DB_PASS
-            valueFrom:
-              secretKeyRef:
-                name: sheepdog-dbcreds
-                key: password
-          - name: SHEEPDOG
-            valueFrom:
-              secretKeyRef:
-                name: indexd-service-creds
-                key: sheepdog
         image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.06
         memory-limit: 12Gi
         name: job-task
@@ -1460,3 +1396,5 @@ tube:
     tag: "2025.06"
 wts:
   enabled: false
+mutatingWebhook:
+  enabled: true
