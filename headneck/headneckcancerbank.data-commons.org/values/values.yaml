@@ -254,7 +254,7 @@ pidgin:
   enabled: false
 
 portal:
-  enabled: false
+  enabled: true
 
 requestor:
   enabled: false

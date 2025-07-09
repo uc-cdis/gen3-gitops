@@ -221,6 +221,8 @@ fence:
     tag: "2025.06"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
+  FENCE_CONFIG_PUBLIC:
+    PRIVACY_POLICY_URL: "https://biodatacatalyst.nhlbi.nih.gov/privacy/"
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/stagingdatastage/user.yaml
@@ -1232,7 +1234,7 @@ revproxy:
     tag: "2025.06"
   ingress:
     aws:
-      group: stagingdatastage-helm
+      group: stagingdatastage
 sheepdog:
   autoscaling:
     enabled: true

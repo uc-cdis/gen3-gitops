@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: ""
+  jupyterNamespace: "jupyter-pods"
 arborist:
   autoscaling:
     enabled: true
@@ -134,6 +134,9 @@ etl:
     root: serious_adverse_event
     type: aggregator
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 10
@@ -147,6 +150,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.05'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/jcoin/user.yaml
 fluentd:
   enabled: true
   image:
@@ -160,13 +166,15 @@ global:
     hatchery_role: jcoinprod--jcoinprod-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::258867494168:role/jcoinprod-external-secrets-sa
+      roleArn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://dictionary-artifacts.s3.amazonaws.com/jcoin_datadictionary/3.1.1/schema.json
   dispatcherJobNum: '10'
   environment: jcoinprod
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "jcoinprod-slack-webhook"
   hostname: jcoin.datacommons.io
   manifestGlobalExtraValues:
     es7: true
@@ -202,103 +210,104 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.05'
-  json: |-
-    {
-      "user-namespace": "jupyter-pods",
-      "sub-dir": "/lw-workspace",
-      "user-volume-size": "10Gi",
-      "sidecar": {
-        "cpu-limit": "1.0",
-        "memory-limit": "256Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.05",
-        "env": {
-          "NAMESPACE": "default",
-          "HOSTNAME": "jcoin.datacommons.io"
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.05",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "jcoin.datacommons.io"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "/sidecarDockerrun.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
         },
-        "args": [],
-        "command": [
-          "/bin/bash",
-          "/sidecarDockerrun.sh"
-        ],
-        "lifecycle-pre-stop": [
-          "su",
-          "-c",
-          "echo test",
-          "-s",
-          "/bin/sh",
-          "root"
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__ff880f355bfcfbb1b1a8c6e4615e13152c71be2b",
+            "env": {
+              "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "User-licensed Stata Notebook",
+            "image": "quay.io/cdis/stata-heal:master",
+            "env": {
+              "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
+            },
+            "args": [
+              "--NotebookApp.base_url=/lw-workspace/proxy/",
+              "--NotebookApp.password=''",
+              "--NotebookApp.token=''",
+              "--NotebookApp.shutdown_no_activity_timeout=5400",
+              "--NotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "(while true; do [ -d ~/pd ] && [ -f ~/pd/stata.lic ] && cp ~/pd/stata.lic /usr/local/stata17/; sleep 1; done) & export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
         ]
-      },
-      "containers": [
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "2Gi",
-          "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-          "image": "quay.io/cdis/heal-notebooks:generic_rkernel__ff880f355bfcfbb1b1a8c6e4615e13152c71be2b",
-          "env": {
-            "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
-          },
-          "args": [
-            "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-            "--JupyterNotebookApp.default_url=/lab",
-            "--JupyterNotebookApp.password=''",
-            "--JupyterNotebookApp.token=''",
-            "--JupyterNotebookApp.ip='*'",
-            "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-            "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-            "--JupyterNotebookApp.quit_button=False"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd",
-          "gen3-volume-location": "/home/jovyan/.gen3"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "2Gi",
-          "name": "User-licensed Stata Notebook",
-          "image": "quay.io/cdis/stata-heal:master",
-          "env": {
-            "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
-          },
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''",
-            "--NotebookApp.shutdown_no_activity_timeout=5400",
-            "--NotebookApp.quit_button=False"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "(while true; do [ -d ~/pd ] && [ -f ~/pd/stata.lic ] && cp ~/pd/stata.lic /usr/local/stata17/; sleep 1; done) & export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd",
-          "gen3-volume-location": "/home/jovyan/.gen3"
-        }
-      ]
-    }
+      }
 indexd:
   defaultPrefix: dg.6VTS/
   autoscaling:
