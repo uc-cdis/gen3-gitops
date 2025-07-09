@@ -3134,12 +3134,19 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
+          - mountPath: /peregrine-creds.json
+            name: peregrine-creds-volume
+            readOnly: true
+            subPath: creds.json
       name: pelican-export
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
+        - name: peregrine-creds-volume
+          secret:
+            secretName: peregrine-creds
     - action: export-files
       container:
         cpu-limit: "1"
@@ -3192,12 +3199,19 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
+          - mountPath: /peregrine-creds.json
+            name: peregrine-creds-volume
+            readOnly: true
+            subPath: creds.json
       name: pelican-export-files
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
+        - name: peregrine-creds-volume
+          secret:
+            secretName: peregrine-creds
 spark:
   enabled: true
   image:
@@ -3208,5 +3222,3 @@ tube:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: "2025.04"
-wts:
-  enabled: false

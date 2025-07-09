@@ -1,3 +1,5 @@
+ambassador:
+  enabled: false
 arborist:
   autoscaling:
     enabled: true
@@ -33,69 +35,73 @@ dashboard:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--dashboard-access
 etl:
   esEndpoint: elasticsearch
-  mappings:
-  - doc_type: dataset
-    name: bih_dataset
-    props:
-    - name: project_id
-    - name: submitter_id
-    - name: collection_id
-    - name: commons_long_name
-    - name: commons_name
-    - name: data_url_doi
-    - name: disease_type
-    - name: full_name
-    - name: license
-    - name: metadata_source_date
-    - name: metadata_source_version
-    - name: primary_site
-    - name: publication_citation
-    root: dataset
-    type: aggregator
-  - doc_type: subject
-    name: bih_subject
-    parent_props:
-    - path: datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
-    props:
-    - name: project_id
-    - name: submitter_id
-    - name: race
-    root: subject
-    type: aggregator
-  - doc_type: imaging_study
-    name: bih_imaging_study
-    parent_props:
-    - path: subjects[race,subject_id:submitter_id].datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
-    props:
-    - name: project_id
-    - name: submitter_id
-    - name: StudyDescription
-    - name: StudyInstanceUID
-    - name: study_viewer_url
-    - name: PatientAge
-    - name: PatientSex
-    - name: PatientID
-    - name: EthnicGroup
-    root: imaging_study
-    type: aggregator
-  - doc_type: imaging_series
-    name: bih_imaging_series
-    parent_props:
-    - path: imaging_studies[StudyDescription,StudyInstanceUID,PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
-    props:
-    - name: project_id
-    - name: submitter_id
-    - name: object_ids
-    - name: BodyPartExamined
-    - name: Manufacturer
-    - name: Modality
-    - name: SeriesDescription
-    - name: SeriesInstanceUID
-    - name: series_viewer_url
-    - name: dicom_viewer_url
-    root: imaging_series
-    type: aggregator
+  etlMapping:
+    mappings:
+    - doc_type: dataset
+      name: bih_dataset
+      props:
+      - name: project_id
+      - name: submitter_id
+      - name: collection_id
+      - name: commons_long_name
+      - name: commons_name
+      - name: data_url_doi
+      - name: disease_type
+      - name: full_name
+      - name: license
+      - name: metadata_source_date
+      - name: metadata_source_version
+      - name: primary_site
+      - name: publication_citation
+      root: dataset
+      type: aggregator
+    - doc_type: subject
+      name: bih_subject
+      parent_props:
+      - path: datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
+      props:
+      - name: project_id
+      - name: submitter_id
+      - name: race
+      root: subject
+      type: aggregator
+    - doc_type: imaging_study
+      name: bih_imaging_study
+      parent_props:
+      - path: subjects[race,subject_id:submitter_id].datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
+      props:
+      - name: project_id
+      - name: submitter_id
+      - name: StudyDescription
+      - name: StudyInstanceUID
+      - name: study_viewer_url
+      - name: PatientAge
+      - name: PatientSex
+      - name: PatientID
+      - name: EthnicGroup
+      root: imaging_study
+      type: aggregator
+    - doc_type: imaging_series
+      name: bih_imaging_series
+      parent_props:
+      - path: imaging_studies[StudyDescription,StudyInstanceUID,PatientAge,PatientSex,PatientID,EthnicGroup].subjects[race,subject_id:submitter_id].datasets[collection_id,commons_long_name,commons_name,data_contributor,data_host,data_url_doi,disease_type,license,metadata_source_api,metadata_source_date,metadata_source_version,primary_site]
+      props:
+      - name: project_id
+      - name: submitter_id
+      - name: object_ids
+      - name: BodyPartExamined
+      - name: Manufacturer
+      - name: Modality
+      - name: SeriesDescription
+      - name: SeriesInstanceUID
+      - name: series_viewer_url
+      - name: dicom_viewer_url
+      root: imaging_series
+      type: aggregator
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 1
@@ -109,6 +115,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.05'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
 fluentd:
   enabled: true
   image:
@@ -134,6 +143,8 @@ global:
   environment: bihprod
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "bihprod-slack-webhook" #pragma: allowlist secret
   frontendRoot: gen3ff
   hostname: imaging-hub.data-commons.org
   manifestGlobalExtraValues:
@@ -145,10 +156,14 @@ global:
     sync_from_dbgap: 'False'
     tier_access_level: libre
     useryaml_s3path: s3://cdis-gen3-users/midrc-bih/user.yaml
+    fence_url: https://imaging-hub.data-commons.org/user
+  tierAccessLevel: libre
   portalApp: gitops
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:533267425233:certificate/ee917704-e7c3-4a25-8317-ef1e9e250747
+hatchery:
+  enabled: false
 guppy:
   configIndex: bih_array-config
   enabled: true
@@ -178,6 +193,8 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.05'
+manifestservice:
+  enabled: false
 metadata:
   aggMdsNamespace: bihprod
   autoscaling:
@@ -194,7 +211,7 @@ metadata:
     tag: '2025.05'
   useAggMds: true
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   enabled: true
   image:
@@ -348,12 +365,13 @@ revproxy:
     tag: '2025.05'
   ingress:
     aws:
-      group: bihprod-helm
+      group: bihprod
 sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.05'
+  fenceUrl: https://imaging-hub.data-commons.org/user
 spark:
   enabled: true
   image:
