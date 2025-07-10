@@ -111,6 +111,9 @@ etl:
     root: open_access_doc
     type: aggregator
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/heal/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-sender
@@ -160,9 +163,11 @@ global:
     slackWebhookSecretName: "healpreprod-slack-webhook"
   frontendRoot: gen3ff
   hostname: preprod.healdata.org
+  fenceURL: https://preprod.healdata.org/user
+  netPolicy:
+    enabled: true
   manifestGlobalExtraValues:
     document_url: https://heal.github.io/platform-documentation
-    es7: true
     kube_bucket: kube-healprod-gen3
     logs_bucket: logs-healprod-gen3
     netpolicy: 'on'
@@ -2594,6 +2599,12 @@ sower:
     restart_policy: Never
     serviceAccountName: sower-service-account
 ssjdispatcher:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/gen3_service/healprod--healpreprod--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/gen3_service/healprod--healpreprod--ssj-job
   enabled: true
   externalSecrets:
     credsFile: healpreprod-ssjdispatcher-creds

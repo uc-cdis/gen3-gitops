@@ -488,17 +488,14 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "midrcvalidate-slack-webhook"
   hostname: validate.midrc.org
+  fenceURL: https://validate.midrc.org/user
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-midrcvalidate-gen3
     logs_bucket: logs-midrcprod-gen3
-    maintenance_mode: 'off'
-    netpolicy: 'on'
-    public_datasets: false
-    sync_from_dbgap: 'False'
-    tier_access_level: private
-    tier_access_limit: '50'
-    useryaml_s3path: s3://cdis-gen3-users/midrcvalidate/user.yaml
+  maintenanceMode: 'off'
+  netPolicy:
+    enabled: true
+  publicDataSets: false
   tierAccessLevel: private
   tierAccessLimit: 50
   portalApp: gitops
@@ -2709,6 +2706,12 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.05'
 ssjdispatcher:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/gen3_service/midrcvalidate--default--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/gen3_service/midrcvalidate--default--ssj-job
   enabled: true
   externalSecrets:
     credsFile: midrcvalidate-ssjdispatcher-creds

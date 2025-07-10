@@ -76,18 +76,14 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "brhprod-slack-webhook" #pragma: allowlist secret
   hostname: brh.data-commons.org
+  netPolicy:
+    enabled: true
+  publicDataSets: true
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
-    es7: true
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    tier_access_level: regular
-    tier_access_limit: 50
-    useryaml_s3path: s3://cdis-gen3-users/brh/user.yaml
-    fence_url: https://brh.data-commons.org/user
+  fenceURL: https://brh.data-commons.org/user
   tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops

@@ -112,6 +112,7 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/icgc/user.yaml
+    syncFromDbgap: true
 fluentd:
   enabled: true
   image:
@@ -135,16 +136,12 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "icgc-slack-webhook" #pragma: allowlist secret
   hostname: icgc.bionimbus.org
+  fenceURL: https://icgc.bionimbus.org/user
+  publicDataSets: true
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-icgc-gen3
     logs_bucket: logs-icgc-gen3
-    maintenance_mode: 'off'
-    public_datasets: true
-    sync_from_dbgap: 'True'
-    tier_access_level: libre
-    tier_access_limit: 50
-    useryaml_s3path: s3://cdis-gen3-users/icgc/user.yaml
+  maintenanceMode: 'off'
   tierAccessLevel: libre
   tierAccessLimit: 50
   portalApp: gitops

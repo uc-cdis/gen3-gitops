@@ -429,6 +429,9 @@ etl:
     root: project
     type: aggregator
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/covid19/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-sender
@@ -471,9 +474,13 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "covid19prod-slack-webhook"
   hostname: chicagoland.pandemicresponsecommons.org
+  fenceURL: https://chicagoland.pandemicresponsecommons.org/user
+  netPolicy:
+    enabled: true
+  publicDataSets: true
+  maintenanceMode: off
   manifestGlobalExtraValues:
     covid19_data_bucket: s3://opencdn-databucket-gen3
-    es7: true
     kube_bucket: kube-covid19-prod-gen3
     logs_bucket: s3logs-logs-covid19-prod-gen3
     maintenance_mode: 'off'

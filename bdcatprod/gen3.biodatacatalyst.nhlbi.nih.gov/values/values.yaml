@@ -1830,8 +1830,11 @@ global:
   externalSecrets:
     deploy: true
   hostname: gen3.biodatacatalyst.nhlbi.nih.gov
+  fenceURL: https://gen3.biodatacatalyst.nhlbi.nih.gov/user
+  netPolicy:
+    enabled: true
+  publicDataSets: true
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-stageprod-gen3
     logs_bucket: logs-stageprod-gen3
     netpolicy: "on"

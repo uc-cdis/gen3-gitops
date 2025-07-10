@@ -158,9 +158,11 @@ global:
     deploy: true
   frontendRoot: gen3ff
   hostname: healdata.org
+  fenceURL: https://healdata.org/user
+  netPolicy:
+    enabled: true
   manifestGlobalExtraValues:
     document_url: https://heal.github.io/platform-documentation
-    es7: true
     kube_bucket: kube-healprod-gen3
     logs_bucket: logs-healprod-gen3
     netpolicy: 'on'
@@ -2296,6 +2298,12 @@ sower:
     restart_policy: Never
     serviceAccountName: sower-service-account
 ssjdispatcher:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/gen3_service/healprod--default--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/gen3_service/healprod--default--ssj-job
   enabled: true
   externalSecrets:
     credsFile: healprod-ssjdispatcher-creds
