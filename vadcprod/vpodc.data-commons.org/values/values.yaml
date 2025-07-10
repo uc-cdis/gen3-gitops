@@ -423,8 +423,6 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: "2025.04"
-mutatingWebhook:
-  enabled: true
 ohdsi-atlas:
   enabled: true
   image:
