@@ -2846,7 +2846,7 @@ sower:
             secretName: pelicanservice-g3auto
         - name: peregrine-creds-volume
           secret:
-            secretName: peregrine-creds
+            secretName: peregrine-dbcreds
     - action: export-files
       container:
         cpu-limit: "1"
@@ -2911,7 +2911,7 @@ sower:
             secretName: pelicanservice-g3auto
         - name: peregrine-creds-volume
           secret:
-            secretName: peregrine-creds
+            secretName: peregrine-dbcreds
 spark:
   enabled: true
   image:
