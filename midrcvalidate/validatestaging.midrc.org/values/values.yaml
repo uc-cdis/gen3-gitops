@@ -2581,7 +2581,7 @@ wts:
 auroraRdsCopyJob:
   enabled: true
   auroraMasterSecret: aurora-creds
-  sourceNamespace: validatestaging
+  sourceNamespace: validatestaging-helm
   targetNamespace: validatestaging-helm
   writeToK8sSecret: true
   writeToAwsSecret: false
