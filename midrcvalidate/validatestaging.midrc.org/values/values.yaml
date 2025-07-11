@@ -2579,7 +2579,7 @@ wts:
 
 # AuroraRDSCopy Job configuration
 auroraRdsCopyJob:
-  enabled: true
+  enabled: false
   auroraMasterSecret: aurora-creds
   sourceNamespace: validatestaging-helm
   targetNamespace: validatestaging-helm
