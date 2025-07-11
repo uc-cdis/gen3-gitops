@@ -2818,6 +2818,26 @@ sower:
               configMapKeyRef:
                 key: dictionary_url
                 name: manifest-global
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
           - name: GEN3_HOSTNAME
             valueFrom:
               configMapKeyRef:
