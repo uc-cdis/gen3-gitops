@@ -2834,19 +2834,12 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
-          - mountPath: /peregrine-creds.json
-            name: peregrine-creds-volume
-            readOnly: true
-            subPath: creds.json
       name: pelican-export
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
-        - name: peregrine-creds-volume
-          secret:
-            secretName: peregrine-dbcreds
     - action: export-files
       container:
         cpu-limit: "1"
@@ -2899,19 +2892,12 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
-          - mountPath: /peregrine-creds.json
-            name: peregrine-creds-volume
-            readOnly: true
-            subPath: creds.json
       name: pelican-export-files
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
-        - name: peregrine-creds-volume
-          secret:
-            secretName: peregrine-dbcreds
 spark:
   enabled: true
   image:
