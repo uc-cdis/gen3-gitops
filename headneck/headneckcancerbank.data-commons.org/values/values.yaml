@@ -262,7 +262,11 @@ portal:
   gitops:
     json: |
       {
-        "graphql": {},
+        "graphql": {
+          "boardCounts": [],
+          "chartCounts": [],
+          "projectDetails": "boardCounts"
+        },
         "components": {
           "appName": "Generic Data Commons Portal",
           "index": {
