@@ -11,7 +11,7 @@ permissions:
 jobs:
   integration_tests:
     name: Integration tests
-    uses: uc-cdis/gen3-code-vigil/.github/workflows/shared_integration_tests.yaml@feat/GPE-1747
+    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
     with:
       GEN3_INSTANCE_TYPE: HELM_LOCAL
     secrets:
