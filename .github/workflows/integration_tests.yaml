@@ -13,9 +13,7 @@ jobs:
     name: Integration tests
     uses: uc-cdis/gen3-code-vigil/.github/workflows/shared_integration_tests.yaml@feat/GPE-1747
     with:
-      TEST_REPO_BRANCH: feat/GPE-1747
       GEN3_INSTANCE_TYPE: HELM_LOCAL
-      WORKING_DIR: gen3-code-vigil/gen3-integration-tests
     secrets:
       CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
       CI_AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_AWS_SECRET_ACCESS_KEY }}
