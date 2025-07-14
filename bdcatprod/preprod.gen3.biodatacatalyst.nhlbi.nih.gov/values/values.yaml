@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: "2025.04"
+    tag: "2025.07"
   externalSecrets:
     accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto
     dbcreds: bdcat-internalstaging-access-backend-dbcreds
@@ -18,14 +18,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.04"
+    tag: "2025.07"
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcat-internalstaging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: "2025.04"
+    tag: "2025.07"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-receiver
@@ -39,7 +39,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: "2025.04"
+    tag: "2025.07"
 dashboard:
   dashboardConfig:
     bucket: dashboard-895962626746-stageprod-gen3
@@ -270,7 +270,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.04"
+    tag: "2025.07"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -2131,7 +2131,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2025.04"
+    tag: "2025.07"
   indices:
     - index: internalstaging_subject
       type: subject
@@ -2148,7 +2148,7 @@ hatchery:
       "sidecar": {
         "cpu-limit": "1.0",
         "memory-limit": "256Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.04",
+        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.07",
         "env": {
           "NAMESPACE": "internalstaging",
           "HOSTNAME": "internalstaging.datastage.io"
@@ -2328,7 +2328,7 @@ indexd:
     serviceCreds: bdcat-internalstaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.04"
+    tag: "2025.07"
 manifestservice:
   enabled: false
   externalSecrets:
@@ -2348,12 +2348,12 @@ metadata:
     metadataG3auto: bdcat-internalstaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.04"
+    tag: "2025.07"
 metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: "2025.04"
+    tag: "2025.07"
 peregrine:
   autoscaling:
     enabled: true
@@ -2363,7 +2363,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.04"
+    tag: "2025.07"
 portal:
   autoscaling:
     enabled: true
@@ -3059,7 +3059,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.04"
+    tag: "2025.07"
   ingress:
     aws:
       group: bdcatprod
@@ -3073,7 +3073,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.04"
+    tag: "2025.07"
 sower:
   enabled: true
   externalSecrets:
@@ -3082,7 +3082,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2025.04"
+    tag: "2025.07"
   sowerConfig:
     - action: export
       container:
@@ -3125,7 +3125,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3190,7 +3190,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3216,9 +3216,9 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: "2025.04"
+    tag: "2025.07"
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: "2025.04"
+    tag: "2025.07"
