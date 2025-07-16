@@ -397,6 +397,25 @@ fence:
     # url where authz microservice is running
     ARBORIST: http://arborist-service
 
+    # url where the audit-service is running
+    # This will be dynamically replaced by env_setup.sh script.
+    AUDIT_SERVICE: "http://audit-service"
+    ENABLE_AUDIT_LOGS:
+      presigned_url: true
+      login: true
+    # `PUSH_AUDIT_LOGS_CONFIG.type` is one of: [api, aws_sqs].
+    # - if type == api: logs are created by hitting the log creation endpoint.
+    # - if type == aws_sqs: logs are pushed to an SQS and `aws_sqs_config` fields
+    # `sqs_url` and `region` are required. Field `aws_cred` is optional and it
+    # should be a key in section `AWS_CREDENTIALS`.
+    PUSH_AUDIT_LOGS_CONFIG:
+      type: aws_sqs
+      aws_sqs_config:
+        # This will be dynamically replaced by env_setup.sh script.
+        sqs_url: https://sqs.us-east-1.amazonaws.com/707767160287/audit-service-sqs
+        region: us-east-1
+        aws_cred: 'cdistest'
+
     # A Google Project identitifier representing the default project to bill to for
     # accessing Google Requester Pays buckets (for signed urls and/or temporary service account
     # credentials). If this is provided and the API call for
