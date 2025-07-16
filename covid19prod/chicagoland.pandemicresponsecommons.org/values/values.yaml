@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: ""
+  jupyterNamespace: "jupyter-pods"
 arborist:
   autoscaling:
     enabled: true
@@ -429,6 +429,9 @@ etl:
     root: project
     type: aggregator
 fence:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-sender
   autoscaling:
     enabled: true
     maxReplicas: 10
@@ -442,6 +445,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.05'
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/covid19/user.yaml
 fluentd:
   enabled: true
   image:
@@ -455,13 +461,15 @@ global:
     hatchery_role: covid19prod--covid19prod-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::236714345101:role/covid19prod-external-secrets-sa
+      roleArn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/covid19-datadictionary/3.9.2/schema.json
   dispatcherJobNum: '10'
   environment: covid19prod
   externalSecrets:
     deploy: true
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: "covid19prod-slack-webhook"
   hostname: chicagoland.pandemicresponsecommons.org
   manifestGlobalExtraValues:
     covid19_data_bucket: s3://opencdn-databucket-gen3
@@ -475,6 +483,8 @@ global:
     tier_access_level: regular
     tier_access_limit: '5'
     useryaml_s3path: s3://cdis-gen3-users/covid19/user.yaml
+  tierAccessLevel: regular
+  tierAccessLimit: 5
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -508,96 +518,85 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.05'
-  json: |-
-    {
-      "user-namespace": "jupyter-pods",
-      "sub-dir": "/lw-workspace",
-      "user-volume-size": "10Gi",
-      "sidecar": {
-        "cpu-limit": "1.0",
-        "memory-limit": "256Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.05",
-        "env": {
-          "NAMESPACE": "default",
-          "HOSTNAME": "chicagoland.pandemicresponsecommons.org"
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.05",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "chicagoland.pandemicresponsecommons.org"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "/sidecarDockerrun.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
         },
-        "args": [],
-        "command": [
-          "/bin/bash",
-          "/sidecarDockerrun.sh"
-        ],
-        "lifecycle-pre-stop": [
-          "su",
-          "-c",
-          "echo test",
-          "-s",
-          "/bin/sh",
-          "root"
+        "containers": [
+          {
+            "target-port": 8787,
+            "cpu-limit": "1.0",
+            "memory-limit": "1024Mi",
+            "name": "R Studio-3.5",
+            "image": "quay.io/cdis/rstudio:master",
+            "env": {
+              "DISABLE_AUTH": "true"
+            },
+            "args": [],
+            "path-rewrite": "/",
+            "use-tls": "false",
+            "ready-probe": "/",
+            "user-volume-location": "/home/rstudio/pd",
+            "fs-gid": 100
+          },
+          {
+            "target-port": 8787,
+            "cpu-limit": "1.0",
+            "memory-limit": "1024Mi",
+            "name": "R Studio-3.6",
+            "image": "quay.io/cdis/rstudio3.6:rstudio3.6-1.0.0",
+            "env": {
+              "DISABLE_AUTH": "true"
+            },
+            "args": [],
+            "path-rewrite": "/",
+            "use-tls": "false",
+            "ready-probe": "/",
+            "user-volume-location": "/home/rstudio/pd",
+            "fs-gid": 100
+          },
+          {
+            "target-port": 8787,
+            "cpu-limit": "1.0",
+            "memory-limit": "1024Mi",
+            "name": "R Studio JHU map",
+            "image": "quay.io/cdis/rstudio-jhumap:jhumap-1.0.0",
+            "env": {
+              "DISABLE_AUTH": "true"
+            },
+            "args": [],
+            "path-rewrite": "/",
+            "use-tls": "false",
+            "ready-probe": "/",
+            "user-volume-location": "/home/rstudio/pd",
+            "fs-gid": 100
+          }
         ]
-      },
-      "containers": [
-        {
-          "target-port": 8787,
-          "cpu-limit": "1.0",
-          "memory-limit": "1024Mi",
-          "name": "R Studio-3.5",
-          "image": "quay.io/cdis/rstudio:master",
-          "env": {
-            "DISABLE_AUTH": "true"
-          },
-          "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/",
-          "user-volume-location": "/home/rstudio/pd",
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8787,
-          "cpu-limit": "1.0",
-          "memory-limit": "1024Mi",
-          "name": "R Studio-3.6",
-          "image": "quay.io/cdis/rstudio3.6:rstudio3.6-1.0.0",
-          "env": {
-            "DISABLE_AUTH": "true"
-          },
-          "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/",
-          "user-volume-location": "/home/rstudio/pd",
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8787,
-          "cpu-limit": "1.0",
-          "memory-limit": "1024Mi",
-          "name": "R Studio JHU map",
-          "image": "quay.io/cdis/rstudio-jhumap:jhumap-1.0.0",
-          "env": {
-            "DISABLE_AUTH": "true"
-          },
-          "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/",
-          "user-volume-location": "/home/rstudio/pd",
-          "fs-gid": 100
-        }
-      ],
-      "more-configs": [
-        {
-          "type": "dockstore-compose:1.0.0",
-          "path": "/hatchery-more-configs/gen3-igv.yaml",
-          "name": "Gen3 IGV"
-        },
-        {
-          "type": "dockstore-compose:1.0.0",
-          "path": "/hatchery-more-configs/jupyter-covid19.yaml",
-          "name": "A collection of Jupyter notebooks to explore health outcomes for COVID-19"
-        }
-      ]
-    }
+      }
 indexd:
   defaultPrefix: dg.63D5/
   autoscaling:
