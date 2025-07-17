@@ -20,6 +20,9 @@ calico:
   configuration:
     enabled: false
 
+cert-manager:
+  enabled: true
+
 coreDNS:
   enabled: true
   configuration:
@@ -59,19 +62,19 @@ karpenter-crds:
     consolidateAfter: "5m"
     volumeSize: 80Gi
     requirements:
-    - key: karpenter.sh/capacity-type
-      operator: In
-      values:
-      - on-demand
-      - spot
-    - key: kubernetes.io/arch
-      operator: In
-      values:
-      - amd64
-    - key: karpenter.k8s.aws/instance-category
-      operator: In
-      values:
-      - r
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+          - spot
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: karpenter.k8s.aws/instance-category
+        operator: In
+        values:
+          - r
   workflow:
     volumeSize: 80Gi
   jupyter:
