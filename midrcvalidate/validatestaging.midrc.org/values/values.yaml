@@ -2508,7 +2508,7 @@ sower:
           configMapKeyRef:
             key: hostname
             name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.05
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.06
       memory-limit: 1Gi
       name: manifest-indexing-job
       pull_policy: Always
@@ -2533,7 +2533,7 @@ sower:
           configMapKeyRef:
             key: hostname
             name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.05
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.06
       memory-limit: 1Gi
       name: indexd-manifest-job
       pull_policy: Always
@@ -2561,7 +2561,7 @@ ssjdispatcher:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2025.06'
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.05
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.06
 tube:
   enabled: true
   image:
