@@ -7,14 +7,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 4.1.0
+    tag: '2025.07'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: externaldata-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.05'
+    tag: '2025.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--audit-sqs-receiver
@@ -47,7 +47,7 @@ fence:
     fenceJwtKeys: externaldata-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.05'
+    tag: '2025.07'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/heal/user.yaml
@@ -93,14 +93,14 @@ indexd:
     serviceCreds: externaldata-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.05'
+    tag: '2025.07'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: externaldata-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.05'
+    tag: '2025.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--manifest-service-sa
@@ -111,14 +111,14 @@ metadata:
     metadataG3auto: externaldata-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.05'
+    tag: '2025.07'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.05'
+    tag: '2025.07'
 portal:
   enabled: false
 revproxy:
@@ -130,7 +130,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.05'
+    tag: '2025.07'
   ingress:
     aws:
       group: healprod
@@ -138,7 +138,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.05'
+    tag: '2025.07'
   replicas: 2
 wts:
   enabled: false
