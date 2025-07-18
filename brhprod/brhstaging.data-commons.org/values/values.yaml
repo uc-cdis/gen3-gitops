@@ -90,18 +90,17 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "brhstaging-slack-webhook"
   hostname: brhstaging.data-commons.org
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.27.99.0/24
+  #     - 172.27.98.0/24
+  publicDataSets: true
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::590183957759:role/EcrRepoPolicyUpdateRole
-    es7: true
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    tier_access_level: regular
-    tier_access_limit: 50
-    useryaml_s3path: s3://cdis-gen3-users/brh/user.yaml
-    fence_url: https://brhstaging.data-commons.org/user
+  fenceURL: https://brhstaging.data-commons.org/user
   tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops
@@ -1070,7 +1069,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.05'
-  fenceUrl: https://brhstaging.data-commons.org/user
 wts:
   enabled: true
   externalSecrets:

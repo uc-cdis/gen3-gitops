@@ -60,6 +60,9 @@ etl:
       root: None
       type: collector
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/vadcprod/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-sender
@@ -102,15 +105,16 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "vadcprod-slack-webhook"
   hostname: vpodc.data-commons.org
+  fenceURL: https://vpodc.data-commons.org/user
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-vadcprod-gen3
     logs_bucket: logs-vadcprod-gen3
-    maintenance_mode: "off"
-    netpolicy: "on"
-    sync_from_dbgap: "False"
-    fence_url: https://vpodc.data-commons.org/user
-    useryaml_s3path: s3://cdis-gen3-users/vadcprod/user.yaml
+  maintenanceMode: 'off'
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.25.51.0/24
+  #     - 172.25.50.0/24
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -818,7 +822,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: "2025.04"
-  fenceUrl: https://vpodc.data-commons.org/user
 sower:
   enabled: true
   externalSecrets:

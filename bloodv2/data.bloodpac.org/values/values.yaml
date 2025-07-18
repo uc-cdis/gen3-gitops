@@ -388,6 +388,9 @@ etl:
     root: None
     type: collector
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/bpa/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--audit-sqs-sender
@@ -404,9 +407,6 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: 10.2.0
-  usersync:
-    usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/bpa/user.yaml
 fluentd:
   enabled: true
   image:
@@ -430,12 +430,13 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "bloodv2-slack-webhook" #pragma: allowlist secret
   hostname: data.bloodpac.org
-  manifestGlobalExtraValues:
-    es7: true
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    useryaml_s3path: s3://cdis-gen3-users/bpa/user.yaml
+  fenceURL: https://data.bloodpac.org/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.24.3.0/24
+  #     - 172.24.2.0/24
+  publicDataSets: true
   portalApp: gitops
   postgres:
     dbCreate: false

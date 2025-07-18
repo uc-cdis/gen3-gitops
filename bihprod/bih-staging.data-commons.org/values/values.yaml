@@ -101,6 +101,9 @@ etl:
       root: imaging_series
       type: aggregator
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/midrc-bih-staging/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-sender
@@ -149,16 +152,17 @@ global:
     slackWebhookSecretName: "bihstaging-slack-webhook" #pragma: allowlist secret
   frontendRoot: gen3ff
   hostname: bihstaging.data-commons.org
-  tierAccessLevel: libre
+  fenceURL: https://bihstaging.data-commons.org/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.27.64.0/25
+  #     - 172.27.64.128/25
+  publicDataSets: true
   manifestGlobalExtraValues:
-    esDomain: bihstaging-gen3-metadata
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    tier_access_level: libre
-    useryaml_s3path: s3://cdis-gen3-users/midrc-bih-staging/user.yaml
+  tierAccessLevel: libre
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -374,6 +378,12 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.07'
 ssjdispatcher:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/gen3_service/bihprod--bihstaging-cloudauto--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/gen3_service/bihprod--bihstaging-cloudauto--ssj-job
   enabled: true
   externalSecrets:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds

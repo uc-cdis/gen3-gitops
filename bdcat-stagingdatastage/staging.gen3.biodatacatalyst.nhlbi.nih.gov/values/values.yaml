@@ -267,18 +267,18 @@ global:
     slackWebhookSecretName: "stagingdatastage-slack-webhook"
   frontendRoot: portal
   hostname: staging.gen3.biodatacatalyst.nhlbi.nih.gov
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.25.195.0/24
+  #     - 172.25.194.0/24
+  publicDataSets: true
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-stageprod-gen3
     logs_bucket: logs-stageprod-gen3
-    netpolicy: "on"
-    public_datasets: true
-    sync_from_dbgap: "True"
-    tier_access_level: regular
-    tier_access_limit: 50
-    useryaml_s3path: s3://cdis-gen3-users/stagingdatastage/user.yaml
   tierAccessLevel: regular
   tierAccessLimit: 50
+  fenceURL: https://staging.gen3.biodatacatalyst.nhlbi.nih.gov/user
   portalApp: gitops
   postgres:
     dbCreate: false

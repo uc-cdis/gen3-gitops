@@ -147,16 +147,16 @@ global:
     slackWebhookSecretName: "bihprod-slack-webhook" #pragma: allowlist secret
   frontendRoot: gen3ff
   hostname: imaging-hub.data-commons.org
+  publicDataSets: true
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    tier_access_level: libre
-    useryaml_s3path: s3://cdis-gen3-users/midrc-bih/user.yaml
-    fence_url: https://imaging-hub.data-commons.org/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.27.64.0/25
+  #     - 172.27.64.128/25
+  fenceURL: https://imaging-hub.data-commons.org/user
   tierAccessLevel: libre
   portalApp: gitops
   postgres:
@@ -371,7 +371,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.05'
-  fenceUrl: https://imaging-hub.data-commons.org/user
 spark:
   enabled: true
   image:
