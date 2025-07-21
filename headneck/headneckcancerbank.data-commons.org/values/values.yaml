@@ -91,6 +91,7 @@ dicom-viewer:
     dbcreds: "headneck_default-dicom-viewer-creds"
 
 etl:
+  esEndpoint: elasticsearch
   etlMapping:
     mappings:
       - name: hnc_dataset
@@ -301,6 +302,7 @@ grafana:
   enabled: false
 
 guppy:
+  esEndpoint: elasticsearch:9200
   # Lower cost
   resources:
     requests:
