@@ -414,7 +414,7 @@ peregrine:
       cpu: "15m"
   enabled: true
   externalSecrets:
-    dbcreds: "headneck_default-sheepdg-creds"
+    dbcreds: "headneck_default-sheepdog-creds"
 
 pidgin:
   enabled: false
