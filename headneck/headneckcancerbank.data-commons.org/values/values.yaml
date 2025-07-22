@@ -23,8 +23,11 @@ global:
   publicDataSets: false
   tierAccessLevel: "private"
   tierAccessLimit: 100
-  netPolicy:
-    enabled: false
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.24.192.128/25
+  #     - 172.24.192.0/25
   dispatcherJobNum: "10"
   frontendRoot: "gen3ff"
   ddEnabled: false

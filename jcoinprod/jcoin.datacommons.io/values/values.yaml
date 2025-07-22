@@ -134,6 +134,9 @@ etl:
     root: serious_adverse_event
     type: aggregator
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/jcoin/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--audit-sqs-sender
@@ -176,14 +179,16 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "jcoinprod-slack-webhook"
   hostname: jcoin.datacommons.io
+  fenceURL: https://jcoin.datacommons.io/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.26.163.0/24
+  #     - 172.26.162.0/24
   manifestGlobalExtraValues:
-    es7: true
     kube_bucket: kube-jcoin-prod-gen3
     logs_bucket: s3logs-logs-jcoin-prod-gen3
-    maintenance_mode: 'off'
-    netpolicy: 'on'
-    sync_from_dbgap: 'False'
-    useryaml_s3path: s3://cdis-gen3-users/jcoin/user.yaml
+  maintenanceMode: 'off'
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -1199,6 +1204,12 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.05'
 ssjdispatcher:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/gen3_service/jcoinprod--default--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/gen3_service/jcoinprod--default--ssj-job
   enabled: true
   externalSecrets:
     credsFile: jcoinprod-ssjdispatcher-creds
