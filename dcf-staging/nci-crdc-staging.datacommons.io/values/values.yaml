@@ -41,6 +41,39 @@ datareplicate:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
     tag: 2.0.0
 fence:
+  FENCE_CONFIG_PUBLIC:
+    S3_BUCKETS:
+      multi-consent-test-bucket-kf:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      nci-cbiit-caninedatacommons-file:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      nci-cbiit-clinical-cmb-stage:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      tcga-protected-dcf-databucket-gen3:
+        cred: 'fence_bot'
+      tcga-public-dcf-databucket-gen3:
+        cred: 'fence_bot'
+      pdcdatastore-controlled:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      dev-testing-bucketfor-matchdata:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      dcf-staging-data-bucket:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      crdc-ita:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      crdc-itb:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      123795211922-4920969-h59mrmjbpxe14b9gzq9tw5hkdwobruse1b-s3alias:
+        cred: 'fence_bot'
+
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-sender
@@ -56,11 +89,13 @@ fence:
     fenceGoogleAppCredsSecret: dcf-staging-fence-google-app-creds
     fenceGoogleStorageCredsSecret: dcf-staging-fence-google-storage-creds
     fenceJwtKeys: dcf-staging-fence-jwt
+    fenceSshKeys: dcf-staging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.06'
   usersync:
     usersync: true
+    syncFromDbgap: true
     userYamlS3Path: s3://cdis-gen3-users/dcfstaging-users/user.yaml
 fluentd:
   enabled: true
@@ -85,17 +120,23 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "dcf-staging-slack-webhook"
   hostname: nci-crdc-staging.datacommons.io
+  fenceURL: https://nci-crdc-staging.datacommons.io/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.24.147.0/24
+  #     - 172.24.146.0/24
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
     kube_bucket: kube-dcf-staging-gen3
     logs_bucket: logs-dcf-staging-gen3
-    sync_from_dbgap: 'True'
-    useryaml_s3path: s3://cdis-gen3-users/dcfstaging-users/user.yaml
   portalApp: gitops
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:584476192960:certificate/b1f41138-54c0-4d5f-b2f3-7c5ebb20b555
 indexd:
+  defaultPrefix: "dg.4DFC/"
+  useSingleTable: "true"
   autoscaling:
     enabled: true
     maxReplicas: 4
@@ -425,7 +466,7 @@ revproxy:
     tag: '2025.06'
   ingress:
     aws:
-      group: dcf-staging-helm
+      group: dcf-staging
 sheepdog:
   enabled: true
   image:

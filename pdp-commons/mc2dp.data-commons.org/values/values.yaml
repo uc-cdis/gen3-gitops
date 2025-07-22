@@ -24,7 +24,7 @@ aws-es-proxy:
 dashboard:
   dashboardConfig:
     bucket: dashboard-851725307933-pdp-commons-gen3
-    prefix: prometheus.data-commons.org
+    prefix: mc2dp.data-commons.org
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
@@ -61,7 +61,7 @@ frontend-framework:
   replicaCount: 2
   enabled: true
   image:
-    repository: quay.io/cdis/prometheus-data-platform
+    repository: quay.io/cdis/mc2dp-data-platform
     tag: main
 gen3-user-data-library:
   enabled: true
@@ -91,17 +91,16 @@ global:
     slackWebhookSecretName: "pdp-commons-slack-webhook"
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
+  fenceURL: https://mc2dp.data-commons.org/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-    netpolicy: 'on'
-    public_datasets: true
-    sync_from_dbgap: 'False'
-    tier_access_level: libre
-    tier_access_limit: 50
-    useryaml_s3path: s3://cdis-gen3-users/pdp/user.yaml
-  tierAccessLevel: libre
+  publicDataSets: true
+  tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops
   postgres:
@@ -159,8 +158,8 @@ hatchery:
             "containers": [
                 {
                     "target-port": 8888,
-                    "cpu-limit": "2.0",
-                    "memory-limit": "8Gi",
+                    "cpu-limit": "1.0",
+                    "memory-limit": "4Gi",
                     "name": "(Generic) Jupyter Lab Notebook with R Kernel",
                     "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
                     "env": {
@@ -240,6 +239,7 @@ metadata:
             "default": []
           },
           "_unique_id": {},
+          "entity_type" : {},
           "study_description": {},
           "study_id": {},
           "study_url": {},
@@ -372,6 +372,7 @@ metadata:
             "_manifest": "path:__manifest",
             "commons_url": "data.bloodpac.org",
             "data_source": "BLOODPAC",
+            "entity_type" : "study",
             "is_synthetic": "Yes"
           }
         },
@@ -398,9 +399,9 @@ metadata:
               "path": "_cases_count",
               "default": 0
             },
-            "_manifest": "",
             "commons_url": "vpodc.data-commons.org",
             "data_source": "VPODC",
+            "entity_type" : "study",
             "is_synthetic": "No"
           }
         },
@@ -429,17 +430,14 @@ metadata:
             "primary_site": "path:primary_site",
             "study_id": "path:id",
             "study_description": "path:name",
-            "full_name": "",
-            "short_name": "",
             "commons": "GDC",
-            "study_url": "",
             "_subjects_count": {
               "path": "summary.case_count",
               "default": 0
             },
-            "_manifest": "",
             "data_source": "GDC",
             "commons_url": "api.gdc.cancer.gov",
+            "entity_type" : "study",
             "is_synthetic": "No"
           }
         },
@@ -510,6 +508,7 @@ metadata:
                 "strip_leading_double_underscore"
               ]
             },
+            "entity_type" : "study",
             "is_synthetic": "No"
           }
         },
@@ -586,6 +585,7 @@ metadata:
             "commons_url": "data.bloodpac.org",
             "data_source": "BLOODPAC",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "Yes"
           }
         },
@@ -719,6 +719,7 @@ metadata:
             "commons_url": "vpodc.data-commons.org",
             "data_source": "VPODC",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "No"
           },
           "per_item_values": {
@@ -852,6 +853,7 @@ metadata:
             "subject_type_of_exposure": "path:exposures[*].tobacco_smoking_status",
             "data_source": "GDC",
             "commons_url": "api.gdc.cancer.gov",
+            "entity_type" : "subject",
             "is_synthetic": "No"
           }
         },
@@ -933,11 +935,11 @@ metadata:
               "default": ""
             },
             "subject_cancer_stage": "path:tumor_stage",
-            "subject_year_of_birth": "",
             "subject_primary_disease": "path:primary_diagnosis",
             "subject_type_of_exposure": "path:exposures[*].exposure_type",
             "data_source": "PDC",
             "commons_url": "proteomic.datacommons.cancer.gov",
+            "entity_type" : "subject",
             "is_synthetic": "No"
           }
         },
@@ -967,6 +969,7 @@ metadata:
             },
             "_manifest": "path:__manifest",
             "commons_url": "externalgen3.prometheus.data-commons.org",
+            "entity_type" : "study",
             "is_synthetic": "Yes"
           }
         },
@@ -1022,6 +1025,7 @@ metadata:
             "data_source": "path:data_source",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "Yes"
           }
         },
@@ -1052,6 +1056,7 @@ metadata:
             },
             "_manifest": "path:__manifest",
             "commons_url": "externalgen3.prometheus.data-commons.org",
+            "entity_type" : "study",
             "is_synthetic": "No"
           }
         },
@@ -1134,8 +1139,6 @@ metadata:
               },
               "default": ""
             },
-            "subject_metastasis": "",
-            "subject_cancer_type": "",
             "subject_cancer_grade": {
               "path": "diagnoses[*].tumor_grade",
               "filters": [
@@ -1155,13 +1158,12 @@ metadata:
               },
               "default": ""
             },
-            "subject_cancer_stage": "",
             "subject_year_of_birth": "path:year_of_birth",
-            "subject_primary_disease": "",
             "data_source": "path:data_source",
             "sub_data_source": "path:sub_data_source",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "No"
           }
         },
@@ -1189,8 +1191,8 @@ metadata:
               "path": "_subjects_count",
               "default": 0
             },
-            "_manifest": "",
             "commons_url": "externalgen3.prometheus.data-commons.org",
+            "entity_type" : "study",
             "is_synthetic": "No"
           }
         },
@@ -1246,8 +1248,6 @@ metadata:
               },
               "default": ""
             },
-            "subject_metastasis": "",
-            "subject_cancer_type": "",
             "subject_cancer_grade": {
               "path": "diagnoses[*].tumor_grade",
               "filters": [
@@ -1267,18 +1267,16 @@ metadata:
               },
               "default": ""
             },
-            "subject_cancer_stage": "",
-            "subject_year_of_birth": "",
-            "subject_primary_disease": "",
             "data_source": "TCIA",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "No",
             "studies": "path:studies.*"
           }
         },
         "Windber-subject-level-metadata": {
-          "mds_url": "https://t-apps.wriwindber.org/prometheus-mesh-api/v1/metadata",
+          "mds_url": "https://apps.wriwindber.org/mc2dp-api/v1/metadata",
           "commons_url": "externalgen3.prometheus.data-commons.org",
           "adapter": "windbersubject",
           "config": {
@@ -1331,14 +1329,9 @@ metadata:
               },
               "default": ""
             },
-            "subject_metastasis": "",
-            "subject_cancer_type": "",
-            "subject_cancer_grade": "",
-            "subject_cancer_stage": "",
-            "subject_primary_disease": "",
             "data_source": "Windber",
-            "commons_url": "externalgen3.prometheus.data-commons.org",
-            "mc2dp_global_id": "",
+            "commons_url": "www.wriwindber.org",
+            "entity_type" : "subject",
             "is_synthetic": "Yes"
           }
         },
@@ -1364,6 +1357,7 @@ metadata:
             "data_source": "path:data_source",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
+            "entity_type" : "subject",
             "is_synthetic": "No",
             "data_files": "path:data_type"
           }
