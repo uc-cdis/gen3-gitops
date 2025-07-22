@@ -32,6 +32,9 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--dashboard-access
 fence:
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/heal/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--audit-sqs-sender
@@ -69,12 +72,15 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: "externaldata-slack-webhook"
   hostname: externaldata.healdata.org
+  fenceURL: https://externaldata.healdata.org/user
+  # netPolicy:
+  #   enabled: true
+  #   dbSubnet:
+  #     - 172.25.130.0/24
+  #     - 172.25.131.0/24
   manifestGlobalExtraValues:
     kube_bucket: kube-healprod-gen3
     logs_bucket: logs-healprod-gen3
-    netpolicy: 'on'
-    sync_from_dbgap: 'False'
-    useryaml_s3path: s3://cdis-gen3-users/heal/user.yaml
   portalApp: gitops
   postgres:
     dbCreate: false
