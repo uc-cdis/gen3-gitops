@@ -655,13 +655,9 @@ portal:
                     "submitter_id"
                   ],
                   "fields": [
-                    "sex",
+                    "Sex_Desc",
                     "race",
-                    "ethnicity",
-                    "age_at_index",
-                    "index_event",
-                    "zip",
-                    "covid19_positive",
+                    "Ethnicity",
                     "project_id"
                   ]
                 },
@@ -735,13 +731,9 @@ portal:
               "fields": [
                 "project_id",
                 "submitter_id",
-                "sex",
+                "Sex_Desc",
                 "race",
-                "ethnicity",
-                "age_at_index",
-                "index_event",
-                "zip",
-                "covid19_positive",
+                "Ethnicity",
                 "treatment.Date_of_First_Surgery",
                 "treatment.First_Course_Chemotherapy_Date",
                 "treatment.First_Course_Chemotherapy_Hosp_Desc",
