@@ -96,7 +96,7 @@ etl:
     tube:
       # -- (string) Overrides the image tag whose default is the chart appVersion.
       tag: "jawad-debug"
-  esEndpoint: elasticsearch
+  esEndpoint: http://elasticsearch:9200
   etlMapping:
     mappings:
       - name: hnc_dataset
@@ -313,7 +313,12 @@ guppy:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: false
+  enabled: true
+  indices:
+    - index: hnc_dataset
+      type: case
+  configIndex: hnc_dataset-array-config
+
 
 hatchery:
   # Lower cost
