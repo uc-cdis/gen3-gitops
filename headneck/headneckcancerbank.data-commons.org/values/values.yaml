@@ -317,8 +317,12 @@ guppy:
   enabled: true
   indices:
     - index: hnc_dataset
-      type: case
-  configIndex: hnc_dataset-array-config
+      type: dataset
+    - index: hnc_subject
+      type: subject
+    - index: hnc_data_file
+      type: data_file  
+  configIndex: hnc_array-config 
 
 
 hatchery:
