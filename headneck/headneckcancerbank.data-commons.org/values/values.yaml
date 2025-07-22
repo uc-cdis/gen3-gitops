@@ -92,6 +92,10 @@ dicom-viewer:
     dbcreds: "headneck_default-dicom-viewer-creds"
 
 etl:
+  image:
+    tube:
+      # -- (string) Overrides the image tag whose default is the chart appVersion.
+      tag: "jawad-debug"
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
