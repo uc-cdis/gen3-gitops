@@ -277,7 +277,7 @@ fence:
     fenceGoogleStorageCredsSecret: ""
     createK8sJwtKeysSecret: true
     createK8sGoogleAppSecrets: true
-    createK8sFenceConfigSecret: true
+    createK8sFenceConfigSecret: false
     dbcreds: "headneck_default-fence-creds"
 
 
