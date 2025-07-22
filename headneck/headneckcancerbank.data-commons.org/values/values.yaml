@@ -96,6 +96,7 @@ etl:
     tube:
       # -- (string) Overrides the image tag whose default is the chart appVersion.
       tag: "jawad-debug"
+      pullPolicy: Always 
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
