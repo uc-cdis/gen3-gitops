@@ -54,6 +54,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--audit-sqs-sender
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/brh/user.yaml
 fluentd:
   enabled: true
   image:

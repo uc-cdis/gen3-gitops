@@ -20,6 +20,7 @@ global:
   publicDataSets: false
   tierAccessLevel: "private"
   tierAccessLimit: 100
+  fenceURL: https://stanfordaimi.data-commons.org/user
   # netPolicy:
   #   enabled: true
   #   dbSubnet:

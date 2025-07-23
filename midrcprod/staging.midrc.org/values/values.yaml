@@ -2639,7 +2639,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.07'
-  fenceUrl: https://staging.midrc.org/user
 spark:
   enabled: true
   image:

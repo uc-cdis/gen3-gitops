@@ -5,6 +5,7 @@ global:
   hostname: "gen3.datacommons.io"
   aws:
     enabled: true
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
         enabled: true
         localSecretName: external-secrets-oadc-secret # pragma: allowlist secret
@@ -34,7 +35,7 @@ arborist:
     dbcreds: "oadc-arborist-db-creds"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2024.09
+    tag: master
 
 aws-es-proxy:
   # Lower cost
@@ -46,9 +47,6 @@ aws-es-proxy:
   externalSecrets:
     awsCreds: "oadc-aws-es-proxy-creds"
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: 0.8
 
 indexd:
   # Lower cost
@@ -65,7 +63,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2024.09
+    tag: master
 
 peregrine:
   # Lower cost
@@ -91,7 +89,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2024.09
+    tag: master
 
 sheepdog:
   # Lower cost
@@ -104,7 +102,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 2024.09
+    tag: master
 
 manifestservice:
   # Lower cost
@@ -115,7 +113,7 @@ manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2024.09
+    tag: master
   externalSecrets:
     manifestserviceG3auto: "oadc-manifestservice-g3auto"
 
@@ -128,7 +126,7 @@ sower:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: 2024.09
+    tag: master
   externalSecrets:
     pelicanserviceG3auto: "oadc-pelicanservice-g3auto"
 
@@ -141,7 +139,7 @@ ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2024.09
+    tag: master
 
 metadata:
   # Lower cost
@@ -156,7 +154,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2024.09
+    tag: master
 
 # disabling workspace services
 ambassador:
