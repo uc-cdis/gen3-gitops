@@ -2840,7 +2840,6 @@ sheepdog:
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
-  fenceUrl: https://data.midrc.org/user
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.06'

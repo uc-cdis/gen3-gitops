@@ -438,6 +438,7 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.7/schema.json
   dispatcherJobNum: '10'
   environment: validatestaging
+  fenceURL: https://validate.midrc.org/user
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true

@@ -1,0 +1,523 @@
+global:
+  # This will be dynamically replaced by env_setup.sh script.
+  hostname:
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
+  pdb: true
+  aws:
+    externalSecrets:
+      # -- (bool) Whether to use External Secrets for aws config.
+      enabled: true
+      # -- (String) Name of Secrets Manager secret.
+      externalSecretAwsCreds: ci-aws-config
+    secretStoreServiceAccount:
+      # -- (bool) Set true if deploying to AWS and want to use service account and IAM role instead of aws keys. Must provide role-arn.
+      enabled: true
+      # -- (string) Name of the service account to create
+      name: secret-store-sa
+      # -- (string) AWS Role ARN for Secret Store to use
+      roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
+    sower_role: sower-jobs-role
+  externalSecrets:
+    deploy: true
+    dbCreate: true
+  manifestGlobalExtraValues:
+    # This will be dynamically replaced by env_setup.sh script.
+    fence_url: https://hostname/user
+    google_enabled: true
+  tierAccessLevel: libre
+
+mutatingWebhook:
+  # -- (bool) Whether to deploy the mutating webhook service.
+  enabled: false
+
+postgresql:
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+  image:
+    registry: quay.io
+    repository: cdis/postgresql
+    tag: 14.5.0-debian-11-r35
+
+hatchery:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  image:
+    tag: master
+  hatchery:
+    containers:
+      - target-port: 8888
+        cpu-limit: '0.5'
+        memory-limit: 1Gi
+        name: "(Tutorial) Bacpac Synthetic Data Analysis Notebook"
+        image: "quay.io/cdis/heal-notebooks:bacpac__10670ad79b4488cfa9f1b3681ce52bc3f1139b5a"
+        env:
+          # This will be dynamically replaced by env_setup.sh script.
+          FRAME_ANCESTORS: https://<hostname>
+        args:
+          - "--NotebookApp.base_url=/lw-workspace/proxy/"
+          - "--NotebookApp.password=''"
+          - "--NotebookApp.token=''"
+          - "--NotebookApp.quit_button=False"
+        command:
+          - start-notebook.sh
+        path-rewrite: "/lw-workspace/proxy/"
+        use-tls: 'false'
+        ready-probe: "/lw-workspace/proxy/"
+        lifecycle-post-start:
+          - "/bin/sh"
+          - "-c"
+          - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true
+        user-uid: 1000
+        fs-gid: 100
+
+indexd:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  # This will be dynamically replaced by env_setup.sh script.
+  defaultPrefix: ""
+  enabled: true
+  image:
+    repository: "quay.io/cdis/indexd"
+    tag: "master"
+  externalSecrets:
+    createK8sServiceCredsSecret: true
+  secrets:
+    userdb:
+      # This will be dynamically replaced by env_setup.sh script.
+      ssj:
+      # This will be dynamically replaced by env_setup.sh script.
+      gateway:
+
+
+metadata:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  image:
+    repository: quay.io/cdis/metadata-service
+    tag: 'master'
+  resources:
+    # -- (map) The amount of resources that the container requests
+    requests:
+      memory: 25Mi
+  enabled: true
+  externalSecrets:
+    createK8sMetadataSecret: true
+  useAggMds: "True"
+  aggMdsNamespace: default
+  aggMdsConfig: |
+    {
+      "gen3_commons": {
+        "HEAL": {
+          "mds_url": "http://revproxy-service",
+          "commons_url": "http://revproxy-service"
+        }
+      },
+      "adapter_commons": {}
+    }
+
+maxUnavailable: ""
+elasticsearch:
+  maxUnavailable: ""
+  volumeClaimTemplate:
+    resources:
+      requests:
+        storage: 1Gi
+
+sower:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  image:
+    repository: quay.io/cdis/sower
+    tag: 'master'
+  enabled: true
+  serviceAccount:
+    # -- (bool) Specifies whether a service account should be created.
+    create: true
+    # -- (string) The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: "sower-service-account"
+  externalSecrets:
+    createK8sPelicanServiceSecret: false
+    pelicanserviceG3auto: ci-pelicanservice-g3auto
+    createK8sSowerJobsSecret: true
+  sowerConfig:
+    - name: pelican-export
+      action: export
+      container:
+        name: job-task
+        image: quay.io/cdis/pelican-export:master
+        pull_policy: Always
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: dictionary_url
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: hostname
+          - name: ROOT_NODE
+            value: subject
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
+          - name: SHEEPDOG
+            valueFrom:
+              secretKeyRef:
+                name: indexd-service-creds
+                key: sheepdog
+        volumeMounts:
+          - name: pelican-creds-volume
+            readOnly: true
+            mountPath: "/pelican-creds.json"
+            subPath: config.json
+        cpu-limit: "0.5"
+        memory-limit: 1Gi
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto #pragma: allowlist secret
+      restart_policy: Never
+    - name: pelican-export-files
+      action: export-files
+      container:
+        name: job-task
+        image: quay.io/cdis/pelican-export:master
+        pull_policy: Always
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: dictionary_url
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: hostname
+          - name: ROOT_NODE
+            value: file
+          - name: EXTRA_NODES
+            value: ""
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
+          - name: SHEEPDOG
+            valueFrom:
+              secretKeyRef:
+                name: indexd-service-creds
+                key: sheepdog
+        volumeMounts:
+          - name: pelican-creds-volume
+            readOnly: true
+            mountPath: "/pelican-creds.json"
+            subPath: config.json
+        cpu-limit: "0.5"
+        memory-limit: 1Gi
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto #pragma: allowlist secret
+      restart_policy: Never
+    - name: batch-export
+      action: batch-export
+      activeDealineSeconds: 600
+      serviceAccountName: sower-service-account
+      container:
+        name: job-task
+        image: quay.io/cdis/batch-export:master
+        pull_policy: Always
+        env:
+          - name: BUCKET
+            value: sower-jobs-bucket
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: hostname
+        cpu-limit: "1"
+        memory-limit: 1Gi
+      restart_policy: Never
+
+ssjdispatcher:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  image:
+    repository: quay.io/cdis/ssjdispatcher
+    tag: 'master'
+  enabled: true
+  indexing: quay.io/cdis/indexs3client:master
+  ssjcreds:
+    # This will be dynamically replaced by env_setup.sh script.
+    sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
+    # This will be dynamically replaced by env_setup.sh script.
+    jobPattern: "s3://gen3-helm-data-upload-bucket/<environment name>/*"
+    # This will be dynamically replaced by env_setup.sh script.
+    jobPassword: "replace_with_password"
+    # This will be dynamically replaced by env_setup.sh script.
+    metadataservicePassword: "replace_with_password"
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role
+    name: "ssjdispatcher-service-account"
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role-job
+  externalSecrets:
+    createK8sSsjdispatcherSecret: true
+  # This will be dynamically replaced by env_setup.sh script.
+  gen3Namespace: default
+
+sheepdog:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  authNamespace: ''
+  image:
+    repository: "quay.io/cdis/sheepdog"
+    tag: "master"
+  # This will be dynamically replaced by env_setup.sh script.
+  fenceUrl: https://hostname/user
+
+peregrine:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/peregrine"
+    tag: "master"
+    pullPolicy: Always
+
+requestor:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+    repository: "quay.io/cdis/requestor"
+    tag: "master"
+
+audit:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  env:
+    - name: ARBORIST_URL
+      valueFrom:
+        configMapKeyRef:
+          name: manifest-global
+          key: arborist_url
+          optional: true
+  externalSecrets:
+    createK8sAuditSecret: true
+  image:
+    repository: quay.io/cdis/audit-service
+    tag: 'master'
+  server:
+    pull_from_queue: true
+    debug: true
+    sqs:
+      region: us-east-1
+      # This will be dynamically replaced by env_setup.sh script.
+      url:  https://sqs.us-east-1.amazonaws.com/707767160287/audit-service-sqs
+  enabled: true
+
+cedar:
+  enabled: true
+  autoscaling:
+    enabled: true
+  externalSecrets:
+    cedarG3auto: ci-cedar-g3auto
+    cedarAPIKey: ci-cedar-directory-id
+    cedarDirectoryId: ci-cedar-api-key
+  image:
+    repository: "quay.io/cdis/cedar-wrapper-service"
+    tag: "master"
+
+ambassador:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+    repository: "quay.io/datawire/ambassador"
+    tag: "1.4.2"
+
+arborist:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/arborist"
+    tag: "master"
+
+revproxy:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/tags: Environment=devplanetv2
+      alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:707767160287:certificate/f427a646-94fd-4b91-8bcd-80f5920c1e46'
+      alb.ingress.kubernetes.io/group.name: devplanetv2
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+      alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+    className: alb
+    hosts:
+      # This will be dynamically replaced by env_setup.sh script.
+      - host: HOSTNAME
+        paths:
+          - path: /
+            pathType: Prefix
+    resources:
+      requests:
+        memory: "105Mi"
+        cpu: "15m"
+
+
+wts:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+    repository: "quay.io/cdis/workspace-token-service"
+    tag: "master"
+  externalSecrets:
+    createWtsOidcClientSecret: true
+    createK8sWtsSecret: true
+
+manifestservice:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  image:
+    repository: quay.io/cdis/manifestservice
+    tag: "krishnaa05-patch-1"
+  env:
+    - name: REQUESTS_CA_BUNDLE
+      value: /etc/ssl/certs/ca-certificates.crt
+    - name: MANIFEST_SERVICE_CONFIG_PATH
+      value: /var/gen3/config/config.json
+    - name: GEN3_DEBUG
+      value: "False"
+  manifestserviceG3auto:
+    # This will be dynamically replaced by env_setup.sh script.
+    hostname:
+    bucketName: gen3-helm-manifest-bucket
+    prefix: 'test'
+  externalSecrets:
+    # -- (string) Will create the Helm "manifestservice-g3auto" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
+    createK8sManifestServiceSecret: true
+
+
+ohif-viewer:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+    repository: "quay.io/cdis/ohif-viewer"
+    tag: "gen3-v3.8.0"
+
+dicom-server:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: false
+  image:
+    repository: "quay.io/cdis/gen3-orthanc"
+    tag: "master"
+
+gen3-user-data-library:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+    repository: "quay.io/cdis/gen3-user-data-library"
+    tag: "main"
+  externalSecrets:
+    createK8sGen3UserDataLibrarySecret: true
+
+access-backend:
+  enabled: false
+
+orthanc:
+  replicaCount: 2
+  autoscaling:
+    enabled: true
+  enabled: true
+  image:
+      repository: "quay.io/cdis/gen3-orthanc"
+      tag: "orthancteam-master-gen3-24.3.5"
+  # -- (map) External Secrets settings.
+  externalSecrets:
+    # -- (string) Will override the name of the aws secrets manager secret. Default is "orthanc-s3-g3auto"
+    orthancS3G3Auto: ci-orthanc-s3-g3auto

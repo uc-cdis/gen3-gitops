@@ -1912,8 +1912,6 @@ global:
     deploy: true
   hostname: gen3.biodatacatalyst.nhlbi.nih.gov
   fenceURL: https://gen3.biodatacatalyst.nhlbi.nih.gov/user
-  netPolicy:
-    enabled: true
   publicDataSets: true
   # netPolicy:
   #   enabled: true
@@ -1923,7 +1921,6 @@ global:
   manifestGlobalExtraValues:
     kube_bucket: kube-stageprod-gen3
     logs_bucket: logs-stageprod-gen3
-  publicDataSets: true
   tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops
