@@ -5,6 +5,7 @@ global:
   hostname: "staging.chordshealth.org"
   aws:
     enabled: true
+    awsEsProxyRoleArn: arn:aws:iam::048463324059:role/gen3-service/chords-esproxy-sa
     useLocalSecret:
         enabled: true
         localSecretName: external-secrets-chords-secret

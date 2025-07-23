@@ -36,7 +36,7 @@ arborist:
     dbcreds: "niaiddata-arborist-db-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.09
+    tag: master
 
 aws-es-proxy:
   # Lower cost
@@ -66,7 +66,7 @@ indexd:
   enabled: true
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.09
+    tag: master
 
 peregrine:
   # Lower cost
@@ -79,7 +79,7 @@ peregrine:
   enabled: true
   image:
     repository: quay.io/cdis/peregrine
-    tag: 2024.09
+    tag: master
     pullPolicy: Always
 
 revproxy:
@@ -91,7 +91,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.09
+    tag: master
 
 sheepdog:
   # Lower cost
@@ -104,7 +104,7 @@ sheepdog:
   enabled: true
   image:
     repository: quay.io/cdis/sheepdog
-    tag: 2024.09
+    tag: master
 
 manifestservice:
   # Lower cost
@@ -115,7 +115,7 @@ manifestservice:
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
-    tag: 2024.09
+    tag: master
   externalSecrets:
     manifestserviceG3auto: "niaiddata-manifestservice-g3auto"
 

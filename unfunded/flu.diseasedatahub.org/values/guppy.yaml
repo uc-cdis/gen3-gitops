@@ -8,7 +8,7 @@ guppy:
   dbRestore: false
   image:
     repository: quay.io/cdis/guppy
-    tag: 2024.09
+    tag: master
   indices:
     - index: flu
       type: subject

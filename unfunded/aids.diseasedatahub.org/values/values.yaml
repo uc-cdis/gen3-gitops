@@ -43,7 +43,7 @@ arborist:
     dbcreds: "charlie-arborist-db-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.09
+    tag: master
 
 aws-es-proxy:
   # Lower cost
@@ -73,7 +73,7 @@ indexd:
   enabled: true
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.09
+    tag: master
 
 peregrine:
   # Lower cost
@@ -98,7 +98,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.09
+    tag: master
 
 sheepdog:
   # Lower cost
@@ -111,7 +111,7 @@ sheepdog:
   enabled: true
   image:
     repository: quay.io/cdis/sheepdog
-    tag: 2024.09
+    tag: master
 
 manifestservice:
   # Lower cost
@@ -122,7 +122,7 @@ manifestservice:
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
-    tag: 2024.09
+    tag: master
   externalSecrets:
     manifestserviceG3auto: "charlie-manifestservice-g3auto"
 
@@ -137,7 +137,7 @@ wts:
   enabled: true
   image:
     repository: quay.io/cdis/workspace-token-service
-    tag: 2024.09
+    tag: master
 
 # Disabled services
 ambassador:

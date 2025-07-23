@@ -5,6 +5,7 @@ global:
   hostname: "caninedc.org"
   aws:
     enabled: true
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
         enabled: true
         localSecretName: external-secrets-canine-secret # pragma: allowlist secret
@@ -38,7 +39,7 @@ arborist:
     dbcreds: "canineprod-arborist"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2024.09
+    tag: master
 
 aws-es-proxy:
   # Lower cost
@@ -67,7 +68,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2024.09
+    tag: master
 
 peregrine:
   # Lower cost
@@ -80,7 +81,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: 2024.09
+    tag: master
     pullPolicy: Always
 
 revproxy:
@@ -93,7 +94,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2024.09
+    tag: master
 
 sheepdog:
   # Lower cost
@@ -106,7 +107,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 2024.09
+    tag: master
 
 manifestservice:
   # Lower cost
@@ -117,7 +118,7 @@ manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2024.09
+    tag: master
   externalSecrets:
     manifestserviceG3auto: "canine-manifestservice-g3auto"
 
@@ -126,11 +127,11 @@ etl:
   spark:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2024.09
+      tag: master
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      tag: 2024.09
+      tag: master
 
 sower:
   # Lower cost
@@ -141,7 +142,7 @@ sower:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: 2024.09
+    tag: master
   externalSecrets:
     pelicanserviceG3auto: "canine-pelicanservice-g3auto"
 
@@ -154,7 +155,7 @@ ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2024.09
+    tag: master
 
 metadata:
   # Lower cost
@@ -173,7 +174,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2024.09
+    tag: master
 
 # disabling workspace services
 ambassador:

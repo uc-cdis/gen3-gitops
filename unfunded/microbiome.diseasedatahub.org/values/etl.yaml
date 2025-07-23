@@ -3,11 +3,11 @@ etl:
   spark:
     image:
       repository: quay.io/cdis/gen3-spark
-      tag: 2024.09
+      tag: master
   tube:
     image:
       repository: quay.io/cdis/tube
-      tag: 2024.09
+      tag: master
   esEndpoint: elasticsearch
   etlMapping:
 mappings:
