@@ -43,7 +43,7 @@ aws-es-proxy:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
+  esEndpoint: unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "oadc-aws-es-proxy-creds"
   enabled: true
