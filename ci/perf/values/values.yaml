@@ -318,7 +318,7 @@ sheepdog:
     repository: "quay.io/cdis/sheepdog"
     tag: "master"
   # This will be dynamically replaced by env_setup.sh script.
-  fenceUrl: https://hostname/user
+  fenceUrl: https://jenkins-perf.ci.planx-pla.net/user
 
 peregrine:
   replicaCount: 2
