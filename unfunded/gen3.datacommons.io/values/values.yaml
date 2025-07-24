@@ -47,9 +47,6 @@ aws-es-proxy:
   externalSecrets:
     awsCreds: "oadc-aws-es-proxy-creds"
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: 0.8
 
 indexd:
   # Lower cost
