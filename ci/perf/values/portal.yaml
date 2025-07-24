@@ -1,7 +1,5 @@
 portal:
   # replicaCount: 2
-  autoscaling:
-    enabled: true
   resources:
     limits:
       memory: 6Gi

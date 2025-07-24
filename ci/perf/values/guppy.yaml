@@ -1,7 +1,5 @@
 guppy:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   # Lower cost
   resources:
     requests:

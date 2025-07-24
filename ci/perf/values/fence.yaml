@@ -10,9 +10,7 @@ fence:
     fenceSshKeys: ci-fence-ssh-keys
   fenceDeleteExpiredClients:
     schedule: "0 0 * * *"
-  replicaCount: 2
-  autoscaling:
-    enabled: true
+  replicaCount: 6
   image:
     repository: quay.io/cdis/fence
     pullPolicy: IfNotPresent

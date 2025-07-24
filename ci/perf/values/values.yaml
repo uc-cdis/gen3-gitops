@@ -42,8 +42,6 @@ postgresql:
 
 hatchery:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   image:
     tag: master
   hatchery:
@@ -74,9 +72,7 @@ hatchery:
         fs-gid: 100
 
 indexd:
-  replicaCount: 2
-  autoscaling:
-    enabled: true
+  replicaCount: 3
   resources:
     requests:
       memory: "105Mi"
@@ -99,8 +95,6 @@ indexd:
 
 metadata:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   image:
     repository: quay.io/cdis/metadata-service
     tag: 'master'
@@ -134,8 +128,6 @@ elasticsearch:
 
 sower:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   image:
     repository: quay.io/cdis/sower
     tag: 'master'
@@ -287,8 +279,6 @@ sower:
 
 ssjdispatcher:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   image:
     repository: quay.io/cdis/ssjdispatcher
     tag: 'master'
@@ -318,8 +308,6 @@ ssjdispatcher:
 
 sheepdog:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   resources:
     requests:
       memory: "105Mi"
@@ -334,8 +322,6 @@ sheepdog:
 
 peregrine:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   resources:
     requests:
       memory: "105Mi"
@@ -348,8 +334,6 @@ peregrine:
 
 requestor:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
     repository: "quay.io/cdis/requestor"
@@ -357,8 +341,6 @@ requestor:
 
 audit:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   env:
     - name: ARBORIST_URL
       valueFrom:
@@ -382,8 +364,6 @@ audit:
 
 cedar:
   enabled: true
-  autoscaling:
-    enabled: true
   externalSecrets:
     cedarG3auto: ci-cedar-g3auto
     cedarAPIKey: ci-cedar-directory-id
@@ -394,8 +374,6 @@ cedar:
 
 ambassador:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
     repository: "quay.io/datawire/ambassador"
@@ -403,8 +381,6 @@ ambassador:
 
 arborist:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   resources:
     requests:
       memory: "105Mi"
@@ -416,8 +392,6 @@ arborist:
 
 revproxy:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   ingress:
     enabled: true
     annotations:
@@ -443,8 +417,6 @@ revproxy:
 
 wts:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
     repository: "quay.io/cdis/workspace-token-service"
@@ -455,8 +427,6 @@ wts:
 
 manifestservice:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   image:
     repository: quay.io/cdis/manifestservice
     tag: "krishnaa05-patch-1"
@@ -479,8 +449,6 @@ manifestservice:
 
 ohif-viewer:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
     repository: "quay.io/cdis/ohif-viewer"
@@ -488,8 +456,6 @@ ohif-viewer:
 
 dicom-server:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: false
   image:
     repository: "quay.io/cdis/gen3-orthanc"
@@ -497,8 +463,6 @@ dicom-server:
 
 gen3-user-data-library:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
     repository: "quay.io/cdis/gen3-user-data-library"
@@ -511,8 +475,6 @@ access-backend:
 
 orthanc:
   replicaCount: 2
-  autoscaling:
-    enabled: true
   enabled: true
   image:
       repository: "quay.io/cdis/gen3-orthanc"
