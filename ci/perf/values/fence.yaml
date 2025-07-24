@@ -13,6 +13,10 @@ fence:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 6
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/fence
     pullPolicy: IfNotPresent
