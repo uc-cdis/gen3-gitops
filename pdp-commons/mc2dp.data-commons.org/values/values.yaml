@@ -735,22 +735,6 @@ metadata:
             "subject_id": "path:case_submitter_id",
             "subject_apollo_id": "path:case_submitter_id",
             "subject_race": "path:race",
-            "subject_gender": {
-              "path": "demographic.gender",
-              "filters": [
-                "normalize_value"
-              ],
-              "filterParams": {
-                "normalize_value": {
-                  "male": "Male",
-                  "female": "Female",
-                  "m": "Male",
-                  "f": "Female",
-                  "not reported": "Not Reported"
-                }
-              },
-              "default": ""
-            },
             "subject_ethnicity": {
               "path": "demographic.ethnicity",
               "filters": [
@@ -1056,9 +1040,7 @@ metadata:
               },
               "default": ""
             },
-            "subject_cancer_stage": "",
             "subject_year_of_birth": "",
-            "subject_primary_disease": "",
             "data_source": "TCIA",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
@@ -1123,8 +1105,6 @@ metadata:
             "subject_metastasis": "",
             "subject_cancer_type": "",
             "subject_cancer_grade": "",
-            "subject_cancer_stage": "",
-            "subject_primary_disease": "",
             "data_source": "Windber",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "",
@@ -1144,13 +1124,13 @@ metadata:
             "authz": "",
             "tags": "path:tags",
             "_unique_id": "path:mc2dp_global_id",
-            "commons": "Aggregated Rows",
+            "commons": "path:data_source",
             "subject_id_list": "path:data_source_ids",
             "subject_metastasis": "path:metastasis",
             "subject_cancer_type": "path:cancer_type",
             "subject_primary_disease": "path:primary_disease",
             "subject_type_of_exposures" : "path:type_of_exposures",
-            "data_source": "path:data_source",
+            "data_source": "Aggregated Data",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
             "is_synthetic": "No",
