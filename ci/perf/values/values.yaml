@@ -20,9 +20,8 @@ global:
   externalSecrets:
     deploy: true
     dbCreate: true
+  fenceUrl: https://jenkins-perf.ci.planx-pla.net/user
   manifestGlobalExtraValues:
-    # This will be dynamically replaced by env_setup.sh script.
-    fence_url: https://hostname/user
     google_enabled: true
   tierAccessLevel: libre
 
@@ -317,8 +316,6 @@ sheepdog:
   image:
     repository: "quay.io/cdis/sheepdog"
     tag: "master"
-  # This will be dynamically replaced by env_setup.sh script.
-  fenceUrl: https://jenkins-perf.ci.planx-pla.net/user
 
 peregrine:
   replicaCount: 2
