@@ -41,6 +41,7 @@ postgresql:
     tag: 14.5.0-debian-11-r35
 
 hatchery:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -80,6 +81,10 @@ indexd:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -101,6 +106,7 @@ indexd:
 
 
 metadata:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -139,6 +145,7 @@ elasticsearch:
         storage: 1Gi
 
 sower:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -295,6 +302,7 @@ sower:
       restart_policy: Never
 
 ssjdispatcher:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -329,6 +337,7 @@ ssjdispatcher:
   gen3Namespace: default
 
 sheepdog:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -348,6 +357,7 @@ sheepdog:
   fenceUrl: https://hostname/user
 
 peregrine:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -365,6 +375,7 @@ peregrine:
     pullPolicy: Always
 
 requestor:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -377,6 +388,7 @@ requestor:
     tag: "master"
 
 audit:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -417,6 +429,7 @@ cedar:
     tag: "master"
 
 ambassador:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -429,6 +442,7 @@ ambassador:
     tag: "1.4.2"
 
 arborist:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -445,6 +459,7 @@ arborist:
     tag: "master"
 
 revproxy:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -475,6 +490,7 @@ revproxy:
 
 
 wts:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -490,6 +506,7 @@ wts:
     createK8sWtsSecret: true
 
 manifestservice:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -517,6 +534,7 @@ manifestservice:
 
 
 ohif-viewer:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -529,6 +547,7 @@ ohif-viewer:
     tag: "gen3-v3.8.0"
 
 dicom-server:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -541,6 +560,7 @@ dicom-server:
     tag: "master"
 
 gen3-user-data-library:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
@@ -558,6 +578,7 @@ access-backend:
   enabled: false
 
 orthanc:
+  replicaCount: 2
   autoscaling:
     enabled: true
     minReplicas: 2
