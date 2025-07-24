@@ -41,9 +41,12 @@ postgresql:
     tag: 14.5.0-debian-11-r35
 
 hatchery:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     tag: master
   hatchery:
@@ -98,9 +101,12 @@ indexd:
 
 
 metadata:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/metadata-service
     tag: 'master'
@@ -133,9 +139,12 @@ elasticsearch:
         storage: 1Gi
 
 sower:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/sower
     tag: 'master'
@@ -286,9 +295,12 @@ sower:
       restart_policy: Never
 
 ssjdispatcher:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/ssjdispatcher
     tag: 'master'
@@ -317,9 +329,12 @@ ssjdispatcher:
   gen3Namespace: default
 
 sheepdog:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -333,9 +348,12 @@ sheepdog:
   fenceUrl: https://hostname/user
 
 peregrine:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -347,18 +365,24 @@ peregrine:
     pullPolicy: Always
 
 requestor:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/requestor"
     tag: "master"
 
 audit:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   env:
     - name: ARBORIST_URL
       valueFrom:
@@ -393,18 +417,24 @@ cedar:
     tag: "master"
 
 ambassador:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/datawire/ambassador"
     tag: "1.4.2"
 
 arborist:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -415,9 +445,12 @@ arborist:
     tag: "master"
 
 revproxy:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   ingress:
     enabled: true
     annotations:
@@ -442,9 +475,12 @@ revproxy:
 
 
 wts:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/workspace-token-service"
@@ -454,9 +490,12 @@ wts:
     createK8sWtsSecret: true
 
 manifestservice:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/manifestservice
     tag: "krishnaa05-patch-1"
@@ -478,27 +517,36 @@ manifestservice:
 
 
 ohif-viewer:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/ohif-viewer"
     tag: "gen3-v3.8.0"
 
 dicom-server:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: false
   image:
     repository: "quay.io/cdis/gen3-orthanc"
     tag: "master"
 
 gen3-user-data-library:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/gen3-user-data-library"
@@ -510,9 +558,12 @@ access-backend:
   enabled: false
 
 orthanc:
-  replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
       repository: "quay.io/cdis/gen3-orthanc"
