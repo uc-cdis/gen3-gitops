@@ -1,6 +1,6 @@
 global:
   # This will be dynamically replaced by env_setup.sh script.
-  hostname:
+  hostname: qaperf
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
   pdb: true
   aws:
