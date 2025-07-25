@@ -1,0 +1,8 @@
+orthanc:
+  replicaCount: 2
+  enabled: true
+  image:
+      repository: "quay.io/cdis/gen3-orthanc"
+      tag: "orthancteam-master-gen3-24.3.5"
+  externalSecrets:
+    orthancS3G3Auto: ci-orthanc-s3-g3auto

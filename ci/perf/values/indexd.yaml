@@ -1,0 +1,17 @@
+indexd:
+  replicaCount: 3
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  defaultPrefix: "ciperf"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/indexd"
+    tag: "master"
+  externalSecrets:
+    createK8sServiceCredsSecret: true
+  secrets:
+    userdb:
+      ssj:
+      gateway:

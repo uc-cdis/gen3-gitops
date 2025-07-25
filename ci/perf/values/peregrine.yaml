@@ -1,0 +1,11 @@
+peregrine:
+  replicaCount: 2
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
+  image:
+    repository: "quay.io/cdis/peregrine"
+    tag: "master"
+    pullPolicy: Always

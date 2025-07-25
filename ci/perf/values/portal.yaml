@@ -1,7 +1,4 @@
 portal:
-  # replicaCount: 2
-  autoscaling:
-    enabled: true
   resources:
     limits:
       memory: 6Gi
@@ -14,7 +11,6 @@ portal:
   gitops:
     json: |
       {
-        "gaTrackingId": "UA-119127212-2",
         "argoTemplate": "gwas-template",
         "graphql": {
           "boardCounts": [
@@ -677,14 +673,7 @@ portal:
               "project_id"
             ],
             "accessibleValidationField": "project_id"
-          },
-          "getAccessButtonLink": "https://dbgap.ncbi.nlm.nih.gov/",
-          "terraExportURL": "https://terra.biodatacatalyst.nhlbi.nih.gov/#import-data",
-          "terraTemplate": [
-            "bdc",
-            "gen3"
-          ],
-          "sevenBridgesExportURL": "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/windmill"
+          }
         },
         {
           "tabTitle": "File",
@@ -784,12 +773,6 @@ portal:
               "rightIcon": "external-link"
             }
           ],
-          "terraExportURL": "https://terra.biodatacatalyst.nhlbi.nih.gov/#import-data",
-          "terraTemplate": [
-            "bdc",
-            "gen3"
-          ],
-          "sevenBridgesExportURL": "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/windmill",
           "enableLimitedFilePFBExport": {
             "sourceNodeField": "source_node"
           },

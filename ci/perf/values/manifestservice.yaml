@@ -1,0 +1,18 @@
+manifestservice:
+  replicaCount: 2
+  image:
+    repository: quay.io/cdis/manifestservice
+    tag: "krishnaa05-patch-1"
+  env:
+    - name: REQUESTS_CA_BUNDLE
+      value: /etc/ssl/certs/ca-certificates.crt
+    - name: MANIFEST_SERVICE_CONFIG_PATH
+      value: /var/gen3/config/config.json
+    - name: GEN3_DEBUG
+      value: "False"
+  manifestserviceG3auto:
+    hostname: perf.ci.planx-pla.net
+    bucketName: gen3-helm-manifest-bucket
+    prefix: 'test'
+  externalSecrets:
+    createK8sManifestServiceSecret: true

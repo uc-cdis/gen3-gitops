@@ -7,7 +7,7 @@ etl:
       tag: "master"
     tube:
       repository: "quay.io/cdis/tube"
-      tag: "2024.12"
+      tag: "master"
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject
@@ -29,7 +29,6 @@ etl:
           - name: age_of_onset
           - name: phenotype_group
           - name: anvil_project_id
-    #    flatten_props:
         aggregated_props:
           - name: sample_provider
             path: samples
