@@ -10,7 +10,6 @@ hatchery:
         name: "(Tutorial) Bacpac Synthetic Data Analysis Notebook"
         image: "quay.io/cdis/heal-notebooks:bacpac__10670ad79b4488cfa9f1b3681ce52bc3f1139b5a"
         env:
-          # This will be dynamically replaced by env_setup.sh script.
           FRAME_ANCESTORS: https://perf.ci.planx-pla.net
         args:
           - "--NotebookApp.base_url=/lw-workspace/proxy/"

@@ -4,7 +4,6 @@ indexd:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  # This will be dynamically replaced by env_setup.sh script.
   defaultPrefix: "ciperf"
   enabled: true
   image:
@@ -14,7 +13,5 @@ indexd:
     createK8sServiceCredsSecret: true
   secrets:
     userdb:
-      # This will be dynamically replaced by env_setup.sh script.
       ssj:
-      # This will be dynamically replaced by env_setup.sh script.
       gateway:

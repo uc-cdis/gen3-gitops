@@ -12,7 +12,6 @@ revproxy:
       alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
     className: alb
     hosts:
-      # This will be dynamically replaced by env_setup.sh script.
       - host: perf
         paths:
           - path: /
