@@ -20,7 +20,7 @@ global:
   externalSecrets:
     deploy: true
     dbCreate: true
-  fenceUrl: https://jenkins-perf.ci.planx-pla.net/user
+  fenceURL: https://jenkins-perf.ci.planx-pla.net/user
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre
@@ -316,7 +316,6 @@ sheepdog:
   image:
     repository: "quay.io/cdis/sheepdog"
     tag: "master"
-  fenceUrl: https://jenkins-perf.ci.planx-pla.net/user
 
 peregrine:
   replicaCount: 2
