@@ -77,7 +77,7 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   # This will be dynamically replaced by env_setup.sh script.
-  defaultPrefix: "qaperf"
+  defaultPrefix: "ciqaperf"
   enabled: true
   image:
     repository: "quay.io/cdis/indexd"
@@ -287,7 +287,7 @@ ssjdispatcher:
     # This will be dynamically replaced by env_setup.sh script.
     sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
     # This will be dynamically replaced by env_setup.sh script.
-    jobPattern: "s3://gen3-helm-data-upload-bucket/qaperf/*"
+    jobPattern: "s3://gen3-helm-data-upload-bucket/ciqaperf/*"
     # This will be dynamically replaced by env_setup.sh script.
     jobPassword: "replace_with_password"
     # This will be dynamically replaced by env_setup.sh script.
