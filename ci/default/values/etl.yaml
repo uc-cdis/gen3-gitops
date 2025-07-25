@@ -1,13 +1,13 @@
-
 etl:
   enabled: true
   image:
+    tube:
+      repository: quay.io/cdis/tube
+      pullPolicy: IfNotPresent
+      tag: "master"
     spark:
       repository: "quay.io/cdis/gen3-spark"
       tag: "master"
-    tube:
-      repository: "quay.io/cdis/tube"
-      tag: "2024.12"
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject

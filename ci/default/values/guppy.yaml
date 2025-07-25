@@ -1,10 +1,12 @@
 guppy:
+  replicaCount: 2
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  #TO DO Re-enable once ES index restore is added to modify values script
   dbRestore: false
   image:
     repository: quay.io/cdis/guppy
@@ -14,15 +16,11 @@ guppy:
       type: subject
     - index: ci_file_alias
       type: file
-    - index: ci_cmc_alias
-      type: clinical_trials
-    - index: ci_midrc_dataset_alias
-      type: dataset
-    - index: ci_midrc_case_alias
-      type: case
-    - index: ci_midrc_imaging_data_file_alias
-      type: imaging_data_file
-    - index: ci_midrc_imaging_study_alias
+    # - index: ci_cmc_alias
+    #   type: clinical_trials
+    # - index: ci_imaging_data_file_alias
+    #   type: imaging_data_file
+    - index: ci_imaging_study_alias
       type: imaging_study
   configIndex: ci_configs_alias
   authFilterField: auth_resource_path
