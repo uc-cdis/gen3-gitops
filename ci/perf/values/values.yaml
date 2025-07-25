@@ -52,7 +52,7 @@ hatchery:
         image: "quay.io/cdis/heal-notebooks:bacpac__10670ad79b4488cfa9f1b3681ce52bc3f1139b5a"
         env:
           # This will be dynamically replaced by env_setup.sh script.
-          FRAME_ANCESTORS: https://<hostname>
+          FRAME_ANCESTORS: https://qaperf.ci.planx-pla.net
         args:
           - "--NotebookApp.base_url=/lw-workspace/proxy/"
           - "--NotebookApp.password=''"
@@ -77,7 +77,7 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   # This will be dynamically replaced by env_setup.sh script.
-  defaultPrefix: ""
+  defaultPrefix: "qaperf"
   enabled: true
   image:
     repository: "quay.io/cdis/indexd"
@@ -287,7 +287,7 @@ ssjdispatcher:
     # This will be dynamically replaced by env_setup.sh script.
     sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
     # This will be dynamically replaced by env_setup.sh script.
-    jobPattern: "s3://gen3-helm-data-upload-bucket/<environment name>/*"
+    jobPattern: "s3://gen3-helm-data-upload-bucket/qaperf/*"
     # This will be dynamically replaced by env_setup.sh script.
     jobPassword: "replace_with_password"
     # This will be dynamically replaced by env_setup.sh script.
@@ -303,7 +303,7 @@ ssjdispatcher:
   externalSecrets:
     createK8sSsjdispatcherSecret: true
   # This will be dynamically replaced by env_setup.sh script.
-  gen3Namespace: default
+  gen3Namespace: qaperf
 
 sheepdog:
   replicaCount: 2
@@ -402,7 +402,7 @@ revproxy:
     className: alb
     hosts:
       # This will be dynamically replaced by env_setup.sh script.
-      - host: HOSTNAME
+      - host: qaperf
         paths:
           - path: /
             pathType: Prefix
@@ -436,7 +436,7 @@ manifestservice:
       value: "False"
   manifestserviceG3auto:
     # This will be dynamically replaced by env_setup.sh script.
-    hostname:
+    hostname: qaperf
     bucketName: gen3-helm-manifest-bucket
     prefix: 'test'
   externalSecrets:

@@ -29,7 +29,7 @@ fence:
     # NOTE: Make this short! Less than 8 characters if possible. Google has
     #       length restrictions on group names.
     # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_GROUP_PREFIX:
+    GOOGLE_GROUP_PREFIX: "qaperf"
 
     # Prefix to namespace Google Service Accounts in a single Google Cloud Platform Project.
     # This is primarily to support multiple instances of fence references the same Google
@@ -38,10 +38,10 @@ fence:
     # NOTE: Make this short! Less than 8 characters if possible. Google has
     #       length restrictions on service account names.
     # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_SERVICE_ACCOUNT_PREFIX:
+    GOOGLE_SERVICE_ACCOUNT_PREFIX: "qaperf"
 
     # This will be dynamically replaced by env_setup.sh script.
-    BASE_URL: https://HOSTNAME/user
+    BASE_URL: https://qaperf.ci.planx-pla.net/user
 
     # -- (string) Name of the Fence app
     APP_NAME: "Gen3 Data Commons"
