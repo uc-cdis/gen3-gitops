@@ -1,5 +1,5 @@
 global:
-  hostname: ci-perf
+  hostname: perf.ci.planx-pla.net
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
   pdb: true
   aws:
@@ -14,7 +14,7 @@ global:
   externalSecrets:
     deploy: true
     dbCreate: true
-  fenceURL: https://ci-perf.ci.planx-pla.net/user
+  fenceURL: https://perf.ci.planx-pla.net/user
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre

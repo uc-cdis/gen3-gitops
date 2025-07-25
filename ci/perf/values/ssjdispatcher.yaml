@@ -20,4 +20,4 @@ ssjdispatcher:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role-job
   externalSecrets:
     createK8sSsjdispatcherSecret: true
-  gen3Namespace: perf
+  gen3Namespace: ci-perf

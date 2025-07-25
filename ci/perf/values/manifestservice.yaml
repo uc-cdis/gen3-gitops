@@ -11,7 +11,7 @@ manifestservice:
     - name: GEN3_DEBUG
       value: "False"
   manifestserviceG3auto:
-    hostname: ci-perf
+    hostname: perf.ci.planx-pla.net
     bucketName: gen3-helm-manifest-bucket
     prefix: 'test'
   externalSecrets:
