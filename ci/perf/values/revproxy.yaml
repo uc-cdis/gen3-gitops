@@ -12,7 +12,7 @@ revproxy:
       alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
     className: alb
     hosts:
-      - host: perf
+      - host: ci-perf
         paths:
           - path: /
             pathType: Prefix

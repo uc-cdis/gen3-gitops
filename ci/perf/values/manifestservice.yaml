@@ -11,8 +11,7 @@ manifestservice:
     - name: GEN3_DEBUG
       value: "False"
   manifestserviceG3auto:
-
-    hostname: perf
+    hostname: ci-perf
     bucketName: gen3-helm-manifest-bucket
     prefix: 'test'
   externalSecrets:

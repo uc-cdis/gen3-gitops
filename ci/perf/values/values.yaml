@@ -1,5 +1,5 @@
 global:
-  hostname: perf
+  hostname: ci-perf
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
   pdb: true
   aws:
