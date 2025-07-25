@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: "2025.04"
+    tag: "2025.07"
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     dbcreds: bdcatprod-access-backend-dbcreds
@@ -18,14 +18,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.04"
+    tag: "2025.07"
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: "2025.04"
+    tag: "2025.07"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -39,14 +39,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: "2025.04"
-dashboard:
-  dashboardConfig:
-    bucket: dashboard-895962626746-stageprod-gen3
-    prefix: gen3.biodatacatalyst.nhlbi.nih.gov
-  serviceAccount:
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--dashboard-access
+    tag: "2025.07"
 etl:
   esEndpoint: elasticsearch
   etlMapping:
@@ -268,7 +261,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.04"
+    tag: "2025.07"
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: 'https://biodatacatalyst.nhlbi.nih.gov/privacy/'
     S3_BUCKETS:
@@ -1891,7 +1884,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: main
+    tag: "2025.07"
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -1939,189 +1932,14 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2025.04"
+    tag: "2025.07"
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_file
       type: file
 hatchery:
-  json: |-
-    {
-      "user-namespace": "jupyter-pods",
-      "sub-dir": "/lw-workspace",
-      "user-volume-size": "500Gi",
-      "sidecar": {
-        "cpu-limit": "1.0",
-        "memory-limit": "256Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.04",
-        "env": {
-          "NAMESPACE": "default",
-          "HOSTNAME": "gen3.biodatacatalyst.nhlbi.nih.gov"
-        },
-        "args": [],
-        "command": [
-          "/bin/bash",
-          "/sidecarDockerrun.sh"
-        ],
-        "lifecycle-pre-stop": [
-          "su",
-          "-c",
-          "echo test",
-          "-s",
-          "/bin/sh",
-          "root"
-        ]
-      },
-      "containers": [
-        {
-          "target-port": 8787,
-          "cpu-limit": "1.0",
-          "memory-limit": "512Mi",
-          "name": "R Studio",
-          "image": "heliumdatastage/rstudio-server:1",
-          "env": {
-            "DISABLE_AUTH": "true"
-          },
-          "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "512Mi",
-          "name": "Jupyter Notebook Bio Python",
-          "image": "quay.io/cdis/jupyter-notebook:jupyter-java-1.1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "4.0",
-          "memory-limit": "15512Mi",
-          "name": "Jupyter Notebook Power Python",
-          "image": "quay.io/cdis/jupyter-notebook:jupyter-java-1.1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium Autoencoder Demo",
-          "image": "quay.io/cdis/auntoencoder-copd-demo:latest",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium Tensorflow-Pytorch",
-          "image": "heliumdatastage/tensorflow-pytorch-ext:1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium CIP Demo",
-          "image": "heliumdatastage/jup-cip:v1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        }
-      ]
-    }
+  enabled: false
 indexd:
   defaultPrefix: dg.4503/
   autoscaling:
@@ -2134,7 +1952,7 @@ indexd:
     serviceCreds: bdcatprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.04"
+    tag: "2025.07"
 manifestservice:
   enabled: true
   externalSecrets:
@@ -2151,12 +1969,12 @@ metadata:
     metadataG3auto: bdcatprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.04"
+    tag: "2025.07"
 metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: "2025.04"
+    tag: "2025.07"
 peregrine:
   autoscaling:
     enabled: true
@@ -2166,7 +1984,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.04"
+    tag: "2025.07"
 portal:
   autoscaling:
     enabled: true
@@ -2865,7 +2683,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.04"
+    tag: "2025.07"
   ingress:
     aws:
       group: bdcatprod
@@ -2879,7 +2697,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.04"
+    tag: "2025.07"
 sower:
   enabled: true
   externalSecrets:
@@ -2888,7 +2706,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2025.04"
+    tag: "2025.07"
   sowerConfig:
     - action: export
       container:
@@ -2926,7 +2744,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -2984,7 +2802,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3003,20 +2821,15 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: "2025.04"
+    tag: "2025.07"
 ssjdispatcher:
   externalSecrets:
     credsFile: bdcatprod-ssjdispatcher-creds
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: "2025.04"
+    tag: "2025.07"
 wts:
-  enabled: true
-  externalSecrets:
-    dbcreds: bdcatprod-wts-creds
-    createWtsOidcClientSecret: false
-    wtsG3auto: bdcatprod-wts-g3auto
-    wtsOidcClient: bdcatprod-wts-client-secret
+  enabled: false

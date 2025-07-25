@@ -252,7 +252,7 @@ metadata:
           "primary_site": {},
           "authz": {},
           "subject_id": {},
-          "subject_id_list" : {
+          "subject_id_list": {
             "type": "array",
             "default": []
           },
@@ -267,7 +267,7 @@ metadata:
           "subject_year_of_birth": {},
           "subject_primary_disease": {},
           "subject_type_of_exposure": {},
-          "subject_type_of_exposures" : {
+          "subject_type_of_exposures": {
             "type": "array"
           },
           "subject_chemical_agents_of_exposure": {},
@@ -279,9 +279,9 @@ metadata:
             "type": "array"
           },
           "filesCount": {
-            "type" : "array",
-            "properties" : {
-                "_typename": {
+            "type": "array",
+            "properties": {
+              "_typename": {
                 "type": "string"
               },
               "data_category": {
@@ -296,20 +296,20 @@ metadata:
             }
           },
           "versions": {
-            "type" : "array",
-              "properties" : {
-                "_typename": {
-                  "type": "string"
-                },
-                "number": {
-                  "type": "string"
-                }
+            "type": "array",
+            "properties": {
+              "_typename": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string"
               }
+            }
           },
-          "supplementaryFilesCount" : {
-              "type" : "array",
-              "properties" : {
-                "_typename": {
+          "supplementaryFilesCount": {
+            "type": "array",
+            "properties": {
+              "_typename": {
                 "type": "string"
               },
               "data_category": {
@@ -323,10 +323,10 @@ metadata:
               }
             }
           },
-          "nonSupplementaryFilesCount" : {
-              "type" : "array",
-              "properties" : {
-                "_typename": {
+          "nonSupplementaryFilesCount": {
+            "type": "array",
+            "properties": {
+              "_typename": {
                 "type": "string"
               },
               "data_category": {
@@ -379,12 +379,16 @@ metadata:
                   "cancer_grade": {
                     "Grade 1": "I",
                     "G1": "I",
+                    "Grade I": "I",
                     "Grade 2": "II",
                     "G2": "II",
+                    "Grade II": "II",
                     "Grade 3": "III",
                     "G3": "III",
+                    "Grade III": "III",
                     "Grade 4": "IV",
-                    "G4": "IV"
+                    "G4": "IV",
+                    "Grade IV": "IV"
                   },
                   "cancer_stage": {
                     "Stage IA": "IA",
@@ -416,15 +420,42 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "Grade 4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
-            "subject_cancer_stage": "path:cancer_stage",
+            "subject_cancer_stage": {
+              "path": "cancer_stage",
+              "filters": [
+                "normalize_value"
+              ],
+              "filterParams": {
+                "normalize_value": {
+                  "Stage IA": "IA",
+                  "Stage IIA": "IIA",
+                  "Stage IIIA": "IIIA",
+                  "Stage IB": "IB",
+                  "Stage IV": "IV",
+                  "Stage IIB": "IIB",
+                  "Stage I": "I",
+                  "Stage II": "II",
+                  "Stage III": "III"
+                }
+              },
+              "default": ""
+            },
             "subject_year_of_birth": "path:year_of_birth",
             "subject_primary_disease": "path:primary_disease",
             "commons_url": "data.bloodpac.org",
@@ -466,12 +497,16 @@ metadata:
                   "cancer_grade": {
                     "Grade 1": "I",
                     "G1": "I",
+                    "Grade I": "I",
                     "Grade 2": "II",
                     "G2": "II",
+                    "Grade II": "II",
                     "Grade 3": "III",
                     "G3": "III",
+                    "Grade III": "III",
                     "Grade 4": "IV",
-                    "G4": "IV"
+                    "G4": "IV",
+                    "Grade IV": "IV"
                   },
                   "cancer_stage": {
                     "Stage IA": "IA",
@@ -547,20 +582,37 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "G1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "G2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "G3": "Grade III",
-                  "Grade 4": "Grade IV",
-                  "G4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
             "subject_cancer_stage": {
               "path": "cancer_stage",
+              "filterParams": {
+                "normalize_value": {
+                  "Stage IA": "IA",
+                  "Stage IIA": "IIA",
+                  "Stage IIIA": "IIIA",
+                  "Stage IB": "IB",
+                  "Stage IV": "IV",
+                  "Stage IIB": "IIB",
+                  "Stage I": "I",
+                  "Stage II": "II",
+                  "Stage III": "III"
+                }
+              },
               "default": ""
             },
             "subject_year_of_birth": {
@@ -689,19 +741,42 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "G1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "G2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "G3": "Grade III",
-                  "Grade 4": "Grade IV",
-                  "G4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
-            "subject_cancer_stage": "path:diagnoses[*].ajcc_pathologic_stage",
+            "subject_cancer_stage": {
+              "path": "diagnoses[*].ajcc_pathologic_stage",
+              "filters": [
+                "normalize_value"
+              ],
+              "filterParams": {
+                "normalize_value": {
+                  "Stage IA": "IA",
+                  "Stage IIA": "IIA",
+                  "Stage IIIA": "IIIA",
+                  "Stage IB": "IB",
+                  "Stage IV": "IV",
+                  "Stage IIB": "IIB",
+                  "Stage I": "I",
+                  "Stage II": "II",
+                  "Stage III": "III"
+                }
+              },
+              "default": ""
+            },
             "subject_year_of_birth": "",
             "subject_primary_disease": "path:diagnoses[*].primary_diagnosis",
             "subject_type_of_exposure": "path:exposures[*].tobacco_smoking_status",
@@ -735,22 +810,6 @@ metadata:
             "subject_id": "path:case_submitter_id",
             "subject_apollo_id": "path:case_submitter_id",
             "subject_race": "path:race",
-            "subject_gender": {
-              "path": "demographic.gender",
-              "filters": [
-                "normalize_value"
-              ],
-              "filterParams": {
-                "normalize_value": {
-                  "male": "Male",
-                  "female": "Female",
-                  "m": "Male",
-                  "f": "Female",
-                  "not reported": "Not Reported"
-                }
-              },
-              "default": ""
-            },
             "subject_ethnicity": {
               "path": "demographic.ethnicity",
               "filters": [
@@ -775,19 +834,42 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "G1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "G2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "G3": "Grade III",
-                  "Grade 4": "Grade IV",
-                  "G4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
-            "subject_cancer_stage": "path:tumor_stage",
+            "subject_cancer_stage": {
+              "path": "tumor_stage",
+              "filters": [
+                "normalize_value"
+              ],
+              "filterParams": {
+                "normalize_value": {
+                  "Stage IA": "IA",
+                  "Stage IIA": "IIA",
+                  "Stage IIIA": "IIIA",
+                  "Stage IB": "IB",
+                  "Stage IV": "IV",
+                  "Stage IIB": "IIB",
+                  "Stage I": "I",
+                  "Stage II": "II",
+                  "Stage III": "III"
+                }
+              },
+              "default": ""
+            },
             "subject_year_of_birth": "",
             "subject_primary_disease": "path:primary_diagnosis",
             "subject_type_of_exposure": "path:exposures[*].exposure_type",
@@ -829,12 +911,16 @@ metadata:
                   "cancer_grade": {
                     "Grade 1": "I",
                     "G1": "I",
+                    "Grade I": "I",
                     "Grade 2": "II",
                     "G2": "II",
+                    "Grade II": "II",
                     "Grade 3": "III",
                     "G3": "III",
+                    "Grade III": "III",
                     "Grade 4": "IV",
-                    "G4": "IV"
+                    "G4": "IV",
+                    "Grade IV": "IV"
                   },
                   "cancer_stage": {
                     "Stage IA": "IA",
@@ -895,12 +981,16 @@ metadata:
                   "cancer_grade": {
                     "Grade 1": "I",
                     "G1": "I",
+                    "Grade I": "I",
                     "Grade 2": "II",
                     "G2": "II",
+                    "Grade II": "II",
                     "Grade 3": "III",
                     "G3": "III",
+                    "Grade III": "III",
                     "Grade 4": "IV",
-                    "G4": "IV"
+                    "G4": "IV",
+                    "Grade IV": "IV"
                   },
                   "cancer_stage": {
                     "Stage IA": "IA",
@@ -961,19 +1051,42 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "G1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "G2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "G3": "Grade III",
-                  "Grade 4": "Grade IV",
-                  "G4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
-            "subject_cancer_stage": "",
+            "subject_cancer_stage": {
+              "path": "cancer_stage",
+              "filters": [
+                "normalize_value"
+              ],
+              "filterParams": {
+                "normalize_value": {
+                  "Stage IA": "IA",
+                  "Stage IIA": "IIA",
+                  "Stage IIIA": "IIIA",
+                  "Stage IB": "IB",
+                  "Stage IV": "IV",
+                  "Stage IIB": "IIB",
+                  "Stage I": "I",
+                  "Stage II": "II",
+                  "Stage III": "III"
+                }
+              },
+              "default": ""
+            },
             "subject_year_of_birth": "path:year_of_birth",
             "subject_primary_disease": "",
             "data_source": "path:data_source",
@@ -1044,21 +1157,23 @@ metadata:
               ],
               "filterParams": {
                 "normalize_value": {
-                  "Grade 1": "Grade I",
-                  "G1": "Grade I",
-                  "Grade 2": "Grade II",
-                  "G2": "Grade II",
-                  "Grade 3": "Grade III",
-                  "G3": "Grade III",
-                  "Grade 4": "Grade IV",
-                  "G4": "Grade IV"
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
                 }
               },
               "default": ""
             },
-            "subject_cancer_stage": "",
             "subject_year_of_birth": "",
-            "subject_primary_disease": "",
             "data_source": "TCIA",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
@@ -1083,6 +1198,10 @@ metadata:
             "subject_id": "path:external_windber_id",
             "subject_apollo_id": "path:apollo_id",
             "subject_race": "path:race",
+            "data_source": "Windber",
+            "commons_url": "externalgen3.prometheus.data-commons.org",
+            "mc2dp_global_id": "",
+            "is_synthetic": "Yes",
             "subject_gender": {
               "path": "gender",
               "filters": [
@@ -1122,13 +1241,29 @@ metadata:
             },
             "subject_metastasis": "",
             "subject_cancer_type": "",
-            "subject_cancer_grade": "",
-            "subject_cancer_stage": "",
-            "subject_primary_disease": "",
-            "data_source": "Windber",
-            "commons_url": "externalgen3.prometheus.data-commons.org",
-            "mc2dp_global_id": "",
-            "is_synthetic": "Yes"
+            "subject_cancer_grade": {
+              "path": "cancer_grade",
+              "filters": [
+                "normalize_value"
+              ],
+              "filterParams": {
+                "normalize_value": {
+                  "Grade 1": "I",
+                  "G1": "I",
+                  "Grade I": "I",
+                  "Grade 2": "II",
+                  "G2": "II",
+                  "Grade II": "II",
+                  "Grade 3": "III",
+                  "G3": "III",
+                  "Grade III": "III",
+                  "Grade 4": "IV",
+                  "G4": "IV",
+                  "Grade IV": "IV"
+                }
+              },
+              "default": ""
+            }
           }
         },
         "aggregated-subject-level-metadata": {
@@ -1144,13 +1279,13 @@ metadata:
             "authz": "",
             "tags": "path:tags",
             "_unique_id": "path:mc2dp_global_id",
-            "commons": "Aggregated Rows",
+            "commons": "path:data_source",
             "subject_id_list": "path:data_source_ids",
             "subject_metastasis": "path:metastasis",
             "subject_cancer_type": "path:cancer_type",
             "subject_primary_disease": "path:primary_disease",
-            "subject_type_of_exposures" : "path:type_of_exposures",
-            "data_source": "path:data_source",
+            "subject_type_of_exposures": "path:type_of_exposures",
+            "data_source": "aggregated data",
             "commons_url": "externalgen3.prometheus.data-commons.org",
             "mc2dp_global_id": "path:mc2dp_global_id",
             "is_synthetic": "No",
