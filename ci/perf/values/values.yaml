@@ -14,7 +14,7 @@ global:
   externalSecrets:
     deploy: true
     dbCreate: true
-  fenceURL: https://perf.ci.planx-pla.net/user
+  fenceURL: https://ci-perf.ci.planx-pla.net/user
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre

@@ -23,7 +23,7 @@ fence:
   FENCE_CONFIG_PUBLIC:
     GOOGLE_GROUP_PREFIX: "ciperf"
     GOOGLE_SERVICE_ACCOUNT_PREFIX: "ciperf"
-    BASE_URL: https://perf.ci.planx-pla.net/user
+    BASE_URL: https://ci-perf.ci.planx-pla.net/user
     APP_NAME: "fence"
     DEBUG: false
     MOCK_AUTH: false
