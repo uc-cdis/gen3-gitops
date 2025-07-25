@@ -1,5 +1,5 @@
 ambassador:
-  enabled: false
+  jupyterNamespace: "jupyter-pods"
 arborist:
   autoscaling:
     enabled: true
@@ -487,6 +487,7 @@ global:
     account: '813684607867'
     awsEsProxyRole: midrcprod--midrcprod-helm--es-access
     enabled: true
+    hatchery_role: midrcprod--midrcprod-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::813684607867:role/midrcprod-external-secrets-sa
@@ -541,7 +542,11 @@ guppy:
   - index: midrc_imaging_study
     type: imaging_study
 hatchery:
-  enabled: false
+  enabled: true
+  jupyterNamespace: jupyter-pods
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2025.06'
 indexd:
   defaultPrefix: dg.MD1R/
   autoscaling:
@@ -1098,6 +1103,11 @@ portal:
         "showFenceAuthzOnProfile": true,
         "hideSubmissionIfIneligible": true,
         "componentToResourceMapping": {
+          "Workspace": {
+            "resource": "/workspace",
+            "method": "access",
+            "service": "jupyterhub"
+          },
           "Query": {
             "resource": "/query_page",
             "method": "access",
@@ -1138,6 +1148,13 @@ portal:
                 "body": "Search and download subsets of data from the MIDRC Data Commons using GraphQL queries.",
                 "link": "/query",
                 "label": "Query Data"
+              },
+              {
+                "name": "Analyze Data",
+                "icon": "data-analyze",
+                "body": "Perform analysis on the MIDRC Data Commons data using Jupyter Notebooks.",
+                "link": "/workspace",
+                "label": "Run Analysis"
               }
             ],
             "homepageChartNodes": [
@@ -1240,6 +1257,12 @@ portal:
                 "icon": "bar-chart",
                 "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data discovered in the MIDRC Data Commons by running a static tutorial notebook, or use one of these examples as a launching point for your own custom analysis.",
                 "color": "#a2a2a2"
+              },
+              {
+                "name": "Workspace",
+                "link": "/workspace",
+                "icon": "workspace",
+                "tooltip": "The Workspace provides a secure cloud environment featuring Jupyter Notebooks and RStudio."
               }
             ]
           },
@@ -2868,4 +2891,11 @@ tube:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2025.06'
 wts:
-  enabled: false
+  enabled: true
+  externalSecrets:
+    createWtsOidcClientSecret: false
+    wtsG3auto: midrcprod-wts-g3auto
+    wtsOidcClient: midrcprod-wts-client-secret
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
+    tag: '2025.06'
