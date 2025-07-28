@@ -123,19 +123,9 @@ fence:
     # -- (string) Default login provider. - must be configured in LOGIN_OPTIONS and OPENID_CONNECT - - if several options in LOGIN_OPTIONS are defined for this IDP, will default to the first one
     DEFAULT_LOGIN_IDP: google
 
-    # -- (string) Default login URL: DEPRECATED and replaced by LOGIN_OPTIONS + DEFAULT_LOGIN_IDP configs
-    DEFAULT_LOGIN_URL: "{{BASE_URL}}/login/google"
-
     # `LOGIN_REDIRECT_WHITELIST` is a list of extra whitelisted URLs which can be redirected
     # to by the `/login/*` endpoints.
     LOGIN_REDIRECT_WHITELIST: [".", "/login"]
-
-    ### DEPRECATED and replaced by OPENID_CONNECT + LOGIN_OPTIONS configs
-    ENABLED_IDENTITY_PROVIDERS:
-      default: google
-      providers:
-        google:
-          name: Login from Google
 
     # //////////////////////////////////////////////////////////////////////////////////////
     # LIBRARY CONFIGURATION (authlib & flask)
@@ -258,16 +248,10 @@ fence:
     # //////////////////////////////////////////////////////////////////////////////////////
     # When true, this modifies usersync (not fence service itself) such that when syncing user
     # access to a Google storage backend happens in "bulk" by doing a diff *per google group*
-    # between what's in Google and what's expected. Then it adds, removes only as necessary.
-    # This is in contrast to the default logic which does blind updates per user and ignores
-    # 409s from Google.
-    # NOTE: This reduces the number of API calls to Google in the general case, but increases
-    #       memory usages by usersync (as it has to track all the Google groups and user access)
+    # between what's in Google and what's expected.
     GOOGLE_BULK_UPDATES: true
 
     # Configuration for various storage systems for the backend
-    # NOTE: Remove the {} and supply backends if needed. Example in comments below
-    # STORAGE_CREDENTIALS: {}
     STORAGE_CREDENTIALS:
       'google':
         backend: google
@@ -292,7 +276,6 @@ fence:
     # PROXY
     #   - Optional: If the api is behind firewall that needs to set http proxy
     # //////////////////////////////////////////////////////////////////////////////////////
-    # NOTE: leave as-is to not use proxy
     # this is only used by the Google Oauth2Client at the moment if provided
     HTTP_PROXY:
       host: 'cloud-proxy.internal.io'
@@ -344,27 +327,6 @@ fence:
     ENABLE_AUTOMATIC_BILLING_PERMISSION_SA_CREDS: false
 
     # //////////////////////////////////////////////////////////////////////////////////////
-    # EMAIL
-    #   - Support for sending emails from fence. Used for user certificates
-    #     and `/google/service_accounts` endpoints
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # Gun Mail Service (for sending emails from fence)
-    #
-    # NOTE: Example in comments below
-    GUN_MAIL:
-      "datacommons.io":
-        smtp_hostname: "smtp.mailgun.org"
-        api_key: ""
-        default_login: "postmaster@mailgun.example.com"
-        api_url: "https://api.mailgun.net/v3/mailgun.example.com"
-        smtp_password: ""
-
-    # For emails regarding users certificates
-    EMAIL_SERVER: "localhost"
-    SEND_FROM: "example@gmail.com"
-    SEND_TO: "example@gmail.com"
-
-    # //////////////////////////////////////////////////////////////////////////////////////
     # DATA ACCESS: GOOGLE LINKING & SERVICE ACCOUNT REGISTRATION
     #   - Support `/google/service_accounts` endpoints
     # //////////////////////////////////////////////////////////////////////////////////////
@@ -375,44 +337,6 @@ fence:
     # if it has a parent organization UNLESS that parent organization's ID is in this
     # whitelist.
     WHITE_LISTED_GOOGLE_PARENT_ORGS: []
-
-    # when service accounts or google projects are determined invalid, an email is sent
-    # to the project owners. These settings are for that email
-    REMOVE_SERVICE_ACCOUNT_EMAIL_NOTIFICATION:
-      enable: false
-      # this domain MUST exist in GUN_MAIL config
-      domain: "example.com"
-      from: "do-not-reply@example.com"
-      subject: "User service account removal notification"
-      # the {} gets replaced dynamically in the Python code to be the Project ID
-      content: >
-        Service accounts were removed from access control data because some users or
-        service accounts of GCP Project {} are not authorized to access the data sets
-        associated to the service accounts, or do not adhere to the security policies.
-      # this admin email will be included as a recipient to *any* email to anyone about
-      # service account removal.
-      #
-      # WARNING: This is NOT a bcc so the email is visible to the end-user
-      admin:
-        - "admin@example.edu"
-
-    PROBLEM_USER_EMAIL_NOTIFICATION:
-      # this domain MUST exist in GUN_MAIL config
-      domain: "example.com"
-      from: "do-not-reply@example.com"
-      subject: "Account access error notification"
-      # the {} gets replaced dynamically in the Python code to be the Project ID
-      content: >
-        The Data Commons Framework utilizes dbGaP for data access authorization.
-        Another member of a Google project you belong to ({}) is attempting to
-        register a service account to the following additional datasets ({}).
-        Please contact dbGaP to request access.
-      # this admin email will be included as a recipient to *any* email to anyone about
-      # service account removal.
-      #
-      # WARNING: This is NOT a bcc so the email is visible to the end-user
-      admin:
-        - "admin@example.edu"
 
     # Service account email domains that represent a service account that Google owns.
     # These are usually created when a sepcific GCP service is enabled.
