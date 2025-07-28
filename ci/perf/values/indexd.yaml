@@ -1,5 +1,5 @@
 indexd:
-  replicaCount: 3
+  replicaCount: 6
   resources:
     requests:
       memory: "105Mi"
