@@ -1,5 +1,5 @@
 sheepdog:
-  replicaCount: 5
+  replicaCount: 10
   resources:
     requests:
       memory: "105Mi"
