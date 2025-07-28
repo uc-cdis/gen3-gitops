@@ -1,6 +1,6 @@
 global:
   hostname: perf.ci.planx-pla.net
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.4.0/schema.json
   pdb: true
   aws:
     externalSecrets:
