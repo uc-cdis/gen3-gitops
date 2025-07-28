@@ -35,7 +35,7 @@ fence:
     BASE_URL: https://HOSTNAME/user
 
     # -- (string) Name of the Fence app
-    APP_NAME: "Gen3 Data Commons"
+    APP_NAME: "fence"
 
     # -- (map) Debug and security settings
     DEBUG: false
