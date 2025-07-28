@@ -744,7 +744,7 @@ portal:
               "type": "export-files-to-pfb",
               "title": "Export All to PFB",
               "rightIcon": "external-link"
-            }+
+            }
           ],
           "enableLimitedFilePFBExport": {
             "sourceNodeField": "source_node"
