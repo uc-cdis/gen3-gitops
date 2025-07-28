@@ -1,8 +1,9 @@
 ambassador:
   jupyterNamespace: jupyter-pods
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -117,8 +118,9 @@ fence:
   usersync:
       usersync: true
       userYamlS3Path: s3://cdis-gen3-users/heal/user.yaml
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -176,8 +178,9 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/f87abeee-47ce-47cd-a3ca-b3f76b34c845
 hatchery:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -378,8 +381,9 @@ hatchery:
       }
 indexd:
   defaultPrefix: dg.H34L/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1577,8 +1581,9 @@ metadata:
     }
   aggMdsDefaultDataDictField: variable_level_metadata
   aggMdsNamespace: healprod-helm
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1598,8 +1603,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.07'
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -2607,8 +2613,9 @@ ssjdispatcher:
     tag: '2025.07'
   indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.05
 wts:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40

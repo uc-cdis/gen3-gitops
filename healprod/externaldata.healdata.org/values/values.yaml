@@ -1,6 +1,7 @@
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -38,8 +39,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -86,8 +88,9 @@ hatchery:
   enabled: false
 indexd:
   defaultPrefix: dg.H35L/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -125,8 +128,9 @@ peregrine:
 portal:
   enabled: false
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

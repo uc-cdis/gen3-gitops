@@ -11,10 +11,11 @@ access-backend:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--access-backend-sa
 arborist:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
@@ -249,10 +250,11 @@ fence:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-sender
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 15
     minReplicas: 5
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: false
@@ -2166,10 +2168,11 @@ global:
 guppy:
   authFilterField: auth_resource_path
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   configIndex: internalstaging_array-config
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -2188,10 +2191,11 @@ hatchery:
 indexd:
   defaultPrefix: dg.4503/
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   externalSecrets:
     serviceCreds: bdcat-internalstaging-indexd-service-creds
@@ -2202,10 +2206,11 @@ manifestservice:
   enabled: false
 metadata:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 5
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -2220,20 +2225,22 @@ metadata-delete-expired-objects:
     tag: "2025.07"
 peregrine:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: "2025.07"
 portal:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   gitops:
     css: |
@@ -2916,10 +2923,11 @@ portal:
     tag: feature_data_library
 revproxy:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -2930,10 +2938,11 @@ revproxy:
       sslPolicy: "ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04"
 sheepdog:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog

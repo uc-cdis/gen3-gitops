@@ -1,6 +1,7 @@
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -235,7 +236,7 @@ fence:
         region: "us-east-1"
       cds-568-phs003161-pivot-msk:
         cred: "fence_bot"
-        region: "us-east-1" 
+        region: "us-east-1"
       cds-572-phs003160-pivot-utsanantonio:
         cred: "fence_bot"
         region: "us-east-1"
@@ -619,7 +620,7 @@ fence:
         region: "us-east-1"
       nci-crdc-data-bucket-prod:
         cred: "fence_bot"
-        region: "us-east-1" 
+        region: "us-east-1"
       pdcdatastore:
         cred: "fence_bot"
         region: "us-east-1"
@@ -656,253 +657,253 @@ fence:
     GS_BUCKETS::
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: ""
-        region: "" 
+        region: ""
       cgci-htmcp-dlbcl-phs000235-open:
         cred: ""
-        region: "" 
+        region: ""
       dcf-integration-qa:
         cred: ""
-        region: "" 
+        region: ""
       dcf-integration-test:
         cred: ""
-        region: "" 
+        region: ""
       gdc-apollo-luad-phs003011-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-apollo-luad-phs003011-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-beataml1-cohort-phs001657-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-beataml1-cohort-phs001657-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-beataml1-crenolanib-phs001628-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-ccle-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cddp-eagle-1-phs001239-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cddp-eagle-1-phs001239-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-blgsp-phs000235-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-blgsp-phs000235-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-htmcp-lc-phs000235-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-htmcp-lc-phs000235-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-phs000235-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cgci-phs000235-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-asc-phs001931-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-asc-phs001931-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-mbc-phs001709-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-mbc-phs001709-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-mpc-phs001939-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cmi-mpc-phs001939-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cptac-2-phs000892-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cptac-2-phs000892-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cptac-phs001287-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-cptac-phs001287-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-ctsp-phs001175-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-ctsp-phs001175-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-exceptional-responders-er-phs001145-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-exceptional-responders-er-phs001145-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-fm-phs001179-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-fm-phs001179-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-genie-phs001337-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-hcmi-cmdc-phs001486-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-hcmi-cmdc-phs001486-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-c1-phs002177-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-h-phs001888-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-i-phs002181-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-p-phs002152-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-q-phs001926-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-r-phs002029-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-s1-phs002153-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-s2-phs002178-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-u-phs002179-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-w-phs001948-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-y-phs001904-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-z1a-phs001973-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-z1b-phs002180-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-z1d-phs001859-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-match-z1i-phs002058-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-mmrf-commpass-phs000748-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-mmrf-commpass-phs000748-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-mp2prt-wt-phs001965-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-mp2prt-wt-phs001965-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-nciccr-phs001444-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-nciccr-phs001444-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-ohsu-cnl-phs001799-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-ohsu-cnl-phs001799-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-organoid-pancreatic-phs001611-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-organoid-pancreatic-phs001611-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-rebc-thyr-phs001134-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-rebc-thyr-phs001134-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-target-phs000218-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-target-phs000218-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-tcga-phs000178-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-tcga-phs000178-open:
         cred: ""
-        region: "" 
+        region: ""
       gdc-trio-cru-phs001163-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-varepop-apollo-phs001374-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-wcdt-mcrpc-phs001648-controlled:
         cred: ""
-        region: "" 
+        region: ""
       gdc-wcdt-mcrpc-phs001648-open:
         cred: ""
-        region: "" 
+        region: ""
       idc-open:
         cred: ""
-        region: "" 
+        region: ""
       idc-open-cr:
         cred: ""
-        region: "" 
+        region: ""
       idc-open-data:
         cred: ""
-        region: "" 
+        region: ""
       idc-open-idc:
         cred: ""
-        region: "" 
+        region: ""
       idc-open-idc1:
         cred: ""
-        region: "" 
+        region: ""
       idc-tcia-tcga-gbm:
         cred: ""
-        region: "" 
+        region: ""
       idc-tcia-tcga-lgg:
         cred: ""
-        region: "" 
+        region: ""
       match-b-phs002028-controlled:
         cred: ""
-        region: "" 
+        region: ""
       match-n-phs002151-controlled:
         cred: ""
-        region: "" 
+        region: ""
       mp2prt-all-phs002005-controlled:
         cred: ""
-        region: "" 
+        region: ""
       mp2prt-all-phs002005-open:
         cred: ""
-        region: "" 
+        region: ""
       public-datasets-idc:
         cred: ""
         region: ""
@@ -913,8 +914,9 @@ fence:
     usersync: true
     syncFromDbgap: true
     userYamlS3Path: s3://cdis-gen3-users/ncicrdc/user.yaml
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 15
     minReplicas: 5
     targetCPUUtilizationPercentage: 40
@@ -970,8 +972,9 @@ global:
 indexd:
   defaultPrefix: "dg.4DFC/"
   useSingleTable: "true"
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 18
     minReplicas: 6
     targetCPUUtilizationPercentage: 40
@@ -982,8 +985,9 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.06'
 metadata:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 5
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1291,8 +1295,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.06'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 12
     minReplicas: 4
     targetCPUUtilizationPercentage: 40

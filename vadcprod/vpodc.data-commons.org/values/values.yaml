@@ -1,8 +1,9 @@
 ambassador:
   jupyterNamespace: "jupyter-pods"
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -23,8 +24,9 @@ aws-es-proxy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
 dashboard:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -66,8 +68,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -118,8 +121,9 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:663707118480:certificate/69ecb9e8-bcc8-4e91-9248-5eb3fcab5940
 guppy:
   authFilterField: auth_resource_path
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -390,8 +394,9 @@ hatchery:
       }
 indexd:
   defaultPrefix: dg.F738/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -412,8 +417,9 @@ manifestservice:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--manifest-service-sa
 metadata:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -435,8 +441,9 @@ ohdsi-webapi:
     repository: docker.io/ohdsi/webapi
     tag: 2.14.0
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -445,8 +452,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: "2025.04"
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -796,8 +804,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: "2025.04"
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -810,8 +819,9 @@ revproxy:
       group: vadcprod
       sslPolicy: "ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04"
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -838,8 +848,9 @@ ssjdispatcher:
     tag: "2025.04"
   indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04
 wts:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

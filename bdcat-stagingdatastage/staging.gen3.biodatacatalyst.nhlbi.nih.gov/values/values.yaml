@@ -10,8 +10,9 @@ access-backend:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-stagingdatastage--access-backend-sa
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -208,8 +209,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/stagingdatastage--stagingdatastage-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 15
     minReplicas: 5
     targetCPUUtilizationPercentage: 40
@@ -285,8 +287,9 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:895962626746:certificate/1876fa51-031e-4aa9-ab95-7da182a52c7f
 guppy:
   authFilterField: auth_resource_path
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -480,8 +483,9 @@ hatchery:
     }
 indexd:
   defaultPrefix: dg.4503/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 8
     minReplicas: 4
     targetCPUUtilizationPercentage: 40
@@ -499,8 +503,9 @@ manifestservice:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/stagingdatastage--stagingdatastage-helm--manifest-service-sa
 metadata:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 5
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -517,8 +522,9 @@ metadata-delete-expired-objects:
     repository: quay.io/cdis/metadata-delete-expired-objects
     tag: "2025.06"
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -527,8 +533,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: "2025.06"
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1227,8 +1234,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: feature_data_library
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 4
     targetCPUUtilizationPercentage: 40
@@ -1240,8 +1248,9 @@ revproxy:
     aws:
       group: stagingdatastage
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
