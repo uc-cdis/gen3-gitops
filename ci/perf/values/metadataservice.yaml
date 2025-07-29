@@ -15,9 +15,8 @@ metadata:
     {
       "gen3_commons": {
         "HEAL": {
-          "mds_url": "http://revproxy-service",
-          "commons_url": "http://revproxy-service"
+          "mds_url": "https://perf.ci.planx-pla.net",
+          "commons_url": "perf.ci.planx-pla.net"
         }
-      },
-      "adapter_commons": {}
+      }
     }
