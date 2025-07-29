@@ -44,6 +44,10 @@ hatchery:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     tag: master
   hatchery:
@@ -77,6 +81,10 @@ indexd:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -101,6 +109,10 @@ metadata:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/metadata-service
     tag: 'master'
@@ -136,6 +148,10 @@ sower:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/sower
     tag: 'master'
@@ -289,6 +305,10 @@ ssjdispatcher:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/ssjdispatcher
     tag: 'master'
@@ -320,6 +340,10 @@ sheepdog:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -336,6 +360,10 @@ peregrine:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -350,6 +378,10 @@ requestor:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/requestor"
@@ -359,6 +391,10 @@ audit:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   env:
     - name: ARBORIST_URL
       valueFrom:
@@ -396,6 +432,10 @@ ambassador:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/datawire/ambassador"
@@ -405,6 +445,10 @@ arborist:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   resources:
     requests:
       memory: "105Mi"
@@ -418,6 +462,10 @@ revproxy:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   ingress:
     enabled: true
     annotations:
@@ -445,6 +493,10 @@ wts:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/workspace-token-service"
@@ -457,6 +509,10 @@ manifestservice:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   image:
     repository: quay.io/cdis/manifestservice
     tag: "krishnaa05-patch-1"
@@ -481,6 +537,10 @@ ohif-viewer:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/ohif-viewer"
@@ -490,6 +550,10 @@ dicom-server:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: false
   image:
     repository: "quay.io/cdis/gen3-orthanc"
@@ -499,6 +563,10 @@ gen3-user-data-library:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
     repository: "quay.io/cdis/gen3-user-data-library"
@@ -513,6 +581,10 @@ orthanc:
   replicaCount: 2
   autoscaling:
     enabled: true
+    minReplicas: 2
+    maxReplicas: 10
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage: 80
   enabled: true
   image:
       repository: "quay.io/cdis/gen3-orthanc"
