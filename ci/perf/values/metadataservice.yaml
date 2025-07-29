@@ -1,5 +1,5 @@
 metadata:
-  replicaCount: 10
+  replicaCount: 2
   image:
     repository: quay.io/cdis/metadata-service
     tag: 'master'
