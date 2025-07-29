@@ -1,9 +1,9 @@
 sheepdog:
-  replicaCount: 6
+  replicaCount: 2
   resources:
     requests:
-      memory: "315Mi"
-      cpu: "45m"
+      memory: "105Mi"
+      cpu: "15m"
   enabled: true
   authNamespace: ''
   image:
