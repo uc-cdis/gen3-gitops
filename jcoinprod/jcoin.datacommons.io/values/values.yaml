@@ -1,8 +1,9 @@
 ambassador:
   jupyterNamespace: "jupyter-pods"
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -140,8 +141,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -312,8 +314,9 @@ hatchery:
       }
 indexd:
   defaultPrefix: dg.6VTS/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 8
     minReplicas: 4
     targetCPUUtilizationPercentage: 40
@@ -344,8 +347,9 @@ metadata:
 mutatingWebhook:
   enabled: true
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -354,8 +358,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.05'
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1039,8 +1044,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.05'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
@@ -1052,8 +1058,9 @@ revproxy:
     aws:
       group: jcoinprod-helm
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40

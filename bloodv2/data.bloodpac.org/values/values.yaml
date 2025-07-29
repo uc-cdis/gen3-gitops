@@ -1,8 +1,9 @@
 ambassador:
   jupyterNamespace: "jupyter-pods"
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -394,8 +395,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -443,8 +445,9 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:562749638216:certificate/8cfa5317-9c44-4d6a-9af8-8373952b4230
 guppy:
   authFilterField: auth_resource_path
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -580,8 +583,9 @@ hatchery:
         ]
       }
 indexd:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -617,8 +621,9 @@ metadata:
 mutatingWebhook:
   enabled: true
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -627,8 +632,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.03'
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -1959,8 +1965,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.03'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -1972,8 +1979,9 @@ revproxy:
     aws:
       group: bloodv2-helm
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 2
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
