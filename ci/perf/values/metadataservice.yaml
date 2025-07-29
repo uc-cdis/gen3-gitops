@@ -9,14 +9,15 @@ metadata:
   enabled: true
   externalSecrets:
     createK8sMetadataSecret: true
-  useAggMds: "True"
+  useAggMds: true
   aggMdsNamespace: ci-perf
   aggMdsConfig: |
     {
       "gen3_commons": {
         "HEAL": {
-          "mds_url": "https://perf.ci.planx-pla.net",
-          "commons_url": "perf.ci.planx-pla.net"
+          "mds_url": "http://revproxy-service",
+          "commons_url": "http://revproxy-service"
         }
-      }
+      },
+      "adapter_commons": {}
     }
