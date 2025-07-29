@@ -9,7 +9,7 @@ metadata:
   enabled: true
   externalSecrets:
     createK8sMetadataSecret: true
-  useAggMds: true
+  useAggMds: "True"
   aggMdsNamespace: default
   aggMdsConfig: |
     {
@@ -18,6 +18,5 @@ metadata:
           "mds_url": "http://revproxy-service",
           "commons_url": "http://revproxy-service"
         }
-      },
-      "adapter_commons": {}
+      }
     }
