@@ -10,7 +10,7 @@ metadata:
   externalSecrets:
     createK8sMetadataSecret: true
   useAggMds: true
-  aggMdsNamespace: ci-perf
+  aggMdsNamespace: default
   aggMdsConfig: |
     {
       "gen3_commons": {
