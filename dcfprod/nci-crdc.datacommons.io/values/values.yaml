@@ -972,7 +972,7 @@ global:
 indexd:
   defaultPrefix: "dg.4DFC/"
   useSingleTable: "true"
-  replicaCount: 4
+  replicaCount: 10
   autoscaling:
     enabled: false
     maxReplicas: 18
