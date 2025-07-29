@@ -12,6 +12,7 @@ alb-controller:
 
 aws-s3-mountpoint:
   enabled: true
+  targetRevision: "2.0.0"
   configuration:
     enabled: false
 
