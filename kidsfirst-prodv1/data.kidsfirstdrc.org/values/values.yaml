@@ -1,6 +1,7 @@
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 8
     minReplicas: 4
     targetCPUUtilizationPercentage: 40
@@ -39,8 +40,9 @@ fence:
     usersync: true
     userYamlS3Path: s3://kf-gen3-user/user.yaml
     syncFromDbgap: true
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -86,8 +88,9 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:053927701465:certificate/bdc2fc77-e66f-4acb-8674-973c362d1c33
 indexd:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 12
     minReplicas: 8
     targetCPUUtilizationPercentage: 40
@@ -108,8 +111,9 @@ metadata:
 mutatingWebhook:
   enabled: true
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -118,8 +122,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.05'
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -228,8 +233,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.05'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -241,8 +247,9 @@ revproxy:
     aws:
       group: prodv1-helm
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

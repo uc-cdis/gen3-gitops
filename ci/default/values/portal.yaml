@@ -1,15 +1,17 @@
 portal:
+  # replicaCount: 2
   resources:
+    limits:
+      memory: 6Gi
     requests:
-      cpu: "0.2"
-      memory: 100Mi
+      cpu: 4
+      memory: 6Gi
   image:
     repository: quay.io/cdis/data-portal
     tag: master
   gitops:
     json: |
       {
-        "gaTrackingId": "UA-119127212-2",
         "argoTemplate": "gwas-template",
         "graphql": {
           "boardCounts": [
@@ -161,11 +163,7 @@ portal:
                 "name": "Submit Data"
               },
               {
-                "link": "https://www.synapse.org/#!Synapse:syn8011461/wiki/411591",
-                "name": "Documentation"
-              },
-              {
-                "link": "bpa-support@gen3.org",
+                "link": "main@example.org",
                 "name": "Email Support"
               }
             ],
@@ -176,7 +174,7 @@ portal:
             "subTitle": "Explore, Analyze, and Share Data",
             "text": "This website combines liquid biopsy data from academic, government, and industry partners and aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for the treatment and prevention of cancer.",
             "contact": "If you have any questions about access or the registration process, please contact ",
-            "email": "bpa-support@gen3.org"
+            "email": "main@example.org"
           },
           "certs": {
             "security_quiz": {
@@ -626,18 +624,6 @@ portal:
           "buttons": [
             {
               "enabled": true,
-              "type": "export",
-              "title": "Export All to Terra",
-              "rightIcon": "external-link"
-            },
-            {
-              "enabled": true,
-              "type": "export-to-seven-bridges",
-              "title": "Export All to Seven Bridges",
-              "rightIcon": "external-link"
-            },
-            {
-              "enabled": true,
               "type": "export-to-pfb",
               "title": "Export to PFB",
               "leftIcon": "datafile",
@@ -651,6 +637,7 @@ portal:
               "rightIcon": "download"
             }
           ],
+          "loginForDownload": true,
           "guppyConfig": {
             "dataType": "subject",
             "nodeCountTitle": "Subjects",
@@ -671,14 +658,7 @@ portal:
               "project_id"
             ],
             "accessibleValidationField": "project_id"
-          },
-          "getAccessButtonLink": "https://dbgap.ncbi.nlm.nih.gov/",
-          "terraExportURL": "https://terra.biodatacatalyst.nhlbi.nih.gov/#import-data",
-          "terraTemplate": [
-            "bdc",
-            "gen3"
-          ],
-          "sevenBridgesExportURL": "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/windmill"
+          }
         },
         {
           "tabTitle": "File",
@@ -716,6 +696,7 @@ portal:
               "file_size",
               "object_id"      ]
           },
+          "loginForDownload": true,
           "guppyConfig": {
             "dataType": "file",
             "fieldMapping": [
@@ -724,9 +705,9 @@ portal:
                 "name": "GUID"
               },
               {
-                          "field": "programs_name",
-                          "name": "Program"
-                      }
+                "field": "programs_name",
+                "name": "Program"
+              }
             ],
             "nodeCountTitle": "Files",
             "manifestMapping": {
@@ -763,26 +744,8 @@ portal:
               "type": "export-files-to-pfb",
               "title": "Export All to PFB",
               "rightIcon": "external-link"
-            },
-            {
-              "enabled": true,
-              "type": "export-files",
-              "title": "Export All to Terra",
-              "rightIcon": "external-link"
-            },
-            {
-              "enabled": true,
-              "type": "export-files-to-seven-bridges",
-              "title": "Export All to Seven Bridges",
-              "rightIcon": "external-link"
             }
           ],
-          "terraExportURL": "https://terra.biodatacatalyst.nhlbi.nih.gov/#import-data",
-          "terraTemplate": [
-            "bdc",
-            "gen3"
-          ],
-          "sevenBridgesExportURL": "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/windmill",
           "enableLimitedFilePFBExport": {
             "sourceNodeField": "source_node"
           },
