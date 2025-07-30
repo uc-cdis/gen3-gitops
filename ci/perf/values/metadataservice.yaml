@@ -2,7 +2,7 @@ metadata:
   replicaCount: 2
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 'master'
+    tag: 'authz-debug-logs'
   resources:
     requests:
       memory: 25Mi
