@@ -70,7 +70,7 @@ fence:
     WTF_CSRF_SECRET_KEY: "{{ENCRYPTION_KEY}}"
 
     # -- (bool) fence (at the moment) attempts a migration on startup. setting this to false will disable that
-    ENABLE_DB_MIGRATION: false
+    ENABLE_DB_MIGRATION: true
 
     # -- (list) These are the *possible* scopes a client can be given, NOT scopes that are given to all clients. You can be more restrictive during client creation
     CLIENT_ALLOWED_SCOPES:
