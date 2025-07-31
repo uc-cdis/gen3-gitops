@@ -32,7 +32,6 @@ postgresql:
     repository: cdis/postgresql
     tag: 14.5.0-debian-11-r35
 
-maxUnavailable: ""
 elasticsearch:
   maxUnavailable: ""
   volumeClaimTemplate:
