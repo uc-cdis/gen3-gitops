@@ -570,8 +570,8 @@ hatchery:
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.password=",
+              "--JupyterNotebookApp.token=",
               "--JupyterNotebookApp.ip='*'",
               "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
               "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
