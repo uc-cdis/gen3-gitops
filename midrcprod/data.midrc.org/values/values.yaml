@@ -551,7 +551,8 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.07'
-  json: |-
+  hatchery:
+    json: |-
       {
         "user-namespace": "jupyter-pods",
         "sub-dir": "/workspace",
@@ -562,7 +563,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/jupyter-superslim-r:master",
+            "image": "quay.io/cdis/jupyter-superslim-r:2.0.1",
             "env": {
               "FRAME_ANCESTORS": "https://data.midrc.org"
             },
