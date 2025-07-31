@@ -563,8 +563,8 @@ hatchery:
           "image": "quay.io/cdis/ecs-ws-sidecar:2025.07",
           "env": {
             "NAMESPACE": "default",
-            "GEN3_ENDPOINT": "healdata.org",
-            "HOSTNAME": "healdata.org"
+            "GEN3_ENDPOINT": "data.midrc.org",
+            "HOSTNAME": "data.midrc.org"
           },
           "args": [],
           "command": [
