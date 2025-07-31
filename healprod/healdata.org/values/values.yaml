@@ -174,6 +174,7 @@ global:
     logs_bucket: logs-healprod-gen3
   tierAccessLevel: libre
   portalApp: gitops
+  dataUploadBucket: healprod-default-205252583234-upload
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/f87abeee-47ce-47cd-a3ca-b3f76b34c845
