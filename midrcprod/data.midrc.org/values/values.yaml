@@ -557,6 +557,29 @@ hatchery:
         "user-namespace": "jupyter-pods",
         "sub-dir": "/workspace",
         "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.07",
+          "env": {
+            "NAMESPACE": "default",
+            "GEN3_ENDPOINT": "data.midrc.org",
+            "HOSTNAME": "data.midrc.org"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
         "containers": [
           {
             "target-port": 8888,
