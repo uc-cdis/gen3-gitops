@@ -92,4 +92,4 @@ vpc-cni:
 crossplane-crds:
   enable: true
   useIRSA: true
-  iamRoleName: "arn:aws:iam::707767160287:role/crossplane-test-qaplanetv1"
+  iamRoleName: "crossplane-test-qaplanetv1"
