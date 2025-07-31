@@ -18,5 +18,6 @@ metadata:
           "mds_url": "http://revproxy-service",
           "commons_url": "http://revproxy-service"
         }
-      }
+      },
+      "adapter_commons": {}
     }

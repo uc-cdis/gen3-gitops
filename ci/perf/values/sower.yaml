@@ -5,7 +5,10 @@ sower:
     tag: 'master'
   enabled: true
   serviceAccount:
+    # -- (bool) Specifies whether a service account should be created.
     create: true
+    # -- (string) The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
     name: "sower-service-account"
   externalSecrets:
     createK8sPelicanServiceSecret: false

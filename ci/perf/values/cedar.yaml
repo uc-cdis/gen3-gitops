@@ -7,3 +7,5 @@ cedar:
   image:
     repository: "quay.io/cdis/cedar-wrapper-service"
     tag: "master"
+  cedarIngestion:
+    enabled: false

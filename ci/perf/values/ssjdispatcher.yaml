@@ -6,9 +6,13 @@ ssjdispatcher:
   enabled: true
   indexing: quay.io/cdis/indexs3client:master
   ssjcreds:
+    # This will be dynamically replaced by env_setup.sh script.
     sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
+    # This will be dynamically replaced by env_setup.sh script.
     jobPattern: "s3://gen3-helm-data-upload-bucket/ciperf/*"
+    # This will be dynamically replaced by env_setup.sh script.
     jobPassword: "replace_with_password"
+    # This will be dynamically replaced by env_setup.sh script.
     metadataservicePassword: "replace_with_password"
   serviceAccount:
     create: true
@@ -20,4 +24,5 @@ ssjdispatcher:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role-job
   externalSecrets:
     createK8sSsjdispatcherSecret: true
+  # This will be dynamically replaced by env_setup.sh script.
   gen3Namespace: ci-perf

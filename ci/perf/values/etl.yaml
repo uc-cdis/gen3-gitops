@@ -1,12 +1,12 @@
-
 etl:
   enabled: true
   image:
+    tube:
+      repository: quay.io/cdis/tube
+      pullPolicy: IfNotPresent
+      tag: "master"
     spark:
       repository: "quay.io/cdis/gen3-spark"
-      tag: "master"
-    tube:
-      repository: "quay.io/cdis/tube"
       tag: "master"
   etlMapping:
     mappings:
@@ -29,6 +29,7 @@ etl:
           - name: age_of_onset
           - name: phenotype_group
           - name: anvil_project_id
+    #    flatten_props:
         aggregated_props:
           - name: sample_provider
             path: samples
