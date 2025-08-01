@@ -1,8 +1,9 @@
 ambassador:
   enabled: false
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -17,8 +18,9 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--audit-sqs-receiver
 aws-es-proxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -405,8 +407,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--audit-sqs-sender
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -462,8 +465,9 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:813684607867:certificate/d4bdf325-afce-4e1d-b431-0dd062ee12c5
 guppy:
   authFilterField: auth_resource_path
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -488,8 +492,9 @@ hatchery:
   enabled: false
 indexd:
   defaultPrefix: dg.MD1R/
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -502,8 +507,9 @@ indexd:
 manifestservice:
   enabled: false
 metadata:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -517,8 +523,9 @@ metadata:
 mutatingWebhook:
   enabled: false
 peregrine:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -527,8 +534,9 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.07'
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -2437,8 +2445,9 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2025.07'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -2450,8 +2459,9 @@ revproxy:
     aws:
       group: midrcvalidate
 sheepdog:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 10
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

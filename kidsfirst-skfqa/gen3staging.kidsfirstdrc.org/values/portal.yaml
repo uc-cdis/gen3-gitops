@@ -1,6 +1,7 @@
 portal:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

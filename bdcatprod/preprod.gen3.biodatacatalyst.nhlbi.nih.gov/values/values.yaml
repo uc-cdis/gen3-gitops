@@ -11,10 +11,11 @@ access-backend:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--access-backend-sa
 arborist:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
@@ -249,10 +250,11 @@ fence:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-sender
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 15
     minReplicas: 5
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: false
@@ -2054,6 +2056,57 @@ fence:
       nih-nhlbi-bdc-shhs-phs003637-v1-r2-c1:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-biolincc-allhat-phs004021-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-concert-hf-phs004055-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ippb-phs004010-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-lhs-phs004013-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-pioped-phs004020-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-prhhp-phs003930-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dir-stressors-health-phs004019-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hfn-migen-phs000294-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-imaging-hchssol-phs003963-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-imaging-hchssol-phs003963-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-invested-phs004011-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-pcgc-phs001194-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-pcgc-phs001194-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-roc-cpr-phs003818-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-push-scd-phs001682-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-fhs-phs000007-v34-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-fhs-phs000007-v34-r1-c2:
+        cred: fence-bot
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
@@ -2087,7 +2140,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: "10"
   environment: bdcat-internalstaging
   externalSecrets:
@@ -2115,10 +2168,11 @@ global:
 guppy:
   authFilterField: auth_resource_path
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   configIndex: internalstaging_array-config
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -2137,10 +2191,11 @@ hatchery:
 indexd:
   defaultPrefix: dg.4503/
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   externalSecrets:
     serviceCreds: bdcat-internalstaging-indexd-service-creds
@@ -2151,10 +2206,11 @@ manifestservice:
   enabled: false
 metadata:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 5
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -2169,20 +2225,22 @@ metadata-delete-expired-objects:
     tag: "2025.07"
 peregrine:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: "2025.07"
 portal:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   gitops:
     css: |
@@ -2865,10 +2923,11 @@ portal:
     tag: feature_data_library
 revproxy:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -2879,10 +2938,11 @@ revproxy:
       sslPolicy: "ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04"
 sheepdog:
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 4
     minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+    targetCPUUtilizationPercentage: 90
+  replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
