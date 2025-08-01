@@ -1,0 +1,6 @@
+ambassador:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/datawire/ambassador"
+    tag: "1.4.2"
