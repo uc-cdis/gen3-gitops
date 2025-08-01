@@ -1,7 +1,7 @@
 global:
   # This will be dynamically replaced by env_setup.sh script.
   hostname:
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/anvil/master/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
   pdb: true
   aws:
     externalSecrets:
