@@ -186,6 +186,8 @@ hatchery:
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
+  externalSecrets:
+    stataG3auto: "heal-stata-workspace-gen3-license"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.07'
@@ -311,8 +313,8 @@ hatchery:
               "enabled": true,
               "license-type": "STATA-HEAL",
               "max-license-ids": 5,
-              "g3auto-name": "stata-workspace-gen3-license-g3auto",
-              "g3auto-key": "stata_license.txt",
+              "g3auto-name": "stata-workspace-gen3-license",
+              "g3auto-key": "stata-license.txt",
               "file-path": "stata.lic",
               "workspace-flavor": "gen3-licensed"
             },
