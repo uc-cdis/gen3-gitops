@@ -3,8 +3,9 @@ ambassador:
 access-backend:
   enabled: false
 arborist:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -46,8 +47,9 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/brh/user.yaml
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -335,8 +337,9 @@ hatchery:
       }
 
 indexd:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -470,8 +473,9 @@ metadata:
     , \"default\" : 0 },\n\t\t\t\t\"__manifest\": \"path:__manifest\",\n\t\t\t\t\"\
     commons_url\" : \"gen3.datacommons.io\"\n\t\t\t}\n\t\t}\n\n\t}\n}\n"
   aggMdsNamespace: brhstaging-helm
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -1047,8 +1051,9 @@ requestor:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2025.05'
 revproxy:
+  replicaCount: 4
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

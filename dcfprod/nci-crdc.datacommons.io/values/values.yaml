@@ -50,6 +50,8 @@ datareplicate:
     tag: 2.0.0
 fence:
   FENCE_CONFIG_PUBLIC:
+    dbGaP:
+      parse_consent_code: true
     S3_BUCKETS:
       cds-54-phs000178:
         cred: "fence_bot"
@@ -970,9 +972,10 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:584476192960:certificate/4173b316-0510-4216-8043-3f9234570475
 indexd:
+  metricsEnabled: false
   defaultPrefix: "dg.4DFC/"
   useSingleTable: "true"
-  replicaCount: 10
+  replicaCount: 20
   autoscaling:
     enabled: false
     maxReplicas: 18
@@ -984,6 +987,11 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.06'
+  resources:
+    requests:
+      memory: 256Mi
+    limits:
+      memory: 1024Mi
 metadata:
   replicaCount: 4
   autoscaling:
@@ -998,8 +1006,6 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.06'
-mutatingWebhook:
-  enabled: disable
 peregrine:
   enabled: true
   image:
