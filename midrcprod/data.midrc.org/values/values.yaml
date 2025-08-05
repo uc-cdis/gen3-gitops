@@ -3,7 +3,7 @@ ambassador:
 arborist:
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   replicaCount: 4
