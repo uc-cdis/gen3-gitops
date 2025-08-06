@@ -181,7 +181,7 @@ global:
 hatchery:
   enabled: true
   externalSecrets:
-    stataG3auto: "preprod-heal-stata-workspace-gen3-license"
+    stataG3auto: "stata-workspace-gen3-license-preprod-heal"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.07'
