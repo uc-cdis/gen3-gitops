@@ -31,6 +31,7 @@ mutatingWebhook:
   enabled: false
 
 postgresql:
+  maxUnavailable: 0
   primary:
     persistence:
       enabled: true
