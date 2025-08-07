@@ -23,6 +23,1051 @@ fence:
     schedule: "0 0 31 2 *"
     syncFromDbgap: true
   FENCE_CONFIG_PUBLIC:
+    USER_YAML: |
+      cloud_providers: {}
+      groups: {}
+      authz:
+        anonymous_policies:
+        - 'open_data_reader'
+      
+        all_users_policies:
+        - 'requestor_creator'
+        - 'kayako_creator'
+      
+        groups:
+          - name: registered_users
+            policies: []
+            users:
+              - 'main@example.org'
+              - 'indexing@example.org'
+      
+          - name: gwas_teamproject1_users
+            policies:
+              - teamproject1_contributor
+            users:
+              - 'main@example.org'
+      
+          - name: gwas_teamproject2_users
+            policies:
+              - teamproject2_contributor
+            users:
+              - 'main@example.org'
+      
+          - name: 'data_uploaders'
+            policies: ['data_upload']
+            users:
+              - 'user0@example.org'
+              - 'user1@example.org'
+      
+          - name: 'access_request_updaters'
+            policies:
+              - 'requestor_reader'
+              - 'requestor_updater'
+              - 'requestor_deleter'
+            users:
+              - 'main@example.org'
+      
+        user_project_to_resource:
+          QA: '/programs/QA'
+          DEV: '/programs/DEV'
+          test: '/programs/QA/projects/test'
+          jenkins: '/programs/jnkns/projects/jenkins'
+          jenkins2: '/programs/jnkns/projects/jenkins2'
+          jnkns: '/programs/jnkns'
+      
+        policies:
+          - id: 'kayako_creator'
+            description: 'be able to create ticket via kayako wrapper service'
+            resource_paths: ['/kayako']
+            role_ids: ['kayako_creator']
+          - id: "teamproject1_contributor"
+            description: "be able to create and access cohorts of teamproject1 in Atlas, Argo-wrapper and cohort-middleware"
+            resource_paths: ["/gwas_projects/project1"]
+            role_ids: ["teamproject_member"]
+          - id: "teamproject2_contributor"
+            description: "be able to create and access cohorts of teamproject2 in Atlas, Argo-wrapper and cohort-middleware"
+            resource_paths: ["/gwas_projects/project2"]
+            role_ids: ["teamproject_member"]
+          - id: 'workspace'
+            description: 'be able to use workspace'
+            resource_paths: ['/workspace']
+            role_ids: ['workspace_user']
+          - id: 'cedar_admin'
+            description: 'be able to use cedar wrapper service'
+            resource_paths: ['/cedar']
+            role_ids: ['cedar_user']
+          - id: 'requestor_creator'
+            description: 'be able to create requestor request'
+            role_ids: ['requestor_creator']
+            resource_paths: ['/programs', '/requestor_client_credentials_test', '/study', '/mds_gateway', '/cedar']
+          - id: 'requestor_reader'
+            role_ids: ['requestor_reader']
+            resource_paths: ['/programs', '/requestor_client_credentials_test', '/study', '/mds_gateway', '/cedar']
+          - id: 'requestor_updater'
+            role_ids: ['requestor_updater']
+            resource_paths: ['/programs', '/requestor_client_credentials_test', '/study', '/mds_gateway', '/cedar']
+          - id: 'requestor_deleter'
+            role_ids: ['requestor_deleter']
+            resource_paths: ['/programs', '/requestor_client_credentials_test', '/study', '/mds_gateway', '/cedar']
+          - id: 'ttyadmin'
+            description: 'be able to use admin tty'
+            resource_paths: ['/ttyadmin']
+            role_ids: ['ttyadmin_user']
+          - id: 'data_upload'
+            description: 'upload raw data files to S3'
+            role_ids: ['file_uploader']
+            resource_paths: ['/data_file']
+          - id: 'sower'
+            description: 'be able to use sower job'
+            role_ids: ['sower_user']
+            resource_paths: ['/sower']
+          - id: 'mds_admin'
+            description: 'be able to use metadata service'
+            resource_paths: ['/mds_gateway']
+            role_ids: ['mds_user']
+          - id: 'audit_reader'
+            role_ids:
+            - 'audit_reader'
+            resource_paths:
+            - '/services/audit'
+          - id: 'study_registrant_admin'
+            resource_paths:
+              - '/programs'
+              - '/study'
+            role_ids:
+              - 'study_registrant'
+          - id: 'audit_login_reader'
+            role_ids:
+            - 'audit_reader'
+            resource_paths:
+            - '/services/audit/login'
+          - id: 'audit_presigned_url_reader'
+            role_ids:
+            - 'audit_reader'
+            resource_paths:
+            - '/services/audit/presigned_url'
+          - id: 'all_dicom_studies_viewer'
+            role_ids:
+              - 'dicom-viewer_reader'
+              - 'orthanc_reader'
+              - 'ohif-viewer_reader'
+            resource_paths:
+            - '/services/dicom-viewer'
+          - id: 'all_dicom_studies_admin'
+            role_ids:
+            - 'creator'
+            resource_paths:
+            - '/services/dicom-viewer'
+          - id: 'all_orthanc_studies_viewer'
+            role_ids:
+              - 'dicom-viewer_reader'
+              - 'orthanc_reader'
+              - 'ohif-viewer_reader'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+            - '/services/orthanc'
+          - id: 'all_orthanc_studies_admin'
+            role_ids:
+            - 'creator'
+            resource_paths:
+            - '/services/orthanc'
+          - id: 'all_programs_reader'
+            role_ids:
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+              - '/programs'
+      
+          - id: 'programs.jnkns-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/programs/jnkns'
+              - '/programs/jnkns/projects/jenkins'  # FIXME: temporary, b/c of bug in arranger
+              - '/programs/jnkns/projects/jenkins2'  # FIXME: temporary, b/c of bug in arranger
+              - '/gen3/programs/jnkns'
+      
+          - id: 'programs.QA-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/programs/QA'
+              - '/programs/QA/projects/test'  # FIXME: temporary, b/c of bug in arranger
+              - '/gen3/programs/QA'
+      
+          - id: 'programs.DEV-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/programs/DEV'
+              - '/programs/DEV/projects/test'  # FIXME: temporary, b/c of bug in arranger
+              - '/gen3/programs/DEV'
+      
+          - id: 'programs.test-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/programs/test'
+              - '/programs/test/projects/test'  # FIXME: temporary, b/c of bug in arranger
+              - '/gen3/programs/test'
+      
+          - id: 'abc-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/abc'
+      
+          - id: 'gen3-admin'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+            resource_paths:
+              - '/gen3'
+      
+          - id: 'gen3-hmb-researcher'
+            description: ''
+            role_ids:
+              - 'creator'
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+              - 'updater'
+              - 'deleter'
+              - 'admin'
+            resource_paths:
+              - '/consents/HMB'
+              - '/consents/GRU'
+              - '/gen3'
+      
+          - id: 'abc.programs.test_program.projects.test_project1-viewer'
+            description: ''
+            role_ids:
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+              - '/abc/programs/test_program/projects/test_project1'
+      
+          - id: 'abc.programs.test_program.projects.test_project2-viewer'
+            description: ''
+            role_ids:
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+              - '/abc/programs/test_program/projects/test_project2'
+      
+          - id: 'abc.programs.test_program2.projects.test_project3-viewer'
+            description: ''
+            role_ids:
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+              - '/abc/programs/test_program2/projects/test_project3'
+      
+          - id: 'open_data_reader'
+            description: ''
+            role_ids:
+              - 'guppy_reader'
+              - 'fence_reader'
+              - 'peregrine_reader'
+              - 'sheepdog_reader'
+            resource_paths:
+              - '/open'
+              - '/programs/DEV/projects/DICOM_test'
+      
+          - id: 'services.sheepdog-admin'
+            description: 'CRUD access to programs and projects'
+            role_ids:
+              - 'sheepdog_admin'
+            resource_paths:
+              - '/services/sheepdog/submission/program'
+              - '/services/sheepdog/submission/project'
+      
+          # indexd
+          - id: 'indexd_admin'
+            # this only works if indexd.arborist is enabled in manifest!
+            description: 'full access to indexd API'
+            role_ids:
+              - 'indexd_admin'
+            resource_paths:
+              - '/programs'
+              - '/services/indexd/admin'
+          - id: 'indexd_creator'
+            role_ids:
+              - 'indexd_record_creator'
+            resource_paths:
+              - '/programs'
+      
+          - id: 'indexd-tester'
+            description: ''
+            role_ids:
+              - 'indexd_record_creator'
+              - 'indexd_record_reader'
+              - 'indexd_record_updater'
+              - 'indexd_delete_record'
+              - 'indexd_storage_reader'
+              - 'indexd_storage_writer'
+            resource_paths: ['/gen3/programs/QA', '/programs/QA']
+
+          - id: fence_admin
+            role_ids:
+            - fence_admin
+            resource_paths:
+            - /services/fence/admin
+      
+          - id: 'workflow_admin'
+            description: 'admin access to argo workflow API'
+            resource_paths: ['/services/workflow/argo/admin']
+            role_ids: ['workflow_admin']
+      
+          - id: 'argo'
+            description: 'be able to use argo'
+            resource_paths: ['/argo']
+            role_ids: ['argo_user']
+      
+          - id : 'requestor_client_credentials_test'
+            description: 'test policy for client credentials requestor requests'
+            role_ids:
+            - 'requestor_creator'
+            - 'requestor_updater'
+            - 'requestor_deleter'
+            resource_paths:
+            - '/requestor_client_credentials_test'
+      
+        # Requestor Integration test policies
+          - id: 'requestor_integration_test'
+            description: 'test policy for integration tests'
+            role_ids:
+            - 'workspace_user'
+            - 'requestor_creator'
+            - 'requestor_updater'
+            - 'requestor_deleter'
+            resource_paths:
+            - '/requestor_integration_test'
+      
+          - id: requestor_admin
+            role_ids:
+              - requestor_admin
+            resource_paths:
+              - "/programs"
+              - "/services"
+              - "/workspace"
+              - "/gwas_projects"
+      
+          # Gen3 Workflow policies
+          - id: workflow_user
+            role_ids:
+            - workflow_user
+            resource_paths:
+            - '/services/workflow/gen3-workflow'
+            - '/services/workflow/gen3-workflow/tasks'
+          - id: workflow_storage_deleter
+            role_ids:
+            - workflow_storage_deleter
+            resource_paths:
+            - '/services/workflow/gen3-workflow/user-bucket'
+      
+        resources:
+          # General Access
+          - name: 'data_file'
+            description: 'data files, stored in S3'
+          - name: 'requestor_client_credentials_test'
+            description: 'test resource for client credentials requestor requests'
+          - name: 'cedar'
+            description: 'commons /cedar'
+          - name: 'kayako'
+            description: 'commons /kayako'
+          - name: 'ttyadmin'
+          - name: 'requestor_admin'
+          - name: 'workspace'
+          - name: "sower"
+          - name: 'query_page'
+          - name: 'mds_gateway'
+            description: 'commons /mds-admin'
+          - name: 'requestor_integration_test'
+            description: 'policy used for requestor integration tests'
+          - name: 'kayako'
+            description: 'commons /kayako'
+      
+          # OLD Data
+          - name: 'programs'
+            subresources:
+              - name: 'open'
+              - name: 'QA'
+                subresources:
+                  - name: 'projects'
+                    subresources:
+                      - name: 'test'
+              - name: 'DEV'
+                subresources:
+                  - name: 'projects'
+                    subresources:
+                      - name: 'test'
+                      - name: 'DICOM_test'  # qa-midrc DICOM viewer testing
+              - name: 'jnkns'
+                subresources:
+                  - name: 'projects'
+                    subresources:
+                      - name: 'jenkins'
+                      - name: 'jenkins2'
+              - name: 'test'
+                subresources:
+                  - name: 'projects'
+                    subresources:
+                      - name: 'test'
+      
+          # NEW Data WITH PREFIX
+          - name: 'gen3'
+            subresources:
+              - name: 'programs'
+                subresources:
+                  - name: 'QA'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'test'
+                  - name: 'DEV'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'test'
+                  - name: 'jnkns'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'jenkins'
+                          - name: 'jenkins2'
+                  - name: 'test'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'test'
+      
+          - name: 'consents'
+            subresources:
+              - name: 'HMB'
+                description: 'health/medical/biomedical research'
+              - name: 'GRU'
+                description: 'general research use'
+      
+          - name: 'abc'
+            subresources:
+              - name: 'programs'
+                subresources:
+                  - name: 'foo'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'bar'
+                  - name: 'test_program'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'test_project1'
+                          - name: 'test_project2'
+                  - name: 'test_program2'
+                    subresources:
+                      - name: 'projects'
+                        subresources:
+                          - name: 'test_project3'
+      
+          - name: 'services'
+            subresources:
+              - name: 'sheepdog'
+                subresources:
+                  - name: 'submission'
+                    subresources:
+                      - name: 'program'
+                      - name: 'project'
+              - name: 'indexd'
+                subresources:
+                  - name: 'admin'
+                  - name: 'bundles'
+              - name: 'audit'
+                subresources:
+                  - name: 'presigned_url'
+                  - name: 'login'
+              - name: 'workflow'
+                subresources:
+                  - name: 'argo'
+                    subresources:
+                      - name: 'admin'
+                  - name: 'gen3-workflow'
+                    subresources:
+                    - name: 'user-bucket'
+                    - name: 'tasks'
+              - name: 'dicom-viewer'
+                subresources:
+                  - name: 'studies'
+              - name: 'orthanc'
+                subresources:
+                  - name: 'studies'
+      
+          - name: 'argo'
+          - name: 'open'
+          # study registration
+          - name: 'study'
+      
+          - name: 'gwas_projects'
+            subresources:
+              - name: 'project1'
+              - name: 'project2'
+      
+        roles:
+          - id: 'kayako_creator'
+            permissions:
+              - id: 'kayako_access'
+                action:
+                  service: 'kayako'
+                  method: 'create'
+          # General Access
+          - id: "teamproject_member"
+            permissions:
+              - id: "teamproject_member"
+                action:
+                  service: "atlas-argo-wrapper-and-cohort-middleware"
+                  method: "access"
+              - id: "teamproject_reader"
+                action:
+                  service: "*"
+                  method: "read-storage"
+          - id: 'requestor_admin'
+            permissions:
+              - id: 'requestor_admin_action'
+                action:
+                  service: 'requestor'
+                  method: "*"
+          - id: 'file_uploader'
+            description: 'can upload data files'
+            permissions:
+              - id: 'file_upload'
+                action:
+                  service: '*'
+                  method: 'file_upload'
+          - id: 'workspace_user'
+            permissions:
+              - id: 'workspace_access'
+                action:
+                  service: 'jupyterhub'
+                  method: 'access'
+          - id: 'requestor_reader'
+            permissions:
+              - id: 'requestor_reader_action'
+                action:
+                  service: 'requestor'
+                  method: 'read'
+          - id: 'requestor_updater'
+            permissions:
+              - id: 'requestor_updater_action'
+                action:
+                  service: 'requestor'
+                  method: 'update'
+          - id: 'requestor_deleter'
+            permissions:
+              - id: 'requestor_deleter_action'
+                action:
+                  service: 'requestor'
+                  method: 'delete'
+          - id: 'requestor_creator'
+            permissions:
+              - id: 'requestor_creator_action'
+                action:
+                  service: 'requestor'
+                  method: 'create'
+          - id: 'ttyadmin_user'
+            permissions:
+              - id: 'ttyadmin_access'
+                action:
+                  service: 'ttyadmin'
+                  method: 'access'
+          - id: 'sower_user'
+            permissions:
+              - id: 'sower_access'
+                action:
+                  service: 'job'
+                  method: 'access'
+          - id: 'query_page_user'
+            permissions:
+              - id: 'query_page_access'
+                action:
+                  service: 'query_page'
+                  method: 'access'
+          - id: 'mds_user'
+            permissions:
+              - id: 'mds_access'
+                action:
+                  service: 'mds_gateway'
+                  method: 'access'
+          - id: 'cedar_user'
+            permissions:
+              - id: 'cedar_access'
+                action:
+                  service: 'cedar'
+                  method: 'access'
+          - id: 'study_registrant'
+            permissions:
+              - id: 'study_registration'
+                action:
+                  service: 'study_registration'
+                  method: 'access'
+              - id: 'storage_writer'
+                action:
+                  service: '*'
+                  method: 'write-storage'
+              - id: 'creator'
+                action:
+                  service: '*'
+                  method: 'create'
+          - id: 'workflow_admin'
+            permissions:
+              - id: 'argo_access'
+                action:
+                  service: 'argo_workflow'
+                  method: 'access'
+          - id: 'argo_user'
+            permissions:
+              - id: 'argo_access'
+                action:
+                  service: 'argo'
+                  method: 'access'
+          - id: 'audit_reader'
+            permissions:
+              - id: 'audit_reader_action'
+                action:
+                  service: 'audit'
+                  method: 'read'
+          - id: 'library_owner'
+            description: ''
+            permissions:
+            - id: 'library_reader'
+              action:
+                method: read
+                service: 'gen3-user-data-library'
+            - id: 'library_creator'
+              action:
+                method: create
+                service: 'gen3-user-data-library'
+            - id: 'library_updater'
+              action:
+                method: update
+                service: 'gen3-user-data-library'
+            - id: 'library_deleter'
+              action:
+                method: delete
+                service: 'gen3-user-data-library'
+          # All services
+          - id: 'admin'
+            description: ''
+            permissions:
+              - id: 'admin'
+                action:
+                  service: '*'
+                  method: '*'
+          - id: 'creator'
+            description: ''
+            permissions:
+              - id: 'creator'
+                action:
+                  service: '*'
+                  method: 'create'
+          - id: 'updater'
+            description: ''
+            permissions:
+              - id: 'updater'
+                action:
+                  service: '*'
+                  method: 'update'
+          - id: 'deleter'
+            description: ''
+            permissions:
+              - id: 'deleter'
+                action:
+                  service: '*'
+                  method: 'delete'
+          # guppy
+          - id: 'guppy_reader'
+            description: ''
+            permissions:
+            - id: 'guppy_reader'
+              action:
+                method: 'read'
+                service: 'guppy'
+          - id: 'fence_reader'
+            description: ''
+            permissions:
+            - id: 'fence-reader'
+              action:
+                method: 'read'
+                service: 'fence'
+            - id: 'fence_storage_reader'
+              action:
+                method: 'read-storage'
+                service: 'fence'
+          - id: fence_admin
+            permissions:
+            - id: fence_admin
+              action:
+                method: '*'
+                service: fence
+          - id: 'peregrine_reader'
+            description: ''
+            permissions:
+            - id: 'peregrine_reader'
+              action:
+                method: 'read'
+                service: 'peregrine'
+          - id: 'dicom-viewer_reader'
+            description: ''
+            permissions:
+            - id: 'dicom-viewer_reader'
+              action:
+                method: 'read'
+                service: 'dicom-viewer'
+          - id: 'orthanc_reader'
+            description: ''
+            permissions:
+            - id: 'orthanc_reader'
+              action:
+                method: 'read'
+                service: 'orthanc'
+          - id: 'ohif-viewer_reader'
+            description: ''
+            permissions:
+            - id: 'ohif-viewer_reader'
+              action:
+                method: 'read'
+                service: 'ohif-viewer'
+      
+          # Sheepdog
+          - id: 'sheepdog_admin'
+            description: 'sheepdog admin role for program project crud'
+            permissions:
+              - id: 'sheepdog_admin_action'
+                action:
+                  service: 'sheepdog'
+                  method: '*'
+          - id: 'sheepdog_reader'
+            description: ''
+            permissions:
+            - id: 'sheepdog_reader'
+              action:
+                method: 'read'
+                service: 'sheepdog'
+      
+          # indexd
+          - id: 'indexd_admin'
+            description: 'full access to indexd API'
+            permissions:
+              - id: 'indexd_admin'
+                action:
+                  service: 'indexd'
+                  method: '*'
+          - id: 'indexd_record_creator'
+            description: ''
+            permissions:
+              - id: 'indexd_record_creator'
+                action:
+                  service: 'indexd'
+                  method: 'create'
+          - id: 'indexd_record_reader'
+            description: ''
+            permissions:
+              - id: 'indexd_record_reader'
+                action:
+                  service: 'indexd'
+                  method: 'read'
+          - id: 'indexd_record_updater'
+            description: ''
+            permissions:
+              - id: 'indexd_record_updater'
+                action:
+                  service: 'indexd'
+                  method: 'update'
+          - id: 'indexd_delete_record'
+            description: ''
+            permissions:
+              - id: 'indexd_delete_record'
+                action:
+                  service: 'indexd'
+                  method: 'delete'
+          - id: 'indexd_storage_reader'
+            description: ''
+            permissions:
+              - id: 'indexd_storage_reader'
+                action:
+                  service: 'indexd'
+                  method: 'read-storage'
+          - id: 'indexd_storage_writer'
+            description: ''
+            permissions:
+              - id: 'indexd_storage_writer'
+                action:
+                  service: 'indexd'
+                  method: 'write-storage'
+      
+          # arborist
+          - id: 'arborist_creator'
+            description: ''
+            permissions:
+              - id: 'arborist_creator'
+                action:
+                  service: 'arborist'
+                  method: 'create'
+          - id: 'arborist_reader'
+            description: ''
+            permissions:
+              - id: 'arborist_reader'
+                action:
+                  service: 'arborist'
+                  method: 'read'
+          - id: 'arborist_updater'
+            description: ''
+            permissions:
+              - id: 'arborist_updater'
+                action:
+                  service: 'arborist'
+                  method: 'update'
+          - id: 'arborist_deleter'
+            description: ''
+            permissions:
+              - id: 'arborist_deleter'
+                action:
+                  service: 'arborist'
+                  method: 'delete'
+      
+          # Gen3 Workflow
+          - id: workflow_user
+            permissions:
+            - id: workflow_user
+              action:
+                service: gen3-workflow
+                method: create
+          - id: workflow_storage_deleter
+            permissions:
+            - id: workflow_storage_deleter
+              action:
+                service: gen3-workflow
+                method: delete
+      
+      clients:
+        wts:
+          policies:
+          - 'all_programs_reader'
+          - 'open_data_reader'
+          - 'workspace'
+        basic-test-client:
+          policies:
+          - 'abc-admin'
+          - 'gen3-admin'
+        basic-test-abc-client:
+          policies:
+          - 'abc-admin'
+        jenkins-client-tester:
+          policies:
+          - 'requestor_creator'
+          - 'requestor_updater'
+          - 'requestor_reader'
+          - 'indexd_creator'
+        jenkinsClientTester:
+          policies:
+          - 'requestor_creator'
+          - 'requestor_updater'
+          - 'indexd_creator'
+        funnel-plugin-test:
+          policies:
+          - workflow_user
+      
+      users:
+        main@example.org:
+          admin: true
+          policies:
+          - 'data_upload'
+          - 'workspace'
+          - 'mds_admin'
+          - 'sower'
+          - 'services.sheepdog-admin'
+          - 'programs.QA-admin'
+          - 'programs.test-admin'
+          - 'programs.DEV-admin'
+          - 'programs.jnkns-admin'
+          - 'abc-admin'
+          - 'requestor_integration_test'
+          - 'ttyadmin'
+          - 'workflow_admin'
+          - 'workflow_user'
+          - 'workflow_storage_deleter'
+          - 'argo'
+          - 'all_orthanc_studies_viewer'
+          - 'all_orthanc_studies_admin'
+          - 'all_dicom_studies_admin'
+          - 'all_dicom_studies_viewer'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'test'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'DEV'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins2'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jnkns'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+        indexing@example.org:
+          admin: true
+          policies:
+          - 'data_upload'
+          - 'workspace'
+          - 'sower'
+          - 'services.sheepdog-admin'
+          - 'programs.QA-admin'
+          - 'programs.test-admin'
+          - 'programs.DEV-admin'
+          - 'programs.jnkns-admin'
+          - 'abc-admin'
+          - 'indexd_admin'
+          - 'mds_admin'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage', 'write-storage']
+          - auth_id: 'test'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'DEV'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage', 'write-storage']
+          - auth_id: 'jenkins2'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jnkns'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+        user0@example.org:
+          admin: false
+          policies:
+          - 'workspace'
+          - 'sower'
+          - 'requestor_creator'
+          - 'programs.QA-admin'
+          - 'gen3-admin'
+          - 'gen3-hmb-researcher'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+        user1@example.org:
+          admin: false
+          policies:
+          - 'workspace'
+          - 'sower'
+          - 'programs.QA-admin'
+          - 'programs.test-admin'
+          - 'gen3-hmb-researcher'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'test'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+        user2@example.org:
+          admin: false
+          policies:
+          - 'requestor_creator'
+          - 'cedar_admin'
+          - 'sower'
+          projects: []
+        dummy-one@example.org:
+          admin: false
+          policies:
+          - 'workspace'
+          - 'audit_presigned_url_reader'
+          - 'programs.QA-admin'
+          - 'programs.test-admin'
+          - 'programs.jnkns-admin'
+          - 'abc.programs.test_program.projects.test_project1-viewer'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'test'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins2'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jnkns'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+        smarty-two@example.org:
+          admin: false
+          policies:
+          - 'data_upload'
+          - 'workspace'
+          - 'audit_login_reader'
+          - 'services.sheepdog-admin'
+          - 'programs.QA-admin'
+          - 'programs.test-admin'
+          - 'programs.DEV-admin'
+          - 'programs.jnkns-admin'
+          - 'abc.programs.test_program2.projects.test_project3-viewer'
+          projects:
+          - auth_id: 'QA'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'test'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jenkins2'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
+          - auth_id: 'jnkns'
+            privilege: ['create', 'read', 'update', 'delete', 'upload', 'read-storage']
     # Prefix to namespace Google Groups on a single Cloud Identity
     # This will be dynamically replaced by env_setup.sh script.
     GOOGLE_GROUP_PREFIX:
