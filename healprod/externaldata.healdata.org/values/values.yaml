@@ -54,6 +54,7 @@ fence:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.07'
 global:
+  pdb: true
   aws:
     account: '205252583234'
     awsEsProxyRole: healprod--healexternaldata-helm--es-access
@@ -146,6 +147,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.07'
-  replicas: 2
+  replicaCount: 2
 wts:
   enabled: false

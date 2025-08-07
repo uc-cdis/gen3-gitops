@@ -65,6 +65,7 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  pdb: true
   aws:
     account: "885078588865"
     awsEsProxyRole: brhprod--brhprod-helm--es-access

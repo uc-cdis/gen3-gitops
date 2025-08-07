@@ -8,6 +8,13 @@ etl:
     spark:
       repository: "quay.io/cdis/gen3-spark"
       tag: "master"
+  resources:
+    tube:
+      requests:
+        memory: 7Gi
+    spark:
+      requests:
+        memory: 2Gi
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject
