@@ -273,7 +273,7 @@ portal:
                 "name": "Example Analysis",
                 "link": "/resource-browser",
                 "icon": "bar-chart",
-                "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data discovered in the Biomedical Research Hub (BRH) by running a static tutorial notebook, or use one of these examples as a launching point for your own custom analysis.",
+                "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data discovered in the Biomedical Research Hub by running a static tutorial notebook, or use one of these examples as a launching point for your own custom analysis.",
                 "color": "#a2a2a2"
               },
               {
