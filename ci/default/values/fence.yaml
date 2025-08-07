@@ -933,6 +933,7 @@ fence:
         main@example.org:
           admin: true
           policies:
+          - fence_admin
           - 'data_upload'
           - 'workspace'
           - 'mds_admin'
