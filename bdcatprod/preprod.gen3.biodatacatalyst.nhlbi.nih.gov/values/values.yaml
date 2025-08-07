@@ -2131,6 +2131,7 @@ gen3-user-data-library:
     dbcreds: bdcat-internalstaging-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcat-internalstaging-gen3userdatalibrary-g3auto
 global:
+  pdb: true
   aws:
     account: "895962626746"
     awsEsProxyRole: bdcatprod--bdcat-internalstaging-helm--es-access

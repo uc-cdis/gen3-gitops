@@ -143,6 +143,7 @@ frontend-framework:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
     tag: 1.2.3
 global:
+  pdb: true
   aws:
     account: '205252583234'
     awsEsProxyRole: healprod--healprod-helm--es-access
@@ -2556,13 +2557,13 @@ revproxy:
   ingress:
     aws:
       group: healprod
-  replicas: 3
+  replicaCount: 4
 sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.07'
-  replicas: 1
+  replicaCount: 4
 sower:
   serviceAccount:
     # -- (bool) Specifies whether a service account should be created.

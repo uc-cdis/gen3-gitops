@@ -486,6 +486,7 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  pdb: true
   aws:
     account: '813684607867'
     awsEsProxyRole: midrcprod--midrcprod-helm--es-access

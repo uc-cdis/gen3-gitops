@@ -73,6 +73,7 @@ gen3-user-data-library:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
 global:
+  pdb: true
   aws:
     account: '851725307933'
     awsEsProxyRole: pdp-commons--pdp-commons-helm--es-access

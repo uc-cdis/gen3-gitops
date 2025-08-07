@@ -1891,6 +1891,7 @@ gen3-user-data-library:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
 global:
+  pdb: true
   aws:
     account: "895962626746"
     awsEsProxyRole: bdcatprod--bdcatprod-helm--es-access
