@@ -26,8 +26,10 @@ coreDNS:
   configuration:
     enabled: false
 
-crossplane:
-  enabled: true
+crossplane-crds:
+  enable: true
+  useIRSA: true
+  iamRoleName: "crossplane-test-devplanetv2"
 
 ebs-csi-driver:
   enabled: false
