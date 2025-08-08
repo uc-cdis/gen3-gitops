@@ -18,6 +18,9 @@ calico:
   configuration:
     enabled: false
 
+crossplane:
+  enabled: true
+
 coreDNS:
   enabled: true
   configuration:
