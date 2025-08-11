@@ -9,6 +9,11 @@ portal:
   image:
     repository: quay.io/cdis/data-portal
     tag: master
+  customConfig:
+    enabled: true
+    dir: "ci/default/values/portal/"
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: master
   gitops:
     json: |
       {
