@@ -11,6 +11,8 @@ etl:
       # patch to flatten nested array
       tag: "1.0.4"
   esEndpoint: elasticsearch
+  esGarbageCollect:
+    enabled: true
 
   etlMapping:
     mappings:
