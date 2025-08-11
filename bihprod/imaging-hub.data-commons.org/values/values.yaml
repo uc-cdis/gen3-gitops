@@ -129,6 +129,7 @@ frontend-framework:
     repository: quay.io/cdis/bih-data-commons
     tag: 1.2.1
 global:
+  pdb: true
   aws:
     account: '533267425233'
     awsEsProxyRole: bihprod--bihprod-helm--es-access

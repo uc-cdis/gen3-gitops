@@ -144,6 +144,7 @@ frontend-framework:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
     tag: 1.2.3
 global:
+  pdb: true
   aws:
     account: '205252583234'
     awsEsProxyRoleArn: arn:aws:iam::205252583234:role/gen3_service/healprod--healpreprod--es-access
@@ -2567,7 +2568,7 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.07'
-  replicas: 2
+  replicaCount: 4
 sower:
   enabled: true
   externalSecrets:

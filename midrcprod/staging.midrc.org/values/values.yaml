@@ -54,7 +54,7 @@ dicom-server:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-orthanc
     tag: gen3-0.1.2
-  replicas: 1
+  replicaCount: 1
   externalSecrets:
     orthancG3Auto: midrcstaging-orthanc-g3auto
 etl:
@@ -487,6 +487,7 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  pdb: true
   aws:
     account: '813684607867'
     awsEsProxyRole: midrcprod--midrcstaging-helm--es-access
@@ -587,7 +588,7 @@ orthanc:
   image:
     repository: quay.io/cdis/gen3-orthanc
     tag: orthancteam-master-gen3-24.3.5
-  replicas: 1
+  replicaCount: 1
   externalSecrets:
     orthancS3G3Auto: midrcstaging-orthanc-s3-g3auto
 peregrine:

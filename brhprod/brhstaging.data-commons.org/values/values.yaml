@@ -72,6 +72,7 @@ gen3-discovery-ai:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-discovery-ai
     tag: 1.1.0
 global:
+  pdb: true
   aws:
     account: '885078588865'
     awsEsProxyRole: brhprod--brhstaging-helm--es-access

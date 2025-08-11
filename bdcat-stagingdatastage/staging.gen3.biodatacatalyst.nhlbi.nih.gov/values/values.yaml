@@ -251,6 +251,7 @@ gen3-user-data-library:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
 global:
+  pdb: true
   aws:
     account: "895962626746"
     awsEsProxyRole: stagingdatastage--stagingdatastage-helm--es-access
