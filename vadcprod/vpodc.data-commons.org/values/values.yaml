@@ -82,11 +82,13 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: "2025.04"
-fluentd:
+
+frontend-framework:
   enabled: true
   image:
-    repository: fluent/fluentd-kubernetes-daemonset
-    tag: v1.15.3-debian-cloudwatch-1.0
+    repository: quay.io/cdis/vpodc-data-commons
+    tag:main
+
 global:
   pdb: true
   aws:
@@ -101,6 +103,8 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
   dispatcherJobNum: "10"
   environment: vadcprod
+  # change to gen3ff when we want to switch to frontend-framework at root
+  frontendRoot: "portal"
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
