@@ -183,12 +183,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.07'
-  reaper:
-    enabled: true
-    suspendCronjob: false
-    schedule: "1 * * * *"
-    idleTimeoutSeconds: 180    
+    tag: '2025.07'  
   hatchery:
     json: |-
       {
@@ -378,6 +373,11 @@ hatchery:
           }
         ]
       }
+    reaper:
+      enabled: true
+      suspendCronjob: false
+      schedule: "1 * * * *"
+      idleTimeoutSeconds: 180      
 indexd:
   defaultPrefix: dg.H34L/
   replicaCount: 4
