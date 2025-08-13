@@ -2042,7 +2042,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/bdcatprod-external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: "10"
   environment: bdcatprod
   externalSecrets:
