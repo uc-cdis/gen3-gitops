@@ -1,4 +1,14 @@
 portal:
+  # replicaCount: 2
+  resources:
+    limits:
+      memory: 6Gi
+    requests:
+      cpu: 4
+      memory: 6Gi
+  image:
+    repository: quay.io/cdis/data-portal
+    tag: master
   customConfig:
     enabled: true
     dir: "ci/default/values/portal/"
