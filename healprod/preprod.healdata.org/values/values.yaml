@@ -373,6 +373,12 @@ hatchery:
           }
         ]
       }
+  workspace_launch_test:
+    workspace_launch_test: true
+    schedule: "0 * * * *"
+    workspaceImages: "(Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example Analysis Jupyter Lab Notebooks"
+    operatorName: "planxdemo@gmail.com"
+    hostname: "https://preprod.healdata.org"
 indexd:
   defaultPrefix: dg.H34L/
   replicaCount: 4
