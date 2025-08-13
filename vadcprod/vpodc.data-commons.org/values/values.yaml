@@ -103,8 +103,8 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
   dispatcherJobNum: "10"
   environment: vadcprod
-  # change to gen3ff when we want to switch to frontend-framework at root
-  frontendRoot: "portal"
+  # change to gen3ff / portal when we want to switch between portal or fefw
+  frontendRoot: "gen3ff"
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
