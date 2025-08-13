@@ -2107,6 +2107,147 @@ fence:
       nih-nhlbi-topmed-parent-fhs-phs000007-v34-r1-c2:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-biolincc-ipfnet-step-ipf-phs004085-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-nett-phs004077-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-petal-clovers-phs004080-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-cardia-phs003045-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-cardia-phs003045-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-ben-phs000507-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-broadeomi-exome-phs000936-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-broadeomi-exome-phs000936-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-broadeomi-exome-phs000936-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-cap-phs000481-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-drugres-htn-phs000442-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-endothelial-pah-phs000998-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-exome-thrombo-leuk-phs000873-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-exrna-healthy-phs001258-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-fam-chd-phs000758-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-fam-dc-phs000581-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-fam-fa-phs000362-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-fam-ib-phs000518-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-genoa-phs000379-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-globin-ips-phs001212-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-kcne1-tdp-phs000617-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-ex-ul-phs000990-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-exs-italamer-phs000814-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-exs-mdc-phs001101-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-exs-ottawa-phs000806-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-exs-promis-phs000917-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-migen-exs-regicor-phs000902-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-pgrn-ace-phs000438-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-pgrn-cardio-stat-phs000963-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-pgrn-dilqts-phs000808-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hf-twins-asthma-phs000886-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hfn-fam-pah-phs000354-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hfn-lhs-phs000335-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-imaging-dmri-vgc-phs004002-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-regards-gwas-phs002719-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-rose-ards-phs003929-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-chirah-phs001605-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-gcpd-phs001661-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-aric-phs000280-v8-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-aric-phs000280-v8-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-cardia-phs000285-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-cardia-phs000285-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-jhs-phs000286-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-jhs-phs000286-v7-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-jhs-phs000286-v7-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-jhs-phs000286-v7-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-sumstats-phs001974-r1-v8-c1:
+        cred: fence-bot
+        region: us-east-1        
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
