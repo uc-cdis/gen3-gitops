@@ -26,7 +26,7 @@ arborist:
     dbcreds: "chords_staging-arborist-db-creds"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2025.03
+    tag: 2025.08
 
 aws-es-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
@@ -46,7 +46,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2025.03
+    tag: 2025.08
 
 peregrine:
   # temporarily scaling up peregrine so it can handle the extra load without giving a 502.
@@ -67,7 +67,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2025.03
+    tag: 2025.08
 
 sheepdog:
   externalSecrets:
@@ -75,14 +75,14 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 5.2.2
+    tag: 2025.08
   fenceUrl: https://staging.chordshealth.org/user
 
 manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2025.03
+    tag: 2025.08
   externalSecrets:
     manifestserviceG3auto: "chords_staging-manifestservice-g3auto"
 
@@ -90,7 +90,7 @@ ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2025.03
+    tag: 2025.08
   externalSecrets:
     createK8sSsjdispatcherSecret: true
 
@@ -102,7 +102,7 @@ metadata:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2025.03
+    tag: 2025.08
     esEndpoint: http://elasticsearch:9200
 
 # disabling workspace services
@@ -131,4 +131,4 @@ etl:
     # patch to flatten nested array
     tube:
       # -- (string) Overrides the image tag whose default is the chart appVersion.
-      tag: "1.0.4"
+      tag: "2025.08"
