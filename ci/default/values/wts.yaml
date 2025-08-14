@@ -3,7 +3,7 @@ wts:
   enabled: true
   image:
     repository: "quay.io/cdis/workspace-token-service"
-    tag: "master"
+    tag: "integration202509"
   externalSecrets:
     createWtsOidcClientSecret: true
     createK8sWtsSecret: true

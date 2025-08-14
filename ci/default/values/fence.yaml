@@ -14,7 +14,7 @@ fence:
   image:
     repository: quay.io/cdis/fence
     pullPolicy: IfNotPresent
-    tag: "master"
+    tag: "integration202509"
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml

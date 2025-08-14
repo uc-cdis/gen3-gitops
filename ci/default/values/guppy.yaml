@@ -10,7 +10,7 @@ guppy:
   dbRestore: false
   image:
     repository: quay.io/cdis/guppy
-    tag: master
+    tag: integration202509
   indices:
     - index: ci_subject_alias
       type: subject

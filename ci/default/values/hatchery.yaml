@@ -1,7 +1,7 @@
 hatchery:
   replicaCount: 2
   image:
-    tag: master
+    tag: integration202509
   hatchery:
     containers:
       - target-port: 8888

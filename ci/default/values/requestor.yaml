@@ -3,4 +3,4 @@ requestor:
   enabled: true
   image:
     repository: "quay.io/cdis/requestor"
-    tag: "master"
+    tag: "integration202509"

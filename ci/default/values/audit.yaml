@@ -11,7 +11,7 @@ audit:
     createK8sAuditSecret: true
   image:
     repository: quay.io/cdis/audit-service
-    tag: 'master'
+    tag: 'integration202509'
   server:
     pull_from_queue: true
     debug: true

@@ -7,4 +7,4 @@ arborist:
   enabled: true
   image:
     repository: "quay.io/cdis/arborist"
-    tag: "master"
+    tag: "integration202509"

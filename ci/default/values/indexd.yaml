@@ -9,7 +9,7 @@ indexd:
   enabled: true
   image:
     repository: "quay.io/cdis/indexd"
-    tag: "master"
+    tag: "integration202509"
   externalSecrets:
     createK8sServiceCredsSecret: true
   secrets:

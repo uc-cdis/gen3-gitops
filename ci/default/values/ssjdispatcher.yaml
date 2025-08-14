@@ -2,7 +2,7 @@ ssjdispatcher:
   replicaCount: 2
   image:
     repository: quay.io/cdis/ssjdispatcher
-    tag: 'master'
+    tag: 'integration202509'
   enabled: true
   indexing: quay.io/cdis/indexs3client:master
   ssjcreds:

@@ -2,7 +2,7 @@ metadata:
   replicaCount: 2
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 'master'
+    tag: 'integration202509'
   resources:
     # -- (map) The amount of resources that the container requests
     requests:
