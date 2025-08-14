@@ -15,6 +15,7 @@ jobs:
     with:
       GEN3_INSTANCE_TYPE: HELM_LOCAL
       TEST_REPO_BRANCH: chore/test_configmaps_storage
+      HELM_BRANCH: feat/portal-config
     secrets:
       CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
       CI_AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_AWS_SECRET_ACCESS_KEY }}
