@@ -125,10 +125,3 @@ audit:
 # disabling argo-wrapper service
 argo-wrapper:
   enabled: false
-
-etl:
-  image:
-    # patch to flatten nested array
-    tube:
-      # -- (string) Overrides the image tag whose default is the chart appVersion.
-      tag: "2025.08"
