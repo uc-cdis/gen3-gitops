@@ -1,28 +1,23 @@
 ssjdispatcher:
-  replicaCount: 2
+  enabled: true
+  externalSecrets:
+    createK8sSsjdispatcherSecret: true
+  gen3Namespace: default
   image:
     repository: quay.io/cdis/ssjdispatcher
-    tag: 'master'
-  enabled: true
-  indexing: quay.io/cdis/indexs3client:master
-  ssjcreds:
-    # This will be dynamically replaced by env_setup.sh script.
-    sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
-    # This will be dynamically replaced by env_setup.sh script.
-    jobPattern: "s3://gen3-helm-data-upload-bucket/<environment name>/*"
-    # This will be dynamically replaced by env_setup.sh script.
-    jobPassword: "replace_with_password"
-    # This will be dynamically replaced by env_setup.sh script.
-    metadataservicePassword: "replace_with_password"
-  serviceAccount:
-    create: true
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role
-    name: "ssjdispatcher-service-account"
+    tag: integration202509
+  indexing: quay.io/cdis/indexs3client:integration202509
   jobServiceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role-job
-  externalSecrets:
-    createK8sSsjdispatcherSecret: true
-  # This will be dynamically replaced by env_setup.sh script.
-  gen3Namespace: default
+  replicaCount: 2
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ssjdispatcher-role
+    create: true
+    name: ssjdispatcher-service-account
+  ssjcreds:
+    jobPassword: replace_with_password
+    jobPattern: s3://gen3-helm-data-upload-bucket/<environment name>/*
+    metadataservicePassword: replace_with_password
+    sqsUrl: https://sqs.us-east-1.amazonaws.com/707767160287/gen3-helm-data-upload-bucket
