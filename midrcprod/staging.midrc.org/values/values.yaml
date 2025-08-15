@@ -496,7 +496,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.9/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.0/schema.json
   dispatcherJobNum: '10'
   environment: midrcstaging
   externalSecrets:
