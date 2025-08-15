@@ -4,7 +4,7 @@ guppy:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
     tag: 2025.08
-  esEndpoint: elasticsearch:9200
+  esEndpoint: http://elasticsearch:9200
 
   indices:
     - index: chordstaging_geospatial_data_resource
