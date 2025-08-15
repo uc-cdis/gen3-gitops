@@ -18,7 +18,7 @@ global:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
-  tierAccessLevel: regular
+  tierAccessLevel: libre
   fenceURL: https://staging.chordshealth.org/user
 
 arborist:
