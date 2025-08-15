@@ -13,11 +13,12 @@ global:
   dictionaryUrl: "https://dictionary-artifacts.s3.us-east-1.amazonaws.com/chords-health-dictionary/link_fix/CHORDS_schema_1.5.4.json"
   postgres:
     dbCreate: false
-    externalSecret: "chords_aurora-master-password"
+    # externalSecret: "chords-aurora-master-password"
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
+  tierAccessLevel: regular
   fenceURL: https://staging.chordshealth.org/user
 
 arborist:
