@@ -53,6 +53,9 @@ fence:
       nci-cbiit-clinical-cmb-stage:
         cred: 'fence_bot'
         region: 'us-east-1'
+      popsci-prod-files-dedicated-bucket:
+        cred: 'fence_bot'
+        region: 'us-east-1'
       tcga-protected-dcf-databucket-gen3:
         cred: 'fence_bot'
       tcga-public-dcf-databucket-gen3:
