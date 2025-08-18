@@ -266,6 +266,7 @@ metadata:
           "subject_cancer_grade": {},
           "subject_cancer_stage": {},
           "subject_year_of_birth": {},
+          "subject_days_to_birth": {},
           "subject_primary_disease": {},
           "subject_type_of_exposure": {},
           "subject_type_of_exposures": {
@@ -616,7 +617,7 @@ metadata:
               },
               "default": ""
             },
-            "subject_year_of_birth": {
+            "subject_days_to_birth": {
               "path": "year_of_birth",
               "default": ""
             },
