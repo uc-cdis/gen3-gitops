@@ -254,6 +254,12 @@ fence:
       cds-596-phs004081-nctn-aml-ds:
         cred: "fence_bot"
         region: "us-east-1"
+      cds-612-phs003987:
+        cred: "fence_bot"
+        region: "us-east-1"
+      cds-614-phs004222:
+        cred: "fence_bot"
+        region: "us-east-1"
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: "fence_bot"
         region: "us-east-1"
@@ -584,13 +590,34 @@ fence:
       kf-strides-study-us-east-1-prd-sd-1nns3k8v-nci:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-15a2mqq9-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-2cekq05v-nci:
         cred: "fence_bot"
         region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-54g4wg4r-nci:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-aq9kvn5p-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-cp7yk94e-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-p3a9dchj-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-r0eprsgs-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-w6fwtd8a-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-x8vk5yht-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-strides-study-us-east-1-prd-sd-z6mwd3h0-nci:
         cred: "fence_bot"
         region: "us-east-1"
       match-b-phs002028-controlled:
@@ -656,7 +683,7 @@ fence:
       tcga-public-dcf-databucket-gen3:
         cred: "fence_bot"
         region: "us-east-1"
-    GS_BUCKETS::
+    GS_BUCKETS:
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: ""
         region: ""

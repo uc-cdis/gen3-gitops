@@ -1,5 +1,9 @@
 revproxy:
   replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/nginx"
+    tag: "master"
   ingress:
     enabled: true
     annotations:
