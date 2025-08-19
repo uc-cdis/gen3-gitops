@@ -6,7 +6,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.04'
+    tag: '2025.08'
 audit:
   replicaCount: 2
   externalSecrets:
@@ -28,7 +28,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.04'
+    tag: '2025.08'
   podSecurityContext:
     fsGroup: 1001
   securityContext:
@@ -114,7 +114,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.04'
+    tag: '2025.08'
   indices:
   - index: pdp-commons-commons-index
     type: metadata
@@ -123,7 +123,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.04'
+    tag: '2025.08'
   hatchery:
     json: |
         {
@@ -137,7 +137,7 @@ hatchery:
             "sidecar": {
                 "cpu-limit": "1.0",
                 "memory-limit": "256Mi",
-                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
+                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.08",
                 "env": {
                     "NAMESPACE": "default",
                     "HOSTNAME": "mc2dp.data-commons.org"
@@ -201,7 +201,7 @@ indexd:
     serviceCreds: pdp-commons-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.04'
+    tag: '2025.08'
 manifestservice:
   replicaCount: 2
   enabled: true
@@ -209,7 +209,7 @@ manifestservice:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.04'
+    tag: '2025.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--manifest-service-sa
@@ -1314,7 +1314,7 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.04'
+    tag: '2025.08'
 portal:
   enabled: false
 
@@ -1322,13 +1322,13 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.04'
+    tag: '2025.08'
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.04'
+    tag: '2025.08'
   ingress:
     aws:
       group: pdp-commons
@@ -1336,7 +1336,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.04'
+    tag: '2025.08'
   replicaCount: 2
 ssjdispatcher:
   enabled: false
@@ -1344,8 +1344,8 @@ ssjdispatcher:
     credsFile: pdp-commons-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.04'
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04
+    tag: '2025.08'
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.08
 wts:
   enabled: true
   replicaCount: 2
@@ -1355,4 +1355,4 @@ wts:
     wtsOidcClient: pdp-commons-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.04'
+    tag: '2025.08'
