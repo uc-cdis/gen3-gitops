@@ -2644,121 +2644,121 @@ sower:
   enabled: true
   externalSecrets:
     createK8sPelicanServiceSecret: false
-    createK8sSowerJobsSecret: true
     pelicanserviceG3auto: bdcatprod-pelicanservice-g3auto
+    createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: integration202509
+    tag: "integration202509"
   sowerConfig:
-  - action: export
-    container:
-      cpu-limit: '1'
-      env:
-      - name: DICTIONARY_URL
-        valueFrom:
-          configMapKeyRef:
-            key: dictionary_url
-            name: manifest-global
-      - name: DB_HOST
-        valueFrom:
-          secretKeyRef:
-            key: host
-            name: sheepdog-dbcreds
-      - name: DB_DATABASE
-        valueFrom:
-          secretKeyRef:
-            key: database
-            name: sheepdog-dbcreds
-      - name: DB_USER
-        valueFrom:
-          secretKeyRef:
-            key: username
-            name: sheepdog-dbcreds
-      - name: DB_PASS
-        valueFrom:
-          secretKeyRef:
-            key: password
-            name: sheepdog-dbcreds
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      - name: ROOT_NODE
-        value: subject
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202509
-      memory-limit: 12Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /pelican-creds.json
-        name: pelican-creds-volume
-        readOnly: true
-        subPath: config.json
-    name: pelican-export
-    restart_policy: Never
-    volumes:
-    - name: pelican-creds-volume
-      secret:
-        secretName: pelicanservice-g3auto
-  - action: export-files
-    container:
-      cpu-limit: '1'
-      env:
-      - name: DICTIONARY_URL
-        valueFrom:
-          configMapKeyRef:
-            key: dictionary_url
-            name: manifest-global
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      - name: ROOT_NODE
-        value: file
-      - name: EXTRA_NODES
-        value: ''
-      - name: DB_HOST
-        valueFrom:
-          secretKeyRef:
-            key: host
-            name: sheepdog-dbcreds
-      - name: DB_DATABASE
-        valueFrom:
-          secretKeyRef:
-            key: database
-            name: sheepdog-dbcreds
-      - name: DB_USER
-        valueFrom:
-          secretKeyRef:
-            key: username
-            name: sheepdog-dbcreds
-      - name: DB_PASS
-        valueFrom:
-          secretKeyRef:
-            key: password
-            name: sheepdog-dbcreds
-      - name: SHEEPDOG
-        valueFrom:
-          secretKeyRef:
-            key: sheepdog
-            name: indexd-service-creds
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202509
-      memory-limit: 12Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /pelican-creds.json
-        name: pelican-creds-volume
-        readOnly: true
-        subPath: config.json
-    name: pelican-export-files
-    restart_policy: Never
-    volumes:
-    - name: pelican-creds-volume
-      secret:
-        secretName: pelicanservice-g3auto
+    - action: export
+      container:
+        cpu-limit: "1"
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                key: dictionary_url
+                name: manifest-global
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+          - name: ROOT_NODE
+            value: subject
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202509
+        memory-limit: 12Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /pelican-creds.json
+            name: pelican-creds-volume
+            readOnly: true
+            subPath: config.json
+      name: pelican-export
+      restart_policy: Never
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto
+    - action: export-files
+      container:
+        cpu-limit: "1"
+        env:
+          - name: DICTIONARY_URL
+            valueFrom:
+              configMapKeyRef:
+                key: dictionary_url
+                name: manifest-global
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+          - name: ROOT_NODE
+            value: file
+          - name: EXTRA_NODES
+            value: ""
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: host
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: database
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: username
+          - name: DB_PASS
+            valueFrom:
+              secretKeyRef:
+                name: sheepdog-dbcreds
+                key: password
+          - name: SHEEPDOG
+            valueFrom:
+              secretKeyRef:
+                name: indexd-service-creds
+                key: sheepdog
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202509
+        memory-limit: 12Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /pelican-creds.json
+            name: pelican-creds-volume
+            readOnly: true
+            subPath: config.json
+      name: pelican-export-files
+      restart_policy: Never
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto
 spark:
   enabled: true
   image:
