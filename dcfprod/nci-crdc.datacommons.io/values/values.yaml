@@ -587,6 +587,9 @@ fence:
       iodc-cimac-nctns1400i-phs003412:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-seq-data-hudsonalpha:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-1nns3k8v-nci:
         cred: "fence_bot"
         region: "us-east-1"
@@ -618,6 +621,33 @@ fence:
         cred: "fence_bot"
         region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-z6mwd3h0-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-0tyvy1tw:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-6fpyjqbr:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-b8x3c1mx:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dz4gpqx6:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-nmvv8a1y:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-r0eprsgs:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-w0v965xz:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-z0d9n23x: 
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-zfgdg5ys:
         cred: "fence_bot"
         region: "us-east-1"
       match-b-phs002028-controlled:
