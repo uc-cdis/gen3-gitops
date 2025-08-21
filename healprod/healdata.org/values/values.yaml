@@ -1616,7 +1616,10 @@ portal:
     enabled: true
     dir: "healprod/healdata.org/values/portal/"
     repo: https://github.com/uc-cdis/gen3-gitops.git
-    branch: chore/test_heal_portal_custom_config
+    branch: master
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
+    tag: "master"
 requestor:
   enabled: true
   image:
