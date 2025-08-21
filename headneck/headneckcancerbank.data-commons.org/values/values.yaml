@@ -1,7 +1,8 @@
 global:
   aws:
     enabled: true
-    account: 419939494982
+    account: "419939494982"
+    awsEsProxyRole: gen3-service/headneck-esproxy-sa
     hatchery_role: arn:aws:iam::419939494982:role/gen3-service/headneck-default-hatchery-sa
     secretStoreServiceAccount:
       enabled: true
@@ -30,7 +31,7 @@ global:
   #     - 172.24.192.128/25
   #     - 172.24.192.0/25
   dispatcherJobNum: "10"
-  frontendRoot: "gen3ff"
+  frontendRoot: "portal"
   ddEnabled: false
 
 ambassador:
@@ -90,6 +91,174 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "headneck_default-dicom-viewer-creds"
 
+etl:
+  image:
+    tube:
+      # -- (string) Overrides the image tag whose default is the chart appVersion.
+      tag: "jawad-debug"
+      pullPolicy: Always 
+  esEndpoint: elasticsearch
+  etlMapping:
+    mappings:
+      - name: hnc_dataset
+        doc_type: dataset
+        type: aggregator
+        root: dataset
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: data_description
+        joining_props:
+          - index: data_file
+            join_on: _dataset_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+      - name: hnc_subject
+        doc_type: subject
+        type: aggregator
+        root: subject
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: MRN
+          - name: Cancer_Status_Desc
+          - name: Cause_of_Death_Desc
+          - name: Class_of_Case_Desc
+          - name: Date_of_Birth
+          - name: Date_of_Last_Contact
+          - name: Ethnicity
+          - name: Primary_Payer_at_DX_Desc
+          - name: Race_1_Desc
+          - name: Sex_Desc
+          - name: Spanish_Hispanic_Origin_Desc
+          - name: Vital_Status_Desc
+          - name: date_of_death
+          - name: gender
+          - name: race
+        nested_props:
+          - name: treatment
+            path: treatment
+            props:
+              - name: Date_of_First_Surgery
+              - name: First_Course_Chemotherapy_Date
+              - name: First_Course_Chemotherapy_Hosp_Desc
+              - name: First_Course_Dx_Staging_Proc_Hosp_Desc
+              - name: First_Course_Immunotherapy_Date
+              - name: First_Course_Immunotherapy_Hosp_Desc
+              - name: Rx_Code_Desc
+              - name: Rx_Course_Desc
+              - name: Rx_Start_Date
+              - name: Rx_Type
+              - name: Rx_Type_Desc
+              - name: Subseq_Course_Rx_Summary
+              - name: Treatment_This_Facility_Desc
+          - name: visit
+            path: visit
+            props:
+              - name: ADM_DATE
+              - name: CRDW_END_DATE
+              - name: CRDW_START_DATE
+              - name: DISC_DATE
+              - name: dx_name
+              - name: dx_rank
+              - name: icd10_code
+              - name: icd9_code
+          - name: diagnosis
+            path: diagnosis
+            props:
+              - name: CS_Mets_at_Dx_Bone_Desc
+              - name: CS_Mets_at_Dx_Brain_Desc
+              - name: CS_Mets_at_Dx_Liver_Desc
+              - name: CS_Mets_at_Dx_Lung_Desc
+              - name: CS_Site_Specific_Factor_1
+              - name: CS_Site_Specific_Factor_10
+              - name: CS_Site_Specific_Factor_2
+              - name: CS_Site_Specific_Factor_3
+              - name: CS_Site_Specific_Factor_4
+              - name: CS_Site_Specific_Factor_5
+              - name: CS_Site_Specific_Factor_6
+              - name: CS_Site_Specific_Factor_7
+              - name: CS_Site_Specific_Factor_8
+              - name: CS_Site_Specific_Factor_9
+              - name: Clinical_M
+              - name: Clinical_N
+              - name: Clinical_Stage_Group
+              - name: Clinical_T
+              - name: Date_of_First_Contact
+              - name: Date_of_Initial_Diagnosis
+              - name: Laterality
+              - name: Mets_at_Dx_Distant_LN
+              - name: Mets_at_Dx_Other
+              - name: Pathologic_M
+              - name: Pathologic_N
+              - name: Pathologic_Stage_Descriptor
+              - name: Pathologic_Stage_Group
+              - name: Pathologic_T
+              - name: Primary_Site
+              - name: Primary_Site_Desc
+              - name: Regional_Nodes_Exam
+              - name: Regional_Nodes_Positive
+              - name: Site_of_Distant_Metastasis_1_Desc
+              - name: Site_of_Distant_Metastasis_2_Desc
+              - name: Site_of_Distant_Metastasis_3_Desc
+              - name: Size_of_Tumor
+              - name: TNM_Edition_Number_Desc
+              - name: Tumor_Size_Clinical
+              - name: Tumor_Size_Pathological
+              - name: Tumor_Size_Summary
+        joining_props:
+          - index: data_file
+            join_on: _subject_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+      - name: hnc_data_file
+        doc_type: data_file
+        type: collector
+        root: None
+        category: data_file
+        props:
+          - name: source_node
+          - name: project_id
+          - name: submitter_id
+          - name: object_id
+          - name: file_name
+          - name: data_format
+          - name: data_type
+          - name: data_category
+        injecting_props:
+          dataset:
+            props:
+              - name: _dataset_id
+                src: id
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+
 
 fence:
   # Lower cost
@@ -109,7 +278,7 @@ fence:
     fenceGoogleStorageCredsSecret: ""
     createK8sJwtKeysSecret: true
     createK8sGoogleAppSecrets: true
-    createK8sFenceConfigSecret: true
+    createK8sFenceConfigSecret: false
     dbcreds: "headneck_default-fence-creds"
 
 
@@ -130,7 +299,7 @@ frontend-framework:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/cdis/commons-frontend-app
     tag: main
@@ -139,12 +308,22 @@ grafana:
   enabled: false
 
 guppy:
+  esEndpoint: elasticsearch:9200
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: false
+  enabled: true
+  indices:
+    - index: hnc_dataset
+      type: dataset
+    - index: hnc_subject
+      type: subject
+    - index: hnc_data_file
+      type: data_file  
+  configIndex: hnc_array-config 
+
 
 hatchery:
   # Lower cost
@@ -212,7 +391,7 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
-  defaultPrefix: dg.XXXX/
+  defaultPrefix: dg.HN3CK/
   externalSecrets:
     dbcreds: "headneck_default-indexd-creds"
     createK8sServiceCredsSecret: true
@@ -252,13 +431,544 @@ peregrine:
       cpu: "15m"
   enabled: true
   externalSecrets:
-    dbcreds: "headneck_default-sheepdg-creds"
+    dbcreds: "headneck_default-sheepdog-creds"
 
 pidgin:
   enabled: false
 
 portal:
   enabled: true
+  image:
+    tag: fix_gqlhelper
+  gitops:
+    json: |
+      {
+        "graphql": {
+          "boardCounts": [],
+          "chartCounts": [],
+          "projectDetails": "boardCounts"
+        },
+        "components": {
+          "appName": "Head and Neck Cancer Bank",
+          "index": {
+            "introduction": {
+              "heading": "Head and Neck Cancer Bank",
+              "text": "The Head and Neck Cancer Bank supports the management, analysis and sharing of data for the research community.",
+              "link": "/submission"
+            },
+            "buttons": [
+              {
+                "name": "Define Data Field",
+                "icon": "data-field-define",
+                "body": "The Head and Neck Cancer Bank define the data in a general way. Please study the dictionary before you start browsing.",
+                "link": "/DD",
+                "label": "Learn more"
+              },
+              {
+                "name": "Explore Data",
+                "icon": "data-explore",
+                "body": "The Exploration Page gives you insights and a clear overview under selected factors.",
+                "link": "/explorer",
+                "label": "Explore data"
+              },
+              {
+                "name": "Access Data",
+                "icon": "data-access",
+                "body": "Use our selected tool to filter out the data you need.",
+                "link": "/query",
+                "label": "Query data"
+              },
+              {
+                "name": "Submit Data",
+                "icon": "data-submit",
+                "body": "Submit Data based on the dictionary.",
+                "link": "/submission",
+                "label": "Submit data"
+              }
+            ]
+          },
+          "navigation": {
+            "title": "Head and Neck Cancer Bank",
+            "items": [
+              {
+                "icon": "dictionary",
+                "link": "/DD",
+                "color": "#a2a2a2",
+                "name": "Dictionary"
+              },
+              {
+                "icon": "exploration",
+                "link": "/explorer",
+                "color": "#a2a2a2",
+                "name": "Exploration"
+              },
+              {
+                "icon": "query",
+                "link": "/query",
+                "color": "#a2a2a2",
+                "name": "Query"
+              },
+              {
+                "icon": "workspace",
+                "link": "/workspace",
+                "color": "#a2a2a2",
+                "name": "Workspace"
+              },
+              {
+                "icon": "profile",
+                "link": "/identity",
+                "color": "#a2a2a2",
+                "name": "Profile"
+              }
+            ]
+          },
+          "topBar": {
+            "items": [
+              {
+                "icon": "upload",
+                "link": "/submission",
+                "name": "Submit Data"
+              },
+              {
+                "link": "https://gen3.org/resources/user",
+                "name": "Documentation"
+              }
+            ]
+          },
+          "login": {
+            "title": "Head and Neck Cancer Bank",
+            "subTitle": "Explore, Analyze, and Share Data",
+            "text": "This website supports the management, analysis and sharing of human disease data for the research community and aims to advance basic understanding of the genetic basis of complex traits and accelerate discovery and development of therapies, diagnostic tests, and other technologies for diseases like cancer.",
+            "contact": "If you have any questions about access or the registration process, please contact ",
+            "email": "support@gen3.org"
+          },
+          "certs": {},
+          "footerLogos": [
+            {
+              "src": "/src/img/gen3.png",
+              "href": "https://ctds.uchicago.edu/gen3",
+              "alt": "Gen3 Data Commons"
+            },
+            {
+              "src": "/src/img/createdby.png",
+              "href": "https://ctds.uchicago.edu/",
+              "alt": "Center for Translational Data Science at the University of Chicago"
+            }
+          ]
+        },
+        "requiredCerts": [],
+        "featureFlags": {
+          "explorer": true,
+          "noIndex": true,
+          "analysis": false,
+          "discovery": false,
+          "discoveryUseAggMDS": false,
+          "studyRegistration": false
+        },
+        "explorerConfig": [
+          {
+            "tabTitle": "Datasets",
+            "charts": {},
+            "filters": {
+              "tabs": [
+                {
+                  "title": "Datasets",
+                  "searchFields": [
+                    "data_description"
+                  ],
+                  "fields": [
+                    "project_id"
+                  ]
+                }
+              ]
+            },
+            "table": {
+              "enabled": true,
+              "fields": [
+                "project_id",
+                "data_description",
+                "submitter_id"
+              ]
+            },
+            "dropdowns": {
+              "download-table": {
+                "title": "Download Table"
+              }
+            },
+            "buttons": [
+              {
+                "enabled": true,
+                "type": "data-json",
+                "title": "JSON",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "datasets_table.json"
+              },
+              {
+                "enabled": true,
+                "type": "data-tsv",
+                "title": "TSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "datasets_table.tsv"
+              },
+              {
+                "enabled": true,
+                "type": "data-csv",
+                "title": "CSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "datasets_table.csv"
+              }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+              "dataType": "dataset",
+              "nodeCountTitle": "Datasets",
+              "fieldMapping": [
+                {
+                  "field": "project_id",
+                  "name": "Project ID"
+                },
+                {
+                  "field": "submitter_id",
+                  "name": "Dataset ID"
+                }
+              ],
+              "accessibleFieldCheckList": [
+                "project_id"
+              ],
+              "accessibleValidationField": "project_id"
+            }
+          },
+          {
+            "tabTitle": "Subjects",
+            "charts": {},
+            "filters": {
+              "tabs": [
+                {
+                  "title": "Demographics",
+                  "searchFields": [
+                    "submitter_id"
+                  ],
+                  "fields": [
+                    "Sex_Desc",
+                    "race",
+                    "Ethnicity",
+                    "project_id"
+                  ]
+                },
+                {
+                  "title": "Treatments",
+                  "fields": [
+                    "treatment.Date_of_First_Surgery",
+                    "treatment.First_Course_Chemotherapy_Date",
+                    "treatment.First_Course_Chemotherapy_Hosp_Desc",
+                    "treatment.First_Course_Dx_Staging_Proc_Hosp_Desc",
+                    "treatment.First_Course_Immunotherapy_Date",
+                    "treatment.First_Course_Immunotherapy_Hosp_Desc",
+                    "treatment.Rx_Code_Desc",
+                    "treatment.Rx_Course_Desc",
+                    "treatment.Rx_Start_Date",
+                    "treatment.Rx_Type",
+                    "treatment.Rx_Type_Desc",
+                    "treatment.Subseq_Course_Rx_Summary",
+                    "treatment.Treatment_This_Facility_Desc"
+                  ]
+                },
+                {
+                  "title": "Diagnoses",
+                  "fields": [
+                    "diagnosis.CS_Mets_at_Dx_Bone_Desc",
+                    "diagnosis.CS_Mets_at_Dx_Brain_Desc",
+                    "diagnosis.CS_Mets_at_Dx_Liver_Desc",
+                    "diagnosis.CS_Mets_at_Dx_Lung_Desc",
+                    "diagnosis.CS_Site_Specific_Factor_1",
+                    "diagnosis.CS_Site_Specific_Factor_2",
+                    "diagnosis.CS_Site_Specific_Factor_3",
+                    "diagnosis.CS_Site_Specific_Factor_4",
+                    "diagnosis.CS_Site_Specific_Factor_5",
+                    "diagnosis.CS_Site_Specific_Factor_6",
+                    "diagnosis.CS_Site_Specific_Factor_7",
+                    "diagnosis.CS_Site_Specific_Factor_8",
+                    "diagnosis.CS_Site_Specific_Factor_9",
+                    "diagnosis.CS_Site_Specific_Factor_10",
+                    "diagnosis.Clinical_M",
+                    "diagnosis.Clinical_N",
+                    "diagnosis.Clinical_Stage_Group",
+                    "diagnosis.Clinical_T",
+                    "diagnosis.Date_of_First_Contact",
+                    "diagnosis.Date_of_Initial_Diagnosis",
+                    "diagnosis.Laterality",
+                    "diagnosis.Mets_at_Dx_Distant_LN",
+                    "diagnosis.Mets_at_Dx_Other",
+                    "diagnosis.Pathologic_M",
+                    "diagnosis.Pathologic_N",
+                    "diagnosis.Pathologic_Stage_Descriptor",
+                    "diagnosis.Pathologic_Stage_Group",
+                    "diagnosis.Pathologic_T",
+                    "diagnosis.Primary_Site",
+                    "diagnosis.Primary_Site_Desc",
+                    "diagnosis.Regional_Nodes_Exam",
+                    "diagnosis.Regional_Nodes_Positive",
+                    "diagnosis.Site_of_Distant_Metastasis_1_Desc",
+                    "diagnosis.Site_of_Distant_Metastasis_2_Desc",
+                    "diagnosis.Site_of_Distant_Metastasis_3_Desc",
+                    "diagnosis.Size_of_Tumor",
+                    "diagnosis.TNM_Edition_Number_Desc",
+                    "diagnosis.Tumor_Size_Clinical",
+                    "diagnosis.Tumor_Size_Pathological",
+                    "diagnosis.Tumor_Size_Summary"
+                  ]
+                }
+              ]
+            },
+            "table": {
+              "enabled": true,
+              "fields": [
+                "project_id",
+                "submitter_id",
+                "Sex_Desc",
+                "race",
+                "Ethnicity",
+                "treatment.Date_of_First_Surgery",
+                "treatment.First_Course_Chemotherapy_Date",
+                "treatment.First_Course_Chemotherapy_Hosp_Desc",
+                "treatment.First_Course_Dx_Staging_Proc_Hosp_Desc",
+                "treatment.First_Course_Immunotherapy_Date",
+                "treatment.First_Course_Immunotherapy_Hosp_Desc",
+                "treatment.Rx_Code_Desc",
+                "treatment.Rx_Course_Desc",
+                "treatment.Rx_Start_Date",
+                "treatment.Rx_Type",
+                "treatment.Rx_Type_Desc",
+                "treatment.Subseq_Course_Rx_Summary",
+                "treatment.Treatment_This_Facility_Desc",
+                "diagnosis.CS_Mets_at_Dx_Bone_Desc",
+                "diagnosis.CS_Mets_at_Dx_Brain_Desc",
+                "diagnosis.CS_Mets_at_Dx_Liver_Desc",
+                "diagnosis.CS_Mets_at_Dx_Lung_Desc",
+                "diagnosis.CS_Site_Specific_Factor_1",
+                "diagnosis.CS_Site_Specific_Factor_2",
+                "diagnosis.CS_Site_Specific_Factor_3",
+                "diagnosis.CS_Site_Specific_Factor_4",
+                "diagnosis.CS_Site_Specific_Factor_5",
+                "diagnosis.CS_Site_Specific_Factor_6",
+                "diagnosis.CS_Site_Specific_Factor_7",
+                "diagnosis.CS_Site_Specific_Factor_8",
+                "diagnosis.CS_Site_Specific_Factor_9",
+                "diagnosis.CS_Site_Specific_Factor_10",
+                "diagnosis.Clinical_M",
+                "diagnosis.Clinical_N",
+                "diagnosis.Clinical_Stage_Group",
+                "diagnosis.Clinical_T",
+                "diagnosis.Date_of_First_Contact",
+                "diagnosis.Date_of_Initial_Diagnosis",
+                "diagnosis.Laterality",
+                "diagnosis.Mets_at_Dx_Distant_LN",
+                "diagnosis.Mets_at_Dx_Other",
+                "diagnosis.Pathologic_M",
+                "diagnosis.Pathologic_N",
+                "diagnosis.Pathologic_Stage_Descriptor",
+                "diagnosis.Pathologic_Stage_Group",
+                "diagnosis.Pathologic_T",
+                "diagnosis.Primary_Site",
+                "diagnosis.Primary_Site_Desc",
+                "diagnosis.Regional_Nodes_Exam",
+                "diagnosis.Regional_Nodes_Positive",
+                "diagnosis.Site_of_Distant_Metastasis_1_Desc",
+                "diagnosis.Site_of_Distant_Metastasis_2_Desc",
+                "diagnosis.Site_of_Distant_Metastasis_3_Desc",
+                "diagnosis.Size_of_Tumor",
+                "diagnosis.TNM_Edition_Number_Desc",
+                "diagnosis.Tumor_Size_Clinical",
+                "diagnosis.Tumor_Size_Pathological",
+                "diagnosis.Tumor_Size_Summary"
+              ],
+              "linkFields": []
+            },
+            "dropdowns": {
+              "download-table": {
+                "title": "Download Table"
+              }
+            },
+            "buttons": [
+              {
+                "enabled": true,
+                "type": "data-json",
+                "title": "JSON",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "subjects_table.json"
+              },
+              {
+                "enabled": true,
+                "type": "data-tsv",
+                "title": "TSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "subjects_table.tsv"
+              },
+              {
+                "enabled": true,
+                "type": "data-csv",
+                "title": "CSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "subjects_table.csv"
+              },
+              {
+                "enabled": true,
+                "type": "manifest",
+                "title": "Download File Manifest for Cases",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "subjects_manifest.json"
+              },
+              {
+                "enabled": false,
+                "type": "export-to-workspace",
+                "title": "Export to Workspace",
+                "leftIcon": "datafile",
+                "rightIcon": "download"
+              }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+              "dataType": "subject",
+              "nodeCountTitle": "Subjects",
+              "fileCountField": "data_file_count",
+              "fieldMapping": [
+                {
+                  "field": "project_id",
+                  "name": "Project ID"
+                },
+                {
+                  "field": "submitter_id",
+                  "name": "Subject ID"
+                }
+              ],
+              "manifestMapping": {
+                "resourceIndexType": "data_file",
+                "resourceIdField": "object_id",
+                "referenceIdFieldInResourceIndex": "_subject_id",
+                "referenceIdFieldInDataIndex": "_subject_id"
+              },
+              "accessibleFieldCheckList": [
+                "project_id"
+              ],
+              "accessibleValidationField": "project_id"
+            }
+          },
+          {
+            "tabTitle": "Files",
+            "charts": {},
+            "filters": {
+              "tabs": [
+                {
+                  "title": "File Properties",
+                  "searchFields": [
+                    "file_name",
+                    "object_id"
+                  ],
+                  "fields": [
+                    "source_node",
+                    "data_format",
+                    "data_category",
+                    "data_type"
+                  ]
+                }
+              ]
+            },
+            "table": {
+              "enabled": true,
+              "fields": [
+                "file_name",
+                "source_node",
+                "object_id",
+                "submitter_id",
+                "project_id"
+              ]
+            },
+            "dropdowns": {
+              "download-table": {
+                "title": "Download Table"
+              }
+            },
+            "buttons": [
+              {
+                "enabled": true,
+                "type": "data-json",
+                "title": "JSON",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "files_table.json"
+              },
+              {
+                "enabled": true,
+                "type": "data-tsv",
+                "title": "TSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "files_table.tsv"
+              },
+              {
+                "enabled": true,
+                "type": "data-csv",
+                "title": "CSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "files_table.csv"
+              },
+              {
+                "enabled": true,
+                "type": "file-manifest",
+                "title": "Download File Manifest",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "files_manifest.json"
+              },
+              {
+                "enabled": false,
+                "type": "export-to-workspace",
+                "title": "Export to Workspace",
+                "leftIcon": "datafile",
+                "rightIcon": "download"
+              }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+              "dataType": "data_file",
+              "nodeCountTitle": "Files",
+              "fieldMapping": [
+                {
+                  "field": "project_id",
+                  "name": "Project ID"
+                }
+              ],
+              "manifestMapping": {
+                "referenceIdFieldInResourceIndex": "object_id",
+                "referenceIdFieldInDataIndex": "object_id"
+              },
+              "downloadAccessor": "object_id",
+              "accessibleFieldCheckList": [
+                "project_id"
+              ],
+              "accessibleValidationField": "project_id"
+            }
+          }
+        ]
+      }
+
 
 requestor:
   enabled: false
