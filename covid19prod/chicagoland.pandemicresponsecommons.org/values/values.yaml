@@ -650,6 +650,9 @@ portal:
   enabled: true
   customConfig:
     enabled: true
+    dir: "covid19prod/chicagoland.pandemicresponsecommons.org/values/portal/"
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: 'master'
