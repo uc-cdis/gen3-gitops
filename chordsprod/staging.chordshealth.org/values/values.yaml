@@ -10,7 +10,7 @@ global:
         enabled: true
         localSecretName: external-secrets-chords-secret
   revproxyArn: arn:aws:acm:us-east-1:048463324059:certificate/b85556ab-b13b-45bf-afd3-1a70b9234b6e
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/chords-health-dictionary/1.5.3/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/chords-health-dictionary/1.5.4/schema.json"
   postgres:
     dbCreate: false
     # externalSecret: "chords-aurora-master-password"
@@ -18,7 +18,7 @@ global:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
-  tierAccessLevel: regular
+  tierAccessLevel: libre
   fenceURL: https://staging.chordshealth.org/user
 
 arborist:

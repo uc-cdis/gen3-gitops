@@ -19,6 +19,7 @@ global:
     deploy: true
   pdb: true
   fenceURL: https://chordshealth.org/user
+  tierAccessLevel: libre
   # netPolicy:
   #   enabled: true
   #   dbSubnet:

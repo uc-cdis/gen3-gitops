@@ -14,6 +14,7 @@ audit:
     tag: 'master'
   server:
     pull_from_queue: true
+    pull_frequency_seconds: 30
     debug: true
     sqs:
       region: us-east-1
