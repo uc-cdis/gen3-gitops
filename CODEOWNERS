@@ -1,10 +1,10 @@
 unfunded/caninedc.org @trevars @beamcb
 dataguids/dataguids.org @trevars @beamcb
 icgc/icgc.bionimbus.org @trevars @beamcb
-unfunded/aids.diseasedatahub.org
-unfunded/tb.diseasedatahub.org
-unfunded/flu.diseasedatahub.org
-unfunded/diseasedatahub.org
+unfunded/aids.diseasedatahub.org @beamcb
+unfunded/tb.diseasedatahub.org @beamcb
+unfunded/flu.diseasedatahub.org @beamcb
+unfunded/diseasedatahub.org @beamcb
 dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight
 dcfprod/nci-crdc.datacommons.io @jeffrey-knight
 vhdcprod/va.data-commons.org @nmetokishlubsky
