@@ -5,40 +5,28 @@ unfunded/aids.diseasedatahub.org @uc-cdis
 unfunded/tb.diseasedatahub.org @uc-cdis
 unfunded/flu.diseasedatahub.org  @uc-cdis
 unfunded/diseasedatahub.org @uc-cdis
-
 dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight @uc-cdis
 dcfprod/nci-crdc.datacommons.io @jeffrey-knight @uc-cdis
-
 vhdcprod/va.data-commons.org @nmetokishlubsky @uc-cdis
 vadcprod/vpodc.data-commons.org @nmetokishlubsky @uc-cdis
-
 midrcprod/data.midrc.org @frankliuao @cgmeyer @uc-cdis
 midrcprod/staging.midrc.org @frankliuao @cgmeyer @uc-cdis
 midrcvalidate/validate.midrc.org @frankliuao @cgmeyer @uc-cdis
 midrcvalidate/validatestaging.midrc.org @frankliuao @cgmeyer @uc-cdis
-
 bihprod/imaging-hub.data-commons.org @frankliuao @cgmeyer @uc-cdis
-
 bdcatprod/gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis
 bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis
 bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis
-
 kidsfirst-kfqa2/gen3qa.kidsfirstdrc.org @jeffrey-knight @uc-cdis
 kidsfirst-skfqa/gen3staging.kidsfirstdrc.org @jeffrey-knight @uc-cdis
 kidsfirst-prodv1/data.kidsfirstdrc.org @jeffrey-knight @uc-cdis
-
 jcoinprod/jcoin.datacommons.io @briennal @uc-cdis
-
 covid19prod/chicagoland.pandemicresponsecommons.org @michaelfitzo @beamcb @uc-cdis
-
 unfunded/gen3.datacommons.io @trevars @beamcb @cgmeyer @uc-cdis
-
 bloodv2/data.bloodpac.org @Mikisha10 @uc-cdis @urvi-occ
-
 healprod/healdata.org @briennal @uc-cdis
 healprod/preprod.healdata.org @briennal @uc-cdis
 healprod/externaldata.healdata.org @briennal @uc-cdis
-
 brhprod/brh.data-commons.org @briennal @uc-cdis
 brhprod/brhstaging.data-commons.org @briennal @uc-cdis
 chordsprod/chordshealth.org @briennal @uc-cdis
