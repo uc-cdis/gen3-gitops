@@ -1,0 +1,55 @@
+acct.bionimbus.org @uc-cdis/planx-qa
+unfunded/caninedc.org @trevars @beamcb @uc-cdis/planx-qa
+dataguids/dataguids.org @trevars @beamcb @uc-cdis/planx-qa
+genomel.bionimbus.org @trevars @beamcb @uc-cdis/planx-qa
+icgc/icgc.bionimbus.org @trevars @beamcb @uc-cdis/planx-qa
+unfunded/aids.diseasedatahub.org @uc-cdis/planx-qa
+unfunded/tb.diseasedatahub.org @uc-cdis/planx-qa
+unfunded/flu.diseasedatahub.org  @uc-cdis/planx-qa
+unfunded/diseasedatahub.org @uc-cdis/planx-qa
+dcf-interop.kidsfirstdrc.org @trevars @beamcb @uc-cdis/planx-qa
+
+dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight @uc-cdis/planx-qa
+dcfprod/nci-crdc.datacommons.io @jeffrey-knight @uc-cdis/planx-qa
+
+va-testing.data-commons.org @nmetokishlubsky @uc-cdis/planx-qa
+vhdcprod/va.data-commons.org @nmetokishlubsky @uc-cdis/planx-qa
+va-perf.data-commons.org @nmetokishlubsky @uc-cdis/planx-qa
+vadcprod/vpodc.data-commons.org @nmetokishlubsky @uc-cdis/planx-qa
+
+midrcprod/data.midrc.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+midrcprod/staging.midrc.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+midrcvalidate/validate.midrc.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+midrcvalidate/validatestaging.midrc.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+
+bihprod/imaging-hub.data-commons.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+bihstaging.data-commons.org @frankliuao @cgmeyer @uc-cdis/planx-qa
+
+bdcatprod/gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis/planx-qa
+bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis/planx-qa
+bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy @uc-cdis/planx-qa
+
+kidsfirst-kfqa2/gen3qa.kidsfirstdrc.org @jeffrey-knight @uc-cdis/planx-qa
+kidsfirst-skfqa/gen3staging.kidsfirstdrc.org @jeffrey-knight @uc-cdis/planx-qa
+kidsfirst-prodv1/data.kidsfirstdrc.org @jeffrey-knight @uc-cdis/planx-qa
+
+jcoinprod/jcoin.datacommons.io @briennal @uc-cdis/planx-qa
+
+accessclinicaldata.niaid.nih.gov @frankliuao @uc-cdis/planx-qa
+
+covid19prod/chicagoland.pandemicresponsecommons.org @michaelfitzo @beamcb @uc-cdis/planx-qa
+elwazi-demo.planx-pla.net @michaelfitzo @uc-cdis/planx-qa
+
+unfunded/gen3.datacommons.io @trevars @beamcb @cgmeyer @uc-cdis/planx-qa
+
+portal.occ-data.org @Mikisha10 @uc-cdis/planx-qa @urvi-occ
+bloodv2/data.bloodpac.org @Mikisha10 @uc-cdis/planx-qa @urvi-occ
+
+healprod/healdata.org @briennal @uc-cdis/planx-qa
+healprod/preprod.healdata.org @briennal @uc-cdis/planx-qa
+healprod/externaldata.healdata.org @briennal @uc-cdis/planx-qa
+
+brhprod/brh.data-commons.org @briennal @uc-cdis/planx-qa
+brhprod/brhstaging.data-commons.org @briennal @uc-cdis/planx-qa
+chordsprod/chordshealth.org @briennal @uc-cdis/planx-qa
+chordsprod/staging.chordshealth.org @briennal @uc-cdis/planx-qa
