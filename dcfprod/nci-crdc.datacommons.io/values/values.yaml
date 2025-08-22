@@ -626,19 +626,43 @@ fence:
       kf-study-us-east-1-prd-sd-0tyvy1tw:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-study-us-east-1-prd-sd-2cekq05v:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-study-us-east-1-prd-sd-6fpyjqbr:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-7nq9151j:
         cred: "fence_bot"
         region: "us-east-1"
       kf-study-us-east-1-prd-sd-b8x3c1mx:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dypmehhf:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-study-us-east-1-prd-sd-dz4gpqx6:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dztb5hrr:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-jws3v24d:
         cred: "fence_bot"
         region: "us-east-1"
       kf-study-us-east-1-prd-sd-nmvv8a1y:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-study-us-east-1-prd-sd-qbg7p5p7:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-study-us-east-1-prd-sd-r0eprsgs:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-rm8afw0r:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-vttshwv4:
         cred: "fence_bot"
         region: "us-east-1"
       kf-study-us-east-1-prd-sd-w0v965xz:
@@ -648,6 +672,9 @@ fence:
         cred: "fence_bot"
         region: "us-east-1"
       kf-study-us-east-1-prd-sd-zfgdg5ys:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-zxjffmef:
         cred: "fence_bot"
         region: "us-east-1"
       match-b-phs002028-controlled:
