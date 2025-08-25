@@ -1,10 +1,10 @@
 arborist:
+  enabled: true
+  image:
+    repository: quay.io/cdis/arborist
+    tag: null
   replicaCount: 2
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  enabled: true
-  image:
-    repository: "quay.io/cdis/arborist"
-    tag: "master"
+      cpu: 15m
+      memory: 105Mi
