@@ -1,11 +1,11 @@
 peregrine:
+  enabled: true
+  image:
+    pullPolicy: Always
+    repository: quay.io/cdis/peregrine
+    tag: null
   replicaCount: 2
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  enabled: true
-  image:
-    repository: "quay.io/cdis/peregrine"
-    tag: "master"
-    pullPolicy: Always
+      cpu: 15m
+      memory: 105Mi
