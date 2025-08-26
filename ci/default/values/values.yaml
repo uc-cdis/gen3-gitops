@@ -35,6 +35,10 @@ postgresql:
     persistence:
       enabled: true
       size: 1Gi
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"
   image:
     registry: quay.io
     repository: cdis/postgresql
@@ -46,3 +50,7 @@ elasticsearch:
     resources:
       requests:
         storage: 1Gi
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"
