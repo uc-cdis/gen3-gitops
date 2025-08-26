@@ -182,7 +182,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Notebooks",
-            "image": "quay.io/cdis/brh-notebooks:combined_demos__8c8c45ded1964148365bf209cbbfb26f72448d3d",
+            "image": "quay.io/cdis/brh-notebooks:combined_demos__b0a59aa051cbd993bbda25a7bb42f99bd4d91322",
             "env": {
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
@@ -207,7 +207,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
