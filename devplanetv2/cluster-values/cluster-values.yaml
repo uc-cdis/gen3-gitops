@@ -31,6 +31,9 @@ crossplane-crds:
   useIRSA: true
   iamRoleName: "crossplane-test-devplanetv2"
 
+custom-objects:
+  enabled: true
+
 ebs-csi-driver:
   enabled: false
   configuration:
