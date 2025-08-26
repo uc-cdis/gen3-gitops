@@ -45,10 +45,6 @@ postgresql:
     tag: 14.5.0-debian-11-r35
 
 elasticsearch:
-  volumeClaimTemplate:
-    resources:
-      requests:
-        storage: 1Gi
   pdb:
     create: true
     minAvailable: "1"
