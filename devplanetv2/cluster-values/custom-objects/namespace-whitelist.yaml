@@ -24,5 +24,7 @@ data:
     satosa
     monitoring
     cert-manager
-    qa-heal
-    qa-mickey-helm
+    qa-prometheus
+    qa-vpodc
+    qaplanetv2
+    csoc
