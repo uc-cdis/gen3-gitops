@@ -76,6 +76,32 @@ jobs:
             fi
           done
 
+      - name: Validate All aggMDS Configurations
+        run: |
+          # loop through each Helm chart directory
+          find . -name 'Chart.yaml' | while read chart_yaml; do
+
+          chart_dir=$(dirname "$chart_yaml")  # Get the directory path of the chart
+          values_dir="$chart_dir/values"  # Assume a 'values' subdirectory for custom values files
+          echo "Processing chart directory: $chart_dir"
+
+          # Check if the values directory exists and contains any yaml files
+          if [ -d "$values_dir" ] && [ -n "$(ls $values_dir/values.yaml 2>/dev/null)" ]; then
+            values_args=""  # Initialize the string to hold the --values arguments
+            for values_file in $values_dir/*.yaml; do
+              mds_config=$(yq '.metadata.aggMdsConfig' "$values_file")
+              if [[ -n "$mds_config" && "$mds_config" != "null" ]]; then
+                if printf '%s' "$mds_config" | jq empty > /dev/null 2>&1; then
+                  echo "$values_file: JSON is valid"
+                else
+                  echo "$values_file: JSON is invalid"
+                  exit 1
+                fi
+              fi
+            done
+          fi
+          done
+
       - name: Validate app.yaml References to Values Files
         run: |
           # Loop through each Helm chart directory
