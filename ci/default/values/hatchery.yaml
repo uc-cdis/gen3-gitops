@@ -2,6 +2,8 @@ hatchery:
   replicaCount: 2
   image:
     tag: master
+  reaper:
+    enabled: false
   hatchery:
     containers:
       - target-port: 8888
