@@ -107,7 +107,7 @@ metadata:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2025.03
+    tag: 2025.04
     esEndpoint: http://elasticsearch:9200
 
 # disabling workspace services
