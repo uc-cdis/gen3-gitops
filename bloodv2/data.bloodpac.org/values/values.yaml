@@ -425,8 +425,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.8/schema.json
-  dispatcherJobNum: "10"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.9/schema.json
+  dispatcherJobNum: '10'
   environment: bloodv2
   externalSecrets:
     deploy: true
