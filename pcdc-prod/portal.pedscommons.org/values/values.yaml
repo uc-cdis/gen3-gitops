@@ -4,7 +4,7 @@ amanuensis:
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/pcdc/amanuensis
     tag: 2.27.0
