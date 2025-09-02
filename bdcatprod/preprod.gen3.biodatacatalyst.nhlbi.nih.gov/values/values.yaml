@@ -2247,7 +2247,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-sumstats-phs001974-r1-v8-c1:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
@@ -2282,7 +2282,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.6/schema.json
   dispatcherJobNum: "10"
   environment: bdcat-internalstaging
   externalSecrets:
@@ -3149,19 +3149,12 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
-          - mountPath: /peregrine-creds.json
-            name: peregrine-creds-volume
-            readOnly: true
-            subPath: creds.json
       name: pelican-export
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
-        - name: peregrine-creds-volume
-          secret:
-            secretName: peregrine-creds
     - action: export-files
       container:
         cpu-limit: "1"
@@ -3214,19 +3207,12 @@ sower:
             name: pelican-creds-volume
             readOnly: true
             subPath: config.json
-          - mountPath: /peregrine-creds.json
-            name: peregrine-creds-volume
-            readOnly: true
-            subPath: creds.json
       name: pelican-export-files
       restart_policy: Never
       volumes:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
-        - name: peregrine-creds-volume
-          secret:
-            secretName: peregrine-creds
 spark:
   enabled: true
   image:

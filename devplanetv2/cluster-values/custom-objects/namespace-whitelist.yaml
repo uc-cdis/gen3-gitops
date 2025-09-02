@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: namespace-whitelist
+  namespace: default
+data:
+  whitelist: |
+    default
+    sftp
+    sftp2
+    logging
+    kube-system
+    grimoire
+    grimoire1
+    gateway-system
+    karpenter
+    external-secrets
+    cortex-xdr
+    calico-system
+    calico-apiserver
+    argocd
+    argo
+    argo-events
+    satosa
+    monitoring
+    cert-manager
+    qa-prometheus
+    qa-vpodc
+    qaplanetv2
+    csoc

@@ -35,14 +35,17 @@ postgresql:
     persistence:
       enabled: true
       size: 1Gi
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"
   image:
     registry: quay.io
     repository: cdis/postgresql
     tag: 14.5.0-debian-11-r35
 
 elasticsearch:
-  maxUnavailable: ""
-  volumeClaimTemplate:
-    resources:
-      requests:
-        storage: 1Gi
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"

@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.07'
+    tag: '2025.08'
 ambassador:
   enabled: false
 hatchery:
@@ -23,7 +23,7 @@ audit:
     auditG3auto: dcfprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.07'
+    tag: '2025.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-receiver
@@ -39,7 +39,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.07'
+    tag: '2025.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--dashboard-access
@@ -587,6 +587,15 @@ fence:
       iodc-cimac-nctns1400i-phs003412:
         cred: "fence_bot"
         region: "us-east-1"
+      kf-seq-data-broad:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-seq-data-hudsonalpha:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-seq-data-washu:
+        cred: "fence_bot"
+        region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-1nns3k8v-nci:
         cred: "fence_bot"
         region: "us-east-1"
@@ -618,6 +627,75 @@ fence:
         cred: "fence_bot"
         region: "us-east-1"
       kf-strides-study-us-east-1-prd-sd-z6mwd3h0-nci:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-0tyvy1tw:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-2cekq05v:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-46sk55a3:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-6fpyjqbr:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-7nq9151j:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-aq9kvn5p:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-b8x3c1mx:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dk0krwk8:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dypmehhf:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dz4gpqx6:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-dztb5hrr:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-jws3v24d:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-nmvv8a1y:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-pet7q6f2:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-qbg7p5p7:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-r0eprsgs:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-rm8afw0r:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-vttshwv4:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-w0v965xz:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-z0d9n23x: 
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-zfgdg5ys:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-z6mwd3h0:
+        cred: "fence_bot"
+        region: "us-east-1"
+      kf-study-us-east-1-prd-sd-zxjffmef:
         cred: "fence_bot"
         region: "us-east-1"
       match-b-phs002028-controlled:
@@ -960,7 +1038,7 @@ fence:
     fenceSshKeys: dcfprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: '2025.08'
 fluentd:
   enabled: true
   image:
@@ -1014,7 +1092,7 @@ indexd:
     serviceCreds: dcfprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    # tag: '2025.07'
+    # tag: '2025.08'
     # temporarily test more gunicorn workers
     tag: 'feat_add-gunicorn-workers'
   resources:
@@ -1035,12 +1113,12 @@ metadata:
     metadataG3auto: dcfprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.07'
+    tag: '2025.08'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.07'
+    tag: '2025.08'
 portal:
   enabled: true
   gitops:
@@ -1329,7 +1407,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.07'
+    tag: '2025.08'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1340,7 +1418,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.07'
+    tag: '2025.08'
   ingress:
     aws:
       group: dcfprod
@@ -1349,7 +1427,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.07'
+    tag: '2025.08'
 sower:
   enabled: true
   externalSecrets:
@@ -1358,7 +1436,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.07'
+    tag: '2025.08'
   sowerConfig:
   - action: index-object-manifest
     activeDeadlineSeconds: 86400
@@ -1370,7 +1448,7 @@ sower:
           configMapKeyRef:
             key: hostname
             name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.07
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.08
       memory-limit: 1Gi
       name: job-task
       pull_policy: Always
@@ -1396,7 +1474,7 @@ sower:
           configMapKeyRef:
             key: hostname
             name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.07
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.08
       memory-limit: 1Gi
       name: job-task
       pull_policy: Always
@@ -1418,5 +1496,5 @@ ssjdispatcher:
     credsFile: dcfprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.07'
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
+    tag: '2025.08'
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.08

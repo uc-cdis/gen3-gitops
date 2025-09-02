@@ -140,6 +140,8 @@ ssjdispatcher:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: master
+  externalSecrets:
+    createK8sSsjdispatcherSecret: true
 
 metadata:
   # Lower cost

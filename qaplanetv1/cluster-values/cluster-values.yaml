@@ -32,6 +32,9 @@ coreDNS:
 crossplane:
   enabled: true
 
+custom-objects:
+  enabled: true
+
 ebs-csi-driver:
   enabled: true
   configuration:
