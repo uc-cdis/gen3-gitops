@@ -18,6 +18,9 @@ calico:
   configuration:
     enabled: false
 
+cert-manager:
+  enabled: true
+
 coreDNS:
   enabled: true
   configuration:
@@ -27,6 +30,9 @@ ebs-csi-driver:
   enabled: false
   configuration:
     enabled: false
+
+external-secrets:
+  enabled: true
 
 fluentd:
   enabled: false
@@ -43,11 +49,20 @@ grafana-alloy:
   configuration:
     enabled: false
 
+karpenter:
+  enabled: true
+  targetRevision: "1.0.8"
+
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
   enabled: true
   selectorTag: pcdc-prod
   migration: true
+  workflow:
+    sgSelector: pcdc-prod
+  default:
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "5m"
 
 vpc-cni:
   enabled: true
