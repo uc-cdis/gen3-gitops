@@ -613,7 +613,7 @@ fence:
     # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sGoogleAppSecrets: true
     # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
-    fenceJwtKeys: "chordprod-fence-jwt"
+    fenceJwtKeys: "chordsprod-fence-jwt"
     # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
     fenceGoogleAppCredsSecret:
     # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
