@@ -4,10 +4,12 @@ amanuensis:
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/pcdc/amanuensis
     tag: 2.27.0
+  serviceAccount:
+    name: "amanuensis-sa"
 arborist:
   autoscaling:
     enabled: true
@@ -151,8 +153,12 @@ fluentd:
     tag: v1.15.3-debian-cloudwatch-1.0
 gearbox:
   enabled: false
+  serviceAccount:
+    name: "gearbox-sa"
 gearbox-middleware:
   enabled: false
+  serviceAccount:
+    name: "gearbox-middleware-sa"
 global:
   aws:
     account: '242397368788'
@@ -225,6 +231,8 @@ pcdcanalysistools:
   image:
     repository: quay.io/pcdc/pcdcanalysistools
     tag: 1.10.1
+  serviceAccount:
+    name: "pcdcanalysistools-sa"    
 peregrine:
   autoscaling:
     enabled: true
