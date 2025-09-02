@@ -149,6 +149,10 @@ fluentd:
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
+gearbox:
+  enabled: false
+gearbox-middleware:
+  enabled: false
 global:
   aws:
     account: '242397368788'
