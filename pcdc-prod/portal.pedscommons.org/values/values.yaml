@@ -10,6 +10,8 @@ amanuensis:
     tag: 2.27.0
   serviceAccount:
     name: "amanuensis-sa"
+ambassador:
+  enabled: false
 arborist:
   autoscaling:
     enabled: true
@@ -21,6 +23,7 @@ arborist:
     repository: quay.io/pcdc/arborist
     tag: '2025.07'
 audit:
+  enabled: false
   externalSecrets:
     auditG3auto: pcdc-prod-audit-g3auto
   serviceAccount:
@@ -216,9 +219,8 @@ manifestservice:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::242397368788:role/pcdc-prod--pcdc-prod-helm--manifest-service-sa
 metadata:
+  enabled: false
   esEndpoint: http://elasticsearch:9200
-  externalSecrets:
-    metadataG3auto: pcdc-prod-metadata-g3auto
 mutatingWebhook:
   enabled: true
 pcdcanalysistools:
@@ -227,7 +229,7 @@ pcdcanalysistools:
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
-  enabled: false
+  enabled: true
   image:
     repository: quay.io/pcdc/pcdcanalysistools
     tag: 1.10.1
