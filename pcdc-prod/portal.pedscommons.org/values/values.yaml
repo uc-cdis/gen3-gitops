@@ -221,7 +221,7 @@ pcdcanalysistools:
     maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/pcdc/pcdcanalysistools
     tag: 1.10.1
