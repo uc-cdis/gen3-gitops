@@ -3,7 +3,6 @@ portal:
   resources:
     requests:
       memory: "300Mi"
-      cpu: "200m"
   enabled: true
   image:
     repository: quay.io/cdis/data-ecosystem-portal
