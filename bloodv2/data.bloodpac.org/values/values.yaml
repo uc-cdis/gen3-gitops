@@ -647,7 +647,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: "2025.07"
+    tag: "2025.09"
 revproxy:
   replicaCount: 4
   autoscaling:
