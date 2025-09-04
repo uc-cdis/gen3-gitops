@@ -39,7 +39,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.05'
+    tag: "2025.07"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--dashboard-access
@@ -169,7 +169,7 @@ fluentd:
 global:
   pdb: true
   aws:
-    account: '258867494168'
+    account: "258867494168"
     awsEsProxyRole: jcoinprod--jcoinprod-helm--es-access
     enabled: true
     hatchery_role: jcoinprod--jcoinprod-helm--hatchery-sa
@@ -178,7 +178,7 @@ global:
       roleArn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--external-secrets-sa
   dev: false
   dictionaryUrl: https://dictionary-artifacts.s3.amazonaws.com/jcoin_datadictionary/3.1.1/schema.json
-  dispatcherJobNum: '10'
+  dispatcherJobNum: "10"
   environment: jcoinprod
   externalSecrets:
     deploy: true
@@ -189,7 +189,7 @@ global:
   manifestGlobalExtraValues:
     kube_bucket: kube-jcoin-prod-gen3
     logs_bucket: s3logs-logs-jcoin-prod-gen3
-  maintenanceMode: 'off'
+  maintenanceMode: "off"
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -212,6 +212,19 @@ guppy:
     - index: jcoin_etl_time_points
       type: time_point
 hatchery:
+  hotNode:
+    enabled: true
+
+    availabilityZones:
+      - us-east-1a
+      - us-east-1c
+      - us-east-1d
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 2
+      memory: 4Gi
+      
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -225,7 +238,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.05",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.07",
           "env": {
             "NAMESPACE": "default",
             "HOSTNAME": "jcoin.datacommons.io"
@@ -1205,7 +1218,7 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.05'
+    tag: "2025.07"
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -1224,7 +1237,7 @@ tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.05'
+    tag: "2025.07"
 wts:
   enabled: true
   externalSecrets:
