@@ -224,7 +224,7 @@ hatchery:
     workspaceCapacityReservation:
       cpu: 2
       memory: 4Gi
-      
+
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -235,6 +235,8 @@ hatchery:
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
+        "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-jcoin",
+        "license-user-maps-global-secondary-index": "activeUsersIndex",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
@@ -319,6 +321,51 @@ hatchery:
               "/bin/sh",
               "-c",
               "(while true; do [ -d ~/pd ] && [ -f ~/pd/stata.lic ] && cp ~/pd/stata.lic /usr/local/stata17/; sleep 1; done) & export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "Limited Gen3-licensed Stata Notebook",
+            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:2.0.0",
+            "env": {
+              "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
+            },
+            "license": {
+              "enabled": true,
+              "license-type": "STATA-JCOIN",
+              "max-license-ids": 4,
+              "g3auto-name": "jcoinprod-stata-workspace-gen3-license",
+              "g3auto-key": "stata_license.txt",
+              "file-path": "stata.lic",
+              "workspace-flavor": "gen3-licensed"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "/bin/bash",
+              "/tmp/wait_for_license.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
             "user-uid": 1000,
             "fs-gid": 100,
