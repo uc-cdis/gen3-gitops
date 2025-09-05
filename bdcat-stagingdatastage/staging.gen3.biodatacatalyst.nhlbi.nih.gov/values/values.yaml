@@ -229,7 +229,7 @@ fence:
     fenceJwtKeys: stagingdatastage-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '11.4.1'
+    tag: '12.0.0'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -237,6 +237,15 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/stagingdatastage/user.yaml
+    sshKnownHosts: |
+      # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
+      # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
+      sftp-private.ncbi.nlm.nih.gov ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjEuJc/1pAQxGxwuk8s/1u7tDq2PiOqutAXNjPOl0BkOiJJnUa6gdRx5WcVd6HApPrw7RUvUXraOmc82Zlzeno6DkzTjLk3ztuRs1hNF3KKx044AxDC1Jew6pK96At3kAvStfamNbY8URB9tj0SF3rFQxLrWo8WfhFr9AU4SuY5S0A2a/njucmTim3vDRPbBFO7Dlz2dxzeKPBdUDB/NvmdPWHxkviXkqUby/QzjglAQTts5lNEMH8qaRcU/dnWYRKvY17RHGu9/gNf8Z9DvBg8TbU7Ek3MT5A9F3nw1ZcZe7M8L7JwIKgQUl1gzOBHFfC248YES9REQffLYPWOCy9
+      # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
+      sftp-private.ncbi.nlm.nih.gov ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFM24A4pG3U+8HzCvEkm9SiEWHOAtQr/DFZd3bf7VYDCcg2FPpUvGRsiDSuzhzBo+eG00d6/6y8NCypWwjiMi1rYgBOh9YA0w/ruutXYMUUVzw361lTgjOBOZ/dt3gKkNgShwDd0e1hnjYk/E7jYc2YJv67ZFy9GzXCWR55LhS/7fGQ5w==
+      # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
+      # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
+
 fluentd:
   enabled: true
   image:
