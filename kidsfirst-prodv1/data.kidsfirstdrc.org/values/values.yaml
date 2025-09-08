@@ -1,3 +1,5 @@
+wts:
+  enabled: false
 arborist:
   replicaCount: 4
   autoscaling:
