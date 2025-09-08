@@ -247,7 +247,7 @@ hatchery:
             "license": {
               "enabled": true,
               "license-type": "STATA-HEAL",
-              "max-license-ids": 5,
+              "max-license-ids": 6,
               "g3auto-name": "stata-workspace-gen3-license-g3auto",
               "g3auto-key": "stata_license.txt",
               "file-path": "stata.lic",
