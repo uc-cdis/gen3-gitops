@@ -1,3 +1,5 @@
+manifestservice:
+  enabled: false
 wts:
   enabled: false
 arborist:
