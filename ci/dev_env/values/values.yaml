@@ -4,7 +4,6 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
   pdb: true
   aws:
-    scheme: "internal"
     externalSecrets:
       # -- (bool) Whether to use External Secrets for aws config.
       enabled: true
@@ -26,7 +25,6 @@ global:
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre
-  revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/798e629d-05ee-4bc5-b51f-a86861f29b68
 
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
