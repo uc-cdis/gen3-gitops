@@ -1,0 +1,8 @@
+cohort-middleware:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/cohort-middleware"
+    tag: "master"
+  externalSecrets:
+    createK8sCohortMiddlewareSecret: true

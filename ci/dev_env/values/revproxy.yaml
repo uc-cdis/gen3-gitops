@@ -1,0 +1,22 @@
+revproxy:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/nginx"
+    tag: "master"
+  ingress:
+    enabled: true
+    aws:
+      # Do not change- this will break DNS for your env.
+      group: devplanetv2-internal
+    className: alb
+    hosts:
+      # This will be dynamically replaced by env_setup.sh script.
+      - host: HOSTNAME
+        paths:
+          - path: /
+            pathType: Prefix
+    resources:
+      requests:
+        memory: "105Mi"
+        cpu: "15m"
