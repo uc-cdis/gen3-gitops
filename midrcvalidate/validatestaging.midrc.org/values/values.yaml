@@ -2476,6 +2476,7 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.08'
 ssjdispatcher:
+  gen3Namespace: validatestaging-helm
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/gen3_service/midrcvalidate--validatestaging--ssj
