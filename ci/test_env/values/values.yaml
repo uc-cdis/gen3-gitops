@@ -25,6 +25,7 @@ global:
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre
+  environment: devplanetv2
 
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
