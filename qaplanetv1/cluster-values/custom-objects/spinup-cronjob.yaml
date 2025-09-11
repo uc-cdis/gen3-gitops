@@ -39,6 +39,7 @@ spec:
                   #!/usr/bin/env bash
 
                   kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | xargs -r -n1 kubectl scale deployments --all --replicas=1 -n
+                  exit 0
               command:
                 - /bin/bash
               image: quay.io/cdis/awshelper:master
@@ -66,6 +67,6 @@ spec:
                 name: shutdown-blacklist
               name: shutdown-blacklist
       ttlSecondsAfterFinished: 3600
-  schedule: 0 23 * * *
+  schedule: 0 6 * * *
   successfulJobsHistoryLimit: 3
   suspend: false

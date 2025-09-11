@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  # This is the blacklist of namespaces that WILL NOT be touched by this job.
   name: shutdown-blacklist
   namespace: default
 data:
