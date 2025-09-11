@@ -49,7 +49,7 @@ karpenter-crds:
   migration: true
   default:
     consolidateAfter: 300s
-    consolidationPolicy: WhenEmptyOrUndertilized
+    consolidationPolicy: WhenEmptyOrUnderutilized
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
