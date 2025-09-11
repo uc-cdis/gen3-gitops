@@ -48,25 +48,26 @@ karpenter-crds:
   selectorTag: unfunded
   migration: true
   default:
+    consolidateAfter: 300s
     consolidationPolicy: WhenEmptyOrUnderutilized
     requirements:
-    - key: karpenter.sh/capacity-type
-      operator: In
-      values:
-      - on-demand
-      - spot
-    - key: kubernetes.io/arch
-      operator: In
-      values:
-      - amd64
-    - key: karpenter.k8s.aws/instance-category
-      operator: In
-      values:
-      - r
-    - key:  karpenter.k8s.aws/instance-memory
-      operator: Gt
-      values: 
-      - "15000"
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+          - spot
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: karpenter.k8s.aws/instance-category
+        operator: In
+        values:
+          - r
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Gt
+        values:
+          - "15000"
 
 kube-state-metrics:
   enabled: true

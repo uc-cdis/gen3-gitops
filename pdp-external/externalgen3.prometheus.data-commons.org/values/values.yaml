@@ -7,7 +7,11 @@ global:
       enabled: true
       name: external-secrets
       roleArn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-external-secrets-sa
-
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: arn:aws:wafv2:us-east-1:637423560817:regional/webacl/externalgen3-waf/0682b26b-c3c5-404e-9609-833f54082744
   dev: false
   postgres:
     dbCreate: false

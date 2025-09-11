@@ -40,7 +40,15 @@ spec:
                   # Load whitelist (one namespace per line)
 
                   # Get all namespaces matching "-pr-", then exclude any in the whitelist, then scale
-                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /whitelist  | xargs -r -n1 kubectl scale deployments --all --replicas=0 -n
+                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers \
+                  | grep -vFxf /whitelist \
+                  | grep -v -- '-pr-' \
+                  | xargs -r -n1 -I{} sh -c '
+                      echo ">>> kubectl scale deploy --all -n {} --replicas=0"
+                      kubectl scale deploy --all -n {} --replicas=0
+                      echo ">>> kubectl scale sts --all -n {} --replicas=0"
+                      kubectl scale sts --all -n {} --replicas=0'
+
               command:
                 - /bin/bash
               image: quay.io/cdis/awshelper:master

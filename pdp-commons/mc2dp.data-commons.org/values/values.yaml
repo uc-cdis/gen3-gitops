@@ -82,6 +82,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: arn:aws:wafv2:us-east-1:851725307933:regional/webacl/pdp-commons-waf/9609720f-857d-4033-bf1f-2e9e9665a638
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
   dispatcherJobNum: '10'

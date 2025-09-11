@@ -53,7 +53,7 @@ aws-es-proxy:
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
-    tag: 0.8
+    tag: master
 
 indexd:
   # Lower cost
