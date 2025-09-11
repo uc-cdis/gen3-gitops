@@ -63,8 +63,8 @@ spec:
           volumes:
             - configMap:
                 defaultMode: 420
-                name: namespace-whitelist
-              name: namespace-whitelist
+                name: shutdown-blacklist
+              name: shutdown-blacklist
       ttlSecondsAfterFinished: 3600
   schedule: 0 23 * * *
   successfulJobsHistoryLimit: 3
