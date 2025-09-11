@@ -176,6 +176,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::258867494168:role/jcoinprod--jcoinprod-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: arn:aws:wafv2:us-east-1:258867494168:regional/webacl/jcoinprod-waf/f1a3178c-d9fa-4720-a473-2f7315938854
   dev: false
   dictionaryUrl: https://dictionary-artifacts.s3.amazonaws.com/jcoin_datadictionary/3.1.1/schema.json
   dispatcherJobNum: "10"
@@ -242,15 +247,15 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.07",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.09",
           "env": {
-            "NAMESPACE": "default",
+            "NAMESPACE": "jcoinprod-helm",
             "HOSTNAME": "jcoin.datacommons.io"
           },
           "args": [],
           "command": [
             "/bin/bash",
-            "/sidecarDockerrun.sh"
+            "./sidecar.sh"
           ],
           "lifecycle-pre-stop": [
             "su",
@@ -343,7 +348,7 @@ hatchery:
               "license-type": "STATA-JCOIN",
               "max-license-ids": 4,
               "g3auto-name": "stata-workspace-gen3-license",
-              "g3auto-key": "stata_license.txt",
+              "g3auto-key": "stata-license.txt",
               "file-path": "stata.lic",
               "workspace-flavor": "gen3-licensed"
             },
