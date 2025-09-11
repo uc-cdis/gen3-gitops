@@ -8,7 +8,7 @@ revproxy:
     enabled: true
     annotations:
       alb.ingress.kubernetes.io/scheme: internal
-      alb.ingress.kubernetes.io/tags: Environment=devplanetv2
+      alb.ingress.kubernetes.io/tags: Environment=devplanetv2-internal
       alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:707767160287:certificate/798e629d-05ee-4bc5-b51f-a86861f29b68'
       alb.ingress.kubernetes.io/group.name: devplanetv2-internal
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
