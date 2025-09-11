@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: shutdown-cronjob
+  name: spinup-cronjob
   namespace: default
 spec:
   concurrencyPolicy: Allow
@@ -38,7 +38,7 @@ spec:
                 - |
                   #!/usr/bin/env bash
 
-                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | xargs -r -n1 kubectl scale deployments --all --replicas=0 -n
+                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | xargs -r -n1 kubectl scale deployments --all --replicas=1 -n
               command:
                 - /bin/bash
               image: quay.io/cdis/awshelper:master
