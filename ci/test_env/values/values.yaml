@@ -15,7 +15,7 @@ global:
       # -- (string) Name of the service account to create
       name: secret-store-sa
       # -- (string) AWS Role ARN for Secret Store to use
-      # roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
+      roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
     sower_role: sower-jobs-role
   externalSecrets:
     deploy: true
