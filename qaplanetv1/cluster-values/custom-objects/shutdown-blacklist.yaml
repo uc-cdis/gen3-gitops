@@ -4,7 +4,7 @@ metadata:
   name: shutdown-blacklist
   namespace: default
 data:
-  whitelist: |
+  blacklist: |
     default
     sftp
     sftp2
