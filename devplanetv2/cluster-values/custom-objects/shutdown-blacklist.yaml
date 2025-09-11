@@ -6,6 +6,7 @@ metadata:
   namespace: default
 data:
   blacklist: |
+    allure
     argo
     argo-events
     argocd
@@ -14,6 +15,7 @@ data:
     cert-manager
     cortex-xdr
     crossplane-system
+    csoc
     default
     external-secrets
     gateway-system
@@ -21,10 +23,12 @@ data:
     grimoire1
     karpenter
     kube-system
+    kubecost
     logging
     monitoring
-    qa-heal
-    qa-mickey-helm
+    qa-prometheus
+    qa-vpodc
+    qaplanetv2
     satosa
     sftp
     sftp2
