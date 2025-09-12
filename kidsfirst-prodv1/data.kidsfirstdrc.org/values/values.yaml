@@ -75,6 +75,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::053927701465:role/prodv1-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:053927701465:regional/webacl/prodv1-waf/f4fe812b-9681-44ea-9a61-5b1eb303b523"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/kf-dictionary/develop/schema.json
   environment: prodv1
