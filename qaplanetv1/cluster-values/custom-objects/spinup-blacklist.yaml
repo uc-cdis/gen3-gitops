@@ -8,3 +8,12 @@ metadata:
 data:
   blacklist: |
     jenkins*
+    qa-anvil
+    qa-brain
+    qa-canine
+    qa-dcp
+    qa-heal
+    qa-heal-helm-helm
+    qa-mickey
+    qa-mickey-helm-helm
+    test-argo
