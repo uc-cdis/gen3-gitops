@@ -9,12 +9,12 @@ dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight
 dcfprod/nci-crdc.datacommons.io @jeffrey-knight
 vhdcprod/va.data-commons.org @nmetokishlubsky
 vadcprod/vpodc.data-commons.org @nmetokishlubsky
-midrcprod/data.midrc.org @frankliuao @cgmeyer
-midrcprod/staging.midrc.org @frankliuao @cgmeyer
-midrcvalidate/validate.midrc.org @frankliuao @cgmeyer
-midrcvalidate/validatestaging.midrc.org @frankliuao @cgmeyer
-bihprod/imaging-hub.data-commons.org @frankliuao @cgmeyer
-bihprod/bih-staging.data-commons.org @frankliuao @cgmeyer
+midrcprod/data.midrc.org @AJuehne-CTDS @cgmeyer
+midrcprod/staging.midrc.org @AJuehne-CTDS @cgmeyer
+midrcvalidate/validate.midrc.org @AJuehne-CTDS @cgmeyer
+midrcvalidate/validatestaging.midrc.org @AJuehne-CTDS @cgmeyer
+bihprod/imaging-hub.data-commons.org @AJuehne-CTDS @cgmeyer
+bihprod/bih-staging.data-commons.org @AJuehne-CTDS @cgmeyer
 bdcatprod/gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
 bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
 bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
