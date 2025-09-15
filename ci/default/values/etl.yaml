@@ -11,10 +11,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 10Gi
+        memory: 7Gi
     spark:
       requests:
-        memory: 3Gi
+        memory: 4Gi
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject
