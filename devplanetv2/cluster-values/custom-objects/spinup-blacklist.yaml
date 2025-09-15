@@ -24,7 +24,6 @@ data:
     qa-dcf-helm
     qa-dcp-helm
     qa-jcoin-helm
-    qa-mc2dp-helm
     qa-midrc-helm
     qa-midrc-test
     qa-vpodc
