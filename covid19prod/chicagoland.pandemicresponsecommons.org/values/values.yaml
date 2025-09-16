@@ -69,6 +69,14 @@ dashboard:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--dashboard-access
 etl:
   esEndpoint: elasticsearch
+  image:
+    tube:
+      repository: quay.io/cdis/tube
+      pullPolicy: IfNotPresent
+      tag: "2025.08"
+    spark:
+      repository: "quay.io/cdis/gen3-spark"
+      tag: "2025.08"
   etlMapping:
     mappings:
       - doc_type: location
@@ -782,11 +790,6 @@ sower:
         - name: pelican-creds-volume
           secret:
             secretName: pelicanservice-g3auto
-spark:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: "2025.08"
 ssjdispatcher:
   enabled: true
   externalSecrets:
@@ -795,11 +798,6 @@ ssjdispatcher:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: "2025.08"
   indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.08
-tube:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: "2025.08"
 wts:
   enabled: true
   externalSecrets:
