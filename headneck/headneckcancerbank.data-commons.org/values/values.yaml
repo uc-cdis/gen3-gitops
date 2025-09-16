@@ -9,7 +9,10 @@ global:
       name: external-secrets
       roleArn: arn:aws:iam::419939494982:role/gen3-service/headneck-default-external-secrets-sa
     wafv2:
-      wafAclArn: arn:aws:wafv2:us-east-1:419939494982:regional/webacl/headneck-waf/7bf68efb-772e-4ac6-857d-0c73911b9e77
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:419939494982:regional/webacl/headneck-waf/7bf68efb-772e-4ac6-857d-0c73911b9e77"
   dev: false
   externalSecrets:
     deploy: true
@@ -96,7 +99,7 @@ etl:
     tube:
       # -- (string) Overrides the image tag whose default is the chart appVersion.
       tag: "jawad-debug"
-      pullPolicy: Always 
+      pullPolicy: Always
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -321,8 +324,8 @@ guppy:
     - index: hnc_subject
       type: subject
     - index: hnc_data_file
-      type: data_file  
-  configIndex: hnc_array-config 
+      type: data_file
+  configIndex: hnc_array-config
 
 
 hatchery:
