@@ -495,6 +495,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::813684607867:role/midrcprod-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcprod-waf/6dae1fe2-287d-4cec-9537-0b8fa1f7d93c"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.9/schema.json
   dispatcherJobNum: '10'
@@ -552,6 +557,8 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.08'
+  hotNode:
+    enabled: true
   hatchery:
     json: |-
       {

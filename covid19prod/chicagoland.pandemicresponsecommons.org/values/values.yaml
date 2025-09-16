@@ -583,12 +583,11 @@ hatchery:
               "FRAME_ANCESTORS": "https://chicagoland.pandemicresponsecommons.org"
             },
             "args": [
-              "--NotebookApp.base_url=/lw-workspace/proxy",
-              "--LabApp.default_url=/lab/tree/welcome.html",
-              "--NotebookApp.shutdown_no_activity_timeout=240",
-              "--NotebookApp.password=''",
-              "--NotebookApp.token=''",
-              "--NotebookApp.ip='*'",
+              "--ServerApp.base_url=/lw-workspace/proxy",
+              "--ServerApp.default_url=/lab/tree/welcome.html",
+              "--ServerApp.shutdown_no_activity_timeout=240",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
               "--ServerApp.allow_remote_access=True"
             ],
             "command": [

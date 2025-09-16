@@ -1,3 +1,5 @@
+ambassador:
+  enabled: false
 arborist:
   enabled: true
   image:
@@ -171,6 +173,8 @@ guppy:
     type: subject
   - index: icgc_file
     type: file
+hatchery:
+  enabled: false
 indexd:
   enabled: true
   externalSecrets:
@@ -178,6 +182,8 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.06'
+manifestservice:
+  enabled: false
 metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -494,3 +500,5 @@ tube:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2025.06'
+wts:
+  enabled: false
