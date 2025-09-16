@@ -100,6 +100,20 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/11bc3b8f-b481-4f01-a9b1-760a674dbdc1
 hatchery:
   enabled: true
+  hotNode:
+    enabled: true
+    
+    # We need hot node(s) in all these zones since EBS volumes exists in these.
+    availabilityZones:
+      - us-east-1a
+      - us-east-1c
+      - us-east-1d
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 2
+      memory: 4Gi
+
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.09'
