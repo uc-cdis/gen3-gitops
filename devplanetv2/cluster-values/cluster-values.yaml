@@ -80,10 +80,10 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-category
+      - key: karpenter.k8s.aws/instance-family
         operator: In
         values:
-          - r
+          - r8i-flex
 
   workflow:
     sgSelector: devplanetv2
