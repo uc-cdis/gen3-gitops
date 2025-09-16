@@ -474,7 +474,7 @@ fence:
     fenceJwtKeys: midrcstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'fix_registration'
+    tag: '11.4.0'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--audit-sqs-sender
