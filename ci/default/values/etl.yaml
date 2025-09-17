@@ -14,7 +14,8 @@ etl:
         memory: 7Gi
     spark:
       requests:
-        memory: 7Gi
+        memory: 3Gi
+        cpu: 3
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject
