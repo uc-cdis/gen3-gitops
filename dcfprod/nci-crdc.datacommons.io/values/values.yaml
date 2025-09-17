@@ -695,7 +695,7 @@ fence:
       kf-study-us-east-1-prd-sd-w0v965xz:
         cred: "fence_bot"
         region: "us-east-1"
-      kf-study-us-east-1-prd-sd-z0d9n23x: 
+      kf-study-us-east-1-prd-sd-z0d9n23x:
         cred: "fence_bot"
         region: "us-east-1"
       kf-study-us-east-1-prd-sd-zfgdg5ys:
@@ -1063,6 +1063,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:584476192960:regional/webacl/dcfprod-waf/fb6cb3a2-31cd-4cab-b0ff-44f09d955958"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   dispatcherJobNum: '10'

@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: jupyter-pods
+  jupyterNamespace: jupyter-pods-jcoinprod-helm
 arborist:
   replicaCount: 4
   autoscaling:
@@ -221,17 +221,14 @@ hatchery:
     stataG3auto: jcoinprod-stata-workspace-gen3-license
   hotNode:
     enabled: true
-
     availabilityZones:
       - us-east-1a
       - us-east-1c
       - us-east-1d
-
     # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
     workspaceCapacityReservation:
       cpu: 2
       memory: 4Gi
-
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -239,7 +236,7 @@ hatchery:
   hatchery:
     json: |-
       {
-        "user-namespace": "jupyter-pods",
+        "user-namespace": "jupyter-pods-jcoinprod-helm",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-jcoin",
@@ -306,17 +303,20 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "User-licensed Stata Notebook",
-            "image": "quay.io/cdis/stata-heal:master",
+            "name": "(Generic, User-licensed) Stata Notebook",
+            "image": "quay.io/cdis/jupyter-pystata-user-licensed:2.0.0",
             "env": {
               "FRAME_ANCESTORS": "https://jcoin.datacommons.io"
             },
             "args": [
-              "--NotebookApp.base_url=/lw-workspace/proxy/",
-              "--NotebookApp.password=''",
-              "--NotebookApp.token=''",
-              "--NotebookApp.shutdown_no_activity_timeout=5400",
-              "--NotebookApp.quit_button=False"
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
             ],
             "command": [
               "start-notebook.sh"
@@ -327,7 +327,7 @@ hatchery:
             "lifecycle-post-start": [
               "/bin/sh",
               "-c",
-              "(while true; do [ -d ~/pd ] && [ -f ~/pd/stata.lic ] && cp ~/pd/stata.lic /usr/local/stata17/; sleep 1; done) & export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
             ],
             "user-uid": 1000,
             "fs-gid": 100,
@@ -338,7 +338,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "Limited Gen3-licensed Stata Notebook",
+            "name": "(Generic, Limited Gen3-licensed) Stata Notebook",
             "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:2.0.0",
             "env": {
               "FRAME_ANCESTORS": "https://jcoin.datacommons.io"

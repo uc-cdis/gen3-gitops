@@ -115,6 +115,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::584476192960:role/dcf-staging-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:584476192960:regional/webacl/dcf-staging-waf/541a5a0d-56c7-4de0-af1e-d5c74cb2210f"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   dispatcherJobNum: '10'
