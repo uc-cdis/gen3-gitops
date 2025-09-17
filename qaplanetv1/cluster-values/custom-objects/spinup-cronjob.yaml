@@ -53,7 +53,7 @@ spec:
                   name: shutdown-blacklist
                   readOnly: true
                   subPath: blacklist
-                - mounPath: /spinup-blacklist
+                - mountPath: /spinup-blacklist
                   name: spinup-blacklist
                   readOnly: true
                   subpath: blacklist
