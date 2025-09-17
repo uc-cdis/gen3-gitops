@@ -11,7 +11,7 @@ etl:
   resources:
     tube:
       requests:
-        memory: 7Gi
+        memory: 12Gi
     spark:
       requests:
         memory: 3Gi
