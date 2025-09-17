@@ -425,6 +425,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:562749638216:regional/webacl/bloodv2-waf/6bfe2374-8097-4c3e-957b-bd5b3f42dded"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.9/schema.json
   dispatcherJobNum: "10"

@@ -135,7 +135,7 @@ global:
       # -- (bool) Set to true if using AWS WAFv2
       enabled: true
       # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2
+      wafAclArn: "arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.2.1/schema.json
   dispatcherJobNum: '10'
