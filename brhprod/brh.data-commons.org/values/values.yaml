@@ -313,13 +313,11 @@ hatchery:
               "version": 0.1,
               "or": [
                 {
-                  "pay_models": [
-                    "Direct Pay"
-                  ]
+                  "pay_models": ["Do Not Show"]
                 },
                 {
                   "resource_paths": [
-                    "/workspace/jupyter-nextflow"
+                    "/workspace/do-not-show"
                   ]
                 }
               ]
