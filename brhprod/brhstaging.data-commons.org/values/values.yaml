@@ -227,7 +227,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Notebooks",
-            "image": "quay.io/cdis/brh-notebooks:combined_demos__352e4af3a35f57aed5fdd90f0d4a0ef4322ead73",
+            "image": "quay.io/cdis/brh-notebooks:combined_demos__ad30ec9e062a3763236931663be16370cf1f29c5",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
