@@ -12,11 +12,11 @@ etl:
     tube:
       requests:
         memory: 12Gi
-        cpu: 2
+        cpu: 3
     spark:
       requests:
-        memory: 7Gi
-        cpu: 2
+        memory: 8Gi
+        cpu: 3
   etlMapping:
     mappings:
       - name: ci.planx-ci.io_subject
