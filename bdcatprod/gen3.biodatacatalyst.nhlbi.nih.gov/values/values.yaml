@@ -5,6 +5,7 @@ access-backend:
     tag: '2025.09'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
+    accessBackendKv: bdcatprod-access-backend-kv
     dbcreds: bdcatprod-access-backend-dbcreds
   serviceAccount:
     annotations:

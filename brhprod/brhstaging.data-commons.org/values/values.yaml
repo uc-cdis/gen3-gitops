@@ -192,7 +192,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__778d8a22ce33935263d7eb85ef2a7a89c164a2a2",
+            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__071a98e75849c876c3652c8ec198653d88503568",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
@@ -262,7 +262,7 @@ hatchery:
             "cpu-limit": "4.0",
             "memory-limit": "10Gi",
             "name": "(Beta) Nextflow with CPU instances",
-            "image": "quay.io/cdis/jupyter-notebook:nextflow-1.3.5",
+            "image": "quay.io/cdis/jupyter-notebook:nextflow-3.0.2",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
