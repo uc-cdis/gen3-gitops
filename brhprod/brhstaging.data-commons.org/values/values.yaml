@@ -198,7 +198,7 @@ hatchery:
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--LabApp.default_url=/lab/tree/brh-welcome.html",
+              "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
