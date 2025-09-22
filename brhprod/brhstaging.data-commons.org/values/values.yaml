@@ -192,7 +192,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__aeb1b0f9da21f728842cb12c8fb631a807c8f414",
+            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__5510d1fdb1e6b2f1bfc620a17096a2a18df9cba4",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
@@ -233,7 +233,7 @@ hatchery:
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--LabApp.default_url=/lab/tree/brh-welcome.html",
+              "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
