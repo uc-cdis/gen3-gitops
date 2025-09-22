@@ -524,6 +524,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: postgres
   revproxyArn: arn:aws:acm:us-east-1:813684607867:certificate/d4bdf325-afce-4e1d-b431-0dd062ee12c5
 guppy:
   authFilterField: auth_resource_path
