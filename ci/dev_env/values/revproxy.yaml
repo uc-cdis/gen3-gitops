@@ -1,0 +1,30 @@
+revproxy:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/nginx"
+    tag: "master"
+  ingress:
+    enabled: true
+    annotations:
+      alb.ingress.kubernetes.io/scheme: internal
+      alb.ingress.kubernetes.io/tags: Environment=devplanetv2-internal
+      alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:707767160287:certificate/798e629d-05ee-4bc5-b51f-a86861f29b68'
+      alb.ingress.kubernetes.io/group.name: devplanetv2-internal
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+      alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
+    aws:
+      # Do not change- this will break DNS for your env.
+      group: devplanetv2-internal
+    className: alb
+    hosts:
+      # This will be dynamically replaced by env_setup.sh script.
+      - host: HOSTNAME
+        paths:
+          - path: /
+            pathType: Prefix
+    resources:
+      requests:
+        memory: "105Mi"
+        cpu: "15m"

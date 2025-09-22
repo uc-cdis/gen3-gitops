@@ -1,3 +1,5 @@
+ambassador:
+  enabled: false
 arborist:
   enabled: true
   image:
@@ -127,6 +129,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::446046036926:role/icgc--icgc-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:446046036926:regional/webacl/icgc-waf/81bd68e0-c424-4fc5-903e-828d1fa8e398"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/tcga_dictionary/1.0.3/schema.json
   dispatcherJobNum: 10
@@ -166,6 +173,8 @@ guppy:
     type: subject
   - index: icgc_file
     type: file
+hatchery:
+  enabled: false
 indexd:
   enabled: true
   externalSecrets:
@@ -173,6 +182,8 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.06'
+manifestservice:
+  enabled: false
 metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -489,3 +500,5 @@ tube:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2025.06'
+wts:
+  enabled: false
