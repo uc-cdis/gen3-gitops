@@ -102,7 +102,7 @@ hatchery:
   enabled: true
   hotNode:
     enabled: true
-    
+
     # We need hot node(s) in all these zones since EBS volumes exists in these.
     availabilityZones:
       - us-east-1a
@@ -338,6 +338,12 @@ hatchery:
           }
         ]
       }
+  workspaceLaunchTest:
+    enable: true
+    schedule: "0 */4 * * *"
+    workspaceImages: "(Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example Analysis Jupyter Lab Notebooks"
+    operatorName: "planxdemo@gmail.com"
+    hostname: "https://brh.data-commons.org"
 indexd:
   replicaCount: 4
   autoscaling:
