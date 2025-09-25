@@ -261,6 +261,8 @@ fence:
   replicaCount: 4
   enabled: true
   externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
     createK8sGoogleAppSecrets: false
     fenceConfig: bdcatprod-fence-config
     fenceGoogleAppCredsSecret: bdcatprod-fence-google-app-creds
