@@ -4,7 +4,8 @@ access-backend:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
     tag: '2025.09'
   externalSecrets:
-    accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto
+    accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto-3
+    accessBackendKv: bdcat-internalstaging-access-backend-kv
     dbcreds: bdcat-internalstaging-access-backend-dbcreds
   serviceAccount:
     annotations:
@@ -2186,7 +2187,7 @@ global:
       # -- (bool) Set to true if using AWS WAFv2
       enabled: true
       # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d"
+      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.6/schema.json
   dispatcherJobNum: '10'

@@ -72,6 +72,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::222487244010:role/kfqa2-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:222487244010:regional/webacl/kfqa2-waf/4b538e50-e586-4bc5-9c91-2b8677a15cba"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/kf-dictionary/develop/schema.json
   environment: kfqa2
