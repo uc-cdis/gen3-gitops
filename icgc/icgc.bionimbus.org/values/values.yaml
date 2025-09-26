@@ -189,7 +189,7 @@ metadata:
   externalSecrets:
     metadataG3auto: icgc-metadata-g3auto
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   enabled: true
   image:

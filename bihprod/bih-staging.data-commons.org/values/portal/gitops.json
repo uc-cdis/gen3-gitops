@@ -113,11 +113,26 @@
         "discovery": false,
         "discoveryUseAggMDS": false,
         "discoveryUseAggWTS": false,
-        "workspaceRegistration": false,
+        "workspaceRegistration": true,
         "workspaceTokenServiceRefreshTokenAtLogin": false
     },
     "useArboristUI": true,
     "showArboristAuthzOnProfile": true,
     "showFenceAuthzOnProfile": false,
-    "showExternalLoginsOnProfile": true
+    "showExternalLoginsOnProfile": true,
+    "registrationConfigs": {
+        "features": {
+            "workspaceRegistrationConfig": {
+                "workspacePolicyId": "workspace",
+                "workspaceInfoMessage": "The MIDRC-BIH workspace provides a standardized computational environment for accessing and analyzing data from MIDRC-BIH studies. Please fill out this form to request access to the workspace and start computing!",
+                "successRedirect": {
+                    "link": "/",
+                    "text": "Go to MIDRC-BIH Home Page"
+                }
+            }
+        },
+        "zendeskConfig": {
+            "zendeskSubdomainName": "midrc-support"
+        }
+    }
 }

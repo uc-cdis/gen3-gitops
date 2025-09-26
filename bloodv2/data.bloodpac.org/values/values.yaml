@@ -627,7 +627,7 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: "2025.07"
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   replicaCount: 4
   autoscaling:
