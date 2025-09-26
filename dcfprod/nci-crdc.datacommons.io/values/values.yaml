@@ -734,6 +734,9 @@ fence:
       pdcdatastore:
         cred: fence_bot
         region: us-east-1
+      popsci-prod-files-dedicated-bucket:
+        cred: fence_bot
+        region: us-east-1
       sddp-phs001524:
         cred: fence_bot
         region: us-east-1

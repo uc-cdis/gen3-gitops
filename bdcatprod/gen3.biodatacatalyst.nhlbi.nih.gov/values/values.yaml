@@ -261,6 +261,8 @@ fence:
   replicaCount: 4
   enabled: true
   externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
     createK8sGoogleAppSecrets: false
     fenceConfig: bdcatprod-fence-config
     fenceGoogleAppCredsSecret: bdcatprod-fence-google-app-creds
@@ -2081,6 +2083,8 @@ global:
   dispatcherJobNum: '10'
   environment: bdcatprod
   externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
     deploy: true
   hostname: gen3.biodatacatalyst.nhlbi.nih.gov
   fenceURL: https://gen3.biodatacatalyst.nhlbi.nih.gov/user
