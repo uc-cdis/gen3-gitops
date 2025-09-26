@@ -27,7 +27,7 @@ coreDNS:
     enabled: false
 
 ebs-csi-driver:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
