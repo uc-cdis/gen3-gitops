@@ -486,8 +486,13 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::813684607867:role/midrcvalidate-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcvalidate-waf/0aba6cf0-a77b-41d1-9ab1-3280add64a25"
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.3.7/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.0/schema.json
   dispatcherJobNum: "10"
   environment: midrcvalidate
   externalSecrets:

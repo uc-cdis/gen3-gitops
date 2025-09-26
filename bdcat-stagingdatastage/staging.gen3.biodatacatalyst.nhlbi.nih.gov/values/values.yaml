@@ -275,6 +275,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/stagingdatastage-external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: '10'
@@ -1466,4 +1471,4 @@ tube:
 wts:
   enabled: false
 mutatingWebhook:
-  enabled: true
+  enabled: false

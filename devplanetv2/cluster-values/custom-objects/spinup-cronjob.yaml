@@ -38,7 +38,7 @@ spec:
                 - |
                   #!/usr/bin/env bash
 
-                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | xargs -r -n1 kubectl scale deployments --all --replicas=1 -n
+                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | grep -vFxf /spinup-blacklist | xargs -r -n1 kubectl scale deployments --all --replicas=1 -n
                   exit 0
               command:
                 - /bin/bash
@@ -53,6 +53,10 @@ spec:
                   name: shutdown-blacklist
                   readOnly: true
                   subPath: blacklist
+                - mountPath: /spinup-blacklist
+                  name: spinup-blacklist
+                  readOnly: true
+                  subpath: blacklist
           dnsPolicy: ClusterFirst
           restartPolicy: Never
           schedulerName: default-scheduler
@@ -66,6 +70,10 @@ spec:
                 defaultMode: 420
                 name: shutdown-blacklist
               name: shutdown-blacklist
+            - configMap:
+                defaultMode: 420
+                name: spinup-blacklist
+              name: spinup-blacklist
       ttlSecondsAfterFinished: 3600
   schedule: 0 6 * * 1-5
   successfulJobsHistoryLimit: 3

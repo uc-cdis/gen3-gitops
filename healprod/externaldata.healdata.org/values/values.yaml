@@ -63,6 +63,11 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--external-secrets-sa
+    wafv2:
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:205252583234:regional/webacl/healprod-waf/433ff65b-9bda-4850-b7b9-dd07051a11e3"
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/heal_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
