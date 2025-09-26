@@ -1,5 +1,6 @@
 ambassador:
-  enabled: false
+  enabled: true
+  jupyterNamespace: "jupyter-pods-bihstaging-helm"
 arborist:
   autoscaling:
     enabled: true
@@ -168,7 +169,112 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:533267425233:certificate/dcb6f91b-6e4c-4458-a9d7-3750ba92b754
 hatchery:
-  enabled: false
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2025.09'
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods-bihstaging-helm",
+        "sub-dir": "/workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.08",
+          "env": {
+            "NAMESPACE": "default",
+            "GEN3_ENDPOINT": "bihstaging.data-commons.org/portal",
+            "HOSTNAME": "bihstaging.data-commons.org/portal"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+            "image": "quay.io/cdis/jupyter-superslim-r:2.0.1",
+            "env": {
+              "FRAME_ANCESTORS": "bihstaging.data-commons.org/portal"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "BIH Tutorial Jupyter Notebook",
+            "image": "quay.io/cdis/jupyter-notebook:bih-master",
+            "env": {
+              "FRAME_ANCESTORS": "bihstaging.data-commons.org/portal"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
+        ]
+      }
 guppy:
   configIndex: bih_array-config
   enabled: true
@@ -227,6 +333,11 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
+    tag: '5.39.2'
+requestor:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2025.09'
 revproxy:
   autoscaling:

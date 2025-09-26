@@ -1186,11 +1186,6 @@ portal:
         "showFenceAuthzOnProfile": true,
         "hideSubmissionIfIneligible": true,
         "componentToResourceMapping": {
-          "Workspace": {
-            "resource": "/workspace",
-            "method": "access",
-            "service": "jupyterhub"
-          },
           "Query": {
             "resource": "/query_page",
             "method": "access",
@@ -1423,7 +1418,8 @@ portal:
           "discovery": true,
           "explorer": true,
           "analysis": true,
-          "explorerPublic": true
+          "explorerPublic": true,
+          "workspaceRegistration": true
         },
         "analysisTools": [],
         "explorerConfig": [
@@ -2912,6 +2908,21 @@ portal:
             }
           ]
         },
+        "registrationConfigs": {
+            "features": {
+                "workspaceRegistrationConfig": {
+                    "workspacePolicyId": "workspace",
+                    "workspaceInfoMessage": "The MIDRC workspace provides a standardized computational environment for accessing and analyzing data from MIDRC studies. Please fill out this form to request access to the workspace and start computing!",
+                    "successRedirect": {
+                        "link": "/",
+                        "text": "Go to MIDRC Home Page"
+                    }
+                }
+            },
+            "zendeskConfig": {
+                "zendeskSubdomainName": "midrc-support"
+            }
+        },
         "ddUrl": "ddog-gov.com"
       }
     logo: |-
@@ -2933,6 +2944,11 @@ revproxy:
   ingress:
     aws:
       group: midrcprod
+requestor:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
+    tag: '2025.09'
 sheepdog:
   autoscaling:
     enabled: false
