@@ -73,6 +73,32 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.09'
+  FENCE_CONFIG_PUBLIC:
+    S3_BUCKETS:
+      healprod-default-205252583234-upload:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      heal-bucket-bacpac:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      heal-bucket-publicaccess:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      jcoinprod-default-258867494168-upload:
+        cred: 'fence_bot'
+        region: 'us-east-1'
+      pennsieve-prod-discover-publish50-use1:
+        cred: 'fence_bot'
+        requester_pays: true
+        region: 'us-east-1'
+      prod-rejoin-discover50-use1:
+        cred: 'fence_bot'
+        requester_pays: true
+        region: 'us-east-1'
+      prd-sparc-discover50-use1:
+        cred: 'fence_bot'
+        requester_pays: true
+        region: 'us-east-1'
 fluentd:
   enabled: true
   image:
