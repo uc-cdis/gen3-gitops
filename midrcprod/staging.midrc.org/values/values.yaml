@@ -1,6 +1,6 @@
 ambassador:
   enabled: true
-  jupyterNamespace: "jupyter-pods-midrcstaging-helm"  
+  jupyterNamespace: "jupyter-pods-midrcstaging-helm"
 arborist:
   autoscaling:
     enabled: false
@@ -566,7 +566,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.08",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.09",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "data.midrc.org",
@@ -627,19 +627,20 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "MIDRC Tutorial Jupyter Notebook",
-            "image": "quay.io/cdis/jupyter-notebook:midrc-chore_midrc-container-gh-action",
+            "image": "quay.io/cdis/jupyter-notebook:midrc-master",
             "env": {
-              "FRAME_ANCESTORS": "https://staging.midrc.org"
+              "FRAME_ANCESTORS": "https://staging.midrc.org",
+              "JUPYTER_ENABLE_LAB": "yes"
             },
             "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-              "--JupyterNotebookApp.quit_button=False"
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False"
             ],
             "command": [
               "start-notebook.sh"

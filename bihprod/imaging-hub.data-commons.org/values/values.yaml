@@ -175,7 +175,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.08",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.09",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "imaging-hub.data-commons.org",
@@ -238,7 +238,7 @@ hatchery:
             "name": "BIH Tutorial Jupyter Notebook",
             "image": "quay.io/cdis/jupyter-notebook:bih-master",
             "env": {
-              "FRAME_ANCESTORS": "imaging-hub.data-commons.org"
+              "FRAME_ANCESTORS": "imaging-hub.data-commons.org",
               "JUPYTER_ENABLE_LAB": "yes"
             },
             "args": [
