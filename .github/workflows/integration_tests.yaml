@@ -12,13 +12,7 @@ jobs:
   integration_tests:
     name: Integration tests
     uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
-    with:
-      GEN3_INSTANCE_TYPE: HELM_LOCAL
     secrets:
-      CI_AWS_ACCESS_KEY_ID: ${{ secrets.CI_AWS_ACCESS_KEY_ID }}
-      CI_AWS_SECRET_ACCESS_KEY: ${{ secrets.CI_AWS_SECRET_ACCESS_KEY }}
-      QA_DASHBOARD_S3_PATH: ${{ secrets.QA_DASHBOARD_S3_PATH }}
-      JENKINS_API_TOKEN: ${{ secrets.JENKINS_API_TOKEN }}
       CI_TEST_ORCID_USERID: ${{ secrets.CI_TEST_ORCID_USERID }}
       CI_TEST_ORCID_PASSWORD: ${{ secrets.CI_TEST_ORCID_PASSWORD }}
       CI_TEST_RAS_EMAIL: ${{ secrets.CI_TEST_RAS_EMAIL }}
