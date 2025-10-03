@@ -481,7 +481,7 @@ fence:
   metricsEnabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--audit-sqs-sender
+      eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcprod-helm--audit-sqs-sender
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc/user.yaml
