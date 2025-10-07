@@ -581,6 +581,10 @@ portal:
               {
                 "link": "https://jcoin-maarc.github.io/jdc-docs-public/",
                 "name": "Documentation"
+              },
+              {
+                "link": "https://uc-cdis.github.io/platform-citation/jcoin-cite/",
+                "name": "Cite JCOIN"
               }
             ]
           },
