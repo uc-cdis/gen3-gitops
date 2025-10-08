@@ -192,13 +192,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__071a98e75849c876c3652c8ec198653d88503568",
+            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__e3f9e921ab4fb4378c97ce4c8201d2c20102d907",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -227,13 +227,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Notebooks",
-            "image": "quay.io/cdis/brh-notebooks:combined_demos__b0a59aa051cbd993bbda25a7bb42f99bd4d91322",
+            "image": "quay.io/cdis/brh-notebooks:combined_demos__e68977edfc602f20cb913f85fe65acc39968b508",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -250,7 +250,7 @@ hatchery:
             "lifecycle-post-start": [
               "/bin/sh",
               "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; wget -O /home/$IAM/brh-welcome.html https://raw.githubusercontent.com/uc-cdis/containers/refs/heads/master/BRH-notebooks/combined_demos/brh-welcome.html; true"
             ],
             "user-uid": 1010,
             "fs-gid": 100,
@@ -523,7 +523,7 @@ metadata:
     tag: '2025.09'
   useAggMds: true
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   enabled: true
   image:

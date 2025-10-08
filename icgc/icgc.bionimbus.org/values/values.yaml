@@ -189,7 +189,7 @@ metadata:
   externalSecrets:
     metadataG3auto: icgc-metadata-g3auto
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   enabled: true
   image:
@@ -200,6 +200,8 @@ portal:
   gitops:
     json: |
       {
+        "ddEnv": "ICGC",
+        "ddUrl": "ddog-gov.com",
         "gaTrackingId": "UA-119127212-5",
         "graphql": {
           "boardCounts": [
@@ -476,7 +478,7 @@ revproxy:
     tag: '2025.06'
   ingress:
     aws:
-      group: icgc-helm
+      group: icgc
 sheepdog:
   enabled: true
   image:

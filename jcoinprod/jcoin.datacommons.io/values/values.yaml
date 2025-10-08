@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: jupyter-pods-jcoinprod-helm
+  jupyterNamespace: jupyter-pods
 arborist:
   replicaCount: 4
   autoscaling:
@@ -236,7 +236,7 @@ hatchery:
   hatchery:
     json: |-
       {
-        "user-namespace": "jupyter-pods-jcoinprod-helm",
+        "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-jcoin",
@@ -414,7 +414,7 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.09'
 mutatingWebhook:
-  enabled: true
+  enabled: false
 peregrine:
   replicaCount: 4
   autoscaling:
@@ -581,6 +581,10 @@ portal:
               {
                 "link": "https://jcoin-maarc.github.io/jdc-docs-public/",
                 "name": "Documentation"
+              },
+              {
+                "link": "https://uc-cdis.github.io/platform-citation/jcoin-cite/",
+                "name": "Cite JCOIN"
               }
             ]
           },
@@ -611,7 +615,7 @@ portal:
               "alt": "Center for Translational Data Science at the University of Chicago"
             },
             {
-              "src": "/src/img/sponsor/gitops-sponsors/0",
+              "src": "/src/img/sponsors/gitops-sponsors/0",
               "href": "https://heal.nih.gov/research/research-to-practice/jcoin",
               "alt": "JCOIN is funded by NIDA as part of the NIH HEAL Initiative(SM)"
             }
@@ -1122,7 +1126,7 @@ revproxy:
     tag: '2025.09'
   ingress:
     aws:
-      group: jcoinprod-helm
+      group: jcoinprod
 sheepdog:
   replicaCount: 4
   autoscaling:
