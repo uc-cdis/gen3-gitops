@@ -15,7 +15,7 @@ etl:
         cpu: 3
     spark:
       requests:
-        memory: 8Gi
+        memory: 10Gi
         cpu: 3
   etlMapping:
     mappings:
