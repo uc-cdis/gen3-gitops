@@ -2,7 +2,7 @@ ambassador:
   jupyterNamespace: "jupyter-pods"
   replicaCount: 2
 arborist:
-  replicaCount: 2
+  replicaCount: 3
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
