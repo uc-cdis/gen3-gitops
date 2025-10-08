@@ -93,6 +93,10 @@
                 {
                     "link": "https://heal.github.io/platform-documentation/",
                     "name": "Help and Guidance"
+                },
+                {
+                    "link": "https://uc-cdis.github.io/platform-citation/heal-cite/",
+                    "name": "Cite HEAL"
                 }
             ]
         },
