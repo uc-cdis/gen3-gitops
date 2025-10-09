@@ -45,9 +45,36 @@ dashboard:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--dashboard-access
 datareplicate:
   enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
-    tag: 2.0.0
+  googleBucketReplicateJob:
+    PROJECT: dcf-prod
+    MAX_WORKERS: 80
+    LOG_BUCKET: datarefresh-log
+    IGNORED_FILE: gs://replication-input/ignored_files_manifest.csv
+    RELEASE: DR43
+    MANIFEST_FILE: gs://replication-input/GDC_full_sync_active_manifest_20190326_post_DR43.0.tsv
+  awsBucketReplicateJob:
+    THREAD_NUM: 20
+    CHUNK_SIZE: 1
+    GDC_BUCKET_NAME: gdcbackup
+    LOG_BUCKET: data-refresh-output
+    RELEASE: DR43
+    MANIFEST_FILE: s3://data-refresh-manifest/short_manifest.tsv
+    QUICK_TEST: true
+  removeObjectsFromCloudsJob:
+    LOG_BUCKET: data-refresh-output
+    IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
+    RELEASE: DR43
+    MANIFEST_FILE: s3://data-refresh-manifest/obsolete.tsv
+    DRY_RUN: true
+  replicateValidationJob:
+    LOG_BUCKET: data-refresh-output
+    MAP_FILE:
+    SAVE_COPIED_OBJECTS:
+    IGNORED_FILE: gs://replication-input/ignored_files_manifest.csv 
+    RELEASE: DR43
+    MANIFEST_FILE: 's3://data-refresh-manifest/GDC_full_sync_active_manifest_20210423_post_DR29.0.csv,s3://data-refresh-manifest/GDC_full_sync_legacy_manifest_20210423_post_DR29.0.csv'
+    OUT_FILES: 'GDC_full_sync_active_manifest_20210423_post_DR29_DCF.tsv,GDC_full_sync_legacy_manifest_20210423_post_DR29_DCF.tsv'
+    FORCE_CREATE_MANIFEST: false
 fence:
   FENCE_CONFIG_PUBLIC:
     dbGaP:
