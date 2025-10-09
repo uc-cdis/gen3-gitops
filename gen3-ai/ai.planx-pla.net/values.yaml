@@ -1,0 +1,218 @@
+global:
+  aws:
+    enabled: true
+    account: "837801696852"
+    hatchery_role: "arn:aws:iam::837801696852:role/gen3-service/gen3-ai-default-hatchery-sa"
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-external-secrets-sa"
+    wafv2:
+      enabled: true
+      wafAclArn: ""
+  dev: false
+  externalSecrets:
+    deploy: true
+  postgres:
+    dbCreate: true
+    externalSecret: "gen3-ai-aurora-master-password"
+  environment: "gen3-ai"
+  hostname: "cac.data-commons.org"
+  # ai.planx-pla.net cert
+  # revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/3dc72278-1dd1-4451-848e-bc1cd3f21d13"
+  # cac.data-commons.org cert
+  revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/d3601fd4-4229-4898-a36a-1ed1ba96814e"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: "100"
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "portal"
+  ddEnabled: false
+
+ambassador:
+  enabled: true
+
+arborist:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-audit-sa"
+  externalSecrets:
+    dbcreds: "gen3-ai-default-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-es-proxy:
+  enabled: true
+  esEndpoint: ""
+  externalSecrets:
+    awsCreds: "gen3-ai-default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-dicom-viewer-creds"
+
+
+fence:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-fence-sa"
+
+  externalSecrets:
+    fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
+    fenceConfig: "gen3-ai-default-fence-config"
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sGoogleAppSecrets: true
+    dbcreds: "gen3-ai-default-fence-creds"
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: false
+  image:
+    repository: "quay.io/cdis/frontend-framework"
+    tag: "main"
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: true
+
+  hatchery:
+    sidecarContainer:
+      cpu-limit: '0.1'
+      memory-limit: 256Mi
+      image: quay.io/cdis/ecs-ws-sidecar:master
+      env:
+        NAMESPACE: "{{ .Release.Namespace }}"
+        HOSTNAME: "{{ .Values.global.hostname }}"
+      args: []
+      command:
+      - "/bin/bash"
+      - "./sidecar.sh"
+      lifecycle-pre-stop:
+      - su
+      - "-c"
+      - echo test
+      - "-s"
+      - "/bin/sh"
+      - root
+    containers:
+      -
+        target-port: 8888
+        cpu-limit: '1.0'
+        memory-limit: 2Gi
+        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
+        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
+        env:
+          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
+        args:
+        - "--NotebookApp.base_url=/lw-workspace/proxy/"
+        - "--NotebookApp.default_url=/lab"
+        - "--NotebookApp.password=''" #pragma: allowlist secret
+        - "--NotebookApp.token=''"
+        - "--NotebookApp.shutdown_no_activity_timeout=5400"
+        - "--NotebookApp.quit_button=False"
+        command:
+        - start-notebook.sh
+        path-rewrite: "/lw-workspace/proxy/"
+        use-tls: 'false'
+        ready-probe: "/lw-workspace/proxy/"
+        lifecycle-post-start:
+        - "/bin/sh"
+        - "-c"
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+          ln -s /data /home/$IAM/pd/; true
+        user-uid: 1000
+        fs-gid: 100
+        user-volume-location: "/home/jovyan/pd"
+        gen3-volume-location: "/home/jovyan/.gen3"
+
+
+indexd:
+  enabled: true
+  defaultPrefix: "dg.XXXX/"
+  externalSecrets:
+    dbcreds: "gen3-ai-default-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-manifestservice-sa"
+  externalSecrets:
+    createK8sManifestServiceSecret: true
+
+metadata:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: true
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-requestor-creds"
+
+revproxy:
+  enabled: true
+
+sheepdog:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-wts-creds"
+    createK8sWtsSecret: true
