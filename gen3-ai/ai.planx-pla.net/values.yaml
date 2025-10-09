@@ -17,7 +17,7 @@ global:
     dbCreate: true
     externalSecret: "gen3-ai-aurora-master-password"
   environment: "gen3-ai"
-  hostname: "ai.planx-pla.net"
+  hostname: "cac.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/3dc72278-1dd1-4451-848e-bc1cd3f21d13"
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
   portalApp: gitops
