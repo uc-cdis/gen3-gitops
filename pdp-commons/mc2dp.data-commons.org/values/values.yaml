@@ -62,7 +62,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: main
+    tag: 0.05
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
