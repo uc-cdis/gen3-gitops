@@ -229,7 +229,7 @@ fence:
     fenceJwtKeys: stagingdatastage-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '12.1.0'
+    tag: '2025.10'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -246,7 +246,6 @@ fence:
       sftp-private.ncbi.nlm.nih.gov ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFM24A4pG3U+8HzCvEkm9SiEWHOAtQr/DFZd3bf7VYDCcg2FPpUvGRsiDSuzhzBo+eG00d6/6y8NCypWwjiMi1rYgBOh9YA0w/ruutXYMUUVzw361lTgjOBOZ/dt3gKkNgShwDd0e1hnjYk/E7jYc2YJv67ZFy9GzXCWR55LhS/7fGQ5w==
       # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
       # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
-
 fluentd:
   enabled: true
   image:
@@ -276,10 +275,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/stagingdatastage-external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d"
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: '10'
@@ -560,13 +557,13 @@ portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/"
+    dir: bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
-    pullPolicy: 'Always'
+    tag: '2025.10'
+    pullPolicy: Always
 revproxy:
   replicaCount: 4
   autoscaling:
