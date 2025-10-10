@@ -767,7 +767,7 @@ portal:
                   ]
                 },
                 {
-                  "title": "Visit",
+                  "title": "Visits",
                   "fields": [
                     "visit.ADM_DATE",
                     "visit.CRDW_START_DATE",
