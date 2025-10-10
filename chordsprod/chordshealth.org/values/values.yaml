@@ -37,7 +37,7 @@ arborist:
     dbcreds: "chords_chords-arborist-db-creds"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2025.03
+    tag: 2025.04
 
 aws-es-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
