@@ -249,8 +249,6 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
-        parent_props:
-          - path: dataset
       - name: hnc_sample
         doc_type: sample
         type: aggregator
