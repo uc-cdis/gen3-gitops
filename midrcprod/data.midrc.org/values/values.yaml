@@ -57,6 +57,13 @@ dicom-server:
   externalSecrets:
     orthancG3Auto: midrcprod-orthanc-g3auto
 etl:
+  resources:
+    tube:
+      requests:
+        memory: 1.5Gi
+    spark:
+      requests:
+        memory: 1Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
