@@ -1,6 +1,6 @@
 ambassador:
   enabled: true
-  jupyterNamespace: "jupyter-pods-bihprod-helm"
+  jupyterNamespace: jupyter-pods-bihprod-helm
 arborist:
   autoscaling:
     enabled: true
@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-receiver
@@ -94,9 +94,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2025.09'
+      tag: '2025.10'
     spark:
-      tag: '2025.09'
+      tag: '2025.10'
 fence:
   serviceAccount:
     annotations:
@@ -113,7 +113,7 @@ fence:
     fenceJwtKeys: bihprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '2025.10'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
@@ -139,8 +139,7 @@ global:
       roleArn: arn:aws:iam::533267425233:role/bihprod-external-secrets-sa
     wafv2:
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2"
+      wafAclArn: arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.2.1/schema.json
   dispatcherJobNum: '10'
@@ -165,7 +164,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.09'
+    tag: '2025.10'
   hatchery:
     json: |-
       {
@@ -275,7 +274,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.09'
+    tag: '2025.10'
   indices:
     - index: bih_dataset
       type: dataset
@@ -297,7 +296,7 @@ indexd:
     serviceCreds: bihprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.10'
 manifestservice:
   enabled: false
 metadata:
@@ -313,7 +312,7 @@ metadata:
     metadataG3auto: bihprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.10'
   useAggMds: true
 mutatingWebhook:
   enabled: false
@@ -321,22 +320,22 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.10'
 portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bihprod/imaging-hub.data-commons.org/values/portal/"
+    dir: bihprod/imaging-hub.data-commons.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.39.2'
+    tag: '2025.10'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.09'
+    tag: '2025.10'
 revproxy:
   autoscaling:
     enabled: true
@@ -346,7 +345,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.10'
   ingress:
     aws:
       group: bihprod
@@ -354,7 +353,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
+    tag: '2025.10'
   fenceUrl: https://imaging-hub.data-commons.org/user
 spark:
   enabled: true
@@ -374,4 +373,4 @@ wts:
     wtsOidcClient: bihprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.09'
+    tag: '2025.10'
