@@ -267,10 +267,6 @@ etl:
           - name: sample_volume
           - name: status
         parent_props:
-          - name: subject
-            path: subject
-            props:
-              - submitter_id 
           - path: subject[MRN,Cancer_Status_Desc,Ethnicity,gender,race]
       - name: hnc_data_file
         doc_type: data_file
