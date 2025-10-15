@@ -185,7 +185,7 @@ hatchery:
           "memory-limit": "256Mi",
           "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
           "env": {
-            "NAMESPACE": "healpreprod",
+            "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
             "USER_UID": "1010"
           },
@@ -286,8 +286,8 @@ hatchery:
               "enabled": true,
               "license-type": "STATA-HEAL",
               "max-license-ids": 5,
-              "g3auto-name": "stata-workspace-gen3-license-g3auto",
-              "g3auto-key": "stata_license.txt",
+              "g3auto-name": "stata-workspace-gen3-license",
+              "g3auto-key": "stata-license.txt",
               "file-path": "stata.lic",
               "workspace-flavor": "gen3-licensed"
             },
