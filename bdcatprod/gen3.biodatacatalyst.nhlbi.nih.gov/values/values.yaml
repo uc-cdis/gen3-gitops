@@ -244,6 +244,9 @@ etl:
     spark:
       tag: '2025.09'
 fence:
+  resources:
+    requests:
+      memory: 500Mi
   usersync:
     usersync: true
     syncFromDbgap: true

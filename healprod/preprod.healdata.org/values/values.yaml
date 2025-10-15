@@ -160,9 +160,11 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
 hatchery:
   enabled: true
+  externalSecrets:
+    stataG3auto: "stata-workspace-gen3-license-preprod-heal"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.09'
+    tag: '2.5.0'
   hatchery:
     json: |-
       {
@@ -181,10 +183,11 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.05",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
           "env": {
             "NAMESPACE": "healpreprod",
-            "GEN3_ENDPOINT": "preprod.healdata.org"
+            "GEN3_ENDPOINT": "preprod.healdata.org",
+            "USER_UID": "1010"
           },
           "args": [],
           "command": [
@@ -206,7 +209,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__a446922e0751453477295f010e18119cee4dd543",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__bb4d2742a47421509769356c893834b3787ecb05",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -231,7 +234,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; wget -O /data/NDA_data_package_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/NDA_data_package_download.ipynb; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -241,7 +244,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic, User-licensed) Stata Notebook ",
-            "image": "quay.io/cdis/jupyter-pystata-user-licensed:2.0.0",
+            "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.0",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -266,7 +269,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd"
           },
@@ -275,7 +278,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic, Limited Gen3-licensed) Stata Notebook",
-            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:2.0.0",
+            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.0",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -310,7 +313,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -320,7 +323,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__22ec8d31c349ea76590d1071e8ceb1072eb69c72",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__671078c1e6fee0cd5621772027015529367e98a9",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -345,7 +348,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
