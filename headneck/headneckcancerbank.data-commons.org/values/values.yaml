@@ -256,23 +256,18 @@ etl:
         props:
           - name: project_id
           - name: submitter_id
-          - name: MRN
-          - name: Cancer_Status_Desc
-          - name: Cause_of_Death_Desc
-          - name: Class_of_Case_Desc
-          - name: Date_of_Birth
-          - name: Date_of_Last_Contact
-          - name: Ethnicity
-          - name: Primary_Payer_at_DX_Desc
-          - name: Race_1_Desc
-          - name: Sex_Desc
-          - name: Spanish_Hispanic_Origin_Desc
-          - name: Vital_Status_Desc
-          - name: date_of_death
-          - name: gender
-          - name: race
+          - name: body_fluid_code
+          - name: dna_260_280
+          - name: dna_concentration
+          - name: dna_od_260
+          - name: procedure_date
+          - name: protocol_number
+          - name: sample_number
+          - name: sample_type
+          - name: sample_volume
+          - name: status
         parent_props:
-          - path: subject[submitter_id,MRN,Cancer_Status_Desc,Ethnicity,gender,race]
+          - path: subjects[submitter_id,MRN,Cancer_Status_Desc,Ethnicity,gender,race]
       - name: hnc_data_file
         doc_type: data_file
         type: collector
