@@ -185,7 +185,7 @@ hatchery:
           "memory-limit": "256Mi",
           "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
           "env": {
-            "NAMESPACE": "healpreprod",
+            "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
             "USER_UID": "1010"
           },
