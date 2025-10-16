@@ -739,19 +739,6 @@ portal:
                     "diagnosis.Tumor_Size_Pathological",
                     "diagnosis.Tumor_Size_Summary"
                   ]
-                },
-                {
-                  "title": "Visits",
-                  "fields": [
-                    "visit.ADM_DATE",
-                    "visit.CRDW_START_DATE",
-                    "visit.CRDW_END_DATE",
-                    "visit.DISC_DATE",
-                    "visit.dx_name",
-                    "visit.dx_rank",
-                    "visit.icd10_code",
-                    "visit.icd9_code",
-                  ]
                 }
               ]
             },
