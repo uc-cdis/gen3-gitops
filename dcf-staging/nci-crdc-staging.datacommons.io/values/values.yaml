@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.10'
 manifestservice:
   enabled: false
 wts:
@@ -19,7 +19,7 @@ audit:
     auditG3auto: dcf-staging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-receiver
@@ -96,7 +96,7 @@ fence:
     fenceSshKeys: dcf-staging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '12.1.0'
   usersync:
     usersync: true
     syncFromDbgap: true
@@ -116,10 +116,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::584476192960:role/dcf-staging-external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:584476192960:regional/webacl/dcf-staging-waf/541a5a0d-56c7-4de0-af1e-d5c74cb2210f"
+      wafAclArn: arn:aws:wafv2:us-east-1:584476192960:regional/webacl/dcf-staging-waf/541a5a0d-56c7-4de0-af1e-d5c74cb2210f
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   dispatcherJobNum: '10'
@@ -152,7 +150,7 @@ indexd:
     serviceCreds: dcf-staging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.10'
 metadata:
   replicaCount: 4
   autoscaling:
@@ -166,14 +164,14 @@ metadata:
     metadataG3auto: dcf-staging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.10'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.10'
 portal:
   enabled: true
   gitops:
@@ -459,7 +457,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.09'
+    tag: '2025.10'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -470,7 +468,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.10'
   ingress:
     aws:
       group: dcf-staging
@@ -478,7 +476,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
+    tag: '2025.10'
 sower:
   enabled: true
   externalSecrets:
@@ -487,7 +485,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.09'
+    tag: '2025.10'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -499,7 +497,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.10
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -525,7 +523,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.10
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -547,5 +545,5 @@ ssjdispatcher:
     credsFile: dcf-staging-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.09'
-  indexing: quay.io/cdis/indexs3client:2025.09
+    tag: '2025.10'
+  indexing: quay.io/cdis/indexs3client:2025.10
