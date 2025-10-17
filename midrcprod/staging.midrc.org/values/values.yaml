@@ -99,6 +99,9 @@ etl:
           - name: _mr_series_file_count
             path: imaging_studies.mr_series_files
             fn: count
+          - name: _radiology_reports_count
+            path: imaging_studies.radiology_reports
+            fn: count
         parent_props:
           - path: datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
         nested_props:
