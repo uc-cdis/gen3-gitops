@@ -150,19 +150,6 @@ etl:
           - name: gender
           - name: race
         nested_props:
-          - name: sample
-            path: sample
-            props:
-              - name: body_fluid_code
-              - name: dna_260_280
-              - name: dna_concentration
-              - name: dna_od_260
-              - name: procedure_date
-              - name: protocol_number
-              - name: sample_number
-              - name: sample_type
-              - name: sample_volume
-              - name: status
           - name: treatment
             path: treatment
             props:
