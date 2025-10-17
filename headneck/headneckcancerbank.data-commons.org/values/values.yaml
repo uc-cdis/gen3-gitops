@@ -979,7 +979,7 @@ requestor:
     dbcreds: "headneck_default-requestor-creds"
 
 revproxy:
-# Lower cost
+  # Lower cost
   resources:
     requests:
       memory: "100Mi"
