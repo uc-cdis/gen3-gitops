@@ -6,6 +6,9 @@ serviceAccount:
     eks.amazonaws.com/role-arn: "arn:aws:iam::707767160287:role/emalinowskiv1-karpenter-sa"
 settings:
   clusterName: emalinowskiv1
+  featureGates:
+    spotToSpotConsolidation: true 
+
 controller:
   env:
     - name: AWS_REGION
@@ -19,3 +22,5 @@ controller:
       cpu: 1
 webhook:
   enabled: false
+
+dnsPolicy: Default
