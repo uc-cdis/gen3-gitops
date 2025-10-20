@@ -16,8 +16,8 @@ spec:
     path: helm/cluster-level-resources
     repoURL: https://github.com/uc-cdis/gen3-helm
   - ref: values
-    repoURL: '<git repo url>'
-    targetRevision: main
+    repoURL: 'https://github.com/uc-cdis/gen3-gitops'
+    targetRevision: feat/ai-commons
   syncPolicy:
     automated:
       selfHeal: true
