@@ -62,7 +62,7 @@ etl:
   resources:
     tube:
       requests:
-        memory: 1.5Gi
+        memory: 4Gi
     spark:
       requests:
         memory: 1Gi
@@ -98,6 +98,9 @@ etl:
             fn: count
           - name: _mr_series_file_count
             path: imaging_studies.mr_series_files
+            fn: count
+          - name: _radiology_report_count
+            path: imaging_studies.radiology_reports
             fn: count
         parent_props:
           - path: datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
@@ -272,6 +275,9 @@ etl:
             fn: count
           - name: _mr_series_file_count
             path: mr_series_files
+            fn: count
+          - name: _radiology_report_count
+            path: radiology_reports
             fn: count
         parent_props:
           - path: cases[sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
@@ -556,8 +562,6 @@ guppy:
       type: data_file
     - index: midrcstaging_imaging_study
       type: imaging_study
-    - index: midrcstaging_radiology_report
-      type: radiology_report
 hatchery:
   enabled: true
   jupyterNamespace: jupyter-pods-midrcstaging-helm
