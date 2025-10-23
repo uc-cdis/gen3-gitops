@@ -11,7 +11,7 @@ permissions:
 jobs:
   integration_tests:
     name: Integration tests
-    uses: uc-cdis/gen3-code-vigil/.github/workflows/integration_tests.yaml@chore/test_covid19_etl_fix
+    uses: uc-cdis/gen3-code-vigil/.github/workflows/shared_integration_tests.yaml@chore/test_covid19_etl_fix
     with:
       TEST_REPO_BRANCH: chore/test_covid19_etl_fix
     secrets:
