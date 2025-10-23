@@ -1,6 +1,6 @@
 ambassador:
   enabled: true
-  jupyterNamespace: "jupyter-pods-bihstaging-helm"
+  jupyterNamespace: jupyter-pods-bihstaging-helm
 arborist:
   autoscaling:
     enabled: true
@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
@@ -82,6 +82,11 @@ etl:
           - name: PatientSex
           - name: PatientID
           - name: EthnicGroup
+          - name: loinc_code
+          - name: loinc_contrast
+          - name: loinc_long_common_name
+          - name: loinc_method
+          - name: loinc_system
         root: imaging_study
         type: aggregator
       - doc_type: imaging_series
@@ -103,9 +108,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2025.09'
+      tag: '2025.10'
     spark:
-      tag: '2025.09'
+      tag: '2025.10'
 fence:
   usersync:
     usersync: true
@@ -125,7 +130,7 @@ fence:
     fenceJwtKeys: bihstaging-cloudauto-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '2025.10'
 fluentd:
   enabled: true
   image:
@@ -172,7 +177,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.09'
+    tag: '2025.10'
   hatchery:
     json: |-
       {
@@ -282,7 +287,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.09'
+    tag: '2025.10'
   indices:
     - index: bih_dataset
       type: dataset
@@ -304,7 +309,7 @@ indexd:
     serviceCreds: bihstaging-cloudauto-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.10'
 metadata:
   aggMdsNamespace: bihstaging
   autoscaling:
@@ -318,18 +323,18 @@ metadata:
     metadataG3auto: bihstaging-cloudauto-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.10'
   useAggMds: true
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.10'
 portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bihprod/bih-staging.data-commons.org/values/portal/"
+    dir: bihprod/bih-staging.data-commons.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
@@ -339,7 +344,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.09'
+    tag: '2025.10'
 revproxy:
   autoscaling:
     enabled: true
@@ -349,7 +354,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.10'
   ingress:
     aws:
       group: bihprod
@@ -357,12 +362,12 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
+    tag: '2025.10'
 spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.08'
+    tag: '2025.10'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -375,13 +380,13 @@ ssjdispatcher:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.09'
-  indexing: quay.io/cdis/indexs3client:2025.09
+    tag: '2025.10'
+  indexing: quay.io/cdis/indexs3client:2025.10
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.08'
+    tag: '2025.10'
 wts:
   enabled: true
   externalSecrets:
@@ -390,4 +395,4 @@ wts:
     wtsOidcClient: bihstaging-cloudauto-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.09'
+    tag: '2025.10'
