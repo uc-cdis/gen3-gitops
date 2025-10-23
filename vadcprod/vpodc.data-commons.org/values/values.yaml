@@ -23,6 +23,26 @@ aws-es-proxy:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
+argo-wrapper:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
+    tag: master
+  scalingGroups:
+    default: "{{workflow.name}}"
+    custom:
+      zchen138@uchicago.edu: "{{workflow.name}}"
+      aprokh@uchicago.edu: "{{workflow.name}}"
+  s3Bucket: vadcprod-argo-user-artifacts-downloadable
+  internalS3Bucket: vadcprod-argo-bucket
+  environment: vadcprod
+cohort-middleware:
+  enabled: true
+  externalSecrets:
+    cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
+    tag: master
 dashboard:
   replicaCount: 4
   autoscaling:
@@ -87,7 +107,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: main
+    tag: 0.03
 
 global:
   pdb: true
@@ -119,7 +139,7 @@ global:
   manifestGlobalExtraValues:
     kube_bucket: kube-vadcprod-gen3
     logs_bucket: logs-vadcprod-gen3
-  maintenanceMode: 'off'
+  maintenanceMode: "off"
   # netPolicy:
   #   enabled: true
   #   dbSubnet:

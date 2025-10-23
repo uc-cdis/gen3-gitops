@@ -82,6 +82,11 @@ etl:
           - name: PatientSex
           - name: PatientID
           - name: EthnicGroup
+          - name: loinc_code
+          - name: loinc_contrast
+          - name: loinc_long_common_name
+          - name: loinc_method
+          - name: loinc_system
         root: imaging_study
         type: aggregator
       - doc_type: imaging_series
