@@ -463,13 +463,13 @@ metadata:
 ohdsi-atlas:
   enabled: true
   image:
-    repository: docker.io/ohdsi/atlas
-    tag: 2.14.1
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
+    tag: VA-2025.10.24
 ohdsi-webapi:
   enabled: true
   image:
-    repository: docker.io/ohdsi/webapi
-    tag: 2.14.0
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
+    tag: VA-2025.10.24
 peregrine:
   replicaCount: 4
   autoscaling:
