@@ -27,7 +27,7 @@ argo-wrapper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
-    tag: master
+    tag: VA-2025.10.24
   scalingGroups:
     default: "{{workflow.name}}"
     custom:
@@ -42,7 +42,7 @@ cohort-middleware:
     cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
-    tag: master
+    tag: VA-2025.10.24
 dashboard:
   replicaCount: 4
   autoscaling:
