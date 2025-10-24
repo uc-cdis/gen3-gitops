@@ -11,11 +11,11 @@ etl:
   resources:
     tube:
       requests:
-        memory: 12Gi
+        memory: 14Gi
         cpu: 3
     spark:
       requests:
-        memory: 10Gi
+        memory: 8Gi
         cpu: 3
   etlMapping:
     mappings:
