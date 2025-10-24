@@ -28,11 +28,10 @@ argo-wrapper:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
     tag: VA-2025.10.24
-  scalingGroups:
-    default: "{{workflow.name}}"
-    custom:
-      zchen138@uchicago.edu: "{{workflow.name}}"
-      aprokh@uchicago.edu: "{{workflow.name}}"
+  # scalingGroups:
+  #   default: "{{workflow.name}}"
+  #   custom:
+  #     aprokh@uchicago.edu: "{{workflow.name}}" # example of how to configure something different for a specific user
   s3Bucket: vadcprod-argo-user-artifacts-downloadable
   internalS3Bucket: vadcprod-argo-bucket
   environment: vadcprod-helm
