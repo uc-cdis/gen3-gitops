@@ -462,7 +462,7 @@ portal:
     enabled: true
     dir: "headneck/headneckcancerbank.data-commons.org/values/portal/"
     repo: https://github.com/uc-cdis/gen3-gitops.git
-    branch: feat/update_etl_hncb
+    branch: master
 
 
 requestor:

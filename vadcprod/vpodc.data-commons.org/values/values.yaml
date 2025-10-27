@@ -35,7 +35,7 @@ argo-wrapper:
       aprokh@uchicago.edu: "{{workflow.name}}"
   s3Bucket: vadcprod-argo-user-artifacts-downloadable
   internalS3Bucket: vadcprod-argo-bucket
-  environment: vadcprod
+  environment: vadcprod-helm
 cohort-middleware:
   enabled: true
   externalSecrets:

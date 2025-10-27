@@ -275,6 +275,8 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '11.4.1'
+  FENCE_CONFIG: 
+    ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: https://biodatacatalyst.nhlbi.nih.gov/privacy/
     ARBORIST_TIMEOUT: 60
