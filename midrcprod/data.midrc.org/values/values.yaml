@@ -3,14 +3,14 @@ ambassador:
 arborist:
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 3
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.11"
+    tag: '2025.10'
 audit:
   enabled: true
   externalSecrets:
