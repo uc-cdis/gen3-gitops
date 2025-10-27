@@ -116,12 +116,18 @@ hatchery:
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods-brhstaging",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "default-pay-model": {
           "workspace_type": "Trial Workspace",
-          "local": true
+          "local": true,
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-brh-staging",
         "sidecar": {
