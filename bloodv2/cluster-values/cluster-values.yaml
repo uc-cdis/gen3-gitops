@@ -57,7 +57,27 @@ karpenter-crds:
   migration: true
   enabled: true
   selectorTag: bloodv2
-  amiSelectorName: "1-31-EKS-FIPS*"
+  default:
+    enabled: true
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+          - spot
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: node.kubernetes.io/instance-type
+        operator: In
+        values:
+          - t2a.large
+          - m6a.large
+          - m6a.xlarge
+          - c6a.large
+          - c6a.xlarge
+          - r6a.large
 
 vpc-cni:
   enabled: true
