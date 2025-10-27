@@ -28,6 +28,7 @@ data:
     monitoring
     qa-prometheus
     qa-vpodc
+    qa-vpodc-helm
     qaplanetv2
     satosa
     sftp
