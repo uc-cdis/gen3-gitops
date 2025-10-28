@@ -27,7 +27,7 @@ argo-wrapper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
-    tag: VA-2025.10.27
+    tag: VA-2025.10.28
   scalingGroups:
     default: default
   #   default: "{{workflow.name}}"
