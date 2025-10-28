@@ -102,11 +102,14 @@ fence:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: "2025.10"
 
+portal:
+  enabled: false
+
 frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.03
+    tag: 0.04
 
 global:
   pdb: true
