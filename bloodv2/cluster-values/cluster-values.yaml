@@ -78,6 +78,8 @@ karpenter-crds:
           - c6a.large
           - c6a.xlarge
           - r6a.large
+  workflow:
+    enabled: false
 
 vpc-cni:
   enabled: true
