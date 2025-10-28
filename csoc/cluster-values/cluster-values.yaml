@@ -30,7 +30,6 @@ karpenter-crds:
         operator: In
         values:
           - r8i-flex
-          - m
           - m8i-flex
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
