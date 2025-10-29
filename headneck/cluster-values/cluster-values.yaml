@@ -62,10 +62,10 @@ karpenter-crds:
     - key: karpenter.k8s.aws/instance-category
       operator: In
       values:
-      - r
+      - m
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["4"]
+      values: ["1"]
 
 kube-state-metrics:
   enabled: true
