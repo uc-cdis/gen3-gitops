@@ -28,7 +28,8 @@ argo-wrapper:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
     tag: VA-2025.10.27
-  # scalingGroups:
+  scalingGroups:
+    default: default
   #   default: "{{workflow.name}}"
   #   custom:
   #     aprokh@uchicago.edu: "{{workflow.name}}" # example of how to configure something different for a specific user
