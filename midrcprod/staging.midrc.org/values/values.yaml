@@ -228,6 +228,22 @@ etl:
           - name: annotation_method
           - name: annotator_id
           - name: instance_uids
+      - name: midrcstaging_radiology_report
+        doc_type: radiology_report
+        type: aggregator
+        root: radiology_report
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: file_size
+          - name: file_name
+          - name: data_type
+          - name: modality
+          - name: object_id
+          - name: body_part_examined
+          - name: report_generation_method
+          - name: report_modification_method
+          - name: study_description
       - name: midrcstaging_imaging_study
         doc_type: imaging_study
         type: aggregator
@@ -562,6 +578,8 @@ guppy:
       type: data_file
     - index: midrcstaging_imaging_study
       type: imaging_study
+    - index: midrcstaging_radiology_report
+      type: radiology_report
 hatchery:
   enabled: true
   jupyterNamespace: jupyter-pods-midrcstaging-helm

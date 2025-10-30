@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-level-resources
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - helm:
+      releaseName: cluster-level-resources
+      valueFiles:
+      - $values/gen3-ai/cluster-level-resources/cluster-values.yaml
+    path: helm/cluster-level-resources
+    repoURL: https://github.com/uc-cdis/gen3-helm
+  - ref: values
+    repoURL: 'https://github.com/uc-cdis/gen3-gitops'
+    targetRevision: feat/ai-commons
+  syncPolicy:
+    automated:
+      selfHeal: true
