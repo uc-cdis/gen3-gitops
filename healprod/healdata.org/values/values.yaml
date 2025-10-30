@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--audit-sqs-receiver
@@ -45,7 +45,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--dashboard-access
@@ -72,33 +72,33 @@ fence:
     fenceJwtKeys: healprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '2025.10'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-default-205252583234-upload:
-        cred: 'fence_bot'
-        region: 'us-east-1'
+        cred: fence_bot
+        region: us-east-1
       heal-bucket-bacpac:
-        cred: 'fence_bot'
-        region: 'us-east-1'
+        cred: fence_bot
+        region: us-east-1
       heal-bucket-publicaccess:
-        cred: 'fence_bot'
-        region: 'us-east-1'
+        cred: fence_bot
+        region: us-east-1
       jcoinprod-default-258867494168-upload:
-        cred: 'fence_bot'
-        region: 'us-east-1'
+        cred: fence_bot
+        region: us-east-1
       pennsieve-prod-discover-publish50-use1:
-        cred: 'fence_bot'
+        cred: fence_bot
         requester_pays: true
-        region: 'us-east-1'
+        region: us-east-1
       prod-rejoin-discover50-use1:
-        cred: 'fence_bot'
+        cred: fence_bot
         requester_pays: true
-        region: 'us-east-1'
+        region: us-east-1
       prd-sparc-discover50-use1:
-        cred: 'fence_bot'
+        cred: fence_bot
         requester_pays: true
-        region: 'us-east-1'
+        region: us-east-1
 fluentd:
   enabled: true
   image:
@@ -108,7 +108,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.2.3
+    tag: 1.2.4
 global:
   pdb: true
   aws:
@@ -121,10 +121,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::205252583234:role/healprod-external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:205252583234:regional/webacl/healprod-waf/433ff65b-9bda-4850-b7b9-dd07051a11e3"
+      wafAclArn: arn:aws:wafv2:us-east-1:205252583234:regional/webacl/healprod-waf/433ff65b-9bda-4850-b7b9-dd07051a11e3
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/heal_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
@@ -154,9 +152,11 @@ hatchery:
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
+  externalSecrets:
+    stataG3auto: "stata-workspace-gen3-license-healdata"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.09'
+    tag: '2.5.0'
   hatchery:
     json: |-
       {
@@ -175,11 +175,12 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.05",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
           "env": {
-            "NAMESPACE": "default",
+            "NAMESPACE": "healprod-helm",
             "GEN3_ENDPOINT": "healdata.org",
-            "HOSTNAME": "healdata.org"
+            "HOSTNAME": "healdata.org",
+            "USER_UID": "1010"
           },
           "args": [],
           "command": [
@@ -201,7 +202,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__a446922e0751453477295f010e18119cee4dd543",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__bb4d2742a47421509769356c893834b3787ecb05",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
@@ -226,7 +227,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -236,7 +237,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic, User-licensed) Stata Notebook ",
-            "image": "quay.io/cdis/jupyter-pystata-user-licensed:2.0.0",
+            "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.0",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
@@ -261,7 +262,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -271,7 +272,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic, Limited Gen3-licensed) Stata Notebook",
-            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:2.0.0",
+            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.0",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
@@ -279,8 +280,8 @@ hatchery:
               "enabled": true,
               "license-type": "STATA-HEAL",
               "max-license-ids": 6,
-              "g3auto-name": "stata-workspace-gen3-license-g3auto",
-              "g3auto-key": "stata_license.txt",
+              "g3auto-name": "stata-workspace-gen3-license",
+              "g3auto-key": "stata-license.txt",
               "file-path": "stata.lic",
               "workspace-flavor": "gen3-licensed"
             },
@@ -306,7 +307,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -316,7 +317,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__22ec8d31c349ea76590d1071e8ceb1072eb69c72",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__671078c1e6fee0cd5621772027015529367e98a9",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
@@ -341,7 +342,7 @@ hatchery:
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
@@ -350,10 +351,11 @@ hatchery:
       }
   workspaceLaunchTest:
     enabled: true
-    schedule: "0 */4 * * *"
-    workspaceImages: "(Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example Analysis Jupyter Lab Notebooks"
-    operatorName: "planxdemo@gmail.com"
-    hostname: "https://healdata.org"
+    schedule: 0 */4 * * *
+    workspaceImages: (Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example
+      Analysis Jupyter Lab Notebooks
+    operatorName: planxdemo@gmail.com
+    hostname: https://healdata.org
 indexd:
   defaultPrefix: dg.H34L/
   replicaCount: 4
@@ -367,14 +369,14 @@ indexd:
     serviceCreds: healprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.10'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.09'
+    tag: '2025.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--manifest-service-sa
@@ -1409,15 +1411,17 @@ metadata:
     metadataG3auto: healprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.10'
   useAggMds: true
+  schedule: "0 9 * * *"
+  suspendCronjob: false
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.10'
 portal:
   replicaCount: 4
   autoscaling:
@@ -1428,24 +1432,24 @@ portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "healprod/healdata.org/values/portal/"
+    dir: healprod/healdata.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   gitops:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.39.1'
+    tag: '2025.10'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.09'
+    tag: '2025.10'
 revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.10'
   ingress:
     aws:
       group: healprod
@@ -1454,7 +1458,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
+    tag: '2025.10'
   replicaCount: 4
 sower:
   serviceAccount:
@@ -1466,7 +1470,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.09'
+    tag: '2025.10'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1480,7 +1484,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2025.09
+        image: quay.io/cdis/batch-export:2025.10
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1502,8 +1506,8 @@ ssjdispatcher:
     credsFile: healprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.09'
-  indexing: quay.io/cdis/indexs3client:2025.09
+    tag: '2025.10'
+  indexing: quay.io/cdis/indexs3client:2025.10
 wts:
   replicaCount: 4
   autoscaling:
@@ -1518,4 +1522,4 @@ wts:
     wtsOidcClient: healprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.09'
+    tag: '2025.10'

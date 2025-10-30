@@ -43,7 +43,7 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://kf-gen3-user/user.yaml
-    syncFromDbgap: true
+    syncFromDbgap: false
   replicaCount: 4
   autoscaling:
     enabled: false
