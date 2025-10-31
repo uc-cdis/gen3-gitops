@@ -1,6 +1,5 @@
 cluster: stanfordaimi
 project: stanfordaimi
-
 accountNumber: "084375550014"
 
 configuration:
@@ -8,40 +7,52 @@ configuration:
 
 alb-controller:
   enabled: true
+  targetRevision: "1.13.4"
   configuration:
     enabled: true
 
 calico:
   enabled: true
+  targetRevision: "3.30.3"
   configuration:
     enabled: false
 
 coreDNS:
   enabled: true
+  targetRevision: v1.43.1
   configuration:
     enabled: false
 
 grafana-alloy:
   enabled: true
+  targetRevision: "1.4.0"
   configuration:
     enabled: false
 
 karpenter:
   enabled: true
-  targetRevision: v0.32.9
+  targetRevision: "1.6.3"
   configuration:
-    enabled: true
+    enabled: false
 
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: stanfordaimi
   migration: true
   default:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: default
+    amiFamily: AL2023
     consolidationPolicy: "WhenUnderutilized"
-    consolidateAfter: ""
+    consolidateAfter: "5m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
 
 vpc-cni:
   enabled: true
+  targetRevision: v1.20.1
   configuration:
     enabled: false
