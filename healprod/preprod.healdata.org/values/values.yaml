@@ -102,6 +102,10 @@ fence:
         cred: fence_bot
         requester_pays: true
         region: us-east-1
+      sparc-prod-aod-discover-publish50-use1:
+        cred: fence_bot
+        requester_pays: true
+        region: us-east-1
     DATA_UPLOAD_BUCKET: healprod-healpreprod-205252583234-upload
 fluentd:
   enabled: true
