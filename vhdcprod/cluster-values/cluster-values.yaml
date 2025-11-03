@@ -556,3 +556,5 @@ alloy-configmap-data: |
       url = "https://loki.planx-pla.net/loki/api/v1/push"
     }
   }
+kube-proxy:
+  enabled: true

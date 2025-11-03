@@ -91,7 +91,7 @@ fence:
     usersync: true
     schedule: "*/30 * * * *"
     syncFromDbgap: false
-    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    userYamlS3Path: "s3://cdis-gen3-users/m3ai/user.yaml"
     slack_webhook: ""
     slack_send_dbgap: false
 
@@ -155,7 +155,7 @@ hatchery:
         - "-c"
         - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
           ln -s /data /home/$IAM/pd/; true
-        user-uid: 1000
+        user-uid: 1001
         fs-gid: 100
         user-volume-location: "/home/jovyan/pd"
         gen3-volume-location: "/home/jovyan/.gen3"

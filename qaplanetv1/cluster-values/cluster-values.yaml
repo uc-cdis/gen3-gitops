@@ -115,3 +115,5 @@ crossplane-crds:
   enable: true
   useIRSA: true
   iamRoleName: "crossplane-test-qaplanetv1"
+kube-proxy:
+  enabled: true

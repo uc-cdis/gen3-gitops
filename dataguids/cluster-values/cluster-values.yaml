@@ -103,3 +103,5 @@ vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true
