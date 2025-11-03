@@ -5,19 +5,16 @@ accountNumber: "433568766270"
 
 calico:
   enabled: true
-  targetRevision: v3.30.3
   configuration:
     enabled: false
 
 coreDNS:
   enabled: true
-  targetRevision: v1.43.1
   configuration:
     enabled: false
 
 ebs-csi-driver:
   enabled: true
-  targetRevision: "1.48.0"
   configuration:
     enabled: false
 
@@ -30,7 +27,7 @@ karpenter:
   enabled: true
   targetRevision: "1.6.3"
   configuration:
-    enabled: false  
+    enabled: false
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"

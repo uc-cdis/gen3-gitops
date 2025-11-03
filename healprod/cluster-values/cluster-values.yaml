@@ -4,35 +4,29 @@ accountNumber: "205252583234"
 
 alb-controller:
   enabled: true
-  targetRevision: "1.13.4"
   configuration:
     enabled: false
 
 aws-s3-mountpoint:
   enabled: true
-  targetRevision: "2.0.0"
   configuration:
     enabled: false
 
 calico:
   enabled: true
-  targetRevision: "3.30.3"
   configuration:
     enabled: false
 
 cert-manager:
   enabled: true
-  targetRevision: "1.18.2"
 
 coreDNS:
   enabled: true
-  targetRevision: "1.43.1"
   configuration:
     enabled: false
 
 ebs-csi-driver:
   enabled: true
-  targetRevision: "1.48.0"
   configuration:
     enabled: false
 
@@ -46,7 +40,6 @@ fluentd:
 
 kube-state-metrics:
   enabled: true
-  targetRevision: "2.16.0"
   configuration:
     enabled: false
 
@@ -110,6 +103,5 @@ karpenter-crds:
 
 vpc-cni:
   enabled: true
-  targetRevision: "1.20.1"
   configuration:
     enabled: false
