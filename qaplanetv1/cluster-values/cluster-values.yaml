@@ -29,7 +29,7 @@ cert-manager:
 
 coreDNS:
   enabled: true
-  targetRevision: "1.12.2"
+  targetRevision: "1.43.1"
   configuration:
     enabled: false
 
