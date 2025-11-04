@@ -1,5 +1,5 @@
 cluster: midrcprod
-project: midrc
+project: midrcprod
 accountNumber: "813684607867"
 
 alb-controller:
