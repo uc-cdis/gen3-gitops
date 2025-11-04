@@ -1,6 +1,5 @@
 cluster: healworkspaces
 project: heal
-
 accountNumber: "252835817747"
 
 alb-controller:
@@ -45,13 +44,42 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.0.8"
+  targetRevision: "1.6.3"
 
 karpenter-crds:
+  amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: healworkspaces
+  migration: true
+  default:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: default
+    amiFamily: AL2023
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "5m"
+    expireAfter: "72h"
+    volumeSize: 50Gi
+
+  workflow:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws
+      kind: EC2NodeClass
+      name: workflow
+    amiFamily: AL2023
+    volumeSize: 50Gi
+  jupyter:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws
+      kind: EC2NodeClass
+      name: jupyter
+    amiFamily: AL2023
+    volumeSize: 50Gi
 
 vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true
