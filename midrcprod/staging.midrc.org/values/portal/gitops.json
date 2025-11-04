@@ -439,15 +439,15 @@
                     {
                         "title": "Radiology Reports",
                         "searchFields": [
-                            "radiology_report.submitter_id"
+                            "submitter_id"
                         ],
                         "fields": [
-                            "radiology_report.project_id",
-                            "radiology_report.modality",
-                            "radiology_report.body_part_examined",
-                            "radiology_report.report_generation_method",
-                            "radiology_report.study_description",
-                            "radiology_report.report_modification_method"
+                            "project_id",
+                            "modality",
+                            "body_part_examined",
+                            "report_generation_method",
+                            "study_description",
+                            "report_modification_method"
                         ]
                     },
                     {
