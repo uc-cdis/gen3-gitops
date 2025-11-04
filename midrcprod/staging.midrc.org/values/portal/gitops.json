@@ -437,6 +437,20 @@
                         ]
                     },
                     {
+                        "title": "Radiology Reports",
+                        "searchFields": [
+                            "radiology_report.submitter_id"
+                        ],
+                        "fields": [
+                            "radiology_report.project_id",
+                            "radiology_report.modality",
+                            "radiology_report.body_part_examined",
+                            "radiology_report.report_generation_method",
+                            "radiology_report.study_description",
+                            "radiology_report.report_modification_method"
+                        ]
+                    },
+                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
