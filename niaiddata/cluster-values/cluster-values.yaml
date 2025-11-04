@@ -45,7 +45,6 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.0.8"
 
 karpenter-crds:
   amiSelectorName: "1-31-EKS-FIPS*"
@@ -57,3 +56,5 @@ vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true

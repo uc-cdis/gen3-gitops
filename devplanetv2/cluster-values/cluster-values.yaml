@@ -5,35 +5,29 @@ accountNumber: "707767160287"
 
 alb-controller:
   enabled: true
-  # targetRevision: "1.13.4"
   configuration:
     enabled: false
 
 aws-s3-mountpoint:
   enabled: true
-  targetRevision: "2.0.0"
   configuration:
     enabled: true
 
 calico:
   enabled: true
-  targetRevision: "3.30.3"
   configuration:
     enabled: false
 
 cert-manager:
   enabled: true
-  targetRevision: "1.18.2"
 
 coreDNS:
   enabled: true
-  targetRevision: "1.12.2"
   configuration:
     enabled: false
 
 crossplane:
   enabled: true
-  targetRevision: "1.19.2"
 
 crossplane-crds:
   enable: true
@@ -45,7 +39,6 @@ custom-objects:
 
 ebs-csi-driver:
   enabled: true
-  targetRevision: "1.48.0"
   configuration:
     enabled: false
 
@@ -56,7 +49,6 @@ fluentd:
 
 kube-state-metrics:
   enabled: true
-  targetRevision: "2.16.0"
   configuration:
     enabled: false
 
@@ -114,6 +106,7 @@ karpenter-crds:
 
 vpc-cni:
   enabled: true
-  targetRevision: "1.20.1"
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true

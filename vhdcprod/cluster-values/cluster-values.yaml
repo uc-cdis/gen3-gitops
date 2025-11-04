@@ -8,7 +8,6 @@ configuration:
 
 alb-controller:
   enabled: true
-  targetRevision: "1.13.4"
   configuration:
     enabled: true
 
@@ -19,7 +18,6 @@ calico:
 
 cert-manager:
   enabled: true
-  targetRevision: "1.18.2"
 
 aws-s3-mountpoint:
   enabled: false
@@ -28,13 +26,11 @@ aws-s3-mountpoint:
 
 coreDNS:
   enabled: true
-  targetRevision: "1.43.1"
   configuration:
     enabled: true
 
 ebs-csi-driver:
   enabled: true
-  targetRevision: "1.48.0"
   configuration:
     enabled: true
 
@@ -114,13 +110,11 @@ karpenter-crds:
 
 kube-state-metrics:
   enabled: false
-  targetRevision: "2.16.0"
   configuration:
     enabled: false
 
 vpc-cni:
   enabled: true
-  targetRevision: "1.20.1"
   configuration:
     enabled: true
 
@@ -562,3 +556,5 @@ alloy-configmap-data: |
       url = "https://loki.planx-pla.net/loki/api/v1/push"
     }
   }
+kube-proxy:
+  enabled: true
