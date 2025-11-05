@@ -557,6 +557,15 @@ fence:
       iodc-cimac-etctn10013-phs003296:
         cred: fence_bot
         region: us-east-1
+      iodc-cimac-etctn10013-phs004162:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-etctn10013-phs004163:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-etctn10013-phs004164:
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10104-phs003414:
         cred: fence_bot
         region: us-east-1
@@ -582,6 +591,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-nctns1400i-phs003412:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-nrglu004-phs003572:
         cred: fence_bot
         region: us-east-1
       kf-seq-data-bam:
