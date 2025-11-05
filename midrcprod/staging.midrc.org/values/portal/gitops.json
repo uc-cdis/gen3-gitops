@@ -437,20 +437,6 @@
                         ]
                     },
                     {
-                        "title": "Radiology Reports",
-                        "searchFields": [
-                            "submitter_id"
-                        ],
-                        "fields": [
-                            "project_id",
-                            "modality",
-                            "body_part_examined",
-                            "report_generation_method",
-                            "study_description",
-                            "report_modification_method"
-                        ]
-                    },
-                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
@@ -1289,6 +1275,40 @@
                     "project_id"
                 ],
                 "accessibleValidationField": "project_id"
+            }
+        },
+        {
+            "tabTitle": "Radiology Reports",
+            "charts": {},
+            "filters": {
+                "tabs": [
+                    {
+                        "title": "Radiology Reports Filters",
+                        "searchFields": [
+                            "submitter_id"
+                        ],
+                        "fields": [
+                            "modality",
+                            "body_part_examined",
+                            "report_generation_method",
+                            "study_description",
+                            "project_id",
+                            "report_modification_method"
+                        ]
+                    }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                    "submitter_id",
+                    "modality",
+                    "body_part_examined",
+                    "report_generation_method",
+                    "study_description",
+                    "project_id",
+                    "report_modification_method"
+                ]
             }
         },
         {
