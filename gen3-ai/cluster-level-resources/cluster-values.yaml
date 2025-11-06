@@ -48,14 +48,9 @@ kube-state-metrics:
   configuration:
     enabled: false
 
-grafana-alloy:
-  enabled: false
-  configuration:
-    enabled: false
-
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"  
+  targetRevision: "1.6.3"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
