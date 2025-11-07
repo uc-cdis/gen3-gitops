@@ -83,7 +83,7 @@ karpenter-crds:
       name: jupyter
     amiFamily: AL2023
     consolidationPolicy: WhenEmptyOrUnderutilized
-    consolidateAfter: "5m"
+    consolidateAfter: "6m"
     expireAfter: "72h"
     volumeSize: 80Gi
   workflow:
