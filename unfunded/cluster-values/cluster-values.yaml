@@ -77,7 +77,7 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
-          - "15000"
+          - "15001"
 
 vpc-cni:
   enabled: true
