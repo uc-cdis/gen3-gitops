@@ -608,6 +608,9 @@ fence:
       kf-seq-data-washu:
         cred: fence_bot
         region: us-east-1
+      kf-strides-controlled-vwb-prd-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-1nns3k8v-nci:
         cred: fence_bot
         region: us-east-1

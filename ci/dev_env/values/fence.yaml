@@ -17,7 +17,7 @@ fence:
     tag: "master"
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/dev/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml
     # we do not want usersync to interrupt test flow
     # so it is set to run on the 31st of February
     schedule: "0 0 31 2 *"

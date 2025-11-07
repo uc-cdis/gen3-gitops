@@ -74,8 +74,24 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "gen3-ai-default-dicom-viewer-creds"
 
+embedding-management-service:
+  enabled: true
+  embeddingsConfig: |
+    {
+      "expr": 256,
+      "hist": 1536,
+      "summ": 4096,
+      "text": 4096
+    }
+
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
+    tag: feat_service
+    pullPolicy: Always
 
 fence:
+  image:
+    tag: feat_embedding-vectors
   enabled: true
   serviceAccount:
     annotations:
