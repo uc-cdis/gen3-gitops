@@ -127,57 +127,78 @@ guppy:
 
 hatchery:
   enabled: true
+  image:
+    tag: feat_gpu-support
 
   hatchery:
-    sidecarContainer:
-      cpu-limit: '0.1'
-      memory-limit: 256Mi
-      image: quay.io/cdis/ecs-ws-sidecar:master
-      env:
-        NAMESPACE: "{{ .Release.Namespace }}"
-        HOSTNAME: "{{ .Values.global.hostname }}"
-      args: []
-      command:
-      - "/bin/bash"
-      - "./sidecar.sh"
-      lifecycle-pre-stop:
-      - su
-      - "-c"
-      - echo test
-      - "-s"
-      - "/bin/sh"
-      - root
-    containers:
-      -
-        target-port: 8888
-        cpu-limit: '1.0'
-        memory-limit: 2Gi
-        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
-        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
-        env:
-          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
-        args:
-        - "--NotebookApp.base_url=/lw-workspace/proxy/"
-        - "--NotebookApp.default_url=/lab"
-        - "--NotebookApp.password=''" #pragma: allowlist secret
-        - "--NotebookApp.token=''"
-        - "--NotebookApp.shutdown_no_activity_timeout=5400"
-        - "--NotebookApp.quit_button=False"
-        command:
-        - start-notebook.sh
-        path-rewrite: "/lw-workspace/proxy/"
-        use-tls: 'false'
-        ready-probe: "/lw-workspace/proxy/"
-        lifecycle-post-start:
-        - "/bin/sh"
-        - "-c"
-        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
-          ln -s /data /home/$IAM/pd/; true
-        user-uid: 1010
-        fs-gid: 100
-        user-volume-location: "/home/jovyan/pd"
-        gen3-volume-location: "/home/jovyan/.gen3"
-
+    json: |
+      {
+        "user-namespace": "jupyter-pods-default",
+        "skip-node-selector": false,
+        "use-internal-services-url": false,
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "cpu-limit": "0.1",
+          "env": {
+            "HOSTNAME": "m3aicommons.org",
+            "NAMESPACE": "default"
+          },
+          "image": "quay.io/cdis/ecs-ws-sidecar:master",
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ],
+          "memory-limit": "256Mi"
+        },
+        "containers": [
+          {
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "gpu": true,
+            "cpu-limit": "1.0",
+            "env": {
+              "FRAME_ANCESTORS": "https://m3aicommons.org"
+            },
+            "fs-gid": 100,
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__latest",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "memory-limit": "2Gi",
+            "name": "(GPU) Example Analysis Jupyter Lab Notebooks",
+            "path-rewrite": "/lw-workspace/proxy/",
+            "ready-probe": "/lw-workspace/proxy/",
+            "target-port": 8888,
+            "use-tls": "false",
+            "user-uid": 1010,
+            "user-volume-location": "/home/jovyan/pd"
+          }
+        ]
+      }
 
 indexd:
   enabled: true
