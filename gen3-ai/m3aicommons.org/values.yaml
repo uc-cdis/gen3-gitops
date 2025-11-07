@@ -176,20 +176,20 @@ hatchery:
               "start-notebook.sh"
             ],
             "gpu": true,
-            "cpu-limit": "1.0",
+            "cpu-limit": "3.0",
             "env": {
               "FRAME_ANCESTORS": "https://m3aicommons.org"
             },
             "fs-gid": 100,
             "gen3-volume-location": "/home/jovyan/.gen3",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__latest",
+            "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
             "lifecycle-post-start": [
               "/bin/sh",
               "-c",
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
             ],
-            "memory-limit": "2Gi",
-            "name": "(GPU) Example Analysis Jupyter Lab Notebooks",
+            "memory-limit": "8Gi",
+            "name": "(GPU) Label Boosted Rag - Jupyter Lab Notebooks",
             "path-rewrite": "/lw-workspace/proxy/",
             "ready-probe": "/lw-workspace/proxy/",
             "target-port": 8888,
