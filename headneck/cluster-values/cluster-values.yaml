@@ -53,7 +53,7 @@ karpenter-crds:
       name: default
     amiFamily: AL2023
     consolidationPolicy: WhenEmptyOrUnderutilized
-    consolidateAfter: "7m"
+    consolidateAfter: "5m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
