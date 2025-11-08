@@ -81,7 +81,9 @@ embedding-management-service:
       "expr": 256,
       "hist": 1536,
       "summ": 4096,
-      "text": 4096
+      "text": 4096,
+      "img_embed": 512,
+      "img_proj": 128
     }
 
   image:
