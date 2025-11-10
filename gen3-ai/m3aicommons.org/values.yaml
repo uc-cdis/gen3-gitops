@@ -81,7 +81,9 @@ embedding-management-service:
       "expr": 256,
       "hist": 1536,
       "summ": 4096,
-      "text": 4096
+      "text": 4096,
+      "img_embed": 512,
+      "img_proj": 128
     }
 
   image:
@@ -189,7 +191,7 @@ hatchery:
               "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
             ],
             "memory-limit": "8Gi",
-            "name": "(GPU) Label Boosted Rag - Jupyter Lab Notebooks",
+            "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
             "path-rewrite": "/lw-workspace/proxy/",
             "ready-probe": "/lw-workspace/proxy/",
             "target-port": 8888,
