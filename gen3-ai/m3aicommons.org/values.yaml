@@ -131,6 +131,19 @@ hatchery:
   enabled: true
   image:
     tag: feat_gpu-support
+  
+  hotNode:
+    enabled: true
+    gpu: true
+    jupyter: false
+
+    availabilityZones:
+      - us-east-1c
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 3
+      memory: 8Gi
 
   hatchery:
     json: |
@@ -151,7 +164,7 @@ hatchery:
             "HOSTNAME": "m3aicommons.org",
             "NAMESPACE": "default"
           },
-          "image": "quay.io/cdis/ecs-ws-sidecar:master",
+          "image": "quay.io/cdis/ecs-ws-sidecar:feat_fast-terminate",
           "lifecycle-pre-stop": [
             "su",
             "-c",
