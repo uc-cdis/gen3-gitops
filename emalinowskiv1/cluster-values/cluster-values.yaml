@@ -12,7 +12,7 @@ alb-controller:
     enabled: false
 
 aws-s3-mountpoint:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
