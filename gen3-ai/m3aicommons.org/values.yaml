@@ -164,7 +164,7 @@ hatchery:
             "HOSTNAME": "m3aicommons.org",
             "NAMESPACE": "default"
           },
-          "image": "quay.io/cdis/ecs-ws-sidecar:feat_fast-terminate",
+          "image": "quay.io/cdis/ecs-ws-sidecar:master",
           "lifecycle-pre-stop": [
             "su",
             "-c",
@@ -225,6 +225,12 @@ indexd:
 
 manifestservice:
   enabled: true
+  manifestserviceG3auto:
+    hostname: m3aicommons.org
+    # -- (string) Bucket for the manifestservice to read and write to.
+    bucketName: manifestservice-gen3-ai-default
+    # -- (string) Directory name to use within the s3 bucket.
+    prefix: default
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-manifestservice-sa"

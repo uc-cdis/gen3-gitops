@@ -87,6 +87,7 @@ karpenter-crds:
         values:
           - "7000"
   workflow:
+    enabled: false
     nodeClassRef:
       apiVersion: karpenter.k8s.aws
       kind: EC2NodeClass
