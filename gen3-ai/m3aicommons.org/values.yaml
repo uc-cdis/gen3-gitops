@@ -131,6 +131,19 @@ hatchery:
   enabled: true
   image:
     tag: feat_gpu-support
+  
+  hotNode:
+    enabled: true
+    gpu: true
+    jupyter: false
+
+    availabilityZones:
+      - us-east-1c
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 3
+      memory: 8Gi
 
   hatchery:
     json: |
@@ -212,6 +225,12 @@ indexd:
 
 manifestservice:
   enabled: true
+  manifestserviceG3auto:
+    hostname: m3aicommons.org
+    # -- (string) Bucket for the manifestservice to read and write to.
+    bucketName: manifestservice-gen3-ai-default
+    # -- (string) Directory name to use within the s3 bucket.
+    prefix: default
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-manifestservice-sa"
