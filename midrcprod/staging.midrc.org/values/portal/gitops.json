@@ -1278,6 +1278,97 @@
             }
         },
         {
+            "tabTitle": "Radiology Reports",
+            "charts": {},
+            "filters": {
+                "tabs": [
+                    {
+                        "title": "Radiology Reports Filters",
+                        "searchFields": [
+                            "submitter_id"
+                        ],
+                        "fields": [
+                            "modality",
+                            "body_part_examined",
+                            "report_generation_method",
+                            "study_description",
+                            "project_id",
+                            "report_modification_method"
+                        ]
+                    }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                    "submitter_id",
+                    "modality",
+                    "body_part_examined",
+                    "report_generation_method",
+                    "study_description",
+                    "project_id",
+                    "report_modification_method"
+                ]
+            },
+             "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.csv"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "radiology_report",
+                "nodeCountTitle": "Radiology Reports",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "submitter_id",
+                        "name": "Annotation ID"
+                    },
+                    {
+                        "field": "case_ids",
+                        "name": "Case ID"
+                    }
+                ],
+                "accessibleFieldCheckList": [
+                    "project_id"
+                ],
+                "accessibleValidationField": "project_id"
+            }
+        },
+        {
             "tabTitle": "Data Files",
             "charts": {},
             "filters": {
