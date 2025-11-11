@@ -2,7 +2,6 @@ global:
   # This will be dynamically replaced by env_setup.sh script.
   hostname:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
-  clusterName: devplanetv2
   pdb: true
   aws:
     externalSecrets:
@@ -18,6 +17,7 @@ global:
       # -- (string) AWS Role ARN for Secret Store to use
       roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
     sower_role: sower-jobs-role
+  clusterName: devplanetv2
   externalSecrets:
     deploy: true
     dbCreate: true
