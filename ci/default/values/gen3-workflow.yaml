@@ -7,7 +7,9 @@ gen3-workflow:
   # This will be dynamically replaced by setup_ci_env.sh script.
     funnelOidcClient: "<namespace>-funnel-oidc-client"
   gen3WorkflowConfig:
-    taskImageWhitelist: ["public.ecr.aws/docker/library/alpine:latest"]
+    taskImageWhitelist:
+      - "public.ecr.aws/docker/library/alpine:latest"
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image"
   funnel:
     Kubernetes:
       # This will be dynamically replaced by setup_ci_env.sh script.
@@ -18,6 +20,6 @@ gen3-workflow:
         OidcClientId: <redacted>
         OidcClientSecret: <redacted>
         # This will be dynamically replaced by setup_ci_env.sh script.
-        S3Url: gen3-workflow-service.qa-midrc-helm.svc.cluster.local
+        S3Url: gen3-workflow-service.<namespace>.svc.cluster.local
         # This will be dynamically replaced by setup_ci_env.sh script.
-        OidcTokenUrl: https://qa-midrc.planx-pla.net/user
+        OidcTokenUrl: https://<hostname>/user
