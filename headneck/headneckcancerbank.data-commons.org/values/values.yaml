@@ -18,7 +18,7 @@ global:
     deploy: true
   postgres:
     dbCreate: false
-    externalSecret: "headneck_aurora-master-password"
+    externalSecret: "headneck-aurora-master-password"
   environment: "headneck"
   hostname: "headneckcancerbank.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
@@ -71,7 +71,6 @@ audit:
   externalSecrets:
     dbcreds: "headneck_default-audit-creds"
     createK8sAuditSecret: true
-
 
 aws-es-proxy:
   # Lower cost
@@ -276,7 +275,6 @@ etl:
                 src: id
                 fn: set
 
-
 fence:
   # Lower cost
   resources:
@@ -297,7 +295,6 @@ fence:
     createK8sGoogleAppSecrets: true
     createK8sFenceConfigSecret: false
     dbcreds: "headneck_default-fence-creds"
-
 
   USER_YAML: |
     {}
@@ -341,7 +338,6 @@ guppy:
       type: data_file
   configIndex: hnc_array-config
 
-
 hatchery:
   # Lower cost
   resources:
@@ -352,7 +348,7 @@ hatchery:
 
   hatchery:
     sidecarContainer:
-      cpu-limit: '0.1'
+      cpu-limit: "0.1"
       memory-limit: 256Mi
       image: quay.io/cdis/ecs-ws-sidecar:master
       env:
@@ -360,46 +356,44 @@ hatchery:
         HOSTNAME: "{{ .Values.global.hostname }}"
       args: []
       command:
-      - "/bin/bash"
-      - "./sidecar.sh"
+        - "/bin/bash"
+        - "./sidecar.sh"
       lifecycle-pre-stop:
-      - su
-      - "-c"
-      - echo test
-      - "-s"
-      - "/bin/sh"
-      - root
+        - su
+        - "-c"
+        - echo test
+        - "-s"
+        - "/bin/sh"
+        - root
     containers:
-      -
-        target-port: 8888
-        cpu-limit: '1.0'
+      - target-port: 8888
+        cpu-limit: "1.0"
         memory-limit: 2Gi
         name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
         image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
         env:
           FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
         args:
-        - "--NotebookApp.base_url=/lw-workspace/proxy/"
-        - "--NotebookApp.default_url=/lab"
-        - "--NotebookApp.password=''"
-        - "--NotebookApp.token=''"
-        - "--NotebookApp.shutdown_no_activity_timeout=5400"
-        - "--NotebookApp.quit_button=False"
+          - "--NotebookApp.base_url=/lw-workspace/proxy/"
+          - "--NotebookApp.default_url=/lab"
+          - "--NotebookApp.password=''"
+          - "--NotebookApp.token=''"
+          - "--NotebookApp.shutdown_no_activity_timeout=5400"
+          - "--NotebookApp.quit_button=False"
         command:
-        - start-notebook.sh
+          - start-notebook.sh
         path-rewrite: "/lw-workspace/proxy/"
-        use-tls: 'false'
+        use-tls: "false"
         ready-probe: "/lw-workspace/proxy/"
         lifecycle-post-start:
-        - "/bin/sh"
-        - "-c"
-        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
-          ln -s /data /home/$IAM/pd/; true
+          - "/bin/sh"
+          - "-c"
+          - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+            ln -s /data /home/$IAM/pd/; true
         user-uid: 1000
         fs-gid: 100
         user-volume-location: "/home/jovyan/pd"
         gen3-volume-location: "/home/jovyan/.gen3"
-
 
 indexd:
   # Lower cost
@@ -413,7 +407,6 @@ indexd:
     dbcreds: "headneck_default-indexd-creds"
     createK8sServiceCredsSecret: true
 
-
 manifestservice:
   # Lower cost
   resources:
@@ -425,7 +418,7 @@ manifestservice:
     createK8sManifestServiceSecret: true
 
 metadata:
- # Lower cost
+  # Lower cost
   initResources:
     requests:
       memory: "105Mi"
@@ -463,7 +456,6 @@ portal:
     dir: "headneck/headneckcancerbank.data-commons.org/values/portal/"
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
-
 
 requestor:
   enabled: false
