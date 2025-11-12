@@ -13,7 +13,7 @@ gen3-workflow:
   funnel:
     Kubernetes:
       # This will be dynamically replaced by setup_ci_env.sh script.
-      JobsNamespace: gen3-qa-midrc-helm-workflow-pods
+      JobsNamespace: gen3-<namespace>-workflow-pods
     Plugins:
       Path: plugin-binaries/auth-plugin
       Params:
