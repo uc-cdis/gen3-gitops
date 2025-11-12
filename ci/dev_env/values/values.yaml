@@ -26,6 +26,7 @@ global:
     google_enabled: true
   tierAccessLevel: libre
   environment: devplanetv2
+  frontendRoot: "gen3ff"
 
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
