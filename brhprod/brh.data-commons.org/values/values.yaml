@@ -116,16 +116,22 @@ hatchery:
 
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.09"
+    tag: "2.6.0"
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "default-pay-model": {
           "workspace_type": "Trial Workspace",
-          "local": true
+          "local": true,
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-34AAJOR7A5AG",
         "sidecar": {

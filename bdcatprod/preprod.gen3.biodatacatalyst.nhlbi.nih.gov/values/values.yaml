@@ -2255,6 +2255,168 @@ fence:
       nih-nhlbi-topmed-substudy-micortex-aric-phs000860-v6-r1-c2:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-biolincc-aadr-phs004187-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-access-phs004276-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cleanup-ipf-phs004314-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-leep-phs004313-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-pph-registry-phs004275-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-wise-phs004310-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crp-jhs-phs002256-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crp-jhs-phs002256-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crp-jhs-phs002256-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crp-jhs-phs002256-v1-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-mpird-jhs-phs002369-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-mpird-jhs-phs002369-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-mpird-jhs-phs002369-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-mpird-jhs-phs002369-v1-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hfn-charge-phs000930-v11-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-imaging-hfn-neat-phs004254-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-adult-phs003463-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-recover-dac-phs003461-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-fhs-allelic-spectrum-phs000307-v20-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-fhs-allelic-spectrum-phs000307-v20-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-dna-mthltn-fhs-phs000724-v12-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-dna-mthltn-fhs-phs000724-v12-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-exome-chip-jhs-phs001356-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-exome-chip-jhs-phs001356-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-exome-chip-jhs-phs001356-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-exome-chip-jhs-phs001356-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-aric-phs000398-v8-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-aric-phs000398-v8-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-fhs-phs000401-v18-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-fhs-phs000401-v18-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-jhs-phs000402-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-jhs-phs000402-v5-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-jhs-phs000402-v5-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-goesp-jhs-phs000402-v5-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-allelic-sptrm-phs000498-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-allelic-sptrm-phs000498-v5-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-allelic-sptrm-phs000498-v5-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-allelic-sptrm-phs000498-v5-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-care-phs000499-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-care-phs000499-v5-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-care-phs000499-v5-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-jhs-care-phs000499-v5-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-migen-jhs-phs001069-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-migen-jhs-phs001069-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-migen-jhs-phs001069-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-migen-jhs-phs001069-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-page-calico-sol-phs000555-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-page-calico-sol-phs000555-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-sabre-cvd-phs000363-v22-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-sabre-cvd-phs000363-v22-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-t2d-genes-exome-phs001098-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-t2d-genes-exome-phs001098-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-t2d-genes-exome-phs001098-v3-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-t2d-genes-exome-phs001098-v3-r1-c4:
+        cred: fence-bot
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true

@@ -99,6 +99,10 @@ fence:
         cred: fence_bot
         requester_pays: true
         region: us-east-1
+      sparc-prod-aod-discover-publish50-use1:
+        cred: fence_bot
+        requester_pays: true
+        region: us-east-1
 fluentd:
   enabled: true
   image:
