@@ -18,6 +18,7 @@ global:
       roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
     sower_role: sower-jobs-role
   clusterName: devplanetv2
+  environment: devplanetv2
   externalSecrets:
     deploy: true
     dbCreate: true
