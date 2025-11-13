@@ -19,7 +19,7 @@ global:
     sower_role: sower-jobs-role
   externalSecrets:
     deploy: true
-    dbCreate: true
+    createLocalK8sSecret: true
   # This will be dynamically replaced by env_setup.sh script.
   fenceURL: https://hostname/user
   manifestGlobalExtraValues:
