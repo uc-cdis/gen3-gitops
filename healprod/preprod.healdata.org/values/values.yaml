@@ -355,6 +355,11 @@ hatchery:
           }
         ]
       }
+    reaper:
+      enabled: true
+      suspendCronjob: false
+      schedule: "1 * * * *"
+      idleTimeoutSeconds: 180      
 indexd:
   defaultPrefix: dg.H34L/
   replicaCount: 4
