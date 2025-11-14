@@ -41,6 +41,7 @@ ambassador:
 
 
 arborist:
+  replicaCount: 3
   enabled: true
   externalSecrets:
     dbcreds: "gen3-ai-default-arborist-creds"
@@ -99,6 +100,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-fence-sa"
+
+  FENCE_CONFIG:
+    OVERRIDE_NGINX_RATE_LIMIT: 36
 
   externalSecrets:
     fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
