@@ -39,7 +39,6 @@ ambassador:
   enabled: true
   jupyterNamespace: jupyter-pods-default
 
-
 arborist:
   replicaCount: 3
   enabled: true
@@ -57,7 +56,6 @@ audit:
   externalSecrets:
     dbcreds: "gen3-ai-default-audit-creds"
     createK8sAuditSecret: true
-
 
 aws-es-proxy:
   enabled: true
@@ -101,7 +99,7 @@ fence:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-fence-sa"
 
-  FENCE_CONFIG:
+  FENCE_CONFIG_PUBLIC:
     OVERRIDE_NGINX_RATE_LIMIT: 36
 
   externalSecrets:
@@ -226,7 +224,6 @@ indexd:
   externalSecrets:
     dbcreds: "gen3-ai-default-indexd-creds"
     createK8sServiceCredsSecret: true
-
 
 manifestservice:
   enabled: true
