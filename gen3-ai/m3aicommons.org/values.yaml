@@ -92,6 +92,7 @@ embedding-management-service:
     pullPolicy: Always
 
 fence:
+  replicaCount: 3
   image:
     tag: feat_embedding-vectors
   enabled: true
