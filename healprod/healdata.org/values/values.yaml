@@ -72,7 +72,7 @@ fence:
     fenceJwtKeys: healprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.10'
+    tag: '12.4.0'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-default-205252583234-upload:
@@ -103,6 +103,7 @@ fence:
         cred: fence_bot
         requester_pays: true
         region: us-east-1
+    HIDE_IDPS: ["https://shib2.swmed.edu/idp/shibboleth"]
 fluentd:
   enabled: true
   image:
@@ -160,10 +161,14 @@ hatchery:
     stataG3auto: "stata-workspace-gen3-license-healdata"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.5.0'
+    tag: '2.6.0'
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
@@ -172,7 +177,9 @@ hatchery:
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
           "account_id": "252835817747",
-          "workspace_type": "healworkspaces"
+          "workspace_type": "healworkspaces",
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",

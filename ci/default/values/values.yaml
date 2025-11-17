@@ -21,7 +21,7 @@ global:
   environment: devplanetv2
   externalSecrets:
     deploy: true
-    dbCreate: true
+    createLocalK8sSecret: true
   # This will be dynamically replaced by env_setup.sh script.
   fenceURL: https://hostname/user
   manifestGlobalExtraValues:
