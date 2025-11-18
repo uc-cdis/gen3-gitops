@@ -24,6 +24,7 @@ aws-es-proxy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
 argo-wrapper:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
@@ -37,6 +38,7 @@ argo-wrapper:
   internalS3Bucket: vadcprod-argo-bucket
   environment: vadcprod-helm
 cohort-middleware:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
@@ -107,6 +109,7 @@ portal:
   enabled: false
 
 frontend-framework:
+  replicaCount: 2
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
