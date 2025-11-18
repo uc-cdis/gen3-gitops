@@ -72,7 +72,7 @@ fence:
     fenceJwtKeys: healpreprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.10'
+    tag: '12.4.0'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-healpreprod-205252583234-upload:
@@ -107,6 +107,7 @@ fence:
         requester_pays: true
         region: us-east-1
     DATA_UPLOAD_BUCKET: healprod-healpreprod-205252583234-upload
+    HIDE_IDPS: ["https://shib2.swmed.edu/idp/shibboleth"]
 fluentd:
   enabled: true
   image:
@@ -157,10 +158,14 @@ hatchery:
     stataG3auto: "stata-workspace-gen3-license-preprod-heal"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.5.0'
+    tag: '2.6.0'
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods-healpreprod",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
@@ -169,7 +174,9 @@ hatchery:
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
           "account_id": "252835817747",
-          "workspace_type": "healworkspaces"
+          "workspace_type": "healworkspaces",
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-preprod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",
@@ -202,13 +209,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__bb4d2742a47421509769356c893834b3787ecb05",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__22b87f36c49ad9273ca12ad268c31cf3ddd24fb6",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -243,7 +250,7 @@ hatchery:
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -316,13 +323,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__671078c1e6fee0cd5621772027015529367e98a9",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__1e5cd5b378fbb2937cfa4aaef7becf63c4ac68f5",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",

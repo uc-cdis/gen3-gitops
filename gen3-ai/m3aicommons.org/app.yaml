@@ -13,7 +13,7 @@ spec:
         releaseName: gen3
         valueFiles:
           - $values/gen3-ai/ai.planx-pla.net/values.yaml
-    - repoURL: 'https://github.com/uc-cdis/gen3-gitops'
+    - repoURL: "https://github.com/uc-cdis/gen3-gitops"
       targetRevision: feat/ai-commons
       ref: values
   destination:
@@ -21,7 +21,7 @@ spec:
     namespace: default
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
-    - Replace=true
+      - CreateNamespace=true
+      - Replace=true
     automated:
       selfHeal: true
