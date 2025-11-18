@@ -4,4 +4,4 @@ metadata:
   name: environment
   namespace: argo-events
 data:
-  environment: qaplanetv1
+  environment: vadcprod
