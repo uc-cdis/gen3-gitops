@@ -29,7 +29,7 @@ data:
       role: eks_ENVIRONMENT_workers_role
       securityGroupSelectorTerms:
       - tags:
-          karpenter.sh/discovery: ENVIRONMENT-workflow
+          karpenter.sh/discovery: ENVIRONMENT
       subnetSelectorTerms:
       - tags:
           karpenter.sh/discovery: ENVIRONMENT
