@@ -213,13 +213,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__bb4d2742a47421509769356c893834b3787ecb05",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__22b87f36c49ad9273ca12ad268c31cf3ddd24fb6",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -254,7 +254,7 @@ hatchery:
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -328,13 +328,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__671078c1e6fee0cd5621772027015529367e98a9",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__1e5cd5b378fbb2937cfa4aaef7becf63c4ac68f5",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
