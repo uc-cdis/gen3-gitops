@@ -3,7 +3,7 @@ sower:
   image:
     repository: quay.io/cdis/sower
     tag: 'master'
-  enabled: false
+  enabled: true
   serviceAccount:
     # -- (bool) Specifies whether a service account should be created.
     create: true

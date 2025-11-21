@@ -3,7 +3,7 @@ ssjdispatcher:
   image:
     repository: quay.io/cdis/ssjdispatcher
     tag: 'master'
-  enabled: false
+  enabled: true
   indexing: quay.io/cdis/indexs3client:master
   ssjcreds:
     # This will be dynamically replaced by env_setup.sh script.
