@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2025.09'
+    tag: '2025.11'
   externalSecrets:
     accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto-3
     accessBackendKv: bdcat-internalstaging-access-backend-kv
@@ -20,14 +20,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.11'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcat-internalstaging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.11'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-receiver
@@ -41,7 +41,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.09'
+    tag: '2025.11'
 etl:
   resources:
     tube:
@@ -248,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2025.09'
+      tag: '2025.11'
     spark:
-      tag: '2025.09'
+      tag: '2025.11'
 fence:
   serviceAccount:
     annotations:
@@ -271,7 +271,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '11.4.1'
+    tag: '2025.11'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -2111,9 +2111,6 @@ fence:
       nih-nhlbi-bdc-image-copdgene-phs004023-v1-r1-c2:
         cred: fence-bot
         region: us-east-1
-      nih-nhlbi-bdc-imaging-dmri-vgc-phs004002-v1-r1-c1:
-        cred: fence-bot
-        region: us-east-1
       nih-nhlbi-bdc-mesa-ecg-phs003703-v1-r2-c1:
         cred: fence-bot
         region: us-east-1
@@ -2431,12 +2428,12 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: 1.0.0
+    tag: 1.1.0
 gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2025.09'
+    tag: '2025.11'
   externalSecrets:
     dbcreds: bdcat-internalstaging-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcat-internalstaging-gen3userdatalibrary-g3auto
@@ -2451,10 +2448,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d"
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.0/schema.json
   dispatcherJobNum: '10'
@@ -2489,7 +2484,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.09'
+    tag: '2025.11'
   indices:
     - index: internalstaging_subject
       type: subject
@@ -2512,7 +2507,7 @@ indexd:
     serviceCreds: bdcat-internalstaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.11'
 manifestservice:
   enabled: false
 metadata:
@@ -2528,7 +2523,7 @@ metadata:
     metadataG3auto: bdcat-internalstaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.11'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -2544,7 +2539,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.11'
 portal:
   autoscaling:
     enabled: false
@@ -2555,13 +2550,13 @@ portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/"
+    dir: bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: 'feature_data_library'
-    pullPolicy: 'Always'
+    pullPolicy: Always
 revproxy:
   autoscaling:
     enabled: false
@@ -2572,7 +2567,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.11'
   ingress:
     aws:
       group: bdcatprod
@@ -2587,7 +2582,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
+    tag: '2025.11'
 sower:
   enabled: true
   externalSecrets:
@@ -2596,7 +2591,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.09'
+    tag: '2025.11'
   sowerConfig:
     - action: export
       container:
@@ -2639,7 +2634,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.11
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -2697,7 +2692,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.11
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always

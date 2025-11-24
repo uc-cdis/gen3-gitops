@@ -72,6 +72,8 @@ karpenter-crds:
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
+    limits:
+      memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "5m"
     expireAfter: "72h"

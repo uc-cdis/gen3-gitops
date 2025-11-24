@@ -7,6 +7,9 @@ alb-controller:
   configuration:
     enabled: false
 
+argo-events:
+  enabled: true
+
 aws-s3-mountpoint:
   enabled: true
   configuration:
@@ -18,6 +21,9 @@ calico:
     enabled: false
 
 cert-manager:
+  enabled: true
+
+custom-objects:
   enabled: true
 
 coreDNS:
