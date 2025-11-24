@@ -2,4 +2,4 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/ci-data-commons
-    tag: chore_update_explorer
+    tag: chore_update_discovery_config
