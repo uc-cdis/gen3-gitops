@@ -112,7 +112,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.04
+    tag: 0.05
 
 global:
   pdb: true
