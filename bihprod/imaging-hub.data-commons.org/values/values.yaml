@@ -2,8 +2,9 @@ ambassador:
   enabled: true
   jupyterNamespace: jupyter-pods-bihprod-helm
 arborist:
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -30,6 +31,9 @@ aws-es-proxy:
 etl:
   resources:
     tube:
+      requests:
+        memory: 4Gi
+    spark:
       requests:
         memory: 2Gi
   esEndpoint: elasticsearch
@@ -110,8 +114,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-sender
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -295,8 +300,9 @@ guppy:
       type: imaging_series
 indexd:
   defaultPrefix: dg.MD1RBIH/
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -309,9 +315,10 @@ indexd:
 manifestservice:
   enabled: false
 metadata:
+  replicaCount: 2
   aggMdsNamespace: bihprod
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -332,6 +339,7 @@ peregrine:
     tag: '2025.11'
 portal:
   enabled: true
+  replicaCount: 2
   customConfig:
     enabled: true
     dir: bihprod/imaging-hub.data-commons.org/values/portal/
@@ -346,8 +354,9 @@ requestor:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2025.11'
 revproxy:
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
