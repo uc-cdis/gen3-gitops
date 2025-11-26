@@ -1,0 +1,29 @@
+gen3-workflow:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-workflow
+    tag: master
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
+  externalSecrets:
+  # This will be dynamically replaced by setup_ci_env.sh script.
+    funnelOidcClient: "<namespace>-funnel-oidc-client"
+  gen3WorkflowConfig:
+    taskImageWhitelist:
+      - "public.ecr.aws/docker/library/alpine:latest"
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image"
+  funnel:
+    Kubernetes:
+      # This will be dynamically replaced by setup_ci_env.sh script.
+      JobsNamespace: gen3-<namespace>-workflow-pods
+    Plugins:
+      Path: plugin-binaries/auth-plugin
+      Params:
+        OidcClientId: <redacted>
+        OidcClientSecret: <redacted>
+        # This will be dynamically replaced by setup_ci_env.sh script.
+        S3Url: gen3-workflow-service.<namespace>.svc.cluster.local
+        # This will be dynamically replaced by setup_ci_env.sh script.
+        OidcTokenUrl: https://<hostname>/user
