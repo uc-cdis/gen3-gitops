@@ -3,6 +3,10 @@ gen3-workflow:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-workflow
     tag: chore_create_iam_role_for_worker_pods
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
   externalSecrets:
   # This will be dynamically replaced by setup_ci_env.sh script.
     funnelOidcClient: "<namespace>-funnel-oidc-client"
