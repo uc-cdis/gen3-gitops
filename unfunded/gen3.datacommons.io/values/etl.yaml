@@ -94,3 +94,8 @@ etl:
             props:
               - name: _subject_id
                 src: id
+  image:
+    tube:
+      tag: '2025.11'
+    spark:
+      tag: '2025.11'
