@@ -74,13 +74,6 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-category
-        operator: In
-        values:
-          - c
-          - m
-          - r
-          - t
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws
