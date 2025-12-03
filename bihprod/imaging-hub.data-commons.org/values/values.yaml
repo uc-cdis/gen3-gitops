@@ -2,8 +2,9 @@ ambassador:
   enabled: true
   jupyterNamespace: jupyter-pods-bihprod-helm
 arborist:
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -28,6 +29,13 @@ aws-es-proxy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
 etl:
+  resources:
+    tube:
+      requests:
+        memory: 4Gi
+    spark:
+      requests:
+        memory: 2Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -106,8 +114,9 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-sender
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -131,7 +140,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.1
+    tag: 1.3.2
 global:
   pdb: true
   aws:
@@ -291,8 +300,9 @@ guppy:
       type: imaging_series
 indexd:
   defaultPrefix: dg.MD1RBIH/
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -305,9 +315,10 @@ indexd:
 manifestservice:
   enabled: false
 metadata:
+  replicaCount: 2
   aggMdsNamespace: bihprod
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
@@ -328,6 +339,7 @@ peregrine:
     tag: '2025.11'
 portal:
   enabled: true
+  replicaCount: 2
   customConfig:
     enabled: true
     dir: bihprod/imaging-hub.data-commons.org/values/portal/
@@ -342,8 +354,9 @@ requestor:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2025.11'
 revproxy:
+  replicaCount: 2
   autoscaling:
-    enabled: true
+    enabled: false
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40

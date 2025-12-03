@@ -63,25 +63,26 @@ dashboard:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
 etl:
   esEndpoint: elasticsearch
-  mappings:
-    - category: data_file
-      doc_type: file
-      injecting_props:
-        case:
-          props:
-            - name: submitter_id
-            - name: project_id
-      name: file_tube_etl_mickey
-      props:
-        - name: object_id
-        - name: md5sum
-        - name: file_name
-        - name: file_size
-        - name: data_format
-        - name: data_type
-        - name: state
-      root: None
-      type: collector
+  etlMapping:
+    mappings:
+      - category: data_file
+        doc_type: file
+        injecting_props:
+          case:
+            props:
+              - name: submitter_id
+              - name: project_id
+        name: file_tube_etl_mickey
+        props:
+          - name: object_id
+          - name: md5sum
+          - name: file_name
+          - name: file_size
+          - name: data_format
+          - name: data_type
+          - name: state
+        root: None
+        type: collector
 fence:
   usersync:
     usersync: true
@@ -173,6 +174,8 @@ guppy:
       type: patients
     - index: file_etl_mickey
       type: file
+    - index: omop_etl_index_cohortb_20251119
+      type: patients
 hatchery:
   enabled: true
   image:

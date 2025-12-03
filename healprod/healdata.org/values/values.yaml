@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.10'
+    tag: '2025.11'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.10'
+    tag: '2025.11'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--audit-sqs-receiver
@@ -45,7 +45,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.10'
+    tag: '2025.11'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--dashboard-access
@@ -103,7 +103,8 @@ fence:
         cred: fence_bot
         requester_pays: true
         region: us-east-1
-    HIDE_IDPS: ["https://shib2.swmed.edu/idp/shibboleth"]
+    HIDE_IDPS:
+      - https://shib2.swmed.edu/idp/shibboleth
 fluentd:
   enabled: true
   image:
@@ -158,7 +159,7 @@ hatchery:
     targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
-    stataG3auto: "stata-workspace-gen3-license-healdata"
+    stataG3auto: stata-workspace-gen3-license-healdata
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2.6.0'
@@ -380,14 +381,14 @@ indexd:
     serviceCreds: healprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.10'
+    tag: '2025.11'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.10'
+    tag: '2025.11'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--manifest-service-sa
@@ -1422,9 +1423,9 @@ metadata:
     metadataG3auto: healprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.10'
+    tag: '2025.11'
   useAggMds: true
-  schedule: "0 9 * * *"
+  schedule: 0 9 * * *
   suspendCronjob: false
 mutatingWebhook:
   enabled: false
@@ -1432,7 +1433,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.10'
+    tag: '2025.11'
 portal:
   replicaCount: 4
   autoscaling:
@@ -1450,17 +1451,17 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.10'
+    tag: '2025.11'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.10'
+    tag: '2025.11'
 revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.10'
+    tag: '2025.11'
   ingress:
     aws:
       group: healprod
@@ -1469,7 +1470,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.10'
+    tag: '2025.11'
   replicaCount: 4
 sower:
   serviceAccount:
@@ -1481,7 +1482,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.10'
+    tag: '2025.11'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1495,7 +1496,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2025.10
+        image: quay.io/cdis/batch-export:2025.11
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1517,8 +1518,8 @@ ssjdispatcher:
     credsFile: healprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.10'
-  indexing: quay.io/cdis/indexs3client:2025.10
+    tag: '2025.11'
+  indexing: quay.io/cdis/indexs3client:2025.11
 wts:
   replicaCount: 4
   autoscaling:
@@ -1533,4 +1534,4 @@ wts:
     wtsOidcClient: healprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.10'
+    tag: '2025.11'
