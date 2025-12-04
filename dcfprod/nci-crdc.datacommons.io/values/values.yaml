@@ -101,7 +101,7 @@ datareplicate:
     RELEASE: DR44
     MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_legacy_manifest_20230410_post_DR37.0.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
-    ONLY_REDACT: gs
+    ONLY_REDACT: all
   replicateValidationJob:
     enabled: false
     suspendCronjob: true
