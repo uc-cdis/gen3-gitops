@@ -459,7 +459,7 @@ portal:
       : \"If you have any questions about access or the registration process, please\
       \ contact \",\n      \"email\": \"support@datacommons.io\"\n    },\n    \"certs\"\
       : {},\n    \"footerLogos\": [\n      {\n        \"src\": \"/src/img/gen3.png\"\
-      ,\n        \"href\": \"https://ctds.uchicago.edu/gen3\",\n        \"alt\": \"\
+      ,\n        \"href\": \"https://gen3.org\",\n        \"alt\": \"\
       Gen3 Data Commons\"\n      },\n      {\n        \"src\": \"/src/img/createdby.png\"\
       ,\n        \"href\": \"https://ctds.uchicago.edu/\",\n        \"alt\": \"Center\
       \ for Translational Data Science at the University of Chicago\"\n      }\n \
