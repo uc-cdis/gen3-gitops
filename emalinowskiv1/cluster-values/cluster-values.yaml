@@ -4,7 +4,7 @@ project: dev
 accountNumber: "707767160287"
 
 configuration:
-  configurationRevision: feat/no-cluster-endpoint-needed
+  configurationRevision: master
 
 alb-controller:
   enabled: true
@@ -12,7 +12,7 @@ alb-controller:
     enabled: false
 
 aws-s3-mountpoint:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
@@ -48,12 +48,15 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.0.8"
+  targetRevision: "1.6.3"
   configuration:
     enabled: true
 
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "EKS-1-33-al23*"
+  consolidationPolicy: "WhenEmptyOrUnderutilized"
+  consolidateAfter: "5m"
+  expireAfter: "72h"
   enabled: true
   selectorTag: emalinowskiv1
   migration: true
@@ -62,3 +65,5 @@ vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true

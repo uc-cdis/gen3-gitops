@@ -17,9 +17,11 @@ global:
       # -- (string) AWS Role ARN for Secret Store to use
       roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
     sower_role: sower-jobs-role
+  clusterName: devplanetv2
+  environment: devplanetv2
   externalSecrets:
     deploy: true
-    dbCreate: true
+    createLocalK8sSecret: true
   # This will be dynamically replaced by env_setup.sh script.
   fenceURL: https://hostname/user
   manifestGlobalExtraValues:
@@ -49,3 +51,5 @@ elasticsearch:
     create: true
     minAvailable: "1"
     maxUnavailable: "0"
+  image: "quay.io/cdis/elasticsearch"
+  imageTag: "7.10.2"

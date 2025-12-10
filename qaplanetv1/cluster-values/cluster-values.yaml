@@ -12,7 +12,6 @@ alb-controller:
 
 aws-s3-mountpoint:
   enabled: true
-  targetRevision: "2.0.0"
   configuration:
     enabled: false
 
@@ -57,16 +56,21 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.0.8"
 
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: qaplanetv1
   migration: true
   default:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: default
+    amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "5m"
+    expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
       - key: karpenter.sh/capacity-type
@@ -88,8 +92,18 @@ karpenter-crds:
         values:
           - "7000"
   workflow:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws
+      kind: EC2NodeClass
+      name: workflow
+    amiFamily: AL2023
     volumeSize: 80Gi
   jupyter:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws
+      kind: EC2NodeClass
+      name: jupyter
+    amiFamily: AL2023
     volumeSize: 80Gi
 
 vpc-cni:
@@ -101,3 +115,5 @@ crossplane-crds:
   enable: true
   useIRSA: true
   iamRoleName: "crossplane-test-qaplanetv1"
+kube-proxy:
+  enabled: true

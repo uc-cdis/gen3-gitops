@@ -116,16 +116,22 @@ hatchery:
 
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.09"
+    tag: "2.6.0"
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "default-pay-model": {
           "workspace_type": "Trial Workspace",
-          "local": true
+          "local": true,
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-34AAJOR7A5AG",
         "sidecar": {
@@ -161,7 +167,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__5510d1fdb1e6b2f1bfc620a17096a2a18df9cba4",
+            "image": "quay.io/cdis/brh-notebooks:generic_rkernel__e3f9e921ab4fb4378c97ce4c8201d2c20102d907",
             "env": {
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
@@ -196,7 +202,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Notebooks",
-            "image": "quay.io/cdis/brh-notebooks:combined_demos__b0a59aa051cbd993bbda25a7bb42f99bd4d91322",
+            "image": "quay.io/cdis/brh-notebooks:combined_demos__e68977edfc602f20cb913f85fe65acc39968b508",
             "env": {
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
@@ -257,13 +263,11 @@ hatchery:
               "version": 0.1,
               "or": [
                 {
-                  "pay_models": [
-                    "Direct Pay"
-                  ]
+                  "pay_models": ["Do Not Show"]
                 },
                 {
                   "resource_paths": [
-                    "/workspace/jupyter-nextflow"
+                    "/workspace/do-not-show"
                   ]
                 }
               ]
