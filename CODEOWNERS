@@ -9,6 +9,7 @@ dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight
 dcfprod/nci-crdc.datacommons.io @jeffrey-knight
 vhdcprod/va.data-commons.org @nmetokishlubsky
 vadcprod/vpodc.data-commons.org @nmetokishlubsky
+pdp-commons/mc2dp.data-commons.org @nmetokishlubsky
 midrcprod/data.midrc.org @AJuehne-CTDS @cgmeyer
 midrcprod/staging.midrc.org @AJuehne-CTDS @cgmeyer
 midrcvalidate/validate.midrc.org @AJuehne-CTDS @cgmeyer

@@ -287,11 +287,11 @@ fence:
       eks.amazonaws.com/role-arn: "arn:aws:iam::419939494982:role/gen3-service/headneck-default-fence-sa"
 
   externalSecrets:
-    fenceJwtKeys: ""
+    fenceJwtKeys: "headneck-default-fence-jwt-keys"
     fenceConfig: headneck_default-fence-config
     fenceGoogleAppCredsSecret: ""
     fenceGoogleStorageCredsSecret: ""
-    createK8sJwtKeysSecret: true
+    createK8sJwtKeysSecret: false
     createK8sGoogleAppSecrets: true
     createK8sFenceConfigSecret: false
     dbcreds: "headneck_default-fence-creds"
@@ -405,7 +405,8 @@ indexd:
   defaultPrefix: dg.HN3CK/
   externalSecrets:
     dbcreds: "headneck_default-indexd-creds"
-    createK8sServiceCredsSecret: true
+    serviceCreds: "headneck-indexd-service-creds"
+    createK8sServiceCredsSecret: false
 
 manifestservice:
   # Lower cost
