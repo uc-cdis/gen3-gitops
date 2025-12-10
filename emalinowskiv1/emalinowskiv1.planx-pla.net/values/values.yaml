@@ -145,7 +145,7 @@ global:
     hatchery_role: emalinowskiv1--emalinowskiv1-helm--hatchery-sa
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::707767160287:role/emalinowskiv1-external-secrets-sa
+      roleArn: arn:aws:iam::707767160287:role/gen3-service/emalinowskiv1-test-external-secrets-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   environment: emalinowskiv1
@@ -162,6 +162,13 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
+  topologySpread:
+    # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
+    enabled: true
+    # -- (string) The topology key to use for spreading. Defaults to "topology.kubernetes.io/zone".
+    topologyKey: "topology.kubernetes.io/zone"
+    # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
+    maxSkew: 1
 guppy:
   authFilterField: auth_resource_path
   configIndex: dev_case-array-config
@@ -179,7 +186,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2023.04'
+    tag: '2025.10'
   json: |
     {
       "user-namespace": "jupyter-pods",
@@ -628,4 +635,4 @@ wts:
     wtsG3auto: emalinowskiv1-wts-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: feat_al2
+    tag: "2025.10"

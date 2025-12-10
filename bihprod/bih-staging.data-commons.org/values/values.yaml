@@ -1,6 +1,6 @@
 ambassador:
   enabled: true
-  jupyterNamespace: "jupyter-pods-bihstaging-helm"
+  jupyterNamespace: jupyter-pods-bihstaging-helm
 arborist:
   autoscaling:
     enabled: true
@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2025.11'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2025.11'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
@@ -82,6 +82,11 @@ etl:
           - name: PatientSex
           - name: PatientID
           - name: EthnicGroup
+          - name: loinc_code
+          - name: loinc_contrast
+          - name: loinc_long_common_name
+          - name: loinc_method
+          - name: loinc_system
         root: imaging_study
         type: aggregator
       - doc_type: imaging_series
@@ -103,9 +108,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2025.09'
+      tag: '2025.11'
     spark:
-      tag: '2025.09'
+      tag: '2025.11'
 fence:
   usersync:
     usersync: true
@@ -125,7 +130,7 @@ fence:
     fenceJwtKeys: bihstaging-cloudauto-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '2025.11'
 fluentd:
   enabled: true
   image:
@@ -135,7 +140,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: main
+    tag: 1.3.3
 global:
   aws:
     account: '533267425233'
@@ -172,7 +177,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.09'
+    tag: '2025.11'
   hatchery:
     json: |-
       {
@@ -182,11 +187,11 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.08",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2025.09",
           "env": {
             "NAMESPACE": "default",
-            "GEN3_ENDPOINT": "bihstaging.data-commons.org/portal",
-            "HOSTNAME": "bihstaging.data-commons.org/portal"
+            "GEN3_ENDPOINT": "bihstaging.data-commons.org",
+            "HOSTNAME": "bihstaging.data-commons.org"
           },
           "args": [],
           "command": [
@@ -210,7 +215,7 @@ hatchery:
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
             "image": "quay.io/cdis/jupyter-superslim-r:2.0.1",
             "env": {
-              "FRAME_ANCESTORS": "bihstaging.data-commons.org/portal"
+              "FRAME_ANCESTORS": "bihstaging.data-commons.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
@@ -245,17 +250,18 @@ hatchery:
             "name": "BIH Tutorial Jupyter Notebook",
             "image": "quay.io/cdis/jupyter-notebook:bih-master",
             "env": {
-              "FRAME_ANCESTORS": "bihstaging.data-commons.org/portal"
+              "FRAME_ANCESTORS": "bihstaging.data-commons.org",
+              "JUPYTER_ENABLE_LAB": "yes"
             },
             "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-              "--JupyterNotebookApp.quit_button=False"
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False"
             ],
             "command": [
               "start-notebook.sh"
@@ -281,7 +287,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.09'
+    tag: '2025.11'
   indices:
     - index: bih_dataset
       type: dataset
@@ -303,7 +309,7 @@ indexd:
     serviceCreds: bihstaging-cloudauto-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2025.11'
 metadata:
   aggMdsNamespace: bihstaging
   autoscaling:
@@ -317,28 +323,28 @@ metadata:
     metadataG3auto: bihstaging-cloudauto-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2025.11'
   useAggMds: true
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2025.11'
 portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bihprod/bih-staging.data-commons.org/values/portal/"
+    dir: bihprod/bih-staging.data-commons.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.39.2'
+    tag: '2025.11'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.09'
+    tag: '2025.11'
 revproxy:
   autoscaling:
     enabled: true
@@ -348,7 +354,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2025.11'
   ingress:
     aws:
       group: bihprod
@@ -356,12 +362,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
-spark:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.08'
+    tag: '2025.11'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -374,13 +375,8 @@ ssjdispatcher:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.09'
-  indexing: quay.io/cdis/indexs3client:2025.09
-tube:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.08'
+    tag: '2025.11'
+  indexing: quay.io/cdis/indexs3client:2025.11
 wts:
   enabled: true
   externalSecrets:
@@ -389,4 +385,4 @@ wts:
     wtsOidcClient: bihstaging-cloudauto-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.09'
+    tag: '2025.11'

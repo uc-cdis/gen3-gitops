@@ -26,7 +26,14 @@ global:
   manifestGlobalExtraValues:
     fence_url: https://caninedc.org/user
   tierAccessLevel: libre
-  tierAccessLimit: 50    
+  tierAccessLimit: 50
+  topologySpread:
+    # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
+    enabled: true
+    # -- (string) The topology key to use for spreading. Defaults to "topology.kubernetes.io/zone".
+    topologyKey: "topology.kubernetes.io/zone"
+    # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
+    maxSkew: 1
 
 arborist:
   # Lower cost

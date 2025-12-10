@@ -177,6 +177,10 @@
                     "name": "CR Series"
                 },
                 {
+                    "node": "radiology_report",
+                    "name": "Radiology Reports"
+                },
+                {
                     "node": "mr_series_file",
                     "name": "MR Series"
                 }
@@ -433,6 +437,12 @@
                         ]
                     },
                     {
+                        "title": "Reports",
+                        "fields": [
+                            "_radiology_report_count"
+                        ]
+                    },
+                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
@@ -502,7 +512,8 @@
                     "_dx_series_file_count",
                     "_cr_series_file_count",
                     "_mr_series_file_count",
-                    "project_id"
+                    "project_id",
+                    "_radiology_report_count"
                 ],
                 "linkFields": [
                     "license",
@@ -1044,6 +1055,12 @@
                         ]
                     },
                     {
+                        "title": "Reports",
+                        "fields": [
+                            "_radiology_report_count"
+                        ]
+                    },
+                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
@@ -1103,7 +1120,8 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
-                    "project_id"
+                    "project_id",
+                    "_radiology_report_count"
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
@@ -1267,6 +1285,97 @@
                     "referenceIdFieldInDataIndex": "_imaging_study_id",
                     "useFilterForCounts": false
                 },
+                "accessibleFieldCheckList": [
+                    "project_id"
+                ],
+                "accessibleValidationField": "project_id"
+            }
+        },
+        {
+            "tabTitle": "Radiology Reports",
+            "charts": {},
+            "filters": {
+                "tabs": [
+                    {
+                        "title": "Radiology Reports Filters",
+                        "searchFields": [
+                            "submitter_id"
+                        ],
+                        "fields": [
+                            "modality",
+                            "body_part_examined",
+                            "report_generation_method",
+                            "study_description",
+                            "project_id",
+                            "report_modification_method"
+                        ]
+                    }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                    "submitter_id",
+                    "modality",
+                    "body_part_examined",
+                    "report_generation_method",
+                    "study_description",
+                    "project_id",
+                    "report_modification_method"
+                ]
+            },
+             "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.csv"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "radiology_report",
+                "nodeCountTitle": "Radiology Reports",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "submitter_id",
+                        "name": "Annotation ID"
+                    },
+                    {
+                        "field": "case_ids",
+                        "name": "Case ID"
+                    }
+                ],
                 "accessibleFieldCheckList": [
                     "project_id"
                 ],
