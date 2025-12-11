@@ -1320,6 +1320,7 @@
                     "body_part_examined",
                     "report_generation_method",
                     "study_description",
+                    "object_id",
                     "project_id",
                     "report_modification_method"
                 ]
@@ -1356,6 +1357,14 @@
                     "leftIcon": "datafile",
                     "rightIcon": "download",
                     "fileName": "MIDRC_radiology_reports_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "file-manifest",
+                    "title": "Download File Manifest",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_manifest.json"
                 }
             ],
             "loginForDownload": true,
