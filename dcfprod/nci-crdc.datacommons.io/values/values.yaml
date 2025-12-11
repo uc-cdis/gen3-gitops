@@ -61,14 +61,14 @@ datareplicate:
     limits:
       memory: 2Gi
   googleBucketReplicateJob:
-    enabled: false
+    enabled: true
     suspendCronjob: true
     schedule: "*/30 * * * *"
     MAX_WORKERS: 80
     PROJECT: dcf-prod
     LOG_BUCKET: datarefresh-log
     RELEASE: DR44
-    MANIFEST_FILE: gs://replication-input/
+    MANIFEST_FILE: gs://replication-input/GDC_active_manifest_DR44_cases_redacted.tsv
     IGNORED_FILE: gs://replication-input/ignored_files_manifest.csv
   awsBucketReplicateJob:
     enabled: false
