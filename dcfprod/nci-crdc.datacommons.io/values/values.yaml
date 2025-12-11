@@ -597,6 +597,9 @@ fence:
       idc-open-data-two:
         cred: fence_bot
         region: us-east-1
+      iodc-cimac-18-279-phs003572:
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-abtc1603-phs0037531:
         cred: fence_bot
         region: us-east-1
