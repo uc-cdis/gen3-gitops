@@ -67,52 +67,41 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - aggregated_props:
-          - fn: count
-            name: _imaging_studies_count
-            path: imaging_studies
-          - fn: count
-            name: _ct_series_file_count
-            path: imaging_studies.ct_series_files
-          - fn: count
-            name: _cr_series_file_count
-            path: imaging_studies.cr_series_files
-          - fn: count
-            name: _dx_series_file_count
-            path: imaging_studies.dx_series_files
-          - fn: count
-            name: _mr_series_file_count
-            path: imaging_studies.mr_series_files
+      - name: midrcstaging_case
         doc_type: case
-        joining_props:
-          - index: data_file
-            join_on: _case_id
-            props:
-              - fn: set
-                name: object_id
-                src: object_id
-              - fn: set
-                name: data_format
-                src: data_format
-              - fn: set
-                name: data_type
-                src: data_type
-              - fn: set
-                name: data_category
-                src: data_category
-              - fn: set
-                name: data_file_image_data_modified
-                src: image_data_modified
-              - fn: set
-                name: data_file_image_data_modification_name
-                src: image_data_modification_name
-              - fn: set
-                name: data_file_image_data_modification_method
-                src: image_data_modification_method
-              - fn: count
-                name: data_file_count
-                src: _data_file_id
-        name: midrc_case
+        type: aggregator
+        root: case
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: sex
+          - name: race
+          - name: age_at_index
+          - name: index_event
+          - name: zip
+          - name: covid19_positive
+          - name: ethnicity
+        aggregated_props:
+          - name: _imaging_studies_count
+            path: imaging_studies
+            fn: count
+          - name: _ct_series_file_count
+            path: imaging_studies.ct_series_files
+            fn: count
+          - name: _cr_series_file_count
+            path: imaging_studies.cr_series_files
+            fn: count
+          - name: _dx_series_file_count
+            path: imaging_studies.dx_series_files
+            fn: count
+          - name: _mr_series_file_count
+            path: imaging_studies.mr_series_files
+            fn: count
+          - name: _radiology_report_count
+            path: imaging_studies.radiology_reports
+            fn: count
+        parent_props:
+          - path: datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
         nested_props:
           - name: case_annotations
             path: annotations
@@ -180,24 +169,38 @@ etl:
               - name: study_modality
               - name: study_year
               - name: study_uid
-        parent_props:
-          - path: datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
-        props:
-          - name: project_id
-          - name: submitter_id
-          - name: sex
-          - name: race
-          - name: age_at_index
-          - name: index_event
-          - name: zip
-          - name: covid19_positive
-          - name: ethnicity
-        root: case
+        joining_props:
+          - index: data_file
+            join_on: _case_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_image_data_modified
+                src: image_data_modified
+                fn: set
+              - name: data_file_image_data_modification_name
+                src: image_data_modification_name
+                fn: set
+              - name: data_file_image_data_modification_method
+                src: image_data_modification_method
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+      - name: midrcstaging_measurement
+        doc_type: measurement
         type: aggregator
-      - doc_type: measurement
-        name: midrc_measurement
-        parent_props:
-          - path: cases.datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+        root: measurement
         props:
           - name: project_id
           - name: submitter_id
@@ -206,10 +209,12 @@ etl:
           - name: test_method
           - name: test_name
           - name: test_result_text
-        root: measurement
+        parent_props:
+          - path: cases.datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+      - name: midrcstaging_annotation
+        doc_type: annotation
         type: aggregator
-      - doc_type: annotation
-        name: midrc_annotation
+        root: annotation
         props:
           - name: project_id
           - name: submitter_id
@@ -221,70 +226,26 @@ etl:
           - name: annotation_method
           - name: annotator_id
           - name: instance_uids
-        root: annotation
+      - name: midrcstaging_radiology_report
+        doc_type: radiology_report
         type: aggregator
-      - aggregated_props:
-          - fn: count
-            name: _cr_series_file_count
-            path: cr_series_files
-          - fn: count
-            name: _ct_series_file_count
-            path: ct_series_files
-          - fn: count
-            name: _dx_series_file_count
-            path: dx_series_files
-          - fn: count
-            name: _mr_series_file_count
-            path: mr_series_files
+        root: radiology_report
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: file_size
+          - name: file_name
+          - name: data_type
+          - name: modality
+          - name: object_id
+          - name: body_part_examined
+          - name: report_generation_method
+          - name: report_modification_method
+          - name: study_description
+      - name: midrcstaging_imaging_study
         doc_type: imaging_study
-        joining_props:
-          - index: data_file
-            join_on: _imaging_study_id
-            props:
-              - fn: set
-                name: object_id
-                src: object_id
-              - fn: set
-                name: data_format
-                src: data_format
-              - fn: set
-                name: data_type
-                src: data_type
-              - fn: set
-                name: data_category
-                src: data_category
-              - fn: set
-                name: data_file_source_node
-                src: source_node
-              - fn: set
-                name: data_file_annotation_name
-                src: annotation_name
-              - fn: set
-                name: data_file_annotation_method
-                src: annotation_method
-              - fn: set
-                name: data_file_image_data_modified
-                src: image_data_modified
-              - fn: set
-                name: data_file_image_data_modification_name
-                src: image_data_modification_name
-              - fn: set
-                name: data_file_image_data_modification_method
-                src: image_data_modification_method
-        name: midrc_imaging_study
-        nested_props:
-          - name: imaging_study_annotations
-            path: annotations
-            props:
-              - name: airspace_disease_grading
-              - name: class_covid19_pneumonia
-              - name: annotation_name
-              - name: midrc_mRALE_score
-              - name: annotation_method
-              - name: annotator_id
-              - name: instance_uids
-        parent_props:
-          - path: cases[sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+        type: aggregator
+        root: imaging_study
         props:
           - name: project_id
           - name: submitter_id
@@ -305,110 +266,74 @@ etl:
           - name: study_year
           - name: study_year_shifted
           - name: study_uid
-        root: imaging_study
-        type: aggregator
-      - category: data_file
+        nested_props:
+          - name: imaging_study_annotations
+            path: annotations
+            props:
+              - name: airspace_disease_grading
+              - name: class_covid19_pneumonia
+              - name: annotation_name
+              - name: midrc_mRALE_score
+              - name: annotation_method
+              - name: annotator_id
+              - name: instance_uids
+        aggregated_props:
+          - name: _cr_series_file_count
+            path: cr_series_files
+            fn: count
+          - name: _ct_series_file_count
+            path: ct_series_files
+            fn: count
+          - name: _dx_series_file_count
+            path: dx_series_files
+            fn: count
+          - name: _mr_series_file_count
+            path: mr_series_files
+            fn: count
+          - name: _radiology_report_count
+            path: radiology_reports
+            fn: count
+        parent_props:
+          - path: cases[sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+        joining_props:
+          - index: data_file
+            join_on: _imaging_study_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_source_node
+                src: source_node
+                fn: set
+              - name: data_file_annotation_name
+                src: annotation_name
+                fn: set
+              - name: data_file_annotation_method
+                src: annotation_method
+                fn: set
+              - name: data_file_image_data_modified
+                src: image_data_modified
+                fn: set
+              - name: data_file_image_data_modification_name
+                src: image_data_modification_name
+                fn: set
+              - name: data_file_image_data_modification_method
+                src: image_data_modification_method
+                fn: set
+      - name: midrcstaging_data_file
         doc_type: data_file
-        injecting_props:
-          annotation:
-            props:
-              - fn: set
-                name: _annotation_id
-                src: id
-          case:
-            props:
-              - fn: set
-                name: _case_id
-                src: id
-              - fn: set
-                name: age_at_index
-                src: age_at_index
-              - fn: set
-                name: covid19_positive
-                src: covid19_positive
-              - fn: set
-                name: ethnicity
-                src: ethnicity
-              - fn: set
-                name: index_event
-                src: index_event
-              - fn: set
-                name: race
-                src: race
-              - fn: set
-                name: sex
-                src: sex
-              - fn: set
-                name: zip
-                src: zip
-          dataset:
-            props:
-              - fn: set
-                name: _dataset_id
-                src: id
-              - fn: set
-                name: dataset_submitter_id
-                src: submitter_id
-              - fn: set
-                name: license
-                src: license
-              - fn: set
-                name: data_url_doi
-                src: data_url_doi
-              - fn: set
-                name: data_contributor
-                src: data_contributor
-          imaging_study:
-            props:
-              - fn: set
-                name: _imaging_study_id
-                src: id
-              - fn: set
-                name: age_at_imaging
-                src: age_at_imaging
-              - fn: set
-                name: body_part_examined
-                src: body_part_examined
-              - fn: set
-                name: days_from_study_to_neg_covid_test
-                src: days_from_study_to_neg_covid_test
-              - fn: set
-                name: days_from_study_to_pos_covid_test
-                src: days_from_study_to_pos_covid_test
-              - fn: set
-                name: days_to_study
-                src: days_to_study
-              - fn: set
-                name: study_description
-                src: study_description
-              - fn: set
-                name: study_modality
-                src: study_modality
-              - fn: set
-                name: study_year
-                src: study_year
-              - fn: set
-                name: study_year_shifted
-                src: study_year_shifted
-              - fn: set
-                name: study_uid
-                src: study_uid
-              - fn: set
-                name: loinc_code
-                src: loinc_code
-              - fn: set
-                name: loinc_contrast
-                src: loinc_contrast
-              - fn: set
-                name: loinc_long_common_name
-                src: loinc_long_common_name
-              - fn: set
-                name: loinc_method
-                src: loinc_method
-              - fn: set
-                name: loinc_system
-                src: loinc_system
-        name: midrc_data_file
+        type: collector
+        root: None
+        category: data_file
         props:
           - name: source_node
           - name: project_id
@@ -463,8 +388,105 @@ etl:
           - name: spatial_resolution
           - name: transducer_type
           - name: view_position
-        root: None
-        type: collector
+        injecting_props:
+          dataset:
+            props:
+              - name: _dataset_id
+                src: id
+                fn: set
+              - name: dataset_submitter_id
+                src: submitter_id
+                fn: set
+              - name: license
+                src: license
+                fn: set
+              - name: data_url_doi
+                src: data_url_doi
+                fn: set
+              - name: data_contributor
+                src: data_contributor
+                fn: set
+          annotation:
+            props:
+              - name: _annotation_id
+                src: id
+                fn: set
+          case:
+            props:
+              - name: _case_id
+                src: id
+                fn: set
+              - name: age_at_index
+                src: age_at_index
+                fn: set
+              - name: covid19_positive
+                src: covid19_positive
+                fn: set
+              - name: ethnicity
+                src: ethnicity
+                fn: set
+              - name: index_event
+                src: index_event
+                fn: set
+              - name: race
+                src: race
+                fn: set
+              - name: sex
+                src: sex
+                fn: set
+              - name: zip
+                src: zip
+                fn: set
+          imaging_study:
+            props:
+              - name: _imaging_study_id
+                src: id
+                fn: set
+              - name: age_at_imaging
+                src: age_at_imaging
+                fn: set
+              - name: body_part_examined
+                src: body_part_examined
+                fn: set
+              - name: days_from_study_to_neg_covid_test
+                src: days_from_study_to_neg_covid_test
+                fn: set
+              - name: days_from_study_to_pos_covid_test
+                src: days_from_study_to_pos_covid_test
+                fn: set
+              - name: days_to_study
+                src: days_to_study
+                fn: set
+              - name: study_description
+                src: study_description
+                fn: set
+              - name: study_modality
+                src: study_modality
+                fn: set
+              - name: study_year
+                src: study_year
+                fn: set
+              - name: study_year_shifted
+                src: study_year_shifted
+                fn: set
+              - name: study_uid
+                src: study_uid
+                fn: set
+              - name: loinc_code
+                src: loinc_code
+                fn: set
+              - name: loinc_contrast
+                src: loinc_contrast
+                fn: set
+              - name: loinc_long_common_name
+                src: loinc_long_common_name
+                fn: set
+              - name: loinc_method
+                src: loinc_method
+                fn: set
+              - name: loinc_system
+                src: loinc_system
+                fn: set
   image:
     tube:
       tag: '2025.11'
@@ -557,6 +579,8 @@ guppy:
       type: data_file
     - index: midrc_imaging_study
       type: imaging_study
+    - index: midrc_radiology_report
+      type: radiology_report
 hatchery:
   enabled: true
   jupyterNamespace: jupyter-pods
