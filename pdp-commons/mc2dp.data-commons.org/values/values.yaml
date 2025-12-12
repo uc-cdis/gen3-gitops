@@ -51,7 +51,7 @@ fence:
     tag: '2025.07'
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
 fluentd:
   enabled: true
   image:
