@@ -333,10 +333,22 @@ fence:
       dcfprod-data-bucket:
         cred: fence_bot
         region: us-east-1
+      gdc-alchemist-alch-phs001140-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-alchemist-alch-phs001140-controlled:
+        cred: fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-2-open:
         cred: fence_bot
         region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-ov-phs003488-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-ov-phs003488-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-beataml1-cohort-phs001657-2-controlled:
@@ -349,6 +361,18 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-beataml1.0-crenolanib-phs001628-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-ccle-2-open:
@@ -559,6 +583,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-organoid-pancreatic-phs001611-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-rc-ptcl-phs002097-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-rc-ptcl-phs002097-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-rebc-thyr-phs001134-controlled:
