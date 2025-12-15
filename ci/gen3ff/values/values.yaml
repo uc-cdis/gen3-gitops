@@ -27,6 +27,7 @@ global:
   manifestGlobalExtraValues:
     google_enabled: true
   tierAccessLevel: libre
+  frontendRoot: "gen3ff"
 
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
