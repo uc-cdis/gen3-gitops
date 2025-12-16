@@ -184,7 +184,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
           "env": {
             "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
