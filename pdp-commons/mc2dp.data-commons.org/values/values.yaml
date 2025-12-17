@@ -48,7 +48,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: 'feat_embedding-vectors'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
@@ -112,6 +112,25 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
+
+
+embedding-management-service:
+  enabled: true
+  embeddingsConfig: |
+    {
+      "expr": 256,
+      "hist": 1536,
+      "summ": 4096,
+      "text": 4096,
+      "img_embed": 512,
+      "img_proj": 128
+    }
+
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
+    tag: feat_service
+    pullPolicy: Always
+
 
 guppy:
   configIndex: pdp-commons-commons-config-index
