@@ -62,7 +62,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.09
+    tag: 0.11
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -296,6 +296,8 @@ metadata:
                 "subject_plate_position": {},
                 "mc2dp_global_id": {},
                 "data_source_project" : {},
+                "is_synthetic" : {},
+                "is_data_files" : {},
                  "data_files": {
                      "type": "array",
                      "properties" : {
@@ -498,6 +500,7 @@ metadata:
                     "commons_url": "",
                     "mc2dp_global_id": "path:mc2dp_global_id",
                     "is_synthetic": "path:is_synthetic",
+                    "is_data_files" : "path:is_data_files",
                     "data_files": "path:data_type"
                 }
             }
