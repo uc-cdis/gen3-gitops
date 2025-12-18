@@ -149,6 +149,8 @@ etl:
           - name: date_of_death
           - name: gender
           - name: race
+        parent_props:
+          - path: dataset[dataset_submitter_id:submitter_id,data_description]
         nested_props:
           - name: sample
             path: sample
@@ -249,6 +251,102 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+      - name: hnc_sample
+        doc_type: sample
+        type: aggregator
+        root: sample
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: body_fluid_code
+          - name: dna_260_280
+          - name: dna_concentration
+          - name: dna_od_260
+          - name: procedure_date
+          - name: protocol_number
+          - name: sample_number
+          - name: sample_type
+          - name: sample_volume
+          - name: status
+        parent_props:
+          - path: subject[subject_submitter_id:submitter_id,MRN,Cancer_Status_Desc,Cause_of_Death_Desc,Class_of_Case_Desc,Date_of_Birth,Date_of_Last_Contact,Ethnicity,Primary_Payer_at_DX_Desc,Race_1_Desc,Sex_Desc,Spanish_Hispanic_Origin_Desc,Vital_Status_Desc,date_of_death,gender,race].dataset[dataset_submitter_id:submitter_id,data_description]
+        nested_props:
+          - name: portion
+            path: portion
+            props:
+              - name: portion_submitter_id	
+              - name: creation_datetime	
+              - name: is_ffpe	
+              - name: portion_number	
+              - name: weight
+          - name: pathology_report
+            path: pathology_report
+            props:
+              - name: accession_num
+              - name: adm_date
+              - name: disc_date
+              - name: enc_date
+              - name: HPV
+              - name: lab_code
+              - name: lab_desc
+              - name: P16
+              - name: path_note
+              - name: path_value
+              - name: proc_code
+              - name: proc_desc
+              - name: order_dttm
+              - name: Order_proc_id
+              - name: reference_unit
+              - name: result_dttm
+              - name: result_flag
+              - name: result_in_range_yn
+        joining_props:
+          - index: data_file
+            join_on: _sample_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+      - name: hnc_imaging_study
+        doc_type: imaging_study
+        type: aggregator
+        root: imaging_study
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: age_at_imaging
+          - name: age_at_imaging_gt89
+          - name: body_part_examined
+          - name: study_description
+          - name: study_uid
+          - name: study_year
+        parent_props:
+          - path: subject[subject_submitter_id:submitter_id,MRN,Cancer_Status_Desc,Cause_of_Death_Desc,Class_of_Case_Desc,Date_of_Birth,Date_of_Last_Contact,Ethnicity,Primary_Payer_at_DX_Desc,Race_1_Desc,Sex_Desc,Spanish_Hispanic_Origin_Desc,Vital_Status_Desc,date_of_death,gender,race].dataset[dataset_submitter_id:submitter_id,data_description]
+        joining_props:
+          - index: data_file
+            join_on: _imaging_study_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
       - name: hnc_data_file
         doc_type: data_file
         type: collector
@@ -263,18 +361,240 @@ etl:
           - name: data_format
           - name: data_type
           - name: data_category
+          - name: acquisition_type
+          - name: convolution_kernel
+          - name: contrast_bolus_agent
+          - name: experimental_strategy
+          - name: exposure_modulation_type
+          - name: imaging_date
+          - name: image_data_modification_name
+          - name: image_data_modification_method
+          - name: image_data_modified
+          - name: image_type
+          - name: lossy_image_compression
+          - name: magnification
+          - name: manufacturer
+          - name: manufacturer_model_name
+          - name: modality
+          - name: number_of_instances
+          - name: patient_position
+          - name: pixel_spacing
+          - name: series_uid
+          - name: series_description
+          - name: slice_thickness
+          - name: spacing_between_slices
+          - name: stain_type
         injecting_props:
           dataset:
             props:
               - name: _dataset_id
                 src: id
                 fn: set
+              - name: dataset_submitter_id
+                src: submitter_id
+                fn: set
+              - name: data_description
+                src: data_description
+                fn: set
           subject:
             props:
               - name: _subject_id
                 src: id
                 fn: set
-
+              - name: subject_submitter_id
+                src: submitter_id
+                fn: set
+              - name: MRN
+                src: MRN
+                fn: set
+              - name: Cancer_Status_Desc
+                src: Cancer_Status_Desc
+                fn: set
+              - name: Cause_of_Death_Desc
+                src: Cause_of_Death_Desc
+                fn: set
+              - name: Class_of_Case_Desc
+                src: Class_of_Case_Desc
+                fn: set
+              - name: Date_of_Birth
+                src: Date_of_Birth
+                fn: set
+              - name: Date_of_Last_Contact
+                src: Date_of_Last_Contact
+                fn: set
+              - name: Ethnicity
+                src: Ethnicity
+                fn: set
+              - name: Primary_Payer_at_DX_Desc
+                src: Primary_Payer_at_DX_Desc
+                fn: set
+              - name: Race_1_Desc
+                src: Race_1_Desc
+                fn: set
+              - name: Sex_Desc
+                src: Sex_Desc
+                fn: set
+              - name: Spanish_Hispanic_Origin_Desc
+                src: Spanish_Hispanic_Origin_Desc
+                fn: set
+              - name: Vital_Status_Desc
+                src: Vital_Status_Desc
+                fn: set
+              - name: date_of_death
+                src: date_of_death
+                fn: set
+              - name: gender
+                src: gender
+                fn: set
+              - name: race
+                src: race
+                fn: set
+          sample:
+            props:
+              - name: _sample_id
+                src: id
+                fn: set
+              - name: sample_submitter_id
+                src: submitter_id
+                fn: set
+              - name: body_fluid_code
+                src: body_fluid_code
+                fn: set
+              - name: dna_260_280
+                src: dna_260_280
+                fn: set
+              - name: dna_concentration
+                src: dna_concentration
+                fn: set
+              - name: dna_od_260
+                src: dna_od_260
+                fn: set
+              - name: procedure_date
+                src: procedure_date
+                fn: set
+              - name: protocol_number
+                src: protocol_number
+                fn: set
+              - name: sample_number
+                src: sample_number
+                fn: set
+              - name: sample_type
+                src: sample_type
+                fn: set
+              - name: sample_volume
+                src: sample_volume
+                fn: set
+              - name: status
+                src: status
+                fn: set
+          portion:
+            props:
+              - name: _portion_id
+                src: id
+                fn: set
+              - name: portion_submitter_id	
+                src: submitter_id
+                fn: set
+              - name: creation_datetime	
+                src: creation_datetime
+                fn: set
+              - name: is_ffpe	
+                src: is_ffpe
+                fn: set
+              - name: portion_number	
+                src: portion_number
+                fn: set
+              - name: weight
+                src: weight
+                fn: set
+          imaging_study:
+            props:
+              - name: _imaging_study_id
+                src: id
+                fn: set
+              - name: imaging_study_submitter_id
+                src: submitter_id
+                fn: set
+              - name: age_at_imaging
+                src: age_at_imaging
+                fn: set
+              - name: age_at_imaging_gt89
+                src: age_at_imaging_gt89
+                fn: set
+              - name: body_part_examined
+                src: body_part_examined
+                fn: set
+              - name: study_description
+                src: study_description
+                fn: set
+              - name: study_uid
+                src: study_uid
+                fn: set
+              - name: study_year
+                src: study_year
+                fn: set
+          pathology_report:
+            props:
+              - name: _pathology_report_id
+                src: id
+                fn: set
+              - name: pathology_report_submitter_id
+                src: submitter_id
+                fn: set
+              - name: accession_num
+                src: accession_num
+                fn: set
+              - name: adm_date
+                src: adm_date
+                fn: set
+              - name: disc_date
+                src: disc_date
+                fn: set
+              - name: enc_date
+                src: enc_date
+                fn: set
+              - name: HPV
+                src: HPV
+                fn: set
+              - name: lab_code
+                src: lab_code
+                fn: set
+              - name: lab_desc
+                src: lab_desc
+                fn: set
+              - name: P16
+                src: P16
+                fn: set
+              - name: path_note
+                src: path_note
+                fn: set
+              - name: path_value
+                src: path_value
+                fn: set
+              - name: proc_code
+                src: proc_code
+                fn: set
+              - name: proc_desc
+                src: proc_desc
+                fn: set
+              - name: order_dttm
+                src: order_dttm
+                fn: set
+              - name: Order_proc_id
+                src: Order_proc_id
+                fn: set
+              - name: reference_unit
+                src: reference_unit
+                fn: set
+              - name: result_dttm
+                src: result_dttm
+                fn: set
+              - name: result_flag
+                src: result_flag
+                fn: set
+              - name: result_in_range_yn
+                src: result_in_range_yn
+                fn: set
 fence:
   # Lower cost
   resources:
