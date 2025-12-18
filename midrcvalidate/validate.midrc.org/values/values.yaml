@@ -495,7 +495,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcvalidate-waf/0aba6cf0-a77b-41d1-9ab1-3280add64a25
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.0/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
   dispatcherJobNum: '10'
   environment: midrcvalidate
   externalSecrets:

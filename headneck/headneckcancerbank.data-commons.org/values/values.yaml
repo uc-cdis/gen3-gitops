@@ -485,8 +485,18 @@ sheepdog:
     dbcreds: "headneck_default-sheepdog-creds"
 
 ssjdispatcher:
-  enabled: false
-
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::419939494982:role/headneck--headneck-helm--ssjdispatcher
+    name: "ssjdispatcher-sa"
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::419939494982:role/headneck--headneck-helm--ssjdispatcher-job-role
+  enabled: true
+  externalSecrets:
+    credsFile: headneck_default-ssjdispatcher-creds
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.11
 sower:
   enabled: false
 

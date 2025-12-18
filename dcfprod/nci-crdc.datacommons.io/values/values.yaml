@@ -56,10 +56,10 @@ datareplicate:
     tag: 3.0.0
   resources:
     requests:
-      cpu: "8"
-      memory: 512Mi
+      cpu: "2"
+      memory: 8Gi
     limits:
-      memory: 2Gi
+      memory: 12Gi
   googleBucketReplicateJob:
     enabled: true
     suspendCronjob: true
