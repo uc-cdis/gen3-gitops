@@ -1385,6 +1385,13 @@
                         "name": "Case ID"
                     }
                 ],
+                "manifestMapping": {
+                    "resourceIndexType": "radiology_report",
+                    "resourceIdField": "object_id",
+                    "referenceIdFieldInResourceIndex": "_radiology_report_id",
+                    "referenceIdFieldInDataIndex": "_radiology_report_id",
+                    "useFilterForCounts": false
+                },
                 "accessibleFieldCheckList": [
                     "project_id"
                 ],
