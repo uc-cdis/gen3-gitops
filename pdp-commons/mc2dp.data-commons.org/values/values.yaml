@@ -51,7 +51,7 @@ fence:
     tag: 'feat_embedding-vectors'
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
 fluentd:
   enabled: true
   image:
@@ -310,6 +310,8 @@ metadata:
                 "subject_plate_position": {},
                 "mc2dp_global_id": {},
                 "data_source_project" : {},
+                "is_synthetic" : {},
+                "is_data_files" : {},
                  "data_files": {
                      "type": "array",
                      "properties" : {
@@ -512,6 +514,7 @@ metadata:
                     "commons_url": "",
                     "mc2dp_global_id": "path:mc2dp_global_id",
                     "is_synthetic": "path:is_synthetic",
+                    "is_data_files" : "path:is_data_files",
                     "data_files": "path:data_type"
                 }
             }
