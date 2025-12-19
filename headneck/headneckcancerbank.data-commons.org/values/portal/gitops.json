@@ -460,6 +460,46 @@
               "data_category",
               "data_type"
             ]
+          },
+          {
+            "title": "Subject Properties",
+            "fields": [
+              "subject_submitter_id",
+              "Ethnicity",
+              "gender",
+              "race",
+              "Date_of_Birth",
+              "date_of_death"
+            ]
+          },
+          {
+            "title": "Study Properties",
+            "fields": [
+              "imaging_study_submitter_id",
+              "age_at_imaging",
+              "study_year",
+              "body_part_examined",
+              "study_description",
+              "study_uid"
+            ]
+          },
+          {
+            "title": "Sample Properties",
+            "fields": [
+              "sample_number",
+              "sample_type",
+              "sample_volume"
+            ]
+          },
+          {
+            "title": "Portion Properties",
+            "fields": [
+              "portion_submitter_id",
+              "creation_datetime",
+              "is_ffpe",
+              "portion_number",
+              "weight"
+            ]
           }
         ]
       },
@@ -470,6 +510,26 @@
           "source_node",
           "object_id",
           "submitter_id",
+          "subject_submitter_id",
+          "Ethnicity",
+          "gender",
+          "race",
+          "Date_of_Birth",
+          "date_of_death",
+          "imaging_study_submitter_id",
+          "age_at_imaging",
+          "study_year",
+          "body_part_examined",
+          "study_description",
+          "study_uid",
+          "sample_number",
+          "sample_type",
+          "sample_volume",
+          "portion_submitter_id",
+          "creation_datetime",
+          "is_ffpe",
+          "portion_number",
+          "weight",
           "project_id"
         ]
       },
