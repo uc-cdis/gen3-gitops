@@ -1297,7 +1297,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "Radiology Reports Filters",
+                        "title": "Report Properties",
                         "searchFields": [
                             "submitter_id"
                         ],
@@ -1311,9 +1311,9 @@
                         ]
                     },
                     {
-                        "title": "Imaging Studies",
+                        "title": "Imaging Study Properties",
                         "searchFields": [
-                            "submitter_id"
+                            "imaging_study_submitter_id"
                         ],
                         "fields": [
                             "loinc_common_name",
@@ -1331,9 +1331,9 @@
                         ]
                     },
                     {
-                        "title": "Cases",
+                        "title": "Case Properties",
                         "searchFields": [
-                            "submitter_id"
+                            "case_submitter_id"
                         ],
                         "fields": [
                             "sex",
@@ -1346,9 +1346,9 @@
                         ]
                     },
                     {
-                        "title": "Datasets",
+                        "title": "Dataset Properties",
                         "searchFields": [
-                            "submitter_id"
+                            "dataset_submitter_id"
                         ],
                         "fields": [
                             "license",
@@ -1367,6 +1367,7 @@
                     "study_description",
                     "report_generation_method",
                     "report_modification_method",
+                    "imaging_study_submitter_id",
                     "loinc_common_name",
                     "loinc_method",
                     "loinc_system",
@@ -1379,6 +1380,7 @@
                     "days_from_study_to_neg_covid_test",
                     "days_from_study_to_pos_covid_test",
                     "image_data_modified",
+                    "case_submitter_id",
                     "sex",
                     "race",
                     "age_at_index",
@@ -1387,6 +1389,7 @@
                     "covid19_positive",
                     "ethnicity",
                     "license",
+                    "dataset_submitter_id",
                     "data_url_doi",
                     "data_contributor",
                     "object_id",
@@ -1449,8 +1452,20 @@
                         "name": "Report ID"
                     },
                     {
-                        "field": "case_ids",
+                        "field": "dataset_submitter_id",
+                        "name": "Dataset ID"
+                    },
+                    {
+                        "field": "case_submitter_id",
                         "name": "Case ID"
+                    },
+                    {
+                        "field": "imaging_study_submitter_id",
+                        "name": "Imaging Study ID"
+                    },
+                    {
+                        "field": "case_ids",
+                        "name": "Case IDs"
                     }
                 ],
                 "manifestMapping": {
