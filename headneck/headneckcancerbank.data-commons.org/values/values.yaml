@@ -678,6 +678,10 @@ guppy:
       type: dataset
     - index: hnc_subject
       type: subject
+    - index: hnc_sample
+      type: sample
+    - index: hnc_imaging_study
+      type: imaging_study
     - index: hnc_data_file
       type: data_file
   configIndex: hnc_array-config
