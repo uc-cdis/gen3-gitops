@@ -142,8 +142,8 @@
         "enabled": true,
         "fields": [
           "project_id",
-          "data_description",
-          "submitter_id"
+          "submitter_id",
+          "data_description"
         ]
       },
       "dropdowns": {
@@ -178,12 +178,21 @@
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "datasets_table.csv"
+        },
+        {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download File Manifest for Datasets",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_file_manifest.json"
         }
       ],
       "loginForDownload": true,
       "guppyConfig": {
         "dataType": "dataset",
         "nodeCountTitle": "Datasets",
+        "fileCountField": "data_file_count",
         "fieldMapping": [
           {
             "field": "project_id",
@@ -194,6 +203,12 @@
             "name": "Dataset ID"
           }
         ],
+        "manifestMapping": {
+            "resourceIndexType": "data_file",
+            "resourceIdField": "object_id",
+            "referenceIdFieldInResourceIndex": "_dataset_id",
+            "referenceIdFieldInDataIndex": "_dataset_id"
+        },
         "accessibleFieldCheckList": [
           "project_id"
         ],
@@ -403,17 +418,10 @@
         {
           "enabled": true,
           "type": "manifest",
-          "title": "Download File Manifest for Cases",
+          "title": "Download File Manifest for Subjects",
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "subjects_manifest.json"
-        },
-        {
-          "enabled": false,
-          "type": "export-to-workspace",
-          "title": "Export to Workspace",
-          "leftIcon": "datafile",
-          "rightIcon": "download"
         }
       ],
       "loginForDownload": true,
@@ -573,13 +581,6 @@
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "files_manifest.json"
-        },
-        {
-          "enabled": false,
-          "type": "export-to-workspace",
-          "title": "Export to Workspace",
-          "leftIcon": "datafile",
-          "rightIcon": "download"
         }
       ],
       "loginForDownload": true,

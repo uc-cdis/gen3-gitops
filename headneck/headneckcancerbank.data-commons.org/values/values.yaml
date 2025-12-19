@@ -127,6 +127,12 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
       - name: hnc_subject
         doc_type: subject
         type: aggregator
@@ -251,6 +257,12 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
       - name: hnc_sample
         doc_type: sample
         type: aggregator
@@ -316,6 +328,12 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
       - name: hnc_imaging_study
         doc_type: imaging_study
         type: aggregator
@@ -346,6 +364,12 @@ etl:
                 fn: set
               - name: data_category
                 src: data_category
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
                 fn: set
       - name: hnc_data_file
         doc_type: data_file
