@@ -1304,10 +1304,10 @@
                         "fields": [
                             "modality",
                             "body_part_examined",
-                            "report_generation_method",
                             "study_description",
-                            "project_id",
-                            "report_modification_method"
+                            "report_generation_method",
+                            "report_modification_method",
+                            "project_id"
                         ]
                     },
                     {
@@ -1316,18 +1316,18 @@
                             "submitter_id"
                         ],
                         "fields": [
-                            "age_at_imaging",
-                            "body_part_examined",
-                            "days_from_study_to_neg_covid_test",
-                            "days_from_study_to_pos_covid_test",
-                            "days_to_study",
-                            "image_data_modified",
-                            "loinc_contrast",
                             "loinc_common_name",
                             "loinc_method",
                             "loinc_system",
-                            "study_description",
-                            "study_modality"
+                            "loinc_contrast",
+                            "age_at_imaging",
+                            "imaging_study_description",
+                            "study_modality",
+                            "imaging_study_body_part_examined",
+                            "days_to_study",
+                            "days_from_study_to_neg_covid_test",
+                            "days_from_study_to_pos_covid_test",
+                            "image_data_modified"
                         ]
                     },
                     {
@@ -1364,11 +1364,33 @@
                     "submitter_id",
                     "modality",
                     "body_part_examined",
-                    "report_generation_method",
                     "study_description",
+                    "report_generation_method",
+                    "report_modification_method",
+                    "loinc_common_name",
+                    "loinc_method",
+                    "loinc_system",
+                    "loinc_contrast",
+                    "age_at_imaging",
+                    "study_modality",
+                    "imaging_study_body_part_examined",
+                    "imaging_study_description",
+                    "days_to_study",
+                    "days_from_study_to_neg_covid_test",
+                    "days_from_study_to_pos_covid_test",
+                    "image_data_modified",
+                    "sex",
+                    "race",
+                    "age_at_index",
+                    "index_event",
+                    "zip",
+                    "covid19_positive",
+                    "ethnicity",
+                    "license",
+                    "data_url_doi",
+                    "data_contributor",
                     "object_id",
-                    "project_id",
-                    "report_modification_method"
+                    "project_id"
                 ]
             },
              "dropdowns": {
@@ -1424,7 +1446,7 @@
                     },
                     {
                         "field": "submitter_id",
-                        "name": "Annotation ID"
+                        "name": "Report ID"
                     },
                     {
                         "field": "case_ids",
