@@ -48,10 +48,10 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: 'feat_embedding-vectors'
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
 fluentd:
   enabled: true
   image:
@@ -62,7 +62,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.08
+    tag: 0.11
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -112,6 +112,20 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
+
+
+embedding-management-service:
+  enabled: true
+  embeddingsConfig: |
+    {
+      "text": 4096,
+    }
+
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
+    tag: feat_service
+    pullPolicy: Always
+
 
 guppy:
   configIndex: pdp-commons-commons-config-index
@@ -296,6 +310,8 @@ metadata:
                 "subject_plate_position": {},
                 "mc2dp_global_id": {},
                 "data_source_project" : {},
+                "is_synthetic" : {},
+                "is_data_files" : {},
                  "data_files": {
                      "type": "array",
                      "properties" : {
@@ -498,6 +514,7 @@ metadata:
                     "commons_url": "",
                     "mc2dp_global_id": "path:mc2dp_global_id",
                     "is_synthetic": "path:is_synthetic",
+                    "is_data_files" : "path:is_data_files",
                     "data_files": "path:data_type"
                 }
             }
