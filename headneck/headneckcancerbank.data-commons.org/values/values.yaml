@@ -797,6 +797,7 @@ pidgin:
   enabled: false
 
 portal:
+  replicas: 2
   enabled: true
   image:
     # tag: fix_gqlhelper
