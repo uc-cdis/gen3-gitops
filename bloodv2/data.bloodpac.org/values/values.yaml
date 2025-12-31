@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.07"
+    tag: "2025.12"
 audit:
   enabled: false
   externalSecrets:
@@ -31,7 +31,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: "2025.07"
+    tag: "2025.12"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--dashboard-access
@@ -409,7 +409,7 @@ fence:
     fenceJwtKeys: bloodv2-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 2025.08
+    tag: 2025.12
 fluentd:
   enabled: true
   image:
@@ -431,7 +431,7 @@ global:
       # -- (string) ARN for the WAFv2 ACL.
       wafAclArn: "arn:aws:wafv2:us-east-1:562749638216:regional/webacl/bloodv2-waf/6bfe2374-8097-4c3e-957b-bd5b3f42dded"
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.9/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.10/schema.json
   dispatcherJobNum: "10"
   environment: bloodv2
   externalSecrets:
@@ -463,7 +463,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2025.07"
+    tag: "2025.12"
   indices:
     - index: bloodpac_study
       type: study
@@ -485,7 +485,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.07"
+    tag: "2025.12"
   hatchery:
     json: |
       {
@@ -602,19 +602,19 @@ indexd:
     serviceCreds: bloodv2-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.07"
+    tag: "2025.12"
 jupyterhub:
   enabled: true
   image:
     repository: quay.io/occ_data/jupyterhub
-    tag: "2025.07"
+    tag: "2025.12"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bloodv2-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: "2025.07"
+    tag: "2025.12"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--manifest-service-sa
@@ -625,7 +625,7 @@ metadata:
     metadataG3auto: bloodv2-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.07"
+    tag: "2025.12"
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -638,7 +638,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.07"
+    tag: "2025.12"
 portal:
   replicaCount: 4
   autoscaling:
@@ -654,7 +654,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: "2025.09"
+    tag: "2025.12"
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -665,7 +665,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.07"
+    tag: "2025.12"
   ingress:
     aws:
       group: bloodv2
@@ -679,7 +679,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.07"
+    tag: "2025.12"
 sower:
   enabled: true
   externalSecrets:
@@ -688,7 +688,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2025.07"
+    tag: "2025.12"
   sowerConfig:
     - action: ingest-metadata-manifest
       activeDeadlineSeconds: 86400
@@ -700,7 +700,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-manifest-ingestion:2025.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-manifest-ingestion:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -720,7 +720,7 @@ sower:
       container:
         cpu-limit: "1"
         env: []
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/get-dbgap-metadata:2025.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/get-dbgap-metadata:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -746,7 +746,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -772,7 +772,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cdis/manifest-merging:2025.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cdis/manifest-merging:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -798,7 +798,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -818,7 +818,7 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: "2025.07"
+    tag: "2025.12"
 ssjdispatcher:
   enabled: true
   gen3Namespace: bloodv2-helm
@@ -826,13 +826,13 @@ ssjdispatcher:
     credsFile: bloodv2-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: "2025.07"
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
+    tag: "2025.12"
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.12
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: "2025.07"
+    tag: "2025.12"
 wts:
   enabled: true
   externalSecrets:
@@ -841,4 +841,4 @@ wts:
     wtsOidcClient: bloodv2-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: "2025.07"
+    tag: "2025.12"
