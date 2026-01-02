@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.11'
+    tag: '2025.12'
 ambassador:
   enabled: false
 hatchery:
@@ -23,7 +23,7 @@ audit:
     auditG3auto: dcfprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.11'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-receiver
@@ -39,7 +39,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.11'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--dashboard-access
@@ -56,7 +56,7 @@ datareplicate:
     tag: 3.0.0
   resources:
     requests:
-      cpu: "2"
+      cpu: '2'
       memory: 8Gi
     limits:
       memory: 12Gi
@@ -66,7 +66,7 @@ datareplicate:
   googleBucketReplicateJob:
     enabled: true
     suspendCronjob: true
-    schedule: "*/30 * * * *"
+    schedule: '*/30 * * * *'
     MAX_WORKERS: 80
     PROJECT: dcf-prod
     LOG_BUCKET: datarefresh-log
@@ -76,7 +76,7 @@ datareplicate:
   awsBucketReplicateJob:
     enabled: false
     suspendCronjob: true
-    schedule: "*/30 * * * *"
+    schedule: '*/30 * * * *'
     THREAD_NUM: 20
     CHUNK_SIZE: 1
     GDC_BUCKET_NAME: gdcbackup
@@ -87,7 +87,7 @@ datareplicate:
   awsBatchReplicateJob:
     enabled: true
     suspendCronjob: true
-    schedule: "*/30 * * * *"
+    schedule: '*/30 * * * *'
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
@@ -98,8 +98,8 @@ datareplicate:
   removeObjectsFromCloudsJob:
     enabled: true
     suspendCronjob: true
-    schedule: "*/30 * * * *"
-    DRY_RUN: "False"
+    schedule: '*/30 * * * *'
+    DRY_RUN: 'False'
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
     MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_legacy_manifest_20230410_post_DR37.0.tsv
@@ -108,12 +108,12 @@ datareplicate:
   replicateValidationJob:
     enabled: false
     suspendCronjob: true
-    schedule: "*/30 * * * *"
+    schedule: '*/30 * * * *'
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
-    MANIFEST_FILE: 's3://data-refresh-manifest/GDC_full_sync_legacy_manifest_20230410_post_DR37.0.tsv,s3://data-refresh-manifest/GDC_full_sync_active_manifest_'
+    MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_legacy_manifest_20230410_post_DR37.0.tsv,s3://data-refresh-manifest/GDC_full_sync_active_manifest_
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
-    OUT_FILES: 'GDC_full_sync_legacy_manifest_20230410_post_DR37_DCF.tsv,GDC_full_sync_active_manifest_'
+    OUT_FILES: GDC_full_sync_legacy_manifest_20230410_post_DR37_DCF.tsv,GDC_full_sync_active_manifest_
     FORCE_CREATE_MANIFEST: false
 fence:
   FENCE_CONFIG_PUBLIC:
@@ -1132,7 +1132,7 @@ fence:
     fenceSshKeys: dcfprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.11'
+    tag: '2025.12'
 fluentd:
   enabled: true
   image:
@@ -1184,7 +1184,7 @@ indexd:
     serviceCreds: dcfprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.11'
+    tag: '2025.12'
   resources:
     requests:
       memory: 256Mi
@@ -1203,12 +1203,12 @@ metadata:
     metadataG3auto: dcfprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.11'
+    tag: '2025.12'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.11'
+    tag: '2025.12'
 portal:
   enabled: true
   gitops:
@@ -1497,7 +1497,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.11'
+    tag: '2025.12'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1508,7 +1508,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.11'
+    tag: '2025.12'
   ingress:
     aws:
       group: dcfprod
@@ -1517,7 +1517,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.11'
+    tag: '2025.12'
 sower:
   enabled: true
   externalSecrets:
@@ -1526,7 +1526,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.11'
+    tag: '2025.12'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -1538,7 +1538,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.11
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -1564,7 +1564,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.11
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -1586,5 +1586,5 @@ ssjdispatcher:
     credsFile: dcfprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.11'
-  indexing: quay.io/cdis/indexs3client:2025.11
+    tag: '2025.12'
+  indexing: quay.io/cdis/indexs3client:2025.12

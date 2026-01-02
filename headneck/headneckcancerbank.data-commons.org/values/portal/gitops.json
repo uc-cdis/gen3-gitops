@@ -204,10 +204,10 @@
           }
         ],
         "manifestMapping": {
-            "resourceIndexType": "data_file",
-            "resourceIdField": "object_id",
-            "referenceIdFieldInResourceIndex": "_dataset_id",
-            "referenceIdFieldInDataIndex": "_dataset_id"
+          "resourceIndexType": "data_file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "_dataset_id",
+          "referenceIdFieldInDataIndex": "_dataset_id"
         },
         "accessibleFieldCheckList": [
           "project_id"
@@ -452,6 +452,180 @@
       }
     },
     {
+      "tabTitle": "Samples",
+      "charts": {},
+      "filters": {
+        "tabs": [
+          {
+            "title": "Samples",
+            "searchFields": [
+              "submitter_id"
+            ],
+            "fields": [
+              "project_id",
+              "protocol_number",
+              "procedure_date",
+              "sample_number",
+              "status",
+              "sample_type",
+              "body_fluid_code",
+              "sample_volume",
+              "dna_concentration",
+              "dna_260_280",
+              "dna_od_260"
+            ]
+          },
+          {
+            "title": "Portions",
+            "searchFields": [
+              "portion_submitter_id"
+            ],
+            "fields": [
+              "creation_datetime",
+              "is_ffpe",
+              "portion_number",
+              "weight"
+            ]
+          },
+          {
+            "title": "Pathology Reports",
+            "searchFields": [
+              "pathology_report_submitter_id"
+            ],
+            "fields": [
+              "accession_num",
+              "adm_date",
+              "disc_date",
+              "enc_date",
+              "HPV",
+              "lab_code",
+              "lab_desc",
+              "P16",
+              "path_note",
+              "path_value",
+              "proc_code",
+              "proc_desc",
+              "order_dttm",
+              "Order_proc_id",
+              "reference_unit",
+              "result_dttm",
+              "result_flag",
+              "result_in_range_yn"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "submitter_id",
+          "project_id",
+          "protocol_number",
+          "procedure_date",
+          "sample_number",
+          "status",
+          "sample_type",
+          "body_fluid_code",
+          "sample_volume",
+          "dna_concentration",
+          "dna_260_280",
+          "dna_od_260",
+          "portion_submitter_id",
+          "creation_datetime",
+          "is_ffpe",
+          "portion_number",
+          "weight",
+          "pathology_report_submitter_id",
+          "accession_num",
+          "adm_date",
+          "disc_date",
+          "enc_date",
+          "HPV",
+          "lab_code",
+          "lab_desc",
+          "P16",
+          "path_note",
+          "path_value",
+          "proc_code",
+          "proc_desc",
+          "order_dttm",
+          "Order_proc_id",
+          "reference_unit",
+          "result_dttm",
+          "result_flag",
+          "result_in_range_yn"
+        ]
+      },
+      "dropdowns": {
+        "download-table": {
+          "title": "Download Table"
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.json"
+        },
+        {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.tsv"
+        },
+        {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.csv"
+        },
+        {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download File Manifest for Samples",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_file_manifest.json"
+        }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+        "dataType": "dataset",
+        "nodeCountTitle": "Sample",
+        "fileCountField": "data_file_count",
+        "fieldMapping": [
+          {
+            "field": "project_id",
+            "name": "Project ID"
+          },
+          {
+            "field": "submitter_id",
+            "name": "Sample ID"
+          }
+        ],
+        "manifestMapping": {
+          "resourceIndexType": "data_file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "_sample_id",
+          "referenceIdFieldInDataIndex": "_sample_id"
+        },
+        "accessibleFieldCheckList": [
+          "project_id"
+        ],
+        "accessibleValidationField": "project_id"
+      }
+    },
+    {
       "tabTitle": "Files",
       "charts": {},
       "filters": {
@@ -471,8 +645,10 @@
           },
           {
             "title": "Subject Properties",
+            "searchFields": [
+              "subject_submitter_id"
+            ],
             "fields": [
-              "subject_submitter_id",
               "Ethnicity",
               "gender",
               "race",
@@ -482,27 +658,34 @@
           },
           {
             "title": "Study Properties",
+            "searchFields": [
+              "imaging_study_submitter_id"
+            ],
             "fields": [
-              "imaging_study_submitter_id",
               "age_at_imaging",
               "study_year",
               "body_part_examined",
-              "study_description",
-              "study_uid"
+              "study_description"
             ]
           },
           {
             "title": "Sample Properties",
+            "searchFields": [
+              "sample_submitter_id"
+            ],
             "fields": [
               "sample_number",
               "sample_type",
-              "sample_volume"
+              "sample_volume",
+              "procedure_date"
             ]
           },
           {
             "title": "Portion Properties",
+            "searchFields": [
+              "portion_submitter_id"
+            ],
             "fields": [
-              "portion_submitter_id",
               "creation_datetime",
               "is_ffpe",
               "portion_number",
@@ -530,6 +713,7 @@
           "body_part_examined",
           "study_description",
           "study_uid",
+          "sample_submitter_id",
           "sample_number",
           "sample_type",
           "sample_volume",
