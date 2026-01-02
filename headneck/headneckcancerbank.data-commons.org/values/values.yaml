@@ -286,14 +286,15 @@ etl:
           - name: portion
             path: portion
             props:
-              - name: portion_submitter_id	
-              - name: creation_datetime	
-              - name: is_ffpe	
-              - name: portion_number	
+              - name: portion_submitter_id
+              - name: creation_datetime
+              - name: is_ffpe
+              - name: portion_number
               - name: weight
           - name: pathology_report
             path: pathology_report
             props:
+              - name: pathology_report_submitter_id
               - name: accession_num
               - name: adm_date
               - name: disc_date
@@ -516,16 +517,16 @@ etl:
               - name: _portion_id
                 src: id
                 fn: set
-              - name: portion_submitter_id	
+              - name: portion_submitter_id
                 src: submitter_id
                 fn: set
-              - name: creation_datetime	
+              - name: creation_datetime
                 src: creation_datetime
                 fn: set
-              - name: is_ffpe	
+              - name: is_ffpe
                 src: is_ffpe
                 fn: set
-              - name: portion_number	
+              - name: portion_number
                 src: portion_number
                 fn: set
               - name: weight
