@@ -3,11 +3,11 @@ etl:
   spark:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2025.03
+      tag: 2025.12
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      #tag: 2025.03
+      #tag: 2025.12
       # patch to flatten nested array
       tag: "1.0.4"
   esEndpoint: elasticsearch

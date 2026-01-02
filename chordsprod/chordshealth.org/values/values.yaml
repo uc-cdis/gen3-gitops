@@ -37,7 +37,7 @@ arborist:
     dbcreds: "chords_chords-arborist-db-creds"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2025.03
+    tag: 2025.12
 
 aws-es-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
@@ -57,7 +57,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2025.03
+    tag: 2025.12
 
 peregrine:
   # temporarily run 3 replicas of peregrine
@@ -78,7 +78,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2025.03
+    tag: 2025.12
 
 sheepdog:
   externalSecrets:
@@ -92,7 +92,7 @@ manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2025.03
+    tag: 2025.12
   externalSecrets:
     manifestserviceG3auto: "chords_chords-manifestservice-g3auto"
 
@@ -100,7 +100,7 @@ ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2025.03
+    tag: 2025.12
   externalSecrets:
     createK8sSsjdispatcherSecret: true
 
@@ -112,7 +112,7 @@ metadata:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2025.03
+    tag: 2025.12
     esEndpoint: http://elasticsearch:9200
 
 # disabling workspace services
