@@ -4,8 +4,8 @@ ambassador:
 arborist:
   autoscaling:
     enabled: false
-    minReplicas: 1
     maxReplicas: 4
+    minReplicas: 1
     targetCPUUtilizationPercentage: 40
   replicaCount: 4
   enabled: true
