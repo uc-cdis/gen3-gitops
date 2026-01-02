@@ -2,8 +2,8 @@ arborist:
   replicaCount: 4
   autoscaling:
     enabled: false
-    minReplicas: 2
     maxReplicas: 4
+    minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
   image:
