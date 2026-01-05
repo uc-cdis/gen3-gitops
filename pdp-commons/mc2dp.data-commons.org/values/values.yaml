@@ -118,7 +118,7 @@ embedding-management-service:
   enabled: true
   embeddingsConfig: |
     {
-      "text": 4096,
+      "expr": 256,
     }
 
   image:
