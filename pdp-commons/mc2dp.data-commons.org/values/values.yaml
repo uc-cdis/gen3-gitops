@@ -111,14 +111,18 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: pdp-commons-aurora-master-password
+    
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
 
 
 embedding-management-service:
   enabled: true
+  postgres:
+    dbCreate: true
   embeddingsConfig: |
     {
-      "text": 4096,
+      "expr": 256,
     }
 
   image:
@@ -146,7 +150,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.04'
+    tag: '2.7.0'
   hatchery:
     json: |
         {
@@ -214,6 +218,43 @@ hatchery:
                     "fs-gid": 101,
                     "user-volume-location": "/home/jovyan/pd",
                     "gen3-volume-location": "/home/jovyan/.gen3"
+                },
+                {
+                  "args": [
+                    "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                    "--JupyterNotebookApp.default_url=/lab",
+                    "--JupyterNotebookApp.password=''",
+                    "--JupyterNotebookApp.token=''",
+                    "--JupyterNotebookApp.ip='*'",
+                    "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                    "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+                    "--JupyterNotebookApp.quit_button=False"
+                  ],
+                  "command": [
+                    "start-notebook.sh"
+                  ],
+                  "gpu": true,
+                  "cpu-limit": "3.0",
+                  "env": {
+                    "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                  },
+                  "fs-gid": 100,
+                  "gen3-volume-location": "/home/jovyan/.gen3",
+                  "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
+                  "pull_policy": "Always",
+                  "lifecycle-post-start": [
+                    "/bin/sh",
+                    "-c",
+                    "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                  ],
+                  "memory-limit": "8Gi",
+                  "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
+                  "path-rewrite": "/lw-workspace/proxy/",
+                  "ready-probe": "/lw-workspace/proxy/",
+                  "target-port": 8888,
+                  "use-tls": "false",
+                  "user-uid": 1010,
+                  "user-volume-location": "/home/jovyan/pd"
                 }
             ]
         }
