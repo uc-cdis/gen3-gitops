@@ -286,7 +286,6 @@ etl:
           - name: portion
             path: portion
             props:
-              - name: portion_submitter_id
               - name: creation_datetime
               - name: is_ffpe
               - name: portion_number
@@ -294,7 +293,6 @@ etl:
           - name: pathology_report
             path: pathology_report
             props:
-              - name: pathology_report_submitter_id
               - name: accession_num
               - name: adm_date
               - name: disc_date
