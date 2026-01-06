@@ -56,10 +56,10 @@ datareplicate:
     tag: 3.0.0
   resources:
     requests:
-      cpu: '2'
-      memory: 8Gi
+      cpu: '6'
+      memory: 24Gi
     limits:
-      memory: 12Gi
+      memory: 32Gi
   batchServiceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--aws-batch-replicate-job
