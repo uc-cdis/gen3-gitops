@@ -61,7 +61,7 @@ indexd:
 
 peregrine:
   # temporarily run 3 replicas of peregrine
-  replicaCount: 3
+  replicaCount: 2
   externalSecrets:
     dbcreds: "chords_chords-peregrine-db-creds"
   enabled: true
