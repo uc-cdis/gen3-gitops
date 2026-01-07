@@ -36,6 +36,13 @@
   },
   "components": {
     "appName": "NHLBI BioData Catalyst®",
+    "banner": [
+      {
+        "type": "info",
+        "message": "Possible Service Interruption on BDC: The NIH Research Auth Service (RAS) and NIH Login teams have a scheduled service period on Friday, December 19, from 8:00 PM to 10:00 PM ET. Note that you may experience service interruptions during this time on some platforms of the BDC ecosystem, including possible interruption to any running jobs on BDC analysis platforms. Please plan the deployment of your tasks accordingly.",
+        "resetMsgDays": 1
+      }
+    ],
     "index": {
       "introduction": {
         "heading": "",
