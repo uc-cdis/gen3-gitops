@@ -522,7 +522,8 @@ hatchery:
             "name": "R Studio",
             "image": "heliumdatastage/rstudio-server:1",
             "env": {
-              "DISABLE_AUTH": "true"
+              "DISABLE_AUTH": "true",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [],
             "path-rewrite": "/",
@@ -536,7 +537,8 @@ hatchery:
             "name": "Jupyter Notebook Bio Python",
             "image": "quay.io/cdis/jupyter-notebook:master",
             "env": {
-              "NAMESPACE": "default"
+              "NAMESPACE": "default",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",
@@ -565,7 +567,8 @@ hatchery:
             "name": "Jupyter Notebook Power Python",
             "image": "quay.io/cdis/jupyter-notebook:master",
             "env": {
-              "NAMESPACE": "default"
+              "NAMESPACE": "default",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",
