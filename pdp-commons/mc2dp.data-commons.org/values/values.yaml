@@ -62,7 +62,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.11
+    tag: 0.12
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -112,7 +112,7 @@ global:
   postgres:
     dbCreate: false
     externalSecret: pdp-commons-aurora-master-password
-    
+
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
 
 
