@@ -81,6 +81,7 @@ karpenter-crds:
         operator: In
         values:
           - m8i-flex
+          - r8i-flex
           - m7i-flex
           - m8i
           - t3
@@ -91,7 +92,7 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:
-          - "15000"
+          - "17000"
   secondary:
     enabled: true
     nodeClassRef:
