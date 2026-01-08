@@ -681,6 +681,9 @@ portal:
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
+  resources:
+    requests:
+      memory: 2Gi
   customConfig:
     enabled: true
     dir: covid19prod/chicagoland.pandemicresponsecommons.org/values/portal/
