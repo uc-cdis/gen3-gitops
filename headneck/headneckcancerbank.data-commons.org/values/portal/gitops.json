@@ -592,8 +592,8 @@
       ],
       "loginForDownload": true,
       "guppyConfig": {
-        "dataType": "dataset",
-        "nodeCountTitle": "Sample",
+        "dataType": "sample",
+        "nodeCountTitle": "Samples",
         "fileCountField": "data_file_count",
         "fieldMapping": [
           {
