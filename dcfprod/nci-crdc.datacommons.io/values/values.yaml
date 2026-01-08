@@ -342,6 +342,12 @@ fence:
       gdc-apollo-luad-phs003011-controlled:
         cred: fence_bot
         region: us-east-1
+      gdc-apollo-ov-phs003488-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-ov-phs003488-controlled:
+        cred: fence_bot
+        region: us-east-1
       gdc-beataml1-cohort-phs001657-2-controlled:
         cred: fence_bot
         region: us-east-1
@@ -352,6 +358,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-beataml1.0-crenolanib-phs001628-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-ccle-2-open:
