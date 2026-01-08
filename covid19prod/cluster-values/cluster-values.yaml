@@ -93,7 +93,7 @@ karpenter-crds:
         values:
           - "17000"
   secondary:
-    enabled: true
+    enabled: false
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
