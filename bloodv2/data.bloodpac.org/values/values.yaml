@@ -495,7 +495,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "0.8",
           "memory-limit": "256Mi",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2022.08",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.12",
           "env": {
             "NAMESPACE": "default",
             "HOSTNAME": "data.bloodpac.org"
@@ -522,7 +522,8 @@ hatchery:
             "name": "R Studio",
             "image": "heliumdatastage/rstudio-server:1",
             "env": {
-              "DISABLE_AUTH": "true"
+              "DISABLE_AUTH": "true",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [],
             "path-rewrite": "/",
@@ -534,9 +535,10 @@ hatchery:
             "cpu-limit": "0.8",
             "memory-limit": "512Mi",
             "name": "Jupyter Notebook Bio Python",
-            "image": "quay.io/occ_data/jupyternotebook:1.9.0",
+            "image": "quay.io/cdis/jupyter-notebook:master",
             "env": {
-              "NAMESPACE": "default"
+              "NAMESPACE": "default",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",
@@ -563,9 +565,10 @@ hatchery:
             "cpu-limit": "4.0",
             "memory-limit": "15512Mi",
             "name": "Jupyter Notebook Power Python",
-            "image": "quay.io/occ_data/jupyternotebook:1.7.2",
+            "image": "quay.io/cdis/jupyter-notebook:master",
             "env": {
-              "NAMESPACE": "default"
+              "NAMESPACE": "default",
+              "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",

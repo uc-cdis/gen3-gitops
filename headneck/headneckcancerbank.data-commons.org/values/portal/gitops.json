@@ -477,40 +477,34 @@
           },
           {
             "title": "Portions",
-            "searchFields": [
-              "portion_submitter_id"
-            ],
             "fields": [
-              "creation_datetime",
-              "is_ffpe",
-              "portion_number",
-              "weight"
+              "portion.creation_datetime",
+              "portion.is_ffpe",
+              "portion.portion_number",
+              "portion.weight"
             ]
           },
           {
             "title": "Pathology Reports",
-            "searchFields": [
-              "pathology_report_submitter_id"
-            ],
             "fields": [
-              "accession_num",
-              "adm_date",
-              "disc_date",
-              "enc_date",
-              "HPV",
-              "lab_code",
-              "lab_desc",
-              "P16",
-              "path_note",
-              "path_value",
-              "proc_code",
-              "proc_desc",
-              "order_dttm",
-              "Order_proc_id",
-              "reference_unit",
-              "result_dttm",
-              "result_flag",
-              "result_in_range_yn"
+              "pathology_report.accession_num",
+              "pathology_report.adm_date",
+              "pathology_report.disc_date",
+              "pathology_report.enc_date",
+              "pathology_report.HPV",
+              "pathology_report.lab_code",
+              "pathology_report.lab_desc",
+              "pathology_report.P16",
+              "pathology_report.path_note",
+              "pathology_report.path_value",
+              "pathology_report.proc_code",
+              "pathology_report.proc_desc",
+              "pathology_report.order_dttm",
+              "pathology_report.Order_proc_id",
+              "pathology_report.reference_unit",
+              "pathology_report.result_dttm",
+              "pathology_report.result_flag",
+              "pathology_report.result_in_range_yn"
             ]
           }
         ]
@@ -530,30 +524,28 @@
           "dna_concentration",
           "dna_260_280",
           "dna_od_260",
-          "portion_submitter_id",
-          "creation_datetime",
-          "is_ffpe",
-          "portion_number",
-          "weight",
-          "pathology_report_submitter_id",
-          "accession_num",
-          "adm_date",
-          "disc_date",
-          "enc_date",
-          "HPV",
-          "lab_code",
-          "lab_desc",
-          "P16",
-          "path_note",
-          "path_value",
-          "proc_code",
-          "proc_desc",
-          "order_dttm",
-          "Order_proc_id",
-          "reference_unit",
-          "result_dttm",
-          "result_flag",
-          "result_in_range_yn"
+          "portion.creation_datetime",
+          "portion.is_ffpe",
+          "portion.portion_number",
+          "portion.weight",
+          "pathology_report.accession_num",
+          "pathology_report.adm_date",
+          "pathology_report.disc_date",
+          "pathology_report.enc_date",
+          "pathology_report.HPV",
+          "pathology_report.lab_code",
+          "pathology_report.lab_desc",
+          "pathology_report.P16",
+          "pathology_report.path_note",
+          "pathology_report.path_value",
+          "pathology_report.proc_code",
+          "pathology_report.proc_desc",
+          "pathology_report.order_dttm",
+          "pathology_report.Order_proc_id",
+          "pathology_report.reference_unit",
+          "pathology_report.result_dttm",
+          "pathology_report.result_flag",
+          "pathology_report.result_in_range_yn"
         ]
       },
       "dropdowns": {
@@ -600,8 +592,8 @@
       ],
       "loginForDownload": true,
       "guppyConfig": {
-        "dataType": "dataset",
-        "nodeCountTitle": "Sample",
+        "dataType": "sample",
+        "nodeCountTitle": "Samples",
         "fileCountField": "data_file_count",
         "fieldMapping": [
           {
@@ -645,9 +637,6 @@
           },
           {
             "title": "Subject Properties",
-            "searchFields": [
-              "subject_submitter_id"
-            ],
             "fields": [
               "Ethnicity",
               "gender",
@@ -658,9 +647,6 @@
           },
           {
             "title": "Study Properties",
-            "searchFields": [
-              "imaging_study_submitter_id"
-            ],
             "fields": [
               "age_at_imaging",
               "study_year",
@@ -670,9 +656,6 @@
           },
           {
             "title": "Sample Properties",
-            "searchFields": [
-              "sample_submitter_id"
-            ],
             "fields": [
               "sample_number",
               "sample_type",
@@ -682,9 +665,6 @@
           },
           {
             "title": "Portion Properties",
-            "searchFields": [
-              "portion_submitter_id"
-            ],
             "fields": [
               "creation_datetime",
               "is_ffpe",
@@ -701,23 +681,19 @@
           "source_node",
           "object_id",
           "submitter_id",
-          "subject_submitter_id",
           "Ethnicity",
           "gender",
           "race",
           "Date_of_Birth",
           "date_of_death",
-          "imaging_study_submitter_id",
           "age_at_imaging",
           "study_year",
           "body_part_examined",
           "study_description",
           "study_uid",
-          "sample_submitter_id",
           "sample_number",
           "sample_type",
           "sample_volume",
-          "portion_submitter_id",
           "creation_datetime",
           "is_ffpe",
           "portion_number",
