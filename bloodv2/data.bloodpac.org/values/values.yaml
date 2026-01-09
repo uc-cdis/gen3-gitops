@@ -36,6 +36,13 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--dashboard-access
 etl:
+  resources:
+    tube:
+      requests:
+        memory: 4Gi
+    spark:
+      requests:
+        memory: 2Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
