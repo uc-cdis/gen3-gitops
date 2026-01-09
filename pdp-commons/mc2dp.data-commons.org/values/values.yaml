@@ -122,7 +122,7 @@ embedding-management-service:
     dbCreate: true
   embeddingsConfig: |
     {
-      "expr": 256,
+      "expr": 256
     }
 
   image:
