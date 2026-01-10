@@ -40,7 +40,7 @@ karpenter-crds:
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
-    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidationPolicy: "WhenEmpty"
     consolidateAfter: "5m"
     expireAfter: "72h"
     volumeSize: 80Gi
@@ -54,14 +54,14 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      # - key: karpenter.k8s.aws/instance-family
-      #   operator: In
-      #   values:
-      #     - r8i-flex
-      #     - m8i-flex
-      # - key: karpenter.k8s.aws/instance-memory
-      #   operator: Gt
-      #   values:
-      #     - "7000"
+      - key: karpenter.k8s.aws/instance-family
+        operator: In
+        values:
+          - r8i-flex
+          - m8i-flex
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Gt
+        values:
+          - "7000"
 kube-proxy:
   enabled: true
