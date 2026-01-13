@@ -43,6 +43,8 @@ awshelper:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
     tag: '2025.11'
 etl:
+  esGarbageCollect:
+    enabled: true
   resources:
     tube:
       requests:
