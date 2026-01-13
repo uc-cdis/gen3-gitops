@@ -363,7 +363,7 @@ portal:
       \ acts are subject to action that result in criminal; civil; or administrative\
       \ penalties.\"\n      ],\n      \"displayUseMsg\": \"cookie\"\n    },\n    \"\
       footerLogos\": [\n      {\n        \"src\": \"/src/img/gen3.png\",\n       \
-      \ \"href\": \"https://ctds.uchicago.edu/gen3\",\n        \"alt\": \"Gen3 Data\
+      \ \"href\": \"https://gen3.org\",\n        \"alt\": \"Gen3 Data\
       \ Commons\"\n      },\n      {\n        \"src\": \"/src/img/createdby.png\"\
       ,\n        \"href\": \"https://ctds.uchicago.edu/\",\n        \"alt\": \"Center\
       \ for Translational Data Science at the University of Chicago\"\n      },\n\
