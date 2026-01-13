@@ -43,6 +43,15 @@ awshelper:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
     tag: '2025.11'
 etl:
+  resources:
+    tube:
+      requests:
+        memory: 4Gi
+    spark:
+      requests:
+        memory: 2Gi
+  esGarbageCollect:
+    enabled: true
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -2316,6 +2325,111 @@ fence:
       nih-nhlbi-topmed-substudy-t2d-genes-exome-phs001098-v3-r1-c4:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-accord-ecg-phs003562-v1-r3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-connects-activ4a-phs002694-v4-r3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-adsp-fhs-phs002558-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-adsp-fhs-phs002558-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-bridget-fhs-phs002559-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-bridget-fhs-phs002559-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccdg-aric-phs001536-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccdg-aric-phs001536-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccf-afib-phs000820-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-fhs-gutmicro-phs002560-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-fhs-gutmicro-phs002560-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-fhs-rna-brain-phs002611-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-fhs-rna-brain-phs002611-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-mvp-phs001672-v13-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-t2d-genes-fhs-phs001610-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-t2d-genes-fhs-phs001610-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-hfn-charge-phs000930-v11-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-image-copdgene-phs004023-v1-r2-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-image-copdgene-phs004023-v1-r2-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-imaging-dmri-vgc-phs004002-v1-r2-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-mesa-ecg-phs003703-v1-r3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-mesa-ecg-phs003703-v1-r3-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-adult-phs003463-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-autopsy-phs003768-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-sprint-ecg-phs003566-v1-r3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hchs-sol-phs001395-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hchs-sol-phs001395-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-ltrc-phs001662-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-trexa-phs001732-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-fhs-phs000007-v35-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-parent-fhs-phs000007-v35-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-aric-care-phs000557-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-aric-care-phs000557-v7-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-charges-fhs-phs000651-v15-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-substudy-charges-fhs-phs000651-v15-r1-c2:
+        cred: fence-bot
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -2349,7 +2463,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.0/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.1/schema.json
   dispatcherJobNum: '10'
   environment: bdcatprod
   externalSecrets:

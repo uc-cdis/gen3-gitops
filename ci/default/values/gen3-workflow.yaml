@@ -14,16 +14,4 @@ gen3-workflow:
     taskImageWhitelist:
       - "public.ecr.aws/docker/library/alpine:latest"
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image"
-  funnel:
-    Kubernetes:
-      # This will be dynamically replaced by setup_ci_env.sh script.
-      JobsNamespace: gen3-<namespace>-workflow-pods
-    Plugins:
-      Path: plugin-binaries/auth-plugin
-      Params:
-        OidcClientId: <redacted>
-        OidcClientSecret: <redacted>
-        # This will be dynamically replaced by setup_ci_env.sh script.
-        S3Url: gen3-workflow-service.<namespace>.svc.cluster.local
-        # This will be dynamically replaced by setup_ci_env.sh script.
-        OidcTokenUrl: https://<hostname>/user
+      - "curlimages/curl:latest"

@@ -536,7 +536,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcprod-waf/6dae1fe2-287d-4cec-9537-0b8fa1f7d93c
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.2_draft/schema.json
   dispatcherJobNum: '10'
   environment: midrcstaging
   externalSecrets:
