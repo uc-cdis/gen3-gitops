@@ -86,7 +86,7 @@
           "name": "Submit Data"
         },
         {
-          "link": "https://gen3.org/resources/user",
+          "link": "https://docs.gen3.org/",
           "name": "Documentation"
         }
       ]
@@ -470,6 +470,7 @@
               "sample_type",
               "body_fluid_code",
               "sample_volume",
+              "sample_year",
               "dna_concentration",
               "dna_260_280",
               "dna_od_260"
@@ -521,6 +522,7 @@
           "sample_type",
           "body_fluid_code",
           "sample_volume",
+          "sample_year",
           "dna_concentration",
           "dna_260_280",
           "dna_od_260",
@@ -660,6 +662,7 @@
               "sample_number",
               "sample_type",
               "sample_volume",
+              "sample_year",
               "procedure_date"
             ]
           },
@@ -694,6 +697,7 @@
           "sample_number",
           "sample_type",
           "sample_volume",
+          "sample_year",
           "creation_datetime",
           "is_ffpe",
           "portion_number",

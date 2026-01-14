@@ -36,6 +36,8 @@ etl:
     spark:
       requests:
         memory: 2Gi
+  esGarbageCollect:
+    enabled: true        
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -329,7 +331,6 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.12'
-  useAggMds: true
 mutatingWebhook:
   enabled: false
 peregrine:
