@@ -15,3 +15,4 @@ gen3-workflow:
       - "public.ecr.aws/docker/library/alpine:latest"
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image"
       - "curlimages/curl:latest"
+      - "quay.io/biocontainers/ubuntu:24.04" # for nf-canary tests
