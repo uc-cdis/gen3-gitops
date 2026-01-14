@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/lgtm-distributed
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: master
+      helm:
+        valueFiles:
+          - $values/eks-resources/values/grafana.yaml
+          - $values/eks-resources/values/loki.yaml
+          - $values/eks-resources/values/mimir.yaml
+          - $values/eks-resources/values/tempo.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: master
+      ref: values
+    - repoURL: https://grafana.github.io/helm-charts
+      chart: alloy
+      targetRevision: 0.1.1
+      helm:
+        valueFiles:
+          - $values/eks-resources/values/alloy.yaml
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: monitoring-extras
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: node-exporter
+      targetRevision: 4.1.0
+    - repoURL: https://charts.bitnami.com/bitnami
+      chart: kube-state-metrics
+      targetRevision: 4.0.4
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
