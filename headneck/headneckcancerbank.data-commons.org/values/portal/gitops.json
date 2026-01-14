@@ -86,7 +86,7 @@
           "name": "Submit Data"
         },
         {
-          "link": "https://gen3.org/resources/user",
+          "link": "https://docs.gen3.org/",
           "name": "Documentation"
         }
       ]
@@ -142,8 +142,8 @@
         "enabled": true,
         "fields": [
           "project_id",
-          "data_description",
-          "submitter_id"
+          "submitter_id",
+          "data_description"
         ]
       },
       "dropdowns": {
@@ -178,12 +178,21 @@
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "datasets_table.csv"
+        },
+        {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download File Manifest for Datasets",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "datasets_file_manifest.json"
         }
       ],
       "loginForDownload": true,
       "guppyConfig": {
         "dataType": "dataset",
         "nodeCountTitle": "Datasets",
+        "fileCountField": "data_file_count",
         "fieldMapping": [
           {
             "field": "project_id",
@@ -194,6 +203,12 @@
             "name": "Dataset ID"
           }
         ],
+        "manifestMapping": {
+          "resourceIndexType": "data_file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "_dataset_id",
+          "referenceIdFieldInDataIndex": "_dataset_id"
+        },
         "accessibleFieldCheckList": [
           "project_id"
         ],
@@ -403,17 +418,10 @@
         {
           "enabled": true,
           "type": "manifest",
-          "title": "Download File Manifest for Cases",
+          "title": "Download File Manifest for Subjects",
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "subjects_manifest.json"
-        },
-        {
-          "enabled": false,
-          "type": "export-to-workspace",
-          "title": "Export to Workspace",
-          "leftIcon": "datafile",
-          "rightIcon": "download"
         }
       ],
       "loginForDownload": true,
@@ -444,6 +452,174 @@
       }
     },
     {
+      "tabTitle": "Samples",
+      "charts": {},
+      "filters": {
+        "tabs": [
+          {
+            "title": "Samples",
+            "searchFields": [
+              "submitter_id"
+            ],
+            "fields": [
+              "project_id",
+              "protocol_number",
+              "procedure_date",
+              "sample_number",
+              "status",
+              "sample_type",
+              "body_fluid_code",
+              "sample_volume",
+              "sample_year",
+              "dna_concentration",
+              "dna_260_280",
+              "dna_od_260"
+            ]
+          },
+          {
+            "title": "Portions",
+            "fields": [
+              "portion.creation_datetime",
+              "portion.is_ffpe",
+              "portion.portion_number",
+              "portion.weight"
+            ]
+          },
+          {
+            "title": "Pathology Reports",
+            "fields": [
+              "pathology_report.accession_num",
+              "pathology_report.adm_date",
+              "pathology_report.disc_date",
+              "pathology_report.enc_date",
+              "pathology_report.HPV",
+              "pathology_report.lab_code",
+              "pathology_report.lab_desc",
+              "pathology_report.P16",
+              "pathology_report.path_note",
+              "pathology_report.path_value",
+              "pathology_report.proc_code",
+              "pathology_report.proc_desc",
+              "pathology_report.order_dttm",
+              "pathology_report.Order_proc_id",
+              "pathology_report.reference_unit",
+              "pathology_report.result_dttm",
+              "pathology_report.result_flag",
+              "pathology_report.result_in_range_yn"
+            ]
+          }
+        ]
+      },
+      "table": {
+        "enabled": true,
+        "fields": [
+          "submitter_id",
+          "project_id",
+          "protocol_number",
+          "procedure_date",
+          "sample_number",
+          "status",
+          "sample_type",
+          "body_fluid_code",
+          "sample_volume",
+          "sample_year",
+          "dna_concentration",
+          "dna_260_280",
+          "dna_od_260",
+          "portion.creation_datetime",
+          "portion.is_ffpe",
+          "portion.portion_number",
+          "portion.weight",
+          "pathology_report.accession_num",
+          "pathology_report.adm_date",
+          "pathology_report.disc_date",
+          "pathology_report.enc_date",
+          "pathology_report.HPV",
+          "pathology_report.lab_code",
+          "pathology_report.lab_desc",
+          "pathology_report.P16",
+          "pathology_report.path_note",
+          "pathology_report.path_value",
+          "pathology_report.proc_code",
+          "pathology_report.proc_desc",
+          "pathology_report.order_dttm",
+          "pathology_report.Order_proc_id",
+          "pathology_report.reference_unit",
+          "pathology_report.result_dttm",
+          "pathology_report.result_flag",
+          "pathology_report.result_in_range_yn"
+        ]
+      },
+      "dropdowns": {
+        "download-table": {
+          "title": "Download Table"
+        }
+      },
+      "buttons": [
+        {
+          "enabled": true,
+          "type": "data-json",
+          "title": "JSON",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.json"
+        },
+        {
+          "enabled": true,
+          "type": "data-tsv",
+          "title": "TSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.tsv"
+        },
+        {
+          "enabled": true,
+          "type": "data-csv",
+          "title": "CSV",
+          "dropdownId": "download-table",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_table.csv"
+        },
+        {
+          "enabled": true,
+          "type": "manifest",
+          "title": "Download File Manifest for Samples",
+          "leftIcon": "datafile",
+          "rightIcon": "download",
+          "fileName": "samples_file_manifest.json"
+        }
+      ],
+      "loginForDownload": true,
+      "guppyConfig": {
+        "dataType": "sample",
+        "nodeCountTitle": "Samples",
+        "fileCountField": "data_file_count",
+        "fieldMapping": [
+          {
+            "field": "project_id",
+            "name": "Project ID"
+          },
+          {
+            "field": "submitter_id",
+            "name": "Sample ID"
+          }
+        ],
+        "manifestMapping": {
+          "resourceIndexType": "data_file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "_sample_id",
+          "referenceIdFieldInDataIndex": "_sample_id"
+        },
+        "accessibleFieldCheckList": [
+          "project_id"
+        ],
+        "accessibleValidationField": "project_id"
+      }
+    },
+    {
       "tabTitle": "Files",
       "charts": {},
       "filters": {
@@ -460,6 +636,44 @@
               "data_category",
               "data_type"
             ]
+          },
+          {
+            "title": "Subject Properties",
+            "fields": [
+              "Ethnicity",
+              "gender",
+              "race",
+              "Date_of_Birth",
+              "date_of_death"
+            ]
+          },
+          {
+            "title": "Study Properties",
+            "fields": [
+              "age_at_imaging",
+              "study_year",
+              "body_part_examined",
+              "study_description"
+            ]
+          },
+          {
+            "title": "Sample Properties",
+            "fields": [
+              "sample_number",
+              "sample_type",
+              "sample_volume",
+              "sample_year",
+              "procedure_date"
+            ]
+          },
+          {
+            "title": "Portion Properties",
+            "fields": [
+              "creation_datetime",
+              "is_ffpe",
+              "portion_number",
+              "weight"
+            ]
           }
         ]
       },
@@ -470,6 +684,24 @@
           "source_node",
           "object_id",
           "submitter_id",
+          "Ethnicity",
+          "gender",
+          "race",
+          "Date_of_Birth",
+          "date_of_death",
+          "age_at_imaging",
+          "study_year",
+          "body_part_examined",
+          "study_description",
+          "study_uid",
+          "sample_number",
+          "sample_type",
+          "sample_volume",
+          "sample_year",
+          "creation_datetime",
+          "is_ffpe",
+          "portion_number",
+          "weight",
           "project_id"
         ]
       },
@@ -513,13 +745,6 @@
           "leftIcon": "datafile",
           "rightIcon": "download",
           "fileName": "files_manifest.json"
-        },
-        {
-          "enabled": false,
-          "type": "export-to-workspace",
-          "title": "Export to Workspace",
-          "leftIcon": "datafile",
-          "rightIcon": "download"
         }
       ],
       "loginForDownload": true,

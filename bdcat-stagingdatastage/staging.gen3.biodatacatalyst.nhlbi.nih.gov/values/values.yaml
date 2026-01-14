@@ -261,7 +261,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: 1.1.0
+    tag: 1.2.0
 gen3-user-data-library:
   enabled: true
   image:
