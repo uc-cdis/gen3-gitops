@@ -22,7 +22,7 @@ global:
   environment: "headneck"
   hostname: "headneckcancerbank.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.2.1/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.2.2/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
