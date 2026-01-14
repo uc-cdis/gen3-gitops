@@ -1,133 +1,107 @@
 global:
   dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "staging.chordshealth.org"
+  hostname: staging.chordshealth.org
   aws:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::048463324059:role/gen3-service/chords-esproxy-sa
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-chords-secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:048463324059:regional/webacl/chords-waf/4d80ffa3-4b61-4607-a869-6ce8ca6ba8ba"
+      localSecretName: external-secrets-chords-secret
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:048463324059:regional/webacl/chords-waf/4d80ffa3-4b61-4607-a869-6ce8ca6ba8ba
   revproxyArn: arn:aws:acm:us-east-1:048463324059:certificate/b85556ab-b13b-45bf-afd3-1a70b9234b6e
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/chords-health-dictionary/1.5.4/schema.json"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/chords-health-dictionary/1.5.4/schema.json
   postgres:
     dbCreate: false
-    # externalSecret: "chords-aurora-master-password"
   externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
   tierAccessLevel: libre
   fenceURL: https://staging.chordshealth.org/user
-
 arborist:
   enabled: true
   externalSecrets:
-    dbcreds: "chords_staging-arborist-db-creds"
+    dbcreds: chords_staging-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 2025.12
-
+    tag: '2026.01'
 aws-es-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "chordstaging-aws-es-proxy-creds"
+    awsCreds: chordstaging-aws-es-proxy-creds
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: v1.3.1
-
 indexd:
-  defaultPrefix: "dg.C78ch/"
+  defaultPrefix: dg.C78ch/
   externalSecrets:
-    dbcreds: "chords_staging-indexd-db-creds"
-    serviceCreds: "chordstaging-indexd-service-creds"
-
+    dbcreds: chords_staging-indexd-db-creds
+    serviceCreds: chordstaging-indexd-service-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: 2025.12
-
+    tag: '2026.01'
 peregrine:
-  # temporarily scaling up peregrine so it can handle the extra load without giving a 502.
   replicaCount: 3
   externalSecrets:
-    dbcreds: "chords_staging-peregrine-db-creds"
+    dbcreds: chords_staging-peregrine-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: feat_jq-audience
+    tag: '2026.01'
     pullPolicy: Always
-
 pidgin:
   enabled: false
-
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: 2025.12
-
+    tag: '2026.01'
 sheepdog:
   externalSecrets:
-    dbcreds: "chords_staging-sheepdog-db-creds"
+    dbcreds: chords_staging-sheepdog-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: 2025.12
+    tag: '2026.01'
   fenceUrl: https://staging.chordshealth.org/user
-
 manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: 2025.12
+    tag: '2026.01'
   externalSecrets:
-    manifestserviceG3auto: "chords_staging-manifestservice-g3auto"
-
+    manifestserviceG3auto: chords_staging-manifestservice-g3auto
 ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: 2025.12
+    tag: '2026.01'
   externalSecrets:
     createK8sSsjdispatcherSecret: true
-
+  indexing: quay.io/cdis/indexs3client:2026.01
 metadata:
-  useAggMds: False
+  useAggMds: false
   externalSecrets:
-    dbcreds: "chords_staging-metadata-db-creds"
-    metadataG3auto: "chords_staging-metadata-g3auto"
+    dbcreds: chords_staging-metadata-db-creds
+    metadataG3auto: chords_staging-metadata-g3auto
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: 2025.12
+    tag: '2026.01'
     esEndpoint: http://elasticsearch:9200
-
-# disabling workspace services
 ambassador:
   enabled: false
 wts:
   enabled: false
-
-
 sower:
   enabled: false
-
 hatchery:
   enabled: false
-
-# disabling audit service
 audit:
   enabled: false
-
-# disabling argo-wrapper service
 argo-wrapper:
   enabled: false
