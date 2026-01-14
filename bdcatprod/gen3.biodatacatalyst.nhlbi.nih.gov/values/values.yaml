@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2025.11'
+    tag: '2025.12'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -20,14 +20,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.11'
+    tag: '2025.12'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.11'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -41,7 +41,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.11'
+    tag: '2025.12'
 etl:
   resources:
     tube:
@@ -249,9 +249,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2025.11'
+      tag: '2025.12'
     spark:
-      tag: '2025.11'
+      tag: '2025.12'
 fence:
   resources:
     requests:
@@ -286,7 +286,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.11'
+    tag: '2025.12'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -2373,9 +2373,6 @@ fence:
       nih-nhlbi-bdc-dbgap-t2d-genes-fhs-phs001610-v6-r1-c2:
         cred: fence-bot
         region: us-east-1
-      nih-nhlbi-bdc-hfn-charge-phs000930-v11-r1-c1:
-        cred: fence-bot
-        region: us-east-1
       nih-nhlbi-bdc-image-copdgene-phs004023-v1-r2-c1:
         cred: fence-bot
         region: us-east-1
@@ -2389,9 +2386,6 @@ fence:
         cred: fence-bot
         region: us-east-1
       nih-nhlbi-bdc-mesa-ecg-phs003703-v1-r3-c2:
-        cred: fence-bot
-        region: us-east-1
-      nih-nhlbi-bdc-recover-adult-phs003463-v5-r1-c1:
         cred: fence-bot
         region: us-east-1
       nih-nhlbi-bdc-recover-autopsy-phs003768-v3-r1-c1:
@@ -2445,7 +2439,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2025.11'
+    tag: '2025.12'
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -2495,7 +2489,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.11'
+    tag: '2025.12'
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -2516,13 +2510,13 @@ indexd:
     serviceCreds: bdcatprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.11'
+    tag: '2025.12'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2025.11'
+    tag: '2025.12'
 metadata:
   autoscaling:
     enabled: false
@@ -2536,7 +2530,7 @@ metadata:
     metadataG3auto: bdcatprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.11'
+    tag: '2025.12'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -2552,7 +2546,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.11'
+    tag: '2025.12'
 portal:
   autoscaling:
     enabled: false
@@ -2580,7 +2574,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.11'
+    tag: '2025.12'
   ingress:
     aws:
       group: bdcatprod
@@ -2595,7 +2589,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.11'
+    tag: '2025.12'
 sower:
   enabled: true
   externalSecrets:
@@ -2604,7 +2598,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.11'
+    tag: '2025.12'
   sowerConfig:
     - action: export
       container:
@@ -2642,7 +2636,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.11
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.12
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -2700,7 +2694,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.11
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.12
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
