@@ -342,7 +342,7 @@ portal:
       \ discovery and development of therapies, diagnostic tests, and other technologies\
       \ for improving the lives of Veterans and beyond.\",\n      \"contact\": \"\
       If you have any questions about access or the registration process, please contact\
-      \ \",\n      \"email\": \"vadc-support@gen3.org\",\n      \"hideNavLink\": true\n\
+      \ \",\n      \"email\": \"support@gen3.org\",\n      \"hideNavLink\": true\n\
       \    },\n    \"systemUse\": {\n      \"systemUseTitle\": \"VA systems are intended\
       \ for Academic and Institutional Users\",\n      \"systemUseText\": [\n    \
       \    \"VA systems are intended to be used by authorized VA network users for\
@@ -399,7 +399,7 @@ portal:
       ,\n    \"https://argo-artifact-storage-downloadable-2024.s3.amazonaws.com\"\n\
       \  ],\n  \"ddUrl\": \"ddog-gov.com\",\n  \"userAccessToSite\": {\n    \"enabled\"\
       : true,\n    \"noAccessMessage\": \"You are not authorized to access this system.\
-      \ If you have any questions, please contact vadc-support@gen3.org\"\n  },\n\
+      \ If you have any questions, please contact support@gen3.org\"\n  },\n\
       \  \"componentToResourceMapping\": { \n    \"Workspace\": {\n      \"resource\"\
       : \"/workspace\", \n      \"method\": \"access\",\n      \"service\": \"jupyterhub\"\
       \n    },\n    \"Apps\": {\n      \"resource\": \"/dashboard\", \n      \"method\"\
