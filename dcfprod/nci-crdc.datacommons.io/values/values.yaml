@@ -99,10 +99,10 @@ datareplicate:
     enabled: true
     suspendCronjob: true
     schedule: '*/30 * * * *'
-    DRY_RUN: false
+    DRY_RUN: 'False'
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
-    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_obsolete_manifest_20250214_post_DR42.0.tsv
+    MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_obsolete_manifest_20250214_post_DR42.0.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
     ONLY_REDACT: all
   replicateValidationJob:
