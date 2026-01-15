@@ -2470,6 +2470,7 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: bdcatprod-slack-webhook
     deploy: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
   hostname: gen3.biodatacatalyst.nhlbi.nih.gov
   fenceURL: https://gen3.biodatacatalyst.nhlbi.nih.gov/user
   publicDataSets: true
