@@ -235,6 +235,12 @@
         "navigation": {
             "items": [
                 {
+                    "name": "Discovery",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "Dataset discovery"
+                },
+                {
                     "name": "Exploration",
                     "link": "/explorer",
                     "icon": "exploration",
@@ -1471,8 +1477,8 @@
                 "manifestMapping": {
                     "resourceIndexType": "radiology_report",
                     "resourceIdField": "object_id",
-                    "referenceIdFieldInResourceIndex": "_radiology_report_id",
-                    "referenceIdFieldInDataIndex": "_radiology_report_id",
+                    "referenceIdFieldInResourceIndex": "object_id",
+                    "referenceIdFieldInDataIndex": "object_id",
                     "useFilterForCounts": false
                 },
                 "accessibleFieldCheckList": [

@@ -12,18 +12,7 @@ gen3-workflow:
     funnelOidcClient: "<namespace>-funnel-oidc-client"
   gen3WorkflowConfig:
     taskImageWhitelist:
-      - "public.ecr.aws/docker/library/alpine:latest"
-      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image"
-  funnel:
-    Kubernetes:
-      # This will be dynamically replaced by setup_ci_env.sh script.
-      JobsNamespace: gen3-<namespace>-workflow-pods
-    Plugins:
-      Path: plugin-binaries/auth-plugin
-      Params:
-        OidcClientId: <redacted>
-        OidcClientSecret: <redacted>
-        # This will be dynamically replaced by setup_ci_env.sh script.
-        S3Url: gen3-workflow-service.<namespace>.svc.cluster.local
-        # This will be dynamically replaced by setup_ci_env.sh script.
-        OidcTokenUrl: https://<hostname>/user
+      - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
+      - "curlimages/curl:latest" # for test_access_internal_endpoints
+      - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
