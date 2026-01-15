@@ -860,6 +860,6 @@ wts:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: true
+  enabled: false
   externalSecrets:
     dbcreds: "headneck_default-wts-creds"
