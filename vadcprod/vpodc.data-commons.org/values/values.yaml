@@ -90,7 +90,7 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-sender
-  replicaCount: 4
+  replicaCount: 3
   autoscaling:
     enabled: false
     maxReplicas: 1
