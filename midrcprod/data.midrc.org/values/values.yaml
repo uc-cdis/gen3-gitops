@@ -242,6 +242,9 @@ etl:
           - name: report_generation_method
           - name: report_modification_method
           - name: study_description
+        parent_props:
+          - path: imaging_studies[imaging_study_submitter_id:submitter_id,age_at_imaging,imaging_study_body_part_examined:body_part_examined,days_from_study_to_neg_covid_test,days_from_study_to_pos_covid_test,days_to_study,image_data_modified,loinc_code,loinc_contrast,loinc_long_common_name,loinc_method,loinc_system,imaging_study_description:study_description,study_modality]
+          - path: cases[case_submitter_id:submitter_id,sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
       - name: midrc_imaging_study
         doc_type: imaging_study
         type: aggregator
