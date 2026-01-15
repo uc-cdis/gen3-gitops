@@ -49,7 +49,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.12'
+    tag: 'feat_embedding-vectors'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
