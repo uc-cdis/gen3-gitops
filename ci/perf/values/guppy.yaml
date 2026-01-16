@@ -1,5 +1,5 @@
 guppy:
-  replicaCount: 2
+  replicaCount: 3
   autoscaling:
     enabled: true
   # Lower cost
