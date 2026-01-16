@@ -168,6 +168,8 @@ guppy:
       type: patients
     - index: file_etl_mickey
       type: file
+    - index: omop_etl_index_cohortb_20251119
+      type: cohort_b_patients
 hatchery:
   enabled: true
   image:
