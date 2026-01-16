@@ -235,6 +235,12 @@
         "navigation": {
             "items": [
                 {
+                    "name": "Discovery",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "Dataset discovery"
+                },
+                {
                     "name": "Exploration",
                     "link": "/explorer",
                     "icon": "exploration",
