@@ -494,7 +494,7 @@ hatchery:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: "2025.12"
   hatchery:
-    json: |
+  json: |
       {
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
@@ -508,8 +508,22 @@ hatchery:
             "HOSTNAME": "data.bloodpac.org"
           },
           "args": [],
-          "command": ["su", "-c", "/home/jovyan/sidecarDockerrun.sh", "-s", "/bin/sh", "jovyan"],
-          "lifecycle-pre-stop": ["su", "-c", "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done", "-s", "/bin/sh", "jovyan"]
+          "command": [
+            "su",
+            "-c",
+            "/home/jovyan/sidecarDockerrun.sh",
+            "-s",
+            "/bin/sh",
+            "jovyan"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done",
+            "-s",
+            "/bin/sh",
+            "jovyan"
+          ]
         },
         "containers": [
           {
@@ -526,7 +540,7 @@ hatchery:
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
+              "--ServerApp.token=''"
             ],
             "command": [
               "start-notebook.sh"
@@ -542,10 +556,11 @@ hatchery:
             "user-uid": 1000,
             "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3",
+            "gen3-volume-location": "/home/jovyan/.gen3"
           }
         ]
       }
+
 indexd:
   replicaCount: 4
   autoscaling:

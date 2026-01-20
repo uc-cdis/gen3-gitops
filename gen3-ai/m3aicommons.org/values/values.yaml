@@ -200,7 +200,7 @@ hatchery:
             },
             "fs-gid": 100,
             "gen3-volume-location": "/home/jovyan/.gen3",
-            "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
+            "image": "quay.io/cdis/m3ai-demos:master",
             "pull_policy": "Always",
             "lifecycle-post-start": [
               "/bin/sh",
