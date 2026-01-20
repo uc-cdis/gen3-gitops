@@ -162,3 +162,8 @@ etl:
                 src: id
                 fn: set
               - name: project_id
+  image:
+    tube:
+      tag: '2026.01'
+    spark:
+      tag: '2026.01'
