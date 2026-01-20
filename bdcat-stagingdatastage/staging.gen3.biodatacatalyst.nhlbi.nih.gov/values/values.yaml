@@ -317,7 +317,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.11'
+    tag: 'fix_introspection'
   indices:
     - index: staging.gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
