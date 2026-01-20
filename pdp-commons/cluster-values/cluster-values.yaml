@@ -134,9 +134,9 @@ karpenter-crds:
         values:
           - amd64
       - key: topology.kubernetes.io/zone
-          operator: In
-          values:
-            - us-east-1d
+        operator: In
+        values:
+          - us-east-1d
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws
