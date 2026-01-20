@@ -86,14 +86,57 @@ karpenter-crds:
         operator: Gt
         values:
           - "7000"
+  
+  jupyter:
+    consolidationPolicy: "WhenEmpty"
+    expireAfter: "168h"
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws
+      kind: EC2NodeClass
+      name: jupyter
+    amiFamily: AL2023
+    volumeSize: 80Gi
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: topology.kubernetes.io/zone
+        operator: In
+        values:
+          - us-east-1d
+      - key: karpenter.k8s.aws/instance-category
+        operator: In
+        values:
+          - c
+          - m
+          - r
+          - t
   gpu:
     enabled: true
     consolidation: true
     consolidateAfter: "30s"
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
-    volumeSize: 50Gi
+    volumeSize: 80Gi
     additionalTags: {}
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: topology.kubernetes.io/zone
+        operator: In
+        values:
+          - us-east-1d
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws
@@ -101,13 +144,7 @@ karpenter-crds:
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
-  jupyter:
-    nodeClassRef:
-      apiVersion: karpenter.k8s.aws
-      kind: EC2NodeClass
-      name: jupyter
-    amiFamily: AL2023
-    volumeSize: 80Gi
+  
 
 nvidia-device-plugin:
   enabled: true

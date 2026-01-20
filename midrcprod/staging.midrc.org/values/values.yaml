@@ -66,6 +66,8 @@ etl:
     spark:
       requests:
         memory: 1Gi
+  esGarbageCollect:
+    enabled: true         
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
