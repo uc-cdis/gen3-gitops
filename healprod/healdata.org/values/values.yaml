@@ -152,6 +152,10 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/f87abeee-47ce-47cd-a3ca-b3f76b34c845
 hatchery:
   replicaCount: 4
+  
+  hotNode:
+    enabled: true
+    
   autoscaling:
     enabled: false
     maxReplicas: 3
