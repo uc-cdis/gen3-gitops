@@ -1,12 +1,12 @@
 ambassador:
-  jupyterNamespace: "jupyter-pods"
+  jupyterNamespace: jupyter-pods
   replicaCount: 2
 arborist:
   replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.04'
+    tag: '2025.12'
 audit:
   replicaCount: 2
   externalSecrets:
@@ -14,6 +14,8 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
+  image:
+    tag: '2025.12'
 aws-es-proxy:
   enabled: true
   replicaCount: 2
@@ -28,11 +30,10 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.04'
+    tag: '2025.12'
   podSecurityContext:
     fsGroup: 1001
-  securityContext:
-    {}
+  securityContext: {}
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--dashboard-access
@@ -62,13 +63,13 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.12
+    tag: 0.13
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: main
+    tag: '2025.12'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
@@ -83,9 +84,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
       wafAclArn: arn:aws:wafv2:us-east-1:851725307933:regional/webacl/pdp-commons-waf/9609720f-857d-4033-bf1f-2e9e9665a638
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
@@ -94,13 +93,10 @@ global:
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: "pdp-commons-slack-webhook"
+    slackWebhookSecretName: pdp-commons-slack-webhook
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
   fenceURL: https://mc2dp.data-commons.org/user
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
@@ -112,10 +108,7 @@ global:
   postgres:
     dbCreate: false
     externalSecret: pdp-commons-aurora-master-password
-
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
-
-
 embedding-management-service:
   enabled: true
   postgres:
@@ -124,140 +117,145 @@ embedding-management-service:
     {
       "expr": 256
     }
-
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
     tag: feat_service
     pullPolicy: Always
-
-
 guppy:
   configIndex: pdp-commons-commons-config-index
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.04'
+    tag: '2025.12'
   indices:
-  - index: pdp-commons-commons-index
-    type: metadata
+    - index: pdp-commons-commons-index
+      type: metadata
 hatchery:
   enabled: true
-  # Enable hot nodes for workspaces
   hotNode:
-    enabled: false
+    enabled: true
+    gpu: true
+    jupyter: false
 
+    availabilityZones:
+      - us-east-1d
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 4
+      memory: 9Gi
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2.7.0'
   hatchery:
     json: |
-        {
-            "user-namespace": "jupyter-pods",
-            "sub-dir": "/lw-workspace",
-            "user-volume-size": "10Gi",
-            "default-pay-model": {
-                "workspace_type": "Trial Workspace",
-                "local": true
-            },
-            "sidecar": {
-                "cpu-limit": "1.0",
-                "memory-limit": "256Mi",
-                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
-                "env": {
-                    "NAMESPACE": "default",
-                    "HOSTNAME": "mc2dp.data-commons.org"
-                },
-                "args": [],
-                "command": [
-                    "/bin/bash",
-                    "./sidecar.sh"
-                ],
-                "lifecycle-pre-stop": [
-                    "su",
-                    "-c",
-                    "echo test",
-                    "-s",
-                    "/bin/sh",
-                    "root"
-                ]
-            },
-            "containers": [
-                {
-                    "target-port": 8888,
-                    "cpu-limit": "1.0",
-                    "memory-limit": "4Gi",
-                    "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-                    "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
-                    "env": {
-                        "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
-                    },
-                    "args": [
-                        "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-                        "--JupyterNotebookApp.default_url=/lab",
-                        "--JupyterNotebookApp.password=''",
-                        "--JupyterNotebookApp.token=''",
-                        "--JupyterNotebookApp.ip='*'",
-                        "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-                        "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-                        "--JupyterNotebookApp.quit_button=False"
-                    ],
-                    "command": [
-                        "start-notebook.sh"
-                    ],
-                    "path-rewrite": "/lw-workspace/proxy/",
-                    "use-tls": "false",
-                    "ready-probe": "/lw-workspace/proxy/",
-                    "lifecycle-post-start": [
-                        "/bin/sh",
-                        "-c",
-                        "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                    ],
-                    "user-uid": 1010,
-                    "fs-gid": 101,
-                    "user-volume-location": "/home/jovyan/pd",
-                    "gen3-volume-location": "/home/jovyan/.gen3"
-                },
-                {
+      {
+          "user-namespace": "jupyter-pods",
+          "sub-dir": "/lw-workspace",
+          "user-volume-size": "10Gi",
+          "default-pay-model": {
+              "workspace_type": "Trial Workspace",
+              "local": true
+          },
+          "sidecar": {
+              "cpu-limit": "1.0",
+              "memory-limit": "256Mi",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
+              "env": {
+                  "NAMESPACE": "default",
+                  "HOSTNAME": "mc2dp.data-commons.org"
+              },
+              "args": [],
+              "command": [
+                  "/bin/bash",
+                  "./sidecar.sh"
+              ],
+              "lifecycle-pre-stop": [
+                  "su",
+                  "-c",
+                  "echo test",
+                  "-s",
+                  "/bin/sh",
+                  "root"
+              ]
+          },
+          "containers": [
+              {
+                  "target-port": 8888,
+                  "cpu-limit": "1.0",
+                  "memory-limit": "4Gi",
+                  "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
+                  "env": {
+                      "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                  },
                   "args": [
-                    "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-                    "--JupyterNotebookApp.default_url=/lab",
-                    "--JupyterNotebookApp.password=''",
-                    "--JupyterNotebookApp.token=''",
-                    "--JupyterNotebookApp.ip='*'",
-                    "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-                    "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
-                    "--JupyterNotebookApp.quit_button=False"
+                      "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                      "--JupyterNotebookApp.default_url=/lab",
+                      "--JupyterNotebookApp.password=''",
+                      "--JupyterNotebookApp.token=''",
+                      "--JupyterNotebookApp.ip='*'",
+                      "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                      "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+                      "--JupyterNotebookApp.quit_button=False"
                   ],
                   "command": [
-                    "start-notebook.sh"
+                      "start-notebook.sh"
                   ],
-                  "gpu": true,
-                  "cpu-limit": "3.0",
-                  "env": {
-                    "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
-                  },
-                  "fs-gid": 100,
-                  "gen3-volume-location": "/home/jovyan/.gen3",
-                  "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
-                  "pull_policy": "Always",
-                  "lifecycle-post-start": [
-                    "/bin/sh",
-                    "-c",
-                    "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "memory-limit": "8Gi",
-                  "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
                   "path-rewrite": "/lw-workspace/proxy/",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "target-port": 8888,
                   "use-tls": "false",
+                  "ready-probe": "/lw-workspace/proxy/",
+                  "lifecycle-post-start": [
+                      "/bin/sh",
+                      "-c",
+                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                  ],
                   "user-uid": 1010,
-                  "user-volume-location": "/home/jovyan/pd"
-                }
-            ]
-        }
+                  "fs-gid": 101,
+                  "user-volume-location": "/home/jovyan/pd",
+                  "gen3-volume-location": "/home/jovyan/.gen3"
+              },
+              {
+                "args": [
+                  "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                  "--JupyterNotebookApp.default_url=/lab",
+                  "--JupyterNotebookApp.password=''",
+                  "--JupyterNotebookApp.token=''",
+                  "--JupyterNotebookApp.ip='*'",
+                  "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                  "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+                  "--JupyterNotebookApp.quit_button=False"
+                ],
+                "command": [
+                  "start-notebook.sh"
+                ],
+                "gpu": true,
+                "cpu-limit": "3.0",
+                "env": {
+                  "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                },
+                "fs-gid": 100,
+                "gen3-volume-location": "/home/jovyan/.gen3",
+                "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
+                "pull_policy": "Always",
+                "lifecycle-post-start": [
+                  "/bin/sh",
+                  "-c",
+                  "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                ],
+                "memory-limit": "8Gi",
+                "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
+                "path-rewrite": "/lw-workspace/proxy/",
+                "ready-probe": "/lw-workspace/proxy/",
+                "target-port": 8888,
+                "use-tls": "false",
+                "user-uid": 1010,
+                "user-volume-location": "/home/jovyan/pd"
+              }
+          ]
+      }
 indexd:
   replicaCount: 2
   enabled: true
@@ -265,7 +263,7 @@ indexd:
     serviceCreds: pdp-commons-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.04'
+    tag: '2025.12'
 manifestservice:
   replicaCount: 2
   enabled: true
@@ -273,294 +271,294 @@ manifestservice:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.04'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--manifest-service-sa
 metadata:
   aggMdsConfig: |-
-   {
-        "configuration": {
-            "schema": {
-                "_subjects_count": {
-                    "type": "integer"
-                },
-                "_manifest": {
-                    "type": "array",
-                    "properties": {
-                        "file_name": {
-                            "type": "string"
-                        },
-                        "file_size": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "tags": {
-                    "type": "array"
-                },
-                "advSearchFilters": {
-                    "type": "array",
-                "properties": {
-                        "key": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "_unique_id": {},
-                "study_description": {},
-                "study_id": {},
-                "study_url": {},
-                "project_id": {},
-                "short_name": {},
-                "full_name": {},
-                "commons_url": {},
-                "commons": {},
-                "data_source": {},
-                "disease_type": {},
-                "primary_site": {},
-                "authz": {},
-                "subject_id": {},
-                "subject_id_list": {},
-                "subject_apollo_id": {},
-                "subject_race": {},
-                "subject_gender": {},
-                "subject_ethnicity": {},
-                "subject_metastasis": {},
-                "subject_cancer_type": {},
-                "subject_cancer_grade": {},
-                "subject_cancer_stage": {},
-                "subject_year_of_birth": {},
-                "subject_primary_disease": {},
-                "subject_type_of_exposure": {},
-                "subject_type_of_exposures": {},
-                "subject_chemical_agents_of_exposure": {},
-                "subject_run_id": {},
-                "subject_class": {},
-                "subject_group": {},
-                "subject_project": {},
-                "subject_rundate": {},
-                "subject_exp_target": {},
-                "subject_ionization": {},
-                "subject_chromatography": {},
-                "subject_plate": {},
-                "subject_injection": {},
-                "subject_plate_position": {},
-                "mc2dp_global_id": {},
-                "data_source_project" : {},
-                "is_synthetic" : {},
-                "is_data_files" : {},
-                 "data_files": {
+    {
+         "configuration": {
+             "schema": {
+                 "_subjects_count": {
+                     "type": "integer"
+                 },
+                 "_manifest": {
                      "type": "array",
-                     "properties" : {
-                       "file_data_size": {
-                         "type": "integer"
-                       }
+                     "properties": {
+                         "file_name": {
+                             "type": "string"
+                         },
+                         "file_size": {
+                             "type": "integer"
+                         }
                      }
                  },
-                "filesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
+                 "tags": {
+                     "type": "array"
+                 },
+                 "advSearchFilters": {
+                     "type": "array",
+                 "properties": {
+                         "key": {
+                             "type": "string"
+                         },
+                         "value": {
+                             "type": "string"
+                         }
+                     }
+                 },
+                 "_unique_id": {},
+                 "study_description": {},
+                 "study_id": {},
+                 "study_url": {},
+                 "project_id": {},
+                 "short_name": {},
+                 "full_name": {},
+                 "commons_url": {},
+                 "commons": {},
+                 "data_source": {},
+                 "disease_type": {},
+                 "primary_site": {},
+                 "authz": {},
+                 "subject_id": {},
+                 "subject_id_list": {},
+                 "subject_apollo_id": {},
+                 "subject_race": {},
+                 "subject_gender": {},
+                 "subject_ethnicity": {},
+                 "subject_metastasis": {},
+                 "subject_cancer_type": {},
+                 "subject_cancer_grade": {},
+                 "subject_cancer_stage": {},
+                 "subject_year_of_birth": {},
+                 "subject_primary_disease": {},
+                 "subject_type_of_exposure": {},
+                 "subject_type_of_exposures": {},
+                 "subject_chemical_agents_of_exposure": {},
+                 "subject_run_id": {},
+                 "subject_class": {},
+                 "subject_group": {},
+                 "subject_project": {},
+                 "subject_rundate": {},
+                 "subject_exp_target": {},
+                 "subject_ionization": {},
+                 "subject_chromatography": {},
+                 "subject_plate": {},
+                 "subject_injection": {},
+                 "subject_plate_position": {},
+                 "mc2dp_global_id": {},
+                 "data_source_project" : {},
+                 "is_synthetic" : {},
+                 "is_data_files" : {},
+                  "data_files": {
+                      "type": "array",
+                      "properties" : {
+                        "file_data_size": {
+                          "type": "integer"
                         }
-                    }
-                },
-                "versions": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "number": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "supplementaryFilesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "nonSupplementaryFilesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
-                        }
-                    }
-                }
-            },
-            "settings": {
-                "cache_drs": true,
-                "array_config_prefix": "gen3_discovery"
-            }
-        },
-        "adapter_commons": {
-            "aggregated-subject-level-metadata": {
-                "mds_url": "https://externalgen3.prometheus.data-commons.org/",
-                "commons_url": "externalgen3.prometheus.data-commons.org",
-                "adapter": "gen3",
-                "config": {
-                    "guid_type": "aggmds_metadata_entry",
-                    "study_field": "gen3_discovery"
-                },
-                "keep_original_fields": false,
-                "field_mappings": {
-                    "authz": "",
-                    "tags": "path:tags",
-                    "_unique_id": "path:mc2dp_global_id",
-                    "commons": "path:data_source",
-                    "subject_id_list": "path:values_of_data_source_ids",
-                    "subject_metastasis": "path:metastasis",
-                    "subject_cancer_type": "path:cancer_type",
-                    "data_source_project" : "path:data_source_project",
-                    "subject_cancer_grade": {
-                        "path": "cancer_grade",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                                "grade i": "I",
-                                "grade ii": "II",
-                                "grade iii": "III",
-                                "grade iv": "IV",
-                                "unknown" : "Unknown"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_cancer_stage" :  {
-                        "path": "cancer_stage",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "ia": "IA",
-                              "ib": "IB",
-                              "iia": "IIA",
-                              "iib": "IIB",
-                              "iiia": "IIIA",
-                              "iiib": "IIIB",
-                              "iiic": "IIIC",
-                              "iva": "IVA",
-                              "ivc": "IVC",
-                              "i": "I",
-                              "ii": "II",
-                              "iii": "III",
-                              "iv": "IV",
-                              "0": "0",
-                              "0a": "0A",
-                              "unknown": "Unknown"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_primary_disease": "path:primary_disease",
-                    "subject_type_of_exposures": "path:values_of_exposures",
-                    "subject_ethnicity": {
-                        "path": "ethnicity",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "spanish/hispanic/latino (of any race)": "Hispanic or Latino",
-                              "not hispanic or latino": "Not Hispanic or Latino",
-                              "hispanic or latino": "Hispanic or Latino",
-                              "unknown": "Unknown",
-                              "not available": "Declined to Answer",
-                              "declined to answer": "Declined to Answer",
-                              "not hispanic or latino, declined to answer": "Not Hispanic or Latino / Declined to Answer",
-                              "not reported / unknown": "Unknown"
-                          }
-                        },
-                        "default": ""
-                    },
-                    "subject_gender": {
-                        "path": "biological_sex",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                                "male": "Male",
-                                "female": "Female",
-                                "female, male" : "Female, Male",
-                                "male, female" : "Male, Female",
-                                "not reported": "Not Reported",
-                                "Not Reported": "Not Reported"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_race": {
-                        "path": "race",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "black or african american": "Black or African American",
-                              "american indian / alaskan native": "American Indian / Alaskan Native",
-                              "black or african american; white": "Black or African American / White",
-                              "black or african american; white; other(mixed)": "Black or African American / White / Other",
-                              "not available": "Not Reported",
-                              "native hawaiian or other pacific islander": "Native Hawaiian or Other Pacific Islander",
-                              "asian": "Asian",
-                              "not reported, white": "Declined to Answer, White",
-                              "declined to answer": "Declined to Answer",
-                              "asian; black or african american": "Asian / Black or African American",
-                              "white": "White"
-                          }
-                        },
-                        "default": ""
-                    },
-                    "data_source": "path:data_source",
-                    "commons_url": "",
-                    "mc2dp_global_id": "path:mc2dp_global_id",
-                    "is_synthetic": "path:is_synthetic",
-                    "is_data_files" : "path:is_data_files",
-                    "data_files": "path:data_type"
-                }
-            }
-        }
-    }
+                      }
+                  },
+                 "filesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 },
+                 "versions": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "number": {
+                             "type": "string"
+                         }
+                     }
+                 },
+                 "supplementaryFilesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 },
+                 "nonSupplementaryFilesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 }
+             },
+             "settings": {
+                 "cache_drs": true,
+                 "array_config_prefix": "gen3_discovery"
+             }
+         },
+         "adapter_commons": {
+             "aggregated-subject-level-metadata": {
+                 "mds_url": "https://externalgen3.prometheus.data-commons.org/",
+                 "commons_url": "externalgen3.prometheus.data-commons.org",
+                 "adapter": "gen3",
+                 "config": {
+                     "guid_type": "aggmds_metadata_entry",
+                     "study_field": "gen3_discovery"
+                 },
+                 "keep_original_fields": false,
+                 "field_mappings": {
+                     "authz": "",
+                     "tags": "path:tags",
+                     "_unique_id": "path:mc2dp_global_id",
+                     "commons": "path:data_source",
+                     "subject_id_list": "path:values_of_data_source_ids",
+                     "subject_metastasis": "path:metastasis",
+                     "subject_cancer_type": "path:cancer_type",
+                     "data_source_project" : "path:data_source_project",
+                     "subject_cancer_grade": {
+                         "path": "cancer_grade",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                                 "grade i": "I",
+                                 "grade ii": "II",
+                                 "grade iii": "III",
+                                 "grade iv": "IV",
+                                 "unknown" : "Unknown"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_cancer_stage" :  {
+                         "path": "cancer_stage",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "ia": "IA",
+                               "ib": "IB",
+                               "iia": "IIA",
+                               "iib": "IIB",
+                               "iiia": "IIIA",
+                               "iiib": "IIIB",
+                               "iiic": "IIIC",
+                               "iva": "IVA",
+                               "ivc": "IVC",
+                               "i": "I",
+                               "ii": "II",
+                               "iii": "III",
+                               "iv": "IV",
+                               "0": "0",
+                               "0a": "0A",
+                               "unknown": "Unknown"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_primary_disease": "path:primary_disease",
+                     "subject_type_of_exposures": "path:values_of_exposures",
+                     "subject_ethnicity": {
+                         "path": "ethnicity",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "spanish/hispanic/latino (of any race)": "Hispanic or Latino",
+                               "not hispanic or latino": "Not Hispanic or Latino",
+                               "hispanic or latino": "Hispanic or Latino",
+                               "unknown": "Unknown",
+                               "not available": "Declined to Answer",
+                               "declined to answer": "Declined to Answer",
+                               "not hispanic or latino, declined to answer": "Not Hispanic or Latino / Declined to Answer",
+                               "not reported / unknown": "Unknown"
+                           }
+                         },
+                         "default": ""
+                     },
+                     "subject_gender": {
+                         "path": "biological_sex",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                                 "male": "Male",
+                                 "female": "Female",
+                                 "female, male" : "Female, Male",
+                                 "male, female" : "Male, Female",
+                                 "not reported": "Not Reported",
+                                 "Not Reported": "Not Reported"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_race": {
+                         "path": "race",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "black or african american": "Black or African American",
+                               "american indian / alaskan native": "American Indian / Alaskan Native",
+                               "black or african american; white": "Black or African American / White",
+                               "black or african american; white; other(mixed)": "Black or African American / White / Other",
+                               "not available": "Not Reported",
+                               "native hawaiian or other pacific islander": "Native Hawaiian or Other Pacific Islander",
+                               "asian": "Asian",
+                               "not reported, white": "Declined to Answer, White",
+                               "declined to answer": "Declined to Answer",
+                               "asian; black or african american": "Asian / Black or African American",
+                               "white": "White"
+                           }
+                         },
+                         "default": ""
+                     },
+                     "data_source": "path:data_source",
+                     "commons_url": "",
+                     "mc2dp_global_id": "path:mc2dp_global_id",
+                     "is_synthetic": "path:is_synthetic",
+                     "is_data_files" : "path:is_data_files",
+                     "data_files": "path:data_type"
+                 }
+             }
+         }
+     }
   aggMdsNamespace: pdp-commons
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -568,7 +566,7 @@ metadata:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: master
+    tag: '2025.12'
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:
@@ -578,21 +576,20 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.04'
+    tag: '2025.12'
 portal:
   enabled: false
-
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.04'
+    tag: '2025.12'
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.04'
+    tag: '2025.12'
   ingress:
     aws:
       group: pdp-commons
@@ -600,7 +597,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.04'
+    tag: '2025.12'
   replicaCount: 2
 ssjdispatcher:
   enabled: false
@@ -619,4 +616,4 @@ wts:
     wtsOidcClient: pdp-commons-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.04'
+    tag: '2025.12'
