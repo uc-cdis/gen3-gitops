@@ -1,26 +1,21 @@
 global:
   dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "caninedc.org"
+  hostname: caninedc.org
   aws:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-canine-secret # pragma: allowlist secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
+      localSecretName: external-secrets-canine-secret
+    wafv2:
+      enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/5874502e-5b67-415f-80ee-dcb814d2883f
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json
   postgres:
     dbCreate: false
-    externalSecret: "pg-master" # pragma: allowlist secret
+    externalSecret: pg-master
   externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
   manifestGlobalExtraValues:
@@ -28,107 +23,89 @@ global:
   tierAccessLevel: libre
   tierAccessLimit: 50
   topologySpread:
-    # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
     enabled: true
-    # -- (string) The topology key to use for spreading. Defaults to "topology.kubernetes.io/zone".
-    topologyKey: "topology.kubernetes.io/zone"
-    # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
+    topologyKey: topology.kubernetes.io/zone
     maxSkew: 1
-
 arborist:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   externalSecrets:
-    dbcreds: "canineprod-arborist"
+    dbcreds: canineprod-arborist
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: master
-
+    tag: '2026.01'
 aws-es-proxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "canineprod-aws-es-proxy-creds"
+    awsCreds: canineprod-aws-es-proxy-creds
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: master
-
 indexd:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  defaultPrefix: "dg.C78ne/"
+      memory: 105Mi
+      cpu: 15m
+  defaultPrefix: dg.C78ne/
   externalSecrets:
-    dbcreds: "canineprod-indexd"
-    serviceCreds: "canineprod-indexd-service-creds"
+    dbcreds: canineprod-indexd
+    serviceCreds: canineprod-indexd-service-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: master
-
+    tag: '2026.01'
 peregrine:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-peregrine"
+    dbcreds: canineprod-peregrine
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: master
+    tag: '2026.01'
     pullPolicy: Always
-
 revproxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: master
-
+    tag: '2026.01'
 sheepdog:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-sheepdog"
+    dbcreds: canineprod-sheepdog
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: master
-
+    tag: '2026.01'
 manifestservice:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    manifestserviceG3auto: "canine-manifestservice-g3auto"
-
+    manifestserviceG3auto: canine-manifestservice-g3auto
 etl:
   enabled: true
   spark:
@@ -139,51 +116,44 @@ etl:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
       tag: master
-
 sower:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    pelicanserviceG3auto: "canine-pelicanservice-g3auto"
-
+    pelicanserviceG3auto: canine-pelicanservice-g3auto
 ssjdispatcher:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: master
-
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01
 metadata:
-  # Lower cost
   initResources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-metadata"
-    metadataG3auto: "canine-metadata-g3auto"
+    dbcreds: canineprod-metadata
+    metadataG3auto: canine-metadata-g3auto
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: master
-
-# disabling workspace services
+    tag: '2026.01'
 ambassador:
   jupyterNamespace: jupyter-pods-canine
 wts:
@@ -194,12 +164,12 @@ wts:
     wtsOidcClient: caninedc-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.11'
+    tag: '2026.01'
 hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.11'
+    tag: '2026.01'
   hatchery:
     json: |-
       {
@@ -276,7 +246,5 @@ hatchery:
           }
         ]
       }
-
-# disabling audit service
 audit:
   enabled: false

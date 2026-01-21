@@ -3,23 +3,13 @@ portal:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: master
-    # repository: quay.io/cdis/data-portal-prebuilt
-    # tag: gen3.datacommons.io-prebuilt-prc
-
+    tag: '2026.01'
   resources:
-    # -- (map) The amount of resources that the container requests
     requests:
       memory: 2Gi
     limits:
       memory: 5Gi
-
-  # Extra images to pull in to serve in portal container
-  extraImages:
-    # - url: https://raw.githubusercontent.com/uc-cdis/gen3-gitops/master/unfunded/gen3.datacommons.io/values/extraImages/notebook_canine.png
-    # - url: https://raw.githubusercontent.com/uc-cdis/cdis-manifest/master/gen3.datacommons.io/dashboard/Public/notebooks/notebook_gene.png
-
-  # GitOps config for portal
+  extraImages: null
   gitops:
     json: |
       {
