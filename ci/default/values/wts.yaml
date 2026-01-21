@@ -2,8 +2,8 @@ wts:
   replicaCount: 2
   enabled: true
   image:
-    repository: "quay.io/cdis/workspace-token-service"
-    tag: "master"
+    repository: quay.io/cdis/workspace-token-service
+    tag: '2026.02'
   externalSecrets:
     createWtsOidcClientSecret: true
     createK8sWtsSecret: true

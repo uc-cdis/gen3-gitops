@@ -2,10 +2,10 @@ peregrine:
   replicaCount: 2
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
-    repository: "quay.io/cdis/peregrine"
-    tag: "master"
+    repository: quay.io/cdis/peregrine
+    tag: '2026.02'
     pullPolicy: Always

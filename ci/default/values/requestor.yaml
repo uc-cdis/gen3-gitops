@@ -2,5 +2,5 @@ requestor:
   replicaCount: 2
   enabled: true
   image:
-    repository: "quay.io/cdis/requestor"
-    tag: "master"
+    repository: quay.io/cdis/requestor
+    tag: '2026.02'

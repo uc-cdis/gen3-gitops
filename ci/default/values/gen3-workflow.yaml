@@ -2,17 +2,16 @@ gen3-workflow:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-workflow
-    tag: master
+    tag: '2026.02'
   serviceAccount:
     create: true
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
   externalSecrets:
-  # This will be dynamically replaced by setup_ci_env.sh script.
-    funnelOidcClient: "<namespace>-funnel-oidc-client"
+    funnelOidcClient: <namespace>-funnel-oidc-client
   gen3WorkflowConfig:
     taskImageWhitelist:
-      - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
-      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
-      - "curlimages/curl:latest" # for test_access_internal_endpoints
-      - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
+      - public.ecr.aws/docker/library/alpine:latest
+      - quay.io/cdis/gen3-workflow:integration_tests_dicom_image
+      - curlimages/curl:latest
+      - quay.io/biocontainers/ubuntu:24.04
