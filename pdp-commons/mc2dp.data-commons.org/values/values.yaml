@@ -253,7 +253,6 @@ hatchery:
                 "use-tls": "false",
                 "user-uid": 1010,
                 "user-volume-location": "/home/jovyan/pd"
-              }
               },
               {
                 "args": [
