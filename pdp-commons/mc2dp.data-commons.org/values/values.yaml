@@ -254,6 +254,44 @@ hatchery:
                 "user-uid": 1010,
                 "user-volume-location": "/home/jovyan/pd"
               }
+              },
+              {
+                "args": [
+                  "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                  "--JupyterNotebookApp.default_url=/lab",
+                  "--JupyterNotebookApp.password=''",
+                  "--JupyterNotebookApp.token=''",
+                  "--JupyterNotebookApp.ip='*'",
+                  "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                  "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+                  "--JupyterNotebookApp.quit_button=False"
+                ],
+                "command": [
+                  "start-notebook.sh"
+                ],
+                "gpu": true,
+                "cpu-limit": "3.0",
+                "env": {
+                  "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
+                },
+                "fs-gid": 100,
+                "gen3-volume-location": "/home/jovyan/.gen3",
+                "image": "quay.io/cdis/jupyter-prometheus:prometheus-master",
+                "pull_policy": "Always",
+                "lifecycle-post-start": [
+                  "/bin/sh",
+                  "-c",
+                  "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                ],
+                "memory-limit": "8Gi",
+                "name": "(GPU) MC2DP Embedding Demos",
+                "path-rewrite": "/lw-workspace/proxy/",
+                "ready-probe": "/lw-workspace/proxy/",
+                "target-port": 8888,
+                "use-tls": "false",
+                "user-uid": 1010,
+                "user-volume-location": "/home/jovyan/pd"
+              }
           ]
       }
 indexd:
