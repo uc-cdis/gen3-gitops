@@ -136,7 +136,7 @@ hatchery:
     tag: feat_gpu-support
 
   hotNode:
-    enabled: false
+    enabled: true
     gpu: true
     jupyter: false
 
