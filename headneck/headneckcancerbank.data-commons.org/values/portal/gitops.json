@@ -241,25 +241,25 @@
               "diagnosis.Clinical_Stage_Group",
               "diagnosis.Clinical_M",
               "diagnosis.Clinical_N",
-              "diagnosis.Clinical_T",
+              "diagnosis.Clinical_T"
             ]
           },
           {
             "title": "Treatments",
             "fields": [
-              "treatment.Date_of_First_Surgery",
+              "treatment.Rx_Code_Desc",
+              "treatment.Rx_Course_Desc",
+              "treatment.Rx_Type",
+              "treatment.Rx_Type_Desc",
+              "treatment.Treatment_This_Facility_Desc",
               "treatment.First_Course_Chemotherapy_Date",
               "treatment.First_Course_Chemotherapy_Hosp_Desc",
               "treatment.First_Course_Dx_Staging_Proc_Hosp_Desc",
               "treatment.First_Course_Immunotherapy_Date",
               "treatment.First_Course_Immunotherapy_Hosp_Desc",
-              "treatment.Rx_Code_Desc",
-              "treatment.Rx_Course_Desc",
               "treatment.Rx_Start_Date",
-              "treatment.Rx_Type",
-              "treatment.Rx_Type_Desc",
               "treatment.Subseq_Course_Rx_Summary",
-              "treatment.Treatment_This_Facility_Desc"
+              "treatment.Date_of_First_Surgery"
             ]
           },
           {
