@@ -392,9 +392,6 @@
         "tabs": [
           {
             "title": "Samples",
-            "searchFields": [
-              "submitter_id"
-            ],
             "fields": [
               "project_id",
               "sample_type",
@@ -406,6 +403,9 @@
               "dna_260_280",
               "dna_od_260",
               "procedure_date"
+            ],
+            "searchFields": [
+              "submitter_id"
             ]
           },
           {
@@ -447,17 +447,15 @@
         "fields": [
           "submitter_id",
           "project_id",
-          "protocol_number",
-          "procedure_date",
-          "sample_number",
-          "status",
           "sample_type",
+          "status",
           "body_fluid_code",
           "sample_volume",
           "sample_year",
           "dna_concentration",
           "dna_260_280",
           "dna_od_260",
+          "procedure_date",
           "portion.creation_datetime",
           "portion.is_ffpe",
           "portion.portion_number",
