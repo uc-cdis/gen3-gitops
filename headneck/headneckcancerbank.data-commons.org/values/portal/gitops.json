@@ -465,7 +465,6 @@
               "project_id",
               "protocol_number",
               "procedure_date",
-              "sample_number",
               "status",
               "sample_type",
               "body_fluid_code",
