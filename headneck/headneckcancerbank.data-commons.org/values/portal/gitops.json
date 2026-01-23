@@ -233,24 +233,6 @@
             ]
           },
           {
-            "title": "Treatments",
-            "fields": [
-              "treatment.Date_of_First_Surgery",
-              "treatment.First_Course_Chemotherapy_Date",
-              "treatment.First_Course_Chemotherapy_Hosp_Desc",
-              "treatment.First_Course_Dx_Staging_Proc_Hosp_Desc",
-              "treatment.First_Course_Immunotherapy_Date",
-              "treatment.First_Course_Immunotherapy_Hosp_Desc",
-              "treatment.Rx_Code_Desc",
-              "treatment.Rx_Course_Desc",
-              "treatment.Rx_Start_Date",
-              "treatment.Rx_Type",
-              "treatment.Rx_Type_Desc",
-              "treatment.Subseq_Course_Rx_Summary",
-              "treatment.Treatment_This_Facility_Desc"
-            ]
-          },
-          {
             "title": "Diagnoses",
             "fields": [
               "diagnosis.CS_Mets_at_Dx_Bone_Desc",
@@ -293,6 +275,24 @@
               "diagnosis.Tumor_Size_Clinical",
               "diagnosis.Tumor_Size_Pathological",
               "diagnosis.Tumor_Size_Summary"
+            ]
+          },
+          {
+            "title": "Treatments",
+            "fields": [
+              "treatment.Date_of_First_Surgery",
+              "treatment.First_Course_Chemotherapy_Date",
+              "treatment.First_Course_Chemotherapy_Hosp_Desc",
+              "treatment.First_Course_Dx_Staging_Proc_Hosp_Desc",
+              "treatment.First_Course_Immunotherapy_Date",
+              "treatment.First_Course_Immunotherapy_Hosp_Desc",
+              "treatment.Rx_Code_Desc",
+              "treatment.Rx_Course_Desc",
+              "treatment.Rx_Start_Date",
+              "treatment.Rx_Type",
+              "treatment.Rx_Type_Desc",
+              "treatment.Subseq_Course_Rx_Summary",
+              "treatment.Treatment_This_Facility_Desc"
             ]
           },
           {
@@ -463,7 +463,6 @@
             ],
             "fields": [
               "project_id",
-              "protocol_number",
               "sample_type",
               "status",
               "body_fluid_code",
