@@ -464,15 +464,15 @@
             "fields": [
               "project_id",
               "protocol_number",
-              "procedure_date",
-              "status",
               "sample_type",
+              "status",
               "body_fluid_code",
               "sample_volume",
               "sample_year",
               "dna_concentration",
               "dna_260_280",
-              "dna_od_260"
+              "dna_od_260",
+              "procedure_date"
             ]
           },
           {
