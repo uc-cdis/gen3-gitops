@@ -2524,7 +2524,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-substudy-charges-fhs-phs000651-v15-r1-c2:
         cred: fence-bot
-        region: us-east-1      
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
@@ -2562,7 +2562,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.1/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.2/schema.json
   dispatcherJobNum: '10'
   environment: bdcat-internalstaging
   externalSecrets:
