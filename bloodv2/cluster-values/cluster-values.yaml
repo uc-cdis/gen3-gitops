@@ -75,6 +75,7 @@ karpenter-crds:
         operator: In
         values:
           - spot
+          - on-demand
       - key: kubernetes.io/arch
         operator: In
         values:
@@ -86,16 +87,17 @@ karpenter-crds:
           - c6a.xlarge
           - m6a.large
           - m6a.xlarge
+          - t3a.large
   workflow:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
     volumeSize: 40Gi
   jupyter:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
