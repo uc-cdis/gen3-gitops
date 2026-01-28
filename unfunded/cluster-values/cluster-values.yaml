@@ -80,7 +80,7 @@ karpenter-crds:
           - "16001"
 
 vpc-cni:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 kube-proxy:
