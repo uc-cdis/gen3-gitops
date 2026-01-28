@@ -71,13 +71,11 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-category
         operator: In
         values:
-          - t
           - r
-          - m
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:
-          - "16001"
+          - "32001"
 
 vpc-cni:
   enabled: false
