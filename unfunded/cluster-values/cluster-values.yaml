@@ -63,21 +63,21 @@ karpenter-crds:
       - key: karpenter.sh/capacity-type
         operator: In
         values:
-          - on-demand
           - spot
       - key: kubernetes.io/arch
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
+      - key: karpenter.k8s.aws/instance-category
         operator: In
         values:
-          - r8i-flex
-          - m8i-flex
+          - t
+          - r
+          - m
       - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
+        operator: Lt
         values:
-          - "15001"
+          - "16001"
 
 vpc-cni:
   enabled: true
