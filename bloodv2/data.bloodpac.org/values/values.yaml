@@ -494,80 +494,80 @@ hatchery:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: "2025.12"
   hatchery:
-  json: |
-      {
-        "user-namespace": "jupyter-pods",
-        "sub-dir": "/lw-workspace",
-        "user-volume-size": "10Gi",
-        "sidecar": {
-          "cpu-limit": "1.0",
-          "memory-limit": "256Mi",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.12",
-          "env": {
-            "NAMESPACE": "bloodv2-helm",
-            "HOSTNAME": "data.bloodpac.org"
-          },
-          "args": [],
-          "command": [
-            "su",
-            "-c",
-            "/home/jovyan/sidecarDockerrun.sh",
-            "-s",
-            "/bin/sh",
-            "jovyan"
-          ],
-          "lifecycle-pre-stop": [
-            "su",
-            "-c",
-            "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done",
-            "-s",
-            "/bin/sh",
-            "jovyan"
-          ]
-        },
-        "containers": [
-          {
-            "target-port": 8888,
-            "cpu-limit": "2.0",
-            "memory-limit": "4Gi",
-            "name": "Jupyter Notebook Bio Python",
-            "image": "quay.io/cdis/jupyter-superslim:master",
+    json: |
+        {
+          "user-namespace": "jupyter-pods",
+          "sub-dir": "/lw-workspace",
+          "user-volume-size": "10Gi",
+          "sidecar": {
+            "cpu-limit": "1.0",
+            "memory-limit": "256Mi",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.12",
             "env": {
               "NAMESPACE": "bloodv2-helm",
-              "HOSTNAME": "data.bloodpac.org",
-              "FRAME_ANCESTORS": "https://data.bloodpac.org"
+              "HOSTNAME": "data.bloodpac.org"
             },
-            "args": [
-              "--NotebookApp.base_url=/lw-workspace/proxy/",
-              "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.runtime_dir=/home/jovyan/pd/.jupyter/runtime"
-            ],
+            "args": [],
             "command": [
-              "start-notebook.sh"
-            ],
-            "path-rewrite": "/lw-workspace/proxy/",
-            "use-tls": "false",
-            "ready-probe": "/lw-workspace/proxy/",
-            "lifecycle-post-start": [
-              "/bin/sh",
+              "su",
               "-c",
-              "export IAM=`whoami`; \
-              rm -rf /home/$IAM/pd/dockerHome; \
-              ln -s $(pwd) /home/$IAM/pd/dockerHome; \
-              mkdir -p /home/$IAM/.jupyter/custom; \
-              mkdir -p /home/$IAM/pd/.jupyter/runtime; \
-              echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; \
-              ln -s /data /home/$IAM/pd/; \
-              true"
+              "/home/jovyan/sidecarDockerrun.sh",
+              "-s",
+              "/bin/sh",
+              "jovyan"
             ],
-            "user-uid": 1000,
-            "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
-          }
-        ]
-      }
+            "lifecycle-pre-stop": [
+              "su",
+              "-c",
+              "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done",
+              "-s",
+              "/bin/sh",
+              "jovyan"
+            ]
+          },
+          "containers": [
+            {
+              "target-port": 8888,
+              "cpu-limit": "2.0",
+              "memory-limit": "4Gi",
+              "name": "Jupyter Notebook Bio Python",
+              "image": "quay.io/cdis/jupyter-superslim:master",
+              "env": {
+                "NAMESPACE": "bloodv2-helm",
+                "HOSTNAME": "data.bloodpac.org",
+                "FRAME_ANCESTORS": "https://data.bloodpac.org"
+              },
+              "args": [
+                "--NotebookApp.base_url=/lw-workspace/proxy/",
+                "--ServerApp.password=''",
+                "--ServerApp.token=''",
+                "--ServerApp.runtime_dir=/home/jovyan/pd/.jupyter/runtime"
+              ],
+              "command": [
+                "start-notebook.sh"
+              ],
+              "path-rewrite": "/lw-workspace/proxy/",
+              "use-tls": "false",
+              "ready-probe": "/lw-workspace/proxy/",
+              "lifecycle-post-start": [
+                "/bin/sh",
+                "-c",
+                "export IAM=`whoami`; \
+                rm -rf /home/$IAM/pd/dockerHome; \
+                ln -s $(pwd) /home/$IAM/pd/dockerHome; \
+                mkdir -p /home/$IAM/.jupyter/custom; \
+                mkdir -p /home/$IAM/pd/.jupyter/runtime; \
+                echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; \
+                ln -s /data /home/$IAM/pd/; \
+                true"
+              ],
+              "user-uid": 1000,
+              "fs-gid": 100,
+              "user-volume-location": "/home/jovyan/pd",
+              "gen3-volume-location": "/home/jovyan/.gen3"
+            }
+          ]
+        }
 
 indexd:
   replicaCount: 4
