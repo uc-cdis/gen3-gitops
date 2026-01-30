@@ -112,9 +112,9 @@ datareplicate:
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
     # Keep the legacy manifest the same at DR37
-    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_legacy_manifest_20230410_post_DR37.0.tsv,s3://log-bucket-june2/GDC_full_sync_active_manifest_20251029_post_DR44.0.tsv
+    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_active_manifest_20251029_post_DR44.0.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
-    OUT_FILES: GDC_full_sync_legacy_manifest_20230410_post_DR37_DCF.tsv,GDC_full_sync_active_manifest_20251029_post_DR44.0_DCF.tsv
+    OUT_FILES: GDC_full_sync_active_manifest_20251029_post_DR44.0_DCF.tsv
     FORCE_CREATE_MANIFEST: true
 fence:
   FENCE_CONFIG_PUBLIC:
@@ -715,6 +715,9 @@ fence:
       kf-strides-study-us-east-1-prd-sd-p3a9dchj-nci:
         cred: fence_bot
         region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-q2f7xa29-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-study-us-east-1-prd-sd-p445achv:
         cred: fence_bot
         region: us-east-1
@@ -731,6 +734,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       kf-study-us-east-1-prd-sd-7nq9151j:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-9pyzahhe:
         cred: fence_bot
         region: us-east-1
       kf-study-us-east-1-prd-sd-aq9kvn5p:

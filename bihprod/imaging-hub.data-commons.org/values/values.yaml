@@ -142,7 +142,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.4
+    tag: 1.3.5
 global:
   pdb: true
   aws:

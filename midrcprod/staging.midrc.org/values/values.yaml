@@ -318,6 +318,9 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: dicom_header_file_guid
+                src: dicom_header_file_guid
+                fn: set
               - name: data_file_source_node
                 src: source_node
                 fn: set
@@ -354,6 +357,7 @@ etl:
           - name: data_format
           - name: data_type
           - name: data_category
+          - name: dicom_header_file_guid
           - name: annotation_method
           - name: annotation_name
           - name: annotator_id
