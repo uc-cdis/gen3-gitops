@@ -35,6 +35,14 @@ dashboard:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1--emalinowskiv1-helm--dashboard-access
+data-upload-cron:
+  enabled: true
+  serviceAccount:
+    create: true
+    annotations: 
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1--default--data-upload-cron
+  env:
+    bucket: "emalinowskiv1-data-bucket"
 etl:
   esEndpoint: elasticsearch
   mappings:
