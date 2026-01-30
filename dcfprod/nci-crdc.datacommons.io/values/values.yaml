@@ -781,6 +781,9 @@ fence:
       kf-study-us-east-1-prd-sd-w0v965xz:
         cred: fence_bot
         region: us-east-1
+      kf-study-us-east-1-prd-sd-ygva0e1c:
+        cred: fence_bot
+        region: us-east-1
       kf-study-us-east-1-prd-sd-z0d9n23x:
         cred: fence_bot
         region: us-east-1
