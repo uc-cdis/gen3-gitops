@@ -71,7 +71,6 @@ karpenter-crds:
       - key: karpenter.sh/capacity-type
         operator: In
         values:
-          - on-demand
           - spot
       - key: kubernetes.io/arch
         operator: In
