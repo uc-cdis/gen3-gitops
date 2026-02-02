@@ -115,11 +115,6 @@
             "resource": "/query_page",
             "method": "access",
             "service": "query_page"
-        },
-        "Query Data": {
-            "resource": "/query_page",
-            "method": "access",
-            "service": "query_page"
         }
     },
     "components": {
@@ -151,6 +146,13 @@
                     "body": "Search and download subsets of data from the MIDRC Data Commons using GraphQL queries.",
                     "link": "/query",
                     "label": "Query Data"
+                },
+                {
+                    "name": "Workspace",
+                    "icon": "data-analyze",
+                    "body": "Perform analysis on the MIDRC Data Commons data using Jupyter Notebooks.",
+                    "link": "/workspace",
+                    "label": "Run Analysis"
                 }
             ],
             "homepageChartNodes": [
@@ -177,6 +179,10 @@
                 {
                     "node": "mr_series_file",
                     "name": "MR Series"
+                },
+                {
+                    "node": "radiology_report",
+                    "name": "Radiology Reports"
                 }
             ]
         },
@@ -228,6 +234,12 @@
         },
         "navigation": {
             "items": [
+                {
+                    "name": "Discovery",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "Dataset discovery"
+                },
                 {
                     "name": "Exploration",
                     "link": "/explorer",
@@ -430,6 +442,12 @@
                         ]
                     },
                     {
+                        "title": "Reports",
+                        "fields": [
+                            "_radiology_report_count"
+                        ]
+                    },
+                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
@@ -499,6 +517,7 @@
                     "_dx_series_file_count",
                     "_cr_series_file_count",
                     "_mr_series_file_count",
+                    "_radiology_report_count",
                     "project_id"
                 ],
                 "linkFields": [
@@ -1041,6 +1060,12 @@
                         ]
                     },
                     {
+                        "title": "Reports",
+                        "fields": [
+                            "_radiology_report_count"
+                        ]
+                    },
+                    {
                         "title": "Annotations",
                         "fields": [
                             "imaging_study_annotations.annotation_name",
@@ -1091,6 +1116,7 @@
                     "_dx_series_file_count",
                     "_cr_series_file_count",
                     "_mr_series_file_count",
+                    "_radiology_report_count",
                     "data_format",
                     "data_category",
                     "data_type",
@@ -1262,6 +1288,196 @@
                     "resourceIdField": "object_id",
                     "referenceIdFieldInResourceIndex": "_imaging_study_id",
                     "referenceIdFieldInDataIndex": "_imaging_study_id",
+                    "useFilterForCounts": false
+                },
+                "accessibleFieldCheckList": [
+                    "project_id"
+                ],
+                "accessibleValidationField": "project_id"
+            }
+        },
+        {
+            "tabTitle": "Radiology Reports",
+            "charts": {},
+            "filters": {
+                "tabs": [
+                    {
+                        "title": "Radiology Reports Filters",
+                        "searchFields": [
+                            "submitter_id"
+                        ],
+                        "fields": [
+                            "report_generation_method",
+                            "report_modification_method",
+                            "modality",
+                            "body_part_examined",
+                            "study_description",
+                            "project_id"
+                        ]
+                    },
+                    {
+                        "title": "Imaging Study Properties",
+                        "searchFields": [
+                            "imaging_study_submitter_id"
+                        ],
+                        "fields": [
+                            "loinc_long_common_name",
+                            "loinc_method",
+                            "loinc_system",
+                            "loinc_contrast",
+                            "age_at_imaging",
+                            "imaging_study_description",
+                            "study_modality",
+                            "imaging_study_body_part_examined",
+                            "days_to_study",
+                            "days_from_study_to_neg_covid_test",
+                            "days_from_study_to_pos_covid_test",
+                            "image_data_modified"
+                        ]
+                    },
+                    {
+                        "title": "Case Properties",
+                        "searchFields": [
+                            "case_submitter_id"
+                        ],
+                        "fields": [
+                            "sex",
+                            "race",
+                            "age_at_index",
+                            "index_event",
+                            "zip",
+                            "covid19_positive",
+                            "ethnicity"
+                        ]
+                    },
+                    {
+                        "title": "Dataset Properties",
+                        "searchFields": [
+                            "dataset_submitter_id"
+                        ],
+                        "fields": [
+                            "license",
+                            "data_url_doi",
+                            "data_contributor"
+                        ]
+                    }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                    "submitter_id",
+                    "modality",
+                    "body_part_examined",
+                    "study_description",
+                    "report_generation_method",
+                    "report_modification_method",
+                    "imaging_study_submitter_id",
+                    "loinc_long_common_name",
+                    "loinc_method",
+                    "loinc_system",
+                    "loinc_contrast",
+                    "age_at_imaging",
+                    "study_modality",
+                    "imaging_study_body_part_examined",
+                    "imaging_study_description",
+                    "days_to_study",
+                    "days_from_study_to_neg_covid_test",
+                    "days_from_study_to_pos_covid_test",
+                    "image_data_modified",
+                    "case_submitter_id",
+                    "sex",
+                    "race",
+                    "age_at_index",
+                    "index_event",
+                    "zip",
+                    "covid19_positive",
+                    "ethnicity",
+                    "license",
+                    "dataset_submitter_id",
+                    "data_url_doi",
+                    "data_contributor",
+                    "object_id",
+                    "project_id"
+                ]
+            },
+             "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "file-manifest",
+                    "title": "Download File Manifest",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_manifest.json"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "radiology_report",
+                "nodeCountTitle": "Radiology Reports",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "submitter_id",
+                        "name": "Report ID"
+                    },
+                    {
+                        "field": "dataset_submitter_id",
+                        "name": "Dataset ID"
+                    },
+                    {
+                        "field": "case_submitter_id",
+                        "name": "Case ID"
+                    },
+                    {
+                        "field": "imaging_study_submitter_id",
+                        "name": "Imaging Study ID"
+                    },
+                    {
+                        "field": "case_ids",
+                        "name": "Case IDs"
+                    }
+                ],
+                "manifestMapping": {
+                    "resourceIndexType": "radiology_report",
+                    "resourceIdField": "object_id",
+                    "referenceIdFieldInResourceIndex": "object_id",
+                    "referenceIdFieldInDataIndex": "object_id",
                     "useFilterForCounts": false
                 },
                 "accessibleFieldCheckList": [

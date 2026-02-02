@@ -1,127 +1,111 @@
 global:
   dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "caninedc.org"
+  hostname: caninedc.org
   aws:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-canine-secret # pragma: allowlist secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
+      localSecretName: external-secrets-canine-secret
+    wafv2:
+      enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/5874502e-5b67-415f-80ee-dcb814d2883f
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/canine_dictionary/1.1.0/schema.json
   postgres:
     dbCreate: false
-    externalSecret: "pg-master" # pragma: allowlist secret
+    externalSecret: pg-master
   externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
   manifestGlobalExtraValues:
     fence_url: https://caninedc.org/user
   tierAccessLevel: libre
-  tierAccessLimit: 50    
-
+  tierAccessLimit: 50
+  topologySpread:
+    enabled: true
+    topologyKey: topology.kubernetes.io/zone
+    maxSkew: 1
 arborist:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   externalSecrets:
-    dbcreds: "canineprod-arborist"
+    dbcreds: canineprod-arborist
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: master
-
+    tag: '2026.01'
 aws-es-proxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "canineprod-aws-es-proxy-creds"
+    awsCreds: canineprod-aws-es-proxy-creds
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: master
-
 indexd:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  defaultPrefix: "dg.C78ne/"
+      memory: 105Mi
+      cpu: 15m
+  defaultPrefix: dg.C78ne/
   externalSecrets:
-    dbcreds: "canineprod-indexd"
-    serviceCreds: "canineprod-indexd-service-creds"
+    dbcreds: canineprod-indexd
+    serviceCreds: canineprod-indexd-service-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: master
-
+    tag: '2026.01'
 peregrine:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-peregrine"
+    dbcreds: canineprod-peregrine
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: master
+    tag: '2026.01'
     pullPolicy: Always
-
 revproxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: master
-
+    tag: '2026.01'
 sheepdog:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-sheepdog"
+    dbcreds: canineprod-sheepdog
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: master
-
+    tag: '2026.01'
 manifestservice:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    manifestserviceG3auto: "canine-manifestservice-g3auto"
-
+    manifestserviceG3auto: canine-manifestservice-g3auto
 etl:
   enabled: true
   spark:
@@ -132,58 +116,135 @@ etl:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
       tag: master
-
 sower:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    pelicanserviceG3auto: "canine-pelicanservice-g3auto"
-
+    pelicanserviceG3auto: canine-pelicanservice-g3auto
 ssjdispatcher:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: master
-
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01
 metadata:
-  # Lower cost
   initResources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "canineprod-metadata"
-    metadataG3auto: "canine-metadata-g3auto"
+    dbcreds: canineprod-metadata
+    metadataG3auto: canine-metadata-g3auto
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: master
-
-# disabling workspace services
+    tag: '2026.01'
 ambassador:
-  enabled: false
+  jupyterNamespace: jupyter-pods-canine
 wts:
-  enabled: false
+  enabled: true
+  externalSecrets:
+    createWtsOidcClientSecret: false
+    wtsG3auto: caninedc-wts-g3auto
+    wtsOidcClient: caninedc-wts-client-secret
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
+    tag: '2026.01'
 hatchery:
-  enabled: false
-
-# disabling audit service
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2026.01'
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods-canine",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.11",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "caninedc.org"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "/sidecarDockerrun.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "memory-limit": "16Gi",
+            "name": "Jupyter Workspace",
+            "image": "quay.io/cdis/jupyter-notebook:covid19-1.3.2",
+            "env": {
+              "DISABLE_AUTH": "true",
+              "NAMESPACE": "default",
+              "HOSTNAME": "caninedc.org,
+              "FRAME_ANCESTORS": "https://caninedc.org"
+            },
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy",
+              "--ServerApp.default_url=/lab/tree/welcome.html",
+              "--ServerApp.shutdown_no_activity_timeout=240",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.allow_remote_access=True"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "user-volume-location": "/home/jovyan/pd",
+            "fs-gid": 100
+          },
+          {
+            "target-port": 8787,
+            "cpu-limit": "1.0",
+            "memory-limit": "1024Mi",
+            "name": "R Studio-3.6",
+            "image": "quay.io/cdis/rstudio3.6:rstudio3.6-1.0.0",
+            "env": {
+              "DISABLE_AUTH": "true"
+            },
+            "args": [],
+            "path-rewrite": "/",
+            "use-tls": "false",
+            "ready-probe": "/",
+            "user-volume-location": "/home/rstudio/pd",
+            "fs-gid": 100
+          }
+        ]
+      }
 audit:
   enabled: false

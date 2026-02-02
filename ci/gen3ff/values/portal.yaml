@@ -1,0 +1,879 @@
+portal:
+  enabled: false
+  # replicaCount: 2
+  resources:
+    limits:
+      memory: 6Gi
+    requests:
+      cpu: 4
+      memory: 6Gi
+  image:
+    repository: quay.io/cdis/data-portal
+    tag: master
+  gitops:
+    json: |
+      {
+        "argoTemplate": "gwas-template",
+        "graphql": {
+          "boardCounts": [
+          ],
+          "chartCounts": [
+          ],
+          "projectDetails": "boardCounts"
+        },
+        "useArboristUI": true,
+        "showArboristAuthzOnProfile": true,
+        "showFenceAuthzOnProfile": false,
+        "componentToResourceMapping": {
+          "Workspace": {
+            "resource": "/workspace",
+            "method": "access",
+            "service": "jupyterhub"
+          },
+          "Query": {
+            "resource": "/query_page",
+            "method": "access",
+            "service": "query_page"
+          },
+          "Send Queries": {
+            "resource": "/query_page",
+            "method": "access",
+            "service": "query_page"
+          },
+          "Data Dictionary": {
+            "resource": "/dictionary_page",
+            "method": "access",
+            "service": "dictionary_page"
+          },
+          "Dictionary": {
+            "resource": "/dictionary_page",
+            "method": "access",
+            "service": "dictionary_page"
+          }
+        },
+        "components": {
+          "appName": "BloodPAC Metadata Submission Portal",
+          "index": {
+            "introduction": {
+              "heading": "BloodPAC Data Commons",
+              "text": "The Blood Profiling Atlas in Cancer (BloodPAC) supports the management, analysis and sharing of liquid biopsy data for the oncology research community and aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for cancer treatment and prevention. The data commons supports cross-project analyses by harmonizing data from different projects through the collaborative development of a data dictionary, providing an API for data queries and download, and providing a cloud-based analysis workspace with rich tools and resources.",
+              "link": "/submission"
+            },
+            "homepageChartNodes": [{
+                "node": "subject",
+                "name": "Subjects"
+              }
+            ],
+            "buttons": [{
+                "name": "Data Dictionary",
+                "icon": "data-field-define",
+                "body": "The BloodPAC Data Commons employs a data model to power queries and data submissions. Study the dictionary to send GraphQL queries or format your data submissions.",
+                "link": "/DD",
+                "label": "Learn more"
+              },
+              {
+                "name": "Submit Data",
+                "icon": "data-submit",
+                "body": "Browse the list of submitted data projects, or find your project and submit data.",
+                "link": "/submission",
+                "label": "Submit data"
+              },
+              {
+                "name": "Explore Data",
+                "icon": "data-files",
+                "body": "The Exploration app enables faceted search for cohort building, getting file download manifests, and browsing data across projects.",
+                "link": "/explorer",
+                "label": "Exploration"
+              },
+              {
+                "name": "Send Queries",
+                "icon": "data-access",
+                "body": "Build and send your own custom GraphQL queries to the database to pinpoint specific data.",
+                "link": "/query",
+                "label": "Send Queries"
+              },
+              {
+                "icon": "analysis",
+                "link": "/analysis",
+                "color": "#a2a2a2",
+                "name": "Apps"
+              }
+            ]
+          },
+          "navigation": {
+            "title": "BloodPAC Data Commons",
+            "items": [
+              {
+                "icon": "query",
+                "link": "/discovery",
+                "name": "Discovery",
+                "tooltip": "Use free-text search and tags to rapidly find relevant studies, discover new datasets across multiple resources, and easily export selected data files to the analysis workspace."
+              },
+              {
+                "icon": "exploration",
+                "link": "/explorer",
+                "color": "#a2a2a2",
+                "name": "Exploration"
+              },
+              {
+                "icon": "query",
+                "link": "/study-viewer/clinical_trials",
+                "color": "#a2a2a2",
+                "name": "Study Viewer"
+              },
+              {
+                "icon": "workspace",
+                "link": "/workspace",
+                "color": "#a2a2a2",
+                "name": "Workspace"
+              },
+              {
+                "icon": "dictionary",
+                "link": "/DD",
+                "color": "#a2a2a2",
+                "name": "Dictionary"
+              },
+              {
+                "icon": "analysis",
+                "link": "/analysis",
+                "color": "#a2a2a2",
+                "name": "Apps"
+              },
+              {
+                "icon": "query",
+                "link": "/query",
+                "color": "#a2a2a2",
+                "name": "Query"
+              },
+              {
+                "icon": "profile",
+                "link": "/identity",
+                "color": "#a2a2a2",
+                "name": "Profile"
+              }
+            ]
+          },
+          "topBar": {
+            "items": [{
+                "link": "https://bloodpac.org/",
+                "name": "About"
+              },
+              {
+                "icon": "upload",
+                "link": "/submission",
+                "name": "Submit Data"
+              },
+              {
+                "link": "main@example.org",
+                "name": "Email Support"
+              }
+            ],
+            "useProfileDropdown": false
+          },
+          "login": {
+            "title": "BloodPAC Data Commons",
+            "subTitle": "Explore, Analyze, and Share Data",
+            "text": "This website combines liquid biopsy data from academic, government, and industry partners and aims to accelerate discovery and development of therapies, diagnostic tests, and other technologies for the treatment and prevention of cancer.",
+            "contact": "If you have any questions about access or the registration process, please contact ",
+            "email": "main@example.org"
+          },
+          "certs": {
+            "security_quiz": {
+              "hasCorrectAnswers": true,
+              "title": "BloodPAC User agreement",
+              "description": "",
+              "questions": [{
+                "name": "",
+                "question": "NOTICE:  To protect the system from unauthorized use and to ensure that the system is functioning, activities on this system are monitored and recorded and subject to audit.  Use of this system is express consent to such monitoring and recording.  Any unauthorized access or use of this system is prohibited.  You may only use this system if you have been designated as an Authenticated Individual by your company or institution.  You may not use the system in any way that is inconsistent with the agreements between CCSR and your company or institution. Please pay particular attention to the restrictions on controlled access data and transfer it in an approved secure manner.",
+                "options": ["I agree"],
+                "answer": 0,
+                "hint": "Click on I agree"
+              }]
+            }
+          }
+        },
+        "featureFlags": {
+          "explorer": true,
+          "analysis": true,
+          "explorerPublic": true,
+          "discovery": true,
+          "discoveryUseAggMDS": true,
+          "studyRegistration": true
+        },
+        "analysisTools": [
+          {
+            "title": "OHDSI Atlas",
+            "description": "Use this App for cohort creation. These will be automatically populated in the Gen3 GWAS App",
+            "applicationUrl": "https://atlas.qa-mickey.planx-pla.net/atlas/",
+            "image": "/custom/sponsors/gitops-sponsors/atlas-logo.png"
+          },
+          {
+            "appId": "GWASUIApp",
+            "title": "Gen3 GWAS",
+            "description": "Use this App to perform high throughput GWAS on Million Veteran Program (MVP) data, using the University of Washington Genesis pipeline",
+            "image": "/src/img/analysis-icons/gwas.svg",
+            "needsTeamProject": true
+          },
+          {
+            "appId": "GWASResults",
+            "title": "GWAS Results",
+            "description": "Use this App to view status & results of submitted workflows",
+            "image": "/src/img/analysis-icons/gwasResults.svg",
+            "needsTeamProject": true
+          }
+        ],
+        "discoveryConfig": {
+          "features": {
+            "advSearchFilters": {
+              "enabled": false,
+              "field": "advSearchFilters",
+              "filters": [
+                { "key": "Research Focus Area" },
+                { "key": "Administering IC(s)" },
+                { "key": "Simulated vs. Real Data" },
+                { "key": "Year Grant Awarded" },
+                { "key": "Study Description" }
+              ]
+            },
+            "exportToWorkspace": {
+              "enabled": true,
+              "manifestFieldName": "__manifest",
+              "downloadManifestButtonText": "Download",
+              "enableDownloadManifest": false,
+              "downloadZipButtonText": "Download Zip",
+              "enableDownloadZip": true
+            },
+            "pageTitle": {
+              "enabled": false
+            },
+            "search": {
+              "searchBar": {
+                "enabled": true,
+                "searchableTextFields": [
+                  "summary",
+                  "location",
+                  "study_name",
+                  "institutions",
+                  "investigators",
+                  "project_title",
+                  "project_number",
+                  "dataset_1_title",
+                  "dataset_2_title",
+                  "dataset_3_title",
+                  "dataset_4_title",
+                  "administering_ic",
+                  "research_program",
+                  "research_question",
+                  "dataset_description",
+                  "dataset_1_description",
+                  "dataset_2_description",
+                  "dataset_3_description",
+                  "dataset_4_description",
+                  "data_dictionary"
+                ]
+              }
+            },
+            "authorization": {
+              "enabled": true,
+              "supportedValues": {
+                "accessible": {
+                  "enabled": true,
+                  "menuText": "Accessible"
+                },
+                "unaccessible": {
+                  "enabled": true,
+                  "menuText": "Not Accessible"
+                },
+                "pending": {
+                  "enabled": false
+                },
+                "notAvailable": {
+                  "enabled": false
+                }
+              }
+            }
+          },
+          "aggregations": [
+              {
+                  "name": "Studies",
+                  "field": "project_number",
+                  "type": "count"
+              }
+          ],
+          "tagSelector": {
+            "title": "Tags by category",
+            "showTagCategoryNames": true
+          },
+          "studies": [],
+          "studyColumns": [
+            {
+              "name": "Project Title",
+              "field": "project_title",
+              "errorIfNotAvailable": false,
+              "valueIfNotAvailable": "n/a"
+            },
+            {
+              "name": "Research Focus Area",
+              "field": "research_focus_area",
+              "errorIfNotAvailable": false,
+              "valueIfNotAvailable": "n/a"
+            },
+            {
+              "name": "Investigator(s)",
+              "field": "investigators",
+              "errorIfNotAvailable": false,
+              "valueIfNotAvailable": "n/a"
+            }
+          ],
+          "studyPreviewField": {
+            "name": "Summary",
+            "field": "summary",
+            "contentType": "string",
+            "includeName": false,
+            "includeIfNotAvailable": true,
+            "valueIfNotAvailable": "No summary has been provided for this study."
+          },
+          "studyPageFields": {
+            "header": {
+              "field": "project_title"
+            },
+            "fieldsToShow": [
+              {
+                "groupName": "HEAL Research Initiatives",
+                "groupWidth": "full",
+                "includeName": false,
+                "fields": [
+                  {
+                    "name": "Project Number",
+                    "field": "project_number"
+                  },
+                  {
+                    "name": "Research Focus Area",
+                    "field": "research_focus_area"
+                  },
+                  {
+                    "name": "Research Program",
+                    "field": "research_program"
+                  },
+                  {
+                    "name": "Research Question",
+                    "field": "research_question"
+                  }
+                ]
+              },
+              {
+                "groupName": "Host Institution",
+                "groupWidth": "half",
+                "includeName": false,
+                "fields": [
+                  {
+                    "name": "Institution(s)",
+                    "field": "institutions"
+                  },
+                  {
+                    "name": "Location",
+                    "field": "location"
+                  },
+                  {
+                    "name": "Investigator(s)",
+                    "field": "investigators"
+                  },
+                  {
+                    "name": "Administering IC(s)",
+                    "field": "administering_ic"
+                  },
+                  {
+                    "name": "Year Grant Awarded",
+                    "field": "year_awarded"
+                  }
+                ]
+              },
+              {
+                "groupName": "Clinical Trial",
+                "groupWidth": "half",
+                "includeName": false,
+                "fields": [
+                  {
+                    "name": "Study Type",
+                    "field": "study_type"
+                  },
+                  {
+                    "name": "Study Name",
+                    "field": "study_name"
+                  },
+                  {
+                    "name": "Study Description",
+                    "field": "study_description"
+                  },
+                  {
+                    "name": "Number of Subjects",
+                    "field": "subjects"
+                  },
+                  {
+                    "name": "Number of Sites",
+                    "field": "sites"
+                  },
+                  {
+                    "name": "Clinical Trial Link",
+                    "field": "clinical_trial_link"
+                  },
+                  {
+                    "name": "Protocol Name",
+                    "field": "protocol_name"
+                  },
+                  {
+                    "name": "Dataset Description",
+                    "field": "dataset_description"
+                  },
+                  {
+                    "name": "Dataset Category",
+                    "field": "dataset_category"
+                  }
+                ]
+              },
+              {
+                "groupName": "Tags",
+                "includeName": false,
+                "groupWidth": "full",
+                "fields": [
+                  {
+                    "name": "Tags",
+                    "field": "tags",
+                    "contentType": "tags",
+                    "includeIfNotAvailable": false
+                  }
+                ]
+              },
+              {
+                "groupWidth": "full",
+                "fields": [
+                  {
+                    "name": "Summary",
+                    "field": "summary",
+                    "contentType": "paragraphs",
+                    "includeName": true,
+                    "includeIfNotAvailable": true,
+                    "valueIfNotAvailable": "No summary has been provided for this study."
+                  }
+                ]
+              },
+              {
+                "groupName": "Datasets",
+                "groupWidth": "full",
+                "includeName": false,
+                "fields": [
+                  {
+                    "name": "Dataset 1 - Title",
+                    "field": "dataset_1_title"
+                  },
+                  {
+                    "name": "Dataset 1 - Description",
+                    "field": "dataset_1_description"
+                  },
+                  {
+                    "name": "Dataset 1 - Type",
+                    "field": "dataset_1_type"
+                  },
+                  {
+                    "name": "Dataset 2 - Title",
+                    "field": "dataset_2_title"
+                  },
+                  {
+                    "name": "Dataset 2 - Description",
+                    "field": "dataset_2_description"
+                  },
+                  {
+                    "name": "Dataset 2 - Type",
+                    "field": "dataset_2_type"
+                  },
+                  {
+                    "name": "Dataset 3 - Title",
+                    "field": "dataset_3_title"
+                  },
+                  {
+                    "name": "Dataset 3 - Description",
+                    "field": "dataset_3_description"
+                  },
+                  {
+                    "name": "Dataset 3 - Type",
+                    "field": "dataset_3_type"
+                  },
+                  {
+                    "name": "Dataset 4 - Title",
+                    "field": "dataset_4_title"
+                  },
+                  {
+                    "name": "Dataset 4 - Description",
+                    "field": "dataset_4_description"
+                  },
+                  {
+                    "name": "Dataset 4 - Type",
+                    "field": "dataset_4_type"
+                  },
+                  {
+                    "name": "Dataset 5 - Title",
+                    "field": "dataset_5_title"
+                  },
+                  {
+                    "name": "Dataset 5 - Description",
+                    "field": "dataset_5_description"
+                  },
+                  {
+                    "name": "Dataset 5 - Type",
+                    "field": "dataset_5_type"
+                  }
+                ]
+              }
+            ]
+          },
+          "minimalFieldMapping": {
+            "authzField": "authz",
+            "tagsListFieldName": "tags",
+            "dataAvailabilityField": "data_availability",
+            "uid": "project_number"
+          },
+          "tagCategories": [
+            {
+              "name": "Demographic Info",
+              "color": "rgba(64, 34, 100, 1)",
+              "display": true
+            },
+            {
+              "name": "Study Design",
+              "color": "rgba(153, 40, 107, 1)",
+              "display": true
+            },
+            {
+              "name": "HEAL Specific",
+              "color": "rgba(161, 36, 46, 1)",
+              "display": true
+            },
+            {
+              "name": "Other",
+              "color": "rgba(207, 54, 38, 1)",
+              "display": true
+            },
+            {
+              "name": "Commons",
+              "displayName": "Data Resources",
+              "color": "rgba(21, 6, 76, 1)"
+            }
+          ]
+        },
+        "studyViewerConfig": [
+          {
+          "dataType": "subject",
+          "title": "Studies",
+          "titleField": "project_id",
+          "rowAccessor": "submitter_id",
+          "listItemConfig": {
+            "blockFields": ["project_id"],
+            "tableFields": ["data_type"]
+          },
+          "fieldMapping": [
+            { "field": "category", "name": "Study Type"},
+            { "field": "project_id", "name": "Project_ID"},
+            { "field": "data_type", "name": "Data_Type"},
+            { "field": "condition", "name": "Condition"}
+          ],
+          "openMode": "close-all",
+          "buttons": [
+            {
+              "type": "download"
+            },
+            {
+              "type": "request_access",
+              "resourceDisplayNameField": "title",
+              "accessRequestedText": "DAR In Progress",
+              "accessRequestedTooltipText": "Your recently submitted DAR is being reviewed by NIAID"
+            }]
+          }
+        ],
+        "explorerConfig": [
+        {
+          "tabTitle": "Data",
+          "charts": {
+            "project_id": {
+              "chartType": "count",
+              "title": "Projects"
+            }
+          },
+          "filters": {
+            "tabs": [
+              {
+                "title": "Project",
+                "fields": [
+                  "project_id",
+                  "data_type",
+                  "data_format"
+                ]
+              }
+            ]
+          },
+          "table": {
+            "enabled": true,
+            "fields": [
+              "project_id",
+              "data_format"
+            ]
+          },
+          "dropdowns": {
+            "download": {
+              "title": "Download"
+            }
+          },
+          "buttons": [
+            {
+              "enabled": true,
+              "type": "export-to-pfb",
+              "title": "Export to PFB",
+              "leftIcon": "datafile",
+              "rightIcon": "download"
+            },
+            {
+              "enabled": true,
+              "type": "export-to-workspace",
+              "title": "Export to Workspace",
+              "leftIcon": "datafile",
+              "rightIcon": "download"
+            }
+          ],
+          "loginForDownload": true,
+          "guppyConfig": {
+            "dataType": "subject",
+            "nodeCountTitle": "Subjects",
+            "fieldMapping": [
+              { "field": "disease_id", "name": "Disease ID" },
+              { "field": "age_of_onset", "name": "Age of Onset" },
+              { "field": "project_dbgap_accession_number", "name": "Project dbGaP Accession Number" },
+              { "field": "project_dbgap_consent_text", "name":"Project dbGaP Consent Text"},
+              { "field": "project_dbgap_phs", "name":"Project dbGaP Phs"}
+            ],
+            "manifestMapping": {
+              "resourceIndexType": "file",
+              "resourceIdField": "object_id",
+              "referenceIdFieldInResourceIndex": "_subject_id",
+              "referenceIdFieldInDataIndex": "_subject_id"
+            },
+            "accessibleFieldCheckList": [
+              "project_id"
+            ],
+            "accessibleValidationField": "project_id"
+          }
+        },
+        {
+          "tabTitle": "File",
+          "charts": {
+            "data_type": {
+              "chartType": "stackedBar",
+              "title": "File Type"
+            },
+            "data_format": {
+              "chartType": "stackedBar",
+              "title": "File Format"
+            }
+          },
+          "filters": {
+            "tabs": [
+              {
+                "title": "File",
+                "fields": [
+                  "project_id",
+                  "data_category",
+                  "data_type",
+                  "data_format"
+                ],
+                "searchFields": [
+                  "file_name"
+                ]
+              }
+            ]
+          },
+          "table": {
+            "enabled": true,
+            "fields": [
+              "project_id",
+              "file_name",
+              "file_size",
+              "object_id"      ]
+          },
+          "loginForDownload": true,
+          "guppyConfig": {
+            "dataType": "file",
+            "fieldMapping": [
+              {
+                "field": "object_id",
+                "name": "GUID"
+              },
+              {
+                "field": "programs_name",
+                "name": "Program"
+              }
+            ],
+            "nodeCountTitle": "Files",
+            "manifestMapping": {
+              "resourceIndexType": "subject",
+              "resourceIdField": "_subject_id",
+              "referenceIdFieldInResourceIndex": "object_id",
+              "referenceIdFieldInDataIndex": "object_id"
+            },
+            "accessibleFieldCheckList": [
+              "project_id"
+            ],
+            "accessibleValidationField": "project_id",
+            "downloadAccessor": "object_id"
+          },
+          "buttons": [
+            {
+              "enabled": true,
+              "type": "file-manifest",
+              "title": "Download Manifest",
+              "leftIcon": "datafile",
+              "rightIcon": "download",
+              "fileName": "file-manifest.json",
+              "dropdownId": "download"
+            },
+            {
+              "enabled": true,
+              "type": "export-files-to-workspace",
+              "title": "Export to Workspace",
+              "leftIcon": "datafile",
+              "rightIcon": "download"
+            },
+            {
+              "enabled": true,
+              "type": "export-files-to-pfb",
+              "title": "Export All to PFB",
+              "rightIcon": "external-link"
+            }
+          ],
+          "enableLimitedFilePFBExport": {
+            "sourceNodeField": "source_node"
+          },
+          "dropdowns": {}
+        },
+        {
+            "tabTitle": "Imaging Studies",
+            "charts": {},
+            "filters": {
+                "tabs": [
+                {
+                    "title": "Study Properties",
+                    "searchFields": [
+                    "study_uid"
+                    ],
+                    "fields": [
+                    "study_modality",
+                    "study_description",
+                    "age_at_imaging",
+                    "study_year",
+                    "study_year_shifted",
+                    "body_part_examined",
+                    "days_from_study_to_pos_covid_test",
+                    "days_from_study_to_neg_covid_test",
+                    "project_id"
+                    ]
+                }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                "submitter_id",
+                "study_uid",
+                "case_ids",
+                "object_id",
+                "project_id"
+                ],
+                "dicomViewerId": "submitter_id",
+                "dicomViewerUrl": "ohif-viewer",
+                "linkFields": [
+                "submitter_id"
+                ]
+            },
+            "dropdowns": {
+                "download-table": {
+                "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                "enabled": true,
+                "type": "data-json",
+                "title": "JSON",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "Imaging_Studies_table.json"
+                },
+                {
+                "enabled": true,
+                "type": "data-tsv",
+                "title": "TSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "Imaging_Studies_table.tsv"
+                },
+                {
+                "enabled": true,
+                "type": "data-csv",
+                "title": "CSV",
+                "dropdownId": "download-table",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "Imaging_Studies_table.csv"
+                },
+                {
+                "enabled": true,
+                "type": "manifest",
+                "title": "Download File Manifest for Imaging Studies",
+                "leftIcon": "datafile",
+                "rightIcon": "download",
+                "fileName": "imaging_study_manifest.json"
+                },
+                {
+                "enabled": false,
+                "type": "export-to-workspace",
+                "title": "Export to Workspace",
+                "leftIcon": "datafile",
+                "rightIcon": "download"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "imaging_study",
+                "nodeCountTitle": "Imaging Studies",
+                "fieldMapping": [
+                {
+                    "field": "project_id",
+                    "name": "Project ID"
+                },
+                {
+                    "field": "study_uid",
+                    "name": "Study UID"
+                },
+                {
+                    "field": "submitter_id",
+                    "name": "Browse in DICOM viewer"
+                },
+                {
+                    "field": "case_ids",
+                    "name": "Patient ID"
+                }
+                ],
+                "manifestMapping": {
+                "resourceIndexType": "data_file",
+                "resourceIdField": "object_id",
+                "referenceIdFieldInResourceIndex": "_imaging_study_id",
+                "referenceIdFieldInDataIndex": "_imaging_study_id",
+                "useFilterForCounts": false
+                },
+                "accessibleFieldCheckList": [
+                "project_id"
+                ],
+                "accessibleValidationField": "project_id"
+            }
+        }
+        ]
+      }

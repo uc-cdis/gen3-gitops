@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.09'
+    tag: '2026.01'
 audit:
   externalSecrets:
     auditG3auto: midrcvalidate-audit-g3auto
@@ -19,7 +19,7 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--midrcvalidate-helm--audit-sqs-receiver
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.09'
+    tag: '2026.01'
 aws-es-proxy:
   replicaCount: 4
   autoscaling:
@@ -36,7 +36,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.09'
+    tag: '2026.01'
 dashboard:
   dashboardConfig:
     bucket: dashboard-813684607867-midrcprod-gen3
@@ -44,7 +44,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.08'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--midrcvalidate-helm--dashboard-access
@@ -452,9 +452,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2025.09'
+      tag: '2026.01'
     spark:
-      tag: '2025.09'
+      tag: '2026.01'
 fence:
   serviceAccount:
     annotations:
@@ -472,7 +472,7 @@ fence:
     fenceJwtKeys: midrcvalidate-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.09'
+    tag: '2026.01'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrcvalidate/user.yaml
@@ -492,13 +492,11 @@ global:
       enabled: true
       roleArn: arn:aws:iam::813684607867:role/midrcvalidate-external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcvalidate-waf/0aba6cf0-a77b-41d1-9ab1-3280add64a25"
+      wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcvalidate-waf/0aba6cf0-a77b-41d1-9ab1-3280add64a25
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.0/schema.json
-  dispatcherJobNum: "10"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
+  dispatcherJobNum: '10'
   environment: midrcvalidate
   externalSecrets:
     deploy: true
@@ -530,7 +528,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.09'
+    tag: '2026.01'
   indices:
     - index: validate_case
       type: case
@@ -557,7 +555,7 @@ indexd:
     serviceCreds: midrcvalidate-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.09'
+    tag: '2026.01'
 manifestservice:
   enabled: false
 metadata:
@@ -573,7 +571,7 @@ metadata:
     metadataG3auto: midrcvalidate-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.09'
+    tag: '2026.01'
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -586,7 +584,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.09'
+    tag: '2026.01'
 portal:
   replicaCount: 4
   autoscaling:
@@ -597,12 +595,12 @@ portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "midrcvalidate/validate.midrc.org/values/portal/"
+    dir: midrcvalidate/validate.midrc.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.09'
+    tag: '2026.01'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -613,7 +611,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.09'
+    tag: '2026.01'
   ingress:
     aws:
       group: midrcvalidate
@@ -627,12 +625,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.09'
-spark:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.08'
+    tag: '2026.01'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -645,12 +638,7 @@ ssjdispatcher:
     credsFile: midrcvalidate-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.09'
-  indexing: quay.io/cdis/indexs3client:2025.09
-tube:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.08'
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01
 wts:
   enabled: false

@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.10'
+    tag: '2025.12'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healpreprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.10'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-receiver
@@ -45,7 +45,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.10'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--dashboard-access
@@ -72,7 +72,7 @@ fence:
     fenceJwtKeys: healpreprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.10'
+    tag: '2025.12'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-healpreprod-205252583234-upload:
@@ -102,7 +102,13 @@ fence:
         cred: fence_bot
         requester_pays: true
         region: us-east-1
+      sparc-prod-aod-discover-publish50-use1:
+        cred: fence_bot
+        requester_pays: true
+        region: us-east-1
     DATA_UPLOAD_BUCKET: healprod-healpreprod-205252583234-upload
+    HIDE_IDPS:
+      - https://shib2.swmed.edu/idp/shibboleth
 fluentd:
   enabled: true
   image:
@@ -112,7 +118,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.2.4
+    tag: 1.2.6
 global:
   pdb: true
   aws:
@@ -150,13 +156,17 @@ global:
 hatchery:
   enabled: true
   externalSecrets:
-    stataG3auto: "stata-workspace-gen3-license-preprod-heal"
+    stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.5.0'
+    tag: '2025.12'
   hatchery:
     json: |-
       {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "user-namespace": "jupyter-pods-healpreprod",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
@@ -165,14 +175,16 @@ hatchery:
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
           "account_id": "252835817747",
-          "workspace_type": "healworkspaces"
+          "workspace_type": "healworkspaces",
+          "hard-limit": 5,
+          "soft-limit": 4
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-preprod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.0",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
           "env": {
             "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
@@ -198,13 +210,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__bb4d2742a47421509769356c893834b3787ecb05",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__22b87f36c49ad9273ca12ad268c31cf3ddd24fb6",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -239,7 +251,7 @@ hatchery:
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/welcome.html",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -312,13 +324,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__671078c1e6fee0cd5621772027015529367e98a9",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__1e5cd5b378fbb2937cfa4aaef7becf63c4ac68f5",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -357,14 +369,14 @@ indexd:
     serviceCreds: healpreprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.10'
+    tag: '2025.12'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healpreprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.10'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--manifest-service-sa
@@ -1394,9 +1406,9 @@ metadata:
     metadataG3auto: healpreprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.10'
+    tag: '4.1.0'
   useAggMds: true
-  schedule: "30 8 * * *"
+  schedule: 30 8 * * *
   suspendCronjob: false
 mutatingWebhook:
   enabled: false
@@ -1404,7 +1416,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.10'
+    tag: '2025.12'
 portal:
   enabled: true
   dataUploadBucket: healprod-healpreprod-205252583234-upload
@@ -1417,12 +1429,12 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.10'
+    tag: '2025.12'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.10'
+    tag: '2025.12'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1433,7 +1445,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.10'
+    tag: '2025.12'
   ingress:
     aws:
       group: healprod
@@ -1441,7 +1453,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.10'
+    tag: '2025.12'
   replicaCount: 4
 sower:
   enabled: true
@@ -1450,7 +1462,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.10'
+    tag: '2025.12'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1464,7 +1476,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: preprod-healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2025.10
+        image: quay.io/cdis/batch-export:2025.12
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1486,8 +1498,8 @@ ssjdispatcher:
     credsFile: healpreprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.10'
-  indexing: quay.io/cdis/indexs3client:2025.10
+    tag: '2025.12'
+  indexing: quay.io/cdis/indexs3client:2025.12
 wts:
   enabled: true
   externalSecrets:
@@ -1496,4 +1508,4 @@ wts:
     wtsOidcClient: healpreprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.10'
+    tag: '2025.12'

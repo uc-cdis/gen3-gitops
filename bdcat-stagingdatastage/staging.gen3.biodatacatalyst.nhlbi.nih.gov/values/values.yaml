@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2025.10'
+    tag: '2025.12'
   externalSecrets:
     accessBackendG3auto: stagingdatastage-access-backend-g3auto
     dbcreds: stagingdatastage-access-backend-dbcreds
@@ -19,14 +19,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.10'
+    tag: '2025.12'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: stagingdatastage-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.10'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/stagingdatastage--stagingdatastage-helm--audit-sqs-receiver
@@ -40,7 +40,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.10'
+    tag: '2025.12'
 dashboard:
   dashboardConfig:
     bucket: dashboard-895962626746-stagingdatastage-gen3
@@ -207,9 +207,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2025.10'
+      tag: '2025.12'
     spark:
-      tag: '2025.10'
+      tag: '2025.12'
 fence:
   serviceAccount:
     annotations:
@@ -229,15 +229,15 @@ fence:
     fenceJwtKeys: stagingdatastage-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '12.1.0'
+    tag: '2025.12'
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: https://biodatacatalyst.nhlbi.nih.gov/privacy/
     LOGIN_OPTIONS:
-      - name: 'NIH Login'
+      - name: NIH Login
         idp: ras
-      - name: 'BioData Catalyst Developer Login'
+      - name: BioData Catalyst Developer Login
         idp: google
-      - name: 'BioData Catalyst Public Login'
+      - name: BioData Catalyst Public Login
         idp: google
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
@@ -252,7 +252,6 @@ fence:
       sftp-private.ncbi.nlm.nih.gov ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFM24A4pG3U+8HzCvEkm9SiEWHOAtQr/DFZd3bf7VYDCcg2FPpUvGRsiDSuzhzBo+eG00d6/6y8NCypWwjiMi1rYgBOh9YA0w/ruutXYMUUVzw361lTgjOBOZ/dt3gKkNgShwDd0e1hnjYk/E7jYc2YJv67ZFy9GzXCWR55LhS/7fGQ5w==
       # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
       # sftp-private.ncbi.nlm.nih.gov:22 SSH-2.0-FTP Server ready.
-
 fluentd:
   enabled: true
   image:
@@ -262,12 +261,12 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: main
+    tag: 1.2.0
 gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2025.10'
+    tag: '2025.12'
   externalSecrets:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
@@ -282,10 +281,8 @@ global:
       enabled: true
       roleArn: arn:aws:iam::895962626746:role/stagingdatastage-external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d"
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: '10'
@@ -320,7 +317,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.10'
+    tag: '2025.12'
   indices:
     - index: staging.gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -504,7 +501,7 @@ hatchery:
       ]
     }
   image:
-    tag: '2025.10'
+    tag: '2025.12'
 indexd:
   defaultPrefix: dg.4503/
   replicaCount: 4
@@ -518,7 +515,7 @@ indexd:
     serviceCreds: stagingdatastage-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.10'
+    tag: '2025.12'
 manifestservice:
   enabled: false
   externalSecrets:
@@ -539,7 +536,7 @@ metadata:
     metadataG3auto: stagingdatastage-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.10'
+    tag: '2025.12'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -555,7 +552,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.10'
+    tag: '2025.12'
 portal:
   replicaCount: 4
   autoscaling:
@@ -566,13 +563,13 @@ portal:
   enabled: true
   customConfig:
     enabled: true
-    dir: "bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/"
+    dir: bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: 'feature_data_library'
-    pullPolicy: 'Always'
+    pullPolicy: Always
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -583,7 +580,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.10'
+    tag: '2025.12'
   ingress:
     aws:
       group: stagingdatastage
@@ -597,7 +594,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.10'
+    tag: '2025.12'
 sower:
   enabled: true
   externalSecrets:
@@ -607,7 +604,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.10'
+    tag: '2025.12'
   sowerConfig:
     - action: export
       container:
@@ -650,7 +647,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.12
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -709,7 +706,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2025.12
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -734,7 +731,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -760,7 +757,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.12
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -787,8 +784,8 @@ ssjdispatcher:
     credsFile: stagingdatastage-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.10'
-  indexing: quay.io/cdis/indexs3client:2025.10
+    tag: '2025.12'
+  indexing: quay.io/cdis/indexs3client:2025.12
 tube:
   enabled: true
   image:

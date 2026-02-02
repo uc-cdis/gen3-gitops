@@ -21,19 +21,19 @@ jobs:
           python-version: '3.9'
           check-latest: true
 
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.7.0
+      # - name: Set up chart-testing
+      #   uses: helm/chart-testing-action@v2.7.0
 
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed --config ct.yaml)
-          if [[ -n "$changed" ]]; then
-            echo "changed=true >> $GITHUB_OUTPUT"
-          fi
+      # - name: Run chart-testing (list-changed)
+      #   id: list-changed
+      #   run: |
+      #     changed=$(ct list-changed --config ct.yaml)
+      #     if [[ -n "$changed" ]]; then
+      #       echo "changed=true >> $GITHUB_OUTPUT"
+      #     fi
 
-      - name: Run chart-testing (lint)
-        run: ct lint --config ct.yaml
+      # - name: Run chart-testing (lint)
+      #   run: ct lint --config ct.yaml
 
       - name: Validate Helm Templates for All Charts
         run: |
@@ -130,4 +130,59 @@ jobs:
             else
               echo "No app.yaml found in $chart_dir/templates/; skipping..."
             fi
+          done
+
+      - name: Set up Kubeconform
+        id: setup-kubeconform
+        uses: bmuschko/setup-kubeconform@v1
+        with:
+          kubeconform-version: '0.6.1'
+
+      - name: Print Kubeconform installation path
+        env:
+          KUBECONFORM_INSTALLATION_PATH: ${{ steps.setup-kubeconform.outputs.installation-path }}
+        run: |
+            echo "Kubeconform installed..."
+            echo "Installation path: ${KUBECONFORM_INSTALLATION_PATH}"
+        shell: bash
+
+      - name: Kubeconform Validate app.yaml
+        run: |
+          #!/usr/bin/env bash
+          set -euo pipefail
+
+          # Resolve a sane base ref (works on PRs and pushes)
+          resolve_base() {
+            if [[ -n "${GITHUB_BASE_REF:-}" ]]; then echo "origin/${GITHUB_BASE_REF}"; return; fi
+            for b in origin/main origin/master main master; do
+              git rev-parse --verify --quiet "$b" >/dev/null && { echo "$b"; return; }
+            done
+            git rev-parse --verify --quiet origin/HEAD >/dev/null \
+              && git symbolic-ref --quiet --short refs/remotes/origin/HEAD \
+              | awk -F/ '{print "origin/"$2}' && return
+            git rev-list --max-parents=0 HEAD | head -n1
+          }
+          BASE_REF="$(resolve_base)"
+          MERGE_BASE="$(git merge-base HEAD "$BASE_REF" 2>/dev/null || echo "$BASE_REF")"
+
+          # Find changed YAML files that look like Argo Applications
+          mapfile -t APP_FILES < <(
+            git diff --name-only --diff-filter=ACMRT "$MERGE_BASE"...HEAD \
+            | grep -E '\.ya?ml$' \
+            | xargs -I{} sh -c 'grep -qE "^[[:space:]]*kind:[[:space:]]*Application[[:space:]]*$" "{}" && echo "{}"' \
+            || true
+          )
+
+          [[ ${#APP_FILES[@]} -eq 0 ]] && { echo "No changed Argo Application YAMLs."; exit 0; }
+
+          for f in "${APP_FILES[@]}"; do
+            echo "=== Validating Application: $f ==="
+            # YAML syntax
+            yq -e '.' "$f" >/dev/null
+            # Schema validation (no -schemas-from-file)
+            kubeconform --summary -ignore-missing-schemas \
+              -schema-location default \
+              -schema-location 'https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/{{.Group}}/{{.ResourceKind}}_{{.ResourceAPIVersion}}.json' \
+              "$f"
+            echo
           done

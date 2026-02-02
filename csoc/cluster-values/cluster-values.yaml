@@ -1,15 +1,71 @@
-# The name of the cluster this configuration is going to. This should match the name of the directory configuration
-# is stored in
-cluster: csoc
+cluster: csoc_main_vpc
 project: gen3-csoc
+
+accountNumber: "433568766270"
+
+calico:
+  enabled: true
+  configuration:
+    enabled: false
+
+coreDNS:
+  enabled: true
+  configuration:
+    enabled: false
+
+ebs-csi-driver:
+  enabled: true
+  configuration:
+    enabled: false
 
 grafana-alloy:
   enabled: true
   configuration:
     enabled: false
 
+karpenter:
+  enabled: true
+  targetRevision: "1.6.3"
+  configuration:
+    enabled: false
+
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: csoc_main_vpc
   migration: true
+  default:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: default
+    amiFamily: AL2023
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "5m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+          - spot
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      # - key: karpenter.k8s.aws/instance-family
+      #   operator: In
+      #   values:
+      #     - r8i-flex
+      #     - m8i-flex
+      # - key: karpenter.k8s.aws/instance-memory
+      #   operator: Gt
+      #   values:
+      #     - "7000"
+
+kube-proxy:
+  enabled: true
+
+vpc-cni:
+  enabled: true

@@ -12,7 +12,7 @@ alb-controller:
     enabled: false
 
 aws-s3-mountpoint:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
@@ -65,3 +65,5 @@ vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true

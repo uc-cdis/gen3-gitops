@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.10'
+    tag: '2026.01'
 manifestservice:
   enabled: false
 wts:
@@ -19,7 +19,7 @@ audit:
     auditG3auto: dcf-staging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.10'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-receiver
@@ -32,15 +32,39 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.08'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--dashboard-access
 datareplicate:
   enabled: true
+  suspendCronjob: true
+  externalSecrets:
+    deploy: true
+    googleCredsSecret: dcf-staging-gcloud-creds-secret
+    dcfDataserviceSettingsSecret: dcf-staging-dcf-dataservice-settings-secrets
+  resources:
+    requests:
+      cpu: '2'
+      memory: 2Gi
+    limits:
+      memory: 8Gi
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
     tag: 2.0.0
+  awsBatchReplicateJob:
+    enabled: true
+    schedule: '*/30 * * * *'
+    REGION: us-east-1
+    THREAD_COUNT: 100
+    MAX_RETRIES: 10
+    MANIFEST_PATH: s3://test-data-replication-manifest/test_manifest_20251025.tsv
+    JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
+    JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
+    OUTPUT_MANIFEST_BUCKET: test-data-replication-manifest
+  batchServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--aws-batch-replicate-job
 fence:
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
@@ -96,10 +120,13 @@ fence:
     fenceSshKeys: dcf-staging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '12.1.0'
+    tag: '2026.01'
   usersync:
     usersync: true
     syncFromDbgap: true
+    sshKnownHosts: |
+      sftp-private.ncbi.nlm.nih.gov ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjEuJc/1pAQxGxwuk8s/1u7tDq2PiOqutAXNjPOl0BkOiJJnUa6gdRx5WcVd6HApPrw7RUvUXraOmc82Zlzeno6DkzTjLk3ztuRs1hNF3KKx044AxDC1Jew6pK96At3kAvStfamNbY8URB9tj0SF3rFQxLrWo8WfhFr9AU4SuY5S0A2a/njucmTim3vDRPbBFO7Dlz2dxzeKPBdUDB/NvmdPWHxkviXkqUby/QzjglAQTts5lNEMH8qaRcU/dnWYRKvY17RHGu9/gNf8Z9DvBg8TbU7Ek3MT5A9F3nw1ZcZe7M8L7JwIKgQUl1gzOBHFfC248YES9REQffLYPWOCy9
+      sftp-private.ncbi.nlm.nih.gov ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFM24A4pG3U+8HzCvEkm9SiEWHOAtQr/DFZd3bf7VYDCcg2FPpUvGRsiDSuzhzBo+eG00d6/6y8NCypWwjiMi1rYgBOh9YA0w/ruutXYMUUVzw361lTgjOBOZ/dt3gKkNgShwDd0e1hnjYk/E7jYc2YJv67ZFy9GzXCWR55LhS/7fGQ5w==
     userYamlS3Path: s3://cdis-gen3-users/dcfstaging-users/user.yaml
 fluentd:
   enabled: true
@@ -150,7 +177,7 @@ indexd:
     serviceCreds: dcf-staging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.10'
+    tag: '2026.01'
 metadata:
   replicaCount: 4
   autoscaling:
@@ -164,14 +191,14 @@ metadata:
     metadataG3auto: dcf-staging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.10'
+    tag: '2026.01'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.10'
+    tag: '2026.01'
 portal:
   enabled: true
   gitops:
@@ -457,7 +484,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.10'
+    tag: '2026.01'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -468,7 +495,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.10'
+    tag: '2026.01'
   ingress:
     aws:
       group: dcf-staging
@@ -476,7 +503,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.10'
+    tag: '2026.01'
 sower:
   enabled: true
   externalSecrets:
@@ -485,7 +512,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.10'
+    tag: '2026.01'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -497,7 +524,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.01
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -523,7 +550,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.01
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -545,5 +572,5 @@ ssjdispatcher:
     credsFile: dcf-staging-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.10'
-  indexing: quay.io/cdis/indexs3client:2025.10
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01

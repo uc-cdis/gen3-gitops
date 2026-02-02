@@ -1,0 +1,285 @@
+global:
+  aws:
+    enabled: true
+    account: "837801696852"
+    hatchery_role: "arn:aws:iam::837801696852:role/gen3-service/gen3-ai-default-hatchery-sa"
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-external-secrets-sa"
+    wafv2:
+      enabled: true
+      wafAclArn: ""
+  dev: false
+  externalSecrets:
+    deploy: true
+  postgres:
+    dbCreate: true
+    externalSecret: "gen3-ai-aurora-master-password"
+  environment: "gen3-ai"
+  hostname: "m3aicommons.org"
+  # ai.planx-pla.net cert
+  # revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/3dc72278-1dd1-4451-848e-bc1cd3f21d13"
+  # cac.data-commons.org cert
+  #revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/d3601fd4-4229-4898-a36a-1ed1ba96814e"
+  #m3aicommons.org cert
+  revproxyArn: "arn:aws:acm:us-east-1:837801696852:certificate/f955599a-afb3-4f97-8318-6efd77793c1f"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: "100"
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "gen3ff"
+  ddEnabled: false
+
+ambassador:
+  enabled: true
+  jupyterNamespace: jupyter-pods-default
+
+arborist:
+  replicaCount: 3
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-audit-sa"
+  externalSecrets:
+    dbcreds: "gen3-ai-default-audit-creds"
+    createK8sAuditSecret: true
+
+aws-es-proxy:
+  enabled: true
+  esEndpoint: ""
+  externalSecrets:
+    awsCreds: "gen3-ai-default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-dicom-viewer-creds"
+
+embedding-management-service:
+  enabled: true
+  embeddingsConfig: |
+    {
+      "expr": 256,
+      "hist": 1536,
+      "summ": 4096,
+      "text": 4096,
+      "img_embed": 512,
+      "img_proj": 128
+    }
+
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
+    tag: feat_service
+    pullPolicy: Always
+
+fence:
+  replicaCount: 3
+  image:
+    tag: feat_embedding-vectors
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-fence-sa"
+
+  FENCE_CONFIG_PUBLIC:
+    OVERRIDE_NGINX_RATE_LIMIT: 36
+
+  externalSecrets:
+    fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
+    fenceConfig: "gen3-ai-default-fence-config"
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sGoogleAppSecrets: true
+    dbcreds: "gen3-ai-default-fence-creds"
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/m3ai/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/cac-data-commons"
+    tag: "main"
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: true
+  image:
+    tag: feat_gpu-support
+
+  hotNode:
+    enabled: true
+    gpu: true
+    jupyter: false
+
+    availabilityZones:
+      - us-east-1c
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 3
+      memory: 8Gi
+
+  hatchery:
+    json: |
+      {
+        "user-namespace": "jupyter-pods-default",
+        "skip-node-selector": false,
+        "use-internal-services-url": false,
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "cpu-limit": "0.1",
+          "env": {
+            "HOSTNAME": "m3aicommons.org",
+            "NAMESPACE": "default"
+          },
+          "image": "quay.io/cdis/ecs-ws-sidecar:master",
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ],
+          "memory-limit": "256Mi"
+        },
+        "containers": [
+          {
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "gpu": true,
+            "cpu-limit": "3.0",
+            "env": {
+              "FRAME_ANCESTORS": "https://m3aicommons.org"
+            },
+            "fs-gid": 100,
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "image": "quay.io/cdis/m3ai-demos:master",
+            "pull_policy": "Always",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "memory-limit": "8Gi",
+            "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
+            "path-rewrite": "/lw-workspace/proxy/",
+            "ready-probe": "/lw-workspace/proxy/",
+            "target-port": 8888,
+            "use-tls": "false",
+            "user-uid": 1010,
+            "user-volume-location": "/home/jovyan/pd"
+          }
+        ]
+      }
+
+indexd:
+  enabled: true
+  defaultPrefix: "dg.XXXX/"
+  externalSecrets:
+    dbcreds: "gen3-ai-default-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+manifestservice:
+  enabled: true
+  manifestserviceG3auto:
+    hostname: m3aicommons.org
+    # -- (string) Bucket for the manifestservice to read and write to.
+    bucketName: manifestservice-gen3-ai-default
+    # -- (string) Directory name to use within the s3 bucket.
+    prefix: default
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-manifestservice-sa"
+  externalSecrets:
+    createK8sManifestServiceSecret: true
+
+metadata:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: false
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-ai-default-requestor-creds"
+
+revproxy:
+  replicas: 3
+  enabled: true
+
+sheepdog:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-ai-default-wts-creds"
+    createK8sWtsSecret: true
+    createWtsOidcClientSecret: true

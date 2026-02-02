@@ -1,6 +1,5 @@
 cluster: headneck
 project: headneck
-
 accountNumber: "419939494982"
 
 alb-controller:
@@ -24,7 +23,7 @@ coreDNS:
     enabled: false
 
 ebs-csi-driver:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
@@ -40,15 +39,23 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.0.8"
+  targetRevision: "1.6.3"
 
 karpenter-crds:
-  amiSelectorName: "1-31-EKS-FIPS*"
+  amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: headneck
   migration: true
   default:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: default
+    amiFamily: AL2023
     consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: "6m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
     requirements:
     - key: karpenter.sh/capacity-type
       operator: In
@@ -59,13 +66,36 @@ karpenter-crds:
       operator: In
       values:
       - amd64
-    - key: karpenter.k8s.aws/instance-category
+    - key: node.kubernetes.io/instance-type
       operator: In
       values:
-      - r
-    - key: "karpenter.k8s.aws/instance-cpu"
-      operator: Gt
-      values: ["4"]
+      - m8i-flex.large
+      - m8i-flex.xlarge
+      - m8i-flex.2xlarge
+      - r8i-flex.large
+      - r8i-flex.xlarge
+      - r8i-flex.2xlarge
+  jupyter:
+    enabled: false
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: jupyter
+    amiFamily: AL2023
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: "6m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
+  workflow:
+    enabled: false
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: workflow
+    amiFamily: AL2023
+    consolidateAfter: "5m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
 
 kube-state-metrics:
   enabled: true
@@ -76,3 +106,5 @@ vpc-cni:
   enabled: true
   configuration:
     enabled: false
+kube-proxy:
+  enabled: true
