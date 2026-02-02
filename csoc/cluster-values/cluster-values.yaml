@@ -63,5 +63,9 @@ karpenter-crds:
       #   operator: Gt
       #   values:
       #     - "7000"
+
 kube-proxy:
+  enabled: true
+
+vpc-cni:
   enabled: true

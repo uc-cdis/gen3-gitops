@@ -11,14 +11,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.12'
+    tag: '2026.01'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.12'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-receiver
@@ -36,6 +36,8 @@ etl:
     spark:
       requests:
         memory: 2Gi
+  esGarbageCollect:
+    enabled: true
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -107,9 +109,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2025.12'
+      tag: '2026.01'
     spark:
-      tag: '2025.12'
+      tag: '2026.01'
 fence:
   serviceAccount:
     annotations:
@@ -127,7 +129,7 @@ fence:
     fenceJwtKeys: bihprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.12'
+    tag: '2026.01'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
@@ -140,7 +142,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.4
+    tag: 1.3.5
 global:
   pdb: true
   aws:
@@ -178,7 +180,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.12'
+    tag: '2026.01'
   hatchery:
     json: |-
       {
@@ -188,7 +190,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.11",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.01",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "imaging-hub.data-commons.org",
@@ -288,7 +290,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.12'
+    tag: '2026.01'
   indices:
     - index: bih_dataset
       type: dataset
@@ -311,12 +313,11 @@ indexd:
     serviceCreds: bihprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.12'
+    tag: '2026.01'
 manifestservice:
   enabled: false
 metadata:
   replicaCount: 2
-  aggMdsNamespace: bihprod
   autoscaling:
     enabled: false
     maxReplicas: 1
@@ -328,15 +329,14 @@ metadata:
     metadataG3auto: bihprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.12'
-  useAggMds: true
+    tag: '2026.01'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.12'
+    tag: '2026.01'
 portal:
   enabled: true
   replicaCount: 2
@@ -347,12 +347,12 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.12'
+    tag: '2026.01'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.12'
+    tag: '2026.01'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -363,7 +363,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.12'
+    tag: '2026.01'
   ingress:
     aws:
       group: bihprod
@@ -371,7 +371,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.12'
+    tag: '2026.01'
   fenceUrl: https://imaging-hub.data-commons.org/user
 wts:
   enabled: true
@@ -381,4 +381,4 @@ wts:
     wtsOidcClient: bihprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.12'
+    tag: '2026.01'

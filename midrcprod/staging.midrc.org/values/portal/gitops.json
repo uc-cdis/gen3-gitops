@@ -235,6 +235,12 @@
         "navigation": {
             "items": [
                 {
+                    "name": "Discovery",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "Dataset discovery"
+                },
+                {
                     "name": "Exploration",
                     "link": "/explorer",
                     "icon": "exploration",
@@ -1120,6 +1126,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "project_id",
                     "_radiology_report_count"
                 ],
@@ -1316,7 +1323,7 @@
                             "imaging_study_submitter_id"
                         ],
                         "fields": [
-                            "loinc_common_name",
+                            "loinc_long_common_name",
                             "loinc_method",
                             "loinc_system",
                             "loinc_contrast",
@@ -1368,7 +1375,7 @@
                     "report_generation_method",
                     "report_modification_method",
                     "imaging_study_submitter_id",
-                    "loinc_common_name",
+                    "loinc_long_common_name",
                     "loinc_method",
                     "loinc_system",
                     "loinc_contrast",
@@ -1471,8 +1478,8 @@
                 "manifestMapping": {
                     "resourceIndexType": "radiology_report",
                     "resourceIdField": "object_id",
-                    "referenceIdFieldInResourceIndex": "_radiology_report_id",
-                    "referenceIdFieldInDataIndex": "_radiology_report_id",
+                    "referenceIdFieldInResourceIndex": "object_id",
+                    "referenceIdFieldInDataIndex": "object_id",
                     "useFilterForCounts": false
                 },
                 "accessibleFieldCheckList": [
@@ -1665,6 +1672,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "submitter_id",
                     "project_id"
                 ],

@@ -36,6 +36,13 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--dashboard-access
 etl:
+  resources:
+    tube:
+      requests:
+        memory: 4Gi
+    spark:
+      requests:
+        memory: 2Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -431,7 +438,7 @@ global:
       # -- (string) ARN for the WAFv2 ACL.
       wafAclArn: "arn:aws:wafv2:us-east-1:562749638216:regional/webacl/bloodv2-waf/6bfe2374-8097-4c3e-957b-bd5b3f42dded"
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.10/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.11/schema.json
   dispatcherJobNum: "10"
   environment: bloodv2
   externalSecrets:
@@ -491,59 +498,50 @@ hatchery:
       {
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
-        "user-volume-size": "20Gi",
+        "user-volume-size": "10Gi",
         "sidecar": {
-          "cpu-limit": "0.8",
+          "cpu-limit": "1.0",
           "memory-limit": "256Mi",
           "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.12",
           "env": {
-            "NAMESPACE": "default",
+            "NAMESPACE": "bloodv2-helm",
             "HOSTNAME": "data.bloodpac.org"
           },
           "args": [],
           "command": [
-            "/bin/bash",
-            "/sidecarDockerrun.sh"
+            "su",
+            "-c",
+            "/home/jovyan/sidecarDockerrun.sh",
+            "-s",
+            "/bin/sh",
+            "jovyan"
           ],
           "lifecycle-pre-stop": [
             "su",
             "-c",
-            "echo test",
+            "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done",
             "-s",
             "/bin/sh",
-            "root"
+            "jovyan"
           ]
         },
         "containers": [
           {
-            "target-port": 8787,
-            "cpu-limit": "0.8",
-            "memory-limit": "512Mi",
-            "name": "R Studio",
-            "image": "heliumdatastage/rstudio-server:1",
-            "env": {
-              "DISABLE_AUTH": "true",
-              "FRAME_ANCESTORS": "https://data.bloodpac.org"
-            },
-            "args": [],
-            "path-rewrite": "/",
-            "use-tls": "false",
-            "ready-probe": "/"
-          },
-          {
             "target-port": 8888,
-            "cpu-limit": "0.8",
-            "memory-limit": "512Mi",
+            "cpu-limit": "2.0",
+            "memory-limit": "4Gi",
             "name": "Jupyter Notebook Bio Python",
-            "image": "quay.io/cdis/jupyter-notebook:master",
+            "image": "quay.io/cdis/jupyter-superslim:master",
             "env": {
-              "NAMESPACE": "default",
+              "NAMESPACE": "bloodv2-helm",
+              "HOSTNAME": "data.bloodpac.org",
               "FRAME_ANCESTORS": "https://data.bloodpac.org"
             },
             "args": [
               "--NotebookApp.base_url=/lw-workspace/proxy/",
-              "--NotebookApp.password=''",
-              "--NotebookApp.token=''"
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.runtime_dir=/home/jovyan/pd/.jupyter/runtime"
             ],
             "command": [
               "start-notebook.sh"
@@ -554,44 +552,21 @@ hatchery:
             "lifecycle-post-start": [
               "/bin/sh",
               "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
+              "export IAM=`whoami`;",
+              "rm -rf /home/$IAM/pd/dockerHome;",
+              "ln -s $(pwd) /home/$IAM/pd/dockerHome;",
+              "mkdir -p /home/$IAM/.jupyter/custom;",
+              "mkdir -p /home/$IAM/pd/.jupyter/runtime;",
+              "echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
             ],
-            "user-uid": 1000,
+            "user-uid": 1010,
             "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd"
-          },
-          {
-            "target-port": 8888,
-            "cpu-limit": "4.0",
-            "memory-limit": "15512Mi",
-            "name": "Jupyter Notebook Power Python",
-            "image": "quay.io/cdis/jupyter-notebook:master",
-            "env": {
-              "NAMESPACE": "default",
-              "FRAME_ANCESTORS": "https://data.bloodpac.org"
-            },
-            "args": [
-              "--NotebookApp.base_url=/lw-workspace/proxy/",
-              "--NotebookApp.password=''",
-              "--NotebookApp.token=''"
-            ],
-            "command": [
-              "start-notebook.sh"
-            ],
-            "path-rewrite": "/lw-workspace/proxy/",
-            "use-tls": "false",
-            "ready-probe": "/lw-workspace/proxy/",
-            "lifecycle-post-start": [
-              "/bin/sh",
-              "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-            ],
-            "user-uid": 1000,
-            "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd"
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
           }
         ]
       }
+
 indexd:
   replicaCount: 4
   autoscaling:
