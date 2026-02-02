@@ -90,7 +90,7 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:
-          - "17000"
+          - "16000"
   secondary:
     enabled: false
     nodeClassRef:
