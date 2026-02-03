@@ -63,10 +63,13 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.13
+    tag: 0.16
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
+  env:
+    - name: MAX_LIST_ITEMS
+      value: "50000"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: '2025.12'
@@ -134,7 +137,7 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: true
+    enabled: false
     gpu: true
     jupyter: false
 
@@ -238,7 +241,7 @@ hatchery:
                 },
                 "fs-gid": 100,
                 "gen3-volume-location": "/home/jovyan/.gen3",
-                "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
+                "image": "quay.io/cdis/jupyter-prometheus:prometheus-master",
                 "pull_policy": "Always",
                 "lifecycle-post-start": [
                   "/bin/sh",
@@ -246,7 +249,7 @@ hatchery:
                   "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
                 ],
                 "memory-limit": "8Gi",
-                "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
+                "name": "(GPU) MC2DP Embedding Demos",
                 "path-rewrite": "/lw-workspace/proxy/",
                 "ready-probe": "/lw-workspace/proxy/",
                 "target-port": 8888,
@@ -566,7 +569,7 @@ metadata:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.12'
+    tag: '4.1.1'
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:

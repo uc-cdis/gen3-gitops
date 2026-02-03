@@ -1126,6 +1126,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "project_id",
                     "_radiology_report_count"
                 ],
@@ -1671,6 +1672,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "submitter_id",
                     "project_id"
                 ],
