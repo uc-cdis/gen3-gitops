@@ -1,0 +1,19 @@
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: default
+spec:
+  limits:
+    cpu: "1000"
+    memory: 1500Gi
+  template:
+    metadata:
+      labels:
+        role: default
+    spec:
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: default
+      expireAfter: 168h
+      terminationGracePeriod: 48h        
