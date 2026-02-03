@@ -415,6 +415,11 @@ pidgin:
     tag: master
 portal:
   enabled: true
+  serviceAccount:
+    annotations: 
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1--emalinowskiv1-helm--manifest-service-sa
+  mountpointCacheEnabled: true
+  mountpointCacheBucketName: "test-gen3-portal-build-bucket"  
   gitops:
     json: "{\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
       : \"_case_count\",\n        \"name\": \"Case\",\n        \"plural\": \"Cases\"\
