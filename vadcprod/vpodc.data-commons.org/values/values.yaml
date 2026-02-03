@@ -116,7 +116,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.08
+    tag: 0.09
 global:
   pdb: true
   aws:
@@ -466,7 +466,7 @@ ohdsi-atlas:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
-    tag: VA-2025.10.24
+    tag: VA-2026.01.08
 ohdsi-webapi:
   enabled: true
   image:
