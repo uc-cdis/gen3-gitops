@@ -71,7 +71,7 @@ datareplicate:
     PROJECT: dcf-prod
     LOG_BUCKET: datarefresh-log
     RELEASE: DR44
-    MANIFEST_FILE: gs://replication-input/GDC_active_manifest_DR44_cases_redacted.tsv
+    MANIFEST_FILE: gs://replication-input/GDC_DR44_failed_manifest.tsv
     IGNORED_FILE: gs://replication-input/ignored_files_manifest.csv
   awsBucketReplicateJob:
     enabled: false
@@ -91,7 +91,7 @@ datareplicate:
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
-    MANIFEST_PATH: s3://log-bucket-june2/GDC_active_manifest_DR44_short.tsv
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_DR44_failed_manifest.tsv
     JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
     JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
     OUTPUT_MANIFEST_BUCKET: log-bucket-june2
