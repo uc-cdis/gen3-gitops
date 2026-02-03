@@ -65,6 +65,7 @@ karpenter-crds:
   migration: true
   default:
     weight: 20
+    disruptionBudget: "70%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
@@ -97,7 +98,8 @@ karpenter-crds:
           - "7000"
   secondary:
     enabled: true
-    weight: 80    
+    weight: 80
+    disruptionBudget: "70%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
