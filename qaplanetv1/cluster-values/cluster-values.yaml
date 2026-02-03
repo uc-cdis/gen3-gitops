@@ -96,6 +96,10 @@ karpenter-crds:
         operator: Gt
         values:
           - "7000"
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Lt
+        values:
+          - "17000"          
   secondary:
     enabled: true
     weight: 80
