@@ -130,9 +130,20 @@ karpenter-crds:
           - m8i-flex
           - r8i-flex
           - m7i-flex
+          - c7i-flex
+          - r7i-flex          
           - m8i
           - r8i
           - r7i
+          - c6i
+          - c7i
+          - m5
+          - m6i
+          - r5
+          - t3
+          - m7i
+          - r6i
+
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
