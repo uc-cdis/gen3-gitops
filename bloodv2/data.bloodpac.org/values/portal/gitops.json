@@ -1218,8 +1218,8 @@
         },
         "tagCategories": [
         {
-            "name": "Study Setting",
-            "displayName": "Study Setting",
+            "name": "Publication Type",
+            "displayName": "Publication Type",
             "color": "#532565",
             "display": true
         },
@@ -1230,20 +1230,26 @@
             "display": true
         },
         {
-            "name": "Study Objectives",
-            "displayName": "Study Objectives",
+            "name": "Study Application",
+            "displayName": "Study Application",
             "color": "#532565",
             "display": true
         },
         {
-            "name": "Cancer Type",
-            "displayName": "Cancer Type",
+            "name": "Cancer Category",
+            "displayName": "Cancer Category",
+            "color": "#981f32",
+            "display": true
+        },
+        {
+            "name": "Primary Cancer Type",
+            "displayName": "Primary Cancer Type",
             "color": "#e07c3e",
             "display": true
         },
         {
-            "name": "Cancer Stage",
-            "displayName": "Cancer Stage",
+            "name": "Primary Cancer Stage",
+            "displayName": "Primary Cancer Stage",
             "color": "#982568",
             "display": true
         },
@@ -1251,12 +1257,6 @@
             "name": "Specimen Type",
             "displayName": "Specimen Type",
             "color": "#982568",
-            "display": true
-        },
-        {
-            "name": "Data Type",
-            "displayName": "Data Type",
-            "color": "#bf362e",
             "display": true
         },
         {
