@@ -444,6 +444,7 @@ fence:
       - https://shibidp.cit.cornell.edu/idp/shibboleth
       - https://login.emory.edu/idp/shibboleth
       - https://idp.jefferson.edu/idp/shibboleth
+      - https://shib.mdanderson.org/idp/shibboleth
       - urn:mace:incommon:stanford.edu
       - urn:mace:incommon:stonybrook.edu
       - urn:mace:incommon:osu.edu
@@ -453,6 +454,7 @@ fence:
       - urn:mace:incommon:ucsf.edu
       - https://idp.pennkey.upenn.edu/idp/shibboleth
       - urn:mace:incommon:washington.edu
+      - https://webauth.wfunet.wfu.edu/saml/saml2/idp/metadata.php
     - fence_idp: orcid
       idp: fence
       name: ORCID Login
