@@ -12,6 +12,9 @@ jobs:
   integration_tests:
     name: Integration tests
     uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
+    with:
+      TEST_REPO_BRANCH: paulineribeyre-patch-1
+      HELM_BRANCH: feat/funnel-db-auto
     secrets:
       CI_TEST_ORCID_USERID: ${{ secrets.CI_TEST_ORCID_USERID }}
       CI_TEST_ORCID_PASSWORD: ${{ secrets.CI_TEST_ORCID_PASSWORD }}
