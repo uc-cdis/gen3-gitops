@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.07'
+    tag: '2026.01'
 ambassador:
   enabled: false
 hatchery:
@@ -23,7 +23,7 @@ audit:
     auditG3auto: dcfprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.07'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-receiver
@@ -39,882 +39,1091 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.07'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--dashboard-access
 datareplicate:
   enabled: true
+  suspendCronjob: true
+  externalSecrets:
+    deploy: true
+    googleCredsSecret: dcfprod-dcf-gcloud-creds-secret
+    awsCredsSecret: dcfprod-dcf-aws-creds-secret
+    dcfDataserviceSettingsSecret: dcfprod-dcf-dataservice-settings-secrets
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dcf-dataservice
-    tag: 2.0.0
+    tag: 3.0.0
+  resources:
+    requests:
+      cpu: '6'
+      memory: 24Gi
+    limits:
+      memory: 32Gi
+  batchServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--aws-batch-replicate-job
+  googleBucketReplicateJob:
+    enabled: true
+    suspendCronjob: true
+    schedule: '*/30 * * * *'
+    MAX_WORKERS: 80
+    PROJECT: dcf-prod
+    LOG_BUCKET: datarefresh-log
+    RELEASE: DR44
+    MANIFEST_FILE: gs://replication-input/GDC_DR44_failed_manifest.tsv
+    IGNORED_FILE: gs://replication-input/ignored_files_manifest.csv
+  awsBucketReplicateJob:
+    enabled: false
+    suspendCronjob: true
+    schedule: '*/30 * * * *'
+    THREAD_NUM: 20
+    CHUNK_SIZE: 1
+    GDC_BUCKET_NAME: gdcbackup
+    LOG_BUCKET: data-refresh-output
+    RELEASE: DR44
+    QUICK_TEST: true
+    MANIFEST_FILE: s3://data-refresh-manifest/
+  awsBatchReplicateJob:
+    enabled: true
+    suspendCronjob: true
+    schedule: '*/30 * * * *'
+    REGION: us-east-1
+    THREAD_COUNT: 100
+    MAX_RETRIES: 10
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_DR44_failed_manifest.tsv
+    JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
+    JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
+    OUTPUT_MANIFEST_BUCKET: log-bucket-june2
+  removeObjectsFromCloudsJob:
+    enabled: true
+    suspendCronjob: true
+    schedule: '*/30 * * * *'
+    DRY_RUN: 'False'
+    LOG_BUCKET: data-refresh-output
+    RELEASE: DR44
+    MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_obsolete_manifest_20250214_post_DR42.0.tsv
+    IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
+    ONLY_REDACT: all
+  replicateValidationJob:
+    enabled: true
+    suspendCronjob: true
+    schedule: '*/30 * * * *'
+    LOG_BUCKET: data-refresh-output
+    RELEASE: DR44
+    # Keep the legacy manifest the same at DR37
+    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_active_manifest_20251029_post_DR44.0.tsv
+    IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
+    OUT_FILES: GDC_full_sync_active_manifest_20251029_post_DR44.0_DCF.tsv
+    FORCE_CREATE_MANIFEST: true
 fence:
   FENCE_CONFIG_PUBLIC:
     dbGaP:
       parse_consent_code: true
     S3_BUCKETS:
       cds-54-phs000178:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-207-phs001787:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-211-phs001713:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-223-phs001926:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-225-phs001859:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-227-phs002011:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-229-phs001905:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-233-phs002050:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-234-phs002366:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-234-phs002366_20240919:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-235-phs002250:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-237-phs001819:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-238-phs001524:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-239-phs002305:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-240-phs001980:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-243-phs002371:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-246-phs002517-imagingfiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-246-phs002517-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-246-phs002517-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-247-phs002518-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-247-phs002518-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-251-phs002530-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-252-phs002529-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-252-phs002529-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-252-phs002529-v1-p1-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-253-phs002620-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-253-phs002620.v1.p1-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-254-phs002599:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-254-phs002599.v1.p1:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-255-phs002430-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-256-phs002504-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-256-phs002504-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-256-phs002504.v1.p1-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-256-phs002504.v1.p1-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-257-phs002432:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-257-phs002432.v1.p1:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-258-phs002479:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-259-phs002293:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-260-phs002790-ccdi-ctsmc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-260-phs002790-sequencefiles-ccdi-ctsmc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-262-phs002431-sequencefiles-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-266-phs002677-p30-fy20:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-290-htan-x6gj-xr09:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-295-phs003155:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-296-phs001287:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-303-phs002637:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-305-phs002790-production-ccdi-ctsmc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-306-phs002517-x01:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-327-phs003111-mskcc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-359-phs001327-ccss:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-371-phs003215-pdx:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-381-phs003143-mypart:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-412-phs001437-pptc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-427-phs003432:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-447-target-c3dc:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-450-phs003519:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-474-phs003164-pivot-ccia:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-489-phs003622-chla:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-507-phs000720-rms:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-515-phs003163-pivot-chop:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-563-phs002883-production-ccdi-pedmatch:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-568-phs003161-pivot-msk:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-572-phs003160-pivot-utsanantonio:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-575-phs003975-spatial-transcriptomics:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-585-phs004017-cmmrd:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-590-phs000720-rhabdomyosarcoma:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cds-596-phs004081-nctn-aml-ds:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      cds-612-phs003987:
+        cred: fence_bot
+        region: us-east-1
+      cds-614-phs004222:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       dcfprod-data-bucket:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-beataml1-cohort-phs001657-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-beataml1-cohort-phs001657-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-beataml1.0-crenolanib-phs001628-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-beataml1.0-crenolanib-phs001628-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ccle-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ccle-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cddp-eagle-1-phs001239-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cddp-eagle-1-phs001239-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-blgsp-phs000235-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-blgsp-phs000235-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-htmcp-lc-phs000235-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-htmcp-lc-phs000235-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-phs000235-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cgci-phs000235-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-asc-phs001931-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-asc-phs001931-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-mbc-phs001709-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-mbc-phs001709-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-mpc-phs001939-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cmi-mpc-phs001939-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cptac-2-phs000892-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cptac-2-phs000892-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cptac-phs001287-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-cptac-phs001287-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ctsp-phs001175-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ctsp-phs001175-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-exceptional-responders-er-phs001145-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-exceptional-responders-er-phs001145-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-fm-ad-phs001179-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-fm-ad-phs001179-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-genie-phs001337-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-genie-phs001337-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-hcmi-cmdc-phs001486-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-hcmi-cmdc-phs001486-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-c1-phs002177-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-c1-phs002177-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-h-phs001888-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-h-phs001888-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-i-phs002181-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-i-phs002181-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-p-phs002152-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-p-phs002152-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-q-phs001926-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-r-phs002029-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-r-phs002029-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-s1-phs002153-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-s1-phs002153-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-s2-phs002178-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-s2-phs002178-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-u-phs002179-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-u-phs002179-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-w-phs001948-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-w-phs001948-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-y-phs001904-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1a-phs001973-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1a-phs001973-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1b-phs002180-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1b-phs002180-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1d-phs001859-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1d-phs001859-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1i-phs002058-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1I-phs002058-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1i-phs002058-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-match-z1I-phs002058-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-mmrf-commpass-phs000748-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-mmrf-commpass-phs000748-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-mp2prt-wt-phs001965-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-mp2prt-wt-phs001965-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-nciccr-phs001444-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-nciccr-phs001444-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ohsu-cnl-phs001799-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-ohsu-cnl-phs001799-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-organoid-pancreatic-phs001611-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-organoid-pancreatic-phs001611-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-rebc-thyr-phs001134-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-rebc-thyr-phs001134-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-target-phs000218-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-tcga-phs000178-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-trio-cru-phs001163-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-varepop-apollo-phs001374-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-varepop-apollo-phs001374-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-wcdt-mcrpc-phs001648-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       gdc-wcdt-mcrpc-phs001648-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       idc-open-data:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       idc-open-data-cr:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       idc-open-data-two:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-18-279-phs003572:
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-abtc1603-phs0037531:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-eay131z1d-phs001859:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn9204-phs003291:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10026-phs003292:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10026-phs003293:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10021-phs003294:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10021-phs003295:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10013-phs003296:
-        cred: "fence_bot"
-        region: "us-east-1"
-      iodc-cimac-etctn10021-phs003294:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-etctn10013-phs004162:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-etctn10013-phs004163:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-etctn10013-phs004164:
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-etctn10104-phs003414:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-hcrngu16257-phs003372:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-hcrngu16257-phs003928:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-hcrngu16257-phs003934:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-nccaps:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-nctne4412-phs003450:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-nctns1609-phs003443:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-nihcc14c0059g-phs003455:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-nctns1400i-phs003412:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-nrglu004-phs003572:
+        cred: fence_bot
+        region: us-east-1
+      kf-seq-data-bam:
+        cred: fence_bot
+        region: us-east-1
+      kf-seq-data-broad:
+        cred: fence_bot
+        region: us-east-1
+      kf-seq-data-hudsonalpha:
+        cred: fence_bot
+        region: us-east-1
+      kf-seq-data-washu:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-controlled-vwb-prd-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-1nns3k8v-nci:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-15a2mqq9-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-2cekq05v-nci:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-54g4wg4r-nci:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-r0eprsgs-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-w6fwtd8a-nci:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-x8vk5yht-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-z6mwd3h0-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-aq9kvn5p-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-cp7yk94e-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-p3a9dchj-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-q2f7xa29-nci:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-p445achv:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-0tyvy1tw:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-2cekq05v:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-46sk55a3:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-6fpyjqbr:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-7nq9151j:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-9pyzahhe:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-aq9kvn5p:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-b8x3c1mx:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-dk0krwk8:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-dypmehhf:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-dz4gpqx6:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-dztb5hrr:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-jws3v24d:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-nmvv8a1y:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-pet7q6f2:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-qbg7p5p7:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-r0eprsgs:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-rm8afw0r:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-vttshwv4:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-w0v965xz:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-ygva0e1c:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-z0d9n23x:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-zfgdg5ys:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-z6mwd3h0:
+        cred: fence_bot
+        region: us-east-1
+      kf-study-us-east-1-prd-sd-zxjffmef:
+        cred: fence_bot
+        region: us-east-1
       match-b-phs002028-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       match-b-phs002028-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       match-n-phs002151-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       match-n-phs002151-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       mp2prt-all-phs002005-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       mp2prt-all-phs002005-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       nci-cbiit-caninedatacommons-file:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       nci-cbiit-clinical-cmb-prod:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       nci-cbiit-clinical-cmb-stage:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       nci-crdc-data-bucket-prod:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       pdcdatastore:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
+      popsci-prod-files-dedicated-bucket:
+        cred: fence_bot
+        region: us-east-1
       sddp-phs001524:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       sddp-phs001554:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       studies:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       target-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       target-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       tcga-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       tcga-2-controlled:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       tcga-2-open:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       tcga-protected-dcf-databucket-gen3:
-        cred: "fence_bot"
-        region: "us-east-1"
+        cred: fence_bot
+        region: us-east-1
       tcga-public-dcf-databucket-gen3:
-        cred: "fence_bot"
-        region: "us-east-1"
-    GS_BUCKETS::
+        cred: fence_bot
+        region: us-east-1
+    GS_BUCKETS:
       cgci-htmcp-dlbcl-phs000235-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       cgci-htmcp-dlbcl-phs000235-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       dcf-integration-qa:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       dcf-integration-test:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-apollo-luad-phs003011-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-apollo-luad-phs003011-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-beataml1-cohort-phs001657-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-beataml1-cohort-phs001657-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-beataml1-crenolanib-phs001628-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-ccle-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cddp-eagle-1-phs001239-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cddp-eagle-1-phs001239-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-blgsp-phs000235-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-blgsp-phs000235-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-htmcp-lc-phs000235-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-htmcp-lc-phs000235-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-phs000235-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cgci-phs000235-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-asc-phs001931-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-asc-phs001931-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-mbc-phs001709-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-mbc-phs001709-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-mpc-phs001939-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cmi-mpc-phs001939-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cptac-2-phs000892-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cptac-2-phs000892-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cptac-phs001287-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-cptac-phs001287-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-ctsp-phs001175-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-ctsp-phs001175-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-exceptional-responders-er-phs001145-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-exceptional-responders-er-phs001145-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-fm-phs001179-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-fm-phs001179-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-genie-phs001337-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-hcmi-cmdc-phs001486-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-hcmi-cmdc-phs001486-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-c1-phs002177-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-h-phs001888-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-i-phs002181-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-p-phs002152-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-q-phs001926-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-r-phs002029-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-s1-phs002153-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-s2-phs002178-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-u-phs002179-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-w-phs001948-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-y-phs001904-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-z1a-phs001973-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-z1b-phs002180-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-z1d-phs001859-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-match-z1i-phs002058-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-mmrf-commpass-phs000748-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-mmrf-commpass-phs000748-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-mp2prt-wt-phs001965-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-mp2prt-wt-phs001965-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-nciccr-phs001444-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-nciccr-phs001444-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-ohsu-cnl-phs001799-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-ohsu-cnl-phs001799-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-organoid-pancreatic-phs001611-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-organoid-pancreatic-phs001611-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-rebc-thyr-phs001134-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-rebc-thyr-phs001134-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-target-phs000218-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-target-phs000218-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-tcga-phs000178-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-tcga-phs000178-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-trio-cru-phs001163-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-varepop-apollo-phs001374-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-wcdt-mcrpc-phs001648-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       gdc-wcdt-mcrpc-phs001648-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-open-cr:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-open-data:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-open-idc:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-open-idc1:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-tcia-tcga-gbm:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       idc-tcia-tcga-lgg:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       match-b-phs002028-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       match-n-phs002151-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       mp2prt-all-phs002005-controlled:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       mp2prt-all-phs002005-open:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
       public-datasets-idc:
-        cred: ""
-        region: ""
+        cred: ''
+        region: ''
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-sender
   usersync:
     usersync: true
     syncFromDbgap: true
+    sshKnownHosts: |
+      sftp-private.ncbi.nlm.nih.gov ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCjEuJc/1pAQxGxwuk8s/1u7tDq2PiOqutAXNjPOl0BkOiJJnUa6gdRx5WcVd6HApPrw7RUvUXraOmc82Zlzeno6DkzTjLk3ztuRs1hNF3KKx044AxDC1Jew6pK96At3kAvStfamNbY8URB9tj0SF3rFQxLrWo8WfhFr9AU4SuY5S0A2a/njucmTim3vDRPbBFO7Dlz2dxzeKPBdUDB/NvmdPWHxkviXkqUby/QzjglAQTts5lNEMH8qaRcU/dnWYRKvY17RHGu9/gNf8Z9DvBg8TbU7Ek3MT5A9F3nw1ZcZe7M8L7JwIKgQUl1gzOBHFfC248YES9REQffLYPWOCy9
+      sftp-private.ncbi.nlm.nih.gov ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAFM24A4pG3U+8HzCvEkm9SiEWHOAtQr/DFZd3bf7VYDCcg2FPpUvGRsiDSuzhzBo+eG00d6/6y8NCypWwjiMi1rYgBOh9YA0w/ruutXYMUUVzw361lTgjOBOZ/dt3gKkNgShwDd0e1hnjYk/E7jYc2YJv67ZFy9GzXCWR55LhS/7fGQ5w==
     userYamlS3Path: s3://cdis-gen3-users/ncicrdc/user.yaml
   replicaCount: 4
   autoscaling:
@@ -933,7 +1142,7 @@ fence:
     fenceSshKeys: dcfprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: '2026.01'
 fluentd:
   enabled: true
   image:
@@ -949,6 +1158,9 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--external-secrets-sa
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:584476192960:regional/webacl/dcfprod-waf/fb6cb3a2-31cd-4cab-b0ff-44f09d955958
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   dispatcherJobNum: '10'
@@ -956,13 +1168,8 @@ global:
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: "dcfprod-slack-webhook"
+    slackWebhookSecretName: dcfprod-slack-webhook
   hostname: nci-crdc.datacommons.io
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
-  #     - 172.24.242.0/24
-  #     - 172.24.243.0/24
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
     kube_bucket: kube-dcfprod-gen3
@@ -974,8 +1181,8 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:584476192960:certificate/4173b316-0510-4216-8043-3f9234570475
 indexd:
   metricsEnabled: false
-  defaultPrefix: "dg.4DFC/"
-  useSingleTable: "true"
+  defaultPrefix: dg.4DFC/
+  useSingleTable: 'true'
   replicaCount: 20
   autoscaling:
     enabled: false
@@ -987,9 +1194,7 @@ indexd:
     serviceCreds: dcfprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    # tag: '2025.07'
-    # temporarily test more gunicorn workers
-    tag: 'feat_add-gunicorn-workers'
+    tag: '2026.01'
   resources:
     requests:
       memory: 256Mi
@@ -1008,12 +1213,12 @@ metadata:
     metadataG3auto: dcfprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.07'
+    tag: '2026.01'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.07'
+    tag: '2026.01'
 portal:
   enabled: true
   gitops:
@@ -1302,7 +1507,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.07'
+    tag: '2026.01'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1313,7 +1518,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.07'
+    tag: '2026.01'
   ingress:
     aws:
       group: dcfprod
@@ -1322,7 +1527,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.07'
+    tag: '2026.01'
 sower:
   enabled: true
   externalSecrets:
@@ -1331,65 +1536,65 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.07'
+    tag: '2026.01'
   sowerConfig:
-  - action: index-object-manifest
-    activeDeadlineSeconds: 86400
-    container:
-      cpu-limit: '1'
-      env:
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2025.07
-      memory-limit: 1Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /creds.json
-        name: sower-jobs-creds-volume
-        readOnly: true
-        subPath: creds.json
-    name: manifest-indexing
-    restart_policy: Never
-    serviceAccountName: jobs-nci-crdc-datacommons-io
-    volumes:
-    - name: sower-jobs-creds-volume
-      secret:
-        secretName: sower-jobs-g3auto
-  - action: download-indexd-manifest
-    activeDeadlineSeconds: 86400
-    container:
-      cpu-limit: '1'
-      env:
-      - name: GEN3_HOSTNAME
-        valueFrom:
-          configMapKeyRef:
-            key: hostname
-            name: manifest-global
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2025.07
-      memory-limit: 1Gi
-      name: job-task
-      pull_policy: Always
-      volumeMounts:
-      - mountPath: /creds.json
-        name: sower-jobs-creds-volume
-        readOnly: true
-        subPath: creds.json
-    name: indexd-manifest
-    restart_policy: Never
-    serviceAccountName: jobs-nci-crdc-datacommons-io
-    volumes:
-    - name: sower-jobs-creds-volume
-      secret:
-        secretName: sower-jobs-g3auto
+    - action: index-object-manifest
+      activeDeadlineSeconds: 86400
+      container:
+        cpu-limit: '1'
+        env:
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.01
+        memory-limit: 1Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /creds.json
+            name: sower-jobs-creds-volume
+            readOnly: true
+            subPath: creds.json
+      name: manifest-indexing
+      restart_policy: Never
+      serviceAccountName: jobs-nci-crdc-datacommons-io
+      volumes:
+        - name: sower-jobs-creds-volume
+          secret:
+            secretName: sower-jobs-g3auto
+    - action: download-indexd-manifest
+      activeDeadlineSeconds: 86400
+      container:
+        cpu-limit: '1'
+        env:
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.01
+        memory-limit: 1Gi
+        name: job-task
+        pull_policy: Always
+        volumeMounts:
+          - mountPath: /creds.json
+            name: sower-jobs-creds-volume
+            readOnly: true
+            subPath: creds.json
+      name: indexd-manifest
+      restart_policy: Never
+      serviceAccountName: jobs-nci-crdc-datacommons-io
+      volumes:
+        - name: sower-jobs-creds-volume
+          secret:
+            secretName: sower-jobs-g3auto
 ssjdispatcher:
   enabled: true
   externalSecrets:
     credsFile: dcfprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.07'
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01

@@ -3,7 +3,7 @@ fence:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 10.2.0
+    tag: 2025.12
 
   usersync:
      #-- (bool) Whether to run Fence usersync or not.

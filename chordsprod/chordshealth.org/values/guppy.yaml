@@ -3,7 +3,7 @@ guppy:
   dbRestore: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: 2025.03
+    tag: 2025.12
   esEndpoint: elasticsearch:9200
 
   indices:

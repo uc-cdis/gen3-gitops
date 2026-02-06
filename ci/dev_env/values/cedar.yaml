@@ -1,0 +1,11 @@
+cedar:
+  enabled: true
+  externalSecrets:
+    cedarG3auto: ci-cedar-g3auto
+    cedarAPIKey: ci-cedar-directory-id
+    cedarDirectoryId: ci-cedar-api-key
+  image:
+    repository: "quay.io/cdis/cedar-wrapper-service"
+    tag: "master"
+  cedarIngestion:
+    enabled: false

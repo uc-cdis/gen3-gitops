@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # This is the blacklist of namespaces that WILL NOT be touched by this job.
+  name: shutdown-blacklist
+  namespace: default
+data:
+  blacklist: |
+    allure
+    argo
+    argo-events
+    argocd
+    calico-apiserver
+    calico-system
+    cert-manager
+    cortex-xdr
+    crossplane-system
+    csoc
+    default
+    external-secrets
+    gateway-system
+    grimoire
+    grimoire1
+    karpenter
+    kube-system
+    kubecost
+    logging
+    monitoring
+    qa-prometheus
+    qa-vpodc
+    qa-vpodc-helm
+    qaplanetv2
+    satosa
+    sftp
+    sftp2

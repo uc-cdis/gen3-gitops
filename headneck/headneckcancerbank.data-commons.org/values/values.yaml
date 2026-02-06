@@ -1,24 +1,28 @@
 global:
   aws:
     enabled: true
-    account: 419939494982
+    account: "419939494982"
+    awsEsProxyRole: gen3-service/headneck-esproxy-sa
     hatchery_role: arn:aws:iam::419939494982:role/gen3-service/headneck-default-hatchery-sa
     secretStoreServiceAccount:
       enabled: true
       name: external-secrets
       roleArn: arn:aws:iam::419939494982:role/gen3-service/headneck-default-external-secrets-sa
     wafv2:
-      wafAclArn: arn:aws:wafv2:us-east-1:419939494982:regional/webacl/headneck-waf/7bf68efb-772e-4ac6-857d-0c73911b9e77
+      # -- (bool) Set to true if using AWS WAFv2
+      enabled: true
+      # -- (string) ARN for the WAFv2 ACL.
+      wafAclArn: "arn:aws:wafv2:us-east-1:419939494982:regional/webacl/headneck-waf/7bf68efb-772e-4ac6-857d-0c73911b9e77"
   dev: false
   externalSecrets:
     deploy: true
   postgres:
     dbCreate: false
-    externalSecret: "headneck_aurora-master-password"
+    externalSecret: "headneck-aurora-master-password"
   environment: "headneck"
   hostname: "headneckcancerbank.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.1.0/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.2.2/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -30,7 +34,7 @@ global:
   #     - 172.24.192.128/25
   #     - 172.24.192.0/25
   dispatcherJobNum: "10"
-  frontendRoot: "gen3ff"
+  frontendRoot: "portal"
   ddEnabled: false
 
 ambassador:
@@ -68,7 +72,6 @@ audit:
     dbcreds: "headneck_default-audit-creds"
     createK8sAuditSecret: true
 
-
 aws-es-proxy:
   # Lower cost
   resources:
@@ -90,7 +93,540 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "headneck_default-dicom-viewer-creds"
 
-
+etl:
+  image:
+    tube:
+      # -- (string) Overrides the image tag whose default is the chart appVersion.
+      tag: "jawad-debug"
+      # tag: "2025.09"
+      pullPolicy: Always
+  esGarbageCollect:
+    enabled: true        
+  esEndpoint: elasticsearch
+  etlMapping:
+    mappings:
+      - name: hnc_dataset
+        doc_type: dataset
+        type: aggregator
+        root: dataset
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: data_description
+        joining_props:
+          - index: data_file
+            join_on: _dataset_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
+      - name: hnc_subject
+        doc_type: subject
+        type: aggregator
+        root: subject
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: MRN
+          - name: Cancer_Status_Desc
+          - name: Cause_of_Death_Desc
+          - name: Class_of_Case_Desc
+          - name: Date_of_Birth
+          - name: Date_of_Last_Contact
+          - name: Ethnicity
+          - name: Primary_Payer_at_DX_Desc
+          - name: Race_1_Desc
+          - name: Sex_Desc
+          - name: Spanish_Hispanic_Origin_Desc
+          - name: Vital_Status_Desc
+          - name: date_of_death
+          - name: gender
+          - name: race
+        parent_props:
+          - path: dataset[dataset_submitter_id:submitter_id,data_description]
+        nested_props:
+          - name: sample
+            path: sample
+            props:
+              - name: body_fluid_code
+              - name: dna_260_280
+              - name: dna_concentration
+              - name: dna_od_260
+              - name: procedure_date
+              - name: protocol_number
+              - name: sample_number
+              - name: sample_type
+              - name: sample_volume
+              - name: sample_year
+              - name: status
+          - name: treatment
+            path: treatment
+            props:
+              - name: Date_of_First_Surgery
+              - name: First_Course_Chemotherapy_Date
+              - name: First_Course_Chemotherapy_Hosp_Desc
+              - name: First_Course_Dx_Staging_Proc_Hosp_Desc
+              - name: First_Course_Immunotherapy_Date
+              - name: First_Course_Immunotherapy_Hosp_Desc
+              - name: Rx_Code_Desc
+              - name: Rx_Course_Desc
+              - name: Rx_Start_Date
+              - name: Rx_Type
+              - name: Rx_Type_Desc
+              - name: Subseq_Course_Rx_Summary
+              - name: Treatment_This_Facility_Desc
+          - name: visit
+            path: visit
+            props:
+              - name: ADM_DATE
+              - name: CRDW_END_DATE
+              - name: CRDW_START_DATE
+              - name: DISC_DATE
+              - name: dx_name
+              - name: dx_rank
+              - name: icd10_code
+              - name: icd9_code
+          - name: diagnosis
+            path: diagnosis
+            props:
+              - name: CS_Mets_at_Dx_Bone_Desc
+              - name: CS_Mets_at_Dx_Brain_Desc
+              - name: CS_Mets_at_Dx_Liver_Desc
+              - name: CS_Mets_at_Dx_Lung_Desc
+              - name: CS_Site_Specific_Factor_1
+              - name: CS_Site_Specific_Factor_10
+              - name: CS_Site_Specific_Factor_2
+              - name: CS_Site_Specific_Factor_3
+              - name: CS_Site_Specific_Factor_4
+              - name: CS_Site_Specific_Factor_5
+              - name: CS_Site_Specific_Factor_6
+              - name: CS_Site_Specific_Factor_7
+              - name: CS_Site_Specific_Factor_8
+              - name: CS_Site_Specific_Factor_9
+              - name: Clinical_M
+              - name: Clinical_N
+              - name: Clinical_Stage_Group
+              - name: Clinical_T
+              - name: Date_of_First_Contact
+              - name: Date_of_Initial_Diagnosis
+              - name: Laterality
+              - name: Mets_at_Dx_Distant_LN
+              - name: Mets_at_Dx_Other
+              - name: Pathologic_M
+              - name: Pathologic_N
+              - name: Pathologic_Stage_Descriptor
+              - name: Pathologic_Stage_Group
+              - name: Pathologic_T
+              - name: Primary_Site
+              - name: Primary_Site_Desc
+              - name: Regional_Nodes_Exam
+              - name: Regional_Nodes_Positive
+              - name: Site_of_Distant_Metastasis_1_Desc
+              - name: Site_of_Distant_Metastasis_2_Desc
+              - name: Site_of_Distant_Metastasis_3_Desc
+              - name: Size_of_Tumor
+              - name: TNM_Edition_Number_Desc
+              - name: Tumor_Size_Clinical
+              - name: Tumor_Size_Pathological
+              - name: Tumor_Size_Summary
+        joining_props:
+          - index: data_file
+            join_on: _subject_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
+      - name: hnc_sample
+        doc_type: sample
+        type: aggregator
+        root: sample
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: body_fluid_code
+          - name: dna_260_280
+          - name: dna_concentration
+          - name: dna_od_260
+          - name: procedure_date
+          - name: protocol_number
+          - name: sample_number
+          - name: sample_type
+          - name: sample_volume
+          - name: sample_year
+          - name: status
+        parent_props:
+          - path: subject[subject_submitter_id:submitter_id,MRN,Cancer_Status_Desc,Cause_of_Death_Desc,Class_of_Case_Desc,Date_of_Birth,Date_of_Last_Contact,Ethnicity,Primary_Payer_at_DX_Desc,Race_1_Desc,Sex_Desc,Spanish_Hispanic_Origin_Desc,Vital_Status_Desc,date_of_death,gender,race].dataset[dataset_submitter_id:submitter_id,data_description]
+        nested_props:
+          - name: portion
+            path: portion
+            props:
+              - name: portion_submitter_id
+              - name: creation_datetime
+              - name: is_ffpe
+              - name: portion_number
+              - name: weight
+          - name: pathology_report
+            path: pathology_report
+            props:
+              - name: pathology_report_submitter_id
+              - name: accession_num
+              - name: adm_date
+              - name: disc_date
+              - name: enc_date
+              - name: HPV
+              - name: lab_code
+              - name: lab_desc
+              - name: P16
+              - name: path_note
+              - name: path_value
+              - name: proc_code
+              - name: proc_desc
+              - name: order_dttm
+              - name: Order_proc_id
+              - name: reference_unit
+              - name: result_dttm
+              - name: result_flag
+              - name: result_in_range_yn
+        joining_props:
+          - index: data_file
+            join_on: _sample_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
+      - name: hnc_imaging_study
+        doc_type: imaging_study
+        type: aggregator
+        root: imaging_study
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: age_at_imaging
+          - name: age_at_imaging_gt89
+          - name: body_part_examined
+          - name: study_description
+          - name: study_uid
+          - name: study_year
+        parent_props:
+          - path: subject[subject_submitter_id:submitter_id,MRN,Cancer_Status_Desc,Cause_of_Death_Desc,Class_of_Case_Desc,Date_of_Birth,Date_of_Last_Contact,Ethnicity,Primary_Payer_at_DX_Desc,Race_1_Desc,Sex_Desc,Spanish_Hispanic_Origin_Desc,Vital_Status_Desc,date_of_death,gender,race].dataset[dataset_submitter_id:submitter_id,data_description]
+        joining_props:
+          - index: data_file
+            join_on: _imaging_study_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_file_source_node
+                src: source_node
+                fn: set
+      - name: hnc_data_file
+        doc_type: data_file
+        type: collector
+        root: None
+        category: data_file
+        props:
+          - name: source_node
+          - name: project_id
+          - name: submitter_id
+          - name: object_id
+          - name: file_name
+          - name: data_format
+          - name: data_type
+          - name: data_category
+          - name: acquisition_type
+          - name: convolution_kernel
+          - name: contrast_bolus_agent
+          - name: experimental_strategy
+          - name: exposure_modulation_type
+          - name: imaging_date
+          - name: image_data_modification_name
+          - name: image_data_modification_method
+          - name: image_data_modified
+          - name: image_type
+          - name: lossy_image_compression
+          - name: magnification
+          - name: manufacturer
+          - name: manufacturer_model_name
+          - name: modality
+          - name: number_of_instances
+          - name: patient_position
+          - name: pixel_spacing
+          - name: series_uid
+          - name: series_description
+          - name: slice_thickness
+          - name: spacing_between_slices
+          - name: stain_type
+        injecting_props:
+          dataset:
+            props:
+              - name: _dataset_id
+                src: id
+                fn: set
+              - name: dataset_submitter_id
+                src: submitter_id
+                fn: set
+              - name: data_description
+                src: data_description
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+              - name: subject_submitter_id
+                src: submitter_id
+                fn: set
+              - name: MRN
+                src: MRN
+                fn: set
+              - name: Cancer_Status_Desc
+                src: Cancer_Status_Desc
+                fn: set
+              - name: Cause_of_Death_Desc
+                src: Cause_of_Death_Desc
+                fn: set
+              - name: Class_of_Case_Desc
+                src: Class_of_Case_Desc
+                fn: set
+              - name: Date_of_Birth
+                src: Date_of_Birth
+                fn: set
+              - name: Date_of_Last_Contact
+                src: Date_of_Last_Contact
+                fn: set
+              - name: Ethnicity
+                src: Ethnicity
+                fn: set
+              - name: Primary_Payer_at_DX_Desc
+                src: Primary_Payer_at_DX_Desc
+                fn: set
+              - name: Race_1_Desc
+                src: Race_1_Desc
+                fn: set
+              - name: Sex_Desc
+                src: Sex_Desc
+                fn: set
+              - name: Spanish_Hispanic_Origin_Desc
+                src: Spanish_Hispanic_Origin_Desc
+                fn: set
+              - name: Vital_Status_Desc
+                src: Vital_Status_Desc
+                fn: set
+              - name: date_of_death
+                src: date_of_death
+                fn: set
+              - name: gender
+                src: gender
+                fn: set
+              - name: race
+                src: race
+                fn: set
+          sample:
+            props:
+              - name: _sample_id
+                src: id
+                fn: set
+              - name: sample_submitter_id
+                src: submitter_id
+                fn: set
+              - name: body_fluid_code
+                src: body_fluid_code
+                fn: set
+              - name: dna_260_280
+                src: dna_260_280
+                fn: set
+              - name: dna_concentration
+                src: dna_concentration
+                fn: set
+              - name: dna_od_260
+                src: dna_od_260
+                fn: set
+              - name: procedure_date
+                src: procedure_date
+                fn: set
+              - name: protocol_number
+                src: protocol_number
+                fn: set
+              - name: sample_number
+                src: sample_number
+                fn: set
+              - name: sample_type
+                src: sample_type
+                fn: set
+              - name: sample_volume
+                src: sample_volume
+                fn: set
+              - name: sample_year
+                src: sample_volume
+                fn: set
+              - name: status
+                src: status
+                fn: set
+          portion:
+            props:
+              - name: _portion_id
+                src: id
+                fn: set
+              - name: portion_submitter_id
+                src: submitter_id
+                fn: set
+              - name: creation_datetime
+                src: creation_datetime
+                fn: set
+              - name: is_ffpe
+                src: is_ffpe
+                fn: set
+              - name: portion_number
+                src: portion_number
+                fn: set
+              - name: weight
+                src: weight
+                fn: set
+          imaging_study:
+            props:
+              - name: _imaging_study_id
+                src: id
+                fn: set
+              - name: imaging_study_submitter_id
+                src: submitter_id
+                fn: set
+              - name: age_at_imaging
+                src: age_at_imaging
+                fn: set
+              - name: age_at_imaging_gt89
+                src: age_at_imaging_gt89
+                fn: set
+              - name: body_part_examined
+                src: body_part_examined
+                fn: set
+              - name: study_description
+                src: study_description
+                fn: set
+              - name: study_uid
+                src: study_uid
+                fn: set
+              - name: study_year
+                src: study_year
+                fn: set
+          pathology_report:
+            props:
+              - name: _pathology_report_id
+                src: id
+                fn: set
+              - name: pathology_report_submitter_id
+                src: submitter_id
+                fn: set
+              - name: accession_num
+                src: accession_num
+                fn: set
+              - name: adm_date
+                src: adm_date
+                fn: set
+              - name: disc_date
+                src: disc_date
+                fn: set
+              - name: enc_date
+                src: enc_date
+                fn: set
+              - name: HPV
+                src: HPV
+                fn: set
+              - name: lab_code
+                src: lab_code
+                fn: set
+              - name: lab_desc
+                src: lab_desc
+                fn: set
+              - name: P16
+                src: P16
+                fn: set
+              - name: path_note
+                src: path_note
+                fn: set
+              - name: path_value
+                src: path_value
+                fn: set
+              - name: proc_code
+                src: proc_code
+                fn: set
+              - name: proc_desc
+                src: proc_desc
+                fn: set
+              - name: order_dttm
+                src: order_dttm
+                fn: set
+              - name: Order_proc_id
+                src: Order_proc_id
+                fn: set
+              - name: reference_unit
+                src: reference_unit
+                fn: set
+              - name: result_dttm
+                src: result_dttm
+                fn: set
+              - name: result_flag
+                src: result_flag
+                fn: set
+              - name: result_in_range_yn
+                src: result_in_range_yn
+                fn: set
 fence:
   # Lower cost
   resources:
@@ -103,15 +639,14 @@ fence:
       eks.amazonaws.com/role-arn: "arn:aws:iam::419939494982:role/gen3-service/headneck-default-fence-sa"
 
   externalSecrets:
-    fenceJwtKeys: ""
+    fenceJwtKeys: "headneck-default-fence-jwt-keys"
     fenceConfig: headneck_default-fence-config
     fenceGoogleAppCredsSecret: ""
     fenceGoogleStorageCredsSecret: ""
-    createK8sJwtKeysSecret: true
+    createK8sJwtKeysSecret: false
     createK8sGoogleAppSecrets: true
-    createK8sFenceConfigSecret: true
+    createK8sFenceConfigSecret: false
     dbcreds: "headneck_default-fence-creds"
-
 
   USER_YAML: |
     {}
@@ -130,7 +665,7 @@ frontend-framework:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/cdis/commons-frontend-app
     tag: main
@@ -139,12 +674,25 @@ grafana:
   enabled: false
 
 guppy:
+  esEndpoint: elasticsearch:9200
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: false
+  enabled: true
+  indices:
+    - index: hnc_dataset
+      type: dataset
+    - index: hnc_subject
+      type: subject
+    - index: hnc_sample
+      type: sample
+    - index: hnc_imaging_study
+      type: imaging_study
+    - index: hnc_data_file
+      type: data_file
+  configIndex: hnc_array-config
 
 hatchery:
   # Lower cost
@@ -156,7 +704,7 @@ hatchery:
 
   hatchery:
     sidecarContainer:
-      cpu-limit: '0.1'
+      cpu-limit: "0.1"
       memory-limit: 256Mi
       image: quay.io/cdis/ecs-ws-sidecar:master
       env:
@@ -164,46 +712,44 @@ hatchery:
         HOSTNAME: "{{ .Values.global.hostname }}"
       args: []
       command:
-      - "/bin/bash"
-      - "./sidecar.sh"
+        - "/bin/bash"
+        - "./sidecar.sh"
       lifecycle-pre-stop:
-      - su
-      - "-c"
-      - echo test
-      - "-s"
-      - "/bin/sh"
-      - root
+        - su
+        - "-c"
+        - echo test
+        - "-s"
+        - "/bin/sh"
+        - root
     containers:
-      -
-        target-port: 8888
-        cpu-limit: '1.0'
+      - target-port: 8888
+        cpu-limit: "1.0"
         memory-limit: 2Gi
         name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
         image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
         env:
           FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
         args:
-        - "--NotebookApp.base_url=/lw-workspace/proxy/"
-        - "--NotebookApp.default_url=/lab"
-        - "--NotebookApp.password=''"
-        - "--NotebookApp.token=''"
-        - "--NotebookApp.shutdown_no_activity_timeout=5400"
-        - "--NotebookApp.quit_button=False"
+          - "--NotebookApp.base_url=/lw-workspace/proxy/"
+          - "--NotebookApp.default_url=/lab"
+          - "--NotebookApp.password=''"
+          - "--NotebookApp.token=''"
+          - "--NotebookApp.shutdown_no_activity_timeout=5400"
+          - "--NotebookApp.quit_button=False"
         command:
-        - start-notebook.sh
+          - start-notebook.sh
         path-rewrite: "/lw-workspace/proxy/"
-        use-tls: 'false'
+        use-tls: "false"
         ready-probe: "/lw-workspace/proxy/"
         lifecycle-post-start:
-        - "/bin/sh"
-        - "-c"
-        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
-          ln -s /data /home/$IAM/pd/; true
+          - "/bin/sh"
+          - "-c"
+          - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+            ln -s /data /home/$IAM/pd/; true
         user-uid: 1000
         fs-gid: 100
         user-volume-location: "/home/jovyan/pd"
         gen3-volume-location: "/home/jovyan/.gen3"
-
 
 indexd:
   # Lower cost
@@ -212,11 +758,11 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
-  defaultPrefix: dg.XXXX/
+  defaultPrefix: dg.HN3CK/
   externalSecrets:
     dbcreds: "headneck_default-indexd-creds"
-    createK8sServiceCredsSecret: true
-
+    serviceCreds: "headneck-indexd-service-creds"
+    createK8sServiceCredsSecret: false
 
 manifestservice:
   # Lower cost
@@ -229,7 +775,7 @@ manifestservice:
     createK8sManifestServiceSecret: true
 
 metadata:
- # Lower cost
+  # Lower cost
   initResources:
     requests:
       memory: "105Mi"
@@ -252,13 +798,21 @@ peregrine:
       cpu: "15m"
   enabled: true
   externalSecrets:
-    dbcreds: "headneck_default-sheepdg-creds"
+    dbcreds: "headneck_default-sheepdog-creds"
 
 pidgin:
   enabled: false
 
 portal:
   enabled: true
+  image:
+    # tag: fix_gqlhelper
+    tag: "2025.10"
+  customConfig:
+    enabled: true
+    dir: "headneck/headneckcancerbank.data-commons.org/values/portal/"
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: master
 
 requestor:
   enabled: false
@@ -266,7 +820,7 @@ requestor:
     dbcreds: "headneck_default-requestor-creds"
 
 revproxy:
-# Lower cost
+  # Lower cost
   resources:
     requests:
       memory: "100Mi"
@@ -287,8 +841,18 @@ sheepdog:
     dbcreds: "headneck_default-sheepdog-creds"
 
 ssjdispatcher:
-  enabled: false
-
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::419939494982:role/headneck--headneck-helm--ssjdispatcher
+    name: "ssjdispatcher-sa"
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::419939494982:role/headneck--headneck-helm--ssjdispatcher-job-role
+  enabled: true
+  externalSecrets:
+    credsFile: headneck_default-ssjdispatcher-creds
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.11
 sower:
   enabled: false
 

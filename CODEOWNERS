@@ -1,0 +1,36 @@
+unfunded/caninedc.org @trevars @beamcb
+dataguids/dataguids.org @trevars @beamcb
+icgc/icgc.bionimbus.org @trevars @beamcb
+unfunded/aids.diseasedatahub.org @beamcb
+unfunded/tb.diseasedatahub.org @beamcb
+unfunded/flu.diseasedatahub.org @beamcb
+unfunded/diseasedatahub.org @beamcb
+dcf-staging/nci-crdc-staging.datacommons.io @jeffrey-knight
+dcfprod/nci-crdc.datacommons.io @jeffrey-knight
+vhdcprod/va.data-commons.org @nmetokishlubsky
+vadcprod/vpodc.data-commons.org @nmetokishlubsky
+pdp-commons/mc2dp.data-commons.org @nmetokishlubsky
+midrcprod/data.midrc.org @AJuehne-CTDS @cgmeyer
+midrcprod/staging.midrc.org @AJuehne-CTDS @cgmeyer
+midrcvalidate/validate.midrc.org @AJuehne-CTDS @cgmeyer
+midrcvalidate/validatestaging.midrc.org @AJuehne-CTDS @cgmeyer
+bihprod/imaging-hub.data-commons.org @AJuehne-CTDS @cgmeyer
+bihprod/bih-staging.data-commons.org @AJuehne-CTDS @cgmeyer
+bdcatprod/gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
+bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
+bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
+kidsfirst-kfqa2/gen3qa.kidsfirstdrc.org @jeffrey-knight
+kidsfirst-skfqa/gen3staging.kidsfirstdrc.org @jeffrey-knight
+kidsfirst-prodv1/data.kidsfirstdrc.org @jeffrey-knight
+jcoinprod/jcoin.datacommons.io @briennal
+covid19prod/chicagoland.pandemicresponsecommons.org @michaelfitzo @beamcb @stephenocc
+unfunded/gen3.datacommons.io @trevars @beamcb @cgmeyer
+bloodv2/data.bloodpac.org @Mikisha10 @urvi-occ
+healprod/healdata.org @briennal
+healprod/preprod.healdata.org @briennal
+healprod/externaldata.healdata.org @briennal
+brhprod/brh.data-commons.org @briennal
+brhprod/brhstaging.data-commons.org @briennal
+chordsprod/chordshealth.org @briennal
+chordsprod/staging.chordshealth.org @briennal
+ci/default @haraprasadj @krishnaa05

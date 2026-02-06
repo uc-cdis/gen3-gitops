@@ -1,45 +1,28 @@
 fence:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 10.2.0
-
-  # -- (map) Annotations to add to the pod
+    tag: '2026.01'
   podAnnotations:
     prometheus.io/path: /metrics
-    prometheus.io/scrape: "true"
-
+    prometheus.io/scrape: 'true'
   usersync:
-    # -- (bool) Whether to run Fence usersync or not.
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/g3dh/user.yaml
-
-  USER_YAML:
-
-  # -- (map) External Secrets settings.
+  USER_YAML: null
   externalSecrets:
-    # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sJwtKeysSecret: false
-    # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sGoogleAppSecrets: true
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
-    fenceJwtKeys: "oadc-fence-jwt"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
-    fenceGoogleAppCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
-    fenceGoogleStorageCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-config"
-    fenceConfig: "oadc-fence-config"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
-    dbcreds: "oadc-fence-db-creds"
-
-  # -- (map) Public configuration settings for Fence app
+    fenceJwtKeys: oadc-fence-jwt
+    fenceGoogleAppCredsSecret: null
+    fenceGoogleStorageCredsSecret: null
+    fenceConfig: oadc-fence-config
+    dbcreds: oadc-fence-db-creds
   FENCE_CONFIG_PUBLIC:
     ENABLE_PROMETHEUS_METRICS: true
     ENABLE_DB_MIGRATION: true

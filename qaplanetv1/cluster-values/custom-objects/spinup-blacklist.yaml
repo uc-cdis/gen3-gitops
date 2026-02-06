@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # This is a separate list of namespaces that can be scaled down, but will not be automatically scaled up every
+  # morning. This is for things like rarely-used dev environments and the like
+  name: spinup-blacklist
+  namespace: default
+data:
+  blacklist: |
+    jenkins*
+    qa-anvil
+    qa-brain
+    qa-canine
+    qa-dcp
+    qa-heal
+    qa-heal-helm-helm
+    qa-mickey
+    qa-mickey-helm-helm
+    test-argo

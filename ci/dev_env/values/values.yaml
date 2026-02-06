@@ -1,0 +1,52 @@
+global:
+  # This will be dynamically replaced by env_setup.sh script.
+  hostname:
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
+  pdb: true
+  aws:
+    externalSecrets:
+      # -- (bool) Whether to use External Secrets for aws config.
+      enabled: true
+      # -- (String) Name of Secrets Manager secret.
+      externalSecretAwsCreds: ci-aws-config
+    secretStoreServiceAccount:
+      # -- (bool) Set true if deploying to AWS and want to use service account and IAM role instead of aws keys. Must provide role-arn.
+      enabled: true
+      # -- (string) Name of the service account to create
+      name: secret-store-sa
+      # -- (string) AWS Role ARN for Secret Store to use
+      roleArn: arn:aws:iam::707767160287:role/devplanetv2-external-secrets-sa
+    sower_role: sower-jobs-role
+  externalSecrets:
+    deploy: true
+    createLocalK8sSecret: true
+  # This will be dynamically replaced by env_setup.sh script.
+  fenceURL: https://hostname/user
+  manifestGlobalExtraValues:
+    google_enabled: true
+  tierAccessLevel: libre
+  environment: devplanetv2
+
+mutatingWebhook:
+  # -- (bool) Whether to deploy the mutating webhook service.
+  enabled: false
+
+postgresql:
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"
+  image:
+    registry: quay.io
+    repository: cdis/postgresql
+    tag: 14.5.0-debian-11-r35
+
+elasticsearch:
+  pdb:
+    create: true
+    minAvailable: "1"
+    maxUnavailable: "0"

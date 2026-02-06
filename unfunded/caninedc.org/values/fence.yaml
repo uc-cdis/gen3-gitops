@@ -1,149 +1,62 @@
 fence:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 10.2.0
-
-  # -- (map) Annotations to add to the pod
+    tag: '2026.01'
   podAnnotations:
     prometheus.io/path: /metrics
-    prometheus.io/scrape: "true"
-
+    prometheus.io/scrape: 'true'
   usersync:
-    # -- (bool) Whether to run Fence usersync or not.
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/canine/user.yaml
-
-  USER_YAML:
-
-  # -- (map) External Secrets settings.
+  USER_YAML: null
   externalSecrets:
-    # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sJwtKeysSecret: false
-    # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sGoogleAppSecrets: true
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
-    fenceJwtKeys: "canine-fence-jwt"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
-    fenceGoogleAppCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
-    fenceGoogleStorageCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-config"
-    fenceConfig: "canine-fence-config"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
-    dbcreds: "canineprod-fence"
-
-  # -- (map) Public configuration settings for Fence app
+    fenceJwtKeys: canine-fence-jwt
+    fenceGoogleAppCredsSecret: null
+    fenceGoogleStorageCredsSecret: null
+    fenceConfig: canine-fence-config
+    dbcreds: canineprod-fence
   FENCE_CONFIG_PUBLIC:
-    APP_NAME: 'Gen3 Data Commons'
-    # Where fence microservice is deployed
-    BASE_URL: 'https://caninedc.org/user'
+    APP_NAME: Gen3 Data Commons
+    BASE_URL: https://caninedc.org/user
     DEBUG: false
-    # if true, will automatically login a user with username "test"
-    # WARNING: DO NOT ENABLE IN PRODUCTION (for testing purposes only)
     MOCK_AUTH: false
-    # if true, will fake a successful login response from Google in /login/google
-    #     NOTE: this will also modify the behavior of /link/google endpoints
-    # WARNING: DO NOT ENABLE IN PRODUCTION (for testing purposes only)
-    # will login as the username set in cookie DEV_LOGIN_COOKIE_NAME
     MOCK_GOOGLE_AUTH: false
-    # if true, will ignore anything configured in STORAGE_CREDENTIALS
     MOCK_STORAGE: true
-    # set if you want browsers to only send cookies with requests over HTTPS
     SESSION_COOKIE_SECURE: true
     ENABLE_CSRF_PROTECTION: true
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # LIBRARY CONFIGURATION (authlib & flask)
-    #   - Already contains reasonable defaults
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # authlib-specific configs for OIDC flow and JWTs
-    # NOTE: the OAUTH2_JWT_KEY cfg gets set automatically by fence if keys are setup
-    #       correctly
-    OAUTH2_JWT_ALG: 'RS256'
+    OAUTH2_JWT_ALG: RS256
     OAUTH2_JWT_ENABLED: true
     OAUTH2_JWT_ISS: '{{BASE_URL}}'
-    OAUTH2_PROVIDER_ERROR_URI: '/api/oauth2/errors'
-
-    # used for flask, "path mounted under by the application / web server"
-    # since we deploy as microservices, fence is typically under {{base}}/user
-    # this is also why our BASE_URL default ends in /user
-    APPLICATION_ROOT: '/user'
-
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # Tokens, Lifetimes, & Expirations
-    #   - Already contains reasonable defaults
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # The name of the browser cookie in which the access token will be stored.
-    ACCESS_TOKEN_COOKIE_NAME: "access_token"
-
-    # The name of the browser cookie in which the session token will be stored.
-    # Note that the session token also stores information for the
-    # ``flask.session`` in the ``context`` field of the token.
-    SESSION_COOKIE_NAME: "fence"
-
+    OAUTH2_PROVIDER_ERROR_URI: /api/oauth2/errors
+    APPLICATION_ROOT: /user
+    ACCESS_TOKEN_COOKIE_NAME: access_token
+    SESSION_COOKIE_NAME: fence
     OAUTH2_TOKEN_EXPIRES_IN:
-      "authorization_code": 1200
-      "implicit": 1200
-
-    # The number of seconds after an access token is issued until it expires.
+      authorization_code: 1200
+      implicit: 1200
     ACCESS_TOKEN_EXPIRES_IN: 1200
-
-    # The number of seconds after a refresh token is issued until it expires.
     REFRESH_TOKEN_EXPIRES_IN: 2592000
-
-    # The maximum session lifetime in seconds.
     SESSION_LIFETIME: 28800
-
-    # The number of seconds the user's Google service account key used for
-    # url signing will last before being expired/rotated
-    # 30 days: 2592000 seconds
     GOOGLE_SERVICE_ACCOUNT_KEY_FOR_URL_SIGNING_EXPIRES_IN: 2592000
-
-    # The number of seconds after a User's Google Service account is added to bucket
-    # access until it expires.
-    # 7 days: 604800 seconds
     GOOGLE_USER_SERVICE_ACCOUNT_ACCESS_EXPIRES_IN: 604800
-
-    # The number of seconds after a User's Google account is added to bucket
-    # access until it expires.
     GOOGLE_ACCOUNT_ACCESS_EXPIRES_IN: 86400
-
-    # The number of seconds after a pre-signed url is issued until it expires.
     MAX_PRESIGNED_URL_TTL: 3600
-
-    # The number of seconds after an API KEY is issued until it expires.
     MAX_API_KEY_TTL: 2592000
-
-    # The number of seconds after an access token is issued until it expires.
     MAX_ACCESS_TOKEN_TTL: 3600
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # SHIBBOLETH
-    #   - Support using `shibboleth` in ENABLED_IDENTITY_PROVIDERS
-    #   - Contains defaults for using NIH's Login.
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # assumes shibboleth is deployed under {{BASE_URL}}/shibboleth
-    SHIBBOLETH_HEADER: 'persistent_id'
-    SSO_URL: 'https://auth.nih.gov/affwebservices/public/saml2sso?SPID={{BASE_URL}}/shibboleth&RelayState='
-    ITRUST_GLOBAL_LOGOUT: 'https://auth.nih.gov/siteminderagent/smlogout.asp?mode=nih&AppReturnUrl='
-
+    SHIBBOLETH_HEADER: persistent_id
+    SSO_URL: https://auth.nih.gov/affwebservices/public/saml2sso?SPID={{BASE_URL}}/shibboleth&RelayState=
+    ITRUST_GLOBAL_LOGOUT: https://auth.nih.gov/siteminderagent/smlogout.asp?mode=nih&AppReturnUrl=
     S3_BUCKETS:
-      'canineprod-data-bucket':
-        'cred': 'canineprod_fence-bot'
-
-    # `DATA_UPLOAD_BUCKET` specifies an S3 bucket to which data files are uploaded,
-    # using the `/data/upload` endpoint. This must be one of the first keys under
-    # `S3_BUCKETS` (since these are the buckets fence has credentials for).
-    DATA_UPLOAD_BUCKET: 'canineprod-data-bucket'
-
+      canineprod-data-bucket:
+        cred: canineprod_fence-bot
+    DATA_UPLOAD_BUCKET: canineprod-data-bucket
     ENABLE_PROMETHEUS_METRICS: true
     ENABLE_DB_MIGRATION: true

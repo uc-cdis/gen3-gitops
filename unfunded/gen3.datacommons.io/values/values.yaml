@@ -1,170 +1,155 @@
 global:
   dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "gen3.datacommons.io"
+  hostname: gen3.datacommons.io
   aws:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
-    useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-oadc-secret # pragma: allowlist secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
+    secretStoreServiceAccount:
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
+      roleArn: arn:aws:iam::662843554732:role/unfunded--oadchelm--external-secrets-sa
+    wafv2:
+      enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/42215b51-29cc-47de-b189-c51bb2e07d97
-  dictionaryUrl: "http://s3.amazonaws.com/dictionary-artifacts/openaccess_dictionary/0.3.0/schema.json"
+  dictionaryUrl: http://s3.amazonaws.com/dictionary-artifacts/openaccess_dictionary/0.3.0/schema.json
   postgres:
     dbCreate: false
-    externalSecret: "pg-master" # pragma: allowlist secret
+    externalSecret: pg-master
   externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   pdb: true
-
+  topologySpread:
+    enabled: true
+    topologyKey: topology.kubernetes.io/zone
+    maxSkew: 1
 arborist:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   externalSecrets:
-    dbcreds: "oadc-arborist-db-creds"
+    dbcreds: oadc-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: master
-
+    tag: '2026.01'
 aws-es-proxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "oadc-aws-es-proxy-creds"
+    awsCreds: oadc-aws-es-proxy-creds
   enabled: true
-
 indexd:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  defaultPrefix: "dg.C78ne/"
-
+      memory: 105Mi
+      cpu: 15m
+  defaultPrefix: dg.C78ne/
   externalSecrets:
-    dbcreds: "oadc-indexd-db-creds"
-    serviceCreds: "oadc-indexd-service-creds"
-
+    dbcreds: oadc-indexd-db-creds
+    serviceCreds: oadc-indexd-service-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: master
-
+    tag: '2026.01'
 peregrine:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "oadc-peregrine-db-creds"
+    dbcreds: oadc-peregrine-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: feat_jq-audience
+    tag: '2026.01'
     pullPolicy: Always
-
 revproxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: master
-
+    tag: '2026.01'
 sheepdog:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "oadc-sheepdog-db-creds"
+    dbcreds: oadc-sheepdog-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: master
-
+    tag: '2026.01'
 manifestservice:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    manifestserviceG3auto: "oadc-manifestservice-g3auto"
-
+    manifestserviceG3auto: oadc-manifestservice-g3auto
 sower:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: master
+    tag: '2026.01'
   externalSecrets:
-    pelicanserviceG3auto: "oadc-pelicanservice-g3auto"
-
+    pelicanserviceG3auto: oadc-pelicanservice-g3auto
 ssjdispatcher:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: master
-
+    tag: '2026.01'
+  externalSecrets:
+    credsFile: oadc-ssjdispatcher-creds
+  indexing: quay.io/cdis/indexs3client:2026.01
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--oadc--ssj
+    name: ssjdispatcher-service-account
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--oadc--ssj-job
+  gen3Namespace: oadchelm
 metadata:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "oadc-metadata-db-creds"
-    metadataG3auto: "oadc-metadata-g3auto"
+    dbcreds: oadc-metadata-db-creds
+    metadataG3auto: oadc-metadata-g3auto
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: master
-
-# disabling workspace services
+    tag: '2026.01'
 ambassador:
   enabled: false
 wts:
   enabled: false
 hatchery:
   enabled: false
-
-# Disabled services
 audit:
   enabled: false
 pidgin:

@@ -12,4 +12,4 @@ fence:
     fenceJwtKeys: skfqa-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.01"
+    tag: '2026.01'

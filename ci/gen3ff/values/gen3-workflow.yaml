@@ -1,0 +1,16 @@
+gen3-workflow:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-workflow
+    tag: master
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
+  gen3WorkflowConfig:
+    debug: true
+    taskImageWhitelist:
+      - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
+      - "curlimages/curl:latest" # for test_access_internal_endpoints
+      - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary

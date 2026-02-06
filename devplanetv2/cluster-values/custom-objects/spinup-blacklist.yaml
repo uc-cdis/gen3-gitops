@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  # This is a separate list of namespaces that can be scaled down, but will not be automatically scaled up every
+  # morning. This is for things like rarely-used dev environments and the like
+  name: spinup-blacklist
+  namespace: default
+data:
+  blacklist: |
+    aidan
+    ajo-helm
+    avantol-helm
+    binamb-helm
+    dev0
+    elise-helm
+    georget
+    gomezmh
+    hara
+    hara-helm
+    jian
+    krishna-helm
+    mingfei
+    pauline-helm
+    qa-dcf-helm
+    qa-dcp-helm
+    qa-jcoin-helm
+    qa-midrc-helm
+    qa-midrc-test
+    qa-vpodc
+    qaplanetv2
+    qureshi

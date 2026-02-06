@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-gen3-ai
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: master
+      helm:
+        releaseName: gen3
+        valueFiles:
+          - $values/gen3-ai/ai.planx-pla.net/values.yaml
+    - repoURL: "https://github.com/uc-cdis/gen3-gitops"
+      targetRevision: feat/ai-commons
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - Replace=true
+    automated:
+      selfHeal: true

@@ -3,13 +3,13 @@ etl:
   spark:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2025.03
+      tag: 2025.12
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      #tag: 2025.03
+      #tag: 2025.12
       # patch to flatten nested array
-      tag: "2025.07"
+      tag: "2025.12"
   esEndpoint: elasticsearch
   esGarbageCollect:
     enabled: true
@@ -39,7 +39,7 @@ etl:
           - name: spatial_bounding_box
           - name: exposure_media
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
       - name: chordstaging_population_data_resource
         doc_type: population_data_resource
         type: aggregator
@@ -66,7 +66,7 @@ etl:
           - name: model_methods
           - name: population_studied
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
       - name: chordstaging_key_dataset_resource
         doc_type: key_data_resource
         type: aggregator
@@ -87,10 +87,9 @@ etl:
           - name: temporal_resolution
           - name: spatial_resolution
           - name: spatial_coverage
-          - name: spatial_coverage_specific_regions
           - name: geometry_type
           - name: model_methods
           - name: data_formats
           - name: data_location_text
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type, strengths, limitations, example_applications, tools_supporting_uses].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]

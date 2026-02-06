@@ -8,14 +8,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.07'
+    tag: '2025.12'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: externaldata-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.07'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--audit-sqs-receiver
@@ -52,7 +52,7 @@ fence:
     fenceJwtKeys: externaldata-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: '2025.12'
 global:
   pdb: true
   aws:
@@ -63,6 +63,9 @@ global:
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--external-secrets-sa
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:205252583234:regional/webacl/healprod-waf/433ff65b-9bda-4850-b7b9-dd07051a11e3
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/heal_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
@@ -70,14 +73,9 @@ global:
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: "externaldata-slack-webhook"
+    slackWebhookSecretName: externaldata-slack-webhook
   hostname: externaldata.healdata.org
   fenceURL: https://externaldata.healdata.org/user
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
-  #     - 172.25.130.0/24
-  #     - 172.25.131.0/24
   manifestGlobalExtraValues:
     kube_bucket: kube-healprod-gen3
     logs_bucket: logs-healprod-gen3
@@ -100,14 +98,14 @@ indexd:
     serviceCreds: externaldata-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.07'
+    tag: '2025.12'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: externaldata-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.07'
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--manifest-service-sa
@@ -118,14 +116,14 @@ metadata:
     metadataG3auto: externaldata-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.07'
+    tag: '2025.12'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.07'
+    tag: '2025.12'
 portal:
   enabled: false
 revproxy:
@@ -138,7 +136,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.07'
+    tag: '2025.12'
   ingress:
     aws:
       group: healprod
@@ -146,7 +144,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.07'
+    tag: '2025.12'
   replicaCount: 2
 wts:
   enabled: false
