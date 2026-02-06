@@ -7,11 +7,8 @@ etl:
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      #tag: 2025.12
-      # patch to flatten nested array
-      tag: "1.0.4"
+      tag: 1.0.4
   esEndpoint: elasticsearch
-
   etlMapping:
     mappings:
       - name: chordprod_geospatial_data_resource
@@ -28,16 +25,17 @@ etl:
           - name: measures_subcategory_minor
           - name: measures
           - name: time_extent_start_year
-            src:  time_extent_start_yyyy
+            src: time_extent_start_yyyy
           - name: time_extent_end_year
-            src:  time_extent_end_yyyy
+            src: time_extent_end_yyyy
           - name: temporal_resolution
           - name: spatial_resolution
           - name: spatial_coverage
           - name: spatial_bounding_box
           - name: exposure_media
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description,
+              domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
       - name: chordprod_population_data_resource
         doc_type: population_data_resource
         type: aggregator
@@ -52,9 +50,9 @@ etl:
           - name: measures_subcategory_minor
           - name: measures
           - name: time_extent_start_year
-            src:  time_extent_start_yyyy
+            src: time_extent_start_yyyy
           - name: time_extent_end_year
-            src:  time_extent_end_yyyy
+            src: time_extent_end_yyyy
           - name: temporal_resolution
           - name: spatial_resolution
           - name: spatial_coverage
@@ -64,7 +62,8 @@ etl:
           - name: model_methods
           - name: population_studied
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description,
+              domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
       - name: chordprod_key_dataset_resource
         doc_type: key_data_resource
         type: aggregator
@@ -78,9 +77,9 @@ etl:
           - name: measures_subcategory_minor
           - name: measures
           - name: time_extent_start_year
-            src:  time_extent_start_yyyy
+            src: time_extent_start_yyyy
           - name: time_extent_end_year
-            src:  time_extent_end_yyyy
+            src: time_extent_end_yyyy
           - name: time_available_comment
           - name: temporal_resolution
           - name: spatial_resolution
@@ -90,4 +89,10 @@ etl:
           - name: data_formats
           - name: data_location_text
         parent_props:
-          - path: resources[resource_short_name:short_name, resource_url, resource_description:description, domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
+          - path: resources[resource_short_name:short_name, resource_url, resource_description:description,
+              domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
+  image:
+    tube:
+      tag: '2026.01'
+    spark:
+      tag: '2026.01'
