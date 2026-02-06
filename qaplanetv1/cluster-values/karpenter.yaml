@@ -15,10 +15,10 @@ controller:
       value: us-east-1
   resources:
     requests:
-      memory: 3Gi
+      memory: 1Gi
       cpu: 1
     limits:
-      memory: 3Gi
+      memory: 1Gi
       cpu: 1
 webhook:
   enabled: false
