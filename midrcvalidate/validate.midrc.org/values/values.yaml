@@ -669,3 +669,22 @@ ssjdispatcher:
   indexing: quay.io/cdis/indexs3client:2026.01
 wts:
   enabled: false
+# AuroraRDSCopy Job configuration
+auroraRdsCopyJob:
+  enabled: true
+  auroraMasterSecret: aurora-creds
+  sourceNamespace: validatestaging-helm
+  targetNamespace: midrcvalidate-helm
+  writeToK8sSecret: false
+  writeToAwsSecret: false
+  services:
+    - serviceName: indexd
+      sourceSecret: indexd-dbcreds
+      targetSecret: indexd-dbcreds
+    - serviceName: metadata
+      sourceSecret: metadata-dbcreds
+      targetSecret: metadata-dbcreds
+    - serviceName: sheepdog
+      sourceSecret: sheepdog-dbcreds
+      targetSecret: sheepdog-dbcreds      
+  
