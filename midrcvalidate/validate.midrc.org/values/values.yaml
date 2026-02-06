@@ -476,6 +476,33 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrcvalidate/user.yaml
+  FENCE_CONFIG_PUBLIC:
+    LOGIN_OPTIONS:
+    - name: 'InCommon Login'
+      idp: fence
+      fence_idp: shibboleth
+      shib_idps:
+      - https://auth.nih.gov/IDP
+      - urn:mace:incommon:uchicago.edu
+      - https://shibboleth.umich.edu/idp/shibboleth
+      - https://fed.huit.harvard.edu/idp/shibboleth
+      - https://shibidp.cit.cornell.edu/idp/shibboleth
+      - https://login.emory.edu/idp/shibboleth
+      - https://idp.jefferson.edu/idp/shibboleth
+      - https://shib.mdanderson.org/idp/shibboleth
+      - urn:mace:incommon:stanford.edu
+      - urn:mace:incommon:stonybrook.edu
+      - urn:mace:incommon:osu.edu
+      - urn:mace:incommon:ucdavis.edu
+      - urn:mace:incommon:ucla.edu
+      - urn:mace:incommon:uiuc.edu
+      - urn:mace:incommon:ucsf.edu
+      - https://idp.pennkey.upenn.edu/idp/shibboleth
+      - urn:mace:incommon:washington.edu
+      - https://webauth.wfunet.wfu.edu/saml/saml2/idp/metadata.php
+    - name: 'ORCID Login'
+      idp: fence
+      fence_idp: orcid
 fluentd:
   enabled: true
   image:
