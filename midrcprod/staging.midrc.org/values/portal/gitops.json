@@ -1993,6 +1993,12 @@
                             "includeIfNotAvailable": false
                         },
                         {
+                            "name": "Publication DOI",
+                            "field": "doi_publication",
+                            "contentType": "link",
+                            "includeIfNotAvailable": false
+                        },
+                        {
                             "name": "Primary Site",
                             "field": "primary_site",
                             "contentType": "string",
