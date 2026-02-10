@@ -7,7 +7,7 @@ guppy:
   dbRestore: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.01'
+    tag: '2026.02'
   indices:
     - index: oadc_etl
       type: subject
