@@ -638,9 +638,9 @@
       },
       "exportToDataLibrary": {
         "enabled": true,
-        "dataObjectFieldName" : "objects",
-        "datesetIdFieldName" : "study_id",
-        "dataObjectIdField" : "guid"
+        "dataObjectFieldName": "objects",
+        "datesetIdFieldName": "study_id",
+        "dataObjectIdField": "guid"
       },
       "search": {
         "searchBar": {

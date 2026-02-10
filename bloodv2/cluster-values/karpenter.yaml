@@ -1,0 +1,25 @@
+skipCrds: true
+serviceAccount:
+  name: karpenter
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::562749638216:role/bloodv2-karpenter-sa"
+settings:
+  clusterName: bloodv2
+  featureGates:
+    spotToSpotConsolidation: true
+
+controller:
+  env:
+    - name: AWS_REGION
+      value: us-east-1
+  resources:
+    requests:
+      memory: 3Gi
+      cpu: 1
+    limits:
+      memory: 3Gi
+      cpu: 1
+webhook:
+  enabled: false
+dnsPolicy: Default
