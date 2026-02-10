@@ -51,6 +51,7 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: "1.8.6"
+  configuration: enabled
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
