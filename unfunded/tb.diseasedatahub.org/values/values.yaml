@@ -1,152 +1,125 @@
 global:
   dev: false
-  # uncomment once we cutover, so we can use shared ALB
-  #environment: "unfunded"
-  hostname: "tb.diseasedatahub.org"
-  origins_allow_credentials: ["https://diseasedatahub.org"]
+  hostname: tb.diseasedatahub.org
+  origins_allow_credentials:
+    - https://diseasedatahub.org
   manifestGlobalExtraValues:
-    fence_url: "https://diseasedatahub.org/user"
-    arborist_url: "http://arborist-service.diseasedatahub.svc.cluster.local"
-    indexd_url: "https://diseasedatahub.org/index/"
-    workspace_url: "https://diseasedatahub.org/lw-workspace"
-    manifest_service_url: "https://diseasedatahub.org/manifests"
-    wts_url: "https://diseasedatahub.org/wts/oauth2/"
-    cookie_domain: "diseasedatahub.org"
-    des_namespace: "diseasedatahub"
+    fence_url: https://diseasedatahub.org/user
+    arborist_url: http://arborist-service.diseasedatahub.svc.cluster.local
+    indexd_url: https://diseasedatahub.org/index/
+    workspace_url: https://diseasedatahub.org/lw-workspace
+    manifest_service_url: https://diseasedatahub.org/manifests
+    wts_url: https://diseasedatahub.org/wts/oauth2/
+    cookie_domain: diseasedatahub.org
+    des_namespace: diseasedatahub
   aws:
     enabled: true
     useLocalSecret:
-        enabled: true
-        localSecretName: external-secrets-tb-secret
-    wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
+      localSecretName: external-secrets-tb-secret
+    wafv2:
+      enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/86eca425-c2c3-4911-a49f-20beca8c7e99
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/tb-datadictionary/1.1.5/schema.json"
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/tb-datadictionary/1.1.5/schema.json
   postgres:
     dbCreate: false
-    externalSecret: "tb-master-password"
+    externalSecret: tb-master-password
   externalSecrets:
-    # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   topologySpread:
-    # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
     enabled: true
-    # -- (string) The topology key to use for spreading. Defaults to "topology.kubernetes.io/zone".
-    topologyKey: "topology.kubernetes.io/zone"
-    # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
+    topologyKey: topology.kubernetes.io/zone
     maxSkew: 1
-
 arborist:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   externalSecrets:
-    dbcreds: "tb-arborist-db-creds"
+    dbcreds: tb-arborist-db-creds
   image:
     repository: quay.io/cdis/arborist
-    tag: master
-
+    tag: '2026.02'
 aws-es-proxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "tb-aws-es-proxy-creds"
+    awsCreds: tb-aws-es-proxy-creds
   enabled: true
   image:
     repository: quay.io/cdis/aws-es-proxy
     tag: v1.3.1
-
 indexd:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-  # defaultPrefix: "dg.C78ch/"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "tb-indexd-db-creds"
-    serviceCreds: "tb-indexd-service-creds"
-
+    dbcreds: tb-indexd-db-creds
+    serviceCreds: tb-indexd-service-creds
   enabled: true
   image:
     repository: quay.io/cdis/indexd
-    tag: master
-
+    tag: '2026.02'
 peregrine:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "tb-peregrine-db-creds"
+    dbcreds: tb-peregrine-db-creds
   enabled: true
   image:
     repository: quay.io/cdis/peregrine
-    tag: master
+    tag: '2026.02'
     pullPolicy: Always
-
 revproxy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: master
-
+    tag: '2026.02'
 sheepdog:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "tb-sheepdog-db-creds"
+    dbcreds: tb-sheepdog-db-creds
   enabled: true
   image:
     repository: quay.io/cdis/sheepdog
-    tag: master
-
+    tag: '2026.02'
 manifestservice:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
-    tag: master
+    tag: '2026.02'
   externalSecrets:
-    manifestserviceG3auto: "tb-manifestservice-g3auto"
-
+    manifestserviceG3auto: tb-manifestservice-g3auto
 wts:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   externalSecrets:
-    dbcreds: "tb-wts-db-creds"
+    dbcreds: tb-wts-db-creds
   enabled: true
   image:
     repository: quay.io/cdis/workspace-token-service
-    tag: master
-
-# Disabled services
+    tag: '2026.02'
 ambassador:
   enabled: false
 hatchery:
