@@ -1,5 +1,5 @@
 frontend-framework:
   enabled: true
   image:
-    repository: "quay.io/cdis/ci-data-commons"
+    repository: quay.io/cdis/ci-data-commons
     tag: main
