@@ -1,42 +1,26 @@
 fence:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   image:
     repository: quay.io/cdis/fence
-    tag: 10.2.0
-
-  # -- (map) Annotations to add to the pod
+    tag: '2026.02'
   podAnnotations:
     prometheus.io/path: /metrics
-    prometheus.io/scrape: "true"
-
+    prometheus.io/scrape: 'true'
   usersync:
-    # -- (bool) Whether to run Fence usersync or not.
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/nde/user.yaml
-
-  # -- (map) Public configuration settings for Fence app
   FENCE_CONFIG_PUBLIC:
     ENABLE_PROMETHEUS_METRICS: true
     ENABLE_DB_MIGRATION: true
-
-  # -- (map) External Secrets settings.
   externalSecrets:
-    # -- (string) Will create the Helm "fence-jwt-keys" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sJwtKeysSecret: false
-    # -- (string) Will create the Helm "fence-google-app-creds-secret" and "fence-google-storage-creds-secret" secrets even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sGoogleAppSecrets: true
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-jwt-keys"
-    fenceJwtKeys: "charlie-fence-jwt"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-app-creds-secret"
-    fenceGoogleAppCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-google-storage-creds-secret"
-    fenceGoogleStorageCredsSecret:
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "fence-config"
-    fenceConfig: "charlie-fence-config"
-    # -- (string) Will override the name of the aws secrets manager secret. Default is "Values.global.environment-.Chart.Name-creds"
-    dbcreds: "charlie-fence-db-creds"
+    fenceJwtKeys: charlie-fence-jwt
+    fenceGoogleAppCredsSecret: null
+    fenceGoogleStorageCredsSecret: null
+    fenceConfig: charlie-fence-config
+    dbcreds: charlie-fence-db-creds
