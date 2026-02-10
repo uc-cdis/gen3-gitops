@@ -1,15 +1,13 @@
 guppy:
-  # Lower cost
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "15m"
-
+      memory: 105Mi
+      cpu: 15m
   enabled: true
   dbRestore: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: master
+    tag: '2026.02'
   indices:
     - index: canine_etl
       type: subject
