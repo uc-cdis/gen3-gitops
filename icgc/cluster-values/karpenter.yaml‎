@@ -1,0 +1,24 @@
+skipCrds: true
+serviceAccount:
+  name: karpenter
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::446046036926:role/icgc-karpenter-sa"
+settings:
+  clusterName: icgc
+  featureGates:
+    spotToSpotConsolidation: true
+controller:
+  env:
+    - name: AWS_REGION
+      value: us-east-1
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 1Gi
+      cpu: 1
+webhook:
+  enabled: false
+dnsPolicy: Default
