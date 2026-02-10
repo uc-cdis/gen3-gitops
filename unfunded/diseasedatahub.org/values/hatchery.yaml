@@ -1,144 +1,159 @@
 hatchery:
   enabled: true
   sidecarContainer:
-    # -- (string) The maximum amount of CPU the sidecar container can use
     cpu-limit: '1.0'
-    # -- (string) The sidecar image.
     image: quay.io/cdis/gen3fuse-sidecar:master
-    # -- (list) Commands to run for the sidecar container.
     command:
-    - "/bin/bash"
-    - "/sidecarDockerrun.sh"
-
-# -- (list) Notebook configuration.
+      - /bin/bash
+      - /sidecarDockerrun.sh
   containers:
     - target-port: 8888
       cpu-limit: '1.0'
       memory-limit: 1024Mi
-      name: "Jupyter Notebook Bio Python- Make your own"
+      name: Jupyter Notebook Bio Python- Make your own
       image: quay.io/occ_data/jupyternotebook:fix_niaid-test
       env:
-        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
       args:
-      - "--NotebookApp.base_url=/lw-workspace/proxy/"
-      - "--NotebookApp.default_url=/lab"
-      - "--NotebookApp.password=''"
-      - "--NotebookApp.token=''"
-      - "--NotebookApp.shutdown_no_activity_timeout=5400"
-      - "--NotebookApp.quit_button=False"
+        - --NotebookApp.base_url=/lw-workspace/proxy/
+        - --NotebookApp.default_url=/lab
+        - --NotebookApp.password=''
+        - --NotebookApp.token=''
+        - --NotebookApp.shutdown_no_activity_timeout=5400
+        - --NotebookApp.quit_button=False
       command:
-      - start-notebook.sh
-      path-rewrite: "/lw-workspace/proxy/"
+        - start-notebook.sh
+      path-rewrite: /lw-workspace/proxy/
       use-tls: 'false'
-      ready-probe: "/lw-workspace/proxy/"
+      ready-probe: /lw-workspace/proxy/
       lifecycle-post-start:
-      - "/bin/sh"
-      - "-c"
-      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true
+        - /bin/sh
+        - -c
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome;
+          mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'],
+          function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js;
+          ln -s /data /home/$IAM/pd/; true
       user-uid: 1000
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
     - target-port: 8888
       cpu-limit: '1.0'
       memory-limit: 14512Mi
-      name: "Jupyter Notebook DAIDS- Lab Edition"
+      name: Jupyter Notebook DAIDS- Lab Edition
       image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-daids:jupyter-nde1.1.2
       env:
-        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
       args:
-      - "--NotebookApp.base_url=/lw-workspace/proxy/"
-      - "--NotebookApp.default_url=/lab"
-      - "--NotebookApp.password=''"
-      - "--NotebookApp.token=''"
-      - "--NotebookApp.shutdown_no_activity_timeout=5400"
-      - "--NotebookApp.quit_button=False"
+        - --NotebookApp.base_url=/lw-workspace/proxy/
+        - --NotebookApp.default_url=/lab
+        - --NotebookApp.password=''
+        - --NotebookApp.token=''
+        - --NotebookApp.shutdown_no_activity_timeout=5400
+        - --NotebookApp.quit_button=False
       command:
-      - start-notebook.sh
-      path-rewrite: "/lw-workspace/proxy/"
+        - start-notebook.sh
+      path-rewrite: /lw-workspace/proxy/
       use-tls: 'false'
-      ready-probe: "/lw-workspace/proxy/"
+      ready-probe: /lw-workspace/proxy/
       lifecycle-post-start:
-      - "/bin/sh"
-      - "-c"
-      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true
+        - /bin/sh
+        - -c
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome;
+          mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'],
+          function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js;
+          ln -s /data /home/$IAM/pd/; true
       user-uid: 1000
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
     - target-port: 8888
       cpu-limit: '1.0'
       memory-limit: 14512Mi
-      name: "Jupyter Notebook DAIT- Lab Edition"
+      name: Jupyter Notebook DAIT- Lab Edition
       image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-dait:jupyter-nde1.1.2
       env:
-        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
       args:
-      - "--NotebookApp.base_url=/lw-workspace/proxy/"
-      - "--NotebookApp.default_url=/lab"
-      - "--NotebookApp.password=''"
-      - "--NotebookApp.token=''"
-      - "--NotebookApp.shutdown_no_activity_timeout=5400"
-      - "--NotebookApp.quit_button=False"
+        - --NotebookApp.base_url=/lw-workspace/proxy/
+        - --NotebookApp.default_url=/lab
+        - --NotebookApp.password=''
+        - --NotebookApp.token=''
+        - --NotebookApp.shutdown_no_activity_timeout=5400
+        - --NotebookApp.quit_button=False
       command:
-      - start-notebook.sh
-      path-rewrite: "/lw-workspace/proxy/"
+        - start-notebook.sh
+      path-rewrite: /lw-workspace/proxy/
       use-tls: 'false'
-      ready-probe: "/lw-workspace/proxy/"
+      ready-probe: /lw-workspace/proxy/
       lifecycle-post-start:
-      - "/bin/sh"
-      - "-c"
-      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true
+        - /bin/sh
+        - -c
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome;
+          mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'],
+          function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js;
+          ln -s /data /home/$IAM/pd/; true
       user-uid: 1000
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
     - target-port: 8888
       cpu-limit: '1.0'
       memory-limit: 14512Mi
-      name: "Jupyter Notebook DMID- Lab Edition"
+      name: Jupyter Notebook DMID- Lab Edition
       image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-dmid:jupyter-nde1.1.2
       env:
-        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        FRAME_ANCESTORS: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
       args:
-      - "--NotebookApp.base_url=/lw-workspace/proxy/"
-      - "--NotebookApp.default_url=/lab"
-      - "--NotebookApp.password=''"
-      - "--NotebookApp.token=''"
-      - "--NotebookApp.shutdown_no_activity_timeout=5400"
-      - "--NotebookApp.quit_button=False"
+        - --NotebookApp.base_url=/lw-workspace/proxy/
+        - --NotebookApp.default_url=/lab
+        - --NotebookApp.password=''
+        - --NotebookApp.token=''
+        - --NotebookApp.shutdown_no_activity_timeout=5400
+        - --NotebookApp.quit_button=False
       command:
-      - start-notebook.sh
-      path-rewrite: "/lw-workspace/proxy/"
+        - start-notebook.sh
+      path-rewrite: /lw-workspace/proxy/
       use-tls: 'false'
-      ready-probe: "/lw-workspace/proxy/"
+      ready-probe: /lw-workspace/proxy/
       lifecycle-post-start:
-      - "/bin/sh"
-      - "-c"
-      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true
+        - /bin/sh
+        - -c
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome;
+          mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'],
+          function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js;
+          ln -s /data /home/$IAM/pd/; true
       user-uid: 1000
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
     - target-port: 8787
       cpu-limit: '1.0'
       memory-limit: 1024Mi
-      name: "R Studio InflammatoryR"
+      name: R Studio InflammatoryR
       image: quay.io/cdis/rstudio-inflammatory:jupyter-nde1.1.2
       env:
-        WWW_FRAME_ORIGIN: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
-        DISABLE_AUTH: "true"
-      path-rewrite: "/"
+        WWW_FRAME_ORIGIN: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        DISABLE_AUTH: 'true'
+      path-rewrite: /
       use-tls: 'false'
-      ready-probe: "/"
+      ready-probe: /
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
     - target-port: 8787
       cpu-limit: '1.0'
       memory-limit: 1024Mi
-      name: "R Studio"
+      name: R Studio
       image: quay.io/cdis/rstudio:maste
       env:
-        WWW_FRAME_ORIGIN: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org https://aids.diseasedatahub.org https://flu.diseasedatahub.org
-        DISABLE_AUTH: "true"
-      path-rewrite: "/"
+        WWW_FRAME_ORIGIN: https://tb.diseasedatahub.org https://microbiome.diseasedatahub.org
+          https://aids.diseasedatahub.org https://flu.diseasedatahub.org
+        DISABLE_AUTH: 'true'
+      path-rewrite: /
       use-tls: 'false'
-      ready-probe: "/"
+      ready-probe: /
       fs-gid: 100
-      user-volume-location: "/home/jovyan/pd"
+      user-volume-location: /home/jovyan/pd
+  image:
+    tag: '2026.02'

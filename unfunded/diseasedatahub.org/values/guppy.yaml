@@ -3,7 +3,7 @@ guppy:
   dbRestore: false
   image:
     repository: quay.io/cdis/guppy
-    tag: master
+    tag: '2026.02'
   indices:
     - index: qa_dataset_browser
       type: dataset
