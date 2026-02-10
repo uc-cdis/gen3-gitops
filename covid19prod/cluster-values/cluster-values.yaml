@@ -58,7 +58,7 @@ karpenter-crds:
   selectorTag: covid19prod
   migration: true
   default:
-    weight: 20
+    weight: 90
     disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
@@ -78,13 +78,28 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
+      - key: node.kubernetes.io/instance-type
         operator: In
         values:
-          - m8i-flex
-          - r8i-flex
-          - m7i-flex
-          - m8i
+          - r8i-flex.large
+          - r8i-flex.xlarge
+          - m8i-flex.large
+          - m8i-flex.xlarge
+          - r8i.large
+          - r8i.xlarge
+          - r8a.medium
+          - r8a.large
+          - r8a.xlarge          
+          - r7a.large
+          - r7a.xlarge
+          - r7i.large
+          - r7i.xlarge
+          - r6a.large
+          - r6a.xlarge
+          - r6i.large
+          - r6i.xlarge
+          - r5a.large
+          - r5i.large
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
@@ -101,7 +116,7 @@ karpenter-crds:
       name: secondary
     amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
@@ -109,7 +124,6 @@ karpenter-crds:
         operator: In
         values:
           - on-demand
-          - spot
       - key: kubernetes.io/arch
         operator: In
         values:
