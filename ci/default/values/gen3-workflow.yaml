@@ -2,7 +2,7 @@ gen3-workflow:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-workflow
-    tag: master
+    tag: chore/delete_bucket_false
   serviceAccount:
     create: true
     annotations:
