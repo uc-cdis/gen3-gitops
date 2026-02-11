@@ -90,28 +90,6 @@ karpenter-crds:
       - key: kubernetes.io/arch
         operator: In
         values: [amd64]
-      - key: node.kubernetes.io/instance-type
-        operator: In
-        values:
-          - r8i-flex.large
-          - r8i-flex.xlarge
-          - m8i-flex.large
-          - m8i-flex.xlarge
-          - r8i.large
-          - r8i.xlarge
-          - r8a.medium
-          - r8a.large
-          - r8a.xlarge          
-          - r7a.large
-          - r7a.xlarge
-          - r7i.large
-          - r7i.xlarge
-          - r6a.large
-          - r6a.xlarge
-          - r6i.large
-          - r6i.xlarge
-          - r5a.large
-          - r5i.large
 
 metrics-server:
   enabled: true
