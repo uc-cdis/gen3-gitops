@@ -115,9 +115,9 @@ karpenter-crds:
 
 metrics-server:
   enabled: true
-  hostNetworkEnabled: true
+  hostNetworkEnabled: false
   configuration:
-    enabled: true
+    enabled: false
     
   workflow:
     nodeClassRef:
