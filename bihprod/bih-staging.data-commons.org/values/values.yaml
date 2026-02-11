@@ -360,7 +360,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: 'UnicodeDecodeError-log'
 ssjdispatcher:
   serviceAccount:
     annotations:
