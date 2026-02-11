@@ -125,7 +125,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
-    externalSecret: "<name of master Postgres secret in AWS Secrets Manager>"
+    externalSecret: "TODO"
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/930ddba3-1e49-4194-8bb8-4ff970dd45a0
 hatchery:
   enabled: true
