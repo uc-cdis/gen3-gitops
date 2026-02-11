@@ -21,6 +21,9 @@ calico:
 cert-manager:
   enabled: true
 
+cilium:
+  enabled: true
+
 coreDNS:
   enabled: true
   configuration:
