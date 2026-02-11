@@ -112,6 +112,13 @@ karpenter-crds:
           - r6i.xlarge
           - r5a.large
           - r5i.large
+
+metrics-server:
+  enabled: true
+  hostNetworkEnabled: true
+  configuration:
+    enabled: false
+    
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
