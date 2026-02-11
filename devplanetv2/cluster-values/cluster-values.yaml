@@ -115,7 +115,7 @@ karpenter-crds:
 
 metrics-server:
   enabled: true
-  hostNetworkEnabled: false
+  hostNetworkEnabled: true
   configuration:
     enabled: false
     
