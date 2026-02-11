@@ -117,7 +117,7 @@ metrics-server:
   enabled: true
   hostNetworkEnabled: true
   configuration:
-    enabled: false
+    enabled: true
     
   workflow:
     nodeClassRef:
