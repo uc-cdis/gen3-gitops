@@ -143,7 +143,7 @@ global:
     enabled: true
 
     # -- (array) A CIDR range representing a database subnet, that services with a database need access to
-    dbSubnet: "172.26.34.0/23"
+    dbSubnets: ["172.26.34.0/23"]
   aws:
     account: '707767160287'
     awsEsProxyRole: emalinowskiv1--emalinowskiv1-helm--es-access
