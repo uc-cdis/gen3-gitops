@@ -15,7 +15,7 @@ aws-s3-mountpoint:
     enabled: true
 
 calico:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
