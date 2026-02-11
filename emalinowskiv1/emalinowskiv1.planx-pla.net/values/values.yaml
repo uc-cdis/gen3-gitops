@@ -138,6 +138,12 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  netPolicy:
+    # -- (bool) Whether network policies are enabled
+    enabled: true
+
+    # -- (array) A CIDR range representing a database subnet, that services with a database need access to
+    dbSubnet: "172.26.34.0/23"
   aws:
     account: '707767160287'
     awsEsProxyRole: emalinowskiv1--emalinowskiv1-helm--es-access
