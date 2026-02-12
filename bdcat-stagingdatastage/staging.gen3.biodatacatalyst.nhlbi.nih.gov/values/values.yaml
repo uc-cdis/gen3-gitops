@@ -293,6 +293,7 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
   dispatcherJobNum: '10'
   environment: stagingdatastage
+  helmBranch: feat/add-gen3-discovery-ai
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
