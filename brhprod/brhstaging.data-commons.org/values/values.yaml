@@ -107,6 +107,7 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.0.6/schema.json
   dispatcherJobNum: '10'
   environment: brhstaging
+  clusterName: brhprod
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
