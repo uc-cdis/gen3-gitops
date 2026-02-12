@@ -32,7 +32,7 @@ arborist:
     dbcreds: oadc-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 aws-es-proxy:
   resources:
     requests:
@@ -54,7 +54,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
 peregrine:
   resources:
     requests:
@@ -65,7 +65,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
     pullPolicy: Always
 revproxy:
   resources:
@@ -76,7 +76,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
 sheepdog:
   resources:
     requests:
@@ -87,7 +87,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.02'
 manifestservice:
   resources:
     requests:
@@ -96,7 +96,7 @@ manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     manifestserviceG3auto: oadc-manifestservice-g3auto
 sower:
@@ -107,7 +107,7 @@ sower:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     pelicanserviceG3auto: oadc-pelicanservice-g3auto
 ssjdispatcher:
@@ -118,10 +118,10 @@ ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     credsFile: oadc-ssjdispatcher-creds
-  indexing: quay.io/cdis/indexs3client:2026.01
+  indexing: quay.io/cdis/indexs3client:2026.02
   serviceAccount:
     create: true
     annotations:
@@ -143,7 +143,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
 ambassador:
   enabled: false
 wts:
