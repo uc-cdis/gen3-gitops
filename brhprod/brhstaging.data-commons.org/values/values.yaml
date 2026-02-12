@@ -73,6 +73,9 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
   externalSecrets:
     gen3workflowG3auto: "brhstaging-helm-gen3workflow-g3auto"
   gen3WorkflowConfig:
