@@ -1,3 +1,4 @@
+helmBranch: feat/add-gen3-discovery-ai
 access-backend:
   enabled: true
   image:
@@ -270,6 +271,11 @@ gen3-user-data-library:
   externalSecrets:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
+gen3-discovery-ai:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-discovery-ai
+    tag: '1.2.3'
 global:
   pdb: true
   aws:
