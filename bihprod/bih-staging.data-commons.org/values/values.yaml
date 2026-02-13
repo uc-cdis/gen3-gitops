@@ -140,7 +140,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.5
+    tag: 1.3.6
 global:
   aws:
     account: '533267425233'
