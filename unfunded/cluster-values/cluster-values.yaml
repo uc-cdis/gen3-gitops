@@ -85,3 +85,9 @@ vpc-cni:
     enabled: false
 kube-proxy:
   enabled: true
+
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
+  configuration:
+    enabled: false
