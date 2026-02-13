@@ -7,6 +7,7 @@ alb-controller:
   enabled: true
   configuration:
     enabled: false
+  hostNetworkEnabled: true
 
 aws-s3-mountpoint:
   enabled: true
@@ -83,3 +84,9 @@ vpc-cni:
     enabled: false
 kube-proxy:
   enabled: false
+
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
+  configuration:
+    enabled: false
