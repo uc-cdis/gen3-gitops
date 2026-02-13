@@ -7,6 +7,7 @@ alb-controller:
   enabled: true
   configuration:
     enabled: false
+  hostNetworkEnabled: true
 
 aws-s3-mountpoint:
   enabled: true
