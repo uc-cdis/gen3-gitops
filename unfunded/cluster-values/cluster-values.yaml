@@ -82,7 +82,7 @@ vpc-cni:
   configuration:
     enabled: false
 kube-proxy:
-  enabled: true
+  enabled: false
 
 external-secrets:
   enabled: true
