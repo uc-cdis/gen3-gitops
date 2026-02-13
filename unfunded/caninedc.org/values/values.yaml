@@ -5,7 +5,7 @@ global:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
-      enabled: true
+      enabled: false
       localSecretName: external-secrets-canine-secret
     secretStoreServiceAccount:
       enabled: true
