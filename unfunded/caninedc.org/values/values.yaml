@@ -27,10 +27,6 @@ global:
     topologyKey: topology.kubernetes.io/zone
     maxSkew: 1
 arborist:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   externalSecrets:
     dbcreds: canineprod-arborist
@@ -38,10 +34,6 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.02'
 aws-es-proxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: canineprod-aws-es-proxy-creds
@@ -50,10 +42,6 @@ aws-es-proxy:
     repository: quay.io/cdis/aws-es-proxy
     tag: master
 indexd:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   defaultPrefix: dg.C78ne/
   externalSecrets:
     dbcreds: canineprod-indexd
@@ -63,10 +51,6 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.02'
 peregrine:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-peregrine
   enabled: true
@@ -75,20 +59,12 @@ peregrine:
     tag: '2026.02'
     pullPolicy: Always
 revproxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
     tag: '2026.02'
 sheepdog:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-sheepdog
   enabled: true
@@ -96,10 +72,6 @@ sheepdog:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.02'
 manifestservice:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
@@ -117,10 +89,6 @@ etl:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
       tag: master
 sower:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
@@ -128,24 +96,12 @@ sower:
   externalSecrets:
     pelicanserviceG3auto: canine-pelicanservice-g3auto
 ssjdispatcher:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2026.02'
   indexing: quay.io/cdis/indexs3client:2026.02
 metadata:
-  initResources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-metadata
     metadataG3auto: canine-metadata-g3auto
