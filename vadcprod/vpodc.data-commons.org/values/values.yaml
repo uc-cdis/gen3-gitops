@@ -162,7 +162,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.12'
+    tag: '2026.02'
   indices:
     - index: etl_mickey
       type: patients
