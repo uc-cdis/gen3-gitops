@@ -71,6 +71,28 @@ gen3-discovery-ai:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-discovery-ai
     tag: 1.1.0
+gen3-workflow:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
+  externalSecrets:
+    gen3workflowG3auto: "brhstaging-helm-gen3workflow-g3auto"
+  gen3WorkflowConfig:
+      debug: true
+      taskImageWhitelist:
+      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
+      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
+      - "quay.io/nextflow/bash:*"
+funnel:
+  postgres:
+    dbCreate: true
+  externalSecrets:
+    dbcreds: "brhstaging-helm-funnel-creds"
+    funnelOidcClient: "brhstaging-helm-funnel-oidc-client"
+  funnel:
+    Kubernetes:
+      JobsNamespace: "workflow-pods-brhstaging-helm"
 global:
   pdb: true
   aws:
@@ -88,10 +110,13 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.0.6/schema.json
   dispatcherJobNum: '10'
   environment: brhstaging
+  clusterName: brhprod
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
     slackWebhookSecretName: brhstaging-slack-webhook
+    createLocalK8sSecret: false
+    pushSecret: true
   hostname: brhstaging.data-commons.org
   publicDataSets: true
   manifestGlobalExtraValues:
@@ -104,6 +129,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: "brhprod-aurora-master-password"
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/930ddba3-1e49-4194-8bb8-4ff970dd45a0
 hatchery:
   enabled: true

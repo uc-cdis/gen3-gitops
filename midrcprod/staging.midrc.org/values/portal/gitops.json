@@ -1850,10 +1850,26 @@
                 "valueIfNotAvailable": "n/a"
             },
             {
-                "name": "Publication URL",
-                "field": "data_url",
-                "contentType": "link",
-                "width": 300,
+                "name": "Primary Imaging Site",
+                "field": "primary_site",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Cases",
+                "field": "cases_count",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Publication Year",
+                "field": "doi_publication_year",
+                "contentType": "string",
+                "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
             }

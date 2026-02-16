@@ -40,11 +40,6 @@ global:
     maxSkew: 1
 
 arborist:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   enabled: true
   externalSecrets:
     dbcreds: "charlie-arborist-db-creds"
@@ -53,11 +48,6 @@ arborist:
     tag: master
 
 aws-es-proxy:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "charlie-aws-es-proxy-creds"
@@ -67,11 +57,6 @@ aws-es-proxy:
     tag: v1.3.1
 
 indexd:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   # defaultPrefix: "dg.C78ch/"
   externalSecrets:
     dbcreds: "charlie-indexd-db-creds"
@@ -83,11 +68,6 @@ indexd:
     tag: master
 
 peregrine:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   externalSecrets:
     dbcreds: "charlie-peregrine-db-creds"
   enabled: true
@@ -97,22 +77,12 @@ peregrine:
     pullPolicy: Always
 
 revproxy:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   enabled: true
   image:
     repository: quay.io/cdis/nginx
     tag: master
 
 sheepdog:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   externalSecrets:
     dbcreds: "charlie-sheepdog-db-creds"
   enabled: true
@@ -121,11 +91,6 @@ sheepdog:
     tag: master
 
 manifestservice:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
@@ -134,11 +99,6 @@ manifestservice:
     manifestserviceG3auto: "charlie-manifestservice-g3auto"
 
 wts:
-  # Lower cost
-  resources:
-    requests:
-      memory: "105Mi"
-      cpu: "15m"
   externalSecrets:
     dbcreds: "charlie-wts-db-creds"
   enabled: true
