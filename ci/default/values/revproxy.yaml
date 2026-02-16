@@ -25,4 +25,4 @@ revproxy:
     resources:
       requests:
         memory: "105Mi"
-        cpu: "15m"
+        cpu: "50m"
