@@ -235,10 +235,10 @@
         "navigation": {
             "items": [
                 {
-                    "name": "Discovery",
+                    "name": "Datasets",
                     "link": "/discovery",
                     "icon": "query",
-                    "tooltip": "Dataset discovery"
+                    "tooltip": "The Datasets page provides free-text and tag-based search over published datasets in MIDRC along with links to publications and data download buttons."
                 },
                 {
                     "name": "Exploration",
