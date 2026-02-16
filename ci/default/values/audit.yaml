@@ -11,13 +11,12 @@ audit:
     createK8sAuditSecret: true
   image:
     repository: quay.io/cdis/audit-service
-    tag: 'master'
+    tag: integration202603
   server:
     pull_from_queue: true
     pull_frequency_seconds: 30
     debug: true
     sqs:
       region: us-east-1
-      # This will be dynamically replaced by env_setup.sh script.
-      url:  https://sqs.us-east-1.amazonaws.com/707767160287/audit-service-sqs
+      url: https://sqs.us-east-1.amazonaws.com/707767160287/audit-service-sqs
   enabled: true

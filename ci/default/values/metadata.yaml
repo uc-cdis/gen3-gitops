@@ -2,15 +2,14 @@ metadata:
   replicaCount: 2
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 'master'
+    tag: integration202603
   resources:
-    # -- (map) The amount of resources that the container requests
     requests:
       memory: 25Mi
   enabled: true
   externalSecrets:
     createK8sMetadataSecret: true
-  useAggMds: "True"
+  useAggMds: 'True'
   aggMdsNamespace: default
   aggMdsConfig: |
     {

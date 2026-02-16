@@ -2,14 +2,11 @@ sower:
   replicaCount: 2
   image:
     repository: quay.io/cdis/sower
-    tag: 'master'
+    tag: integration202603
   enabled: true
   serviceAccount:
-    # -- (bool) Specifies whether a service account should be created.
     create: true
-    # -- (string) The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
-    name: "sower-service-account"
+    name: sower-service-account
   externalSecrets:
     createK8sPelicanServiceSecret: false
     pelicanserviceG3auto: ci-pelicanservice-g3auto
@@ -19,7 +16,7 @@ sower:
       action: export
       container:
         name: job-task
-        image: quay.io/cdis/pelican-export:master
+        image: quay.io/cdis/pelican-export:integration202603
         pull_policy: Always
         env:
           - name: DICTIONARY_URL
@@ -62,20 +59,20 @@ sower:
         volumeMounts:
           - name: pelican-creds-volume
             readOnly: true
-            mountPath: "/pelican-creds.json"
+            mountPath: /pelican-creds.json
             subPath: config.json
-        cpu-limit: "0.5"
+        cpu-limit: '0.5'
         memory-limit: 1Gi
       volumes:
         - name: pelican-creds-volume
           secret:
-            secretName: pelicanservice-g3auto #pragma: allowlist secret
+            secretName: pelicanservice-g3auto
       restart_policy: Never
     - name: pelican-export-files
       action: export-files
       container:
         name: job-task
-        image: quay.io/cdis/pelican-export:master
+        image: quay.io/cdis/pelican-export:integration202603
         pull_policy: Always
         env:
           - name: DICTIONARY_URL
@@ -91,7 +88,7 @@ sower:
           - name: ROOT_NODE
             value: file
           - name: EXTRA_NODES
-            value: ""
+            value: ''
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -120,14 +117,14 @@ sower:
         volumeMounts:
           - name: pelican-creds-volume
             readOnly: true
-            mountPath: "/pelican-creds.json"
+            mountPath: /pelican-creds.json
             subPath: config.json
-        cpu-limit: "0.5"
+        cpu-limit: '0.5'
         memory-limit: 1Gi
       volumes:
         - name: pelican-creds-volume
           secret:
-            secretName: pelicanservice-g3auto #pragma: allowlist secret
+            secretName: pelicanservice-g3auto
       restart_policy: Never
     - name: batch-export
       action: batch-export
@@ -135,7 +132,7 @@ sower:
       serviceAccountName: sower-service-account
       container:
         name: job-task
-        image: quay.io/cdis/batch-export:master
+        image: quay.io/cdis/batch-export:integration202603
         pull_policy: Always
         env:
           - name: BUCKET
@@ -145,6 +142,6 @@ sower:
               configMapKeyRef:
                 name: manifest-global
                 key: hostname
-        cpu-limit: "1"
+        cpu-limit: '1'
         memory-limit: 1Gi
       restart_policy: Never

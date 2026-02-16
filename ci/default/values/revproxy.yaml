@@ -2,27 +2,27 @@ revproxy:
   replicaCount: 2
   enabled: true
   image:
-    repository: "quay.io/cdis/nginx"
-    tag: "master"
+    repository: quay.io/cdis/nginx
+    tag: integration202603
   ingress:
     enabled: true
     annotations:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/tags: Environment=devplanetv2-ci
-      alb.ingress.kubernetes.io/certificate-arn: 'arn:aws:acm:us-east-1:707767160287:certificate/f427a646-94fd-4b91-8bcd-80f5920c1e46'
+      alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:707767160287:certificate/f427a646-94fd-4b91-8bcd-80f5920c1e46
       alb.ingress.kubernetes.io/group.name: devplanetv2-ci
       alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+      alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig":
+        { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
       alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
       alb.ingress.kubernetes.io/wafv2-acl-arn: arn:aws:wafv2:us-east-1:707767160287:regional/webacl/devplanetv2-waf/30660590-f707-4ecf-aeae-ddfbe381f388
     className: alb
     hosts:
-      # This will be dynamically replaced by env_setup.sh script.
       - host: HOSTNAME
         paths:
           - path: /
             pathType: Prefix
     resources:
       requests:
-        memory: "105Mi"
-        cpu: "50m"
+        memory: 105Mi
+        cpu: 50m

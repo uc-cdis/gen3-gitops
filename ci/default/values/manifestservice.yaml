@@ -2,19 +2,17 @@ manifestservice:
   replicaCount: 2
   image:
     repository: quay.io/cdis/manifestservice
-    tag: "master"
+    tag: integration202603
   env:
     - name: REQUESTS_CA_BUNDLE
       value: /etc/ssl/certs/ca-certificates.crt
     - name: MANIFEST_SERVICE_CONFIG_PATH
       value: /var/gen3/config/config.json
     - name: GEN3_DEBUG
-      value: "False"
+      value: 'False'
   manifestserviceG3auto:
-    # This will be dynamically replaced by env_setup.sh script.
-    hostname:
+    hostname: null
     bucketName: gen3-helm-manifest-bucket
-    prefix: 'test'
+    prefix: test
   externalSecrets:
-    # -- (string) Will create the Helm "manifestservice-g3auto" secret even if Secrets Manager is enabled. This is helpful if you are wanting to use External Secrets for some, but not all secrets.
     createK8sManifestServiceSecret: true

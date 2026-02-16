@@ -2,9 +2,9 @@ arborist:
   replicaCount: 2
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "50m"
+      memory: 105Mi
+      cpu: 50m
   enabled: true
   image:
-    repository: "quay.io/cdis/arborist"
-    tag: "master"
+    repository: quay.io/cdis/arborist
+    tag: integration202603

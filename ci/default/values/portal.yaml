@@ -1,5 +1,4 @@
 portal:
-  # replicaCount: 2
   resources:
     limits:
       memory: 6Gi
@@ -8,7 +7,7 @@ portal:
       memory: 6Gi
   image:
     repository: quay.io/cdis/data-portal
-    tag: master
+    tag: integration202603
   gitops:
     json: |
       {
