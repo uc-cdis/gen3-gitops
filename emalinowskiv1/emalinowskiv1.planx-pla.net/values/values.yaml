@@ -454,7 +454,10 @@ portal:
     extraction:
       stripComponents: true
 
-      
+  resources:
+    requests:
+      memory: 128Mi
+ 
   gitops:
     json: "{\n  \"graphql\": {\n    \"boardCounts\": [\n      {\n        \"graphql\"\
       : \"_case_count\",\n        \"name\": \"Case\",\n        \"plural\": \"Cases\"\
