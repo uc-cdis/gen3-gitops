@@ -437,10 +437,14 @@ portal:
       createPV: true
       #volumeHandle: ""
       bucketName: "test-gen3-portal-build-bucket"
-      region: us-east-1
-      kmsKeyArn: "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+      mountOptions:
+      - allow-delete
+      - region us-east-1
+      - sse aws:kms
+      - sse-kms-key-id arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c    
       size: 1Gi
-      cacheEmptyDirSizeLimit: 500Mi
+      cache:
+        emptyDirSizeLimit: 500Mi
   
     images:
       builder: quay.io/cdis/data-portal:2024.12
