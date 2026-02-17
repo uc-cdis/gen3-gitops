@@ -26,6 +26,7 @@ data:
     kubecost
     logging
     monitoring
+    qabot
     qa-prometheus
     qa-vpodc
     qa-vpodc-helm
@@ -33,3 +34,4 @@ data:
     satosa
     sftp
     sftp2
+    thor
