@@ -50,7 +50,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
@@ -58,13 +58,65 @@ karpenter-crds:
   selectorTag: covid19prod
   migration: true
   default:
+    weight: 90
+    disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - spot
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+      - key: node.kubernetes.io/instance-type
+        operator: In
+        values:
+          - r8i-flex.large
+          - r8i-flex.xlarge
+          - m8i-flex.large
+          - m8i-flex.xlarge
+          - r8i.large
+          - r8i.xlarge
+          - r8a.medium
+          - r8a.large
+          - r8a.xlarge          
+          - r7a.large
+          - r7a.xlarge
+          - r7i.large
+          - r7i.xlarge
+          - r6a.large
+          - r6a.xlarge
+          - r6i.large
+          - r6i.xlarge
+          - r5a.large
+          - r5i.large
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Gt
+        values:
+          - "4000"          
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Lt
+        values:
+          - "17000"
+  secondary:
+    enabled: false
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: secondary
+    amiFamily: AL2023
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
@@ -72,20 +124,32 @@ karpenter-crds:
         operator: In
         values:
           - on-demand
-          - spot
       - key: kubernetes.io/arch
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
+      - key: node.kubernetes.io/instance-type
         operator: In
         values:
-          - r8i-flex
-          - m8i-flex
-      - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
-        values:
-          - "7000"
+          - r8i-flex.large
+          - r8i-flex.xlarge
+          - m8i-flex.large
+          - m8i-flex.xlarge
+          - r8i.large
+          - r8i.xlarge
+          - r8a.medium
+          - r8a.large
+          - r8a.xlarge          
+          - r7a.large
+          - r7a.xlarge
+          - r7i.large
+          - r7i.xlarge
+          - r6a.large
+          - r6a.xlarge
+          - r6i.large
+          - r6i.xlarge
+          - r5a.large
+          - r5i.large
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws
