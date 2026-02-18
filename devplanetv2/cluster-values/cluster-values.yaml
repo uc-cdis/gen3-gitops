@@ -92,7 +92,7 @@ karpenter-crds:
         values: [amd64]
       - key: "karpenter.k8s.aws/instance-cpu"
         operator: Gte
-        values: "4"
+        values: ["4"]
 
 metrics-server:
   enabled: true
