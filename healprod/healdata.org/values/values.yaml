@@ -328,7 +328,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "JupyterLab with Example Analysis Notebooks",
+            "name": "Use JupyterLab with Example Analysis Notebooks",
             "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
