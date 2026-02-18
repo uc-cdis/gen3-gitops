@@ -170,7 +170,7 @@ hatchery:
         "user-namespace": "jupyter-pods-healpreprod",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
-        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F",
+        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F-preprod",
         "default-pay-model": {
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
