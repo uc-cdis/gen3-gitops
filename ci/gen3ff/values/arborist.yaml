@@ -1,5 +1,5 @@
 arborist:
-  replicaCount: 2
+  replicaCount: 1
   resources:
     requests:
       memory: "105Mi"
