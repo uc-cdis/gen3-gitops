@@ -86,7 +86,40 @@ karpenter-crds:
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
-        values: [on-demand, spot]
+        values:
+          - spot
+        - key: capacity-spread
+          operator: In
+          values: ["2", "3", "4", "5", "6", "7", "8", "9"]  # 9 values = 90%          
+      - key: kubernetes.io/arch
+        operator: In
+        values: [amd64]
+      - key: "karpenter.k8s.aws/instance-cpu"
+        operator: Gt
+        values: ["3"]
+
+  secondary:
+    enabled: true
+    disruptionBudget: "80%"
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: secondary
+    amiFamily: AL2023
+    limits:
+      memory: 1100Gi
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "1m"
+    expireAfter: "72h"
+    volumeSize: 80Gi
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+        - key: capacity-spread
+          operator: In
+          values: ["1"]  # 1 value = 10%          
       - key: kubernetes.io/arch
         operator: In
         values: [amd64]
