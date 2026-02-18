@@ -91,8 +91,8 @@ karpenter-crds:
         operator: In
         values: [amd64]
       - key: "karpenter.k8s.aws/instance-cpu"
-        operator: Gte
-        values: ["4"]
+        operator: Gt
+        values: ["3"]
 
 metrics-server:
   enabled: true
