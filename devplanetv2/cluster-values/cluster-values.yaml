@@ -71,7 +71,7 @@ karpenter-crds:
   selectorTag: devplanetv2
   migration: true
   default:
-    weight: 30
+    weight: 50
     disruptionBudget: "80%"   
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
@@ -100,7 +100,7 @@ karpenter-crds:
         values: ["3"]
 
   secondary:
-    weight: 70  
+    weight: 50  
     enabled: true
     disruptionBudget: "80%"
     nodeClassRef:
