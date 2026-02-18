@@ -101,7 +101,7 @@ karpenter-crds:
 
   secondary:
     weight: 10  
-    enabled: true
+    enabled: false
     disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
