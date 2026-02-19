@@ -128,6 +128,9 @@ karpenter-crds:
       - key: "karpenter.k8s.aws/instance-cpu"
         operator: Gt
         values: ["3"]
+      - key: "karpenter.k8s.aws/instance-cpu"
+        operator: Lt
+        values: ["9"]        
 
 metrics-server:
   enabled: true
