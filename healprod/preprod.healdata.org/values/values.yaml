@@ -155,11 +155,13 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
 hatchery:
   enabled: true
+  replicaCount: 3
   externalSecrets:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.01'
+    # tag: '2026.01'
+    tag: 'fix_idempotent-cost-track'
   hatchery:
     json: |-
       {
