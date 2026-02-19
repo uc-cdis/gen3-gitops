@@ -105,6 +105,8 @@ ssjdispatcher:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2026.02'
   indexing: quay.io/cdis/indexs3client:2026.02
+  externalSecrets:
+    credsFile: canineprod-ssjdispatcher-creds
 metadata:
   externalSecrets:
     dbcreds: canineprod-metadata
@@ -121,7 +123,7 @@ wts:
   externalSecrets:
     dbcreds: canineprod-wts
     createWtsOidcClientSecret: true
-    createK8sWtsSecret: false
+    createK8sWtsSecret: true
     wtsG3auto: caninedc-wts-g3auto
     wtsOidcClient: caninedc-wts-client-secret
   image:
