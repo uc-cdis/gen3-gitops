@@ -73,6 +73,8 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
+  image:
+    tag: chore_add_helm_deployment_doc
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
