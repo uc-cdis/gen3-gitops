@@ -47,6 +47,7 @@ aws-es-proxy:
 indexd:
   defaultPrefix: dg.C78ne/
   externalSecrets:
+    createK8sServiceCredsSecret: true
     dbcreds: canineprod-indexd
     serviceCreds: canineprod-indexd-service-creds
   enabled: true
