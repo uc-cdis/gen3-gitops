@@ -22,7 +22,7 @@ global:
   environment: "headneck"
   hostname: "headneckcancerbank.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.2.0/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/hnc_dictionary/0.2.2/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -100,6 +100,8 @@ etl:
       tag: "jawad-debug"
       # tag: "2025.09"
       pullPolicy: Always
+  esGarbageCollect:
+    enabled: true        
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -170,6 +172,7 @@ etl:
               - name: sample_number
               - name: sample_type
               - name: sample_volume
+              - name: sample_year
               - name: status
           - name: treatment
             path: treatment
@@ -279,6 +282,7 @@ etl:
           - name: sample_number
           - name: sample_type
           - name: sample_volume
+          - name: sample_year
           - name: status
         parent_props:
           - path: subject[subject_submitter_id:submitter_id,MRN,Cancer_Status_Desc,Cause_of_Death_Desc,Class_of_Case_Desc,Date_of_Birth,Date_of_Last_Contact,Ethnicity,Primary_Payer_at_DX_Desc,Race_1_Desc,Sex_Desc,Spanish_Hispanic_Origin_Desc,Vital_Status_Desc,date_of_death,gender,race].dataset[dataset_submitter_id:submitter_id,data_description]
@@ -507,6 +511,9 @@ etl:
                 src: sample_type
                 fn: set
               - name: sample_volume
+                src: sample_volume
+                fn: set
+              - name: sample_year
                 src: sample_volume
                 fn: set
               - name: status

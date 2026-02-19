@@ -235,6 +235,12 @@
         "navigation": {
             "items": [
                 {
+                    "name": "Datasets",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "The Datasets page provides free-text and tag-based search over published datasets in MIDRC along with links to publications and data download buttons."
+                },
+                {
                     "name": "Exploration",
                     "link": "/explorer",
                     "icon": "exploration",
@@ -1120,6 +1126,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "project_id",
                     "_radiology_report_count"
                 ],
@@ -1316,7 +1323,7 @@
                             "imaging_study_submitter_id"
                         ],
                         "fields": [
-                            "loinc_common_name",
+                            "loinc_long_common_name",
                             "loinc_method",
                             "loinc_system",
                             "loinc_contrast",
@@ -1368,7 +1375,7 @@
                     "report_generation_method",
                     "report_modification_method",
                     "imaging_study_submitter_id",
-                    "loinc_common_name",
+                    "loinc_long_common_name",
                     "loinc_method",
                     "loinc_system",
                     "loinc_contrast",
@@ -1471,8 +1478,8 @@
                 "manifestMapping": {
                     "resourceIndexType": "radiology_report",
                     "resourceIdField": "object_id",
-                    "referenceIdFieldInResourceIndex": "_radiology_report_id",
-                    "referenceIdFieldInDataIndex": "_radiology_report_id",
+                    "referenceIdFieldInResourceIndex": "object_id",
+                    "referenceIdFieldInDataIndex": "object_id",
                     "useFilterForCounts": false
                 },
                 "accessibleFieldCheckList": [
@@ -1665,6 +1672,7 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "submitter_id",
                     "project_id"
                 ],
@@ -1842,10 +1850,26 @@
                 "valueIfNotAvailable": "n/a"
             },
             {
-                "name": "Publication URL",
-                "field": "data_url",
-                "contentType": "link",
-                "width": 300,
+                "name": "Primary Imaging Site",
+                "field": "primary_site",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Cases",
+                "field": "cases_count",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Publication Year",
+                "field": "doi_publication_year",
+                "contentType": "string",
+                "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
             }
@@ -1982,6 +2006,12 @@
                             "name": "DOI Publisher",
                             "field": "doi_publisher",
                             "contentType": "string",
+                            "includeIfNotAvailable": false
+                        },
+                        {
+                            "name": "Publication DOI",
+                            "field": "doi_publication",
+                            "contentType": "link",
                             "includeIfNotAvailable": false
                         },
                         {

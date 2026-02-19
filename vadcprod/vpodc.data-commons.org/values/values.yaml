@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: "jupyter-pods"
+  jupyterNamespace: jupyter-pods
 arborist:
   replicaCount: 4
   autoscaling:
@@ -10,13 +10,15 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.10"
+    tag: '2025.12'
 audit:
   externalSecrets:
     auditG3auto: vadcprod-audit-g3auto
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-receiver
+  image:
+    tag: '2025.12'
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-vadcprod-gen3-metadata-2-vqrbyt4omluv7b2uqw5idjdwua.us-east-1.es.amazonaws.com
@@ -30,9 +32,7 @@ argo-wrapper:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
     tag: VA-2025.10.28
   scalingGroups:
-    default: "{{workflow.name}}"
-  #   custom:
-  #     aprokh@uchicago.edu: "{{workflow.name}}" # example of how to configure something different for a specific user
+    default: '{{workflow.name}}'
   s3Bucket: vadcprod-argo-user-artifacts-downloadable
   internalS3Bucket: vadcprod-argo-bucket
   environment: vadcprod-helm
@@ -57,7 +57,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: "2025.10"
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
@@ -83,6 +83,11 @@ etl:
           - name: state
         root: None
         type: collector
+  image:
+    tube:
+      tag: '2025.12'
+    spark:
+      tag: '2025.12'
 fence:
   usersync:
     usersync: true
@@ -103,22 +108,19 @@ fence:
     fenceJwtKeys: vadcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.10"
-
+    tag: '2025.12'
 portal:
   enabled: false
-
 frontend-framework:
   replicaCount: 2
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.07
-
+    tag: 0.11
 global:
   pdb: true
   aws:
-    account: "663707118480"
+    account: '663707118480'
     awsEsProxyRole: vadcprod--vadcprod-helm--es-access
     enabled: true
     hatchery_role: vadcprod--vadcprod-helm--hatchery-sa
@@ -126,31 +128,23 @@ global:
       enabled: true
       roleArn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
-      wafAclArn: "arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403"
+      wafAclArn: arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
-  dispatcherJobNum: "10"
+  dispatcherJobNum: '10'
   environment: vadcprod
-  # change to gen3ff / portal when we want to switch between portal or fefw
-  frontendRoot: "gen3ff"
+  frontendRoot: gen3ff
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: "vadcprod-slack-webhook"
+    slackWebhookSecretName: vadcprod-slack-webhook
   hostname: vpodc.data-commons.org
   fenceURL: https://vpodc.data-commons.org/user
   manifestGlobalExtraValues:
     kube_bucket: kube-vadcprod-gen3
     logs_bucket: logs-vadcprod-gen3
-  maintenanceMode: "off"
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
-  #     - 172.25.51.0/24
-  #     - 172.25.50.0/24
+  maintenanceMode: 'off'
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -168,17 +162,19 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2025.10"
+    tag: '2025.12'
   indices:
     - index: etl_mickey
       type: patients
     - index: file_etl_mickey
       type: file
+    - index: omop_etl_index_cohortb_20251119
+      type: cohort_b_patients
 hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.10"
+    tag: '2025.12'
   hatchery:
     json: |-
       {
@@ -441,14 +437,14 @@ indexd:
     serviceCreds: vadcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.10"
+    tag: '2025.12'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: vadcprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: "2025.10"
+    tag: '2025.12'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--manifest-service-sa
@@ -465,12 +461,12 @@ metadata:
     metadataG3auto: vadcprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.10"
+    tag: '2025.12'
 ohdsi-atlas:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
-    tag: VA-2025.10.24
+    tag: VA-2026.01.08
 ohdsi-webapi:
   enabled: true
   image:
@@ -486,7 +482,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.10"
+    tag: '2025.12'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -497,11 +493,11 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.10"
+    tag: '2025.12'
   ingress:
     aws:
       group: vadcprod
-      sslPolicy: "ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04"
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   replicaCount: 4
   autoscaling:
@@ -512,16 +508,15 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.10"
+    tag: '2025.12'
 sower:
   enabled: true
   externalSecrets:
     pelicanserviceG3auto: vadcprod-pelicanservice-g3auto
-    # sowerjobsG3auto: vadcprod-sower-jobs-g3auto
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2025.10"
+    tag: '2025.12'
   sowerConfig: []
 ssjdispatcher:
   enabled: true
@@ -529,8 +524,8 @@ ssjdispatcher:
     credsFile: vadcprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: "2025.10"
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.10
+    tag: '2025.12'
+  indexing: quay.io/cdis/indexs3client:2025.12
 wts:
   replicaCount: 4
   autoscaling:
@@ -545,4 +540,4 @@ wts:
     wtsOidcClient: vadcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: "2025.10"
+    tag: '2025.12'

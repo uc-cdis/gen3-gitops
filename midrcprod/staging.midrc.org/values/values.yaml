@@ -11,14 +11,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.12'
+    tag: '2026.01'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: midrcstaging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2025.12'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--audit-sqs-receiver
@@ -38,7 +38,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.12'
+    tag: '2026.01'
 dashboard:
   dashboardConfig:
     bucket: dashboard-813684607867-midrcprod-gen3
@@ -46,7 +46,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.12'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--dashboard-access
@@ -66,6 +66,8 @@ etl:
     spark:
       requests:
         memory: 1Gi
+  esGarbageCollect:
+    enabled: true         
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -316,6 +318,9 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: dicom_header_file_guid
+                src: dicom_header_file_guid
+                fn: set
               - name: data_file_source_node
                 src: source_node
                 fn: set
@@ -352,6 +357,7 @@ etl:
           - name: data_format
           - name: data_type
           - name: data_category
+          - name: dicom_header_file_guid
           - name: annotation_method
           - name: annotation_name
           - name: annotator_id
@@ -494,9 +500,9 @@ etl:
                 fn: set
   image:
     tube:
-      tag: '2025.12'
+      tag: '2026.01'
     spark:
-      tag: '2025.12'
+      tag: '2026.01'
 fence:
   autoscaling:
     enabled: false
@@ -511,7 +517,7 @@ fence:
     fenceJwtKeys: midrcstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.12'
+    tag: '2026.01'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcstaging-helm--audit-sqs-sender
@@ -536,7 +542,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcprod-waf/6dae1fe2-287d-4cec-9537-0b8fa1f7d93c
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.2_draft/schema.json
   dispatcherJobNum: '10'
   environment: midrcstaging
   externalSecrets:
@@ -569,7 +575,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.12'
+    tag: '2026.01'
   indices:
     - index: midrcstaging_case
       type: case
@@ -588,7 +594,7 @@ hatchery:
   jupyterNamespace: jupyter-pods-midrcstaging-helm
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.12'
+    tag: '2026.01'
   hatchery:
     json: |-
       {
@@ -598,7 +604,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.11",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.01",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "data.midrc.org",
@@ -705,7 +711,7 @@ indexd:
     serviceCreds: midrcstaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.12'
+    tag: '2026.01'
 manifestservice:
   enabled: false
 metadata:
@@ -721,7 +727,7 @@ metadata:
     metadataG3auto: midrcstaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.12'
+    tag: '2026.01'
 ohif-viewer:
   enabled: true
   image:
@@ -745,7 +751,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.12'
+    tag: '2026.01'
 portal:
   autoscaling:
     enabled: false
@@ -761,12 +767,12 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2025.12'
+    tag: '2026.01'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.12'
+    tag: '2026.01'
 revproxy:
   autoscaling:
     enabled: false
@@ -777,7 +783,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.12'
+    tag: '2026.01'
   ingress:
     aws:
       group: midrcprod
@@ -791,7 +797,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.12'
+    tag: '2026.01'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -805,8 +811,8 @@ ssjdispatcher:
   gen3Namespace: midrcstaging-helm
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.12'
-  indexing: quay.io/cdis/indexs3client:2025.12
+    tag: '2026.01'
+  indexing: quay.io/cdis/indexs3client:2026.01
 wts:
   enabled: true
   externalSecrets:
@@ -815,4 +821,4 @@ wts:
     wtsOidcClient: midrcstaging-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.12'
+    tag: '2026.01'
