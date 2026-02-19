@@ -118,7 +118,9 @@ ambassador:
 wts:
   enabled: true
   externalSecrets:
-    createWtsOidcClientSecret: false
+    dbcreds: canineprod-wts
+    createWtsOidcClientSecret: true
+    createK8sWtsSecret: true
     wtsG3auto: caninedc-wts-g3auto
     wtsOidcClient: caninedc-wts-client-secret
   image:
