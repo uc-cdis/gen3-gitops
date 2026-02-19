@@ -1,7 +1,7 @@
 ambassador:
   jupyterNamespace: jupyter-pods-healpreprod
 arborist:
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
