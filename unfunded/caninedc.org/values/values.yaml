@@ -172,7 +172,7 @@ hatchery:
             "env": {
               "DISABLE_AUTH": "true",
               "NAMESPACE": "default",
-              "HOSTNAME": "caninedc.org,
+              "HOSTNAME": "caninedc.org",
               "FRAME_ANCESTORS": "https://caninedc.org"
             },
             "args": [
