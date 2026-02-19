@@ -59,7 +59,7 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-sender
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
