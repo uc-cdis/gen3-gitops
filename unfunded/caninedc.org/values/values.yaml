@@ -121,7 +121,7 @@ wts:
   externalSecrets:
     dbcreds: canineprod-wts
     createWtsOidcClientSecret: true
-    createK8sWtsSecret: true
+    createK8sWtsSecret: false
     wtsG3auto: caninedc-wts-g3auto
     wtsOidcClient: caninedc-wts-client-secret
   image:
