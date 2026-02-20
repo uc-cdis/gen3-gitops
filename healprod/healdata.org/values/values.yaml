@@ -177,7 +177,7 @@ hatchery:
         "default-pay-model": {
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
-          "account_id": "252835817747",
+          "local": true,
           "workspace_type": "healworkspaces",
           "hard-limit": 5,
           "soft-limit": 4
