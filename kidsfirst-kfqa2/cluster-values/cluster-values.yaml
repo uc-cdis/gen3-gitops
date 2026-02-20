@@ -77,6 +77,10 @@ karpenter-crds:
         operator: Gt
         values:
           - "7000"
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Lt
+        values:
+          - "32500"          
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
