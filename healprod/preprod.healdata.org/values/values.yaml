@@ -155,7 +155,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
 hatchery:
   enabled: true
-  replicaCount: 3
+  replicaCount: 2
   externalSecrets:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
