@@ -4,3 +4,5 @@ dicom-server:
   image:
     repository: "quay.io/cdis/gen3-orthanc"
     tag: "master"
+  externalSecrets:
+    createK8sOrthancG3auto: true
