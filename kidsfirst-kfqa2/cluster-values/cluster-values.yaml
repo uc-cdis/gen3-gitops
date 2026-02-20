@@ -60,7 +60,7 @@ karpenter-crds:
     limits:
       memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
