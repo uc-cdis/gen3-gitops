@@ -162,7 +162,7 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-healdata
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.01'
+    tag: '2.7.1'
   hatchery:
     json: |-
       {
@@ -187,7 +187,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "healprod-helm",
             "GEN3_ENDPOINT": "healdata.org",
