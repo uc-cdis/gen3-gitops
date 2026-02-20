@@ -3,71 +3,62 @@ project: kidsfirst
 eksClusterName: kfqa2
 accountNumber: "222487244010"
 eksClusterEndpoint: "https://0390EC57790D396E90741AA0EAA3F54B.sk1.us-east-1.eks.amazonaws.com"
-
 alb-controller:
   enabled: true
   configuration:
     enabled: false
-
 aws-s3-mountpoint:
   enabled: true
   configuration:
     enabled: false
-
 calico:
   enabled: true
   configuration:
     enabled: false
-
 cert-manager:
   enabled: true
-
 coreDNS:
   enabled: true
   configuration:
     enabled: false
-
 ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
-
 external-secrets:
   enabled: true
   targetRevision: "0.16.2"
   configuration:
     enabled: false
-
 fluentd:
   enabled: false
   configuration:
     enabled: false
-
 kube-state-metrics:
   enabled: true
   configuration:
     enabled: false
-
 grafana-alloy:
   enabled: true
   configuration:
     enabled: false
-
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
-
+  targetRevision: "1.8.6"
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: kfqa2
   migration: true
   default:
+    disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
+    limits:
+      memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "5m"
     expireAfter: "72h"
@@ -82,30 +73,24 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
           - "7000"
   workflow:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
   jupyter:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
     volumeSize: 80Gi
-
 vpc-cni:
   enabled: true
   configuration:
