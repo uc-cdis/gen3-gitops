@@ -32,6 +32,9 @@ ebs-csi-driver:
 
 external-secrets:
   enabled: true
+  targetRevision: "0.16.2"
+  configuration:
+    enabled: false
 
 fluentd:
   enabled: false
@@ -86,7 +89,7 @@ karpenter-crds:
         operator: Gt
         values:
           - "7000"
-  
+
   jupyter:
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
@@ -144,7 +147,7 @@ karpenter-crds:
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
-  
+
 
 nvidia-device-plugin:
   enabled: true
