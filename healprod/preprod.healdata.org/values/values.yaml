@@ -1,7 +1,7 @@
 ambassador:
   jupyterNamespace: jupyter-pods-healpreprod
 arborist:
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
@@ -59,7 +59,7 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-sender
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
@@ -155,11 +155,12 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
 hatchery:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.01'
+    tag: '2.7.1'
   hatchery:
     json: |-
       {
@@ -170,11 +171,11 @@ hatchery:
         "user-namespace": "jupyter-pods-healpreprod",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
-        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F",
+        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F-preprod",
         "default-pay-model": {
           "bmh_workspace_id": "blanket_billing_eks",
           "region": "us-east-1",
-          "account_id": "252835817747",
+          "local": true,
           "workspace_type": "healworkspaces",
           "hard-limit": 5,
           "soft-limit": 4
@@ -184,7 +185,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
@@ -209,7 +210,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+            "name": "JupyterLab with Python and R Kernels",
             "image": "quay.io/cdis/heal-notebooks:generic_rkernel__518649830a512a48eb4727ffa56d3a87b08d427c",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
@@ -244,7 +245,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic, User-licensed) Stata Notebook ",
+            "name": "JupyterLab with User-Licensed Stata",
             "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.1",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
@@ -278,7 +279,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic, Limited Gen3-licensed) Stata Notebook",
+            "name": "JupyterLab with Shared Stata License",
             "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.1",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
@@ -323,7 +324,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
+            "name": "Use JupyterLab with Example Analysis Notebooks",
             "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
