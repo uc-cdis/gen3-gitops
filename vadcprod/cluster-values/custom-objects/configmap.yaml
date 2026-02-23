@@ -1,6 +1,14 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  name: environment 
+  namespace: argo-events 
+data:
+  environment: vadcprod 
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
   name: karpenter-templates
   namespace: argo-events
 data:
@@ -10,9 +18,9 @@ data:
     metadata:
       name: workflow-WORKFLOW_NAME
     spec:
-      amiFamily: AL2
+      amiFamily: AL2023
       amiSelectorTerms:
-      - name: 1-31-EKS-FIPS*
+      - name: "EKS-1-33-al23*"
         owner: "143731057154"
       blockDeviceMappings:
       - deviceName: /dev/xvda
@@ -29,7 +37,7 @@ data:
       role: eks_ENVIRONMENT_workers_role
       securityGroupSelectorTerms:
       - tags:
-          karpenter.sh/discovery: ENVIRONMENT-workflow
+          karpenter.sh/discovery: ENVIRONMENT
       subnetSelectorTerms:
       - tags:
           karpenter.sh/discovery: ENVIRONMENT
