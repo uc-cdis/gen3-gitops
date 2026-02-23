@@ -1,0 +1,4 @@
+ohdsi-webapi:
+  global:
+    externalSecrets:
+      deploy: false
