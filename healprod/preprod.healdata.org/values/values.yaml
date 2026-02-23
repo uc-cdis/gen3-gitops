@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healpreprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-receiver
@@ -45,7 +45,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--dashboard-access
@@ -72,7 +72,7 @@ fence:
     fenceJwtKeys: healpreprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.01'
+    tag: '2026.02'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-healpreprod-205252583234-upload:
@@ -370,14 +370,14 @@ indexd:
     serviceCreds: healpreprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healpreprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--manifest-service-sa
@@ -1407,7 +1407,7 @@ metadata:
     metadataG3auto: healpreprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
   useAggMds: true
   schedule: 30 8 * * *
   suspendCronjob: false
@@ -1417,7 +1417,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
 portal:
   enabled: true
   dataUploadBucket: healprod-healpreprod-205252583234-upload
@@ -1430,12 +1430,12 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.01'
+    tag: '2026.02'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.01'
+    tag: '2026.02'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1446,7 +1446,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
   ingress:
     aws:
       group: healprod
@@ -1454,7 +1454,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.02'
   replicaCount: 4
 sower:
   enabled: true
@@ -1463,7 +1463,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.02'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1477,7 +1477,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: preprod-healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2026.01
+        image: quay.io/cdis/batch-export:2026.02
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1499,8 +1499,8 @@ ssjdispatcher:
     credsFile: healpreprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
-  indexing: quay.io/cdis/indexs3client:2026.01
+    tag: '2026.02'
+  indexing: quay.io/cdis/indexs3client:2026.02
 wts:
   enabled: true
   externalSecrets:
@@ -1509,4 +1509,4 @@ wts:
     wtsOidcClient: healpreprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.01'
+    tag: '2026.02'
