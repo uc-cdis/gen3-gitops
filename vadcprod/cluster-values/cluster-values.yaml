@@ -1,6 +1,8 @@
 cluster: vadcprod
 project: vadc
 accountNumber: "663707118480"
+configuration:
+  configurationRevision: EliseCastle23-patch-12
 alb-controller:
   enabled: true
   configuration:
