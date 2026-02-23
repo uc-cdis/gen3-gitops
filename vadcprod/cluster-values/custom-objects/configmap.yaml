@@ -18,7 +18,7 @@ data:
     metadata:
       name: workflow-WORKFLOW_NAME
     spec:
-      amiFamily: AL2
+      amiFamily: AL2023
       amiSelectorTerms:
       - name: "EKS-1-33-al23*"
         owner: "143731057154"
