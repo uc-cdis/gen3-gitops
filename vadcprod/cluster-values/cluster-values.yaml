@@ -1,6 +1,8 @@
 cluster: vadcprod
 project: vadc
 accountNumber: "663707118480"
+configuration:
+  configurationRevision: master
 alb-controller:
   enabled: true
   configuration:
