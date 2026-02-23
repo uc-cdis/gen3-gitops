@@ -1,3 +1,4 @@
 ohdsi-webapi:
+  enabled: true
   externalSecrets:
     createK8sOhdsiWebApiConfigSecret: true
