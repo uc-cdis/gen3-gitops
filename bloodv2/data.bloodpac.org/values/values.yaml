@@ -577,7 +577,7 @@ indexd:
   defaultPrefix: "dg.5B0D/"
   enabled: true
   externalSecrets:
-    serviceCreds: bloodv2-indexd-service-creds
+    createK8sServiceCredsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: "2025.12"
