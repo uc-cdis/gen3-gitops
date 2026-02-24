@@ -1498,10 +1498,10 @@ sower:
         cpu-limit: "1"
         env:
           - name: GEN3_HOSTNAME
-          valueFrom:
-            configMapKeyRef:
-              key: hostname
-              name: manifest-global
+            valueFrom:
+              configMapKeyRef:
+                key: hostname
+                name: manifest-global
           - name: BUCKET
           value: healdata-org-batch-export-bucket
         image: quay.io/cdis/batch-export:2026.01
