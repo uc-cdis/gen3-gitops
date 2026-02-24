@@ -1478,7 +1478,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: "2026.01"
   replicaCount: 1
 sower:
   serviceAccount:
@@ -1503,7 +1503,7 @@ sower:
                 key: hostname
                 name: manifest-global
           - name: BUCKET
-          value: healdata-org-batch-export-bucket
+            value: healdata-org-batch-export-bucket
         image: quay.io/cdis/batch-export:2026.01
         labels:
           internet: "yes"
