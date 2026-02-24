@@ -155,7 +155,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::707767160287:role/gen3-service/emalinowskiv1-test-external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
   environment: emalinowskiv1
   externalSecrets:
     deploy: true
