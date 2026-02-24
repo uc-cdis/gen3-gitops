@@ -1,4 +1,4 @@
 ohdsi-webapi:
-  global:
-    externalSecrets:
-      deploy: false
+  enabled: true
+  externalSecrets:
+    createK8sOhdsiWebApiConfigSecret: true
