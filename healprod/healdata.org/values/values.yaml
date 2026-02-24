@@ -1,7 +1,8 @@
 ambassador:
-    jupyterNamespace: jupyter-pods
-    image:
-        tag: "1.14.4"
+  jupyterNamespace: jupyter-pods
+  image:
+    tag: "1.14.4"
+  replicaCount: 4
 arborist:
     replicaCount: 4
     autoscaling:
@@ -153,12 +154,217 @@ global:
         dbCreate: false
     revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/f87abeee-47ce-47cd-a3ca-b3f76b34c845
 hatchery:
-    replicaCount: 4
-    autoscaling:
-        enabled: false
-        maxReplicas: 3
-        minReplicas: 2
-        targetCPUUtilizationPercentage: 40
+  replicaCount: 4
+  autoscaling:
+    enabled: false
+    maxReplicas: 3
+    minReplicas: 2
+    targetCPUUtilizationPercentage: 40
+  enabled: true
+  externalSecrets:
+    stataG3auto: stata-workspace-gen3-license-healdata
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2.7.1'
+  hatchery:
+    json: |-
+      {
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F",
+        "default-pay-model": {
+          "bmh_workspace_id": "blanket_billing_eks",
+          "region": "us-east-1",
+          "account_id": "252835817747",
+          "workspace_type": "healworkspaces",
+          "hard-limit": 5,
+          "soft-limit": 4
+        },
+        "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-heal",
+        "license-user-maps-global-secondary-index": "activeUsersIndex",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
+          "env": {
+            "NAMESPACE": "healprod-helm",
+            "GEN3_ENDPOINT": "healdata.org",
+            "HOSTNAME": "healdata.org",
+            "USER_UID": "1010"
+          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "JupyterLab with Python and R Kernels",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__518649830a512a48eb4727ffa56d3a87b08d427c",
+            "env": {
+              "FRAME_ANCESTORS": "https://healdata.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "JupyterLab with User-Licensed Stata",
+            "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.1",
+            "env": {
+              "FRAME_ANCESTORS": "https://healdata.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab/tree/welcome.html",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "JupyterLab with Shared Stata License",
+            "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.1",
+            "env": {
+              "FRAME_ANCESTORS": "https://healdata.org"
+            },
+            "license": {
+              "enabled": true,
+              "license-type": "STATA-HEAL",
+              "max-license-ids": 6,
+              "g3auto-name": "stata-workspace-gen3-license",
+              "g3auto-key": "stata-license.txt",
+              "file-path": "stata.lic",
+              "workspace-flavor": "gen3-licensed"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "/bin/bash",
+              "/tmp/wait_for_license.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "Use JupyterLab with Example Analysis Notebooks",
+            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
+            "env": {
+              "FRAME_ANCESTORS": "https://healdata.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
+        ]
+      }
+  workspaceLaunchTest:
     enabled: true
     externalSecrets:
         stataG3auto: stata-workspace-gen3-license-healdata
@@ -1470,11 +1676,11 @@ revproxy:
             group: healprod
     replicaCount: 4
 sheepdog:
-    enabled: true
-    image:
-        repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-        tag: "2026.01"
-    replicaCount: 4
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
+    tag: '2026.01'
+  replicaCount: 1
 sower:
     serviceAccount:
         create: true
