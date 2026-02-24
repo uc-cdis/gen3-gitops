@@ -472,6 +472,8 @@ ohdsi-webapi:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
     tag: VA-2025.10.24
+  externalSecrets:
+    dbcreds: vadcprod-ohdsi-webapi-creds
 peregrine:
   replicaCount: 4
   autoscaling:
