@@ -417,19 +417,16 @@ portal:
   enabled: true
   serviceAccount:
     annotations: 
-      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1-portal-sa
-  mountpointCacheEnabled: true
-  mountpointCacheBucketName: "test-gen3-portal-build-bucket"  
-  portalWebpackBuild:
-    s3csi:
-      createPV: true    
-
+      eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1-portal-sa  
+  customConfig:
+    enabled: true
+    dir: midrcprod/data.midrc.org/values/portal/
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: master
   portalBuild:
     enabled: true
-  
     rbac:
       enabled: true
-  
     s3csi:
       enabled: true
       pvcName: portal-pvc-emalinowskiv1
