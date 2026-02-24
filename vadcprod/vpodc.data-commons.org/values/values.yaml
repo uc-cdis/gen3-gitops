@@ -140,6 +140,7 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: vadcprod-slack-webhook
   hostname: vpodc.data-commons.org
+  atlasUrl: https://atlas.vpodc.data-commons.org
   fenceURL: https://vpodc.data-commons.org/user
   manifestGlobalExtraValues:
     kube_bucket: kube-vadcprod-gen3
@@ -467,8 +468,6 @@ ohdsi-atlas:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
     tag: VA-2026.02.24
-  global:
-    hostname: vpodc.data-commons.org
 ohdsi-webapi:
   enabled: true
   image:
@@ -476,9 +475,6 @@ ohdsi-webapi:
     tag: VA-2025.10.24
   externalSecrets:
     dbcreds: vadcprod-ohdsi-webapi-creds
-  global:
-    hostname: vpodc.data-commons.org
-    atlasUrl: https://atlas.vpodc.data-commons.org
 peregrine:
   replicaCount: 4
   autoscaling:
