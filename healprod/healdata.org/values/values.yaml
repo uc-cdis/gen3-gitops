@@ -13,14 +13,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: "2026.02"
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: "2026.02"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--audit-sqs-receiver
@@ -48,7 +48,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.02'
+    tag: "2026.02"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--dashboard-access
@@ -75,7 +75,7 @@ fence:
     fenceJwtKeys: healprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: "2026.02"
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-default-205252583234-upload:
@@ -169,37 +169,37 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-healdata
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2026.01"
+    tag: "2.7.1"
   hatchery:
     json: |-
       {
         "pricing": {
-        "cpu": 0.04048,
-        "memory": 0.004445
+            "cpu": 0.04048,
+            "memory": 0.004445
         },
         "user-namespace": "jupyter-pods",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F",
         "default-pay-model": {
-        "bmh_workspace_id": "blanket_billing_eks",
-        "region": "us-east-1",
-        "local": true,
-        "workspace_type": "healworkspaces",
-        "hard-limit": 5,
-        "soft-limit": 4
+            "bmh_workspace_id": "blanket_billing_eks",
+            "region": "us-east-1",
+            "local": true,
+            "workspace_type": "healworkspaces",
+            "hard-limit": 5,
+            "soft-limit": 4
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",
         "sidecar": {
-        "cpu-limit": "1.0",
-        "memory-limit": "256Mi",
-        "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
-        "env": {
-          "NAMESPACE": "healprod-helm",
-          "GEN3_ENDPOINT": "healdata.org",
-          "HOSTNAME": "healdata.org",
-          "USER_UID": "1010"
+            "cpu-limit": "1.0",
+            "memory-limit": "256Mi",
+            "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
+            "env": {
+            "NAMESPACE": "healprod-helm",
+            "GEN3_ENDPOINT": "healdata.org",
+            "HOSTNAME": "healdata.org",
+            "USER_UID": "1010"
         },
         "args": [],
         "command": [
@@ -389,14 +389,14 @@ indexd:
     serviceCreds: healprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: "2026.02"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.02'
+    tag: "2026.02"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--manifest-service-sa
@@ -1431,7 +1431,7 @@ metadata:
     metadataG3auto: healprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: "2026.02"
   useAggMds: true
   schedule: 0 9 * * *
   suspendCronjob: false
@@ -1441,7 +1441,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: "2026.02"
 portal:
   replicaCount: 4
   autoscaling:
@@ -1459,17 +1459,17 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.02'
+    tag: "2026.02"
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.02'
+    tag: "2026.02"
 revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: "2026.02"
   ingress:
     aws:
       group: healprod
@@ -1478,7 +1478,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: "2026.02"
   replicaCount: 1
 sower:
   serviceAccount:
@@ -1490,7 +1490,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.02'
+    tag: "2026.02"
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1526,7 +1526,7 @@ ssjdispatcher:
     credsFile: healprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.02'
+    tag: "2026.02"
   indexing: quay.io/cdis/indexs3client:2026.02
 wts:
   replicaCount: 4
@@ -1542,4 +1542,4 @@ wts:
     wtsOidcClient: healprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.02'
+    tag: "2026.02"
