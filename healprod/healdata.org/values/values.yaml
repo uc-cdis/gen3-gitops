@@ -1,4 +1,5 @@
 ambassador:
+  replicaCount: 4
   jupyterNamespace: jupyter-pods
 arborist:
   replicaCount: 4
@@ -10,14 +11,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--audit-sqs-receiver
@@ -45,7 +46,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--dashboard-access
@@ -72,7 +73,7 @@ fence:
     fenceJwtKeys: healprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.01'
+    tag: '2026.02'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-default-205252583234-upload:
@@ -114,7 +115,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.2.6
+    tag: 1.2.7
 global:
   pdb: true
   aws:
@@ -162,7 +163,7 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-healdata
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.01'
+    tag: '2.7.1'
   hatchery:
     json: |-
       {
@@ -187,7 +188,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.1",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "healprod-helm",
             "GEN3_ENDPOINT": "healdata.org",
@@ -213,7 +214,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+            "name": "JupyterLab with Python and R Kernels",
             "image": "quay.io/cdis/heal-notebooks:generic_rkernel__518649830a512a48eb4727ffa56d3a87b08d427c",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
@@ -248,7 +249,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic, User-licensed) Stata Notebook ",
+            "name": "JupyterLab with User-Licensed Stata",
             "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.1",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
@@ -283,7 +284,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Generic, Limited Gen3-licensed) Stata Notebook",
+            "name": "JupyterLab with Shared Stata License",
             "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.1",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
@@ -328,7 +329,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "(Tutorials) Example Analysis Jupyter Lab Notebooks",
+            "name": "Use JupyterLab with Example Analysis Notebooks",
             "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
             "env": {
               "FRAME_ANCESTORS": "https://healdata.org"
@@ -381,14 +382,14 @@ indexd:
     serviceCreds: healprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--manifest-service-sa
@@ -1423,7 +1424,7 @@ metadata:
     metadataG3auto: healprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
   useAggMds: true
   schedule: 0 9 * * *
   suspendCronjob: false
@@ -1433,7 +1434,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
 portal:
   replicaCount: 4
   autoscaling:
@@ -1451,17 +1452,17 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.01'
+    tag: '2026.02'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.01'
+    tag: '2026.02'
 revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
   ingress:
     aws:
       group: healprod
@@ -1470,8 +1471,8 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
-  replicaCount: 4
+    tag: '2026.02'
+  replicaCount: 1
 sower:
   serviceAccount:
     create: true
@@ -1482,7 +1483,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.02'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1496,7 +1497,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2026.01
+        image: quay.io/cdis/batch-export:2026.02
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1518,8 +1519,8 @@ ssjdispatcher:
     credsFile: healprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
-  indexing: quay.io/cdis/indexs3client:2026.01
+    tag: '2026.02'
+  indexing: quay.io/cdis/indexs3client:2026.02
 wts:
   replicaCount: 4
   autoscaling:
@@ -1534,4 +1535,4 @@ wts:
     wtsOidcClient: healprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.01'
+    tag: '2026.02'
