@@ -23,30 +23,18 @@ global:
     topologyKey: topology.kubernetes.io/zone
     maxSkew: 1
 arborist:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   externalSecrets:
     dbcreds: oadc-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 aws-es-proxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: oadc-aws-es-proxy-creds
   enabled: true
 indexd:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   defaultPrefix: dg.C78ne/
   externalSecrets:
     dbcreds: oadc-indexd-db-creds
@@ -54,74 +42,50 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
 peregrine:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: oadc-peregrine-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
     pullPolicy: Always
 revproxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
 sheepdog:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: oadc-sheepdog-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.02'
 manifestservice:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     manifestserviceG3auto: oadc-manifestservice-g3auto
 sower:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     pelicanserviceG3auto: oadc-pelicanservice-g3auto
 ssjdispatcher:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
+    tag: '2026.02'
   externalSecrets:
     credsFile: oadc-ssjdispatcher-creds
-  indexing: quay.io/cdis/indexs3client:2026.01
+  indexing: quay.io/cdis/indexs3client:2026.02
   serviceAccount:
     create: true
     annotations:
@@ -132,10 +96,6 @@ ssjdispatcher:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--oadc--ssj-job
   gen3Namespace: oadchelm
 metadata:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: oadc-metadata-db-creds
     metadataG3auto: oadc-metadata-g3auto
@@ -143,7 +103,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
 ambassador:
   enabled: false
 wts:
