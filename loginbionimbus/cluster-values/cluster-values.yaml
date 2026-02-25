@@ -75,15 +75,6 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
-      - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
-        values:
-          - "7000"
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
