@@ -50,7 +50,7 @@ kube-state-metrics:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
@@ -58,34 +58,31 @@ karpenter-crds:
   selectorTag: gen3-ai
   migration: true
   default:
+    disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
+    limits:
+      memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "10m"
+    consolidateAfter: "1m"
     expireAfter: "96h"
     volumeSize: 80Gi
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
         values:
-          - on-demand
           - spot
       - key: kubernetes.io/arch
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
       - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
+        operator: Lt
         values:
-          - "7000"
+          - "32500"
   gpu:
     enabled: true
     consolidation: true
@@ -97,7 +94,7 @@ karpenter-crds:
   workflow:
     enabled: false
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
@@ -106,7 +103,7 @@ karpenter-crds:
     consolidateAfter: "10m"
   jupyter:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023

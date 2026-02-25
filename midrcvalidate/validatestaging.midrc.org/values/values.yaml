@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 audit:
   externalSecrets:
     auditG3auto: validatestaging-audit-g3auto
@@ -18,7 +18,7 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--audit-sqs-receiver
   image:
-    tag: '2026.01'
+    tag: '2026.02'
 aws-es-proxy:
   replicaCount: 4
   autoscaling:
@@ -35,7 +35,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.01'
+    tag: '2026.02'
 dashboard:
   dashboardConfig:
     bucket: dashboard-813684607867-midrcprod-gen3
@@ -43,7 +43,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--dashboard-access
@@ -407,9 +407,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.01'
+      tag: '2026.02'
     spark:
-      tag: '2026.01'
+      tag: '2026.02'
 fence:
   serviceAccount:
     annotations:
@@ -427,38 +427,38 @@ fence:
     fenceJwtKeys: validatestaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.01'
+    tag: '2026.02'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrcvalidate/user.yaml
   FENCE_CONFIG_PUBLIC:
     LOGIN_OPTIONS:
-    - fence_idp: shibboleth
-      idp: fence
-      name: InCommon Login
-      shib_idps:
-      - https://auth.nih.gov/IDP
-      - urn:mace:incommon:uchicago.edu
-      - https://shibboleth.umich.edu/idp/shibboleth
-      - https://fed.huit.harvard.edu/idp/shibboleth
-      - https://shibidp.cit.cornell.edu/idp/shibboleth
-      - https://login.emory.edu/idp/shibboleth
-      - https://idp.jefferson.edu/idp/shibboleth
-      - https://shib.mdanderson.org/idp/shibboleth
-      - urn:mace:incommon:stanford.edu
-      - urn:mace:incommon:stonybrook.edu
-      - urn:mace:incommon:osu.edu
-      - urn:mace:incommon:ucdavis.edu
-      - urn:mace:incommon:ucla.edu
-      - urn:mace:incommon:uiuc.edu
-      - urn:mace:incommon:ucsf.edu
-      - https://idp.pennkey.upenn.edu/idp/shibboleth
-      - urn:mace:incommon:washington.edu
-      - https://webauth.wfunet.wfu.edu/saml/saml2/idp/metadata.php
-    - fence_idp: orcid
-      idp: fence
-      name: ORCID Login
-      secondary: false
+      - fence_idp: shibboleth
+        idp: fence
+        name: InCommon Login
+        shib_idps:
+          - https://auth.nih.gov/IDP
+          - urn:mace:incommon:uchicago.edu
+          - https://shibboleth.umich.edu/idp/shibboleth
+          - https://fed.huit.harvard.edu/idp/shibboleth
+          - https://shibidp.cit.cornell.edu/idp/shibboleth
+          - https://login.emory.edu/idp/shibboleth
+          - https://idp.jefferson.edu/idp/shibboleth
+          - https://shib.mdanderson.org/idp/shibboleth
+          - urn:mace:incommon:stanford.edu
+          - urn:mace:incommon:stonybrook.edu
+          - urn:mace:incommon:osu.edu
+          - urn:mace:incommon:ucdavis.edu
+          - urn:mace:incommon:ucla.edu
+          - urn:mace:incommon:uiuc.edu
+          - urn:mace:incommon:ucsf.edu
+          - https://idp.pennkey.upenn.edu/idp/shibboleth
+          - urn:mace:incommon:washington.edu
+          - https://webauth.wfunet.wfu.edu/saml/saml2/idp/metadata.php
+      - fence_idp: orcid
+        idp: fence
+        name: ORCID Login
+        secondary: false
 fluentd:
   enabled: true
   image:
@@ -510,7 +510,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.01'
+    tag: '2026.02'
   indices:
     - index: validatestaging_case
       type: case
@@ -537,7 +537,7 @@ indexd:
     serviceCreds: validatestaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
 manifestservice:
   enabled: false
 metadata:
@@ -553,7 +553,7 @@ metadata:
     metadataG3auto: validatestaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -566,7 +566,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
 portal:
   replicaCount: 4
   autoscaling:
@@ -582,7 +582,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.01'
+    tag: '2026.02'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -593,7 +593,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
   ingress:
     aws:
       group: midrcvalidate
@@ -607,7 +607,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.02'
 ssjdispatcher:
   gen3Namespace: validatestaging-helm
   serviceAccount:
@@ -621,7 +621,7 @@ ssjdispatcher:
     credsFile: validatestaging-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
-  indexing: quay.io/cdis/indexs3client:2026.01
+    tag: '2026.02'
+  indexing: quay.io/cdis/indexs3client:2026.02
 wts:
   enabled: false
