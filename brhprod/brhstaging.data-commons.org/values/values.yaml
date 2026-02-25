@@ -137,7 +137,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.02'
+    tag: '2.7.1'
   vpcId: brhprod
   hatchery:
     json: |-
@@ -159,7 +159,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:feat_fast-terminate",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "brhstaging-helm",
             "HOSTNAME": "brhstaging.data-commons.org"
