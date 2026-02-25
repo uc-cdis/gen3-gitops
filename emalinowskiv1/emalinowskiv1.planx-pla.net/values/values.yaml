@@ -155,7 +155,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::707767160287:role/gen3-service/emalinowskiv1-test-external-secrets-sa
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bpadictionary/0.8.11/schema.json
   environment: emalinowskiv1
   externalSecrets:
     deploy: true
@@ -420,7 +420,7 @@ portal:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/emalinowskiv1-portal-sa  
   customConfig:
     enabled: true
-    dir: midrcprod/data.midrc.org/values/portal/
+    dir: bloodv2/data.bloodpac.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
   portalBuild:
