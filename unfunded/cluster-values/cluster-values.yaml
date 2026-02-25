@@ -40,7 +40,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
   configuration:
     enabled: false
 
@@ -50,13 +50,16 @@ karpenter-crds:
   selectorTag: unfunded
   migration: true
   default:
+    disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
+    limits:
+      memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
