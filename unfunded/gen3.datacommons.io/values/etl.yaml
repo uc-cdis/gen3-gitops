@@ -96,6 +96,6 @@ etl:
                 src: id
   image:
     tube:
-      tag: '2026.01'
+      tag: '2026.02'
     spark:
-      tag: '2026.01'
+      tag: '2026.02'
