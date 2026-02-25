@@ -444,7 +444,7 @@ portal:
         emptyDirSizeLimit: 500Mi
   
     images:
-      builder: quay.io/cdis/data-portal:2026.01
+      builder: quay.io/cdis/data-portal:2024.12
       kubectl: bitnami/kubectl:latest
       alpine: alpine:3.20
   
@@ -576,7 +576,7 @@ portal:
       : \"object_id\"\n    }\n  }\n}\n"
   image:
     repository: quay.io/cdis/data-portal
-    tag: '2026.01'
+    tag: '2024.12'
 requestor:
   enabled: true
   image:
