@@ -1,4 +1,7 @@
 fence:
+  resources:
+    requests:
+      cpu: "50m"
   # -- (map) External Secrets settings.
   externalSecrets:
     createK8sJwtKeysSecret: false

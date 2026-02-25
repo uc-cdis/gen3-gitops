@@ -1,103 +1,92 @@
 cluster: externalgen3
 project: externalgen3
 accountNumber: "637423560817"
-
 configuration:
   configurationRevision: calico-dev
-
 alb-controller:
   enabled: true
   configuration:
     enabled: true
-
 aws-s3-mountpoint:
   enabled: true
   configuration:
     enabled: false
-
 calico:
   enabled: true
   configuration:
     enabled: false
-
 coreDNS:
   enabled: true
   configuration:
     enabled: false
-
 ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
-
 fluentd:
   enabled: false
   configuration:
     enabled: false
-
 kube-state-metrics:
   enabled: true
   configuration:
     enabled: false
-
 grafana-alloy:
   enabled: true
   configuration:
     enabled: false
-
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
-
+  targetRevision: "1.8.6"
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
   enabled: true
   selectorTag: externalgen3
   migration: true
   default:
+    disruptionBudget: "80%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
+    limits:
+      memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
         values:
-          - on-demand
           - spot
       - key: kubernetes.io/arch
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
           - "7000"
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Lt
+        values:
+          - "32500"
   workflow:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
   jupyter:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
     volumeSize: 80Gi
-
 vpc-cni:
   enabled: true
   configuration:
