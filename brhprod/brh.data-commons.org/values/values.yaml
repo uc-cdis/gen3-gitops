@@ -109,7 +109,7 @@ hatchery:
       memory: 4Gi
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.02'
+    tag: '2.7.1'
   hatchery:
     json: |-
       {
@@ -130,7 +130,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2025.08",
+          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "default",
             "HOSTNAME": "brh.data-commons.org"
