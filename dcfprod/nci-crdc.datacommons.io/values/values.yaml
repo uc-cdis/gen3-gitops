@@ -651,6 +651,9 @@ fence:
       iodc-cimac-etctn10104-phs003414:
         cred: fence_bot
         region: us-east-1
+      iodc-cimac-gu16-257-phs003371.v1.p1:
+        cred: fence_bot
+        region: us-east-1
       iodc-cimac-hcrngu16257-phs003372:
         cred: fence_bot
         region: us-east-1
