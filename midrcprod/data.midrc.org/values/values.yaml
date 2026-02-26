@@ -981,6 +981,7 @@ portal:
       - region us-east-1
       - sse aws:kms
       - sse-kms-key-id arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c
+
       size: 1Gi
       cache:
         emptyDirSizeLimit: 500Mi
