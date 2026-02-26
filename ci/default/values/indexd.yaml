@@ -2,19 +2,16 @@ indexd:
   replicaCount: 2
   resources:
     requests:
-      memory: "105Mi"
-      cpu: "50m"
-  # This will be dynamically replaced by env_setup.sh script.
-  defaultPrefix: ""
+      memory: 105Mi
+      cpu: 50m
+  defaultPrefix: ''
   enabled: true
   image:
-    repository: "quay.io/cdis/indexd"
-    tag: "master"
+    repository: quay.io/cdis/indexd
+    tag: '2026.03'
   externalSecrets:
     createK8sServiceCredsSecret: true
   secrets:
     userdb:
-      # This will be dynamically replaced by env_setup.sh script.
-      ssj:
-      # This will be dynamically replaced by env_setup.sh script.
-      gateway:
+      ssj: null
+      gateway: null
