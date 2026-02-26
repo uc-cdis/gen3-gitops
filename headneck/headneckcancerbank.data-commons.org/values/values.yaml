@@ -38,6 +38,7 @@ global:
   ddEnabled: false
 
 ambassador:
+  jupyterNamespace: jupyter-pods
   # Lower cost
   resources:
     requests:
@@ -104,7 +105,7 @@ etl:
       # tag: "2025.09"
       pullPolicy: Always
   esGarbageCollect:
-    enabled: true        
+    enabled: true
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
