@@ -957,6 +957,7 @@ peregrine:
     tag: '2026.01'
 portal:
   enabled: true
+  
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/devplanetv2-portal-sa
