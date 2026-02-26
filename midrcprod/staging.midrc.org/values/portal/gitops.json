@@ -1850,9 +1850,10 @@
                 "valueIfNotAvailable": "n/a"
             },
             {
-                "name": "Primary Imaging Site",
-                "field": "primary_site",
-                "contentType": "string",
+                "name": "Publication URL",
+                "field": "doi_publication",
+                "contentType": "link",
+                "linkLabel": "View Publication"
                 "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
