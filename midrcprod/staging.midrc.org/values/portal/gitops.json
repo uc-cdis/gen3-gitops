@@ -2072,6 +2072,12 @@
                 "displayName": "Primary Site",
                 "color": "#981f32",
                 "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
+                "display": true
             }
         ]
     },
