@@ -3,11 +3,11 @@ etl:
   spark:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-      tag: 2025.12
+      tag: '2026.02'
   tube:
     image:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-      tag: 1.0.4
+      tag: '2026.02'
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
