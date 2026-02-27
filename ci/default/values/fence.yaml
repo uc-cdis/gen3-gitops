@@ -1,5 +1,4 @@
 fence:
-  # -- (map) External Secrets settings.
   externalSecrets:
     createK8sJwtKeysSecret: false
     fenceJwtKeys: ci-fence-jwt
@@ -9,406 +8,187 @@ fence:
     fenceConfig: ci-fence-config-priv
     fenceSshKeys: ci-fence-ssh-keys
   fenceDeleteExpiredClients:
-    schedule: "0 0 * * *"
+    schedule: 0 0 * * *
   replicaCount: 2
   image:
     repository: quay.io/cdis/fence
     pullPolicy: IfNotPresent
-    tag: "master"
+    tag: '2026.03'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml
-    # we do not want usersync to interrupt test flow
-    # so it is set to run on the 31st of February
-    schedule: "0 0 31 2 *"
+    schedule: 0 0 31 2 *
     syncFromDbgap: true
   FENCE_CONFIG_PUBLIC:
-    # Prefix to namespace Google Groups on a single Cloud Identity
-    # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_GROUP_PREFIX:
-
-    # Prefix to namespace Google Service Accounts in a single Google Cloud Platform Project.
-    # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_SERVICE_ACCOUNT_PREFIX:
-
-    # This will be dynamically replaced by env_setup.sh script.
+    GOOGLE_GROUP_PREFIX: null
+    GOOGLE_SERVICE_ACCOUNT_PREFIX: null
     BASE_URL: https://HOSTNAME/user
-
-    # -- (string) Name of the Fence app
-    APP_NAME: "fence"
-
-    # -- (map) Debug and security settings
+    APP_NAME: fence
     DEBUG: false
-
-    # -- (bool) if true, will automatically login a user with username "test"
     MOCK_AUTH: false
-
-    # -- (bool) if true, will fake a successful login response from Google in /login/google
-    # NOTE: this will also modify the behavior of /link/google endpoints
-    # will login as the username set in cookie DEV_LOGIN_COOKIE_NAME
     MOCK_GOOGLE_AUTH: true
-
-    # -- (str) the name of the cookie set by mock authentication (used for testing only)
-    DEV_LOGIN_COOKIE_NAME: "dev_login"
-
-    # -- (bool) if true, will ignore anything configured in STORAGE_CREDENTIALS
+    DEV_LOGIN_COOKIE_NAME: dev_login
     MOCK_STORAGE: false
-
-    # -- (bool) allow OIDC traffic on http for development. By default it requires https.
     AUTHLIB_INSECURE_TRANSPORT: true
-
-    # -- (bool) enable Prometheus Metrics for observability purposes
     ENABLE_PROMETHEUS_METRICS: false
-
-    # -- (bool) set if you want browsers to only send cookies with requests over HTTPS
     SESSION_COOKIE_SECURE: true
-
-    # -- (bool) enable CSRF protection
     ENABLE_CSRF_PROTECTION: true
-
-    # -- (str) signing key for WTForms to sign CSRF tokens with
-    WTF_CSRF_SECRET_KEY: "{{ENCRYPTION_KEY}}"
-
-    # -- (bool) fence (at the moment) attempts a migration on startup. setting this to false will disable that
+    WTF_CSRF_SECRET_KEY: '{{ENCRYPTION_KEY}}'
     ENABLE_DB_MIGRATION: true
-
-    # -- (list) These are the *possible* scopes a client can be given, NOT scopes that are given to all clients. You can be more restrictive during client creation
     CLIENT_ALLOWED_SCOPES:
-      - "openid"
-      - "user"
-      - "data"
-      - "google_credentials"
-      - "google_service_account"
-      - "google_link"
-      - "ga4gh_passport_v1"
-
-    # -- (list) these are the scopes that CAN be included in a user's own access_token
+      - openid
+      - user
+      - data
+      - google_credentials
+      - google_service_account
+      - google_link
+      - ga4gh_passport_v1
     USER_ALLOWED_SCOPES:
-      - "fence"
-      - "openid"
-      - "user"
-      - "data"
-      - "admin"
-      - "google_credentials"
-      - "google_service_account"
-      - "google_link"
-      - "ga4gh_passport_v1"
-
-    # -- (list) these are the scopes that a browser session can create for a user (very similar to USER_ALLOWED_SCOPES, as the session will actually create access_tokens for an actively logged in user)
+      - fence
+      - openid
+      - user
+      - data
+      - admin
+      - google_credentials
+      - google_service_account
+      - google_link
+      - ga4gh_passport_v1
     SESSION_ALLOWED_SCOPES:
-      - "openid"
-      - "user"
-      - "credentials"
-      - "data"
-      - "admin"
-      - "google_credentials"
-      - "google_service_account"
-      - "google_link"
-      - "ga4gh_passport_v1"
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # LOGIN
-    # //////////////////////////////////////////////////////////////////////////////////////
-
-    # List of enabled login options (used by data-portal to display login buttons).
+      - openid
+      - user
+      - credentials
+      - data
+      - admin
+      - google_credentials
+      - google_service_account
+      - google_link
+      - ga4gh_passport_v1
     LOGIN_OPTIONS:
-      - name: 'Login from Google'
+      - name: Login from Google
         idp: google
-      - name: 'ORCID Login'
+      - name: ORCID Login
         idp: fence
         fence_idp: orcid
-      - name: 'Login from RAS'
+      - name: Login from RAS
         idp: ras
-
-    # -- (string) Default login provider. - must be configured in LOGIN_OPTIONS and OPENID_CONNECT - - if several options in LOGIN_OPTIONS are defined for this IDP, will default to the first one
     DEFAULT_LOGIN_IDP: google
-
-    # `LOGIN_REDIRECT_WHITELIST` is a list of extra whitelisted URLs which can be redirected
-    # to by the `/login/*` endpoints.
-    LOGIN_REDIRECT_WHITELIST: [".", "/login"]
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # LIBRARY CONFIGURATION (authlib & flask)
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # authlib-specific configs for OIDC flow and JWTs
-    OAUTH2_JWT_ALG: "RS256"
+    LOGIN_REDIRECT_WHITELIST:
+      - .
+      - /login
+    OAUTH2_JWT_ALG: RS256
     OAUTH2_JWT_ENABLED: true
-    OAUTH2_JWT_ISS: "{{BASE_URL}}"
-    OAUTH2_PROVIDER_ERROR_URI: "/api/oauth2/errors"
-
-    # used for flask, "path mounted under by the application / web server"
-    APPLICATION_ROOT: "/user"
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # Tokens, Lifetimes, & Expirations
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # The name of the browser cookie in which the access token will be stored.
-    ACCESS_TOKEN_COOKIE_NAME: "access_token"
-
-    # The name of the browser cookie in which the session token will be stored.
-    # Note that the session token also stores information for the
-    # ``flask.session`` in the ``context`` field of the token.
-    SESSION_COOKIE_NAME: "fence"
-
-    # The domain of the browser cookie in which the session token will be stored.
-    # Leave unset (not empty string!) for normal single-site deployment.
-    SESSION_COOKIE_DOMAIN:
-
+    OAUTH2_JWT_ISS: '{{BASE_URL}}'
+    OAUTH2_PROVIDER_ERROR_URI: /api/oauth2/errors
+    APPLICATION_ROOT: /user
+    ACCESS_TOKEN_COOKIE_NAME: access_token
+    SESSION_COOKIE_NAME: fence
+    SESSION_COOKIE_DOMAIN: null
     OAUTH2_TOKEN_EXPIRES_IN:
-      "authorization_code": 1200
-      "implicit": 1200
-
-    # The number of seconds after an access token is issued until it expires.
+      authorization_code: 1200
+      implicit: 1200
     ACCESS_TOKEN_EXPIRES_IN: 1200
-
-    # The number of seconds after a refresh token is issued until it expires.
     REFRESH_TOKEN_EXPIRES_IN: 2592000
-
-    # The number of seconds after which a browser session is considered stale.
     SESSION_TIMEOUT: 1800
-
-    # The maximum session lifetime in seconds.
     SESSION_LIFETIME: 28800
-
-    # The number of seconds the user's Google service account key used for
-    # url signing will last before being expired/rotated
-    # 30 days: 2592000 seconds
     GOOGLE_SERVICE_ACCOUNT_KEY_FOR_URL_SIGNING_EXPIRES_IN: 2592000
-
-    # The number of seconds after a User's Google Service account is added to bucket
-    # access until it expires.
-    # 7 days: 604800 seconds
     GOOGLE_USER_SERVICE_ACCOUNT_ACCESS_EXPIRES_IN: 604800
-
-    # The number of seconds after a User's Google account is added to bucket
-    # access until it expires.
     GOOGLE_ACCOUNT_ACCESS_EXPIRES_IN: 86400
-
-    # The number of seconds after a pre-signed url is issued until it expires.
     MAX_PRESIGNED_URL_TTL: 3600
-
-    # The number of seconds after an API KEY is issued until it expires.
     MAX_API_KEY_TTL: 2592000
-
-    # The number of seconds after an access token is issued until it expires.
     MAX_ACCESS_TOKEN_TTL: 3600
-
-    # TEMPORARY: The maximum number of projects allowed in token claims.
-    # This config var should be removed after sheepdog and peregrine support
-    # auth checks against Arborist, and no longer check the token.
     TOKEN_PROJECTS_CUTOFF: 10
-
-    # If set to true, will generate an new access token each time when a browser session update happens
     RENEW_ACCESS_TOKEN_BEFORE_EXPIRATION: false
-
-    # The maximum lifetime of a Gen3 passport in seconds
     GEN3_PASSPORT_EXPIRES_IN: 43200
-
-    ########################################################################################
-    #                               OPTIONAL CONFIGURATIONS                                #
-    ########################################################################################
-
-    # For displaying a privacy policy to users, we can either link to the URL specified by
-    # PRIVACY_POLICY_URL, or default to the `static/privacy_policy.md` file in fence.
     PRIVACY_POLICY_URL: null
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # RELIABILITY OPTS
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # Configurations related to resiliency, fault-tolerance and availability
-    # This is the number of requests per second that the Nginx proxy will accept before reaching fence
-    # The value defined in fence-config-public.yaml takes precedence over this one
-    # In the absence of this OVERRIDE prefixed config, the legacy NGINX_RATE_LIMIT from the k8s deployment yaml is applied
     OVERRIDE_NGINX_RATE_LIMIT: 18
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # SUPPORT INFO
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # If you want an email address to show up when an unhandled error occurs, provide one
-    # here. Something like: support@example.com
     SUPPORT_EMAIL_FOR_ERRORS: null
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # SHIBBOLETH
-    #   - Support using `shibboleth` in LOGIN_OPTIONS
-    #   - Contains defaults for using NIH's Login.
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # assumes shibboleth is deployed under {{BASE_URL}}/shibboleth
-    SHIBBOLETH_HEADER: "persistent_id"
-    SSO_URL: "https://auth.nih.gov/affwebservices/public/saml2sso?SPID={{BASE_URL}}/shibboleth&RelayState="
-    ITRUST_GLOBAL_LOGOUT: "https://auth.nih.gov/siteminderagent/smlogout.asp?mode=nih&AppReturnUrl="
-
-    DBGAP_ACCESSION_WITH_CONSENT_REGEX: "(?P<phsid>phs[0-9]+)(.(?P<version>v[0-9]+)){0,1}(.(?P<participant_set>p[0-9]+)){0,1}.(?P<consent>c[0-9]+)"
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # STORAGE BACKENDS AND CREDENTIALS
-    #   - Optional: Used for `/admin` & `/credentials` endpoints for user management.
-    #               Also used during User Syncing process to automate managing Storage
-    #               access for users.
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # When true, this modifies usersync (not fence service itself) such that when syncing user
-    # access to a Google storage backend happens in "bulk" by doing a diff *per google group*
-    # between what's in Google and what's expected.
+    SHIBBOLETH_HEADER: persistent_id
+    SSO_URL: https://auth.nih.gov/affwebservices/public/saml2sso?SPID={{BASE_URL}}/shibboleth&RelayState=
+    ITRUST_GLOBAL_LOGOUT: https://auth.nih.gov/siteminderagent/smlogout.asp?mode=nih&AppReturnUrl=
+    DBGAP_ACCESSION_WITH_CONSENT_REGEX: (?P<phsid>phs[0-9]+)(.(?P<version>v[0-9]+)){0,1}(.(?P<participant_set>p[0-9]+)){0,1}.(?P<consent>c[0-9]+)
     GOOGLE_BULK_UPDATES: true
-
-    # Configuration for various storage systems for the backend
     STORAGE_CREDENTIALS:
-      'google':
+      google:
         backend: google
-        # this should be the project id where the Google Groups for data access are managed
         google_project_id: dcf-integration
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # AWS BUCKETS AND CREDENTIALS
-    #   - Support `/data` endpoints
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # the cred values should be keys in section `AWS_CREDENTIALS`.
     S3_BUCKETS:
       cdis-presigned-url-test:
-        region: 'us-east-1'
-        cred: 'cdistest'
+        region: us-east-1
+        cred: cdistest
       gen3-helm-data-upload-bucket:
-        region: 'us-east-1'
-        cred: 'cdistest'
-    DATA_UPLOAD_BUCKET: 'gen3-helm-data-upload-bucket'
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # PROXY
-    #   - Optional: If the api is behind firewall that needs to set http proxy
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # this is only used by the Google Oauth2Client at the moment if provided
+        region: us-east-1
+        cred: cdistest
+    DATA_UPLOAD_BUCKET: gen3-helm-data-upload-bucket
     HTTP_PROXY:
-      host: 'cloud-proxy.internal.io'
+      host: cloud-proxy.internal.io
       port: 3128
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # MICROSERVICE PATHS
-    #   - Support `/data` endpoints & authz functionality
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # url where indexd microservice is running (for signed urls primarily)
     INDEXD: http://indexd-service
-    # this is the username which fence uses to make authenticated requests to indexd
-    INDEXD_USERNAME: "fence"
-    # this is the password which fence uses to make authenticated requests to indexd
-    INDEXD_PASSWORD: ""
-
-    # url where authz microservice is running
+    INDEXD_USERNAME: fence
+    INDEXD_PASSWORD: ''
     ARBORIST: http://arborist-service
-
-    # url where the audit-service is running
-    # This will be dynamically replaced by env_setup.sh script.
-    AUDIT_SERVICE: "http://audit-service"
+    AUDIT_SERVICE: http://audit-service
     ENABLE_AUDIT_LOGS:
       presigned_url: true
       login: true
-    # `PUSH_AUDIT_LOGS_CONFIG.type` is one of: [api, aws_sqs].
-    # - if type == api: logs are created by hitting the log creation endpoint.
-    # - if type == aws_sqs: logs are pushed to an SQS and `aws_sqs_config` fields
-    # `sqs_url` and `region` are required. Field `aws_cred` is optional and it
-    # should be a key in section `AWS_CREDENTIALS`.
     PUSH_AUDIT_LOGS_CONFIG:
       type: aws_sqs
       aws_sqs_config:
-        # This will be dynamically replaced by env_setup.sh script.
         sqs_url: https://sqs.us-east-1.amazonaws.com/707767160287/audit-service-sqs
         region: us-east-1
-        aws_cred: 'cdistest'
-
-    # A Google Project identitifier representing the default project to bill to for
-    # accessing Google Requester Pays buckets (for signed urls and/or temporary service account
-    # credentials).
-    BILLING_PROJECT_FOR_SIGNED_URLS:
-    BILLING_PROJECT_FOR_SA_CREDS:
-
-    # Setting this to `true` will make Fence automatically attempt to create a Custom Role
-    # in the billing project and give the necessary Google Service Account that role
-    # (which will allow it to bill to the project).
+        aws_cred: cdistest
+    BILLING_PROJECT_FOR_SIGNED_URLS: null
+    BILLING_PROJECT_FOR_SA_CREDS: null
     ENABLE_AUTOMATIC_BILLING_PERMISSION_SIGNED_URLS: false
     ENABLE_AUTOMATIC_BILLING_PERMISSION_SA_CREDS: false
-
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # DATA ACCESS: GOOGLE LINKING & SERVICE ACCOUNT REGISTRATION
-    #   - Support `/google/service_accounts` endpoints
-    # //////////////////////////////////////////////////////////////////////////////////////
-    # whether or not to allow access to the /link/google endpoints
     ALLOW_GOOGLE_LINKING: true
-
-    # A Google Project with controlled data access will be determined INVALID if
-    # if it has a parent organization UNLESS that parent organization's ID is in this
-    # whitelist.
     WHITE_LISTED_GOOGLE_PARENT_ORGS: []
-
-    # Service account email domains that represent a service account that Google owns.
-    # These are usually created when a sepcific GCP service is enabled.
-    # This is used for Service Account Validation for Data Access.
     GOOGLE_MANAGED_SERVICE_ACCOUNT_DOMAINS:
-      - "dataflow-service-producer-prod.iam.gserviceaccount.com"
-      - "cloudbuild.gserviceaccount.com"
-      - "cloud-ml.google.com.iam.gserviceaccount.com"
-      - "container-engine-robot.iam.gserviceaccount.com"
-      - "dataflow-service-producer-prod.iam.gserviceaccount.com"
-      - "sourcerepo-service-accounts.iam.gserviceaccount.com"
-      - "dataproc-accounts.iam.gserviceaccount.com"
-      - "gae-api-prod.google.com.iam.gserviceaccount.com"
-      - "genomics-api.google.com.iam.gserviceaccount.com"
-      - "containerregistry.iam.gserviceaccount.com"
-      - "container-analysis.iam.gserviceaccount.com"
-      - "cloudservices.gserviceaccount.com"
-      - "stackdriver-service.iam.gserviceaccount.com"
-      - "appspot.gserviceaccount.com"
-      - "partnercontent.gserviceaccount.com"
-      - "trifacta-gcloud-prod.iam.gserviceaccount.com"
-      - "gcf-admin-robot.iam.gserviceaccount.com"
-      - "compute-system.iam.gserviceaccount.com"
-      - "gcp-sa-websecurityscanner.iam.gserviceaccount.com"
-      - "storage-transfer-service.iam.gserviceaccount.com"
-      - "firebase-sa-management.iam.gserviceaccount.com"
-      - "firebase-rules.iam.gserviceaccount.com"
-      - "gcp-sa-cloudbuild.iam.gserviceaccount.com"
-      - "gcp-sa-automl.iam.gserviceaccount.com"
-      - "gcp-sa-datalabeling.iam.gserviceaccount.com"
-      - "gcp-sa-cloudscheduler.iam.gserviceaccount.com"
-
-    # The types of service accounts that are allowed to be registered at
-    # /google/service_accounts endpoints
+      - dataflow-service-producer-prod.iam.gserviceaccount.com
+      - cloudbuild.gserviceaccount.com
+      - cloud-ml.google.com.iam.gserviceaccount.com
+      - container-engine-robot.iam.gserviceaccount.com
+      - dataflow-service-producer-prod.iam.gserviceaccount.com
+      - sourcerepo-service-accounts.iam.gserviceaccount.com
+      - dataproc-accounts.iam.gserviceaccount.com
+      - gae-api-prod.google.com.iam.gserviceaccount.com
+      - genomics-api.google.com.iam.gserviceaccount.com
+      - containerregistry.iam.gserviceaccount.com
+      - container-analysis.iam.gserviceaccount.com
+      - cloudservices.gserviceaccount.com
+      - stackdriver-service.iam.gserviceaccount.com
+      - appspot.gserviceaccount.com
+      - partnercontent.gserviceaccount.com
+      - trifacta-gcloud-prod.iam.gserviceaccount.com
+      - gcf-admin-robot.iam.gserviceaccount.com
+      - compute-system.iam.gserviceaccount.com
+      - gcp-sa-websecurityscanner.iam.gserviceaccount.com
+      - storage-transfer-service.iam.gserviceaccount.com
+      - firebase-sa-management.iam.gserviceaccount.com
+      - firebase-rules.iam.gserviceaccount.com
+      - gcp-sa-cloudbuild.iam.gserviceaccount.com
+      - gcp-sa-automl.iam.gserviceaccount.com
+      - gcp-sa-datalabeling.iam.gserviceaccount.com
+      - gcp-sa-cloudscheduler.iam.gserviceaccount.com
     ALLOWED_USER_SERVICE_ACCOUNT_DOMAINS:
-      # compute engine default service account
-      - "developer.gserviceaccount.com"
-      # app engine default service account
-      - "appspot.gserviceaccount.com"
-      # user-managed service account
-      - "iam.gserviceaccount.com"
-
-    # Role caching for generating presigned urls if max role session increase is true
-    # then we can increase the amount of time that a session is valid for
+      - developer.gserviceaccount.com
+      - appspot.gserviceaccount.com
+      - iam.gserviceaccount.com
     MAX_ROLE_SESSION_INCREASE: false
     ASSUME_ROLE_CACHE_SECONDS: 1800
-
-    # Optional user registration feature: Ask users to register (provide firstname/lastname/org/email) on login.
-    # If user registers, add them to configured Arborist group; idea is that the Arborist group
-    # will have access to download data.
     REGISTER_USERS_ON: true
-    REGISTERED_USERS_GROUP: ""
-    # RAS refresh_tokens expire in 15 days
+    REGISTERED_USERS_GROUP: ''
     RAS_REFRESH_EXPIRATION: 1296000
-    # List of JWT issuers from which Fence will accept GA4GH visas
     GA4GH_VISA_ISSUER_ALLOWLIST:
-      - "{{BASE_URL}}"
-      - "https://sts.nih.gov"
-      - "https://stsstg.nih.gov"
-    # Number of projects that can be registered to a Google Service Accont
+      - '{{BASE_URL}}'
+      - https://sts.nih.gov
+      - https://stsstg.nih.gov
     SERVICE_ACCOUNT_LIMIT: 6
-
-    # Global sync visas during login
-    # None(Default): Allow per client i.e. a fence client can pick whether or not to sync their visas during login with parse_visas param in /authorization endpoint
-    # True: Parse for all clients i.e. a fence client will always sync their visas during login
-    # False: Parse for no clients i.e. a fence client will not be able to sync visas during login even with parse_visas param
     GLOBAL_PARSE_VISAS_ON_LOGIN: false
-    # Settings for usersync with visas
     USERSYNC:
       sync_from_visas: false
-      # fallback to dbgap sftp when there are no valid visas for a user i.e. if they're expired or if they're malformed
       fallback_to_dbgap_sftp: false
       visa_types:
-        ras: ["https://ras.nih.gov/visas/v1", "https://ras.nih.gov/visas/v1.1"]
-    RAS_USERINFO_ENDPOINT: "/openid/connect/v1.1/userinfo"
+        ras:
+          - https://ras.nih.gov/visas/v1
+          - https://ras.nih.gov/visas/v1.1
+    RAS_USERINFO_ENDPOINT: /openid/connect/v1.1/userinfo

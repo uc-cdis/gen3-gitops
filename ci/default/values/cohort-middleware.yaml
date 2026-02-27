@@ -2,7 +2,7 @@ cohort-middleware:
   replicaCount: 2
   enabled: true
   image:
-    repository: "quay.io/cdis/cohort-middleware"
-    tag: "master"
+    repository: quay.io/cdis/cohort-middleware
+    tag: '2026.03'
   externalSecrets:
     createK8sCohortMiddlewareSecret: true

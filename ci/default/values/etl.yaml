@@ -4,10 +4,10 @@ etl:
     tube:
       repository: quay.io/cdis/tube
       pullPolicy: IfNotPresent
-      tag: "master"
+      tag: '2026.03'
     spark:
-      repository: "quay.io/cdis/gen3-spark"
-      tag: "master"
+      repository: quay.io/cdis/gen3-spark
+      tag: '2026.03'
   resources:
     tube:
       requests:
