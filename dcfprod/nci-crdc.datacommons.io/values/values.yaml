@@ -64,7 +64,7 @@ datareplicate:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--aws-batch-replicate-job
   googleBucketReplicateJob:
-    enabled: true
+    enabled: false
     suspendCronjob: true
     schedule: '*/30 * * * *'
     MAX_WORKERS: 80
@@ -91,7 +91,7 @@ datareplicate:
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
-    MANIFEST_PATH: s3://log-bucket-june2/GDC_DR44_failed_manifest.tsv
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
     JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
     JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
     OUTPUT_MANIFEST_BUCKET: log-bucket-june2
