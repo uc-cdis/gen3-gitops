@@ -74,7 +74,7 @@ gen3-discovery-ai:
 gen3-workflow:
   enabled: true
   image:
-    tag: debug-chunk
+    tag: authz-refactor
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
