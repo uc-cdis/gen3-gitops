@@ -273,7 +273,7 @@ hatchery:
                   "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
                 ],
                 "memory-limit": "8Gi",
-                "name": "(GPU) QA-VPODC Embedding Demos",
+                "name": "(GPU) VPODC Embedding Demos",
                 "path-rewrite": "/lw-workspace/proxy/",
                 "ready-probe": "/lw-workspace/proxy/",
                 "target-port": 8888,
