@@ -1850,9 +1850,10 @@
                 "valueIfNotAvailable": "n/a"
             },
             {
-                "name": "Primary Imaging Site",
-                "field": "primary_site",
-                "contentType": "string",
+                "name": "Publication URL",
+                "field": "doi_publication",
+                "contentType": "link",
+                "linkLabel": "View Publication"
                 "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
@@ -2070,6 +2071,12 @@
                 "name": "primary_site",
                 "displayName": "Primary Site",
                 "color": "#981f32",
+                "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
                 "display": true
             }
         ]
