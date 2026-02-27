@@ -34,7 +34,7 @@ aws-es-proxy:
   enabled: true
   esEndpoint: vpc-stagingdatastage-gen3-2-fkiriymtypyt4i7s4rxq5kpkpy.us-east-1.es.amazonaws.com
   image:
-    repository: quay.io/cdis/aws-es-proxy
+    repository: quay.io/cdis/aws-sigv4-proxy
     tag: v1.3.1
 awshelper:
   enabled: true
