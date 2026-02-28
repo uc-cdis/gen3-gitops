@@ -64,7 +64,7 @@ datareplicate:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--aws-batch-replicate-job
   googleBucketReplicateJob:
-    enabled: true
+    enabled: false
     suspendCronjob: true
     schedule: '*/30 * * * *'
     MAX_WORKERS: 80
@@ -91,7 +91,7 @@ datareplicate:
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
-    MANIFEST_PATH: s3://log-bucket-june2/GDC_DR44_failed_manifest.tsv
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
     JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
     JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
     OUTPUT_MANIFEST_BUCKET: log-bucket-june2
@@ -339,6 +339,12 @@ fence:
       gdc-apollo-luad-phs003011-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-alchemist-alch-phs001140-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-alchemist-alch-phs001140-2-open:
+        cred: fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
         cred: fence_bot
         region: us-east-1
@@ -364,6 +370,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-ccdi-mci-phs002790-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-ccle-2-open:
@@ -576,6 +588,12 @@ fence:
       gdc-organoid-pancreatic-phs001611-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-rc-ptcl-phs002097-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-rc-ptcl-phs002097-2-open:
+        cred: fence_bot
+        region: us-east-1
       gdc-rebc-thyr-phs001134-controlled:
         cred: fence_bot
         region: us-east-1
@@ -649,6 +667,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-etctn10104-phs003414:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-gu16-257-phs003371.v1.p1:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-hcrngu16257-phs003372:

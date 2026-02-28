@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.12'
+    tag: "2025.12"
 audit:
   externalSecrets:
     auditG3auto: vadcprod-audit-g3auto
@@ -18,7 +18,7 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-receiver
   image:
-    tag: '2025.12'
+    tag: "2025.12"
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-vadcprod-gen3-metadata-2-vqrbyt4omluv7b2uqw5idjdwua.us-east-1.es.amazonaws.com
@@ -32,7 +32,7 @@ argo-wrapper:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
     tag: VA-2025.10.28
   scalingGroups:
-    default: '{{workflow.name}}'
+    default: "{{workflow.name}}"
   s3Bucket: vadcprod-argo-user-artifacts-downloadable
   internalS3Bucket: vadcprod-argo-bucket
   environment: vadcprod-helm
@@ -57,7 +57,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.12'
+    tag: "2025.12"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
@@ -85,9 +85,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2025.12'
+      tag: "2025.12"
     spark:
-      tag: '2025.12'
+      tag: "2025.12"
 fence:
   usersync:
     usersync: true
@@ -108,7 +108,7 @@ fence:
     fenceJwtKeys: vadcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.12'
+    tag: "2025.12"
 portal:
   enabled: false
 frontend-framework:
@@ -120,7 +120,7 @@ frontend-framework:
 global:
   pdb: true
   aws:
-    account: '663707118480'
+    account: "663707118480"
     awsEsProxyRole: vadcprod--vadcprod-helm--es-access
     enabled: true
     hatchery_role: vadcprod--vadcprod-helm--hatchery-sa
@@ -132,7 +132,7 @@ global:
       wafAclArn: arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
-  dispatcherJobNum: '10'
+  dispatcherJobNum: "10"
   environment: vadcprod
   frontendRoot: gen3ff
   externalSecrets:
@@ -140,11 +140,12 @@ global:
     createSlackWebhookSecret: true
     slackWebhookSecretName: vadcprod-slack-webhook
   hostname: vpodc.data-commons.org
+  atlasUrl: https://atlas.vpodc.data-commons.org
   fenceURL: https://vpodc.data-commons.org/user
   manifestGlobalExtraValues:
     kube_bucket: kube-vadcprod-gen3
     logs_bucket: logs-vadcprod-gen3
-  maintenanceMode: 'off'
+  maintenanceMode: "off"
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -162,7 +163,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: "2026.02"
   indices:
     - index: etl_mickey
       type: patients
@@ -174,17 +175,21 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.12'
+    tag: "2025.12"
   hatchery:
-    json: |-
+    json: |
       {
           "user-namespace": "jupyter-pods",
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
+          "default-pay-model": {
+              "workspace_type": "Trial Workspace",
+              "local": true
+          },
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
-              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:master",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.02",
               "env": {
                   "NAMESPACE": "default",
                   "HOSTNAME": "vpodc.data-commons.org"
@@ -192,7 +197,7 @@ hatchery:
               "args": [],
               "command": [
                   "/bin/bash",
-                  "/sidecarDockerrun.sh"
+                  "./sidecar.sh"
               ],
               "lifecycle-pre-stop": [
                   "su",
@@ -206,42 +211,22 @@ hatchery:
           "containers": [
               {
                   "target-port": 8888,
-                  "cpu-limit": "0.5",
-                  "memory-limit": "256Mi",
-                  "name": "Bioinfo - Python/R",
-                  "image": "quay.io/occ_data/jupyternotebook:1.7.4",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
                   "cpu-limit": "1.0",
-                  "memory-limit": "1024Mi",
-                  "name": "Bioinfo - Python/R",
-                  "image": "quay.io/occ_data/jupyternotebook:1.7.4",
-                  "env": {},
+                  "memory-limit": "4Gi",
+                  "name": "(Generic) Jupyter Lab Notebook with R Kernel",
+                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
+                  "env": {
+                      "FRAME_ANCESTORS": "https://vpodc.data-commons.org/"
+                  },
                   "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
+                      "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                      "--JupyterNotebookApp.default_url=/lab",
+                      "--JupyterNotebookApp.password=''",
+                      "--JupyterNotebookApp.token=''",
+                      "--JupyterNotebookApp.ip='*'",
+                      "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                      "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+                      "--JupyterNotebookApp.quit_button=False"
                   ],
                   "command": [
                       "start-notebook.sh"
@@ -252,175 +237,49 @@ hatchery:
                   "lifecycle-post-start": [
                       "/bin/sh",
                       "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
+                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
                   ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
+                  "user-uid": 1010,
+                  "fs-gid": 101,
+                  "user-volume-location": "/home/jovyan/pd",
+                  "gen3-volume-location": "/home/jovyan/.gen3"
               },
               {
-                  "target-port": 8888,
-                  "cpu-limit": "6.0",
-                  "memory-limit": "15512Mi",
-                  "name": "Bioinfo - Python/R",
-                  "image": "quay.io/occ_data/jupyternotebook:1.7.4",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "4.0",
-                  "memory-limit": "8192Mi",
-                  "name": "Bioinfo - Python/R (Lab Edition)",
-                  "image": "quay.io/occ_data/jupyternotebook:1.7.4",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.default_url=/lab",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "0.5",
-                  "memory-limit": "256Mi",
-                  "name": "Bioinfo - Python/R-3.6",
-                  "image": "quay.io/occ_data/jupyternotebook:1.8.0",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "1.0",
-                  "memory-limit": "1024Mi",
-                  "name": "Bioinfo - Python/R-3.6",
-                  "image": "quay.io/occ_data/jupyternotebook:1.8.0",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "6.0",
-                  "memory-limit": "15512Mi",
-                  "name": "Bioinfo - Python/R-3.6",
-                  "image": "quay.io/occ_data/jupyternotebook:1.8.0",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
-              },
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "4.0",
-                  "memory-limit": "8192Mi",
-                  "name": "Bioinfo - Python/R-3.6 (Lab Edition)",
-                  "image": "quay.io/occ_data/jupyternotebook:1.8.0",
-                  "env": {},
-                  "args": [
-                      "--NotebookApp.base_url=/lw-workspace/proxy/",
-                      "--NotebookApp.default_url=/lab",
-                      "--NotebookApp.password=''",
-                      "--NotebookApp.token=''"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1000,
-                  "fs-gid": 100,
-                  "user-volume-location": "/home/jovyan/pd"
+                "args": [
+                  "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+                  "--JupyterNotebookApp.default_url=/lab",
+                  "--JupyterNotebookApp.password=''",
+                  "--JupyterNotebookApp.token=''",
+                  "--JupyterNotebookApp.ip='*'",
+                  "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+                  "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+                  "--JupyterNotebookApp.quit_button=False"
+                ],
+                "command": [
+                  "start-notebook.sh"
+                ],
+                "gpu": true,
+                "cpu-limit": "3.0",
+                "env": {
+                  "FRAME_ANCESTORS": "https://vpodc.data-commons.org/"
+                },
+                "fs-gid": 100,
+                "gen3-volume-location": "/home/jovyan/.gen3",
+                "image": "quay.io/cdis/jupyter-prometheus:prometheus-master",
+                "pull_policy": "Always",
+                "lifecycle-post-start": [
+                  "/bin/sh",
+                  "-c",
+                  "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+                ],
+                "memory-limit": "8Gi",
+                "name": "(GPU) VPODC Embedding Demos",
+                "path-rewrite": "/lw-workspace/proxy/",
+                "ready-probe": "/lw-workspace/proxy/",
+                "target-port": 8888,
+                "use-tls": "false",
+                "user-uid": 1010,
+                "user-volume-location": "/home/jovyan/pd"
               }
           ]
       }
@@ -437,14 +296,14 @@ indexd:
     serviceCreds: vadcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.12'
+    tag: "2025.12"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: vadcprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.12'
+    tag: "2025.12"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--manifest-service-sa
@@ -461,12 +320,12 @@ metadata:
     metadataG3auto: vadcprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.12'
+    tag: "2025.12"
 ohdsi-atlas:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
-    tag: VA-2026.01.08
+    tag: VA-2026.02.24
 ohdsi-webapi:
   enabled: true
   image:
@@ -484,7 +343,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.12'
+    tag: "2025.12"
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -495,7 +354,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.12'
+    tag: "2025.12"
   ingress:
     aws:
       group: vadcprod
@@ -510,7 +369,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.12'
+    tag: "2025.12"
 sower:
   enabled: true
   externalSecrets:
@@ -518,7 +377,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.12'
+    tag: "2025.12"
   sowerConfig: []
 ssjdispatcher:
   enabled: true
@@ -526,7 +385,7 @@ ssjdispatcher:
     credsFile: vadcprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.12'
+    tag: "2025.12"
   indexing: quay.io/cdis/indexs3client:2025.12
 wts:
   replicaCount: 4
@@ -542,4 +401,4 @@ wts:
     wtsOidcClient: vadcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.12'
+    tag: "2025.12"
