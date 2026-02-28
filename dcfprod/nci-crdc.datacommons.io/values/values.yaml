@@ -8,7 +8,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.02'
 ambassador:
   enabled: false
 hatchery:
@@ -23,7 +23,7 @@ audit:
     auditG3auto: dcfprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--audit-sqs-receiver
@@ -39,7 +39,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.01'
+    tag: '2026.02'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--dashboard-access
@@ -64,7 +64,7 @@ datareplicate:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcfprod--dcfprod-helm--aws-batch-replicate-job
   googleBucketReplicateJob:
-    enabled: true
+    enabled: false
     suspendCronjob: true
     schedule: '*/30 * * * *'
     MAX_WORKERS: 80
@@ -91,7 +91,7 @@ datareplicate:
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
-    MANIFEST_PATH: s3://log-bucket-june2/GDC_DR44_failed_manifest.tsv
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
     JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
     JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
     OUTPUT_MANIFEST_BUCKET: log-bucket-june2
@@ -111,7 +111,6 @@ datareplicate:
     schedule: '*/30 * * * *'
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
-    # Keep the legacy manifest the same at DR37
     MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_active_manifest_20251029_post_DR44.0.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
     OUT_FILES: GDC_full_sync_active_manifest_20251029_post_DR44.0_DCF.tsv
@@ -340,7 +339,19 @@ fence:
       gdc-apollo-luad-phs003011-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-alchemist-alch-phs001140-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-alchemist-alch-phs001140-2-open:
+        cred: fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-ov-phs003488-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-ov-phs003488-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-beataml1-cohort-phs001657-2-controlled:
@@ -353,6 +364,18 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-beataml1.0-crenolanib-phs001628-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccdi-mci-phs002790-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-ccg-cupp-phs001801-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-ccle-2-open:
@@ -565,6 +588,12 @@ fence:
       gdc-organoid-pancreatic-phs001611-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-rc-ptcl-phs002097-controlled:
+        cred: fence_bot
+        region: us-east-1
+      gdc-rc-ptcl-phs002097-2-open:
+        cred: fence_bot
+        region: us-east-1
       gdc-rebc-thyr-phs001134-controlled:
         cred: fence_bot
         region: us-east-1
@@ -638,6 +667,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-etctn10104-phs003414:
+        cred: fence_bot
+        region: us-east-1
+      iodc-cimac-gu16-257-phs003371.v1.p1:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-hcrngu16257-phs003372:
@@ -1142,7 +1174,7 @@ fence:
     fenceSshKeys: dcfprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.01'
+    tag: '2026.02'
 fluentd:
   enabled: true
   image:
@@ -1194,7 +1226,7 @@ indexd:
     serviceCreds: dcfprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.02'
   resources:
     requests:
       memory: 256Mi
@@ -1213,12 +1245,12 @@ metadata:
     metadataG3auto: dcfprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.02'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.02'
 portal:
   enabled: true
   gitops:
@@ -1507,7 +1539,7 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.01'
+    tag: '2026.02'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -1518,7 +1550,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.02'
   ingress:
     aws:
       group: dcfprod
@@ -1527,7 +1559,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.02'
 sower:
   enabled: true
   externalSecrets:
@@ -1536,7 +1568,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.02'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -1548,7 +1580,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.01
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.02
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -1574,7 +1606,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.01
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.02
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -1596,5 +1628,5 @@ ssjdispatcher:
     credsFile: dcfprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
-  indexing: quay.io/cdis/indexs3client:2026.01
+    tag: '2026.02'
+  indexing: quay.io/cdis/indexs3client:2026.02
