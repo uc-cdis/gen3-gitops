@@ -80,7 +80,7 @@ indexd:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   # This will be dynamically replaced by env_setup.sh script.
   defaultPrefix: ""
   enabled: true
@@ -323,7 +323,7 @@ sheepdog:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   enabled: true
   authNamespace: ''
   image:
@@ -339,7 +339,7 @@ peregrine:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   enabled: true
   image:
     repository: "quay.io/cdis/peregrine"
@@ -408,7 +408,7 @@ arborist:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   enabled: true
   image:
     repository: "quay.io/cdis/arborist"
@@ -438,7 +438,7 @@ revproxy:
     resources:
       requests:
         memory: "105Mi"
-        cpu: "15m"
+        cpu: "50m"
 
 
 wts:

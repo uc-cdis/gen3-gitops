@@ -38,12 +38,14 @@ global:
   ddEnabled: false
 
 ambassador:
+  jupyterNamespace: jupyter-pods
   # Lower cost
   resources:
     requests:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
 
 arborist:
   # Lower cost
@@ -52,6 +54,7 @@ arborist:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     dbcreds: "headneck_default-arborist-creds"
 
@@ -79,6 +82,7 @@ aws-es-proxy:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   esEndpoint: vpc-headneck-gen3-metadata-nqv355pim7ge3dduo5kexxoilu.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "headneck_default-aws-es-proxy-creds"
@@ -101,7 +105,7 @@ etl:
       # tag: "2025.09"
       pullPolicy: Always
   esGarbageCollect:
-    enabled: true        
+    enabled: true
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
@@ -634,6 +638,7 @@ fence:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::419939494982:role/gen3-service/headneck-default-fence-sa"
@@ -681,6 +686,7 @@ guppy:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   indices:
     - index: hnc_dataset
       type: dataset
@@ -701,6 +707,7 @@ hatchery:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
 
   hatchery:
     sidecarContainer:
@@ -758,6 +765,7 @@ indexd:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   defaultPrefix: dg.HN3CK/
   externalSecrets:
     dbcreds: "headneck_default-indexd-creds"
@@ -771,6 +779,7 @@ manifestservice:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     createK8sManifestServiceSecret: true
 
@@ -786,6 +795,7 @@ metadata:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     dbcreds: "headneck_default-metadata-creds"
     createK8sMetadataSecret: true
@@ -797,6 +807,7 @@ peregrine:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     dbcreds: "headneck_default-sheepdog-creds"
 
@@ -810,6 +821,7 @@ portal:
     tag: "2025.10"
   customConfig:
     enabled: true
+    replicaCount: 2
     dir: "headneck/headneckcancerbank.data-commons.org/values/portal/"
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
@@ -826,6 +838,7 @@ revproxy:
       memory: "100Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
 
 s3-mountpoint:
   enabled: false
@@ -837,6 +850,7 @@ sheepdog:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     dbcreds: "headneck_default-sheepdog-creds"
 
@@ -850,6 +864,7 @@ ssjdispatcher:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::419939494982:role/headneck--headneck-helm--ssjdispatcher-job-role
   enabled: true
+  replicaCount: 2
   externalSecrets:
     credsFile: headneck_default-ssjdispatcher-creds
   indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.11
@@ -863,5 +878,6 @@ wts:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  replicaCount: 2
   externalSecrets:
     dbcreds: "headneck_default-wts-creds"

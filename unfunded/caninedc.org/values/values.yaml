@@ -5,8 +5,11 @@ global:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
     useLocalSecret:
-      enabled: true
+      enabled: false
       localSecretName: external-secrets-canine-secret
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::662843554732:role/unfunded--canineprod--external-secrets-sa
     wafv2:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
@@ -44,6 +47,7 @@ aws-es-proxy:
 indexd:
   defaultPrefix: dg.C78ne/
   externalSecrets:
+    createK8sServiceCredsSecret: true
     dbcreds: canineprod-indexd
     serviceCreds: canineprod-indexd-service-creds
   enabled: true
@@ -101,6 +105,8 @@ ssjdispatcher:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2026.02'
   indexing: quay.io/cdis/indexs3client:2026.02
+  externalSecrets:
+    credsFile: canineprod-ssjdispatcher-creds
 metadata:
   externalSecrets:
     dbcreds: canineprod-metadata
@@ -115,7 +121,9 @@ ambassador:
 wts:
   enabled: true
   externalSecrets:
-    createWtsOidcClientSecret: false
+    dbcreds: canineprod-wts
+    createWtsOidcClientSecret: true
+    createK8sWtsSecret: true
     wtsG3auto: caninedc-wts-g3auto
     wtsOidcClient: caninedc-wts-client-secret
   image:
@@ -164,7 +172,7 @@ hatchery:
             "env": {
               "DISABLE_AUTH": "true",
               "NAMESPACE": "default",
-              "HOSTNAME": "caninedc.org,
+              "HOSTNAME": "caninedc.org",
               "FRAME_ANCESTORS": "https://caninedc.org"
             },
             "args": [
