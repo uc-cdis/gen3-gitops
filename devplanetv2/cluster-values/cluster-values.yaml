@@ -145,6 +145,7 @@ metrics-server:
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
+    sgSelector: devplanetv2-jupyter
   jupyter:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
