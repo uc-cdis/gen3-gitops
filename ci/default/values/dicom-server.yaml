@@ -6,4 +6,5 @@ dicom-server:
     tag: "master"
   externalSecrets:
     createK8sOrthancG3auto: true
+    createK8sOrthancS3G3auto: true
     orthancG3Auto: ""
