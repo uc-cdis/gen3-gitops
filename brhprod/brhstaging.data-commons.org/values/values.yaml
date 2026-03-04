@@ -406,7 +406,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter with pre-installed Nextflow",
-            "image": "qquay.io/cdis/jupyter-notebook:nextflow-nextflow-24.04.3",
+            "image": "quay.io/cdis/jupyter-notebook:nextflow-nextflow-24.04.3",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
