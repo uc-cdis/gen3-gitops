@@ -189,7 +189,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "(Generic) Jupyter SuperSlim",
-            "image": "quay.io/cdis/jupyter-superslim:feat_diet",
+            "image": "quay.io/cdis/jupyter-superslim:2.1.1",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
@@ -293,7 +293,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "4.0",
             "memory-limit": "10Gi",
-            "name": "(Beta) Nextflow with CPU instances",
+            "name": "Nextflow with CPU instances (deprecated AWS Batch integration)",
             "image": "quay.io/cdis/jupyter-notebook:nextflow-3.0.2",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
@@ -349,7 +349,7 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "4.0",
             "memory-limit": "10Gi",
-            "name": "(Beta) Nextflow with GPU instances",
+            "name": "Nextflow with GPU instances (deprecated AWS Batch integration)",
             "image": "quay.io/cdis/jupyter-notebook:nextflow-1.3.5",
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
@@ -400,7 +400,42 @@ hatchery:
               "instance-min-vcpus": 0,
               "instance-max-vcpus": 9
             }
-          }
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "1.0",
+            "memory-limit": "2Gi",
+            "name": "(Generic) Jupyter with pre-installed Nextflow",
+            "image": "quay.io/cdis/jupyter-superslim:nextflow-24.04.3",
+            "env": {
+              "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
+            },
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
         ]
       }
 indexd:
