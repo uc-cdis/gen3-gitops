@@ -3,7 +3,7 @@ global:
   hostname: gen3.datacommons.io
   aws:
     enabled: true
-    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::662843554732:role/unfunded--oadchelm--external-secrets-sa

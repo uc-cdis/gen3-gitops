@@ -26,6 +26,7 @@ data:
     qa-jcoin-helm
     qa-midrc-helm
     qa-midrc-test
+    qamickey-helm
     qa-vpodc
     qaplanetv2
     qureshi

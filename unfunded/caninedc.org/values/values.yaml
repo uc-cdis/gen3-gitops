@@ -3,7 +3,7 @@ global:
   hostname: caninedc.org
   aws:
     enabled: true
-    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
     useLocalSecret:
       enabled: false
       localSecretName: external-secrets-canine-secret
