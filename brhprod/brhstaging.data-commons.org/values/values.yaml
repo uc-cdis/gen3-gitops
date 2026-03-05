@@ -87,7 +87,6 @@ gen3-workflow:
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
 funnel:
-  replicaCount: 3
   postgres:
     dbCreate: true
   externalSecrets:
@@ -98,6 +97,12 @@ funnel:
       JobsNamespace: "workflow-pods-brhstaging-helm"
       ReconcileRate: 120s
       ReplicaCount: 3
+      NodeSelector: {}
+      Tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "workflow"
+        effect: "NoSchedule"
 global:
   pdb: true
   aws:
