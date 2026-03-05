@@ -9,7 +9,7 @@ global:
       roleArn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-external-secrets-sa"
     wafv2:
       enabled: true
-      wafAclArn: ""
+      wafAclArn: "arn:aws:wafv2:us-east-1:837801696852:regional/webacl/gen3-ai-waf/5a4e71a9-a34e-45a8-9e05-b60e873424b9"
   dev: false
   externalSecrets:
     deploy: true
