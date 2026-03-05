@@ -97,7 +97,7 @@ funnel:
       JobsNamespace: "workflow-pods-brhstaging-helm"
       ReconcileRate: 120s
       ReplicaCount: 3
-      NodeSelector: {}
+      NodeSelector: {"role": "workflow"}
       Tolerations:
       - key: "role"
         operator: "Equal"
