@@ -1459,7 +1459,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: "2026.02"
+    tag: "5.40.0"
 requestor:
   enabled: true
   image:

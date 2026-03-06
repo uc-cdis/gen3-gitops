@@ -359,7 +359,7 @@ hatchery:
       }
 indexd:
   defaultPrefix: dg.H34L/
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
@@ -1430,14 +1430,14 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.02'
+    tag: '5.40.0'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2026.02'
 revproxy:
-  replicaCount: 4
+  replicaCount: 2
   autoscaling:
     enabled: false
     maxReplicas: 1
@@ -1455,7 +1455,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.02'
-  replicaCount: 4
 sower:
   enabled: true
   externalSecrets:
