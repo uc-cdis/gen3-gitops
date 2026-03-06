@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.02'
+    tag: "2026.02"
   externalSecrets:
     accessBackendG3auto: stagingdatastage-access-backend-g3auto
     dbcreds: stagingdatastage-access-backend-dbcreds
@@ -19,28 +19,27 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: "2026.02"
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: stagingdatastage-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: "2026.02"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/stagingdatastage--stagingdatastage-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-stagingdatastage-gen3-2-fkiriymtypyt4i7s4rxq5kpkpy.us-east-1.es.amazonaws.com
   image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
+    tag: v1.11.1
 awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.02'
+    tag: "2026.02"
 dashboard:
   dashboardConfig:
     bucket: dashboard-895962626746-stagingdatastage-gen3
@@ -207,9 +206,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.02'
+      tag: "2026.02"
     spark:
-      tag: '2026.02'
+      tag: "2026.02"
 fence:
   serviceAccount:
     annotations:
@@ -229,7 +228,7 @@ fence:
     fenceJwtKeys: stagingdatastage-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: "2026.02"
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: https://biodatacatalyst.nhlbi.nih.gov/privacy/
     LOGIN_OPTIONS:
@@ -266,14 +265,14 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.02'
+    tag: "2026.02"
   externalSecrets:
     dbcreds: stagingdatastage-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: stagingdatastage-gen3userdatalibrary-g3auto
 global:
   pdb: true
   aws:
-    account: '895962626746'
+    account: "895962626746"
     awsEsProxyRole: stagingdatastage--stagingdatastage-helm--es-access
     enabled: true
     hatchery_role: stagingdatastage--stagingdatastage-helm--hatchery-sa
@@ -285,7 +284,7 @@ global:
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/stagingdatastage-waf/5b4cb3ca-64af-4c69-a509-be3895a83b5d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.5/schema.json
-  dispatcherJobNum: '10'
+  dispatcherJobNum: "10"
   environment: stagingdatastage
   externalSecrets:
     deploy: true
@@ -317,7 +316,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: "2026.02"
   indices:
     - index: staging.gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -501,7 +500,7 @@ hatchery:
       ]
     }
   image:
-    tag: '2026.02'
+    tag: "2026.02"
 indexd:
   defaultPrefix: dg.4503/
   replicaCount: 4
@@ -515,7 +514,7 @@ indexd:
     serviceCreds: stagingdatastage-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: "2026.02"
 manifestservice:
   enabled: false
   externalSecrets:
@@ -536,12 +535,12 @@ metadata:
     metadataG3auto: stagingdatastage-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: "2026.02"
 metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: '2025.06'
+    tag: "2025.06"
 peregrine:
   replicaCount: 4
   autoscaling:
@@ -552,7 +551,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: "2026.02"
 portal:
   replicaCount: 4
   autoscaling:
@@ -568,7 +567,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
+    tag: "feature_data_library"
     pullPolicy: Always
 revproxy:
   replicaCount: 4
@@ -580,7 +579,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: "2026.02"
   ingress:
     aws:
       group: stagingdatastage
@@ -594,7 +593,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: "2026.02"
 sower:
   enabled: true
   externalSecrets:
@@ -604,11 +603,11 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.02'
+    tag: "2026.02"
   sowerConfig:
     - action: export
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -665,7 +664,7 @@ sower:
             secretName: pelicanservice-g3auto
     - action: export-files
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -680,7 +679,7 @@ sower:
           - name: ROOT_NODE
             value: file
           - name: EXTRA_NODES
-            value: ''
+            value: ""
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -724,7 +723,7 @@ sower:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: GEN3_HOSTNAME
             valueFrom:
@@ -750,7 +749,7 @@ sower:
     - action: download-indexd-manifest
       activeDeadlineSeconds: 86400
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: GEN3_HOSTNAME
             valueFrom:
@@ -777,20 +776,20 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.06'
+    tag: "2025.06"
 ssjdispatcher:
   enabled: true
   externalSecrets:
     credsFile: stagingdatastage-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.02'
+    tag: "2026.02"
   indexing: quay.io/cdis/indexs3client:2026.02
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.06'
+    tag: "2025.06"
 wts:
   enabled: false
 mutatingWebhook:
