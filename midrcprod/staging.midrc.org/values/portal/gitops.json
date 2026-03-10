@@ -1932,6 +1932,12 @@
                             "includeIfNotAvailable": false
                         },
                         {
+                            "name": "Data DOI",
+                            "field": "data_doi",
+                            "contentType": "link",
+                            "includeIfNotAvailable": false
+                        },
+                        {
                             "name": "DOI Creators",
                             "field": "doi_creators",
                             "contentType": "string",

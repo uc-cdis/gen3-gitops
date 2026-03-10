@@ -201,6 +201,7 @@ peregrine:
     tag: '2026.03'
 portal:
   enabled: true
+  replicaCount: 2  
   gitops:
     css: |-
       /* Hide Data Dictionary information */
