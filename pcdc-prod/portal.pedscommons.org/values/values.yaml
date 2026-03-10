@@ -13,6 +13,7 @@ amanuensis:
   externalSecrets:
     createK8sAmanuensisConfigSecret: true
     createK8sJwtKeysSecret: true
+    createLocalK8sSecret: true
     amanuensisJwtKeys: pcdc-prod-amanuensis-jwt-keys
     amanuensisConfig: pcdc-prod-amanuensis-config
     dbcreds: pcdc-prod-amanuensis-creds 
@@ -30,11 +31,11 @@ arborist:
     tag: '2025.07'
 audit:
   enabled: false
-  externalSecrets:
-    auditG3auto: pcdc-prod-audit-g3auto
-  serviceAccount:
-    annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::242397368788:role/pcdc-prod--pcdc-prod-helm--audit-sqs-receiver
+  #externalSecrets:
+  #  auditG3auto: pcdc-prod-audit-g3auto
+  #serviceAccount:
+  #  annotations:
+  #    eks.amazonaws.com/role-arn: arn:aws:iam::242397368788:role/pcdc-prod--pcdc-prod-helm--audit-sqs-receiver
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-pcdc-prod-gen3-metadata-2-5q6ulor7lz7lgqtxjjx4gu6e24.us-east-1.es.amazonaws.com
