@@ -11,6 +11,8 @@ amanuensis:
   serviceAccount:
     name: "amanuensis-sa"
   externalSecrets:
+    createK8sAmanuensisConfigSecret: true
+    createK8sJwtKeysSecret: true
     amanuensisJwtKeys: pcdc-prod-amanuensis-jwt-keys
     amanuensisConfig: pcdc-prod-amanuensis-config
     dbcreds: pcdc-prod-amanuensis-creds 
@@ -153,6 +155,9 @@ fence:
   image:
     repository: quay.io/pcdc/fence
     tag: 3.5.1
+  usersync:
+    usersync: true
+    schedule: "0 0 31 2 *"
 fluentd:
   enabled: true
   image:
@@ -180,6 +185,7 @@ global:
   environment: pcdc-prod
   externalSecrets:
     deploy: true
+    dbCreate: false
   hostname: portal.pedscommons.org
   manifestGlobalExtraValues:
     authz_entity_name: subject
