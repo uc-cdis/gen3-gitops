@@ -96,6 +96,8 @@ funnel:
   funnel:
     # image:
     #    tag: 2026-03-05.4
+    Logger:
+      Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
       # ReconcileRate: 120s
