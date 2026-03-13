@@ -5,5 +5,5 @@ dicom-server:
     repository: "quay.io/cdis/gen3-orthanc"
     tag: "master"
   externalSecrets:
-    createK8sOrthancG3auto: true
-    orthancG3Auto: ""
+    createK8sOrthancG3auto: false
+    orthancG3Auto: "ci-orthanc-g3auto"
