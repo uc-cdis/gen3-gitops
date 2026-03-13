@@ -125,13 +125,16 @@ etl:
     type: collector
 fence:
   enabled: true
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/dev/user.yaml
   externalSecrets:
     createK8sGoogleAppSecrets: true
     fenceConfig: emalinowskiv1-fence-config
     fenceJwtKeys: emalinowskiv1-fence-jwt
   image:
     repository: quay.io/cdis/fence
-    tag: '2024.12'
+    tag: '2026.01'
 fluentd:
   enabled: true
   image:
@@ -163,7 +166,6 @@ global:
     kube_bucket: kube-emalinowskiv1-gen3
     logs_bucket: logs-emalinowskiv1-gen3
     sync_from_dbgap: 'False'
-    useryaml_s3path: s3://cdis-gen3-users/dev/user.yaml
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -638,7 +640,7 @@ tube:
 wts:
   enabled: true
   externalSecrets:
-    wtsG3auto: emalinowskiv1-wts-g3auto
+    createK8sWtsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: "2025.10"

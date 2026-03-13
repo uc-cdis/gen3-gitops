@@ -1,4 +1,9 @@
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.160.0/25
+      - 172.25.160.128/25
   dev: false
   hostname: gen3.datacommons.io
   aws:
