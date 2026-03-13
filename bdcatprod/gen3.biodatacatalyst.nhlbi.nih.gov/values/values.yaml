@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.02'
+    tag: "2026.02"
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -10,6 +10,8 @@ access-backend:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--access-backend-sa
+ambassador:
+  jupyterNamespace: jupyter-pods
 arborist:
   autoscaling:
     enabled: false
@@ -20,14 +22,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: "2026.02"
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: "2026.02"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -41,7 +43,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.02'
+    tag: "2026.02"
 etl:
   resources:
     tube:
@@ -249,9 +251,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.02'
+      tag: "2026.02"
     spark:
-      tag: '2026.02'
+      tag: "2026.02"
 fence:
   resources:
     requests:
@@ -286,7 +288,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: "2026.02"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -304,7 +306,7 @@ fence:
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
       cgp-commons-public:
-        cred: '*'
+        cred: "*"
         region: us-east-1
       dcp-ds-bagit-databucket-gen3:
         cred: fence-bot
@@ -400,7 +402,7 @@ fence:
         cred: fence-bot
         region: us-east-1
       topmed_workflow_testing:
-        cred: '*'
+        cred: "*"
         region: us-east-1
       topmed-workflow-testing:
         cred: fence-bot
@@ -420,14 +422,14 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.02'
+    tag: "2026.02"
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
 global:
   pdb: true
   aws:
-    account: '895962626746'
+    account: "895962626746"
     awsEsProxyRole: bdcatprod--bdcatprod-helm--es-access
     enabled: true
     hatchery_role: bdcatprod--bdcatprod-helm--hatchery-sa
@@ -439,7 +441,7 @@ global:
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.2/schema.json
-  dispatcherJobNum: '10'
+  dispatcherJobNum: "10"
   environment: bdcatprod
   externalSecrets:
     createSlackWebhookSecret: true
@@ -470,7 +472,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: "2026.02"
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -491,13 +493,13 @@ indexd:
     serviceCreds: bdcatprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: "2026.02"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.02'
+    tag: "2026.02"
 metadata:
   autoscaling:
     enabled: false
@@ -511,12 +513,12 @@ metadata:
     metadataG3auto: bdcatprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: "2026.02"
 metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: '2025.07'
+    tag: "2025.07"
 peregrine:
   autoscaling:
     enabled: false
@@ -527,7 +529,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: "2026.02"
 portal:
   autoscaling:
     enabled: false
@@ -543,7 +545,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
+    tag: "feature_data_library"
     pullPolicy: Always
 revproxy:
   autoscaling:
@@ -555,7 +557,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: "2026.02"
   ingress:
     aws:
       group: bdcatprod
@@ -570,7 +572,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: "2026.02"
 sower:
   enabled: true
   externalSecrets:
@@ -579,11 +581,11 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.02'
+    tag: "2026.02"
   sowerConfig:
     - action: export
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -634,7 +636,7 @@ sower:
             secretName: pelicanservice-g3auto
     - action: export-files
       container:
-        cpu-limit: '1'
+        cpu-limit: "1"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -649,7 +651,7 @@ sower:
           - name: ROOT_NODE
             value: file
           - name: EXTRA_NODES
-            value: ''
+            value: ""
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -694,7 +696,7 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.07'
+    tag: "2025.07"
 ssjdispatcher:
   externalSecrets:
     credsFile: bdcatprod-ssjdispatcher-creds
@@ -703,6 +705,6 @@ tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.07'
+    tag: "2025.07"
 wts:
   enabled: false

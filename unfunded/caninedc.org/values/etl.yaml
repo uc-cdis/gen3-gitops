@@ -100,6 +100,6 @@ etl:
               - name: project_id
   image:
     tube:
-      tag: '2026.02'
+      tag: '2026.03'
     spark:
-      tag: '2026.02'
+      tag: '2026.03'

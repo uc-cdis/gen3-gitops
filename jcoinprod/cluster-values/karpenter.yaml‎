@@ -1,0 +1,24 @@
+skipCrds: true
+serviceAccount:
+  name: karpenter
+  create: true
+  annotations:
+    eks.amazonaws.com/role-arn: "arn:aws:iam::258867494168:role/jcoinprod-karpenter-sa"
+settings:
+  clusterName: jcoinprod
+  featureGates:
+    spotToSpotConsolidation: true
+controller:
+  env:
+    - name: AWS_REGION
+      value: us-east-1
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 1Gi
+      cpu: 1
+webhook:
+  enabled: false
+dnsPolicy: Default

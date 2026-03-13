@@ -47,7 +47,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
@@ -55,13 +55,14 @@ karpenter-crds:
   selectorTag: loginbionimbus
   migration: true
   default:
+    disruptionBudget: "60%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "3m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
@@ -74,25 +75,16 @@ karpenter-crds:
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
-      - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
-        values:
-          - "7000"
   workflow:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
     volumeSize: 80Gi
   jupyter:
     nodeClassRef:
-      apiVersion: karpenter.k8s.aws
+      apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
