@@ -365,7 +365,7 @@ sower:
 wts:
   enabled: true
   externalSecrets:
-    createWtsOidcClientSecret: false
+    createWtsOidcClientSecret: true
     wtsG3auto: pcdc-prod-wts-g3auto
     wtsOidcClient: pcdc-prod-wts-client-secret
   image:
