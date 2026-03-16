@@ -12,7 +12,7 @@ amanuensis:
     name: "amanuensis-sa"
   externalSecrets:
     createK8sAmanuensisConfigSecret: false
-    createK8sJwtKeysSecret: true
+    createK8sJwtKeysSecret: false
     createLocalK8sSecret: true
     amanuensisJwtKeys: pcdc-prod-amanuensis-jwt-keys
     amanuensisConfig: pcdc-prod-amanuensis-config
@@ -251,6 +251,7 @@ pcdcanalysistools:
   serviceAccount:
     name: "pcdcanalysistools-sa"
   externalSecrets:
+    createK8sJwtKeysSecret: false
     analysisJwtKeys: pcdc-prod-analysis-jwt-keys
 peregrine:
   autoscaling:
