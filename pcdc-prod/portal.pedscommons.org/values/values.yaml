@@ -184,7 +184,7 @@ global:
       enabled: true
       roleArn: arn:aws:iam::242397368788:role/pcdc-prod-external-secrets-sa
   dev: false
-  dictionaryUrl: https://pcdc-gen3-dictionaries.s3.amazonaws.com/pcdc-schema-prod-20250708.json
+  dictionaryUrl: https://pcdc-gen3-dictionaries.s3.amazonaws.com/pcdc-schema-prod-20260113.json
   environment: pcdc-prod
   externalSecrets:
     deploy: true
