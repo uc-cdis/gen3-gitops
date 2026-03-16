@@ -2,7 +2,7 @@ cluster: stanfordaimi
 project: stanfordaimi
 accountNumber: "084375550014"
 configuration:
-  configurationRevision: calico-dev
+  configurationRevision: master
 alb-controller:
   enabled: true
   configuration:
