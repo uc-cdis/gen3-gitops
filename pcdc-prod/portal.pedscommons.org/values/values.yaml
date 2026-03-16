@@ -11,7 +11,7 @@ amanuensis:
   serviceAccount:
     name: "amanuensis-sa"
   externalSecrets:
-    createK8sAmanuensisConfigSecret: true
+    createK8sAmanuensisConfigSecret: false
     createK8sJwtKeysSecret: true
     createLocalK8sSecret: true
     amanuensisJwtKeys: pcdc-prod-amanuensis-jwt-keys
