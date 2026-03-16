@@ -17,7 +17,7 @@ aws-s3-mountpoint:
     enabled: false
 
 calico:
-  enabled: true
+  enabled: false  # Cilium is the CNI now
   configuration:
     enabled: false
 
@@ -48,7 +48,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
   configuration:
     enabled: true
 
@@ -62,8 +62,8 @@ karpenter-crds:
   migration: true
 
 vpc-cni:
-  enabled: true
+  enabled: false  # Cilium replaced vpc-cni
   configuration:
     enabled: false
 kube-proxy:
-  enabled: true
+  enabled: false  # Cilium kube-proxy replacement is now active
