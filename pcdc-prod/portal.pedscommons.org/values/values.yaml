@@ -201,6 +201,8 @@ global:
     tier_access_limit: '5'
     useryaml_s3path: s3://pcdc-gen3-users/user.yaml
     uwsgi-timeout: '600'
+  tier_access_level: granular
+  tier_access_limit: '5'
   portalApp: gitops
   postgres:
     dbCreate: false
