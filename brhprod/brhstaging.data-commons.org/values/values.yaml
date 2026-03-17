@@ -12,7 +12,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: 'authz_provider-err'
+    tag: '2026.02'
 audit:
   enabled: true
   externalSecrets:
@@ -60,7 +60,7 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'improve-usersync'
+    tag: '2026.02'
 fluentd:
   enabled: true
   image:
