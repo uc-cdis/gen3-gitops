@@ -12,7 +12,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: 'authz_provider-err'
 audit:
   enabled: true
   externalSecrets:
@@ -60,7 +60,7 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: 'improve-usersync'
 fluentd:
   enabled: true
   image:
@@ -87,6 +87,7 @@ gen3-workflow:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
+      - "quay.io/curl/curl:latest"
 funnel:
   postgres:
     dbCreate: true
@@ -141,7 +142,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # Tolerations
       #         # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
       #         {{`
@@ -156,7 +157,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # SecurityContext
       #         # https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
       #         {{`
@@ -168,7 +169,7 @@ funnel:
       #           supplementalGroups: {{ .securityContext.supplementalGroups }}
       #         {{- end }}
       #         `}}
-        
+
       #         restartPolicy: {{ .Values.restartPolicy.executor }}
       #         serviceAccountName: {{`{{.ServiceAccountName}}`}}
       #         containers:
@@ -187,7 +188,7 @@ funnel:
       #               cpu: {{`{{ .CpusLimit }}`}}
       #               memory: {{`{{ .RamGbLimit }}`}}Gi
       #               ephemeral-storage: {{`{{ .DiskGbLimit }}`}}Gi
-        
+
       #           volumeMounts:
       #           {{`
       #           {{- if .NeedsPVC }}
@@ -198,7 +199,7 @@ funnel:
       #             {{end}}
       #           {{- end }}
       #           `}}
-        
+
       #         volumes:
       #         {{`
       #         {{- if .NeedsPVC }}
@@ -516,8 +517,8 @@ hatchery:
           },
           {
             "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
+            "cpu-limit": "2.0",
+            "memory-limit": "4Gi",
             "name": "(Generic) Jupyter with pre-installed Nextflow",
             "image": "quay.io/cdis/jupyter-notebook:nextflow-master",
             "env": {

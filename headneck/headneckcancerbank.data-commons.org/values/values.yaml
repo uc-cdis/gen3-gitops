@@ -34,7 +34,7 @@ global:
   #     - 172.24.192.128/25
   #     - 172.24.192.0/25
   dispatcherJobNum: "10"
-  frontendRoot: "portal"
+  frontendRoot: "gen3ff"
   ddEnabled: false
 
 ambassador:
@@ -670,9 +670,9 @@ frontend-framework:
     requests:
       memory: "105Mi"
       cpu: "15m"
-  enabled: false
+  enabled: true
   image:
-    repository: quay.io/cdis/commons-frontend-app
+    repository: quay.io/cdis/head-neck-data-commons
     tag: main
 
 grafana:
