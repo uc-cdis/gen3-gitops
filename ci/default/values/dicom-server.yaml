@@ -1,6 +1,6 @@
 dicom-server:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: "quay.io/cdis/gen3-orthanc"
     tag: "gen3-0.1.2"
