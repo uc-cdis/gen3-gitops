@@ -516,8 +516,8 @@ hatchery:
           },
           {
             "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
+            "cpu-limit": "2.0",
+            "memory-limit": "4Gi",
             "name": "(Generic) Jupyter with pre-installed Nextflow",
             "image": "quay.io/cdis/jupyter-notebook:nextflow-master",
             "env": {
