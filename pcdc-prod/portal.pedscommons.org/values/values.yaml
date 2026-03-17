@@ -223,6 +223,8 @@ guppy:
   indices:
   - index: pcdc
     type: subject
+  encryptWhitelist: ""
+  enableEncryptWhitelist: false
 indexd:
   enabled: false
 manifestservice:
