@@ -87,7 +87,7 @@ gen3-workflow:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
-      - "curlimages/curl:latest"
+      - "quay.io/curl/curl:latest"
 funnel:
   postgres:
     dbCreate: true
@@ -142,7 +142,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # Tolerations
       #         # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
       #         {{`
@@ -157,7 +157,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # SecurityContext
       #         # https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
       #         {{`
@@ -169,7 +169,7 @@ funnel:
       #           supplementalGroups: {{ .securityContext.supplementalGroups }}
       #         {{- end }}
       #         `}}
-        
+
       #         restartPolicy: {{ .Values.restartPolicy.executor }}
       #         serviceAccountName: {{`{{.ServiceAccountName}}`}}
       #         containers:
@@ -188,7 +188,7 @@ funnel:
       #               cpu: {{`{{ .CpusLimit }}`}}
       #               memory: {{`{{ .RamGbLimit }}`}}Gi
       #               ephemeral-storage: {{`{{ .DiskGbLimit }}`}}Gi
-        
+
       #           volumeMounts:
       #           {{`
       #           {{- if .NeedsPVC }}
@@ -199,7 +199,7 @@ funnel:
       #             {{end}}
       #           {{- end }}
       #           `}}
-        
+
       #         volumes:
       #         {{`
       #         {{- if .NeedsPVC }}
