@@ -87,6 +87,7 @@ gen3-workflow:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
+      - "curlimages/curl:latest"
 funnel:
   postgres:
     dbCreate: true
