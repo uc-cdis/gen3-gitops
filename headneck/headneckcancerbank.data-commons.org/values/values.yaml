@@ -34,7 +34,7 @@ global:
   #     - 172.24.192.128/25
   #     - 172.24.192.0/25
   dispatcherJobNum: "10"
-  frontendRoot: "portal"
+  frontendRoot: "gen3ff"
   ddEnabled: false
 
 ambassador:
