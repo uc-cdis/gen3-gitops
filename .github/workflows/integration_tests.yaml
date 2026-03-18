@@ -13,7 +13,7 @@ jobs:
     name: Integration tests
     uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
     with:
-      TEST_REPO_BRANCH: chore/add_dicom_support_midrc_prod
+      TEST_REPO_BRANCH: chore/fix_dicom_setup_ci_env_issue
     secrets:
       CI_TEST_ORCID_USERID: ${{ secrets.CI_TEST_ORCID_USERID }}
       CI_TEST_ORCID_PASSWORD: ${{ secrets.CI_TEST_ORCID_PASSWORD }}
