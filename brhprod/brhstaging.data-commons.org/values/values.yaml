@@ -102,7 +102,7 @@ funnel:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
-      # ReconcileRate: 120s
+      ReconcileRate: 120s
       ReplicaCount: 2
       NodeSelector: {"role": "workflow"}
       Tolerations:

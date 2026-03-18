@@ -51,6 +51,7 @@ dashboard:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcprod-helm--dashboard-access
 dicom-server:
   enabled: true
+  replicaCount: 2  
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-orthanc
     tag: gen3-0.1.2
@@ -731,6 +732,7 @@ mutatingWebhook:
   enabled: false
 ohif-viewer:
   enabled: true
+  replicaCount: 2  
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohif-viewer
     tag: gen3-v3.9.3
