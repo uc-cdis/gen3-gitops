@@ -1007,7 +1007,7 @@
         {
             "tabTitle": "Imaging Studies",
             "charts": {
-                    "loinc_system": {
+                "loinc_system": {
                     "chartType": "fullPie",
                     "title": "LOINC System"
                 }
