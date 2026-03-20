@@ -137,10 +137,14 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
+  customConfig:
+    branch: main
+    enabled: true
+    repo: https://github.com/uc-cdis/bih-data-commons.git
   enabled: true
   image:
-    repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.10
+    repository: quay.io/cdis/commons-frontend-app
+    tag: main
 global:
   aws:
     account: '533267425233'
