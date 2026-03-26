@@ -36,6 +36,13 @@
   },
   "components": {
     "appName": "NHLBI BioData Catalyst®",
+    "banner": [
+      {
+        "type": "info",
+        "message": "Data transfers from Gen3 to Seven Bridges may fail or be incomplete, resulting in errors on either or both platforms. Teams are actively working to resolve the issue. If you experience issues, please report it to the BDC Help Desk: https://biodatacatalyst.nhlbi.nih.gov/help-and-support/contact-us/",
+        "resetMsgDays": 1
+      }
+    ], 
     "index": {
       "introduction": {
         "heading": "",
