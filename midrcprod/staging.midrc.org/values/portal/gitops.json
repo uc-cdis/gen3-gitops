@@ -894,7 +894,7 @@
                 },
                 "test_result_text": {
                     "chartType": "fullPie",
-                    "title": "COVID-19 Test Result"
+                    "title": "Test Result"
                 },
                 "test_name": {
                     "chartType": "fullPie",
@@ -904,7 +904,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "COVID-19 Tests",
+                        "title": "Measurements",
                         "fields": [
                             "test_method",
                             "test_result_text",
@@ -1006,7 +1006,22 @@
         },
         {
             "tabTitle": "Imaging Studies",
-            "charts": {},
+            "charts": {
+                "loinc_system": {
+                    "chartType": "fullPie",
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
+                },
+                "study_modality": {
+                    "chartType": "fullPie",
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
+                },
+                "loinc_contrast": {
+                    "chartType": "fullPie",
+                    "title": "LOINC Contrast"
+                }
+            },
             "filters": {
                 "tabs": [
                     {
@@ -1850,9 +1865,10 @@
                 "valueIfNotAvailable": "n/a"
             },
             {
-                "name": "Primary Imaging Site",
-                "field": "primary_site",
-                "contentType": "string",
+                "name": "Publication URL",
+                "field": "doi_publication",
+                "contentType": "link",
+                "length": 25,
                 "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
@@ -1928,6 +1944,12 @@
                             "name": "Data Description",
                             "field": "data_description",
                             "contentType": "string",
+                            "includeIfNotAvailable": false
+                        },
+                        {
+                            "name": "Data DOI",
+                            "field": "data_doi",
+                            "contentType": "link",
                             "includeIfNotAvailable": false
                         },
                         {
@@ -2070,6 +2092,12 @@
                 "name": "primary_site",
                 "displayName": "Primary Site",
                 "color": "#981f32",
+                "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
                 "display": true
             }
         ]

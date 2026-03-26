@@ -1,6 +1,8 @@
 cluster: vadcprod
 project: vadc
 accountNumber: "663707118480"
+configuration:
+  configurationRevision: master
 alb-controller:
   enabled: true
   configuration:
@@ -29,6 +31,11 @@ ebs-csi-driver:
     enabled: false
 external-secrets:
   enabled: true
+  targetRevision: "0.16.2"
+  configuration:
+    enabled: false
+
+
 fluentd:
   enabled: false
   configuration:
@@ -93,7 +100,7 @@ karpenter-crds:
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
-    volumeSize: 80Gi
+    volumeSize: 200Gi
 vpc-cni:
   enabled: true
   configuration:

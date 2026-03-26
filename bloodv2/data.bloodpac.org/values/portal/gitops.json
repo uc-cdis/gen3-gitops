@@ -1104,7 +1104,7 @@
             "valueIfNotAvailable": "n/a"
         },
         {
-            "name": "Condition",
+            "name": "Primary Cancer Type",
             "field": "condition",
             "contentType": "string",
             "width": 200,
@@ -1181,7 +1181,7 @@
                 "includeIfNotAvailable": false
                 },
                 {
-                "name": "Condition",
+                "name": "Primary Cancer Type",
                 "field": "condition",
                 "contentType": "string",
                 "includeIfNotAvailable": false

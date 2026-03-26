@@ -1,9 +1,9 @@
 portal:
   enabled: true
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: '2026.02'
+    tag: '2026.03'
   gitops:
     json: |
       {

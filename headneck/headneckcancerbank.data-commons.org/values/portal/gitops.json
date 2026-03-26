@@ -233,6 +233,21 @@
             ]
           },
           {
+            "title": "Samples",
+            "fields": [
+              "sample.sample_number",
+              "sample.sample_type",
+              "sample.status",
+              "sample.body_fluid_code",
+              "sample.sample_volume",
+              "sample.sample_year",
+              "sample.dna_concentration",
+              "sample.dna_260_280",
+              "sample.dna_od_260",
+              "sample.procedure_date"
+            ]
+          },
+          {
             "title": "Diagnoses",
             "fields": [
               "diagnosis.Primary_Site",
@@ -285,6 +300,16 @@
           "Sex_Desc",
           "race",
           "Ethnicity",
+          "sample.sample_number",
+          "sample.sample_type",
+          "sample.status",
+          "sample.body_fluid_code",
+          "sample.sample_volume",
+          "sample.sample_year",
+          "sample.dna_concentration",
+          "sample.dna_260_280",
+          "sample.dna_od_260",
+          "sample.procedure_date",
           "diagnosis.Primary_Site",
           "diagnosis.Regional_Nodes_Exam",
           "diagnosis.Regional_Nodes_Positive",

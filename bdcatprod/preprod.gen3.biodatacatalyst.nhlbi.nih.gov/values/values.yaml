@@ -310,10 +310,6 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_access_gtex
         region: us-east-1
-      nih-nhlbi-datacommons:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
-        region: us-east-1
       nih-nhlbi-topmed-released-phs000007-c2:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene

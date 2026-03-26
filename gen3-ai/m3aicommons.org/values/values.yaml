@@ -2,6 +2,7 @@ global:
   aws:
     enabled: true
     account: "837801696852"
+    awsEsProxyRole: gen3-service/gen3-ai-esproxy-sa
     hatchery_role: "arn:aws:iam::837801696852:role/gen3-service/gen3-ai-default-hatchery-sa"
     secretStoreServiceAccount:
       enabled: true
@@ -9,7 +10,7 @@ global:
       roleArn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-external-secrets-sa"
     wafv2:
       enabled: true
-      wafAclArn: ""
+      wafAclArn: "arn:aws:wafv2:us-east-1:837801696852:regional/webacl/gen3-ai-waf/5a4e71a9-a34e-45a8-9e05-b60e873424b9"
   dev: false
   externalSecrets:
     deploy: true
@@ -62,6 +63,7 @@ aws-es-proxy:
   esEndpoint: ""
   externalSecrets:
     awsCreds: "gen3-ai-default-aws-es-proxy-creds"
+  esEndpoint: vpc-gen3-ai-gen3-metadata-wcqwdpwxzoz3fpseni55ugqq6u.us-east-1.es.amazonaws.com
 
 dicom-server:
   enabled: false
@@ -136,7 +138,7 @@ hatchery:
     tag: feat_gpu-support
 
   hotNode:
-    enabled: false
+    enabled: true
     gpu: true
     jupyter: false
 
