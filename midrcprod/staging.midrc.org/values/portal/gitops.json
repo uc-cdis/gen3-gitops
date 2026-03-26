@@ -1009,11 +1009,13 @@
             "charts": {
                 "loinc_system": {
                     "chartType": "fullPie",
-                    "title": "LOINC System"
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
                 },
                 "study_modality": {
                     "chartType": "fullPie",
-                    "title": "Study Modality"
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
                 },
                 "loinc_contrast": {
                     "chartType": "fullPie",
