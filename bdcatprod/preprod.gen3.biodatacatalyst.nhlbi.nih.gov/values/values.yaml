@@ -273,7 +273,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: "13.0.3"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
