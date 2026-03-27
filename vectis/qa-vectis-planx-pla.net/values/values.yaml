@@ -1,0 +1,344 @@
+# Main gen3-helm values for qa-vectis-planx-pla.net
+# PLACEHOLDER values that must be filled in before deploying:
+#   PLACEHOLDER_REGISTRY             — container registry hosting gen3-vectis + workspace-proxy
+#   PLACEHOLDER_OPENSEARCH_ENDPOINT  — managed AWS OpenSearch domain endpoint (no https://)
+#   PLACEHOLDER_EXTERNAL_SECRETS_ROLE_ARN — IRSA role ARN that allows ESO to read Secrets Manager
+# ─────────────────────────────────────────────────────────────────────────────
+
+global:
+  environment: vectis-qa
+  hostname: qa-vectis-planx-pla.net
+  # Directs revproxy to route / → gen3ff-service (frontend-framework) instead of portal.
+  frontendRoot: gen3ff
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/vectis/0.1.0/schema.json"
+  portalApp: gen3ff
+
+  aws:
+    enabled: true
+    region: us-east-1
+    accountId: "707767160287"
+
+  externalSecrets:
+    enabled: true
+    awsRegion: us-east-1
+    # IRSA role that External Secrets Operator uses to read AWS Secrets Manager.
+    # Grant this role GetSecretValue on all vectis-qa-* secrets.
+    serviceAccountAnnotations:
+      eks.amazonaws.com/role-arn: "PLACEHOLDER_EXTERNAL_SECRETS_ROLE_ARN"
+
+  netPolicy:
+    enabled: true
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Disabled: Emissary/Ambassador is replaced by the workspace-proxy ExternalName
+# bridge deployed via the workspace-proxy ArgoCD Application.
+# ─────────────────────────────────────────────────────────────────────────────
+ambassador:
+  enabled: false
+
+# Replaced by frontend-framework below.
+portal:
+  enabled: false
+
+# ─────────────────────────────────────────────────────────────────────────────
+# gen3-vectis frontend (Next.js)
+# ─────────────────────────────────────────────────────────────────────────────
+frontend-framework:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-vectis
+    tag: latest
+    pullPolicy: Always
+  # Environment variables consumed by the Next.js server process.
+  env:
+    NODE_ENV: production
+    PORT: "3000"
+    NEXT_PUBLIC_GEN3_COMMONS_NAME: vectis-qa
+    NEXT_PUBLIC_DATACOMMONS: commons_frontend_app
+    HATCHERY_URL: "http://hatchery-service.vectis-qa-helm.svc.cluster.local"
+    GEN3_FENCE_SERVICE: "http://fence-service.vectis-qa-helm.svc.cluster.local"
+    GEN3_ARBORIST_SERVICE: "http://arborist-service.vectis-qa-helm.svc.cluster.local"
+    GEN3_INDEXD_SERVICE: "http://indexd-service.vectis-qa-helm.svc.cluster.local"
+    JUPYTER_GATEWAY_URL: "http://jupyter-enterprise-gateway.jupyter-pods-vectis-qa-helm.svc.cluster.local:8888"
+    KERNEL_SPEC_POLICY: "{}"
+  replicaCount: 2
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Revproxy (AWS ALB ingress)
+# ─────────────────────────────────────────────────────────────────────────────
+revproxy:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    tag: '2026.03'
+
+  ingress:
+    enabled: true
+    ingressClass: alb
+    tlsEnabled: true
+    certArn: "arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8"
+    hostname: qa-vectis-planx-pla.net
+    aws:
+      # ALB ingress group — keeps this the only ALB ingress rule for the cluster.
+      group: vectis-qa
+    additionalAnnotations:
+      alb.ingress.kubernetes.io/scheme: internet-facing
+      alb.ingress.kubernetes.io/target-type: ip
+      alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+      alb.ingress.kubernetes.io/ssl-redirect: '443'
+      alb.ingress.kubernetes.io/healthcheck-path: /index.html
+      alb.ingress.kubernetes.io/load-balancer-attributes: >-
+        idle_timeout.timeout_seconds=600
+
+  # Additional nginx location blocks injected into revproxy-nginx-subconf ConfigMap.
+  # NOTE: if the gen3-helm revproxy subchart does not support this field name,
+  # apply the workspace-api block via:
+  #   kubectl patch cm revproxy-nginx-subconf -n vectis-qa-helm \
+  #     --type=json -p='[{"op":"add","path":"/data/workspace-api.conf","value":"<conf>"}]'
+  additionalConfigs:
+    workspace-api.conf: |-
+      location ^~ /workspace-api/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request /gen3-authz;
+          error_page 403 = @errorworkspace;
+          set $upstream http://gen3ff-service.vectis-qa-helm.svc.cluster.local;
+          rewrite ^/workspace-api/(.*) /$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $http_host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Core gen3 services
+# ─────────────────────────────────────────────────────────────────────────────
+fence:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    # Secrets Manager path: vectis-qa-fence-g3auto, vectis-qa-fence-config
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-fence-g3auto: {}
+      vectis-qa-fence-config: {}
+
+arborist:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-arborist-g3auto: {}
+
+indexd:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-indexd-g3auto: {}
+
+sheepdog:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-sheepdog-g3auto: {}
+
+peregrine:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-peregrine-g3auto: {}
+
+metadata:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-metadata-g3auto: {}
+
+requestor:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-requestor-g3auto: {}
+
+audit:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-audit-g3auto: {}
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Workspace services
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Workspace Token Service — bridges fence tokens into workspace pods.
+wts:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-wts-g3auto: {}
+  networkPolicy:
+    enabled: true
+    ingressNamespaces:
+      - vectis-qa-helm
+      - jupyter-pods-vectis-qa-helm
+
+# Hatchery — provisions user workspace pods in jupyter-pods-vectis-qa-helm.
+hatchery:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: '2026.03'
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-hatchery-g3auto: {}
+
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods-vectis-qa-helm",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/gen3fuse-sidecar:2024.07",
+          "env": {
+            "NAMESPACE": "vectis-qa-helm",
+            "HOSTNAME": "qa-vectis-planx-pla.net"
+          },
+          "args": [],
+          "command": ["/bin/bash", "/sidecar.sh"],
+          "lifecycle-pre-stop": ["/bin/bash", "-c", "fusermount -u /data || true"]
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "memory-limit": "4Gi",
+            "name": "Jupyter Notebook (Python 3) - Vectis QA",
+            "image": "quay.io/cdis/jupyter-superslim:2024.07",
+            "env": {
+              "FRAME_ANCESTORS": "qa-vectis-planx-pla.net",
+              "JUPYTER_GATEWAY_URL": "http://jupyter-enterprise-gateway.jupyter-pods-vectis-qa-helm.svc.cluster.local:8888",
+              "JUPYTER_GATEWAY_HTTP_USER": "",
+              "JUPYTER_GATEWAY_VALIDATE_CERT": "false"
+            },
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://qa-vectis-planx-pla.net'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": false,
+            "ready-probe": "/lw-workspace/proxy/",
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
+        ]
+      }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Search (Guppy + ETL + OpenSearch proxy)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Reverse-proxy to AWS OpenSearch (avoids public exposure of OpenSearch endpoint).
+aws-es-proxy:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
+    tag: '2026.03'
+  esEndpoint: "https://PLACEHOLDER_OPENSEARCH_ENDPOINT"
+
+guppy:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: '2026.03'
+  esEndpoint: "http://aws-es-proxy-service.vectis-qa-helm.svc.cluster.local:9200"
+  # Index names follow the convention <environment>_<type>.
+  indices:
+    - index: vectis-qa_subject
+      type: subject
+    - index: vectis-qa_file
+      type: file
+  configIndex: vectis-qa_array-config
+  authFilterField: auth_resource_path
+  tierAccessLevel: libre
+
+etl:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
+    tag: '2026.03'
+  esEndpoint: "http://aws-es-proxy-service.vectis-qa-helm.svc.cluster.local:9200"
+  externalSecrets:
+    enabled: true
+    secretStore: aws-secrets-manager
+    secrets:
+      vectis-qa-etl-g3auto: {}
