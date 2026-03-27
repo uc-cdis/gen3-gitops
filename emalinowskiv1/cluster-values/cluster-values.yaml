@@ -53,7 +53,7 @@ karpenter:
     enabled: true
 
 karpenter-crds:
-  amiSelectorName: "EKS-1-33-al23*"
+  amiSelectorName: "EKS-1-35-*"
   consolidationPolicy: "WhenEmptyOrUnderutilized"
   consolidateAfter: "5m"
   expireAfter: "72h"
