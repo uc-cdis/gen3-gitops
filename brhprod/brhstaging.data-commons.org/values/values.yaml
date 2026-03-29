@@ -212,6 +212,13 @@ funnel:
 
 global:
   pdb: true
+  netPolicy:
+    # -- (bool) Whether network policies are enabled
+    enabled: true
+    # -- (array) A CIDR range representing a database subnet, that services with a database need access to
+    dbSubnets: 
+      - 172.27.98.0/24
+      - 172.27.99.0/24
   aws:
     account: '885078588865'
     awsEsProxyRole: brhprod--brhstaging-helm--es-access
