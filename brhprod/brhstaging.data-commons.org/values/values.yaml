@@ -87,6 +87,8 @@ gen3-workflow:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
+      - "quay.io/curl/curl:latest"
+      - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
 funnel:
   postgres:
     dbCreate: true
@@ -100,7 +102,7 @@ funnel:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
-      # ReconcileRate: 120s
+      ReconcileRate: 120s
       ReplicaCount: 2
       NodeSelector: {"role": "workflow"}
       Tolerations:
@@ -141,7 +143,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # Tolerations
       #         # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
       #         {{`
@@ -156,7 +158,7 @@ funnel:
       #           {{- end }}
       #         {{- end }}
       #         `}}
-        
+
       #         # SecurityContext
       #         # https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
       #         {{`
@@ -168,7 +170,7 @@ funnel:
       #           supplementalGroups: {{ .securityContext.supplementalGroups }}
       #         {{- end }}
       #         `}}
-        
+
       #         restartPolicy: {{ .Values.restartPolicy.executor }}
       #         serviceAccountName: {{`{{.ServiceAccountName}}`}}
       #         containers:
@@ -187,7 +189,7 @@ funnel:
       #               cpu: {{`{{ .CpusLimit }}`}}
       #               memory: {{`{{ .RamGbLimit }}`}}Gi
       #               ephemeral-storage: {{`{{ .DiskGbLimit }}`}}Gi
-        
+
       #           volumeMounts:
       #           {{`
       #           {{- if .NeedsPVC }}
@@ -198,7 +200,7 @@ funnel:
       #             {{end}}
       #           {{- end }}
       #           `}}
-        
+
       #         volumes:
       #         {{`
       #         {{- if .NeedsPVC }}
@@ -210,6 +212,13 @@ funnel:
 
 global:
   pdb: true
+  netPolicy:
+    # -- (bool) Whether network policies are enabled
+    enabled: true
+    # -- (array) A CIDR range representing a database subnet, that services with a database need access to
+    dbSubnets: 
+      - 172.27.98.0/24
+      - 172.27.99.0/24
   aws:
     account: '885078588865'
     awsEsProxyRole: brhprod--brhstaging-helm--es-access
@@ -516,8 +525,8 @@ hatchery:
           },
           {
             "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
+            "cpu-limit": "2.0",
+            "memory-limit": "4Gi",
             "name": "(Generic) Jupyter with pre-installed Nextflow",
             "image": "quay.io/cdis/jupyter-notebook:nextflow-master",
             "env": {

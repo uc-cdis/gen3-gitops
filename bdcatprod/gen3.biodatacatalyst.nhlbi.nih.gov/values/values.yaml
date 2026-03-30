@@ -288,7 +288,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2026.02"
+    tag: "13.0.3"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -487,7 +487,16 @@ indexd:
     maxReplicas: 8
     minReplicas: 4
     targetCPUUtilizationPercentage: 90
-  replicaCount: 4
+  replicaCount: 10
+  # -- (map) Resource requests and limits for the containers in the pod
+  resources:
+    limits:
+      memory: 2Gi
+    # -- (map) The amount of resources that the container requests
+    requests:
+      # -- (string) The amount of memory requested
+      memory: 512Mi
+      cpu: 1
   enabled: true
   externalSecrets:
     serviceCreds: bdcatprod-indexd-service-creds
@@ -575,6 +584,7 @@ sheepdog:
     tag: "2026.02"
 sower:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     createK8sPelicanServiceSecret: false
     pelicanserviceG3auto: bdcatprod-pelicanservice-g3auto

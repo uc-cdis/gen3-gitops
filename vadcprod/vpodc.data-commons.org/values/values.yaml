@@ -43,7 +43,7 @@ cohort-middleware:
     cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
-    tag: VA-2025.10.28
+    tag: VA-2026.03.18
 dashboard:
   replicaCount: 4
   autoscaling:
@@ -116,7 +116,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.11
+    tag: 0.13
 global:
   pdb: true
   aws:

@@ -273,7 +273,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: "13.0.3"
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -309,10 +309,6 @@ fence:
       nih-nhgri-datacommons:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_access_gtex
-        region: us-east-1
-      nih-nhlbi-datacommons:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
       nih-nhlbi-topmed-released-phs000007-c2:
         cred: fence-bot
