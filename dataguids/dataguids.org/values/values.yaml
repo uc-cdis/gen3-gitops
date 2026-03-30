@@ -1,3 +1,26 @@
+global:
+  pdb: true
+  aws:
+    account: "895962626746"
+    enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::895962626746:role/bdcatprod-external-secrets-sa
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
+  dev: false
+  environment: dataguids
+  externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
+    deploy: true
+  hostname: dataguids.org
+  portalApp: gitops
+  postgres:
+    dbCreate: false
+  revproxyArn: arn:aws:acm:us-east-1:895962626746:certificate/742b0502-bcd6-45b9-8a18-921560be4432
+
 indexd:
   enabled: true
   replicaCount: 8
