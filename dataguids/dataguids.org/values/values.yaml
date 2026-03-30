@@ -34,6 +34,8 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     pullPolicy: Always
     tag: "2026.02"
+  externalSecrets:
+    metadataG3auto: dataguids-metadata-g3auto
 portal:
   enabled: true
   replicaCount: 2
