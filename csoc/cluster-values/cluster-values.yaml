@@ -13,6 +13,8 @@ ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
+external-secrets:
+  enabled: true
 grafana-alloy:
   enabled: true
   configuration:
