@@ -47,4 +47,7 @@ spec:
       ports:
         - protocol: TCP
           port: 80
+        # JEG listens on 8888 — workspace-proxy proxies /jeg-proxy/* to it
+        - protocol: TCP
+          port: 8888
 {{- end }}

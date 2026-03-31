@@ -4,9 +4,8 @@
 replicaCount: 2
 
 image:
-  # Replace with your registry after the images are published.
-  repository: PLACEHOLDER_REGISTRY/workspace-proxy
-  tag: latest
+  repository: quay.io/cdis/gen3-vectis
+  tag: qa-goproxy
   pullPolicy: Always
 
 deploymentNamespace: vectis-qa-helm

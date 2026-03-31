@@ -30,8 +30,8 @@ global:
     enabled: true
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Disabled: Emissary/Ambassador is replaced by the workspace-proxy ExternalName
-# bridge deployed via the workspace-proxy ArgoCD Application.
+# Disabled: No Ambassador/Emissary. Revproxy routes /lw-workspace/proxy/
+# directly to workspace-proxy-service via additionalConfigs below.
 # ─────────────────────────────────────────────────────────────────────────────
 ambassador:
   enabled: false
@@ -46,8 +46,8 @@ portal:
 frontend-framework:
   enabled: true
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-vectis
-    tag: latest
+    repository: quay.io/cdis/gen3-vectis
+    tag: qa-vectis
     pullPolicy: Always
   # Environment variables consumed by the Next.js server process.
   env:
@@ -61,6 +61,7 @@ frontend-framework:
     GEN3_INDEXD_SERVICE: "http://indexd-service.vectis-qa-helm.svc.cluster.local"
     JUPYTER_GATEWAY_URL: "http://jupyter-enterprise-gateway.jupyter-pods-vectis-qa-helm.svc.cluster.local:8888"
     KERNEL_SPEC_POLICY: "{}"
+    ENABLE_JEG: "true"
   replicaCount: 2
   resources:
     requests:
@@ -104,6 +105,42 @@ revproxy:
   #   kubectl patch cm revproxy-nginx-subconf -n vectis-qa-helm \
   #     --type=json -p='[{"op":"add","path":"/data/workspace-api.conf","value":"<conf>"}]'
   additionalConfigs:
+    ambassador-service.conf: |-
+      location = /lw-workspace/proxy {
+        return 308 $scheme://$http_host/lw-workspace/proxy/;
+      }
+
+      location /lw-workspace/proxy/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+          auth_request /gen3-authz;
+
+          if ($saved_set_cookie != "") {
+              add_header Set-Cookie $saved_set_cookie always;
+          }
+          add_header Cache-Control "no-store";
+
+          proxy_set_header REMOTE_USER $remoteUser;
+          error_page 403 = @errorworkspace;
+
+          set $proxy_service  "workspace-proxy";
+          set $upstream http://workspace-proxy-service.vectis-qa-helm.svc.cluster.local;
+          rewrite ^/lw-workspace/proxy/(.*) /$1 break;
+          proxy_pass $upstream;
+          proxy_redirect http://$http_host/ https://$http_host/lw-workspace/proxy/;
+          proxy_http_version 1.1;
+          proxy_set_header Host $http_host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 36000s;
+      }
     workspace-api.conf: |-
       location ^~ /workspace-api/ {
           set $authz_resource "/workspace";
@@ -275,10 +312,7 @@ hatchery:
             "name": "Jupyter Notebook (Python 3) - Vectis QA",
             "image": "quay.io/cdis/jupyter-superslim:2024.07",
             "env": {
-              "FRAME_ANCESTORS": "qa-vectis-planx-pla.net",
-              "JUPYTER_GATEWAY_URL": "http://jupyter-enterprise-gateway.jupyter-pods-vectis-qa-helm.svc.cluster.local:8888",
-              "JUPYTER_GATEWAY_HTTP_USER": "",
-              "JUPYTER_GATEWAY_VALIDATE_CERT": "false"
+              "FRAME_ANCESTORS": "qa-vectis-planx-pla.net"
             },
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
@@ -309,14 +343,14 @@ hatchery:
 
 # Reverse-proxy to AWS OpenSearch (avoids public exposure of OpenSearch endpoint).
 aws-es-proxy:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: '2026.03'
   esEndpoint: "https://PLACEHOLDER_OPENSEARCH_ENDPOINT"
 
 guppy:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
     tag: '2026.03'
@@ -332,7 +366,7 @@ guppy:
   tierAccessLevel: libre
 
 etl:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2026.03'

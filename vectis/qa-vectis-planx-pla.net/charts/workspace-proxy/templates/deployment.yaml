@@ -24,6 +24,11 @@ spec:
           args:
             - --listen={{ .Values.listenAddr }}
             - --workspace-namespace={{ .Values.workspaceNamespace }}
+          env:
+            - name: JEG_GATEWAY_URL
+              value: "http://jupyter-enterprise-gateway.{{ .Values.workspaceNamespace }}.svc.cluster.local:8888"
+            - name: WORKSPACE_NAMESPACE
+              value: "{{ .Values.workspaceNamespace }}"
           ports:
             - name: http
               containerPort: 8080

@@ -6,9 +6,9 @@ workspaceNamespace: jupyter-pods-vectis-qa-helm
 replicaCount: 1
 
 image:
-  repository: elyra/enterprise-gateway
-  tag: "3.2.3"
-  pullPolicy: IfNotPresent
+  repository: quay.io/cdis/gen3-vectis
+  tag: "qa-jeg"
+  pullPolicy: Always
 
 env:
   # CRITICAL: must match hatchery user-namespace and workspace-proxy WORKSPACE_NAMESPACE.
