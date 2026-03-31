@@ -10,7 +10,7 @@ global:
   hostname: qa-vectis-planx-pla.net
   # Directs revproxy to route / → gen3ff-service (frontend-framework) instead of portal.
   frontendRoot: gen3ff
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/vectis/0.1.0/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/vectis/0.0.1/schema.json"
   portalApp: gen3ff
 
   aws:
