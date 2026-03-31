@@ -292,6 +292,7 @@ hatchery:
         "user-namespace": "jupyter-pods-vectis-qa-helm",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
+        "jeg-gateway-proxy-url": "http://workspace-proxy-service.vectis-qa-helm.svc.cluster.local:8080/jeg-proxy",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
