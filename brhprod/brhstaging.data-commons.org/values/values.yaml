@@ -96,29 +96,30 @@ funnel:
     dbcreds: "brhstaging-helm-funnel-creds"
     funnelOidcClient: "brhstaging-helm-funnel-oidc-client"
   funnel:
-      repository: quay.io/cdis/funnel
-      tag: allow-retry-2026-03-19
-    Logger:
-      Level: debug
-    Kubernetes:
-      JobsNamespace: "workflow-pods-brhstaging-helm"
-      ReconcileRate: 120s
-      ReplicaCount: 2
-      NodeSelector: {"role": "workflow"}
-      Tolerations:
+    repository: quay.io/cdis/funnel
+    tag: allow-retry-2026-03-19
+  Logger:
+    Level: debug
+  Kubernetes:
+    JobsNamespace: "workflow-pods-brhstaging-helm"
+    ReconcileRate: 120s
+    ReplicaCount: 2
+    NodeSelector:
+      role: "workflow"
+    Tolerations:
       - Key: "role"
         Operator: "Equal"
         Value: "workflow"
         Effect: "NoSchedule"
-      Executor:
-          restartPolicy: OnFailure
-          backoffLimit: 0
-          # Annotations:
-          #     karpenter.sh/do-not-disrupt: "true"
-      Worker:
-          restartPolicy: OnFailure
-          backoffLimit: 2
-          # PriorityClassName: "system-cluster-critical"
+    Executor:
+      restartPolicy: OnFailure
+      backoffLimit: 0
+      # Annotations:
+      #   karpenter.sh/do-not-disrupt: "true"
+    Worker:
+      restartPolicy: OnFailure
+      backoffLimit: 2
+      # PriorityClassName: "system-cluster-critical"
 
 global:
   pdb: true
