@@ -111,104 +111,14 @@ funnel:
         Value: "workflow"
         Effect: "NoSchedule"
       Executor:
-        Annotations:
-          karpenter.sh/do-not-disrupt: "true"
+          restartPolicy: OnFailure
+          backoffLimit: 0
+          # Annotations:
+          #     karpenter.sh/do-not-disrupt: "true"
       Worker:
-        PriorityClassName: "system-cluster-critical"
-      # # ExecutorTemplate copied from https://github.com/ohsu-comp-bio/helm-charts/blob/27c596d/charts/funnel/files/executor-job.yaml
-      # ExecutorTemplate: |
-      #   apiVersion: batch/v1
-      #   kind: Job
-      #   metadata:
-      #     name: {{`{{.TaskId}}`}}-{{`{{.JobId}}`}}
-      #     namespace: {{`{{.JobsNamespace}}`}}
-      #     labels:
-      #       app: funnel-executor
-      #       job-name: {{`{{.TaskId}}-{{.JobId}}`}}
-      #   spec:
-      #     backoffLimit: {{ .Values.backoffLimit}}
-      #     completions: {{ .Values.completions }}
-      #     template:
-      #       metadata:
-      #         annotations:
-      #           karpenter.sh/do-not-disrupt: "true"
-      #       spec:
-      #         # NodeSelectors
-      #         # https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/#create-a-pod-that-gets-scheduled-to-your-chosen-node
-      #         {{`
-      #         {{- if .NodeSelector }}
-      #         nodeSelector:
-      #           {{- range $key, $value := .NodeSelector }}
-      #           {{ $key }}: {{ $value }}
-      #           {{- end }}
-      #         {{- end }}
-      #         `}}
-
-      #         # Tolerations
-      #         # https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
-      #         {{`
-      #         {{- if .Tolerations }}
-      #         tolerations:
-      #           {{- range .Tolerations }}
-      #           - key: {{ .Key }}
-      #             operator: {{ .Operator }}
-      #             effect: {{ .Effect }}
-      #             {{if .Value}}value: {{ .Value }}{{end}}
-      #             {{if .TolerationSeconds}}tolerationSeconds: {{ .TolerationSeconds }}{{end}}
-      #           {{- end }}
-      #         {{- end }}
-      #         `}}
-
-      #         # SecurityContext
-      #         # https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-      #         {{`
-      #         {{- if .securityContext }}
-      #         securityContext:
-      #           fsGroup: {{ .securityContext.fsGroup }}
-      #           runAsUser: {{ .securityContext.runAsUser }}
-      #           runAsGroup: {{ .securityContext.runAsGroup }}
-      #           supplementalGroups: {{ .securityContext.supplementalGroups }}
-      #         {{- end }}
-      #         `}}
-
-      #         restartPolicy: {{ .Values.restartPolicy.executor }}
-      #         serviceAccountName: {{`{{.ServiceAccountName}}`}}
-      #         containers:
-      #         - name: funnel-worker-{{`{{.TaskId}}`}}
-      #           image: {{`{{.Image}}`}}
-      #           imagePullPolicy: Always
-      #           command: ["/bin/sh", "-c"]
-      #           args: {{`{{.Command}}`}}
-      #           workingDir: {{`{{.Workdir}}`}}
-      #           resources:
-      #             requests:
-      #               cpu: {{`{{ .Cpus }}`}}
-      #               memory: {{`{{ .RamGb }}`}}Gi
-      #               ephemeral-storage: {{`{{ .DiskGb }}`}}Gi
-      #             limits:
-      #               cpu: {{`{{ .CpusLimit }}`}}
-      #               memory: {{`{{ .RamGbLimit }}`}}Gi
-      #               ephemeral-storage: {{`{{ .DiskGbLimit }}`}}Gi
-
-      #           volumeMounts:
-      #           {{`
-      #           {{- if .NeedsPVC }}
-      #             {{range $idx, $item := .Volumes}}
-      #             - name: funnel-storage-{{$.TaskId}}
-      #               mountPath: {{$item.ContainerPath}}
-      #               subPath: {{$.TaskId}}{{$item.ContainerPath}}
-      #             {{end}}
-      #           {{- end }}
-      #           `}}
-
-      #         volumes:
-      #         {{`
-      #         {{- if .NeedsPVC }}
-      #         - name: funnel-storage-{{.TaskId}}
-      #           persistentVolumeClaim:
-      #             claimName: funnel-worker-pvc-{{.TaskId}}
-      #         {{- end }}
-      #         `}}
+          restartPolicy: OnFailure
+          backoffLimit: 2
+          # PriorityClassName: "system-cluster-critical"
 
 global:
   pdb: true
