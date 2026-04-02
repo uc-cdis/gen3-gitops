@@ -89,7 +89,7 @@ gen3-workflow:
       - "quay.io/nextflow/bash:*"
       - "quay.io/curl/curl:latest"
       - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
-      - "python:3.9*
+      - "python:3.9*"
 funnel:
   postgres:
     dbCreate: true
