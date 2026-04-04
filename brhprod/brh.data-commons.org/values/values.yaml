@@ -1,4 +1,5 @@
 ambassador:
+  replicaCount: 2
   jupyterNamespace: jupyter-pods
 arborist:
   replicaCount: 4
@@ -28,6 +29,7 @@ aws-es-proxy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
 dashboard:
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-885078588865-brhdemo-gen3
     prefix: brh.data-commons.org
@@ -98,6 +100,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/11bc3b8f-b481-4f01-a9b1-760a674dbdc1
 hatchery:
   enabled: true
+  replicaCount: 2  
   hotNode:
     enabled: true
     availabilityZones:
@@ -356,6 +359,7 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.02'
 manifestservice:
+    replicaCount: 2
   enabled: true
   externalSecrets:
     manifestserviceG3auto: brhprod-manifestservice-g3auto
@@ -495,11 +499,13 @@ metadata:
   useAggMds: true
 peregrine:
   enabled: true
+  replicaCount: 2  
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.02'
 portal:
   enabled: true
+  replicaCount: 2  
   gitops:
     gen3Bundle: ecosystem
     json: |
