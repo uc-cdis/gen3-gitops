@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vectis-qa-jeg
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    # Deploy JEG after workspace-proxy (which creates the shared namespace).
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  sources:
+    - path: vectis/qa-vectis-planx-pla.net/charts/jeg
+      repoURL: https://github.com/uc-cdis/gen3-gitops.git
+      targetRevision: master
+      helm:
+        releaseName: jupyter-enterprise-gateway
+        valueFiles:
+          - $values/vectis/qa-vectis-planx-pla.net/values/jeg-values.yaml
+    - repoURL: https://github.com/uc-cdis/gen3-gitops.git
+      targetRevision: master
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: jupyter-pods-vectis-qa-helm
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
