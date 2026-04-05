@@ -7,6 +7,7 @@ chart-repos:
   - eks=https://aws.github.io/eks-charts
   - projectcalico=https://docs.tigera.io/calico/charts
   - coredns=https://coredns.github.io/helm
+  - grafana=https://grafana.github.io/helm-charts
 helm-extra-args: --timeout 600s
 check-version-increment: true
 debug: false
