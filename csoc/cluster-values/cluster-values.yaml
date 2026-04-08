@@ -13,6 +13,9 @@ ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
 grafana-alloy:
   enabled: true
   configuration:
