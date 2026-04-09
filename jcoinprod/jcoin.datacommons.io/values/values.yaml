@@ -218,7 +218,7 @@ hatchery:
   externalSecrets:
     stataG3auto: jcoinprod-stata-workspace-gen3-license
   hotNode:
-    enabled: true
+    enabled: false
     availabilityZones:
       - us-east-1a
       - us-east-1c

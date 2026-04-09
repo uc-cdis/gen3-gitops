@@ -42,7 +42,7 @@ awshelper:
 dashboard:
   dashboardConfig:
     bucket: dashboard-813684607867-midrcprod-gen3
-    prefix: midrcstaging.midrc.org
+    prefix: staging.midrc.org
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
