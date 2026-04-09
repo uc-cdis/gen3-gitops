@@ -91,6 +91,7 @@ gen3-workflow:
       - "quay.io/cdis/nginx:*"
       - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
       - "python:3.9*"
+      - "pytorch/pytorch:latest" # nf-canary TEST_GPU
 funnel:
   postgres:
     dbCreate: true
