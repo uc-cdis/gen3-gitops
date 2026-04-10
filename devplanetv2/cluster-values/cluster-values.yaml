@@ -105,6 +105,29 @@ karpenter-crds:
       name: jupyter
     amiFamily: AL2023
     volumeSize: 80Gi
+  gpu:
+    enabled: true
+    consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "WhenEmpty"
+    expireAfter: "168h"
+    volumeSize: 80Gi
+    additionalTags: {}
+    requirements:
+      - key: karpenter.sh/capacity-type
+        operator: In
+        values:
+          - on-demand
+      - key: kubernetes.io/arch
+        operator: In
+        values:
+          - amd64
+
+nvidia-device-plugin:
+  enabled: true
+  configuration:
+    enabled: false
+  targetRevision: v0.18.0
 
 vpc-cni:
   enabled: true
