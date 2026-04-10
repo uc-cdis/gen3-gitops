@@ -3,4 +3,7 @@ dicom-server:
   enabled: false
   image:
     repository: "quay.io/cdis/gen3-orthanc"
-    tag: "master"
+    tag: "gen3-0.1.2"
+  externalSecrets:
+    createK8sOrthancG3auto: false
+    orthancG3Auto: "ci-orthanc-g3auto"

@@ -1,9 +1,0 @@
-funnel:
-  postgres:
-    dbCreate: true
-  externalSecrets:
-    dbcreds: "dynamically replaced by setup_ci_env.sh script"
-    funnelOidcClient: "dynamically replaced by setup_ci_env.sh script"
-  funnel:
-    Kubernetes:
-      JobsNamespace: "dynamically replaced by setup_ci_env.sh script"

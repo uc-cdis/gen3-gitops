@@ -1,12 +1,16 @@
 global:
   dev: false
   hostname: caninedc.org
+  frontendRoot: gen3ff
   aws:
     enabled: true
-    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded-elasticsearch-access-role
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
     useLocalSecret:
-      enabled: true
+      enabled: false
       localSecretName: external-secrets-canine-secret
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::662843554732:role/unfunded--canineprod--external-secrets-sa
     wafv2:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
@@ -27,21 +31,13 @@ global:
     topologyKey: topology.kubernetes.io/zone
     maxSkew: 1
 arborist:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   externalSecrets:
     dbcreds: canineprod-arborist
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.01'
+    tag: '2026.04'
 aws-es-proxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: canineprod-aws-es-proxy-creds
@@ -50,60 +46,41 @@ aws-es-proxy:
     repository: quay.io/cdis/aws-es-proxy
     tag: master
 indexd:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   defaultPrefix: dg.C78ne/
   externalSecrets:
+    createK8sServiceCredsSecret: true
     dbcreds: canineprod-indexd
     serviceCreds: canineprod-indexd-service-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.01'
+    tag: '2026.04'
 peregrine:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-peregrine
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.01'
+    tag: '2026.04'
     pullPolicy: Always
 revproxy:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.01'
+    tag: '2026.04'
 sheepdog:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-sheepdog
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.01'
+    tag: '2026.04'
 manifestservice:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.01'
+    tag: '2026.04'
   externalSecrets:
     manifestserviceG3auto: canine-manifestservice-g3auto
 etl:
@@ -117,35 +94,29 @@ etl:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
       tag: master
 sower:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.01'
+    tag: '2026.04'
   externalSecrets:
     pelicanserviceG3auto: canine-pelicanservice-g3auto
 ssjdispatcher:
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.01'
-  indexing: quay.io/cdis/indexs3client:2026.01
+    tag: '2026.04'
+  indexing: quay.io/cdis/indexs3client:2026.04
+  externalSecrets:
+    credsFile: canineprod-ssjdispatcher-creds
+  serviceAccountName: ssjdispatcher-service-account
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj-job
 metadata:
-  initResources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
-  resources:
-    requests:
-      memory: 105Mi
-      cpu: 15m
   externalSecrets:
     dbcreds: canineprod-metadata
     metadataG3auto: canine-metadata-g3auto
@@ -153,23 +124,25 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.01'
+    tag: '2026.04'
 ambassador:
   jupyterNamespace: jupyter-pods-canine
 wts:
   enabled: true
   externalSecrets:
-    createWtsOidcClientSecret: false
+    dbcreds: canineprod-wts
+    createWtsOidcClientSecret: true
+    createK8sWtsSecret: true
     wtsG3auto: caninedc-wts-g3auto
     wtsOidcClient: caninedc-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.01'
+    tag: '2026.04'
 hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.01'
+    tag: '2026.04'
   hatchery:
     json: |-
       {
@@ -208,7 +181,7 @@ hatchery:
             "env": {
               "DISABLE_AUTH": "true",
               "NAMESPACE": "default",
-              "HOSTNAME": "caninedc.org,
+              "HOSTNAME": "caninedc.org",
               "FRAME_ANCESTORS": "https://caninedc.org"
             },
             "args": [
@@ -248,3 +221,13 @@ hatchery:
       }
 audit:
   enabled: false
+frontend-framework:
+  enabled: true
+  customConfig:
+    enabled: true
+    repo: https://github.com/uc-cdis/cdis-manifest.git
+    branch: spike/canine_test
+    dir: caninedc.org/frontend
+  image:
+    repository: quay.io/cdis/commons-frontend-app
+    tag: main

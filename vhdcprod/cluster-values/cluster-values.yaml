@@ -46,7 +46,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.6.3"
+  targetRevision: "1.8.6"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-33-al23*"
@@ -54,13 +54,14 @@ karpenter-crds:
   selectorTag: vhdcprod
   migration: true
   default:
+    disruptionBudget: "80%"  
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "5m"
+    consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
     additionalTags:
@@ -71,21 +72,19 @@ karpenter-crds:
       - key: karpenter.sh/capacity-type
         operator: In
         values:
-          - on-demand
           - spot
       - key: kubernetes.io/arch
         operator: In
         values:
           - amd64
-      - key: karpenter.k8s.aws/instance-family
-        operator: In
-        values:
-          - r8i-flex
-          - m8i-flex
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
           - "7000"
+      - key: karpenter.k8s.aws/instance-memory
+        operator: Lt
+        values:
+          - "32500"
   jupyter:
     enabled: false
     nodeClassRef:

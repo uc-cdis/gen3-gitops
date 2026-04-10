@@ -51,6 +51,12 @@
         "description": "The Jupyter notebooks contained in this notebook viewer pull data from various sources to generate and output useful tables, charts, graphs, and models. Each notebook is static, meaning the data being used by the notebooks is not updated in real time. Executable versions of these notebooks can be downloaded from <a href='https://github.com/MIDRC/tutorial_notebooks'> MIDRC's GitHub Repository</a>. If you’d like to browse the machine learning-related algorithms and code being developed by MIDRC, please visit <a href='https://midrc.org/algorithms'>the algorithms page</a> on our website.",
         "resources": [
             {
+                "title": "Representativeness In Interoperable Databases",
+                "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
+                "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
+                "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
+            },            
+            {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
                 "imageUrl": "/dashboard/Public/notebooks/Cohort_Building_Using_LOINC_Terms.png",
@@ -235,10 +241,10 @@
         "navigation": {
             "items": [
                 {
-                    "name": "Discovery",
+                    "name": "Datasets",
                     "link": "/discovery",
                     "icon": "query",
-                    "tooltip": "Dataset discovery"
+                    "tooltip": "The Datasets page provides free-text and tag-based search over published datasets in MIDRC along with links to publications and data download buttons."
                 },
                 {
                     "name": "Exploration",
@@ -894,7 +900,7 @@
                 },
                 "test_result_text": {
                     "chartType": "fullPie",
-                    "title": "COVID-19 Test Result"
+                    "title": "Test Result"
                 },
                 "test_name": {
                     "chartType": "fullPie",
@@ -904,7 +910,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "COVID-19 Tests",
+                        "title": "Measurements",
                         "fields": [
                             "test_method",
                             "test_result_text",
@@ -1006,7 +1012,22 @@
         },
         {
             "tabTitle": "Imaging Studies",
-            "charts": {},
+            "charts": {
+                "loinc_system": {
+                    "chartType": "fullPie",
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
+                },
+                "study_modality": {
+                    "chartType": "fullPie",
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
+                },
+                "loinc_contrast": {
+                    "chartType": "fullPie",
+                    "title": "LOINC Contrast"
+                }
+            },
             "filters": {
                 "tabs": [
                     {
@@ -1851,9 +1872,26 @@
             },
             {
                 "name": "Publication URL",
-                "field": "data_url",
+                "field": "doi_publication",
                 "contentType": "link",
-                "width": 300,
+                "length": 25,
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Cases",
+                "field": "cases_count",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Publication Year",
+                "field": "doi_publication_year",
+                "contentType": "string",
+                "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
             }
@@ -1912,6 +1950,12 @@
                             "name": "Data Description",
                             "field": "data_description",
                             "contentType": "string",
+                            "includeIfNotAvailable": false
+                        },
+                        {
+                            "name": "Data DOI",
+                            "field": "data_doi",
+                            "contentType": "link",
                             "includeIfNotAvailable": false
                         },
                         {
@@ -1993,6 +2037,12 @@
                             "includeIfNotAvailable": false
                         },
                         {
+                            "name": "Publication DOI",
+                            "field": "doi_publication",
+                            "contentType": "link",
+                            "includeIfNotAvailable": false
+                        },
+                        {
                             "name": "Primary Site",
                             "field": "primary_site",
                             "contentType": "string",
@@ -2048,6 +2098,12 @@
                 "name": "primary_site",
                 "displayName": "Primary Site",
                 "color": "#981f32",
+                "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
                 "display": true
             }
         ]

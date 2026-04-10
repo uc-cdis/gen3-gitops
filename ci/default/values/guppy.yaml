@@ -4,7 +4,7 @@ guppy:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   enabled: true
   #TO DO Re-enable once ES index restore is added to modify values script
   dbRestore: false

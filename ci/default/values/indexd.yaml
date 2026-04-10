@@ -3,7 +3,7 @@ indexd:
   resources:
     requests:
       memory: "105Mi"
-      cpu: "15m"
+      cpu: "50m"
   # This will be dynamically replaced by env_setup.sh script.
   defaultPrefix: ""
   enabled: true
