@@ -1,0 +1,12 @@
+embedding-management-service:
+  enabled: true
+  postgres:
+    dbCreate: true
+  embeddingsConfig: |
+    {
+      "expr": 256
+    }
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
+    tag: feat_service
+    pullPolicy: Always

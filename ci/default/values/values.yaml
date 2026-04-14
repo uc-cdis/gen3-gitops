@@ -52,7 +52,7 @@ postgresql:
   image:
     registry: quay.io
     repository: cdis/postgresql
-    tag: 14.5.0-debian-11-r35
+    tag: 14.5.0-debian-11-pgvector
 
 elasticsearch:
   pdb:
