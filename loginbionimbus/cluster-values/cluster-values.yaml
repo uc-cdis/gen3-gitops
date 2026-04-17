@@ -77,7 +77,6 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-category
         operator: In
         values:
-          - c
           - m
           - r
       - key: karpenter.k8s.aws/instance-generation
