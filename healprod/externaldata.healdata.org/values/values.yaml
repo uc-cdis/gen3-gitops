@@ -8,23 +8,20 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: '2026.04'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: externaldata-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: '2026.04'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-healprod-gen3-metadata-2-l6eifqrue4gqcmvc4u2dny3cdi.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: '0.8'
 dashboard:
   dashboardConfig:
     bucket: dashboard-205252583234-healprod-gen3
@@ -52,7 +49,7 @@ fence:
     fenceJwtKeys: externaldata-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: '2026.04'
 global:
   pdb: true
   aws:
@@ -98,14 +95,14 @@ indexd:
     serviceCreds: externaldata-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: '2026.04'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: externaldata-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.02'
+    tag: '2026.04'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healexternaldata-helm--manifest-service-sa
@@ -116,14 +113,14 @@ metadata:
     metadataG3auto: externaldata-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: '2026.04'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: '2026.04'
 portal:
   enabled: false
 revproxy:
@@ -136,7 +133,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: '2026.04'
   ingress:
     aws:
       group: healprod
@@ -144,7 +141,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: '2026.04'
   replicaCount: 2
 wts:
   enabled: false
