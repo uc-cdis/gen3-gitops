@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-unfunded
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: 'https://github.com/uc-cdis/gen3-helm'
+      targetRevision: master
+      helm:
+        releaseName: gen3
+        valueFiles:
+          - $values/unfunded/biocuration.planx-pla.net/values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops'
+      targetRevision: main
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: elwazi
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    - Replace=true
+    automated:
+      selfHeal: true
