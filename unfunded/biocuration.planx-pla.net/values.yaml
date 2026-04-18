@@ -2,11 +2,11 @@ global:
   aws:
     enabled: true
     account: "662843554732"
-    hatchery_role: "arn:aws:iam::662843554732:role/gen3-service/unfunded-elwazi-hatchery-sa"
+    hatchery_role: "arn:aws:iam::662843554732:role/gen3-service/unfunded-africa-hatchery-sa"
     secretStoreServiceAccount:
       enabled: true
       name: external-secrets
-      roleArn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-elwazi-external-secrets-sa"
+      roleArn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-africa-external-secrets-sa"
     wafv2:
       enabled: true
       wafAclArn: ""
@@ -36,7 +36,7 @@ ambassador:
 arborist:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-elwazi-arborist-creds"
+    dbcreds: "unfunded-africa-arborist-creds"
 
 argo-wrapper:
   enabled: false
@@ -45,9 +45,9 @@ audit:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-elwazi-audit-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-africa-audit-sa"
   externalSecrets:
-    dbcreds: "unfunded-elwazi-audit-creds"
+    dbcreds: "unfunded-africa-audit-creds"
     createK8sAuditSecret: true
 
 
@@ -55,32 +55,32 @@ aws-es-proxy:
   enabled: true
   esEndpoint: "vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com"
   externalSecrets:
-    awsCreds: "unfunded-elwazi-aws-es-proxy-creds"
+    awsCreds: "unfunded-africa-aws-es-proxy-creds"
 
 dicom-server:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-elwazi-dicom-server-creds"
+    dbcreds: "unfunded-africa-dicom-server-creds"
 
 dicom-viewer:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-elwazi-dicom-viewer-creds"
+    dbcreds: "unfunded-africa-dicom-viewer-creds"
 
 
 fence:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-elwazi-fence-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-africa-fence-sa"
 
   externalSecrets:
-    fenceJwtKeys: "unfunded-elwazi-fence-jwt-keys"
-    fenceConfig: "unfunded-elwazi-fence-config"
+    fenceJwtKeys: "unfunded-africa-fence-jwt-keys"
+    fenceConfig: "unfunded-africa-fence-config"
     fenceGoogleAppCredsSecret: ""
     fenceGoogleStorageCredsSecret: ""
     createK8sGoogleAppSecrets: true
-    dbcreds: "unfunded-elwazi-fence-creds"
+    dbcreds: "unfunded-africa-fence-creds"
 
   usersync:
     usersync: true
@@ -160,7 +160,7 @@ indexd:
   enabled: true
   defaultPrefix: "dg.XXXX/"
   externalSecrets:
-    dbcreds: "unfunded-elwazi-indexd-creds"
+    dbcreds: "unfunded-africa-indexd-creds"
     createK8sServiceCredsSecret: true
 
 
@@ -168,20 +168,20 @@ manifestservice:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-elwazi-manifestservice-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-africa-manifestservice-sa"
   externalSecrets:
     createK8sManifestServiceSecret: true
 
 metadata:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-elwazi-metadata-creds"
+    dbcreds: "unfunded-africa-metadata-creds"
     createK8sMetadataSecret: true
 
 peregrine:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-elwazi-sheepdog-creds"
+    dbcreds: "unfunded-africa-sheepdog-creds"
 
 pidgin:
   enabled: false
@@ -192,7 +192,7 @@ portal:
 requestor:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-elwazi-requestor-creds"
+    dbcreds: "unfunded-africa-requestor-creds"
 
 revproxy:
   enabled: true
@@ -200,7 +200,7 @@ revproxy:
 sheepdog:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-elwazi-sheepdog-creds"
+    dbcreds: "unfunded-africa-sheepdog-creds"
 
 ssjdispatcher:
   enabled: false
@@ -211,5 +211,5 @@ sower:
 wts:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-elwazi-wts-creds"
+    dbcreds: "unfunded-africa-wts-creds"
     createK8sWtsSecret: true
