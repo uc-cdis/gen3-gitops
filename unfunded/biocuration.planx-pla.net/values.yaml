@@ -199,11 +199,6 @@ portal:
               "plural": "Subjects"
             },
             {
-              "graphql": "_experiment_count",
-              "name": "Experiment",
-              "plural": "Experiments"
-            },
-            {
               "graphql": "_aliquot_count",
               "name": "Aliquot",
               "plural": "Aliquots"
@@ -213,10 +208,6 @@ portal:
             {
               "graphql": "_subject_count",
               "name": "Subject"
-            },
-            {
-              "graphql": "_experiment_count",
-              "name": "Experiment"
             },
             {
               "graphql": "_aliquot_count",
