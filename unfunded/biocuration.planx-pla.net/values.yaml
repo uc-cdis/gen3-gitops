@@ -372,11 +372,29 @@ grafana:
   enabled: false
 
 guppy:
-  enabled: false
+  authFilterField: auth_resource_path
+  autoscaling:
+    enabled: false
+    maxReplicas: 4
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 40
+  replicaCount: 4
+  configIndex: scd_array-config
+  enabled: true
+  esEndpoint: http://elasticsearch:9200
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: '2026.03'
+  indices:
+    - index: scd_study
+      type: study
+    - index: scd_subject
+      type: subject
+    - index: scd_data_file
+      type: data_file
 
 hatchery:
   enabled: true
-
   hatchery:
     sidecarContainer:
       cpu-limit: '0.1'
