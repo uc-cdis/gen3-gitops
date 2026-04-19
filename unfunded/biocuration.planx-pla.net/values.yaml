@@ -197,21 +197,12 @@ portal:
               "graphql": "_subject_count",
               "name": "Subject",
               "plural": "Subjects"
-            },
-            {
-              "graphql": "_aliquot_count",
-              "name": "Aliquot",
-              "plural": "Aliquots"
             }
           ],
           "chartCounts": [
             {
               "graphql": "_subject_count",
               "name": "Subject"
-            },
-            {
-              "graphql": "_aliquot_count",
-              "name": "Aliquot"
             }
           ],
           "projectDetails": "boardCounts"
