@@ -67,7 +67,278 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "unfunded-africa-dicom-viewer-creds"
 
-
+etl:
+  etlMapping:
+    mappings:
+      - name: scd_study
+        doc_type: study
+        type: aggregator
+        root: study
+        props:
+          - name: project_id
+          - name: submitter_id
+          - name: data_description
+          - name: study_description
+          - name: full_name
+          - name: short_name
+          - name: study_setup
+          - name: type_of_data
+          - name: study_id
+        joining_props:
+          - index: data_file
+            join_on: _study_id
+            props:
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: object_id
+                src: object_id
+                fn: set
+      - name: scd_subject
+        doc_type: subject
+        type: aggregator
+        root: subject
+        props:
+          - name: submitter_id
+          - name: project_id
+          - name: abo_blood_group
+          - name: add_date
+          - name: added_by
+          - name: age_on_day_of_visit
+          - name: antimalaria_prophylaxis
+          - name: calc_age_on_day_of_visit
+          - name: consent_date
+          - name: consent_file_guid
+          - name: consent_obtained
+          - name: consent_type
+          - name: consented_by
+          - name: date_of_birth
+          - name: date_of_initiation_of_hydr
+          - name: date_today
+          - name: diagnosis_date_known
+          - name: exact_diagnosis_date
+          - name: folic_acid
+          - name: gender
+          - name: marital_status		
+          - name: month_of_diagnosis
+          - name: other_marital_status
+          - name: other_test
+          - name: participant_number
+          - name: penicillin_v_prophylaxis
+          - name: pneumococcal_vacc_uptodate
+          - name: redcap_id
+          - name: research_id
+          - name: scd_number
+          - name: scd_test_result
+          - name: type_of_test
+          - name: using_hydroxyurea
+          - name: year_of_diagnosis
+        parent_props:
+          - path: study[study_submitter_id:submitter_id,data_description,study_description,full_name,short_name,study_setup,type_of_data,study_id]
+        nested_props:
+          - name: subject_lab_results
+            path: lab_result
+            props:
+              - name: billirubin_total_billirubin_conc
+              - name: body_temperature
+              - name: carboxyhemoglobin
+              - name: cbc_hemoglobin
+              - name: cbc_mchc
+              - name: cbc_mean_cell_hemoglobin
+              - name: cbc_mean_cell_volume
+              - name: cbc_platelet_count
+              - name: cbc_redbloodcount
+              - name: cbc_redcelldistributionwidth
+              - name: cbc_whitebloodcount
+              - name: hbf_percent
+              - name: imagemap
+              - name: lactate_dehydrogenase_conc
+              - name: methemoglobin
+              - name: oxyhemoglobin_saturation
+              - name: partial_pressure_co2
+              - name: partial_pressure_of_oxygen
+              - name: respiratory_rate
+              - name: results_of_alanine_at_assay
+              - name: results_of_alkaline_phosphatase_assay
+              - name: results_of_aspartate_at_assay
+              - name: results_of_bilirubin_assay
+              - name: reticulocyte_amount
+              - name: scd_hemoglobin_assay_results
+              - name: serum_creatinine_conc
+              - name: total_hemoglobin
+              - name: urinary_creatinine_conc
+              - name: urinary_microalbumin_conc
+        aggregated_props:
+          - name: _lab_results_count
+            path: lab_result
+            fn: count
+        joining_props:
+          - index: data_file
+            join_on: _subject_id
+            props:
+              - name: data_file_count
+                src: _data_file_id
+                fn: count
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: object_id
+                src: object_id
+                fn: set
+      - name: scd_data_file
+        doc_type: data_file
+        type: collector
+        root: None
+        category: data_file
+        props:
+          - name: source_node
+          - name: project_id
+          - name: submitter_id
+          - name: subject_ids
+          - name: object_id
+          - name: md5sum
+          - name: file_name
+          - name: file_size
+          - name: data_category
+          - name: data_format
+          - name: data_type
+        injecting_props:
+          study:
+            props:
+              - name: _study_id
+                src: id
+                fn: set
+              - name: study_submitter_id
+                src: submitter_id
+                fn: set
+              - name: study_full_name
+                src: full_name
+                fn: set
+              - name: study_short_name
+                src: short_name
+                fn: set
+              - name: study_description
+                src: study_description
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+              - name: subject_submitter_id
+                src: submitter_id
+                fn: set
+              - name: abo_blood_group
+                src: abo_blood_group
+                fn: set
+              - name: add_date
+                src: add_date
+                fn: set
+              - name: added_by
+                src: added_by
+                fn: set
+              - name: age_on_day_of_visit
+                src: age_on_day_of_visit
+                fn: set
+              - name: antimalaria_prophylaxis
+                src: antimalaria_prophylaxis
+                fn: set
+              - name: calc_age_on_day_of_visit
+                src: calc_age_on_day_of_visit
+                fn: set
+              - name: consent_date
+                src: consent_date
+                fn: set
+              - name: consent_file_guid
+                src: consent_file_guid
+                fn: set
+              - name: consent_obtained
+                src: consent_obtained
+                fn: set
+              - name: consent_type
+                src: consent_type
+                fn: set
+              - name: consented_by
+                src: consented_by
+                fn: set
+              - name: date_of_birth
+                src: date_of_birth
+                fn: set
+              - name: date_of_initiation_of_hydr
+                src: date_of_initiation_of_hydr
+                fn: set
+              - name: date_today
+                src: date_today
+                fn: set
+              - name: diagnosis_date_known
+                src: diagnosis_date_known
+                fn: set
+              - name: exact_diagnosis_date
+                src: exact_diagnosis_date
+                fn: set
+              - name: folic_acid
+                src: folic_acid
+                fn: set
+              - name: gender
+                src: gender
+                fn: set
+              - name: marital_status
+                src: marital_status
+                fn: set
+              - name: month_of_diagnosis
+                src: month_of_diagnosis
+                fn: set
+              - name: other_marital_status
+                src: other_marital_status
+                fn: set
+              - name: other_test
+                src: other_test
+                fn: set
+              - name: participant_number
+                src: participant_number
+                fn: set
+              - name: penicillin_v_prophylaxis
+                src: penicillin_v_prophylaxis
+                fn: set
+              - name: pneumococcal_vacc_uptodate
+                src: pneumococcal_vacc_uptodate
+                fn: set
+              - name: redcap_id
+                src: redcap_id
+                fn: set
+              - name: research_id
+                src: research_id
+                fn: set
+              - name: scd_number
+                src: scd_number
+                fn: set
+              - name: scd_test_result
+                src: scd_test_result
+                fn: set
+              - name: type_of_test
+                src: type_of_test
+                fn: set
+              - name: using_hydroxyurea
+                src: using_hydroxyurea
+                fn: set
+              - name: year_of_diagnosis
+                src: year_of_diagnosis
+                fn: set
 fence:
   enabled: true
   serviceAccount:
@@ -353,14 +624,6 @@ portal:
           {
             "tabTitle": "Subjects",
             "charts": {
-              "project_id": {
-                "chartType": "count",
-                "title": "Projects"
-              },
-              "_subject_id": {
-                "chartType": "count",
-                "title": "Subjects"
-              },
               "gender": {
                 "chartType": "pie",
                 "title": "Gender"
