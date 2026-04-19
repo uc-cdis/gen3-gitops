@@ -19,7 +19,7 @@ global:
   environment: "unfunded"
   hostname: "biocuration.planx-pla.net"
   revproxyArn: "arn:aws:acm:us-east-1:662843554732:certificate/fa13f8ee-5abb-4e0d-89a3-153007d591e0"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/sdc_dictionary/0.0.2/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/sdc_dictionary/0.0.3/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
