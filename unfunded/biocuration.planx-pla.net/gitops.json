@@ -1,270 +1,719 @@
       {
-        "graphql": {
-          "boardCounts": [
-            {
-              "graphql": "_subject_count",
-              "name": "Subject",
-              "plural": "Subjects"
+        "explorerConfig": [
+          {
+            "tabTitle": "Studies",
+            "charts": {
+              "Study Setup": {
+                "chartType": "pie",
+                "title": "Study Setup"
+              },
+              "type_of_data": {
+                "chartType": "bar",
+                "title": "Type of Data"
+              }
             },
-            {
-              "graphql": "_study_count",
-              "name": "Study",
-              "plural": "Studies"
+            "filters": {
+              "tabs": [
+                {
+                  "title": "Study",
+                  "searchFields": [
+                      "submitter_id",
+                      "full_name"
+                  ],
+                  "fields":[
+                    "project_id",
+                    "short_name",
+                    "study_setup",
+                    "type_of_data"
+                  ]
+                }
+              ]
             },
-            {
-              "graphql": "_lab_result_count",
-              "name": "Lab Result",
-              "plural": "Lab Results"
-            }
-          ],
-          "chartCounts": [
-            {
-              "graphql": "_subject_count",
-              "name": "Subject"
+            "table": {
+              "enabled": true,
+              "fields": [
+                "project_id",
+                "short_name",
+                "full_name",
+                "study_description",
+                "study_setup",
+                "type_of_data",
+                "data_description",
+                "object_id",
+                "data_category",
+                "data_type",
+                "data_format"
+              ]
             },
-            {
-              "graphql": "_study_count",
-              "name": "Study"
-            },
-            {
-              "graphql": "_lab_result_count",
-              "name": "Lab Result"
-            }
-          ],
-          "projectDetails": "boardCounts"
-        },
-        "components": {
-          "appName": "Sickle Cell Disease Data Commons",
-          "index": {
-            "introduction": {
-              "heading": "Data Commons",
-              "text": "The Sickle Cell Data Commons supports the management, analysis and sharing of sickle cell data for the research community.",
-              "link": "/submission"
+            "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
             },
             "buttons": [
-              {
-                "name": "Define Data Field",
-                "icon": "data-field-define",
-                "body": "The Gen3 Sickle Cell Data Commons defines the data according to selected properties from the SCDO ontology. Please, study the dictionary before you start browsing.",
-                "link": "/DD",
-                "label": "Learn more"
-              },
-              {
-                "name": "Explore Data",
-                "icon": "data-explore",
-                "body": "The Exploration Page facilitates cohort selection using faceted search and offers insights and a clear overview of data.",
-                "link": "/explorer",
-                "label": "Explore data"
-              },
-              {
-                "name": "Access Data",
-                "icon": "data-access",
-                "body": "Use our selected tool to filter out the data you need.",
-                "link": "/query",
-                "label": "Query data"
-              },
-              {
-                "name": "Submit Data",
-                "icon": "data-submit",
-                "body": "Submit Data based on the dictionary.",
-                "link": "/submission",
-                "label": "Submit data"
-              }
-            ]
-          },
-          "navigation": {
-            "title": "Generic Data Commons",
-            "items": [
-              {
-                "icon": "dictionary",
-                "link": "/DD",
-                "color": "#a2a2a2",
-                "name": "Dictionary"
-              },
-              {
-                "icon": "exploration",
-                "link": "/explorer",
-                "color": "#a2a2a2",
-                "name": "Exploration"
-              },
-              {
-                "icon": "query",
-                "link": "/query",
-                "color": "#a2a2a2",
-                "name": "Query"
-              },
-              {
-                "icon": "workspace",
-                "link": "/workspace",
-                "color": "#a2a2a2",
-                "name": "Workspace"
-              },
-              {
-                "icon": "profile",
-                "link": "/identity",
-                "color": "#a2a2a2",
-                "name": "Profile"
-              }
-            ]
-          },
-          "topBar": {
-            "items": [
-              {
-                "icon": "upload",
-                "link": "/submission",
-                "name": "Submit Data"
-              },
-              {
-                "link": "https://docs.gen3.org/gen3-resources/user-guide/",
-                "name": "Documentation"
-              }
-            ]
-          },
-          "login": {
-            "title": "Sickle Cell Disease Data Commons",
-            "subTitle": "Explore, Analyze, and Share Data",
-            "text": "This website supports the management, analysis and sharing of human disease data for the research community and aims to advance basic understanding of the genetic basis of complex traits and accelerate discovery and development of therapies, diagnostic tests, and other technologies for diseases like cancer.",
-            "contact": "If you have any questions about access or the registration process, please contact ",
-            "email": "support@gen3.org"
-          },
-          "certs": {},
-          "footerLogos": [
-            {
-              "src": "/src/img/gen3.png",
-              "href": "https://ctds.uchicago.edu/gen3",
-              "alt": "Gen3 Data Commons"
-            },
-            {
-              "src": "/src/img/createdby.png",
-              "href": "https://ctds.uchicago.edu/",
-              "alt": "Center for Translational Data Science at the University of Chicago"
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_Cases_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Studies_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Studies_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "manifest",
+                    "title": "Download File Manifest for Studies",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_studies_manifest.json"
+                },
+                {
+                    "enabled": false,
+                    "type": "export-to-workspace",
+                    "title": "Export to Workspace",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "study",
+                "nodeCountTitle": "Studies",
+                "fileCountField": "data_file_count",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "submitter_id",
+                        "name": "Study ID"
+                    },
+                    {
+                        "field": "study_description",
+                        "name": "Study Description"
+                    },
+                    {
+                        "field": "study_setup",
+                        "name": "Study Setup"
+                    },
+                    {
+                        "field": "type_of_data",
+                        "name": "Type of Data"
+                    },
+                    {
+                        "field": "data_description",
+                        "name": "Data Description"
+                    },
+                    {
+                        "field": "data_category",
+                        "name": "Data Category"
+                    },
+                    {
+                        "field": "data_type",
+                        "name": "Data Type"
+                    },
+                    {
+                        "field": "data_format",
+                        "name": "Data Format"
+                    }
+                ],
+                "manifestMapping": {
+                    "resourceIndexType": "data_file",
+                    "resourceIdField": "object_id",
+                    "referenceIdFieldInResourceIndex": "_study_id",
+                    "referenceIdFieldInDataIndex": "_study_id"
+                },
+                "accessibleFieldCheckList": [
+                    "project_id"
+                ],
+                "accessibleValidationField": "project_id"
             }
-          ]
-        },
-        "requiredCerts": [],
-        "featureFlags": {
-          "explorer": true,
-          "noIndex": true,
-          "analysis": false,
-          "discovery": true,
-          "discoveryUseAggMDS": false,
-          "studyRegistration": false
-        },
-        "explorerConfig": [
+          },
           {
             "tabTitle": "Subjects",
             "charts": {
-              "gender": {
+              "consent_obtained": {
                 "chartType": "pie",
-                "title": "Gender"
+                "title": "Consent Obtained"
               },
-              "race": {
+              "type_of_test": {
                 "chartType": "bar",
-                "title": "Race"
+                "title": "Type of Test"
               }
             },
             "filters": {
               "tabs": [
                 {
                   "title": "Subject",
+                  "searchFields": [
+                      "submitter_id"
+                  ],
+                  "fields":[
+                    "consent_obtained",
+                    "type_of_test",
+                    "abo_blood_group",
+                    "add_date",
+                    "added_by",
+                    "age_on_day_of_visit",
+                    "antimalaria_prophylaxis",
+                    "calc_age_on_day_of_visit",
+                    "consent_date",
+                    "consent_file_guid",
+                    "consent_obtained",
+                    "consent_type",
+                    "consented_by",
+                    "date_of_birth",
+                    "date_of_initiation_of_hydr",
+                    "date_today",
+                    "diagnosis_date_known",
+                    "exact_diagnosis_date",
+                    "folic_acid",
+                    "gender",
+                    "marital_status",
+                    "month_of_diagnosis",
+                    "other_marital_status",
+                    "other_test",
+                    "participant_number",
+                    "penicillin_v_prophylaxis",
+                    "pneumococcal_vacc_uptodate",
+                    "redcap_id",
+                    "research_id",
+                    "scd_number",
+                    "scd_test_result",
+                    "type_of_test",
+                    "using_hydroxyurea",
+                    "year_of_diagnosis"
+                  ]
+                },
+                {
+                  "title": "Study",
                   "fields":[
                     "project_id",
-                    "gender",
-                    "race",
-                    "ethnicity"
+                    "study_setup",
+                    "short_name",
+                    "type_of_data"
                   ]
-                }
-              ]
-            },
-            "table": {
-              "enabled": false
-            },
-            "dropdowns": {},
-            "buttons": [
-              {
-              "enabled": true,
-              "type": "export-to-workspace",
-              "title": "Export to Workspace",
-              "leftIcon": "datafile",
-              "rightIcon": "download"
-              }
-              ],
-            "guppyConfig": {
-              "dataType": "subject",
-              "nodeCountTitle": "Subjects",
-              "fieldMapping": [
-                { "field": "disease_type", "name": "Disease type" },
-                { "field": "primary_site", "name": "Site where samples were collected"}
-              ],
-              "manifestMapping": {
-                "resourceIndexType": "file",
-                "resourceIdField": "object_id",
-                "referenceIdFieldInResourceIndex": "_subject_id",
-                "referenceIdFieldInDataIndex": "_subject_id"
-              },
-              "accessibleFieldCheckList": ["_subject_id"],
-              "accessibleValidationField": "_subject_id"
-            }
-          },
-          {
-            "tabTitle": "File",
-            "charts": {
-              "data_type": {
-                "chartType": "stackedBar",
-                "title": "File Type"
-              },
-              "data_format": {
-                "chartType": "stackedBar",
-                "title": "File Format"
-              }
-            },
-            "filters": {
-              "tabs": [
+                },
                 {
-                  "title": "File",
-                  "fields": [
-                    "project_id",
+                  "title": "Lab Results",
+                  "fields":[
+                    "lab_result.billirubin_total_billirubin_conc",
+                    "lab_result.body_temperature",
+                    "lab_result.carboxyhemoglobin",
+                    "lab_result.cbc_hemoglobin",
+                    "lab_result.cbc_mchc",
+                    "lab_result.cbc_mean_cell_hemoglobin",
+                    "lab_result.cbc_mean_cell_volume",
+                    "lab_result.cbc_platelet_count",
+                    "lab_result.cbc_redbloodcount",
+                    "lab_result.cbc_redcelldistributionwidth",
+                    "lab_result.cbc_whitebloodcount",
+                    "lab_result.hbf_percent",
+                    "lab_result.imagemap",
+                    "lab_result.lactate_dehydrogenase_conc",
+                    "lab_result.methemoglobin",
+                    "lab_result.oxyhemoglobin_saturation",
+                    "lab_result.partial_pressure_co2",
+                    "lab_result.partial_pressure_of_oxygen",
+                    "lab_result.respiratory_rate",
+                    "lab_result.results_of_alanine_at_assay",
+                    "lab_result.results_of_alkaline_phosphatase_assay",
+                    "lab_result.results_of_aspartate_at_assay",
+                    "lab_result.results_of_bilirubin_assay",
+                    "lab_result.reticulocyte_amount",
+                    "lab_result.scd_hemoglobin_assay_results",
+                    "lab_result.serum_creatinine_conc",
+                    "lab_result.total_hemoglobin",
+                    "lab_result.urinary_creatinine_conc",
+                    "lab_result.urinary_microalbumin_conc"
+                  ]
+                },
+                {
+                  "title": "File Properties",
+                  "fields":[
                     "data_type",
+                    "data_category",
                     "data_format"
                   ]
                 }
               ]
             },
-            "buttons": [
-              {
-              "enabled": true,
-              "type": "export-files-to-workspace",
-              "title": "Export to Workspace",
-              "leftIcon": "datafile",
-              "rightIcon": "download"
-              }
-            ],
             "table": {
               "enabled": true,
               "fields": [
                 "project_id",
-                "file_name",
-                "file_size",
-                "object_id"
+                "submitter_id",
+                "study_setup",
+                "short_name",
+                "type_of_data",
+                "consent_obtained",
+                "type_of_test",
+                "abo_blood_group",
+                "add_date",
+                "added_by",
+                "age_on_day_of_visit",
+                "antimalaria_prophylaxis",
+                "calc_age_on_day_of_visit",
+                "consent_date",
+                "consent_file_guid",
+                "consent_obtained",
+                "consent_type",
+                "consented_by",
+                "date_of_birth",
+                "date_of_initiation_of_hydr",
+                "date_today",
+                "diagnosis_date_known",
+                "exact_diagnosis_date",
+                "folic_acid",
+                "gender",
+                "marital_status",
+                "month_of_diagnosis",
+                "other_marital_status",
+                "other_test",
+                "participant_number",
+                "penicillin_v_prophylaxis",
+                "pneumococcal_vacc_uptodate",
+                "redcap_id",
+                "research_id",
+                "scd_number",
+                "scd_test_result",
+                "type_of_test",
+                "using_hydroxyurea",
+                "year_of_diagnosis",
+                "lab_result.billirubin_total_billirubin_conc",
+                "lab_result.body_temperature",
+                "lab_result.carboxyhemoglobin",
+                "lab_result.cbc_hemoglobin",
+                "lab_result.cbc_mchc",
+                "lab_result.cbc_mean_cell_hemoglobin",
+                "lab_result.cbc_mean_cell_volume",
+                "lab_result.cbc_platelet_count",
+                "lab_result.cbc_redbloodcount",
+                "lab_result.cbc_redcelldistributionwidth",
+                "lab_result.cbc_whitebloodcount",
+                "lab_result.hbf_percent",
+                "lab_result.imagemap",
+                "lab_result.lactate_dehydrogenase_conc",
+                "lab_result.methemoglobin",
+                "lab_result.oxyhemoglobin_saturation",
+                "lab_result.partial_pressure_co2",
+                "lab_result.partial_pressure_of_oxygen",
+                "lab_result.respiratory_rate",
+                "lab_result.results_of_alanine_at_assay",
+                "lab_result.results_of_alkaline_phosphatase_assay",
+                "lab_result.results_of_aspartate_at_assay",
+                "lab_result.results_of_bilirubin_assay",
+                "lab_result.reticulocyte_amount",
+                "lab_result.scd_hemoglobin_assay_results",
+                "lab_result.serum_creatinine_conc",
+                "lab_result.total_hemoglobin",
+                "lab_result.urinary_creatinine_conc",
+                "lab_result.urinary_microalbumin_conc"
               ]
             },
-            "dropdowns": {},
+            "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Subjects_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Subjects_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Subjects_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "manifest",
+                    "title": "Download File Manifest for Subjects",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_Subjects_manifest.json"
+                },
+                {
+                    "enabled": false,
+                    "type": "export-to-workspace",
+                    "title": "Export to Workspace",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download"
+                }
+            ],
+            "loginForDownload": true,
             "guppyConfig": {
-              "dataType": "file",
-              "fieldMapping": [
-                { "field": "object_id", "name": "GUID" }
-              ],
-              "nodeCountTitle": "Files",
-              "manifestMapping": {
-                "resourceIndexType": "subject",
-                "resourceIdField": "_subject_id",
-                "referenceIdFieldInResourceIndex": "object_id",
-                "referenceIdFieldInDataIndex": "object_id"
+                "dataType": "subject",
+                "nodeCountTitle": "Subjects",
+                "fileCountField": "data_file_count",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "submitter_id",
+                        "name": "Subject ID"
+                    },
+                    {
+                        "field": "study_description",
+                        "name": "Study Description"
+                    },
+                    {
+                        "field": "study_setup",
+                        "name": "Study Setup"
+                    },
+                    {
+                        "field": "type_of_data",
+                        "name": "Type of Data"
+                    },
+                    {
+                        "field": "data_description",
+                        "name": "Data Description"
+                    },
+                    {
+                        "field": "data_category",
+                        "name": "Data Category"
+                    },
+                    {
+                        "field": "data_type",
+                        "name": "Data Type"
+                    },
+                    {
+                        "field": "data_format",
+                        "name": "Data Format"
+                    },
+                    {
+                        "field": "consent_obtained",
+                        "name": "Consent Obtained"
+                    },
+                    {
+                        "field": "type_of_test",
+                        "name": "Type of Test"
+                    },
+                    {
+                        "field": "abo_blood_group",
+                        "name": "ABO Blood Group"
+                    },
+                    {
+                        "field": "add_date",
+                        "name": "Add Date"
+                    },
+                    {
+                        "field": "added_by",
+                        "name": "Added By"
+                    },
+                    {
+                        "field": "age_on_day_of_visit",
+                        "name": "Age on Day of Visit"
+                    },
+                    {
+                        "field": "antimalaria_prophylaxis",
+                        "name": "Antimalaria Prophylaxis"
+                    },
+                    {
+                        "field": "calc_age_on_day_of_visit",
+                        "name": "Calculated Age on Day of Visit"
+                    },
+                    {
+                        "field": "consent_date",
+                        "name": "Consent Date"
+                    },
+                    {
+                        "field": "consent_file_guid",
+                        "name": "Consent File GUID"
+                    },
+                    {
+                        "field": "consent_type",
+                        "name": "Consent Type"
+                    },
+                    {
+                        "field": "consented_by",
+                        "name": "Consented By"
+                    },
+                    {
+                        "field": "date_of_birth",
+                        "name": "Date of Birth"
+                    },
+                    {
+                        "field": "date_of_initiation_of_hydr",
+                        "name": "Date of Initiation of Hydroxyurea"
+                    },
+                    {
+                        "field": "date_today",
+                        "name": 	"Date Today"
+                    },
+                    {
+                        "field": 	"diagnosis_date_known",
+                        "name": 	"Diagnosis Date Known"
+                    },
+                    {
+                        "field": 	"exact_diagnosis_date",
+                        "name": 	"Exact Diagnosis Date"
+                    },
+                    {
+                        "field": 	"folic_acid",
+                        "name": 	"Folic Acid"
+                    }
+                ],
+                "manifestMapping": {
+                    "resourceIndexType": "data_file",
+                    "resourceIdField": "object_id",
+                    "referenceIdFieldInResourceIndex": "_subject_id",
+                    "referenceIdFieldInDataIndex": "_subject_id"
+                },
+                "accessibleFieldCheckList": [
+                    "project_id"
+                ],
+                "accessibleValidationField": "project_id"
+            }
+          },
+          {
+            "tabTitle": "Data Files",
+            "charts": {
+              "data_category": {
+                "chartType": "pie",
+                "title": "Data Category"
               },
-              "accessibleFieldCheckList": ["_subject_id"],
-              "accessibleValidationField": "_subject_id",
-              "downloadAccessor": "object_id"
+              "data_type": {
+                "chartType": "pie",
+                "title": "Data Type"
+              },
+              "data_format": {
+                "chartType": "pie",
+                "title": "Data Format"
+              }
+            },
+            "filters": {
+                "tabs": [
+                    {
+                        "title": "File Properties",
+                        "searchFields": [
+                            "file_name",
+                            "object_id"
+                        ],
+                        "fields": [
+                            "source_node",
+                            "data_format",
+                            "data_category",
+                            "data_type"
+                        ]
+                    },
+                    {
+                        "title": "Study Properties",
+                        "searchFields": [
+                            "study_description",
+                            "data_description"
+                        ],
+                        "fields": [
+                            "project_id",
+                            "study_setup",
+                            "type_of_data"
+                        ]
+                    },
+                    {
+                        "title": "Subject Properties",
+                        "fields": [
+                            "consent_obtained",
+                            "type_of_test",
+                            "abo_blood_group",
+                            "age_on_day_of_visit",
+                            "antimalaria_prophylaxis",
+                            "calc_age_on_day_of_visit",
+                            "consent_type",
+                            "consented_by",
+                            "date_of_birth",
+                            "date_of_initiation_of_hydr",
+                            "diagnosis_date_known",
+                            "exact_diagnosis_date",
+                            "folic_acid",
+                            "gender",
+                            "marital_status",
+                            "month_of_diagnosis",
+                            "other_marital_status",
+                            "other_test",
+                            "participant_number",
+                            "penicillin_v_prophylaxis",
+                            "pneumococcal_vacc_uptodate",
+                            "scd_test_result",
+                            "using_hydroxyurea",
+                            "year_of_diagnosis"
+                        ]
+                    }
+                ]
+            },
+            "table": {
+                "enabled": true,
+                "fields": [
+                    "project_id",
+                    "source_node",
+                    "file_name",
+                    "object_id",
+                    "data_format",
+                    "data_category",
+                    "data_type",
+                    "study_description",
+                    "data_description",
+                    "study_setup",
+                    "type_of_data",
+                    "consent_obtained",
+                    "type_of_test",
+                    "abo_blood_group",
+                    "age_on_day_of_visit",
+                    "antimalaria_prophylaxis",
+                    "calc_age_on_day_of_visit",
+                    "consent_type",
+                    "consented_by",
+                    "date_of_birth",
+                    "date_of_initiation_of_hydr",
+                    "diagnosis_date_known",
+                    "exact_diagnosis_date",
+                    "folic_acid",
+                    "gender",
+                    "marital_status",
+                    "month_of_diagnosis",
+                    "other_marital_status",
+                    "other_test",
+                    "participant_number",
+                    "penicillin_v_prophylaxis",
+                    "pneumococcal_vacc_uptodate",
+                    "scd_test_result",
+                    "using_hydroxyurea",
+                    "year_of_diagnosis"
+                ]
+            },
+            "dropdowns": {
+                "download-table": {
+                    "title": "Download Table"
+                }
+            },
+            "buttons": [
+                {
+                    "enabled": true,
+                    "type": "data-json",
+                    "title": "JSON",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_data_files_table.json"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-tsv",
+                    "title": "TSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_data_files_table.tsv"
+                },
+                {
+                    "enabled": true,
+                    "type": "data-csv",
+                    "title": "CSV",
+                    "dropdownId": "download-table",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_data_files_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "file-manifest",
+                    "title": "Download File Manifest",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "SCD_data_files_manifest.json"
+                },
+                {
+                    "enabled": false,
+                    "type": "export-to-workspace",
+                    "title": "Export to Workspace",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download"
+                }
+            ],
+            "loginForDownload": true,
+            "guppyConfig": {
+                "dataType": "data_file",
+                "nodeCountTitle": "Data Files",
+                "fieldMapping": [
+                    {
+                        "field": "project_id",
+                        "name": "Project ID"
+                    },
+                    {
+                        "field": "source_node",
+                        "name": "Source Node"
+                    },
+                    {
+                        "field": "file_name",
+                        "name": "File Name"
+                    },
+                    {
+                        "field": "object_id",
+                        "name": "Object ID"
+                    },
+                    {
+                        "field": "data_format",
+                        "name": "Data Format"
+                    },
+                    {
+                        "field": "data_category",
+                        "name": "Data Category"
+                    },
+                    {
+                        "field": "data_type",
+                        "name": "Data Type"
+                    }
+                  ],
+                  "manifestMapping": {
+                      "referenceIdFieldInResourceIndex": "object_id",
+                      "referenceIdFieldInDataIndex": "object_id"
+                  },
+                  "downloadAccessor": "object_id",
+                  "accessibleFieldCheckList": [
+                      "project_id"
+                  ],
+                  "accessibleValidationField": "project_id"
             }
           }
-        ]
-      }  
+       ]
+}
