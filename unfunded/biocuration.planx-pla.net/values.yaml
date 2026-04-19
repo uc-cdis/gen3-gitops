@@ -197,36 +197,54 @@ portal:
               "graphql": "_subject_count",
               "name": "Subject",
               "plural": "Subjects"
+            },
+            {
+              "graphql": "_study_count",
+              "name": "Study",
+              "plural": "Studies"
+            },
+            {
+              "graphql": "_lab_result_count",
+              "name": "Lab Result",
+              "plural": "Lab Results"
             }
           ],
           "chartCounts": [
             {
               "graphql": "_subject_count",
               "name": "Subject"
+            },
+            {
+              "graphql": "_study_count",
+              "name": "Study"
+            },
+            {
+              "graphql": "_lab_result_count",
+              "name": "Lab Result"
             }
           ],
           "projectDetails": "boardCounts"
         },
         "components": {
-          "appName": "Generic Data Commons Portal",
+          "appName": "Sickle Cell Disease Data Commons",
           "index": {
             "introduction": {
               "heading": "Data Commons",
-              "text": "The Generic Data Commons supports the management, analysis and sharing of data for the research community.",
+              "text": "The Sickle Cell Data Commons supports the management, analysis and sharing of sickle cell data for the research community.",
               "link": "/submission"
             },
             "buttons": [
               {
                 "name": "Define Data Field",
                 "icon": "data-field-define",
-                "body": "The Generic Data Commons define the data in a general way. Please study the dictionary before you start browsing.",
+                "body": "The Gen3 Sickle Cell Data Commons defines the data according to selected properties from the SCDO ontology. Please, study the dictionary before you start browsing.",
                 "link": "/DD",
                 "label": "Learn more"
               },
               {
                 "name": "Explore Data",
                 "icon": "data-explore",
-                "body": "The Exploration Page gives you insights and a clear overview under selected factors.",
+                "body": "The Exploration Page facilitates cohort selection using faceted search and offers insights and a clear overview of data.",
                 "link": "/explorer",
                 "label": "Explore data"
               },
@@ -295,7 +313,7 @@ portal:
             ]
           },
           "login": {
-            "title": "Generic Data Commons",
+            "title": "Sickle Cell Disease Data Commons",
             "subTitle": "Explore, Analyze, and Share Data",
             "text": "This website supports the management, analysis and sharing of human disease data for the research community and aims to advance basic understanding of the genetic basis of complex traits and accelerate discovery and development of therapies, diagnostic tests, and other technologies for diseases like cancer.",
             "contact": "If you have any questions about access or the registration process, please contact ",
@@ -320,13 +338,13 @@ portal:
           "explorer": true,
           "noIndex": true,
           "analysis": false,
-          "discovery": false,
+          "discovery": true,
           "discoveryUseAggMDS": false,
           "studyRegistration": false
         },
         "explorerConfig": [
           {
-            "tabTitle": "Data",
+            "tabTitle": "Subjects",
             "charts": {
               "project_id": {
                 "chartType": "count",
