@@ -188,6 +188,13 @@ pidgin:
 
 portal:
   enabled: true
+  customConfig:
+    enabled: true
+    dir: unfunded/biocuration.planx-pla.net/portal/
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: feat/africa-biocommons
+
+
   gitops:
     json: |
       {
