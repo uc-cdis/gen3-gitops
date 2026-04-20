@@ -69,32 +69,32 @@
           "label": "Discover Projects"
         },
         {
-        "name": "Data Model",
-        "icon": "data-field-define",
-        "body": "The Gen3 Sickle Cell Data Commons defines the data according to selected properties from the SCDO ontology. Please, study the dictionary before you start browsing.",
-        "link": "/DD",
-        "label": "Data Model"
+            "name": "Data Model",
+            "icon": "data-field-define",
+            "body": "The Gen3 Sickle Cell Data Commons defines the data according to selected properties from the SCDO ontology. Please, study the dictionary before you start browsing.",
+            "link": "/DD",
+            "label": "Data Model"
         },
         {
-        "name": "Explore Data",
-        "icon": "data-explore",
-        "body": "The Exploration Page facilitates cohort selection using faceted search and offers insights and a clear overview of data.",
-        "link": "/explorer",
-        "label": "Explore data"
+            "name": "Explore Data",
+            "icon": "data-explore",
+            "body": "The Exploration Page facilitates cohort selection using faceted search and offers insights and a clear overview of data.",
+            "link": "/explorer",
+            "label": "Explore data"
         },
         {
-        "name": "Access Data",
-        "icon": "data-access",
-        "body": "Use our selected tool to filter out the data you need.",
-        "link": "/query",
-        "label": "Query data"
+            "name": "Access Data",
+            "icon": "data-access",
+            "body": "Use our selected tool to filter out the data you need.",
+            "link": "/query",
+            "label": "Query data"
         },
         {
-        "name": "Submit Data",
-        "icon": "data-submit",
-        "body": "Submit Data based on the dictionary.",
-        "link": "/submission",
-        "label": "Submit data"
+            "name": "Submit Data",
+            "icon": "data-submit",
+            "body": "Submit Data based on the dictionary.",
+            "link": "/submission",
+            "label": "Submit data"
         }
     ]
     },
@@ -112,38 +112,43 @@
             "icon": "dictionary",
             "link": "/DD",
             "color": "#a2a2a2",
-            "name": "Dictionary"
+            "name": "Dictionary",
+            "tooltip": "Study the data dictionary to understand the structure and meaning of the data and execute powerful queries of the data."
         },
         {
             "icon": "exploration",
             "link": "/explorer",
             "color": "#a2a2a2",
-            "name": "Exploration"
+            "name": "Exploration",
+            "tooltip": "Explore the data and perform cohort selection with faceted search tools to gain insights and a clear overview of the data. Export data tables and generate file manifests to access selected data files."
         },
         {
             "icon": "query",
             "link": "/query",
             "color": "#a2a2a2",
-            "name": "Query"
+            "name": "Query",
+            "tooltip": "Use the graphiQL interface to construct and run powerful queries of the data."
         },
         {
           "name": "Example Analysis",
           "link": "/resource-browser",
           "icon": "bar-chart",
           "color": "#a2a2a2",
-          "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data discovered in the eLwazi Data Commons by running a static tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
+          "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data by viewing and running tutorial notebooks. Use these examples as a launching point for your own custom analyses."
         },
         {
             "icon": "workspace",
             "link": "/workspace",
             "color": "#a2a2a2",
-            "name": "Workspace"
+            "name": "Workspace",
+            "tooltip": "Launch a personalized analysis workspace in the cloud with access to the data and a suite of analysis tools to analyze the data and generate insights."
         },
         {
             "icon": "profile",
             "link": "/identity",
             "color": "#a2a2a2",
-            "name": "Profile"
+            "name": "Profile",
+            "tooltip": "View and edit your user profile, manage your credentials, and see your authorization to compute and data resources."
         }
     ]
     },
