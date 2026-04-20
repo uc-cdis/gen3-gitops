@@ -33,6 +33,7 @@ global:
 
 ambassador:
   enabled: true
+  jupyterNamespace: jupyter-pods-africa
 
 arborist:
   enabled: true
