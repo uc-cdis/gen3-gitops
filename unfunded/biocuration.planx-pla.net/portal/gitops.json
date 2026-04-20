@@ -12,7 +12,7 @@
         "plural": "Studies"
     },
     {
-        "graphql": "_subject_lab_results_count",
+        "graphql": "_lab_results_count",
         "name": "Lab Result",
         "plural": "Lab Results"
     }
@@ -27,7 +27,7 @@
         "name": "Study"
     },
     {
-        "graphql": "_subject_lab_results_count",
+        "graphql": "_lab_results_count",
         "name": "Lab Result"
     }
     ],
