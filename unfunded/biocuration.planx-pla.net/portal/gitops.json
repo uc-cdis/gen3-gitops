@@ -52,6 +52,10 @@
         }
     ]
 },
+"useArboristUI": true,
+"showArboristAuthzOnProfile": true,
+"showFenceAuthzOnProfile": true,
+"hideSubmissionIfIneligible": true,
 "components": {
     "appName": "Sickle Cell Disease jData Commons",
     "index": {
