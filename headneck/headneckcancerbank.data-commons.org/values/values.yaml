@@ -45,7 +45,7 @@ ambassador:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
-  replicaCount: 2
+  replicaCount: 3
 
 arborist:
   # Lower cost
