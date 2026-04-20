@@ -58,6 +58,14 @@ aws-es-proxy:
   externalSecrets:
     awsCreds: "unfunded-africa-aws-es-proxy-creds"
 
+dashboard:
+  dashboardConfig:
+    bucket: dashboard-662843554732-elwazi-demo-gen3
+    prefix: elwazi-demo.planx-pla.net
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--elwazi--dashboard
+
 dicom-server:
   enabled: false
   externalSecrets:
