@@ -12,7 +12,7 @@
         "plural": "Studies"
     },
     {
-        "graphql": "_lab_result_count",
+        "graphql": "_subject_lab_results_count",
         "name": "Lab Result",
         "plural": "Lab Results"
     }
@@ -27,7 +27,7 @@
         "name": "Study"
     },
     {
-        "graphql": "_lab_result_count",
+        "graphql": "_subject_lab_results_count",
         "name": "Lab Result"
     }
     ],
@@ -154,13 +154,13 @@
     {
     "tabTitle": "Studies",
     "charts": {
-        "Study Setup": {
-        "chartType": "pie",
-        "title": "Study Setup"
+        "study_setup": {
+            "chartType": "pie",
+            "title": "Study Setup"
         },
         "type_of_data": {
-        "chartType": "bar",
-        "title": "Type of Data"
+            "chartType": "bar",
+            "title": "Type of Data"
         }
     },
     "filters": {
@@ -172,10 +172,10 @@
                 "full_name"
             ],
             "fields":[
-            "project_id",
-            "short_name",
-            "study_setup",
-            "type_of_data"
+                "project_id",
+                "short_name",
+                "study_setup",
+                "type_of_data"
             ]
         }
         ]
@@ -183,17 +183,17 @@
     "table": {
         "enabled": true,
         "fields": [
-        "project_id",
-        "short_name",
-        "full_name",
-        "study_description",
-        "study_setup",
-        "type_of_data",
-        "data_description",
-        "object_id",
-        "data_category",
-        "data_type",
-        "data_format"
+            "project_id",
+            "short_name",
+            "full_name",
+            "study_description",
+            "study_setup",
+            "type_of_data",
+            "data_description",
+            "object_id",
+            "data_category",
+            "data_type",
+            "data_format"
         ]
     },
     "dropdowns": {
@@ -304,12 +304,12 @@
     "tabTitle": "Subjects",
     "charts": {
         "consent_obtained": {
-        "chartType": "pie",
-        "title": "Consent Obtained"
+            "chartType": "pie",
+            "title": "Consent Obtained"
         },
         "type_of_test": {
-        "chartType": "bar",
-        "title": "Type of Test"
+            "chartType": "bar",
+            "title": "Type of Test"
         }
     },
     "filters": {
@@ -320,6 +320,103 @@
                 "submitter_id"
             ],
             "fields":[
+                "consent_obtained",
+                "type_of_test",
+                "abo_blood_group",
+                "add_date",
+                "added_by",
+                "age_on_day_of_visit",
+                "antimalaria_prophylaxis",
+                "calc_age_on_day_of_visit",
+                "consent_date",
+                "consent_file_guid",
+                "consent_obtained",
+                "consent_type",
+                "consented_by",
+                "date_of_birth",
+                "date_of_initiation_of_hydr",
+                "date_today",
+                "diagnosis_date_known",
+                "exact_diagnosis_date",
+                "folic_acid",
+                "gender",
+                "marital_status",
+                "month_of_diagnosis",
+                "other_marital_status",
+                "other_test",
+                "participant_number",
+                "penicillin_v_prophylaxis",
+                "pneumococcal_vacc_uptodate",
+                "redcap_id",
+                "research_id",
+                "scd_number",
+                "scd_test_result",
+                "type_of_test",
+                "using_hydroxyurea",
+                "year_of_diagnosis"
+            ]
+        },
+        {
+            "title": "Study",
+            "fields":[
+                "project_id",
+                "study_setup",
+                "short_name",
+                "type_of_data"
+            ]
+        },
+        {
+            "title": "Lab Results",
+            "fields":[
+                "subject_lab_results.billirubin_total_billirubin_conc",
+                "subject_lab_results.body_temperature",
+                "subject_lab_results.carboxyhemoglobin",
+                "subject_lab_results.cbc_hemoglobin",
+                "subject_lab_results.cbc_mchc",
+                "subject_lab_results.cbc_mean_cell_hemoglobin",
+                "subject_lab_results.cbc_mean_cell_volume",
+                "subject_lab_results.cbc_platelet_count",
+                "subject_lab_results.cbc_redbloodcount",
+                "subject_lab_results.cbc_redcelldistributionwidth",
+                "subject_lab_results.cbc_whitebloodcount",
+                "subject_lab_results.hbf_percent",
+                "subject_lab_results.imagemap",
+                "subject_lab_results.lactate_dehydrogenase_conc",
+                "subject_lab_results.methemoglobin",
+                "subject_lab_results.oxyhemoglobin_saturation",
+                "subject_lab_results.partial_pressure_co2",
+                "subject_lab_results.partial_pressure_of_oxygen",
+                "subject_lab_results.respiratory_rate",
+                "subject_lab_results.results_of_alanine_at_assay",
+                "subject_lab_results.results_of_alkaline_phosphatase_assay",
+                "subject_lab_results.results_of_aspartate_at_assay",
+                "subject_lab_results.results_of_bilirubin_assay",
+                "subject_lab_results.reticulocyte_amount",
+                "subject_lab_results.scd_hemoglobin_assay_results",
+                "subject_lab_results.serum_creatinine_conc",
+                "subject_lab_results.total_hemoglobin",
+                "subject_lab_results.urinary_creatinine_conc",
+                "subject_lab_results.urinary_microalbumin_conc"
+            ]
+        },
+        {
+            "title": "File Properties",
+            "fields":[
+                "data_type",
+                "data_category",
+                "data_format"
+            ]
+        }
+        ]
+    },
+    "table": {
+        "enabled": true,
+        "fields": [
+            "project_id",
+            "submitter_id",
+            "study_setup",
+            "short_name",
+            "type_of_data",
             "consent_obtained",
             "type_of_test",
             "abo_blood_group",
@@ -353,133 +450,36 @@
             "scd_test_result",
             "type_of_test",
             "using_hydroxyurea",
-            "year_of_diagnosis"
-            ]
-        },
-        {
-            "title": "Study",
-            "fields":[
-            "project_id",
-            "study_setup",
-            "short_name",
-            "type_of_data"
-            ]
-        },
-        {
-            "title": "Lab Results",
-            "fields":[
-            "lab_result.billirubin_total_billirubin_conc",
-            "lab_result.body_temperature",
-            "lab_result.carboxyhemoglobin",
-            "lab_result.cbc_hemoglobin",
-            "lab_result.cbc_mchc",
-            "lab_result.cbc_mean_cell_hemoglobin",
-            "lab_result.cbc_mean_cell_volume",
-            "lab_result.cbc_platelet_count",
-            "lab_result.cbc_redbloodcount",
-            "lab_result.cbc_redcelldistributionwidth",
-            "lab_result.cbc_whitebloodcount",
-            "lab_result.hbf_percent",
-            "lab_result.imagemap",
-            "lab_result.lactate_dehydrogenase_conc",
-            "lab_result.methemoglobin",
-            "lab_result.oxyhemoglobin_saturation",
-            "lab_result.partial_pressure_co2",
-            "lab_result.partial_pressure_of_oxygen",
-            "lab_result.respiratory_rate",
-            "lab_result.results_of_alanine_at_assay",
-            "lab_result.results_of_alkaline_phosphatase_assay",
-            "lab_result.results_of_aspartate_at_assay",
-            "lab_result.results_of_bilirubin_assay",
-            "lab_result.reticulocyte_amount",
-            "lab_result.scd_hemoglobin_assay_results",
-            "lab_result.serum_creatinine_conc",
-            "lab_result.total_hemoglobin",
-            "lab_result.urinary_creatinine_conc",
-            "lab_result.urinary_microalbumin_conc"
-            ]
-        },
-        {
-            "title": "File Properties",
-            "fields":[
-            "data_type",
-            "data_category",
-            "data_format"
-            ]
-        }
-        ]
-    },
-    "table": {
-        "enabled": true,
-        "fields": [
-        "project_id",
-        "submitter_id",
-        "study_setup",
-        "short_name",
-        "type_of_data",
-        "consent_obtained",
-        "type_of_test",
-        "abo_blood_group",
-        "add_date",
-        "added_by",
-        "age_on_day_of_visit",
-        "antimalaria_prophylaxis",
-        "calc_age_on_day_of_visit",
-        "consent_date",
-        "consent_file_guid",
-        "consent_obtained",
-        "consent_type",
-        "consented_by",
-        "date_of_birth",
-        "date_of_initiation_of_hydr",
-        "date_today",
-        "diagnosis_date_known",
-        "exact_diagnosis_date",
-        "folic_acid",
-        "gender",
-        "marital_status",
-        "month_of_diagnosis",
-        "other_marital_status",
-        "other_test",
-        "participant_number",
-        "penicillin_v_prophylaxis",
-        "pneumococcal_vacc_uptodate",
-        "redcap_id",
-        "research_id",
-        "scd_number",
-        "scd_test_result",
-        "type_of_test",
-        "using_hydroxyurea",
-        "year_of_diagnosis",
-        "lab_result.billirubin_total_billirubin_conc",
-        "lab_result.body_temperature",
-        "lab_result.carboxyhemoglobin",
-        "lab_result.cbc_hemoglobin",
-        "lab_result.cbc_mchc",
-        "lab_result.cbc_mean_cell_hemoglobin",
-        "lab_result.cbc_mean_cell_volume",
-        "lab_result.cbc_platelet_count",
-        "lab_result.cbc_redbloodcount",
-        "lab_result.cbc_redcelldistributionwidth",
-        "lab_result.cbc_whitebloodcount",
-        "lab_result.hbf_percent",
-        "lab_result.imagemap",
-        "lab_result.lactate_dehydrogenase_conc",
-        "lab_result.methemoglobin",
-        "lab_result.oxyhemoglobin_saturation",
-        "lab_result.partial_pressure_co2",
-        "lab_result.partial_pressure_of_oxygen",
-        "lab_result.respiratory_rate",
-        "lab_result.results_of_alanine_at_assay",
-        "lab_result.results_of_alkaline_phosphatase_assay",
-        "lab_result.results_of_aspartate_at_assay",
-        "lab_result.results_of_bilirubin_assay",
-        "lab_result.reticulocyte_amount",
-        "lab_result.scd_hemoglobin_assay_results",
-        "lab_result.serum_creatinine_conc",
-        "lab_result.total_hemoglobin",
-        "lab_result.urinary_creatinine_conc",
-        "lab_result.urinary_microalbumin_conc"
+            "year_of_diagnosis",
+            "subject_lab_results.billirubin_total_billirubin_conc",
+            "subject_lab_results.body_temperature",
+            "subject_lab_results.carboxyhemoglobin",
+            "subject_lab_results.cbc_hemoglobin",
+            "subject_lab_results.cbc_mchc",
+            "subject_lab_results.cbc_mean_cell_hemoglobin",
+            "subject_lab_results.cbc_mean_cell_volume",
+            "subject_lab_results.cbc_platelet_count",
+            "subject_lab_results.cbc_redbloodcount",
+            "subject_lab_results.cbc_redcelldistributionwidth",
+            "subject_lab_results.cbc_whitebloodcount",
+            "subject_lab_results.hbf_percent",
+            "subject_lab_results.imagemap",
+            "subject_lab_results.lactate_dehydrogenase_conc",
+            "subject_lab_results.methemoglobin",
+            "subject_lab_results.oxyhemoglobin_saturation",
+            "subject_lab_results.partial_pressure_co2",
+            "subject_lab_results.partial_pressure_of_oxygen",
+            "subject_lab_results.respiratory_rate",
+            "subject_lab_results.results_of_alanine_at_assay",
+            "subject_lab_results.results_of_alkaline_phosphatase_assay",
+            "subject_lab_results.results_of_aspartate_at_assay",
+            "subject_lab_results.results_of_bilirubin_assay",
+            "subject_lab_results.reticulocyte_amount",
+            "subject_lab_results.scd_hemoglobin_assay_results",
+            "subject_lab_results.serum_creatinine_conc",
+            "subject_lab_results.total_hemoglobin",
+            "subject_lab_results.urinary_creatinine_conc",
+            "subject_lab_results.urinary_microalbumin_conc"
         ]
     },
     "dropdowns": {
