@@ -59,6 +59,7 @@ aws-es-proxy:
     awsCreds: "unfunded-africa-aws-es-proxy-creds"
 
 dashboard:
+  enabled: true
   dashboardConfig:
     bucket: dashboard-662843554732-elwazi-demo-gen3
     prefix: elwazi-demo.planx-pla.net
