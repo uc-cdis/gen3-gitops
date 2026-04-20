@@ -791,7 +791,21 @@ sheepdog:
     dbcreds: "unfunded-africa-sheepdog-creds"
 
 ssjdispatcher:
-  enabled: false
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
+    tag: '2026.04'
+  indexing: quay.io/cdis/indexs3client:2026.04
+  externalSecrets:
+    credsFile: africa-ssjdispatcher-creds
+  serviceAccountName: ssjdispatcher-service-account
+  serviceAccount:
+    create: true
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--elwazi--ssj
+  jobServiceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--elwazi--ssj-job
 
 sower:
   enabled: false
