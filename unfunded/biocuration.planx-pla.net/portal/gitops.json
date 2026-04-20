@@ -662,16 +662,16 @@
     "tabTitle": "Data Files",
     "charts": {
         "data_category": {
-        "chartType": "pie",
-        "title": "Data Category"
+            "chartType": "pie",
+            "title": "Data Category"
         },
         "data_type": {
-        "chartType": "pie",
-        "title": "Data Type"
+            "chartType": "pie",
+            "title": "Data Type"
         },
         "data_format": {
-        "chartType": "pie",
-        "title": "Data Format"
+            "chartType": "pie",
+            "title": "Data Format"
         }
     },
     "filters": {

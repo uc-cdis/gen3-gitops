@@ -236,6 +236,15 @@ etl:
               - name: study_description
                 src: study_description
                 fn: set
+              - name: data_description
+                src: data_description
+                fn: set
+              - name: study_setup
+                src: study_setup
+                fn: set
+              - name: type_of_data
+                src: type_of_data
+                fn: set
           subject:
             props:
               - name: _subject_id
