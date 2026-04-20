@@ -73,6 +73,10 @@ gen3-workflow:
   replicaCount: 2
   image:
     tag: feat_s3-endpoint2
+  resources:
+    requests:
+      cpu: 2
+      memory: 850Mi
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
