@@ -85,6 +85,9 @@ karpenter-crds:
         operator: In
         values:
           - amd64
+      - key: "karpenter.k8s.aws/instance-generation"
+        operator: Gte
+        values: ["3"]
       - key: karpenter.k8s.aws/instance-memory
         operator: Gt
         values:
