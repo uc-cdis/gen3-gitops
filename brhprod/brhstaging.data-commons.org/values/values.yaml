@@ -74,6 +74,8 @@ gen3-workflow:
   image:
     tag: feat_s3-endpoint2
   resources:
+    limits:
+      cpu: 2
     requests:
       cpu: 2
       memory: 850Mi
