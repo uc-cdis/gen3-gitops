@@ -70,9 +70,13 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
-  replicaCount: 2
+  replicaCount: 3
   image:
     tag: feat_s3-endpoint2
+  resources:
+    requests:
+      cpu: 2
+      memory: 850Mi
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
@@ -102,12 +106,6 @@ funnel:
       JobsNamespace: "workflow-pods-brhstaging-helm"
       ReconcileRate: 120s
       ReplicaCount: 2
-      NodeSelector: { "role": "workflow" }
-      Tolerations:
-        - Key: "role"
-          Operator: "Equal"
-          Value: "workflow"
-          Effect: "NoSchedule"
       Executor:
         restartPolicy: OnFailure
         backoffLimit: 0
