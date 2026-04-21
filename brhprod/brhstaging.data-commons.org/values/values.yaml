@@ -70,9 +70,15 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
-  replicaCount: 2
+  replicaCount: 3
   image:
-    tag: master
+    tag: feat_s3-endpoint2
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 2
+      memory: 850Mi
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow"
@@ -96,21 +102,12 @@ funnel:
     dbcreds: "brhstaging-helm-funnel-creds"
     funnelOidcClient: "brhstaging-helm-funnel-oidc-client"
   funnel:
-    image:
-      repository: quay.io/cdis/funnel
-      tag: allow-retry-2026-03-19
     Logger:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
       ReconcileRate: 120s
       ReplicaCount: 2
-      NodeSelector: { "role": "workflow" }
-      Tolerations:
-        - Key: "role"
-          Operator: "Equal"
-          Value: "workflow"
-          Effect: "NoSchedule"
       Executor:
         restartPolicy: OnFailure
         backoffLimit: 0
@@ -118,7 +115,7 @@ funnel:
         #     karpenter.sh/do-not-disrupt: "true"
       Worker:
         restartPolicy: OnFailure
-        backoffLimit: 1
+        backoffLimit: 0
         # PriorityClassName: "system-cluster-critical"
 
 global:

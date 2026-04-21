@@ -171,6 +171,8 @@ guppy:
       type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
+    - index: omop_etl_index_cohorta_20260311
+      type: cohort_a_patients
 hatchery:
   enabled: true
   image:

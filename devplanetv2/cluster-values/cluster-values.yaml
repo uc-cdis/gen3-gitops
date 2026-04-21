@@ -80,7 +80,7 @@ karpenter-crds:
     amiFamily: AL2023
     limits:
       memory: 1100Gi
-    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidationPolicy: "WhenEmpty"
     consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
