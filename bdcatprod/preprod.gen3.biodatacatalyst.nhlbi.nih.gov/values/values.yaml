@@ -2905,7 +2905,7 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/datastageinternalstaging/user.yaml
-    syncFromDbgap: true
+    syncFromDbgap: false
 fluentd:
   enabled: true
   image:
