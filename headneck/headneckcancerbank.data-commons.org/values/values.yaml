@@ -671,8 +671,12 @@ frontend-framework:
       memory: "105Mi"
       cpu: "15m"
   enabled: true
+  customConfig:
+    branch: main
+    enabled: true
+    repo: https://github.com/uc-cdis/head-neck-data-commons.git
   image:
-    repository: quay.io/cdis/head-neck-data-commons
+    repository: quay.io/cdis/commons-frontend-app
     tag: main
 
 grafana:
