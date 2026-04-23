@@ -177,13 +177,17 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.12"
+    tag: "2.7.2"
   hatchery:
     json: |
       {
           "user-namespace": "jupyter-pods",
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
+          "shared-workspace": {
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::663707118480:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/274F67985C56EBE1E628BA749BAE9222"
+          },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true

@@ -72,7 +72,7 @@ gen3-workflow:
   enabled: true
   replicaCount: 3
   image:
-    tag: feat_s3-endpoint2
+    tag: nss10-patch-3
   resources:
     limits:
       cpu: 2
@@ -95,6 +95,13 @@ gen3-workflow:
       - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
       - "python:3.9*"
       - "pytorch/pytorch:latest" # nf-canary TEST_GPU
+      - "quay.io/ncigdc/samtools:1.9"
+      - "quay.io/ncigdc/star2:2.7.5c"
+      - "quay.io/ncigdc/bio-alpine"
+      - "quay.io/ncigdc/picard:2.26.10"
+      - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
+      - "quay.io/ncigdc/trimmomatic:0.38"
+      - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
 funnel:
   postgres:
     dbCreate: true
