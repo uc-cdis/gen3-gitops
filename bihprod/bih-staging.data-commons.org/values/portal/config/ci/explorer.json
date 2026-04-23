@@ -1,0 +1,281 @@
+[
+  {
+    "tabTitle": "Cases",
+    "charts": {
+      "race": {
+        "chartType": "fullPie",
+        "title": "Race"
+      },
+      "ethnicity": {
+        "chartType": "horizontalStacked",
+        "title": "Ethnicity"
+      },
+      "gender": {
+        "chartType": "bar",
+        "title": "Gender"
+      }
+    },
+    "filters": {
+      "tabs": [
+        {
+          "title": "Study Selection",
+          "fields": ["project"]
+        },
+        {
+          "title": "Subjects",
+          "fields": [
+            "study",
+            "gender",
+            "race",
+            "ethnicity",
+            "vital_status",
+            "whatever_lab_result_value"
+          ],
+          "fieldsConfig": {
+            "gender" : {
+              "type" : "multiselect"
+            }
+          }
+        }
+      ]
+    },
+    "table": {
+      "enabled": true,
+      "detailsConfig": {
+        "panel": "default",
+        "mode" : "click",
+        "idField": "submitter_id",
+        "title": "Row Details"
+      },
+      "pageLimit": {
+        "limit": 10000
+      },
+      "fields": [
+        "project",
+        "gender",
+        "race",
+        "ethnicity",
+        "whatever_lab_result_value"
+      ],
+      "columns": {
+        "whatever_lab_result_value": {
+          "sortable": false
+        }
+      }
+    },
+    "dropdowns": {
+      "download-table": {
+        "title": "Download Table",
+        "leftIcon": "gen3:download",
+        "rightIcon": "gen3:chevron-down",
+        "dropdownItems": [
+          {
+            "enabled": true,
+            "type": "data-json",
+            "title": "JSON",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-json",
+            "actionArgs" : {
+              "filename": "MIDRC_Series_table.json",
+              "rootPath": "gen3_discovery"
+            }
+          },
+          {
+            "enabled": true,
+            "type": "data-csv",
+            "title": "CSV",
+            "leftIcon": "datafile",
+            "rightIcon": "download",
+            "action": "data-csv",
+            "actionArgs" : {
+              "filename": "data_table.csv"
+            }
+          }
+        ]
+      }
+    },
+    "buttons": [
+      {
+        "enabled": true,
+        "type": "data-json",
+        "title": "JSON",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.json"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "data-tsv",
+        "title": "TSV",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.tsv"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "CSV",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.csv"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "manifest",
+        "action": "manifest",
+        "title": "Download File Manifest for Cases",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "fileName": "case_manifest.json",
+        "actionArgs": {
+          "resourceIndexType": "file",
+          "resourceIdField": "object_id",
+          "referenceIdFieldInResourceIndex": "project_id",
+          "referenceIdFieldInDataIndex": "project_id",
+          "fileFields": ["file_name", "file_size", "md5sum", "object_id"]
+        }
+      }
+    ],
+    "loginForDownload": false,
+    "guppyConfig": {
+      "dataType": "subject",
+      "nodeCountTitle": "Subjects",
+      "fieldMapping": [
+        {
+          "field": "_samples_count",
+          "name": "Samples Count"
+        },
+        {
+          "field": "_imaging_files_count",
+          "name": "Imaging Files Count"
+        },
+        {
+          "field": "_unaligned_reads_files_count",
+          "name": "Unaligned Reads Count"
+        },
+        {
+          "field": "_aligned_reads_files_count",
+          "name": "Aligned Reads Count"
+        },
+        {
+          "field": "_expression_arrays_count",
+          "name": "Expression Arrays Count"
+        }
+      ],
+      "manifestMapping": {
+        "resourceIndexType": "file",
+        "resourceIdField": "object_id",
+        "referenceIdFieldInResourceIndex": "subject_id",
+        "referenceIdFieldInDataIndex": "subject_id"
+      },
+      "accessibleFieldCheckList": ["project"],
+      "accessibleValidationField": "project"
+    }
+  },
+  {
+    "tabTitle": "Data Files",
+    "charts": {
+      "file_type": {
+        "chartType": "stackedBar",
+        "title": "File Type"
+      },
+      "file_format": {
+        "chartType": "stackedBar",
+        "title": "File Format"
+      }
+    },
+    "filters": {
+      "tabs": [
+        {
+          "title": "File",
+          "fields": ["subject_id"]
+        }
+      ]
+    },
+    "table": {
+      "enabled": true,
+      "detailsConfig": {
+        "panel": "fileDetails",
+        "mode": "click",
+        "idField": "file_name",
+        "title": "File Details"
+      },
+      "fields": ["subject_id", "file_type", "file_size", "object_id"]
+    },
+    "guppyConfig": {
+      "dataType": "file",
+      "fieldMapping": [
+        {
+          "field": "file_id",
+          "name": "GUID"
+        }
+      ],
+      "nodeCountTitle": "Files",
+      "manifestMapping": {
+        "resourceIndexType": "subject",
+        "resourceIdField": "subject_id",
+        "referenceIdFieldInResourceIndex": "object_id",
+        "referenceIdFieldInDataIndex": "object_id"
+      },
+      "accessibleFieldCheckList": ["subject_id"],
+      "accessibleValidationField": "subject_id",
+      "downloadAccessor": "subject_id"
+    },
+    "buttons": [
+      {
+        "enabled": true,
+        "type": "data-json",
+        "title": "JSON",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.json"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "data-tsv",
+        "title": "TSV",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.tsv"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "data-csv",
+        "title": "CSV",
+        "dropdownId": "download-table",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table.csv"
+        }
+      },
+      {
+        "enabled": true,
+        "type": "file-manifest",
+        "title": "Download File Manifest",
+        "leftIcon": "datafile",
+        "rightIcon": "download",
+        "actionArgs": {
+          "filename": "data_table_manifest.csv"
+        }
+      }
+    ],
+    "loginForDownload": true
+  }
+]

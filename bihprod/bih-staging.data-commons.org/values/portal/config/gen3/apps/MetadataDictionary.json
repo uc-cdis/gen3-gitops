@@ -1,0 +1,14 @@
+{
+  "headerMetadata" : {
+    "title": "BIH Metadata Dictionary",
+    "content": "Metadata Data Dictionary",
+    "key": "bih-data-dictionary-page"
+  },
+  "schemas": [
+    {
+      "label": "Metadata",
+      "schemaID": "midrc_bih_mesh_metadata_model",
+      "definitionsFieldName": "metadata_elements"
+    }
+  ]
+}

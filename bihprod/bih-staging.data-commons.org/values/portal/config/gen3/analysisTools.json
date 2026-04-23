@@ -1,0 +1,24 @@
+{
+  "tools": [
+    {
+      "title": "Cohort Building and Data Access Using the MIDRC BDF Imaging Hub",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/cohort_building_thumbnail.png",
+      "description": "This notebook briefly demonstrates how to use the MIDRC Biomedical Imaging Hub (BIH) APIs to discover medical imaging datasets across the Biomedical Data Fabric (BDF), including those in data resources other than the MIDRC data commons.",
+      "loginRequired": false,
+      "href": "/staticNotebook/cohort_building_notebook.html",
+      "btnText": "Show Analysis"
+    },
+    {
+      "title": "Federated AIMI and TCIA: Shared 128-D Embeddings and Cross-Dataset Visualization",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.png",
+      "image": "/images/apps/bih-federated-aimi-tcia-shared-embeddings-umap_thumbnail.png",
+      "description": "This notebook demonstrates a federated workflow for generating and analyzing shared 128-D image embeddings across AIMI/TCIA resources, including fast local UMAP visualization using a subset-fit and full-transform approach.",
+      "loginRequired": false,
+      "href": "/staticNotebook/bih-federated-aimi-tcia-shared-embeddings-umap.html",
+      "btnText": "Show Analysis"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "classNames": {
+    "root": "bg-base-darker",
+    "layout": "flex items-center justify-end"
+  },
+  "rightSection": {
+    "columns": [
+      {
+        "rows": [
+          {
+            "Icon": {
+              "logo": "/icons/gen3.png",
+              "width": 132,
+              "height": 60,
+              "description": "Gen3",
+              "href": "https://gen3.org"
+            }
+          }
+        ]
+      },
+      {
+        "rows": [
+          {
+            "Icon": {
+              "logo": "/icons/createdby.png",
+              "width": 170,
+              "height": 60,
+              "description": "Center for Translational Data Science at the University of Chicago",
+              "href": "https://ctds.uchicago.edu/"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "useAPI": false,
+  "actions": [
+    {
+      "id": "exportTerra",
+      "label": "Export: Terra",
+      "rightIcon" : "gen3:send",
+      "buttonLabel" : "Export",
+      "actionFunction" : "export-pfb-to-url",
+      "parameters" : {
+        "targetURLTemplate" : "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/pfb?URL={{PRESIGNED_URL}}&source=bdc"
+      },
+      "itemRules": [
+        {
+          "field": "type",
+          "operator": "equals",
+          "value": "GA4GH_DRS",
+          "errorMessage": "file type must be GA4GH_DRS"
+        }
+      ],
+      "groupRules": [
+        {
+          "field": "type",
+          "operator": "count",
+          "value": "GA4GH_DRS",
+          "total": 1,
+          "errorMessage": "Only 1 GA4GH_DRS can be selected"
+        }
+      ]
+    },
+    {
+      "id": "exportTo7Bridges",
+      "label": "Export: Seven Bridges",
+      "rightIcon" : "gen3:send",
+      "buttonLabel" : "Export",
+      "actionFunction" : "export-pfb-to-url",
+      "parameters" : {
+        "targetURLTemplate" : "https://platform.sb.biodatacatalyst.nhlbi.nih.gov/import/pfb?URL={{PRESIGNED_URL}}&source=bdc"
+      },
+      "itemRules": [
+        {
+          "field": "type",
+          "operator": "equals",
+          "value": "GA4GH_DRS",
+          "errorMessage": "file type must be GA4GH_DRS"
+        }
+      ],
+      "groupRules": [
+        {
+          "field": "type",
+          "operator": "count",
+          "value": "GA4GH_DRS",
+          "total": 1,
+          "errorMessage": "only 1 GA4GH_DRS can be selected"
+        }
+      ]
+    }
+  ]
+}
