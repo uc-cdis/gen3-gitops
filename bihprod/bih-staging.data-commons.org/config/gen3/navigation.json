@@ -1,0 +1,54 @@
+{
+  "navigation": {
+    "title": "MIDRC BDF Imaging Hub",
+    "logo": {
+      "src": "/images/BDF-MIDRC Logo-V2.png",
+      "height":128,
+      "width": 256,
+      "href": "/"
+    },
+    "items": [
+      {
+        "icon": "gen3:exploration",
+        "href": "/Explorer",
+        "name": "Exploration",
+        "tooltip": "The Exploration Page enables discovery of the data at the series level and features a cohort builder.",
+        "classNames": {
+          "root": "flex flex-col flex-nowrap py-4 pt-4 items-center pr-10 px-2",
+          "label" : "text-black font-semibold hover:text-black",
+          "icon" : "text-black hover:text-black"
+        }
+      },
+      {
+        "icon": "gen3:analysis",
+        "href": "/Analysis",
+        "name": "Tutorials",
+        "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data available by running a tutorial notebook, or use one of these examples as a launching point for your own custom analysis. Executable notebooks can be found in GitHub at https://github.com/MIDRC/tutorial_notebooks/ and going to the BIH folder."
+      },
+      {
+        "icon": "gen3:mdd",
+        "href": "/app/MetadataDictionary",
+        "name": "Mesh Metadata Model",
+        "tooltip": "View the mesh metadata model, which defines metadata elements in the Explorer."
+      }
+    ]
+  },
+  "topBar": {
+    "items": [
+      {
+        "href": "/app/MetadataDictionary",
+        "name": "Mesh Metadata Model"
+      }
+    ],
+    "loginButtonVisibility": "hide",
+    "classNames": {
+      "root": "border-base-light bg-secondary text-secondary-contrast",
+      "divider": "border-base-min border-0"
+    },
+    "itemClassnames": {
+      "root": "border-base-light",
+      "label": "text-white",
+      "button": "hover:border-white"
+    }
+  }
+}

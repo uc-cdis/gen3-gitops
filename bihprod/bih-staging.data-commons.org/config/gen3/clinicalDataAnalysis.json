@@ -1,0 +1,36 @@
+{
+  "index": "subject",
+  "initialFields": ["race", "gender", "ethnicity", "age_at_enrollment"],
+  "uniqueIdField": "_subject_id",
+  "dataTypename": "Subject",
+  "tabs": [
+    {
+      "label": "Demographic",
+      "color": "#2081A8",
+      "facets": [
+        {
+          "field": "gender",
+          "label": "Sex",
+          "description": "Text designations that identify sex."
+        },
+        {
+          "field": "race"
+        },
+        { "field": "ethnicity" },
+        { "field": "age_at_enrollment", "type": "age" }
+      ]
+    },
+    {
+      "label": "Data",
+      "color": "#20A8A8",
+      "facets": [
+        {
+          "field": "experimental_group"
+        },
+        {
+          "field": "project_id"
+        }
+      ]
+    }
+  ]
+}
