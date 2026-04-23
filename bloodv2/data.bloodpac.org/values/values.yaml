@@ -502,28 +502,24 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2025.12",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:master",
           "env": {
             "NAMESPACE": "bloodv2-helm",
             "HOSTNAME": "data.bloodpac.org"
           },
           "args": [],
           "command": [
-            "su",
-            "-c",
-            "/home/jovyan/sidecarDockerrun.sh",
-            "-s",
-            "/bin/sh",
-            "jovyan"
+            "/bin/sh", 
+            "-c", 
+            "/home/jovyan/sidecarDockerrun.sh"
           ],
           "lifecycle-pre-stop": [
-            "su",
-            "-c",
-            "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done",
-            "-s",
-            "/bin/sh",
-            "jovyan"
-          ]
+            "/bin/sh", 
+            "-c", 
+            "cd /data; for f in *; do fusermount -u $f; rm -rf $f; done"
+          ],
+          "user-uid": 1010,
+          "fs-gid": 100
         },
         "containers": [
           {
