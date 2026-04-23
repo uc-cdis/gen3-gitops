@@ -113,6 +113,8 @@ funnel:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
+      DisableReconciler: false
+      DisableJobCleanup: false
       ReconcileRate: 120s
       ReplicaCount: 2
       Executor:
