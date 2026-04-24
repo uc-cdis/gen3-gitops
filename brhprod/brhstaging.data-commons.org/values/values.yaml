@@ -103,6 +103,9 @@ gen3-workflow:
       - "quay.io/ncigdc/trimmomatic:0.38"
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
 funnel:
+  image:
+    repository: quay.io/cdis/funnel
+    tag: test-exec_error_fails_worker
   postgres:
     dbCreate: true
   externalSecrets:
