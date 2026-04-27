@@ -304,6 +304,10 @@
                     "name": "Resources"
                 },
                 {
+                    "link": "https://staging.midrc.org/dashboard/Public/documentation/Release_notes_final.pdf",
+                    "name": "Release Notes"
+                },
+                {
                     "link": "https://docs.gen3.org/gen3-resources/user-guide/",
                     "name": "Gen3"
                 },

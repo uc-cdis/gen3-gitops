@@ -733,6 +733,9 @@ fence:
       kf-strides-study-us-east-1-prd-sd-cp7yk94e-nci:
         cred: fence_bot
         region: us-east-1
+      kf-strides-study-us-east-1-prd-sd-gpzg67fz-nci:
+        cred: fence_bot
+        region: us-east-1
       kf-strides-study-us-east-1-prd-sd-jk4z4t6v-nci:
         cred: fence_bot
         region: us-east-1

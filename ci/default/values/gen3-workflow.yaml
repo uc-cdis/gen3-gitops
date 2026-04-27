@@ -1,5 +1,5 @@
 gen3-workflow:
-  enabled: true
+  enabled: false
   image:
     repository: quay.io/cdis/gen3-workflow
     tag: master

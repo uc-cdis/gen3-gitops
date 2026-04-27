@@ -55,15 +55,15 @@ karpenter-crds:
   selectorTag: loginbionimbus
   migration: true
   default:
-    disruptionBudget: "60%"
+    disruptionBudget: "30%"
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: default
     amiFamily: AL2023
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "3m"
-    expireAfter: "72h"
+    consolidateAfter: "15m"
+    expireAfter: "120h"
     volumeSize: 80Gi
     requirements:
       - key: karpenter.sh/capacity-type
@@ -74,6 +74,21 @@ karpenter-crds:
         operator: In
         values:
           - amd64
+      - key: karpenter.k8s.aws/instance-category
+        operator: In
+        values:
+          - c
+          - m
+          - r
+      - key: karpenter.k8s.aws/instance-generation
+        operator: Gt
+        values:
+          - "5"
+      - key: karpenter.k8s.aws/instance-size
+        operator: In
+        values:
+          - large
+          - medium
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
