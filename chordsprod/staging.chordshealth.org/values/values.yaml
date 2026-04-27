@@ -26,14 +26,11 @@ arborist:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
-aws-es-proxy:
+aws-sigv4-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: chordstaging-aws-es-proxy-creds
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 indexd:
   defaultPrefix: dg.C78ch/
   externalSecrets:
