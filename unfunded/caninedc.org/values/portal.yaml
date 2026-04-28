@@ -17,6 +17,7 @@ portal:
       bucketName: "unfunded-portal-build-bucket"
       mountOptions:
       - allow-delete
+      - allow-other
       - region us-east-1
       - sse aws:kms
       - sse-kms-key-id arn:aws:kms:us-east-1:662843554732:key/8d519fe8-e4fd-4519-aad2-2ef6284f0420   
