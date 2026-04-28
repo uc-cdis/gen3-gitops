@@ -1,6 +1,6 @@
 apiVersion: v2
-name: perf
-description: ci perf setup
+name: icgc.bionimbus.org
+description: icgc.bionimbus.org argo application
 
 # A chart can be either an 'application' or a 'library' chart.
 #

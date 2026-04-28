@@ -11,14 +11,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: '2026.04'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: '2026.04'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-receiver
@@ -109,9 +109,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2026.02'
+      tag: '2026.04'
     spark:
-      tag: '2026.02'
+      tag: '2026.04'
 fence:
   serviceAccount:
     annotations:
@@ -129,7 +129,7 @@ fence:
     fenceJwtKeys: bihprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: '2026.04'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
@@ -140,9 +140,17 @@ fluentd:
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
   enabled: true
+  env:
+    DATACOMMONS: bih_frontend_app
+    DATADOG_APPLICATION_ID: 407210b5-f9e9-4acb-a268-3e6ad027e794
+    DATADOG_CLIENT_TOKEN: pub3a09afedb7c71b6f3f62e36616199cf5
+  customConfig:
+    branch: main
+    enabled: true
+    repo: https://github.com/uc-cdis/bih-data-commons.git
   image:
-    repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.10
+    repository: quay.io/cdis/commons-frontend-app
+    tag: main
 global:
   pdb: true
   aws:
@@ -180,7 +188,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.02'
+    tag: '2026.04'
   hatchery:
     json: |-
       {
@@ -190,7 +198,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.01",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.03",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "imaging-hub.data-commons.org",
@@ -290,7 +298,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: '2026.04'
   indices:
     - index: bih_dataset
       type: dataset
@@ -313,7 +321,7 @@ indexd:
     serviceCreds: bihprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: '2026.04'
 manifestservice:
   enabled: false
 metadata:
@@ -329,14 +337,14 @@ metadata:
     metadataG3auto: bihprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: '2026.04'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: '2026.04'
 portal:
   enabled: true
   replicaCount: 2
@@ -347,12 +355,12 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.02'
+    tag: '2026.04'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.02'
+    tag: '2026.04'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -363,7 +371,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: '2026.04'
   ingress:
     aws:
       group: bihprod
@@ -371,7 +379,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: '2026.04'
   fenceUrl: https://imaging-hub.data-commons.org/user
 wts:
   enabled: true
@@ -381,4 +389,4 @@ wts:
     wtsOidcClient: bihprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.02'
+    tag: '2026.04'

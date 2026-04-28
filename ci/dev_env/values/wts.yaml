@@ -1,9 +1,0 @@
-wts:
-  replicaCount: 2
-  enabled: true
-  image:
-    repository: "quay.io/cdis/workspace-token-service"
-    tag: "master"
-  externalSecrets:
-    createWtsOidcClientSecret: true
-    createK8sWtsSecret: true

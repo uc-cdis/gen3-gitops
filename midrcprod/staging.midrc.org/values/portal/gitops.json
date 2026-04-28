@@ -51,6 +51,12 @@
         "description": "The Jupyter notebooks contained in this notebook viewer pull data from various sources to generate and output useful tables, charts, graphs, and models. Each notebook is static, meaning the data being used by the notebooks is not updated in real time. Executable versions of these notebooks can be downloaded from <a href='https://github.com/MIDRC/tutorial_notebooks'> MIDRC's GitHub Repository</a>. If you’d like to browse the machine learning-related algorithms and code being developed by MIDRC, please visit <a href='https://midrc.org/algorithms'>the algorithms page</a> on our website.",
         "resources": [
             {
+                "title": "Representativeness In Interoperable Databases",
+                "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
+                "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
+                "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
+            },            
+            {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
                 "imageUrl": "/dashboard/Public/notebooks/Cohort_Building_Using_LOINC_Terms.png",
@@ -296,6 +302,10 @@
                 {
                     "link": "https://www.midrc.org/resources",
                     "name": "Resources"
+                },
+                {
+                    "link": "https://staging.midrc.org/dashboard/Public/documentation/Release_notes_final.pdf",
+                    "name": "Release Notes"
                 },
                 {
                     "link": "https://docs.gen3.org/gen3-resources/user-guide/",
@@ -894,7 +904,7 @@
                 },
                 "test_result_text": {
                     "chartType": "fullPie",
-                    "title": "COVID-19 Test Result"
+                    "title": "Test Result"
                 },
                 "test_name": {
                     "chartType": "fullPie",
@@ -904,7 +914,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "COVID-19 Tests",
+                        "title": "Measurements",
                         "fields": [
                             "test_method",
                             "test_result_text",
@@ -1006,7 +1016,22 @@
         },
         {
             "tabTitle": "Imaging Studies",
-            "charts": {},
+            "charts": {
+                "loinc_system": {
+                    "chartType": "fullPie",
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
+                },
+                "study_modality": {
+                    "chartType": "fullPie",
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
+                },
+                "loinc_contrast": {
+                    "chartType": "fullPie",
+                    "title": "LOINC Contrast"
+                }
+            },
             "filters": {
                 "tabs": [
                     {

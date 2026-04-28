@@ -10,25 +10,22 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: '2026.04'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: '2026.04'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
 manifestservice:
   enabled: false
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
-    tag: v1.3.1
 dashboard:
   dashboardConfig:
     bucket: dashboard-533267425233-bihprod-gen3
@@ -108,9 +105,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2026.02'
+      tag: '2026.04'
     spark:
-      tag: '2026.02'
+      tag: '2026.04'
 fence:
   usersync:
     usersync: true
@@ -130,17 +127,21 @@ fence:
     fenceJwtKeys: bihstaging-cloudauto-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.02'
+    tag: '2026.04'
 fluentd:
   enabled: true
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
+  customConfig:
+    branch: main
+    enabled: true
+    repo: https://github.com/uc-cdis/bih-data-commons.git
   enabled: true
   image:
-    repository: quay.io/cdis/bih-data-commons
-    tag: 1.3.10
+    repository: quay.io/cdis/commons-frontend-app
+    tag: main
 global:
   aws:
     account: '533267425233'
@@ -177,7 +178,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.02'
+    tag: '2026.04'
   hatchery:
     json: |-
       {
@@ -187,7 +188,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.01",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.03",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "bihstaging.data-commons.org",
@@ -287,7 +288,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: '2026.04'
   indices:
     - index: bih_dataset
       type: dataset
@@ -309,7 +310,7 @@ indexd:
     serviceCreds: bihstaging-cloudauto-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: '2026.04'
 metadata:
   autoscaling:
     enabled: true
@@ -322,12 +323,12 @@ metadata:
     metadataG3auto: bihstaging-cloudauto-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: '2026.04'
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: '2026.04'
 portal:
   enabled: true
   customConfig:
@@ -337,12 +338,12 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.02'
+    tag: '2026.04'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.02'
+    tag: '2026.04'
 revproxy:
   autoscaling:
     enabled: true
@@ -352,7 +353,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: '2026.04'
   ingress:
     aws:
       group: bihprod
@@ -360,7 +361,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: '2026.04'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -373,8 +374,8 @@ ssjdispatcher:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.02'
-  indexing: quay.io/cdis/indexs3client:2026.02
+    tag: '2026.04'
+  indexing: quay.io/cdis/indexs3client:2026.04
 wts:
   enabled: true
   externalSecrets:
@@ -383,4 +384,4 @@ wts:
     wtsOidcClient: bihstaging-cloudauto-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.02'
+    tag: '2026.04'

@@ -12,7 +12,7 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: "2025.12"
 audit:
-  enabled: false
+  enabled: true
   externalSecrets:
     auditG3auto: bloodv2-audit-g3auto
   serviceAccount:
@@ -632,7 +632,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: "2025.12"
+    tag: "5.40.3"
 revproxy:
   replicaCount: 4
   autoscaling:
