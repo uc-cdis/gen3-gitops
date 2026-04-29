@@ -75,8 +75,8 @@
                     "tooltip": "Gen3 workspaces are secure cloud environments where users can analyze data from one or more data resources."
                 },
                 {
-                    "name": "Example Analysis",
-                    "link": "/resource-browser",
+                    "name": "Example Analyses",
+                    "link": "https://uc-cdis.github.io/heal-notebooks-pages/",
                     "icon": "bar-chart",
                     "tooltip": "Learn how to use Jupyter Notebooks to explore and visualize data available on the HEAL platform by running a static tutorial notebook, or use one of these examples as a launching point for your own custom analysis."
                 },
