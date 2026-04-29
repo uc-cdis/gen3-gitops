@@ -420,6 +420,47 @@ portal:
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
+
+ serviceAccount:
+    annotations: 
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-jcoin
+      pvName: portal-pv-jcoin
+      createPV: true
+      #volumeHandle: ""
+      bucketName: "unfunded-portal-build-bucket"
+      mountOptions:
+      - allow-delete
+      - allow-other
+      - region us-east-1
+      - sse aws:kms
+      - sse-kms-key-id arn:aws:kms:us-east-1:662843554732:key/8d519fe8-e4fd-4519-aad2-2ef6284f0420   
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+  
+    images:
+      builder: quay.io/cdis/data-portal:2026.03
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+  
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+  
+    extraction:
+      stripComponents: true
+
+  resources:
+    requests:
+      memory: 128Mi
+  
   gitops:
     css: |
       .nav-bar__logo {
