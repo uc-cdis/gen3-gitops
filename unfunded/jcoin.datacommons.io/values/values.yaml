@@ -421,7 +421,7 @@ portal:
     targetCPUUtilizationPercentage: 40
   enabled: true
 
- serviceAccount:
+  serviceAccount:
     annotations: 
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded-portal-sa
   portalBuild:
