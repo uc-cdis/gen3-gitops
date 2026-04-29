@@ -1,0 +1,74 @@
+global:
+  pdb: true
+  aws:
+    account: "895962626746"
+    enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::895962626746:role/bdcatprod-external-secrets-sa
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
+  dev: false
+  environment: dataguids
+  externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
+    deploy: true
+  hostname: dataguids.org
+  portalApp: gitops
+  postgres:
+    dbCreate: false
+  revproxyArn: arn:aws:acm:us-east-1:895962626746:certificate/742b0502-bcd6-45b9-8a18-921560be4432
+
+indexd:
+  enabled: true
+  replicaCount: 8
+  image:
+    repository: quay.io/cdis/indexd
+    pullPolicy: Always
+    tag: "2026.02"
+metadata:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    pullPolicy: Always
+    tag: "2026.02"
+  externalSecrets:
+    metadataG3auto: dataguids-metadata-g3auto
+portal:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dataguids
+    pullPolicy: Always
+    tag: "1.0.2"
+revproxy:
+  enabled: true
+  replicaCount: 4
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    pullPolicy: Always
+    tag: "2026.02"
+
+
+ambdassador:
+  enabled: false
+arborist:
+  enabled: false
+audit:
+  enabled: false
+etl:
+  enabled: false
+fence:
+  enabled: false
+hatchery:
+  enabled: false
+manifestservice:
+  enabled: false
+peregrine:
+  enabled: false
+sheepdog:
+  enabled: false
+wts:
+  enabled: false
