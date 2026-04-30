@@ -102,7 +102,7 @@ gen3-workflow:
       - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
       - "quay.io/ncigdc/trimmomatic:0.38"
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
-      - "quay.io/cdis/cadc-plp:0.0.6"
+      - "quay.io/cdis/cadc-plp:*"
 funnel:
   postgres:
     dbCreate: true
