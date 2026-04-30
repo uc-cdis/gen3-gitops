@@ -102,6 +102,8 @@ gen3-workflow:
       - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
       - "quay.io/ncigdc/trimmomatic:0.38"
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
+      - "quay.io/cdis/cadc-plp:*"
+      - "docker.io/sairamkova/tes-flow:*"
 funnel:
   postgres:
     dbCreate: true
@@ -125,7 +127,7 @@ funnel:
         backoffLimit: 0
       Worker:
         restartPolicy: Never
-        backoffLimit: 1
+        backoffLimit: 0
 global:
   pdb: true
   netPolicy:
@@ -634,6 +636,7 @@ peregrine:
     tag: '2026.04'
 portal:
   enabled: true
+  replicaCount: 2
   gitops:
     gen3Bundle: ecosystem
     json: |
