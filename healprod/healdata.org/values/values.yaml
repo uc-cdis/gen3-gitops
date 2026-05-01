@@ -241,7 +241,7 @@ hatchery:
           "lifecycle-post-start": [
           "/bin/sh",
           "-c",
-          "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; true"
+          "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; wget -O /data/NDA_data_package_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/NDA_data_package_download.ipynb; wget -O /data/NSRR_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/NSRR_data_download.ipynb; true"
           ],
           "user-uid": 1010,
           "fs-gid": 100,
@@ -333,7 +333,7 @@ hatchery:
           "cpu-limit": "1.0",
           "memory-limit": "2Gi",
           "name": "Use JupyterLab with Example Analysis Notebooks",
-          "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
+          "image": "quay.io/cdis/heal-notebooks:combined_tutorials__9f5b41352050e2ce606eb2cef253984018574f81",
           "env": {
           "FRAME_ANCESTORS": "https://healdata.org"
           },
