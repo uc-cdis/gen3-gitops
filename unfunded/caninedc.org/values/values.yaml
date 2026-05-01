@@ -37,14 +37,11 @@ arborist:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
-aws-es-proxy:
+aws-sigv4-proxy:
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: canineprod-aws-es-proxy-creds
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: master
 indexd:
   defaultPrefix: dg.C78ne/
   externalSecrets:
