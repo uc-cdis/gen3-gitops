@@ -497,6 +497,7 @@ peregrine:
     tag: '2026.04'
 portal:
   enabled: true
+  replicaCount: 2
   gitops:
     gen3Bundle: ecosystem
     json: |
