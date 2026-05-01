@@ -333,7 +333,7 @@ hatchery:
           "cpu-limit": "1.0",
           "memory-limit": "2Gi",
           "name": "Use JupyterLab with Example Analysis Notebooks",
-          "image": "quay.io/cdis/heal-notebooks:combined_tutorials__efec6b81db6f08d1c94f610463951610410a96ce",
+          "image": "quay.io/cdis/heal-notebooks:combined_tutorials__9f5b41352050e2ce606eb2cef253984018574f81",
           "env": {
           "FRAME_ANCESTORS": "https://healdata.org"
           },
