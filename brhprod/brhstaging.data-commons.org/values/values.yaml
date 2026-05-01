@@ -72,7 +72,7 @@ gen3-workflow:
   enabled: true
   replicaCount: 3
   image:
-    tag: nss10-patch-3
+    tag: ui
   resources:
     limits:
       cpu: 2
@@ -102,6 +102,8 @@ gen3-workflow:
       - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
       - "quay.io/ncigdc/trimmomatic:0.38"
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
+      - "quay.io/cdis/cadc-plp:*"
+      - "docker.io/sairamkova/tes-flow:*"
 funnel:
   postgres:
     dbCreate: true
@@ -116,16 +118,16 @@ funnel:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
-      DisableReconciler: true
-      DisableJobCleanup: true
+      DisableReconciler: false
+      DisableJobCleanup: false
       ReconcileRate: 120s
       ReplicaCount: 2
       Executor:
-        restartPolicy: OnFailure
+        restartPolicy: Never
         backoffLimit: 0
       Worker:
-        restartPolicy: OnFailure
-        backoffLimit: 1
+        restartPolicy: Never
+        backoffLimit: 0
 global:
   pdb: true
   netPolicy:
@@ -634,6 +636,7 @@ peregrine:
     tag: '2026.04'
 portal:
   enabled: true
+  replicaCount: 2
   gitops:
     gen3Bundle: ecosystem
     json: |
