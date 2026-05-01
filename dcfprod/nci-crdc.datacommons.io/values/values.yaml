@@ -1,5 +1,5 @@
 arborist:
-  replicaCount: 4
+  replicaCount: 3
   autoscaling:
     enabled: false
     maxReplicas: 4
