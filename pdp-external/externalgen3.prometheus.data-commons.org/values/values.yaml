@@ -54,7 +54,8 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
   externalSecrets:
     dbcreds: "externalgen3_default-audit-creds"
-    createK8sAuditSecret: true
+    auditG3auto: externalgen3-audit-g3auto
+    #createK8sAuditSecret: true
 
 aws-es-proxy:
   # Disabled. We don't use this service in this environment.
@@ -77,6 +78,10 @@ frontend-framework:
 
 
 fence:
+
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-fence-sa
   # Lower cost
   resources:
     requests:
