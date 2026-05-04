@@ -75,7 +75,7 @@ audit:
     dbcreds: "headneck_default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   # Lower cost
   resources:
     requests:

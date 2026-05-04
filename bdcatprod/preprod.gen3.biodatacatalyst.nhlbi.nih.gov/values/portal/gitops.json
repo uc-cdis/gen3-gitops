@@ -110,6 +110,10 @@
         {
           "link": "https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/explore_data/gen3-discovering-data",
           "name": "Documentation"
+        },
+        {
+          "link":"https://uc-cdis.github.io/platform-citation/bdc-cite/",
+          "name": "Cite BDC"
         }
       ]
     },

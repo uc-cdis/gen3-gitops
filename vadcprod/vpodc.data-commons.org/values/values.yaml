@@ -173,6 +173,8 @@ guppy:
       type: cohort_b_patients
     - index: omop_etl_index_cohorta_20260311
       type: cohort_a_patients
+    - index: omop_etl_index_cohortf_20260408
+      type: cohort_f_patients
 hatchery:
   enabled: true
   image:
