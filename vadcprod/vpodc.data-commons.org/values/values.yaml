@@ -116,7 +116,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.14
+    tag: 0.15
 global:
   pdb: true
   aws:
@@ -173,6 +173,8 @@ guppy:
       type: cohort_b_patients
     - index: omop_etl_index_cohorta_20260311
       type: cohort_a_patients
+    - index: omop_etl_index_cohortf_20260408
+      type: cohort_f_patients
 hatchery:
   enabled: true
   image:
