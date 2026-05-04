@@ -18,12 +18,9 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::562749638216:role/bloodv2--bloodv2-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-bloodv2-gen3-metadata-2-hmyheohzgcr36i5nlv2l4bzkve.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: "v1.3.1"
 dashboard:
   dashboardConfig:
     bucket: dashboard-562749638216-bloodv2-gen3
