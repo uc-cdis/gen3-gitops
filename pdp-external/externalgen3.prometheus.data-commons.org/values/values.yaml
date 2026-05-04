@@ -54,7 +54,7 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
   externalSecrets:
     dbcreds: "externalgen3_default-audit-creds"
-    auditG3auto: pdp-commons-audit-g3auto
+    auditG3auto: externalgen3-audit-g3auto
     #createK8sAuditSecret: true
 
 aws-es-proxy:
