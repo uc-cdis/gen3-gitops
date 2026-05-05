@@ -127,7 +127,7 @@ funnel:
         backoffLimit: 0
       Worker:
         restartPolicy: Never
-        backoffLimit: 0
+        backoffLimit: 1
 global:
   pdb: true
   netPolicy:
