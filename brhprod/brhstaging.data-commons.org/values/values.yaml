@@ -131,7 +131,7 @@ funnel:
 global:
   pdb: true
   netPolicy:
-    enabled: false
+    enabled: true
     dbSubnets:
       - 172.27.98.0/24
       - 172.27.99.0/24
