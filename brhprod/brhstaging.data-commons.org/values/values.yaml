@@ -165,8 +165,8 @@ global:
     enabled: true
     ip:
     # -- <list of ip ranges of kubeapi> can be fetched by running `kubectl get endpoints --namespace default kubernetes` in your cluster.
-      - 172.27.103.241:443
-      - 172.27.104.147:443
+      - 172.27.103.241
+      - 172.27.104.147
   publicDataSets: true
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::590183957759:role/EcrRepoPolicyUpdateRole
