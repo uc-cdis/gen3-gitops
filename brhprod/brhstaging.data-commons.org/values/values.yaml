@@ -127,11 +127,11 @@ funnel:
         backoffLimit: 0
       Worker:
         restartPolicy: Never
-        backoffLimit: 0
+        backoffLimit: 1
 global:
   pdb: true
   netPolicy:
-    enabled: false
+    enabled: true
     dbSubnets:
       - 172.27.98.0/24
       - 172.27.99.0/24
@@ -158,6 +158,15 @@ global:
     createLocalK8sSecret: false
     pushSecret: true
   hostname: brhstaging.data-commons.org
+  kubeapi_endpoints:
+    # Enable for Argo CD based deployments.
+    # This lets funnel worker pods access the kube api to create executor jobs.
+    # If disabled, an automatic lookup will be performed to get the IPs.
+    enabled: true
+    ip:
+    # -- <list of ip ranges of kubeapi> can be fetched by running `kubectl get endpoints --namespace default kubernetes` in your cluster.
+      - 172.27.103.241
+      - 172.27.104.147
   publicDataSets: true
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::590183957759:role/EcrRepoPolicyUpdateRole

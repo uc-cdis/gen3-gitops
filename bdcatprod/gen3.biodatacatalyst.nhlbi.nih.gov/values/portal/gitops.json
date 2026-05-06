@@ -42,7 +42,7 @@
         "message": "Data transfers from BDC-Gen3 to BDC-Seven Bridges may be slower than expected. Teams are actively working to improve this experience.  Check the Activity Center in BDC-Seven Bridges to track imports. If you experience issues, please report it to the BDC Help Desk: https://biodatacatalyst.nhlbi.nih.gov/help-and-support/contact-us/",
         "resetMsgDays": 1
       }
-    ], 
+    ],
     "index": {
       "introduction": {
         "heading": "",
@@ -121,6 +121,10 @@
         {
           "link": "https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/explore_data/gen3-discovering-data",
           "name": "Documentation"
+        },
+        {
+          "link":"https://uc-cdis.github.io/platform-citation/bdc-cite/",
+          "name": "Cite BDC"
         }
       ]
     },
