@@ -1,6 +1,7 @@
 ambassador:
   enabled: false
 arborist:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: icgc-arborist-creds
@@ -8,6 +9,7 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.03'
 audit:
+  replicaCount: 2
   externalSecrets:
     auditCreds: icgc-audit-creds
     auditG3auto: icgc-audit-g3auto
@@ -17,12 +19,14 @@ audit:
   image:
     tag: '2026.03'
 aws-es-proxy:
+  replicaCount: 2
   enabled: true
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
     tag: v1.3.1
 dashboard:
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-662843554732-icgc-gen3
     prefix: icgc.bionimbus.org
@@ -113,6 +117,7 @@ etl:
     spark:
       tag: '2026.03'
 fence:
+  replicaCount: 2
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--icgc--audit-sqs-sender
@@ -154,7 +159,7 @@ global:
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: icgc-slack-webhook
+    slackWebhookSecretName: icgc-slack-webhook #pragma: allowlist secret
   hostname: icgc.bionimbus.org
   fenceURL: https://icgc.bionimbus.org/user
   publicDataSets: true
@@ -165,10 +170,12 @@ global:
   tierAccessLevel: libre
   tierAccessLimit: 50
   portalApp: gitops
+  pdb: true
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/93fe9615-a767-477e-8aff-25e4d47b6f2d
 guppy:
+  replicaCount: 2
   authFilterField: auth_resource_path
   configIndex: icgc_array-config
   enabled: true
@@ -184,6 +191,7 @@ guppy:
 hatchery:
   enabled: false
 indexd:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: icgc-indexd-creds
@@ -194,6 +202,7 @@ indexd:
 manifestservice:
   enabled: false
 metadata:
+  replicaCount: 2
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     dbcreds: icgc-metadata-creds
@@ -203,6 +212,7 @@ metadata:
 mutatingWebhook:
   enabled: false
 peregrine:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: icgc-peregrine-creds
@@ -210,9 +220,10 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.03'
 portal:
+  replicaCount: 2
   enabled: true
   serviceAccount:
-    annotations: 
+    annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded-portal-sa
   portalBuild:
     enabled: true
@@ -230,27 +241,27 @@ portal:
       - allow-other
       - region us-east-1
       - sse aws:kms
-      - sse-kms-key-id arn:aws:kms:us-east-1:662843554732:key/8d519fe8-e4fd-4519-aad2-2ef6284f0420   
+      - sse-kms-key-id arn:aws:kms:us-east-1:662843554732:key/8d519fe8-e4fd-4519-aad2-2ef6284f0420
       size: 1Gi
       cache:
         emptyDirSizeLimit: 500Mi
-  
+
     images:
       builder: quay.io/cdis/data-portal:2026.03
       kubectl: bitnami/kubectl:latest
       alpine: alpine:3.20
-  
+
     job:
       lockTtlSeconds: 1800
       ttlSecondsAfterFinished: 600
-  
+
     extraction:
       stripComponents: true
 
   resources:
     requests:
       memory: 128Mi
-      
+
   gitops:
     json: |
       {
@@ -525,6 +536,7 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.03'
 revproxy:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -533,6 +545,7 @@ revproxy:
     aws:
       group: default
 sheepdog:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: icgc-sheepdog-creds
@@ -545,6 +558,7 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.06'
 ssjdispatcher:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     credsFile: icgc-ssjdispatcher-creds
