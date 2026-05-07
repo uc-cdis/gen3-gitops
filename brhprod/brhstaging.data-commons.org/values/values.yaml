@@ -72,7 +72,7 @@ gen3-workflow:
   enabled: true
   replicaCount: 3
   image:
-    tag: ui
+    tag: misc-improvements
   resources:
     limits:
       cpu: 2
