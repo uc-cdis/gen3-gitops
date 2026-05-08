@@ -73,7 +73,7 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
-  replicaCount: 1
+  replicaCount: 3
   image:
     tag: misc-improvements
   resources:
