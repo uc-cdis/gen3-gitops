@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gen3-jcoinprod
+  name: gen3-jcoin
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,17 +10,17 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: chore/icgc-nginx-test
       helm:
-        releaseName: gen3-jcoinprod
+        releaseName: gen3-jcoin
         valueFiles:
-          - $values/jcoinprod/jcoin.datacommons.io/values/values.yaml
+          - $values/unfunded/jcoin.datacommons.io/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: feat/jcoin-unfunded
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: jcoinprod-helm
+    namespace: jcoinhelm
   syncPolicy:
     managedNamespaceMetadata:
       labels:

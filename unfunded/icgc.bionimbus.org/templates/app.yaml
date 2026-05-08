@@ -10,17 +10,17 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: master
       helm:
         releaseName: gen3-icgc
         valueFiles:
-          - $values/icgc/icgc.bionimbus.org/values/values.yaml
+          - $values/unfunded/gen3.datacommons.io/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: feat/icgc-unfunded
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: icgc-helm
+    namespace: icgchelm
   syncPolicy:
     managedNamespaceMetadata:
       labels:
