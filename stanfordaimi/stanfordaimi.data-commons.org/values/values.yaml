@@ -61,7 +61,7 @@ audit:
     createK8sAuditSecret: true
 
 
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: false
   esEndpoint:
   externalSecrets:
