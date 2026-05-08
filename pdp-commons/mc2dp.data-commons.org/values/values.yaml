@@ -16,13 +16,10 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
   image:
     tag: '2025.12'
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   replicaCount: 2
   esEndpoint: vpc-pdp-commons-gen3-metadata-2-uxeiendqin66xtsv6p4h3upv5u.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 dashboard:
   dashboardConfig:
     bucket: dashboard-851725307933-pdp-commons-gen3
