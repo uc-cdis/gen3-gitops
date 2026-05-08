@@ -1,4 +1,4 @@
-global:
+/global:
   aws:
     enabled: true
     account: 637423560817
@@ -56,7 +56,7 @@ audit:
     dbcreds: "externalgen3_default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   # Disabled. We don't use this service in this environment.
   enabled: false
   # Lower cost
