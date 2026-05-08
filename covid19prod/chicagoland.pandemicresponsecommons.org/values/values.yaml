@@ -25,12 +25,9 @@ auspice:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-auspice
     tag: v2.25.gen3.2.15
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-covid19prod-gen3-metadata-2-kd46ogc4c4lcwpmvkxwsprqgn4.us-east-1.es.amazonaws.com
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
