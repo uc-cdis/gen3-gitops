@@ -1,7 +1,7 @@
 ambassador:
   jupyterNamespace: jupyter-pods
   image:
-    tag: "1.14.4"
+    tag: 1.14.4
   replicaCount: 4
 arborist:
   replicaCount: 4
@@ -31,7 +31,7 @@ cedar:
   enabled: true
   image:
     repository: quay.io/cdis/cedar-wrapper-service
-    tag: "0.7.0"
+    tag: 0.7.0
   cedar_client_job_enabled: false
   externalSecrets:
     createCedarClientSecret: false
@@ -392,7 +392,7 @@ manifestservice:
     manifestserviceG3auto: healprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.04'
+    tag: integration202606
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healprod-helm--manifest-service-sa
@@ -1437,7 +1437,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: integration202606
 portal:
   replicaCount: 4
   autoscaling:
@@ -1538,4 +1538,4 @@ wts:
     wtsOidcClient: healprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.04'
+    tag: integration202606
