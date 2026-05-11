@@ -442,7 +442,10 @@ metadata:
                  },
                  "keep_original_fields": false,
                  "field_mappings": {
-                     "authz": "",
+                     "authz": { 
+                        "type": "string", 
+                        "default" : "/open"
+                     },
                      "tags": "path:tags",
                      "_unique_id": "path:mc2dp_global_id",
                      "commons": "path:data_source",
