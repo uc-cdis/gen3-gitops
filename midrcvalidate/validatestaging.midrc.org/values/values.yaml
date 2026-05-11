@@ -19,7 +19,7 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcvalidate--validatestaging-helm--audit-sqs-receiver
   image:
     tag: '2026.04'
-aws-es-proxy:
+aws-sigv4-proxy:
   replicaCount: 4
   autoscaling:
     enabled: false
@@ -28,9 +28,6 @@ aws-es-proxy:
     targetCPUUtilizationPercentage: 40
   enabled: true
   esEndpoint: vpc-midrcvalidate-gen3-metadata2-a2aewhaq6k3ytdy6sp4dhlmnmm.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
