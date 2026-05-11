@@ -512,7 +512,7 @@ fence:
     fenceJwtKeys: midrcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.0.3'
+    tag: 13.0.3
   metricsEnabled: true
   serviceAccount:
     annotations:
@@ -956,7 +956,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: integration202606
 portal:
   autoscaling:
     enabled: false
@@ -972,7 +972,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.40.1'
+    tag: 5.40.1
 revproxy:
   autoscaling:
     enabled: false
@@ -1027,4 +1027,4 @@ wts:
     wtsOidcClient: midrcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.04'
+    tag: integration202606
