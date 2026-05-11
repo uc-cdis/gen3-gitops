@@ -58,9 +58,8 @@ audit:
     dbcreds: "gen3-ai-default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
-  esEndpoint: ""
   externalSecrets:
     awsCreds: "gen3-ai-default-aws-es-proxy-creds"
   esEndpoint: vpc-gen3-ai-gen3-metadata-wcqwdpwxzoz3fpseni55ugqq6u.us-east-1.es.amazonaws.com
