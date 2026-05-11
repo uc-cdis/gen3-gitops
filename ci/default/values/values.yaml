@@ -40,6 +40,12 @@ mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
   enabled: false
 
+netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.27.128.128/25
+      - 172.27.128.0/25
+
 postgresql:
   primary:
     persistence:
