@@ -444,6 +444,11 @@ alloy-configmap-data: |
       target_label = "namespace"
     }
     rule {
+      source_labels = ["__meta_kubernetes_namespace"]
+      regex = "calico-apiserver|calico-system|argocd"
+      action = "drop"
+    }
+    rule {
       source_labels = ["__meta_kubernetes_pod_name"]
       target_label = "pod"
     }
