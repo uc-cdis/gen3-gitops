@@ -3018,7 +3018,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -3117,7 +3117,7 @@ manifestservice:
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.04'
+    tag: integration202606
 metadata:
   autoscaling:
     enabled: false
@@ -3147,7 +3147,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: integration202606
 portal:
   autoscaling:
     enabled: false
@@ -3163,7 +3163,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
+    tag: feature_data_library
     pullPolicy: Always
 revproxy:
   autoscaling:
