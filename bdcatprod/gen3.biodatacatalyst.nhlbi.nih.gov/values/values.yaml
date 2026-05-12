@@ -2908,6 +2908,117 @@ fence:
       nih-nhlbi-topmed-freeze10-walk-phasst-scd-phs001514-v3-r1-c2:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-biolincc-an-april-ocelot-phs004582-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-an-infant-avica-phs004584-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-alfa-phs004561-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-bard-phs004585-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-vida-phs004587-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-dash-phs004553-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004495-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-h1n1-phs004540-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-heirs-phs004477-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-hit-radio-phs004545-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-kids-dott-phs004590-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-lrc-cppt-phs004589-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-masm-phs004541-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-nanb-tah-phs004538-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-pactg-phs004581-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-peace-phs004562-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-power-up-phs004559-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-reds-ii-chagas-phs004528-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-reds-ii-ms-phs004524-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-reds-ii-rise-phs004507-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-shep-phs004555-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-solvd-phs003668-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-timi-ii-phs004550-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-tohp-phs004556-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-transform-hf-phs004560-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-trap-phs004558-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-vats-phs004557-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-whi-phs004266-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-whi-phs004266-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-mint-phs004546-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-ninds-shine-trial-phs004544-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-adult-phs003463-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-autopsy-phs003768-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-pediatrics-phs003461-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-childhs-metaair-phs001604-r1-v3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-decaf-phs001546-r1-v3-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1        
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
