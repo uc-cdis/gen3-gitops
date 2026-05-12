@@ -317,6 +317,9 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: dicom_header_file_guid
+                src: dicom_header_file_guid
+                fn: set
               - name: data_file_source_node
                 src: source_node
                 fn: set
@@ -353,6 +356,7 @@ etl:
           - name: data_format
           - name: data_type
           - name: data_category
+          - name: dicom_header_file_guid
           - name: annotation_method
           - name: annotation_name
           - name: annotator_id
@@ -527,6 +531,7 @@ fluentd:
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
   pdb: true
+  awshelper_container_image: quay.io/cdis/awshelper:master
   aws:
     account: '813684607867'
     awsEsProxyRole: midrcprod--midrcprod-helm--es-access
@@ -539,7 +544,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcprod-waf/6dae1fe2-287d-4cec-9537-0b8fa1f7d93c
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.1/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.2/schema.json
   dispatcherJobNum: '10'
   environment: midrcprod
   externalSecrets:
