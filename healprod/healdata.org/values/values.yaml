@@ -1,7 +1,7 @@
 ambassador:
   jupyterNamespace: jupyter-pods
   image:
-    tag: 1.4.2
+    tag: 1.14.4
   replicaCount: 4
 arborist:
   replicaCount: 4
