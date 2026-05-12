@@ -74,6 +74,21 @@ portal:
               }
             ]
           },
+          "systemUse": {
+            "systemUseTitle": "Data Use Agreement for Academic and Institutional Users",
+            "systemUseText": [
+               "The Canine Data Commons (\"Platform\") provides controlled access to genomic data for the canine research community, supporting the management and sharing of data to accelerate discovery and development of treatments and prevention strategies for canine cancer. The Platform is designed to protect Controlled Data in accordance with applicable security and privacy requirements, including NIST SP 800-171.",
+              "Access to the Platform is granted based on approved authorization, least privilege, and need-to-know principles, and may be subject to repository-specific Data Use Agreements (DUAs). Users agree to access only data for which they are authorized and to comply with all applicable DUAs and platform controls. Users must maintain the confidentiality of their authentication credentials and may not share access or attempt to bypass security mechanisms.",
+              "All data must be handled in accordance with applicable regulatory, contractual, and platform requirements. Users may not download, store, transmit, or process Controlled Data outside of approved environments unless explicitly authorized. Redistribution of Controlled Data, including posting to external systems or repositories, is strictly prohibited.",
+              "Users are strictly prohibited from attempting to re-identify individuals or contact study participants. Any suspected re-identification, unauthorized access, or security incident must be reported immediately. All user activity on the Platform may be logged, monitored, and reviewed to ensure compliance with security requirements.",
+              "The Platform must be used only for lawful purposes and in accordance with all applicable Federal, State, Local, and institutional requirements. Users agree to access the system only through approved, secure methods and may not attempt to disrupt, intercept, or misuse system resources.",
+              "All data are provided \"as is\" without warranties of any kind. Failure to comply with these Terms of Use or applicable agreements may result in immediate suspension or termination of access, as well as administrative, contractual, or legal action. The Platform operates under a shared responsibility model, and users are responsible for adhering to security and compliance obligations as defined during the assigned Platform training.",
+              "By selecting \"Accept,\" the user certifies that they have read, understand, and agree to comply with these Terms of Use and any applicable Data Use Agreements, and that they will ensure compliance by any individuals under their supervision."
+            ],
+            "expireUseMsgDays": 365,
+            "showOnlyOnLogin": true,
+            "displayUseMsg": "cookie"
+          },
           "navigation": {
             "items": [
               {
