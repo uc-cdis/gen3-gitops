@@ -51,6 +51,13 @@ kube-state-metrics:
   configuration:
     enabled: false
 
+metrics-server:
+  enabled: true
+  targetRevision: "3.13.0"
+  hostNetworkEnabled: false
+  configuration:
+    enabled: false
+
 karpenter:
   enabled: true
   targetRevision: "1.8.6"
