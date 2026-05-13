@@ -1,0 +1,215 @@
+global:
+  aws:
+    enabled: true
+    account: "662843554732"
+    hatchery_role: "arn:aws:iam::662843554732:role/gen3-service/unfunded-vpodc-staging-hatchery-sa"
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-external-secrets-sa"
+    wafv2:
+      enabled: true
+      wafAclArn: ""
+  dev: false
+  externalSecrets:
+    deploy: true
+  postgres:
+    dbCreate: true
+    externalSecret: "unfunded-aurora-master-password"
+  environment: "unfunded"
+  hostname: "vpodc-staging.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: "100"
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "portal"
+  ddEnabled: false
+
+ambassador:
+  enabled: true
+
+arborist:
+  enabled: true
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-audit-sa"
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-es-proxy:
+  enabled: true
+  esEndpoint: "vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com"
+  externalSecrets:
+    awsCreds: "unfunded-vpodc-staging-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-dicom-viewer-creds"
+
+
+fence:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-fence-sa"
+
+  externalSecrets:
+    fenceJwtKeys: "unfunded-vpodc-staging-fence-jwt-keys"
+    fenceConfig: "unfunded-vpodc-staging-fence-config"
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sGoogleAppSecrets: true
+    dbcreds: "unfunded-vpodc-staging-fence-creds"
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: false
+  image:
+    repository: "quay.io/cdis/frontend-framework"
+    tag: "main"
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: true
+
+  hatchery:
+    sidecarContainer:
+      cpu-limit: '0.1'
+      memory-limit: 256Mi
+      image: quay.io/cdis/ecs-ws-sidecar:master
+      env:
+        NAMESPACE: "{{ .Release.Namespace }}"
+        HOSTNAME: "{{ .Values.global.hostname }}"
+      args: []
+      command:
+      - "/bin/bash"
+      - "./sidecar.sh"
+      lifecycle-pre-stop:
+      - su
+      - "-c"
+      - echo test
+      - "-s"
+      - "/bin/sh"
+      - root
+    containers:
+      -
+        target-port: 8888
+        cpu-limit: '1.0'
+        memory-limit: 2Gi
+        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
+        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
+        env:
+          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
+        args:
+        - "--NotebookApp.base_url=/lw-workspace/proxy/"
+        - "--NotebookApp.default_url=/lab"
+        - "--NotebookApp.password=''" #pragma: allowlist secret
+        - "--NotebookApp.token=''"
+        - "--NotebookApp.shutdown_no_activity_timeout=5400"
+        - "--NotebookApp.quit_button=False"
+        command:
+        - start-notebook.sh
+        path-rewrite: "/lw-workspace/proxy/"
+        use-tls: 'false'
+        ready-probe: "/lw-workspace/proxy/"
+        lifecycle-post-start:
+        - "/bin/sh"
+        - "-c"
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+          ln -s /data /home/$IAM/pd/; true
+        user-uid: 1000
+        fs-gid: 100
+        user-volume-location: "/home/jovyan/pd"
+        gen3-volume-location: "/home/jovyan/.gen3"
+
+
+indexd:
+  enabled: true
+  defaultPrefix: "dg.XXXX/"
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-manifestservice-sa"
+  externalSecrets:
+    createK8sManifestServiceSecret: true
+
+metadata:
+  enabled: true
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  enabled: true
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-sheepdog-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: true
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-requestor-creds"
+
+revproxy:
+  enabled: true
+
+sheepdog:
+  enabled: true
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  enabled: true
+  externalSecrets:
+    dbcreds: "unfunded-vpodc-staging-wts-creds"
+    createK8sWtsSecret: true
