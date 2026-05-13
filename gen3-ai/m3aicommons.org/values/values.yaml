@@ -279,7 +279,7 @@ requestor:
     dbcreds: "gen3-ai-default-requestor-creds"
 
 revproxy:
-  replicas: 3
+  replicaCount: 3
   enabled: true
 
 sheepdog:
