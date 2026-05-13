@@ -18,23 +18,23 @@
             },
             {
                 "graphql": "_ct_series_file_count",
-                "name": "Computed Tomography (CT) Series",
-                "plural": "Computed Tomography (CT) Series"
+                "name": "CT Series",
+                "plural": "CT Series"
             },
             {
                 "graphql": "_dx_series_file_count",
-                "name": "Digital X-ray (DX) Series",
-                "plural": "Digital X-ray (DX) Series"
+                "name": "DX Series",
+                "plural": "DX Series"
             },
             {
                 "graphql": "_cr_series_file_count",
-                "name": "Computed Radiography (CR) Series",
-                "plural": "Computed Radiography (CR) Series"
+                "name": "CR Series",
+                "plural": "CR Series"
             },
             {
                 "graphql": "_mr_series_file_count",
-                "name": "Magnetic Resonance (MR) Series",
-                "plural": "Magnetic Resonance (MR) Series"
+                "name": "MR Series",
+                "plural": "MR Series"
             },
             {
                 "graphql": "_dicom_annotation_file_count",
@@ -50,6 +50,12 @@
         "public": true,
         "description": "The Jupyter notebooks contained in this notebook viewer pull data from various sources to generate and output useful tables, charts, graphs, and models. Each notebook is static, meaning the data being used by the notebooks is not updated in real time. Executable versions of these notebooks can be downloaded from <a href='https://github.com/MIDRC/tutorial_notebooks'> MIDRC's GitHub Repository</a>. If you’d like to browse the machine learning-related algorithms and code being developed by MIDRC, please visit <a href='https://midrc.org/algorithms'>the algorithms page</a> on our website.",
         "resources": [
+            {
+                "title": "Representativeness In Interoperable Databases",
+                "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
+                "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
+                "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
+            },            
             {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
@@ -148,11 +154,11 @@
                     "label": "Query Data"
                 },
                 {
-                    "name": "Workspace",
-                    "icon": "data-analyze",
-                    "body": "Perform analysis on the MIDRC Data Commons data using Jupyter Notebooks.",
-                    "link": "/workspace",
-                    "label": "Run Analysis"
+                "name": "Workspace",
+                "icon": "data-analyze",
+                "body": "Perform analysis on the MIDRC Data Commons data using Jupyter Notebooks.",
+                "link": "/workspace",
+                "label": "Run Analysis"
                 }
             ],
             "homepageChartNodes": [
@@ -177,12 +183,12 @@
                     "name": "CR Series"
                 },
                 {
-                    "node": "mr_series_file",
-                    "name": "MR Series"
-                },
-                {
                     "node": "radiology_report",
                     "name": "Radiology Reports"
+                },
+                {
+                    "node": "mr_series_file",
+                    "name": "MR Series"
                 }
             ]
         },
@@ -235,10 +241,10 @@
         "navigation": {
             "items": [
                 {
-                    "name": "Discovery",
+                    "name": "Datasets",
                     "link": "/discovery",
                     "icon": "query",
-                    "tooltip": "Dataset discovery"
+                    "tooltip": "The Datasets page provides free-text and tag-based search over published datasets in MIDRC along with links to publications and data download buttons."
                 },
                 {
                     "name": "Exploration",
@@ -267,11 +273,12 @@
                     "color": "#a2a2a2"
                 },
                 {
-                    "name": "Workspace",
-                    "link": "/workspace",
-                    "icon": "workspace",
-                    "tooltip": "The Workspace provides a secure cloud environment featuring Jupyter Notebooks and RStudio."
+                "name": "Workspace",
+                "link": "/workspace",
+                "icon": "workspace",
+                "tooltip": "The Workspace provides a secure cloud environment featuring Jupyter Notebooks and RStudio."
                 }
+
             ]
         },
         "topBar": {
@@ -295,6 +302,10 @@
                 {
                     "link": "https://www.midrc.org/resources",
                     "name": "Resources"
+                },
+                {
+                    "link": "https://staging.midrc.org/dashboard/Public/documentation/Release_notes_final.pdf",
+                    "name": "Release Notes"
                 },
                 {
                     "link": "https://docs.gen3.org/gen3-resources/user-guide/",
@@ -517,8 +528,8 @@
                     "_dx_series_file_count",
                     "_cr_series_file_count",
                     "_mr_series_file_count",
-                    "_radiology_report_count",
-                    "project_id"
+                    "project_id",
+                    "_radiology_report_count"
                 ],
                 "linkFields": [
                     "license",
@@ -893,7 +904,7 @@
                 },
                 "test_result_text": {
                     "chartType": "fullPie",
-                    "title": "COVID-19 Test Result"
+                    "title": "Test Result"
                 },
                 "test_name": {
                     "chartType": "fullPie",
@@ -903,7 +914,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "COVID-19 Tests",
+                        "title": "Measurements",
                         "fields": [
                             "test_method",
                             "test_result_text",
@@ -1005,7 +1016,22 @@
         },
         {
             "tabTitle": "Imaging Studies",
-            "charts": {},
+            "charts": {
+                "loinc_system": {
+                    "chartType": "fullPie",
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
+                },
+                "study_modality": {
+                    "chartType": "fullPie",
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
+                },
+                "loinc_contrast": {
+                    "chartType": "fullPie",
+                    "title": "LOINC Contrast"
+                }
+            },
             "filters": {
                 "tabs": [
                     {
@@ -1116,7 +1142,6 @@
                     "_dx_series_file_count",
                     "_cr_series_file_count",
                     "_mr_series_file_count",
-                    "_radiology_report_count",
                     "data_format",
                     "data_category",
                     "data_type",
@@ -1126,7 +1151,8 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
-                    "project_id"
+                    "project_id",
+                    "_radiology_report_count"
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
@@ -1302,16 +1328,16 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "Radiology Reports Filters",
+                        "title": "Report Properties",
                         "searchFields": [
                             "submitter_id"
                         ],
                         "fields": [
-                            "report_generation_method",
-                            "report_modification_method",
                             "modality",
                             "body_part_examined",
                             "study_description",
+                            "report_generation_method",
+                            "report_modification_method",
                             "project_id"
                         ]
                     },
@@ -1584,6 +1610,7 @@
                         "title": "Annotation Properties",
                         "fields": [
                             "source_node",
+                            "data_type",
                             "annotation_method",
                             "annotation_name",
                             "manufacturer",
@@ -1592,8 +1619,7 @@
                             "series_description",
                             "software_versions",
                             "data_format",
-                            "data_category",
-                            "data_type"
+                            "data_category"
                         ]
                     }
                 ]
@@ -1848,9 +1874,26 @@
             },
             {
                 "name": "Publication URL",
-                "field": "data_url",
+                "field": "doi_publication",
                 "contentType": "link",
-                "width": 300,
+                "length": 25,
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Cases",
+                "field": "cases_count",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Publication Year",
+                "field": "doi_publication_year",
+                "contentType": "string",
+                "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
             }
@@ -1909,6 +1952,12 @@
                             "name": "Data Description",
                             "field": "data_description",
                             "contentType": "string",
+                            "includeIfNotAvailable": false
+                        },
+                        {
+                            "name": "Data DOI",
+                            "field": "data_doi",
+                            "contentType": "link",
                             "includeIfNotAvailable": false
                         },
                         {
@@ -1990,6 +2039,12 @@
                             "includeIfNotAvailable": false
                         },
                         {
+                            "name": "Publication DOI",
+                            "field": "doi_publication",
+                            "contentType": "link",
+                            "includeIfNotAvailable": false
+                        },
+                        {
                             "name": "Primary Site",
                             "field": "primary_site",
                             "contentType": "string",
@@ -2045,6 +2100,12 @@
                 "name": "primary_site",
                 "displayName": "Primary Site",
                 "color": "#981f32",
+                "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
                 "display": true
             }
         ]

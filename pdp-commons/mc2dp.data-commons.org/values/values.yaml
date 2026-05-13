@@ -63,7 +63,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.20'
+    tag: '0.21'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -437,11 +437,15 @@ metadata:
                  "adapter": "gen3",
                  "config": {
                      "guid_type": "aggmds_metadata_entry",
-                     "study_field": "gen3_discovery"
+                     "study_field": "gen3_discovery",
+                     "batchSize": 100
                  },
                  "keep_original_fields": false,
                  "field_mappings": {
-                     "authz": "",
+                     "authz": {
+                        "type": "string",
+                        "default" : "/open"
+                     },
                      "tags": "path:tags",
                      "_unique_id": "path:mc2dp_global_id",
                      "commons": "path:data_source",
