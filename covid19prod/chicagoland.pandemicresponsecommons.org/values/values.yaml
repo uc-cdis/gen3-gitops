@@ -1,16 +1,13 @@
 ambassador:
   jupyterNamespace: jupyter-pods
 arborist:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
 audit:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     auditG3auto: covid19prod-audit-g3auto
@@ -21,11 +18,13 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-receiver
 auspice:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-auspice
     tag: v2.25.gen3.2.15
 aws-es-proxy:
+  replicaCount: 2
   enabled: true
   esEndpoint: vpc-covid19prod-gen3-metadata-2-kd46ogc4c4lcwpmvkxwsprqgn4.us-east-1.es.amazonaws.com
   image:
@@ -52,11 +51,7 @@ covid19-notebook-etl:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-notebook-etl
     tag: 5.1.6
 dashboard:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-236714345101-covid19-prod-gen3
     prefix: chicagoland.pandemicresponsecommons.org
@@ -435,17 +430,13 @@ etl:
     spark:
       tag: '2026.04'
 fence:
+  replicaCount: 2
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/covid19/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-sender
-  autoscaling:
-    enabled: true
-    maxReplicas: 10
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -495,12 +486,8 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:236714345101:certificate/e5edf56f-4003-4ee3-9ecd-162aaf19c058
 guppy:
+  replicaCount: 2
   authFilterField: auth_resource_path
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
   configIndex: covid19_array-config
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -519,6 +506,7 @@ guppy:
     - index: covid19_dataset
       type: dataset
 hatchery:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -632,12 +620,8 @@ hatchery:
         ]
       }
 indexd:
+  replicaCount: 2
   defaultPrefix: dg.63D5/
-  autoscaling:
-    enabled: true
-    maxReplicas: 8
-    minReplicas: 4
-    targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
     serviceCreds: covid19prod-indexd-service-creds
@@ -645,6 +629,7 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.04'
 manifestservice:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     manifestserviceG3auto: covid19prod-manifestservice-g3auto
@@ -655,6 +640,7 @@ manifestservice:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--manifest-service-sa
 metadata:
+  replicaCount: 2
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -665,21 +651,13 @@ metadata:
 mutatingWebhook:
   enabled: false
 peregrine:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.04'
 portal:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   resources:
     requests:
@@ -695,11 +673,7 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.04'
 revproxy:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -708,16 +682,13 @@ revproxy:
     aws:
       group: covid19prod
 sheepdog:
-  autoscaling:
-    enabled: true
-    maxReplicas: 4
-    minReplicas: 2
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.04'
 sower:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     createK8sPelicanServiceSecret: true
@@ -788,6 +759,7 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2025.08'
 ssjdispatcher:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     credsFile: covid19prod-ssjdispatcher-creds
@@ -801,6 +773,7 @@ tube:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2025.08'
 wts:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     createWtsOidcClientSecret: false
