@@ -1,215 +1,320 @@
+# Updated staging values.yaml
+# Base: user-provided staging values
+# Applied: prod service enablement and image/version pins from user-provided prod values
+# Review inferred staging resources before deploy: argo-wrapper buckets, dashboard bucket/IRSA,
+# cohort-middleware secret, ohdsi-webapi secret, ssjdispatcher secret, and sower/pelican secret.
+
 global:
   aws:
     enabled: true
-    account: "662843554732"
-    hatchery_role: "arn:aws:iam::662843554732:role/gen3-service/unfunded-vpodc-staging-hatchery-sa"
+    account: '662843554732'
+    hatchery_role: arn:aws:iam::662843554732:role/gen3-service/unfunded-vpodc-staging-hatchery-sa
     secretStoreServiceAccount:
       enabled: true
       name: external-secrets
-      roleArn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-external-secrets-sa"
+      roleArn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-external-secrets-sa
     wafv2:
       enabled: true
-      wafAclArn: ""
+      wafAclArn: ''
   dev: false
   externalSecrets:
     deploy: true
   postgres:
     dbCreate: true
-    externalSecret: "unfunded-aurora-master-password"
-  environment: "unfunded"
-  hostname: "vpodc-staging.data-commons.org"
-  revproxyArn: "arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+    externalSecret: unfunded-aurora-master-password
+  environment: unfunded
+  hostname: vpodc-staging.data-commons.org
+  revproxyArn: arn:aws:acm:us-east-1:419939494982:certificate/04695470-5b09-41a9-bccb-f5da3dd0f5a4
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   portalApp: gitops
   publicDataSets: false
-  tierAccessLevel: "private"
-  tierAccessLimit: "100"
+  tierAccessLevel: private
+  tierAccessLimit: '100'
   netPolicy:
     enabled: false
-  dispatcherJobNum: "10"
-  frontendRoot: "portal"
+  dispatcherJobNum: '10'
+  frontendRoot: gen3ff
   ddEnabled: false
 
 ambassador:
+  replicaCount: 2
   enabled: true
 
 arborist:
+  replicaCount: 2
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-arborist-creds"
+    dbcreds: unfunded-vpodc-staging-arborist-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
+    tag: '2025.12'
 
 argo-wrapper:
-  enabled: false
-
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
+    tag: VA-2025.10.28
+  scalingGroups:
+    default: '{{workflow.name}}'
+  s3Bucket: unfunded-vpodc-staging-argo-user-artifacts-downloadable
+  internalS3Bucket: unfunded-vpodc-staging-argo-bucket
+  environment: unfunded-vpodc-staging
 audit:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-audit-sa"
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-audit-sa
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-audit-creds"
+    dbcreds: unfunded-vpodc-staging-audit-creds
     createK8sAuditSecret: true
-
-
+  image:
+    tag: '2025.12'
 aws-es-proxy:
   enabled: true
-  esEndpoint: "vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com"
+  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
-    awsCreds: "unfunded-vpodc-staging-aws-es-proxy-creds"
-
+    awsCreds: unfunded-vpodc-staging-aws-es-proxy-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
+    tag: v1.3.1
 dicom-server:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-dicom-server-creds"
-
+    dbcreds: unfunded-vpodc-staging-dicom-server-creds
 dicom-viewer:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-dicom-viewer-creds"
-
-
+    dbcreds: unfunded-vpodc-staging-dicom-viewer-creds
 fence:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-fence-sa"
-
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-fence-sa
   externalSecrets:
-    fenceJwtKeys: "unfunded-vpodc-staging-fence-jwt-keys"
-    fenceConfig: "unfunded-vpodc-staging-fence-config"
-    fenceGoogleAppCredsSecret: ""
-    fenceGoogleStorageCredsSecret: ""
+    fenceJwtKeys: unfunded-vpodc-staging-fence-jwt-keys
+    fenceConfig: unfunded-vpodc-staging-fence-config
+    fenceGoogleAppCredsSecret: ''
+    fenceGoogleStorageCredsSecret: ''
     createK8sGoogleAppSecrets: true
-    dbcreds: "unfunded-vpodc-staging-fence-creds"
-
+    dbcreds: unfunded-vpodc-staging-fence-creds
   usersync:
     usersync: true
-    schedule: "*/30 * * * *"
+    schedule: '*/30 * * * *'
     syncFromDbgap: false
-    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
-    slack_webhook: ""
+    userYamlS3Path: s3://cdis-gen3-users/dev/user.yaml
+    slack_webhook: ''
     slack_send_dbgap: false
-
-frontend-framework:
-  enabled: false
   image:
-    repository: "quay.io/cdis/frontend-framework"
-    tag: "main"
-
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
+    tag: '2025.12'
+frontend-framework:
+  enabled: true
+  image:
+    repository: quay.io/cdis/vpodc-data-commons
+    tag: 0.15
+  replicaCount: 2
 grafana:
   enabled: false
-
 guppy:
-  enabled: false
-
+  enabled: true
+  authFilterField: auth_resource_path
+  replicaCount: 4
+  autoscaling:
+    enabled: false
+    maxReplicas: 1
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 40
+  configIndex: etl_mickey_array-config
+  esEndpoint: http://elasticsearch:9200
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: '2026.02'
+  indices:
+  - index: etl_mickey
+    type: patients
+  - index: file_etl_mickey
+    type: file
+  - index: omop_etl_index_cohortb_20251119
+    type: cohort_b_patients
+  - index: omop_etl_index_cohorta_20260311
+    type: cohort_a_patients
+  - index: omop_etl_index_cohortf_20260408
+    type: cohort_f_patients
+  - index: vpodc_patients
+    type: vpodc_patients
 hatchery:
   enabled: true
-
   hatchery:
     sidecarContainer:
       cpu-limit: '0.1'
       memory-limit: 256Mi
-      image: quay.io/cdis/ecs-ws-sidecar:master
+      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.02
       env:
-        NAMESPACE: "{{ .Release.Namespace }}"
-        HOSTNAME: "{{ .Values.global.hostname }}"
+        NAMESPACE: '{{ .Release.Namespace }}'
+        HOSTNAME: '{{ .Values.global.hostname }}'
       args: []
       command:
-      - "/bin/bash"
-      - "./sidecar.sh"
+      - /bin/bash
+      - ./sidecar.sh
       lifecycle-pre-stop:
       - su
-      - "-c"
+      - -c
       - echo test
-      - "-s"
-      - "/bin/sh"
+      - -s
+      - /bin/sh
       - root
     containers:
-      -
-        target-port: 8888
-        cpu-limit: '1.0'
-        memory-limit: 2Gi
-        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
-        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
-        env:
-          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
-        args:
-        - "--NotebookApp.base_url=/lw-workspace/proxy/"
-        - "--NotebookApp.default_url=/lab"
-        - "--NotebookApp.password=''" #pragma: allowlist secret
-        - "--NotebookApp.token=''"
-        - "--NotebookApp.shutdown_no_activity_timeout=5400"
-        - "--NotebookApp.quit_button=False"
-        command:
-        - start-notebook.sh
-        path-rewrite: "/lw-workspace/proxy/"
-        use-tls: 'false'
-        ready-probe: "/lw-workspace/proxy/"
-        lifecycle-post-start:
-        - "/bin/sh"
-        - "-c"
-        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
-          ln -s /data /home/$IAM/pd/; true
-        user-uid: 1000
-        fs-gid: 100
-        user-volume-location: "/home/jovyan/pd"
-        gen3-volume-location: "/home/jovyan/.gen3"
-
-
+    - target-port: 8888
+      cpu-limit: '1.0'
+      memory-limit: 2Gi
+      name: (Tutorials) Example Analysis Jupyter Lab Notebooks
+      image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
+      env:
+        FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
+      args:
+      - --NotebookApp.base_url=/lw-workspace/proxy/
+      - --NotebookApp.default_url=/lab
+      - --NotebookApp.password=''
+      - --NotebookApp.token=''
+      - --NotebookApp.shutdown_no_activity_timeout=5400
+      - --NotebookApp.quit_button=False
+      command:
+      - start-notebook.sh
+      path-rewrite: /lw-workspace/proxy/
+      use-tls: 'false'
+      ready-probe: /lw-workspace/proxy/
+      lifecycle-post-start:
+      - /bin/sh
+      - -c
+      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true
+      user-uid: 1000
+      fs-gid: 100
+      user-volume-location: /home/jovyan/pd
+      gen3-volume-location: /home/jovyan/.gen3
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
+    tag: 2.7.2
 indexd:
   enabled: true
-  defaultPrefix: "dg.XXXX/"
+  defaultPrefix: dg.XXXX/
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-indexd-creds"
+    dbcreds: unfunded-vpodc-staging-indexd-creds
     createK8sServiceCredsSecret: true
-
-
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
+    tag: '2025.12'
 manifestservice:
   enabled: true
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-manifestservice-sa"
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-manifestservice-sa
   externalSecrets:
     createK8sManifestServiceSecret: true
-
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
+    tag: '2025.12'
 metadata:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-metadata-creds"
+    dbcreds: unfunded-vpodc-staging-metadata-creds
     createK8sMetadataSecret: true
-
+  esEndpoint: http://elasticsearch:9200
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    tag: '2025.12'
 peregrine:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-sheepdog-creds"
-
+    dbcreds: unfunded-vpodc-staging-sheepdog-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: '2025.12'
 pidgin:
   enabled: false
-
 portal:
-  enabled: true
-
+  enabled: false
 requestor:
   enabled: false
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-requestor-creds"
-
+    dbcreds: unfunded-vpodc-staging-requestor-creds
 revproxy:
   enabled: true
-
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    tag: '2025.12'
+  ingress:
+    aws:
+      group: unfunded-vpodc-staging
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-sheepdog-creds"
-
+    dbcreds: unfunded-vpodc-staging-sheepdog-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
+    tag: '2025.12'
 ssjdispatcher:
-  enabled: false
-
+  enabled: true
+  externalSecrets:
+    credsFile: unfunded-vpodc-staging-ssjdispatcher-creds
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
+    tag: '2025.12'
+  indexing: quay.io/cdis/indexs3client:2025.12
 sower:
-  enabled: false
-
+  enabled: true
+  externalSecrets:
+    pelicanserviceG3auto: unfunded-vpodc-staging-pelicanservice-g3auto
+    createK8sSowerJobsSecret: false
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
+    tag: '2025.12'
+  sowerConfig: []
 wts:
   enabled: true
   externalSecrets:
-    dbcreds: "unfunded-vpodc-staging-wts-creds"
+    dbcreds: unfunded-vpodc-staging-wts-creds
     createK8sWtsSecret: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
+    tag: '2025.12'
+cohort-middleware:
+  enabled: true
+  replicaCount: 2
+  externalSecrets:
+    cohortMiddlewareG3Auto: unfunded-vpodc-staging-cohort-middleware-g3auto
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
+    tag: VA-2026.03.18
+dashboard:
+  enabled: true
+  replicaCount: 4
+  dashboardConfig:
+    bucket: dashboard-662843554732-unfunded-gen3
+    prefix: vpodc-staging.data-commons.org
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
+    tag: '2025.12'
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-staging-dashboard-access
+etl:
+  esEndpoint: elasticsearch
+  image:
+    tube:
+      tag: '2025.12'
+    spark:
+      tag: '2025.12'
+ohdsi-atlas:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-atlas
+    tag: VA-2026.02.24
+ohdsi-webapi:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
+    tag: VA-2025.10.24
+  externalSecrets:
+    dbcreds: unfunded-vpodc-staging-ohdsi-webapi-creds
