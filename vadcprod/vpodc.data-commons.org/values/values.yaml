@@ -354,7 +354,8 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.12"
+    # tag: "2025.12"
+    tag: "gunicorn-worker-test"
 revproxy:
   replicaCount: 4
   autoscaling:
