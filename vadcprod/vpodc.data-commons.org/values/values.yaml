@@ -345,11 +345,12 @@ ohdsi-webapi:
     dbcreds: vadcprod-ohdsi-webapi-creds
 peregrine:
   replicaCount: 4
-  autoscaling:
-    enabled: false
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  resources:
+    requests:
+      memory: 512Mi
+    limits:
+      memory: 2Gi
+    
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
