@@ -1,21 +1,20 @@
 ambassador:
+  replicaCount: 2
   jupyterNamespace: ''
 arborist:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2025.12'
 argo-wrapper:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
     tag: 2.2.7
 audit:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     auditG3auto: vhdcprod-audit-g3auto
@@ -25,29 +24,18 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::199578515826:role/vhdcprod--vhdcprod-helm--audit-sqs-receiver
-awshelper:
-  enabled: true
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2025.12'
+
 cohort-middleware:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     cohortMiddlewareG3Auto: vhdcprod-cohort-middleware-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
     tag: 0.4.9
+
 dashboard:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-199578515826-vhdcprod-gen3
     prefix: va.data-commons.org
@@ -62,11 +50,7 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/vhdcprod/user.yaml
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -75,12 +59,9 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2025.12'
-fluentd:
-  enabled: true
-  image:
-    repository: fluent/fluentd-kubernetes-daemonset
-    tag: v1.15.3-debian-cloudwatch-1.0
+
 global:
+  pdb: true
   aws:
     account: '199578515826'
     awsEsProxyRole: vhdcprod--vhdcprod-helm--es-access
@@ -108,135 +89,137 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:199578515826:certificate/393e9cca-a115-4748-9ce7-928fc666b7f0
+
 hatchery:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.12'
-  json: |-
-    {
-      "user-namespace": "jupyter-pods",
-      "sub-dir": "/lw-workspace",
-      "user-volume-size": "10Gi",
-      "sidecar": {
-        "cpu-limit": "0.1",
-        "memory-limit": "128Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2024.10",
-        "env": {
-          "NAMESPACE": "default",
-          "HOSTNAME": "va.data-commons.org"
-        },
-        "args": [],
-        "command": [
-          "sleep",
-          "infinity"
-        ],
-        "lifecycle-pre-stop": [
-          "su",
-          "-c",
-          "echo test",
-          "-s",
-          "/bin/sh",
-          "root"
-        ]
-      },
-      "containers": [
-        {
-          "target-port": 8787,
-          "cpu-limit": "2",
-          "memory-limit": "2048Mi",
-          "name": "R Studio",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/vadc-rstudio:vadc-rstudio-1.0.0",
+  hatchery
+    json: |-
+      {
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "cpu-limit": "0.1",
+          "memory-limit": "128Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2024.10",
           "env": {
-            "DISABLE_AUTH": "true"
+            "NAMESPACE": "default",
+            "HOSTNAME": "va.data-commons.org"
           },
           "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/",
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "2",
-          "memory-limit": "2048Mi",
-          "name": "Bioinfo - Python/R (Lab Edition)",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-vadc:vadc-jupyter-vadc-1.0.0",
-          "env": {
-            "NAMESPACE": "default",
-            "HOSTNAME": "va.data-commons.org",
-            "FRAME_ANCESTORS": "https://va.data-commons.org/"
-          },
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.default_url=/lab",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''",
-            "--NotebookApp.shutdown_no_activity_timeout=5400"
-          ],
           "command": [
-            "start-notebook.sh"
+            "sleep",
+            "infinity"
           ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
+          "lifecycle-pre-stop": [
+            "su",
             "-c",
-            "ln -s /data /home/${NB_USER}/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
         },
-        {
-          "target-port": 8888,
-          "cpu-limit": "4.0",
-          "memory-limit": "8192Mi",
-          "name": "Bioinfo - Python/R (Lab Edition)",
-          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-vadc:vadc-jupyter-vadc-1.0.0",
-          "env": {
-            "NAMESPACE": "default",
-            "HOSTNAME": "va.data-commons.org",
-            "FRAME_ANCESTORS": "https://va.data-commons.org/"
+        "containers": [
+          {
+            "target-port": 8787,
+            "cpu-limit": "2",
+            "memory-limit": "2048Mi",
+            "name": "R Studio",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/vadc-rstudio:vadc-rstudio-1.0.0",
+            "env": {
+              "DISABLE_AUTH": "true"
+            },
+            "args": [],
+            "path-rewrite": "/",
+            "use-tls": "false",
+            "ready-probe": "/",
+            "fs-gid": 100
           },
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.default_url=/lab",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''",
-            "--NotebookApp.shutdown_no_activity_timeout=5400"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "ln -s /data /home/${NB_USER}/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
-        }
-      ]
-    }
+          {
+            "target-port": 8888,
+            "cpu-limit": "2",
+            "memory-limit": "2048Mi",
+            "name": "Bioinfo - Python/R (Lab Edition)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-vadc:vadc-jupyter-vadc-1.0.0",
+            "env": {
+              "NAMESPACE": "default",
+              "HOSTNAME": "va.data-commons.org",
+              "FRAME_ANCESTORS": "https://va.data-commons.org/"
+            },
+            "args": [
+              "--NotebookApp.base_url=/lw-workspace/proxy/",
+              "--NotebookApp.default_url=/lab",
+              "--NotebookApp.password=''",
+              "--NotebookApp.token=''",
+              "--NotebookApp.shutdown_no_activity_timeout=5400"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "ln -s /data /home/${NB_USER}/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "memory-limit": "8192Mi",
+            "name": "Bioinfo - Python/R (Lab Edition)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-vadc:vadc-jupyter-vadc-1.0.0",
+            "env": {
+              "NAMESPACE": "default",
+              "HOSTNAME": "va.data-commons.org",
+              "FRAME_ANCESTORS": "https://va.data-commons.org/"
+            },
+            "args": [
+              "--NotebookApp.base_url=/lw-workspace/proxy/",
+              "--NotebookApp.default_url=/lab",
+              "--NotebookApp.password=''",
+              "--NotebookApp.token=''",
+              "--NotebookApp.shutdown_no_activity_timeout=5400"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "ln -s /data /home/${NB_USER}/pd/; true"
+            ],
+            "user-uid": 1000,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd"
+          }
+        ]
+      }
+
 indexd:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     serviceCreds: vhdcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2025.12'
+
 manifestservice:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     manifestserviceG3auto: vhdcprod-manifestservice-g3auto
@@ -246,12 +229,9 @@ manifestservice:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::199578515826:role/vhdcprod--vhdcprod-helm--manifest-service-sa
+
 metadata:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -259,8 +239,10 @@ metadata:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2025.12'
+
 mutatingWebhook:
-  enabled: true
+  enabled: false
+
 ohdsi-atlas:
   enabled: true
   image:
@@ -272,21 +254,14 @@ ohdsi-webapi:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
     tag: VA-2025.01.15
 peregrine:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2025.12'
+
 portal:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   gitops:
     css: ":root {\n  --g3-color__base-blue: #194C90;\n  --g3-color__base-blue-light:\
@@ -381,12 +356,9 @@ portal:
   image:
     repository: quay.io/cdis/data-portal-prebuilt
     tag: 'va.data-commons.org-2025.03'
+
 revproxy:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -394,17 +366,16 @@ revproxy:
   ingress:
     aws:
       group: vhdcprod-helm
+
 sheepdog:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2025.12'
+
 ssjdispatcher:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     credsFile: vhdcprod-ssjdispatcher-creds
@@ -412,12 +383,9 @@ ssjdispatcher:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2025.12'
   indexing: quay.io/cdis/indexs3client:2025.12
+
 wts:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   externalSecrets:
     createWtsOidcClientSecret: false
