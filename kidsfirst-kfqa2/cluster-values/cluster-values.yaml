@@ -46,7 +46,7 @@ karpenter:
   enabled: true
   targetRevision: "1.8.6"
 karpenter-crds:
-  amiSelectorName: "EKS-1-33-al23*"
+  amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
   selectorTag: kfqa2
   migration: true
@@ -79,7 +79,7 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:
-          - "32500"          
+          - "32500"
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1

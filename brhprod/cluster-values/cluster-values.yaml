@@ -59,7 +59,7 @@ karpenter:
   targetRevision: "1.8.6"
 
 karpenter-crds:
-  amiSelectorName: "EKS-1-33-al23*"
+  amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
   selectorTag: brhprod
   migration: true
