@@ -343,6 +343,7 @@ ohdsi-webapi:
     tag: VA-2025.10.24
   externalSecrets:
     dbcreds: vadcprod-ohdsi-webapi-creds
+    createK8sOhdsiWebApiConfigSecret: true
 peregrine:
   replicaCount: 4
   autoscaling:
