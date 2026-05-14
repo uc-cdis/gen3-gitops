@@ -344,6 +344,7 @@ ohdsi-webapi:
   externalSecrets:
     dbcreds: vadcprod-ohdsi-webapi-creds
     createK8sOhdsiWebApiConfigSecret: true
+    pushSecret: true
 peregrine:
   replicaCount: 4
   autoscaling:
