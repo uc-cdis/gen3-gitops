@@ -23,7 +23,7 @@ global:
     dbCreate: true
     externalSecret: unfunded-aurora-master-password
   environment: unfunded
-  hostname: vpodcstaging.data-commons.org
+  hostname: vpodc-staging.data-commons.org
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/12c79298-0ff5-4c52-b63b-3302b7119e12
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   portalApp: gitops
