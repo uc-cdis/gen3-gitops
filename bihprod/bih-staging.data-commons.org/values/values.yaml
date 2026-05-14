@@ -1,18 +1,16 @@
 ambassador:
   enabled: true
+  replicaCount: 2
   jupyterNamespace: jupyter-pods-bihstaging-helm
 arborist:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
 audit:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
@@ -23,10 +21,14 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
 manifestservice:
   enabled: false
+  replicaCount: 2
 aws-sigv4-proxy:
   enabled: true
+  replicaCount: 2
   esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
 dashboard:
+  enabled: true
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-533267425233-bihprod-gen3
     prefix: bih.data-commons.org
@@ -109,16 +111,13 @@ etl:
     spark:
       tag: '2026.04'
 fence:
+  replicaCount: 2
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih-staging/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-sender
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
@@ -130,10 +129,12 @@ fence:
     tag: '2026.04'
 fluentd:
   enabled: true
+  replicaCount: 2
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
+  replicaCount: 2
   customConfig:
     branch: main
     enabled: true
@@ -155,6 +156,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2
   dev: false
+  pdb: true
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.2.1/schema.json
   dispatcherJobNum: '10'
   environment: bihstaging-cloudauto
@@ -176,6 +178,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:533267425233:certificate/dcb6f91b-6e4c-4458-a9d7-3750ba92b754
 hatchery:
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2026.04'
@@ -285,6 +288,7 @@ hatchery:
 guppy:
   configIndex: bih_array-config
   enabled: true
+  replicaCount: 2
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
@@ -300,24 +304,16 @@ guppy:
       type: imaging_series
 indexd:
   defaultPrefix: dg.MD1RBIH/
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
   enabled: true
+  replicaCount: 2
   externalSecrets:
     serviceCreds: bihstaging-cloudauto-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.04'
 metadata:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
   enabled: true
+  replicaCount: 2
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: bihstaging-cloudauto-metadata-g3auto
@@ -326,11 +322,13 @@ metadata:
     tag: '2026.04'
 peregrine:
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.04'
 portal:
   enabled: true
+  replicaCount: 2
   customConfig:
     enabled: true
     dir: bihprod/bih-staging.data-commons.org/values/portal/
@@ -341,16 +339,13 @@ portal:
     tag: '2026.04'
 requestor:
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
     tag: '2026.04'
 revproxy:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
     tag: '2026.04'
@@ -359,6 +354,7 @@ revproxy:
       group: bihprod
 sheepdog:
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.04'
@@ -370,6 +366,7 @@ ssjdispatcher:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/gen3_service/bihprod--bihstaging-cloudauto--ssj-job
   enabled: true
+  replicaCount: 2
   externalSecrets:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds
   image:
@@ -378,6 +375,7 @@ ssjdispatcher:
   indexing: quay.io/cdis/indexs3client:2026.04
 wts:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     createWtsOidcClientSecret: false
     wtsG3auto: bihstaging-cloudauto-wts-g3auto
