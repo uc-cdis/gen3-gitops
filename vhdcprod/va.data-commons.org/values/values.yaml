@@ -96,7 +96,7 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.12'
-  hatchery
+  hatchery:
     json: |-
       {
         "user-namespace": "jupyter-pods",
