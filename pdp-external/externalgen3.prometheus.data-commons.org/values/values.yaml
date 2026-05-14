@@ -1,4 +1,5 @@
 global:
+  pdb: true
   aws:
     enabled: true
     account: 637423560817

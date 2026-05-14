@@ -1,18 +1,16 @@
 ambassador:
   enabled: true
+  replicaCount: 2
   jupyterNamespace: jupyter-pods-bihstaging-helm
 arborist:
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
 audit:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
@@ -23,10 +21,13 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
 manifestservice:
   enabled: false
+  replicaCount: 2
 aws-sigv4-proxy:
   enabled: true
+  replicaCount: 2
   esEndpoint: vpc-bihstaging-gen3-metadata-246rfk4w4ymusdypoqs2g6ml3m.us-east-1.es.amazonaws.com
 dashboard:
+  replicaCount: 2
   dashboardConfig:
     bucket: dashboard-533267425233-bihprod-gen3
     prefix: bih.data-commons.org
@@ -109,16 +110,13 @@ etl:
     spark:
       tag: '2026.04'
 fence:
+  replicaCount: 2
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih-staging/user.yaml
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-sender
-  autoscaling:
-    enabled: true
-    maxReplicas: 1
-    minReplicas: 1
     targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
@@ -130,10 +128,12 @@ fence:
     tag: '2026.04'
 fluentd:
   enabled: true
+  replicaCount: 2
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
+  replicaCount: 2
   customConfig:
     branch: main
     enabled: true
@@ -155,6 +155,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:533267425233:regional/webacl/bihprod-waf/540985b3-9a4b-4d25-9881-7f1ce48d78d2
   dev: false
+  pdb: true
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/bih_dictionary/0.2.1/schema.json
   dispatcherJobNum: '10'
   environment: bihstaging-cloudauto
