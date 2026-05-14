@@ -1404,7 +1404,7 @@ metadata:
     metadataG3auto: healpreprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '4.3.0'
   useAggMds: true
   schedule: 30 8 * * *
   suspendCronjob: false
