@@ -3,17 +3,13 @@ ambassador:
   jupyterNamespace: jupyter-pods-bihprod-helm
 arborist:
   replicaCount: 2
-  autoscaling:
-    enabled: false
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.04'
 audit:
   enabled: true
+  replicaCount: 2
   externalSecrets:
     auditG3auto: bihprod-audit-g3auto
   image:
@@ -24,6 +20,7 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-receiver
 aws-es-proxy:
   enabled: true
+  replicaCount: 2
   esEndpoint: vpc-bihprod-gen3-metadata-2-yv2vbhiq7hyejz2wazjrq5w3pe.us-east-1.es.amazonaws.com
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
@@ -117,11 +114,6 @@ fence:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-sender
   replicaCount: 2
-  autoscaling:
-    enabled: false
-    maxReplicas: 1
-    minReplicas: 1
-    targetCPUUtilizationPercentage: 40
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -135,11 +127,13 @@ fence:
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
 fluentd:
   enabled: true
+  replicaCount: 2
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 frontend-framework:
   enabled: true
+  replicaCount: 2
   env:
     DATACOMMONS: bih_frontend_app
     DATADOG_APPLICATION_ID: 407210b5-f9e9-4acb-a268-3e6ad027e794
