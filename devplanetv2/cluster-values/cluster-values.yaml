@@ -81,7 +81,7 @@ karpenter-crds:
     limits:
       memory: 1100Gi
     consolidationPolicy: "WhenEmpty"
-    consolidateAfter: "1m"
+    consolidateAfter: "5m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
@@ -112,11 +112,13 @@ karpenter-crds:
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
+    consolidationPolicy: "WhenEmpty"
+    consolidateAfter: "5m"    
     volumeSize: 80Gi
   gpu:
     enabled: true
     consolidation: true
-    consolidateAfter: "30s"
+    consolidateAfter: "5m"
     consolidationPolicy: "WhenEmpty"
     expireAfter: "168h"
     volumeSize: 80Gi
@@ -142,7 +144,7 @@ karpenter-crds:
     limits:
       memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
-    consolidateAfter: "1m"
+    consolidateAfter: "5m"
     expireAfter: "72h"
     volumeSize: 80Gi
     requirements:
