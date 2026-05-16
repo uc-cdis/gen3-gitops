@@ -6,7 +6,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.04'
+    tag: '2026.05'
 audit:
   enabled: true
   replicaCount: 2
@@ -14,7 +14,7 @@ audit:
     auditG3auto: bihprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.04'
+    tag: '2026.05'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihprod-helm--audit-sqs-receiver
@@ -106,9 +106,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2026.04'
+      tag: '2026.05'
     spark:
-      tag: '2026.04'
+      tag: '2026.05'
 fence:
   serviceAccount:
     annotations:
@@ -121,7 +121,7 @@ fence:
     fenceJwtKeys: bihprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.04'
+    tag: '2026.05'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/midrc-bih/user.yaml
@@ -182,7 +182,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.04'
+    tag: '2026.05'
   hatchery:
     json: |-
       {
@@ -192,7 +192,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.03",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.05",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "imaging-hub.data-commons.org",
@@ -292,7 +292,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.04'
+    tag: '2026.05'
   indices:
     - index: bih_dataset
       type: dataset
@@ -315,7 +315,7 @@ indexd:
     serviceCreds: bihprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.04'
+    tag: '2026.05'
 manifestservice:
   enabled: false
 metadata:
@@ -331,14 +331,14 @@ metadata:
     metadataG3auto: bihprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '2026.05'
 mutatingWebhook:
   enabled: false
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: '2026.05'
 portal:
   enabled: true
   replicaCount: 2
@@ -349,12 +349,12 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.04'
+    tag: '2026.05'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.04'
+    tag: '2026.05'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -365,7 +365,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.04'
+    tag: '2026.05'
   ingress:
     aws:
       group: bihprod
@@ -373,7 +373,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.04'
+    tag: '2026.05'
   fenceUrl: https://imaging-hub.data-commons.org/user
 wts:
   enabled: true
@@ -383,4 +383,4 @@ wts:
     wtsOidcClient: bihprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.04'
+    tag: '2026.05'
