@@ -444,6 +444,11 @@ alloy-configmap-data: |
       target_label = "namespace"
     }
     rule {
+      source_labels = ["__meta_kubernetes_namespace"]
+      regex = "calico-apiserver|calico-system|argocd"
+      action = "drop"
+    }
+    rule {
       source_labels = ["__meta_kubernetes_pod_name"]
       target_label = "pod"
     }
@@ -459,6 +464,12 @@ alloy-configmap-data: |
     rule {
       source_labels = ["__meta_kubernetes_pod_label_app"]
       target_label = "app"
+    }
+
+    // drop high-cardinality rollout labels
+    rule {
+      action = "labeldrop"
+      regex = "pod_template_hash|controller_revision_hash|apps_kubernetes_io_pod_index"
     }
   }
 
