@@ -114,9 +114,9 @@ funnel:
     dbcreds: brhstaging-helm-funnel-creds
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   funnel:
-    image:
-      repository: quay.io/cdis/funnel
-      tag: test-exec_error_fails_worker
+    # image:
+    #   repository: quay.io/cdis/funnel
+    #   tag: test-exec_error_fails_worker
     Logger:
       Level: debug
     Kubernetes:
