@@ -65,14 +65,39 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - category: data_file
-        doc_type: file
-        injecting_props:
-          case:
+      - name: vpodc_case
+        doc_type: case
+        type: aggregator
+        root: case
+        props:
+          - name: project_id
+          - name: submitter_id
+        nested_props:
+          - name: case_clinical_demographic
+            path: clinical_demographic
             props:
-              - name: submitter_id
-              - name: project_id
-        name: file_tube_etl_mickey
+              - name: Days_To_Birth
+              - name: Days_To_Death
+              - name: Ethnicity
+              - name: Gender
+              - name: Race
+              - name: Vital_Status
+              - name: Year_Of_Birth
+              - name: Year_Of_Death
+              - name: DeceasedFlag
+              - name: MaritalStatus
+              - name: PatientOver90Flag
+          - name: case_oncology_primary
+            path: oncology_primary
+            props:
+              - name: ICDOSite
+              - name: Stagegroupclinical
+              - name: PrimarysiteX
+      - name: vpodc_data_file
+        doc_type: data_file
+        type: collector
+        root: None
+        category: data_file
         props:
           - name: object_id
           - name: md5sum
@@ -80,9 +105,13 @@ etl:
           - name: file_size
           - name: data_format
           - name: data_type
+          - name: data_category
           - name: state
-        root: None
-        type: collector
+        injecting_props:
+          case:
+            props:
+              - name: submitter_id
+              - name: project_id
   image:
     tube:
       tag: "2025.12"
@@ -167,7 +196,9 @@ guppy:
   indices:
     - index: etl_mickey
       type: patients
-    - index: file_etl_mickey
+    - index: vpodc_case
+      type: case
+    - index: vpodc_data_file
       type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
