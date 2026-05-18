@@ -93,6 +93,20 @@ etl:
               - name: ICDOSite
               - name: Stagegroupclinical
               - name: PrimarysiteX
+              - name: Chemotherapy
+              - name: ChemotherapyFac
+              - name: Gradedifferentiation
+              - name: Histologyicdo3X
+              - name: Laterality
+              - name: Lymphvascularinvasionl
+              - name: Multiplicitycounter
+              - name: PhysiciansStage
+              - name: Radiation
+              - name: RadiationsurgerySequence
+              - name: SeerSummaryStage2000
+              - name: SequenceNumber
+              - name: Stagegroupbest
+              - name: TumorSize
       - name: vpodc_data_file
         doc_type: data_file
         type: collector
