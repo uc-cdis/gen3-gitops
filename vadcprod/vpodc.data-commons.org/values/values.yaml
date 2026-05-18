@@ -73,7 +73,7 @@ etl:
           - name: project_id
           - name: submitter_id
         nested_props:
-          - name: case_clinical_demographic
+          - name: clinical_demographic
             path: clinical_demographic
             props:
               - name: Days_To_Birth
@@ -87,7 +87,7 @@ etl:
               - name: DeceasedFlag
               - name: MaritalStatus
               - name: PatientOver90Flag
-          - name: case_oncology_primary
+          - name: oncology_primary
             path: oncology_primary
             props:
               - name: ICDOSite
