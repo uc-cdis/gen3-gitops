@@ -73,8 +73,8 @@ etl:
           - name: project_id
           - name: submitter_id
         nested_props:
-          - name: clinical_demographic
-            path: clinical_demographic
+          - name: clinical_demographics
+            path: clinical_demographics
             props:
               - name: Days_To_Birth
               - name: Days_To_Death
@@ -87,8 +87,8 @@ etl:
               - name: DeceasedFlag
               - name: MaritalStatus
               - name: PatientOver90Flag
-          - name: oncology_primary
-            path: oncology_primary
+          - name: oncology_primaries
+            path: oncology_primaries
             props:
               - name: ICDOSite
               - name: Stagegroupclinical
