@@ -318,3 +318,4 @@ ohdsi-webapi:
     tag: VA-2025.10.24
   externalSecrets:
     dbcreds: unfunded-vpodc-staging-ohdsi-creds
+    createK8sOhdsiWebApiConfigSecret: true
