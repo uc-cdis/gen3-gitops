@@ -21,7 +21,7 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcprod-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   autoscaling:
     enabled: false
     maxReplicas: 4
@@ -30,9 +30,6 @@ aws-es-proxy:
   replicaCount: 4
   enabled: true
   esEndpoint: vpc-midrcprod-gen3-metadata-2-g3zccvv7awc5samwqp62bc5g6y.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
