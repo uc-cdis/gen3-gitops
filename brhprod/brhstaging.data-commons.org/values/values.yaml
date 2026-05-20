@@ -116,13 +116,13 @@ funnel:
   funnel:
     image:
       repository: quay.io/cdis/funnel
-      tag: test-exec_error_fails_worker
+      tag: test-rename_temp_volume
     Logger:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
-      DisableReconciler: false
-      DisableJobCleanup: false
+      DisableReconciler: true
+      DisableJobCleanup: true
       ReconcileRate: 120s
       ReplicaCount: 2
       Executor:
