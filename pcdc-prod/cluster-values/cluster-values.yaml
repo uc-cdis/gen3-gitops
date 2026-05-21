@@ -101,7 +101,7 @@ alloy-configmap-data: |
   logging {
     level    = "info"
     format   = "json"
-    write_to = [loki.write.endpoint.receiver]
+    write_to = [loki.write.endpoint.receiver,loki.write.local_endpoint.receiver]
   }
 
   /////////////////////// OTLP START ///////////////////////
@@ -451,7 +451,7 @@ alloy-configmap-data: |
 
   loki.source.kubernetes "pods" {
     targets = discovery.relabel.all_pods.output
-    forward_to = [loki.write.endpoint.receiver]
+    forward_to = [loki.write.endpoint.receiver,loki.write.local_endpoint.receiver]
   }
 
   // kube-state-metrics
@@ -519,7 +519,7 @@ alloy-configmap-data: |
   loki.source.kubernetes_events "cluster_events" {
     job_name   = "integrations/kubernetes/eventhandler"
     log_format = "logfmt"
-    forward_to = [loki.write.endpoint.receiver]
+    forward_to = [loki.write.endpoint.receiver,loki.write.local_endpoint.receiver]
   }
 
 
@@ -564,5 +564,10 @@ alloy-configmap-data: |
     }
     endpoint {
       url = "http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push"
+      
+      headers = {
+        "X-Scope-OrgID" = "tenant1",
+      }
     }
+
   }
