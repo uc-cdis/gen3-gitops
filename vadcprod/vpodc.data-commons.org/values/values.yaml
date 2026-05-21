@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.12"
+    tag: "2026.05"
 audit:
   externalSecrets:
     auditG3auto: vadcprod-audit-g3auto
@@ -18,7 +18,7 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-receiver
   image:
-    tag: "2025.12"
+    tag: "2026.05"
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-vadcprod-gen3-metadata-2-vqrbyt4omluv7b2uqw5idjdwua.us-east-1.es.amazonaws.com
@@ -57,7 +57,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: "2025.12"
+    tag: "2026.05"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
@@ -85,9 +85,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: "2025.12"
+      tag: "2026.05"
     spark:
-      tag: "2025.12"
+      tag: "2026.05"
 fence:
   usersync:
     usersync: true
@@ -108,7 +108,7 @@ fence:
     fenceJwtKeys: vadcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.12"
+    tag: "2026.05"
 portal:
   enabled: false
 frontend-framework:
@@ -163,7 +163,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2026.02"
+    tag: "2026.05"
   indices:
     - index: etl_mickey
       type: patients
@@ -175,7 +175,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2025.12"
+    tag: "2026.05"
   hatchery:
     json: |
       {
@@ -296,14 +296,14 @@ indexd:
     serviceCreds: vadcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.12"
+    tag: "2026.05"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: vadcprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: "2025.12"
+    tag: "2026.05"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--manifest-service-sa
@@ -320,7 +320,7 @@ metadata:
     metadataG3auto: vadcprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.12"
+    tag: "2026.05"
 ohdsi-atlas:
   enabled: true
   image:
@@ -343,7 +343,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.12"
+    tag: "2026.05"
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -354,7 +354,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.12"
+    tag: "2026.05"
   ingress:
     aws:
       group: vadcprod
@@ -369,7 +369,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.12"
+    tag: "2026.05"
 sower:
   enabled: true
   externalSecrets:
@@ -377,7 +377,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2025.12"
+    tag: "2026.05"
   sowerConfig: []
 ssjdispatcher:
   enabled: true
@@ -385,8 +385,8 @@ ssjdispatcher:
     credsFile: vadcprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: "2025.12"
-  indexing: quay.io/cdis/indexs3client:2025.12
+    tag: "2026.05"
+  indexing: quay.io/cdis/indexs3client:2026.05
 wts:
   replicaCount: 4
   autoscaling:
@@ -401,4 +401,4 @@ wts:
     wtsOidcClient: vadcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: "2025.12"
+    tag: "2026.05"
