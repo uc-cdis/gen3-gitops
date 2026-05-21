@@ -1478,7 +1478,7 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.04'
-  replicaCount: 1
+  replicaCount: 2
 sower:
   serviceAccount:
     create: true
