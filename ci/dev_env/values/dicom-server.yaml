@@ -1,6 +1,0 @@
-dicom-server:
-  replicaCount: 2
-  enabled: false
-  image:
-    repository: "quay.io/cdis/gen3-orthanc"
-    tag: "master"

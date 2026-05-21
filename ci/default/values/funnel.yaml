@@ -14,7 +14,11 @@ funnel:
         Value: "workflow"
         Effect: "NoSchedule"
       Executor:
+        restartPolicy: OnFailure
+        backoffLimit: 0
         Annotations:
           karpenter.sh/do-not-disrupt: "true"
       Worker:
+        restartPolicy: OnFailure
+        backoffLimit: 0
         PriorityClassName: "system-cluster-critical"
