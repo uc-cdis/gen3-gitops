@@ -151,13 +151,17 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.7.0'
+    tag: '2.7.2'
   hatchery:
     json: |
       {
           "user-namespace": "jupyter-pods",
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
+          "shared-workspace": {
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+          },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
