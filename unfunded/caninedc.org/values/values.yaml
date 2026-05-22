@@ -1,7 +1,7 @@
 global:
   dev: false
   hostname: caninedc.org
-  frontendRoot: "gen3ff"
+  frontendRoot: gen3ff
   aws:
     enabled: true
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
@@ -37,14 +37,11 @@ arborist:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.05'
-aws-es-proxy:
+aws-sigv4-proxy:
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: canineprod-aws-es-proxy-creds
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: master
 indexd:
   defaultPrefix: dg.C78ne/
   externalSecrets:
@@ -114,8 +111,8 @@ ssjdispatcher:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj
   jobServiceAccount:
-      annotations:
-        eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj-job
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj-job
 metadata:
   externalSecrets:
     dbcreds: canineprod-metadata
@@ -221,7 +218,6 @@ hatchery:
       }
 audit:
   enabled: false
-
 frontend-framework:
   enabled: true
   customConfig:
