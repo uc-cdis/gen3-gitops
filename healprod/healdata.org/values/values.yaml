@@ -153,9 +153,10 @@ global:
 hatchery:
   hotNode:
     enabled: true
-    workspaceCapacityReservation:
-      cpu: 60
-      memory: 69Gi
+    # 20/ 30 person hotNode for demos
+    # workspaceCapacityReservation:
+    #   cpu: 60
+    #   memory: 69Gi
     availabilityZones:
       - us-east-1c
   replicaCount: 4
