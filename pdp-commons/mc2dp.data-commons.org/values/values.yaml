@@ -63,7 +63,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.17
+    tag: '0.21'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -137,7 +137,7 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: true
+    enabled: false
     gpu: true
     jupyter: false
 
@@ -158,6 +158,10 @@ hatchery:
           "user-namespace": "jupyter-pods",
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
+          "shared-workspace": {
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+          },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
@@ -437,11 +441,15 @@ metadata:
                  "adapter": "gen3",
                  "config": {
                      "guid_type": "aggmds_metadata_entry",
-                     "study_field": "gen3_discovery"
+                     "study_field": "gen3_discovery",
+                     "batchSize": 100
                  },
                  "keep_original_fields": false,
                  "field_mappings": {
-                     "authz": "",
+                     "authz": {
+                        "type": "string",
+                        "default" : "/open"
+                     },
                      "tags": "path:tags",
                      "_unique_id": "path:mc2dp_global_id",
                      "commons": "path:data_source",
@@ -569,7 +577,7 @@ metadata:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '4.1.1'
+    tag: '4.3.0'
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:

@@ -1,4 +1,5 @@
 ambassador:
+  jupyterNamespace: "jupyter-pods-emalinowskiv1-helm"
   enabled: true
   image:
     repository: quay.io/datawire/ambassador
@@ -125,13 +126,16 @@ etl:
     type: collector
 fence:
   enabled: true
+  usersync:
+    usersync: true
+    userYamlS3Path: s3://cdis-gen3-users/dev/user.yaml
   externalSecrets:
     createK8sGoogleAppSecrets: true
     fenceConfig: emalinowskiv1-fence-config
     fenceJwtKeys: emalinowskiv1-fence-jwt
   image:
     repository: quay.io/cdis/fence
-    tag: '2024.12'
+    tag: '2026.01'
 fluentd:
   enabled: true
   image:
@@ -163,7 +167,6 @@ global:
     kube_bucket: kube-emalinowskiv1-gen3
     logs_bucket: logs-emalinowskiv1-gen3
     sync_from_dbgap: 'False'
-    useryaml_s3path: s3://cdis-gen3-users/dev/user.yaml
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -193,182 +196,6 @@ hatchery:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2025.10'
-  json: |
-    {
-      "user-namespace": "jupyter-pods",
-      "sub-dir": "/lw-workspace",
-      "user-volume-size": "5Gi",
-      "sidecar": {
-        "cpu-limit": "1.0",
-        "memory-limit": "256Mi",
-        "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3fuse-sidecar:2023.04",
-        "env": {
-          "NAMESPACE": "default",
-          "HOSTNAME": "emalinowskiv1.planx-pla.net"
-        },
-        "args": [],
-        "command": [
-          "/bin/bash",
-          "/sidecarDockerrun.sh"
-        ],
-        "lifecycle-pre-stop": [
-          "su",
-          "-c",
-          "echo test",
-          "-s",
-          "/bin/sh",
-          "root"
-        ]
-      },
-      "containers": [
-        {
-          "target-port": 8787,
-          "cpu-limit": "1.0",
-          "memory-limit": "512Mi",
-          "name": "R Studio",
-          "image": "heliumdatastage/rstudio-server:1",
-          "env": {
-            "DISABLE_AUTH": "true"
-          },
-          "args": [],
-          "path-rewrite": "/",
-          "use-tls": "false",
-          "ready-probe": "/"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "512Mi",
-          "name": "Jupyter Notebook Bio Python",
-          "image": "quay.io/cdis/jupyter-notebook:jupyter-java-1.1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "4.0",
-          "memory-limit": "15512Mi",
-          "name": "Jupyter Notebook Power Python",
-          "image": "quay.io/cdis/jupyter-notebook:jupyter-java-1.1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100,
-          "user-volume-location": "/home/jovyan/pd"
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium Autoencoder Demo",
-          "image": "quay.io/cdis/auntoencoder-copd-demo:latest",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium Tensorflow-Pytorch",
-          "image": "heliumdatastage/tensorflow-pytorch-ext:1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        },
-        {
-          "target-port": 8888,
-          "cpu-limit": "1.0",
-          "memory-limit": "8096Mi",
-          "name": "Helium CIP Demo",
-          "image": "heliumdatastage/jup-cip:v1",
-          "env": {},
-          "args": [
-            "--NotebookApp.base_url=/lw-workspace/proxy/",
-            "--NotebookApp.password=''",
-            "--NotebookApp.token=''"
-          ],
-          "command": [
-            "start-notebook.sh"
-          ],
-          "path-rewrite": "/lw-workspace/proxy/",
-          "use-tls": "false",
-          "ready-probe": "/lw-workspace/proxy/",
-          "lifecycle-post-start": [
-            "/bin/sh",
-            "-c",
-            "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; ln -s $(pwd) /home/$IAM/pd/dockerHome; mkdir -p /home/$IAM/.jupyter/custom; echo \"define(['base/js/namespace'], function(Jupyter){Jupyter._target = '_self';})\" >/home/$IAM/.jupyter/custom/custom.js; ln -s /data /home/$IAM/pd/; true"
-          ],
-          "user-uid": 1000,
-          "fs-gid": 100
-        }
-      ]
-    }
 indexd:
   enabled: true
   externalSecrets:
@@ -638,7 +465,7 @@ tube:
 wts:
   enabled: true
   externalSecrets:
-    wtsG3auto: emalinowskiv1-wts-g3auto
+    createK8sWtsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: "2025.10"
