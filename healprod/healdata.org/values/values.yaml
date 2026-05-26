@@ -62,7 +62,7 @@ fence:
   replicaCount: 4
   autoscaling:
     enabled: false
-    maxReplicas: 3
+    maxReplicas: 4
     minReplicas: 2
     targetCPUUtilizationPercentage: 40
   enabled: true
