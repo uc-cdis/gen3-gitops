@@ -334,6 +334,9 @@ fence:
       cgci-htmcp-dlbcl-phs000235-2-open:
         cred: fence_bot
         region: us-east-1
+      data-refresh-dcf-manifest:
+        cred: fence_bot
+        region: us-east-1
       dcfprod-data-bucket:
         cred: fence_bot
         region: us-east-1
