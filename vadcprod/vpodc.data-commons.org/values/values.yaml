@@ -69,7 +69,7 @@ etl:
             props:
               - name: submitter_id
               - name: project_id
-        name: file_tube_etl_mickey
+        name: file_etl_mickey
         props:
           - name: object_id
           - name: md5sum
