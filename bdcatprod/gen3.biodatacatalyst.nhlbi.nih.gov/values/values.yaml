@@ -48,10 +48,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 4Gi
+        memory: 8Gi
     spark:
       requests:
-        memory: 2Gi
+        memory: 4Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch

@@ -114,7 +114,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.2.8
+    tag: 1.3.0
 global:
   pdb: true
   aws:
@@ -153,6 +153,10 @@ global:
 hatchery:
   hotNode:
     enabled: true
+    # 20/ 30 person hotNode for demos
+    # workspaceCapacityReservation:
+    #   cpu: 60
+    #   memory: 69Gi
     availabilityZones:
       - us-east-1c
   replicaCount: 4
@@ -1427,7 +1431,7 @@ metadata:
     metadataG3auto: healprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '4.3.0'
   useAggMds: true
   schedule: 0 9 * * *
   suspendCronjob: false
@@ -1460,7 +1464,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.04'
+    tag: '1.10.0'
 revproxy:
   enabled: true
   image:
@@ -1475,7 +1479,7 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.04'
-  replicaCount: 1
+  replicaCount: 2
 sower:
   serviceAccount:
     create: true

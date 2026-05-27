@@ -57,7 +57,7 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.04'
+    tag: 'feat_scoped-token'
   FENCE_CONFIG_PUBLIC:
     # 2h - temporary to unblock TES testing
     ACCESS_TOKEN_EXPIRES_IN: 7200
@@ -116,13 +116,13 @@ funnel:
   funnel:
     image:
       repository: quay.io/cdis/funnel
-      tag: test-exec_error_fails_worker
+      tag: test-rename_temp_volume
     Logger:
       Level: debug
     Kubernetes:
       JobsNamespace: "workflow-pods-brhstaging-helm"
-      DisableReconciler: false
-      DisableJobCleanup: false
+      DisableReconciler: true
+      DisableJobCleanup: true
       ReconcileRate: 120s
       ReplicaCount: 2
       Executor:
@@ -1182,7 +1182,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.04'
+    tag: '1.10.0'
 revproxy:
   replicaCount: 4
   autoscaling:
