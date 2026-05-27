@@ -48,7 +48,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.8.6"
+  targetRevision: "1.9.0"
   configuration:
     enabled: true
 
