@@ -69,7 +69,7 @@ etl:
             props:
               - name: submitter_id
               - name: project_id
-        name: file_etl_mickey
+        name: etl_mickey_file
         props:
           - name: object_id
           - name: md5sum
@@ -164,7 +164,7 @@ guppy:
   indices:
     - index: etl_mickey
       type: patients
-    - index: file_etl_mickey
+    - index: etl_mickey_file
       type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
