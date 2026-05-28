@@ -82,9 +82,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: "2025.12"
+      tag: "2026.06"
     spark:
-      tag: "2025.12"
+      tag: "2026.06"
 fence:
   usersync:
     usersync: true
@@ -160,7 +160,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2026.02"
+    tag: "2026.06"
   indices:
     - index: etl_mickey
       type: patients
@@ -376,7 +376,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.12"
+    tag: "2026.06"
 sower:
   enabled: true
   externalSecrets:
