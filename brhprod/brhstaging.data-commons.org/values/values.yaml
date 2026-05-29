@@ -134,6 +134,9 @@ funnel:
       Worker:
         restartPolicy: Never
         backoffLimit: 1
+      Resources:
+        Limits:
+          RamGb: 32768Mi
 global:
   pdb: true
   netPolicy:
