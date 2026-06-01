@@ -6,7 +6,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: '2026.06'
 audit:
   replicaCount: 2
   externalSecrets:
@@ -15,7 +15,7 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
   image:
-    tag: '2026.02'
+    tag: '2026.06'
 aws-es-proxy:
   enabled: true
   replicaCount: 2
@@ -30,7 +30,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.02'
+    tag: '2026.06'
   podSecurityContext:
     fsGroup: 1001
   securityContext: {}
@@ -49,7 +49,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'feat_embedding-vectors'
+    tag: '2026.06'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
@@ -69,10 +69,10 @@ gen3-user-data-library:
   replicaCount: 2
   env:
     - name: MAX_LIST_ITEMS
-      value: "50000"
+      value: '50000'
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.02'
+    tag: '2026.06'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
@@ -130,7 +130,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: '2026.06'
   indices:
     - index: pdp-commons-commons-index
       type: metadata
@@ -140,18 +140,15 @@ hatchery:
     enabled: false
     gpu: true
     jupyter: false
-
     availabilityZones:
       - us-east-1d
-
-    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
     workspaceCapacityReservation:
       cpu: 4
       memory: 9Gi
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.7.2'
+    tag: '2026.06'
   hatchery:
     json: |
       {
@@ -270,7 +267,7 @@ indexd:
     serviceCreds: pdp-commons-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: '2026.06'
 manifestservice:
   replicaCount: 2
   enabled: true
@@ -278,7 +275,7 @@ manifestservice:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.02'
+    tag: '2026.06'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--manifest-service-sa
@@ -577,7 +574,7 @@ metadata:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '4.3.0'
+    tag: '2026.06'
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:
@@ -587,20 +584,20 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: '2026.06'
 portal:
   enabled: false
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.02'
+    tag: '2026.06'
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: '2026.06'
   ingress:
     aws:
       group: pdp-commons
@@ -608,7 +605,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: '2026.06'
   replicaCount: 2
 ssjdispatcher:
   enabled: false
@@ -627,4 +624,4 @@ wts:
     wtsOidcClient: pdp-commons-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.02'
+    tag: '2026.06'
