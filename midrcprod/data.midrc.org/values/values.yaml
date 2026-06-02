@@ -1008,6 +1008,7 @@ sheepdog:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.05'
 ssjdispatcher:
+  enabled: false
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/gen3_service/midrcprod--default--ssj

@@ -62,14 +62,21 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - category: data_file
+      - name: etl_mickey_file 
         doc_type: file
+        type: collector
+        category: data_file
+        root: None
         injecting_props:
           case:
             props:
-              - name: submitter_id
-              - name: project_id
-        name: etl_mickey_file
+              - name: _case_submitter_id
+                src: submitter_id
+                fn: set
+              - name: _project_id
+                src: project_id
+                fn: set
+        
         props:
           - name: object_id
           - name: md5sum
@@ -78,8 +85,6 @@ etl:
           - name: data_format
           - name: data_type
           - name: state
-        root: None
-        type: collector
   image:
     tube:
       tag: "2026.06"
@@ -113,7 +118,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.16
+    tag: main
 global:
   pdb: true
   aws:
