@@ -67,7 +67,7 @@ etl:
         type: collector
         category: data_file
         root: None
-		injecting_props:
+        injecting_props:
           case:
             props:
               - name: _case_submitter_id
