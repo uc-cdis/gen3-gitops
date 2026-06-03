@@ -1459,7 +1459,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.04'
+    tag: '5.41.0'
 requestor:
   enabled: true
   image:
@@ -1504,7 +1504,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2026.04
+        image: quay.io/cdis/batch-export:6.1.0
         labels:
           internet: 'yes'
         memory-limit: 1Gi
