@@ -67,6 +67,18 @@ etl:
         type: collector
         category: data_file
         root: None
+        props:
+          - name: source_node
+          - name: submitter_id
+          - name: case_submitter_id
+          - name: data_category
+          - name: data_format
+          - name: data_type
+          - name: file_name
+          - name: file_size
+          - name: md5sum
+          - name: object_id
+          - name: state
         injecting_props:
           case:
             props:
@@ -76,15 +88,6 @@ etl:
               - name: _project_id
                 src: project_id
                 fn: set
-        
-        props:
-          - name: object_id
-          - name: md5sum
-          - name: file_name
-          - name: file_size
-          - name: data_format
-          - name: data_type
-          - name: state
   image:
     tube:
       tag: "2026.06"
