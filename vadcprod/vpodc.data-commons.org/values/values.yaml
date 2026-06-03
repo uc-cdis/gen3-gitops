@@ -78,6 +78,7 @@ etl:
           - name: file_size
           - name: md5sum
           - name: object_id
+          - name: modality
           - name: body_part_examined
           - name: study_instance_uid
           - name: series_instance_uid
