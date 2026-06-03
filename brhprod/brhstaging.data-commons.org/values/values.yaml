@@ -141,7 +141,9 @@ funnel:
         # PriorityClassName: "system-cluster-critical"
       Resources:
         Limits:
-          RamGb: 32768Mi
+          Cpus: "8"
+          RamGb: 32Gi
+          DiskGb: 60Gi
 global:
   pdb: true
   netPolicy:
