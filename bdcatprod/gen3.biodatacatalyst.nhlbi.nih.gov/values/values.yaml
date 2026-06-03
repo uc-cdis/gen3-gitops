@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 13.0.4
+    tag: 13.1.1
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -3015,7 +3015,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
