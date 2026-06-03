@@ -141,7 +141,8 @@ funnel:
         # PriorityClassName: "system-cluster-critical"
       Resources:
         Limits:
-          Cpus: "8"
+          # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
+          Cpus: 8000m
           RamGb: 32Gi
           DiskGb: 60Gi
 global:
