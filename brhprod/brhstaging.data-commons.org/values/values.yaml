@@ -75,8 +75,8 @@ gen3-workflow:
   enabled: true
   autoscaling:
     enabled: true
-    minReplicas: 1
-    maxReplicas: 3
+    minReplicas: 2
+    maxReplicas: 4
   image:
     tag: misc-improvements
   resources:
