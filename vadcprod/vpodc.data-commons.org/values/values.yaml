@@ -62,15 +62,15 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - name: etl_mickey_file 
+      - name: etl_mickey_file
         doc_type: file
         type: collector
         category: data_file
         root: None
         props:
           - name: source_node
+          - name: project_id
           - name: submitter_id
-          - name: case_submitter_id
           - name: data_category
           - name: data_format
           - name: data_type
@@ -87,11 +87,11 @@ etl:
         injecting_props:
           case:
             props:
-              - name: _case_submitter_id
-                src: submitter_id
+              - name: _case_id
+                src: id
                 fn: set
-              - name: _project_id
-                src: project_id
+              - name: case_submitter_id
+                src: submitter_id
                 fn: set
   image:
     tube:
