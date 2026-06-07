@@ -148,3 +148,41 @@ sower:
         cpu-limit: "1"
         memory-limit: 1Gi
       restart_policy: Never
+    - name: manifest-indexing
+      action: index-object-manifest
+      activeDealineSeconds: 600
+      serviceAccountName: sower-service-account
+      container:
+        name: job-task
+        image: quay.io/cdis/manifest-indexing:master
+        pull_policy: Always
+        env:
+          - name: BUCKET
+            value: sower-jobs-bucket
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: hostname
+        cpu-limit: "1"
+        memory-limit: 1Gi
+      restart_policy: Never
+    - name: indexd-manifest
+      action: index-object-manifest
+      activeDealineSeconds: 600
+      serviceAccountName: sower-service-account
+      container:
+        name: job-task
+        image: quay.io/cdis/download-indexd-manifest:master
+        pull_policy: Always
+        env:
+          - name: BUCKET
+            value: sower-jobs-bucket
+          - name: GEN3_HOSTNAME
+            valueFrom:
+              configMapKeyRef:
+                name: manifest-global
+                key: hostname
+        cpu-limit: "1"
+        memory-limit: 1Gi
+      restart_policy: Never
