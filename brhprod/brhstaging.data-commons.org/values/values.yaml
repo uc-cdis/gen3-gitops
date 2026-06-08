@@ -92,6 +92,7 @@ gen3-workflow:
     gen3workflowG3auto: brhstaging-helm-gen3workflow-g3auto
   gen3WorkflowConfig:
     debug: true
+    nWorkers: 4
     taskImageWhitelist:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
