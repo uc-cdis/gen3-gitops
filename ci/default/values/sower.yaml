@@ -157,8 +157,6 @@ sower:
         image: quay.io/cdis/manifest-indexing:master
         pull_policy: Always
         env:
-          - name: BUCKET
-            value: sower-jobs-bucket
           - name: GEN3_HOSTNAME
             valueFrom:
               configMapKeyRef:
@@ -166,7 +164,16 @@ sower:
                 key: hostname
         cpu-limit: "1"
         memory-limit: 1Gi
+        volumeMounts:
+          - mountPath: /creds.json
+            name: sower-jobs-creds-volume
+            readOnly: true
+            subPath: creds.json
       restart_policy: Never
+      volumes:
+        - name: sower-jobs-creds-volume
+          secret:
+            secretName: sower-jobs-g3auto
     - name: indexd-manifest
       action: index-object-manifest
       activeDealineSeconds: 600
@@ -185,4 +192,13 @@ sower:
                 key: hostname
         cpu-limit: "1"
         memory-limit: 1Gi
+        volumeMounts:
+          - mountPath: /creds.json
+            name: sower-jobs-creds-volume
+            readOnly: true
+            subPath: creds.json
       restart_policy: Never
+      volumes:
+        - name: sower-jobs-creds-volume
+          secret:
+            secretName: sower-jobs-g3auto
