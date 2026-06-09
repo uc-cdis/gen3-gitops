@@ -191,7 +191,7 @@ sower:
         cpu-limit: "1"
         memory-limit: 1Gi
         volumeMounts:
-          - mountPath: /creds.json
+          - mountPath: /config.json
             name: sower-jobs-creds-volume
             readOnly: true
             subPath: creds.json
