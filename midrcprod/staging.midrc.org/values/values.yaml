@@ -752,7 +752,7 @@ peregrine:
 portal:
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 3
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
   replicaCount: 4
