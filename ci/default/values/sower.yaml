@@ -170,10 +170,10 @@ sower:
             readOnly: true
             subPath: creds.json
       restart_policy: Never
-      volumes:
-        - name: sower-jobs-creds-volume
-          secret:
-            secretName: sower-jobs-g3auto
+    volumes:
+      - name: sower-jobs-creds-volume
+        secret:
+          secretName: sower-jobs-g3auto
     - name: indexd-manifest
       action: download-indexd-manifest
       activeDealineSeconds: 600
