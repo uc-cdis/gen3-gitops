@@ -71,6 +71,7 @@ etl:
           - name: source_node
           - name: project_id
           - name: submitter_id
+          - name: case_submitter_id
           - name: data_category
           - name: data_format
           - name: data_type
@@ -89,9 +90,6 @@ etl:
             props:
               - name: _case_id
                 src: id
-                fn: set
-              - name: case_submitter_id
-                src: submitter_id
                 fn: set
   image:
     tube:
