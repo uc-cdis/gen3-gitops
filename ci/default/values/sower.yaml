@@ -183,6 +183,8 @@ sower:
         image: quay.io/cdis/download-indexd-manifest:master
         pull_policy: Always
         env:
+          - name: BUCKET
+            value: sower-jobs-bucket
           - name: GEN3_HOSTNAME
             valueFrom:
               configMapKeyRef:
