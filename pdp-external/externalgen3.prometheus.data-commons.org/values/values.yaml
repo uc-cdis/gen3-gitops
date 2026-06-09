@@ -271,10 +271,13 @@ metadata:
     requests:
       memory: "105Mi"
       cpu: "15m"
+  # Needs more ram/ cpu
   resources:
+    limits:
+      memory: 2Gi
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: "512Mi"
+      cpu: "500m"
 
   externalSecrets:
     createK8sMetadataSecret: true
