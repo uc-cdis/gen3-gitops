@@ -286,7 +286,8 @@ revproxy:
     serviceName: agent
     authzPolicy: "workspace"
     authzService: "jupyterhub"
-    csrfCheck: true
+    csrfCheck: false
+    rewritePath: false
 
 sheepdog:
   replicaCount: 2
