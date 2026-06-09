@@ -5,15 +5,15 @@ sower:
     tag: 'master'
   enabled: true
   sowerjobsG3auto: |
-  {
-    "download-indexd-manifest": {
-      "job_requires": {
-        "arborist_url": "http://arborist-service",
-        "job_access_req": []
-      },
-      "bucket": "sower-jobs-bucket"
+    {
+      "download-indexd-manifest": {
+        "job_requires": {
+          "arborist_url": "http://arborist-service",
+          "job_access_req": []
+        },
+        "bucket": "sower-jobs-bucket"
+      }
     }
-  }
   serviceAccount:
     # -- (bool) Specifies whether a service account should be created.
     create: true
