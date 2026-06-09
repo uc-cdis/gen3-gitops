@@ -174,8 +174,8 @@ sower:
         - name: sower-jobs-creds-volume
           secret:
             secretName: sower-jobs-g3auto
-    - name: download-indexd-manifest
-      action: index-object-manifest
+    - name: indexd-manifest
+      action: download-indexd-manifest
       activeDealineSeconds: 600
       serviceAccountName: sower-service-account
       container:
