@@ -168,7 +168,7 @@ sower:
           - mountPath: /creds.json
             name: sower-jobs-creds-volume
             readOnly: true
-            subPath: creds.json
+            subPath: config.json
       restart_policy: Never
       volumes:
         - name: sower-jobs-creds-volume
