@@ -51,12 +51,19 @@ kube-state-metrics:
   configuration:
     enabled: false
 
+metrics-server:
+  enabled: true
+  targetRevision: "3.13.0"
+  hostNetworkEnabled: false
+  configuration:
+    enabled: false
+
 karpenter:
   enabled: true
   targetRevision: "1.8.6"
 
 karpenter-crds:
-  amiSelectorName: "EKS-1-33-al23*"
+  amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
   selectorTag: gen3-ai
   migration: true

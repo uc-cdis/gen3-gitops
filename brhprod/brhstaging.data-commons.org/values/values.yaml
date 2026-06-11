@@ -57,7 +57,10 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.04'
+    tag: 'feat_scoped-token'
+  FENCE_CONFIG_PUBLIC:
+    # 2h - temporary to unblock TES testing
+    ACCESS_TOKEN_EXPIRES_IN: 7200
 fluentd:
   enabled: true
   image:
@@ -70,7 +73,10 @@ gen3-discovery-ai:
     tag: 1.1.0
 gen3-workflow:
   enabled: true
-  replicaCount: 3
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
   image:
     tag: misc-improvements
   resources:
@@ -86,6 +92,7 @@ gen3-workflow:
     gen3workflowG3auto: brhstaging-helm-gen3workflow-g3auto
   gen3WorkflowConfig:
     debug: true
+    nWorkers: 4
     taskImageWhitelist:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
@@ -113,7 +120,7 @@ funnel:
   funnel:
     image:
       repository: quay.io/cdis/funnel
-      tag: test-exec_error_fails_worker
+      tag: test-rename_temp_volume
     Logger:
       Level: debug
     Kubernetes:
@@ -125,9 +132,20 @@ funnel:
       Executor:
         restartPolicy: Never
         backoffLimit: 0
+        # Annotations:
+        #   karpenter.sh/do-not-disrupt: "true"
       Worker:
         restartPolicy: Never
         backoffLimit: 1
+        # Annotations:
+        #   karpenter.sh/do-not-disrupt: "true"
+        # PriorityClassName: "system-cluster-critical"
+      Resources:
+        Limits:
+          # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
+          Cpus: 8000m
+          RamGb: 32Gi
+          DiskGb: 60Gi
 global:
   pdb: true
   netPolicy:
@@ -1179,7 +1197,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.04'
+    tag: '1.10.0'
 revproxy:
   replicaCount: 4
   autoscaling:

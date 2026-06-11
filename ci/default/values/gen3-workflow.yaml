@@ -1,5 +1,6 @@
 gen3-workflow:
   enabled: false
+  replicaCount: 2
   image:
     repository: quay.io/cdis/gen3-workflow
     tag: master
@@ -14,3 +15,4 @@ gen3-workflow:
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
+      - "pytorch/pytorch:latest" # for test_nf_canary TEST_GPU

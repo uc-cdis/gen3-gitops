@@ -1,4 +1,5 @@
 global:
+  pdb: true
   aws:
     enabled: true
     account: 637423560817
@@ -43,7 +44,7 @@ arborist:
     dbcreds: "externalgen3_default-arborist-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.11
+    tag: 2026.05
 
 audit:
   # Enabled. We do want to track audit events in this environment.
@@ -56,7 +57,7 @@ audit:
     dbcreds: "externalgen3_default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   # Disabled. We don't use this service in this environment.
   enabled: false
   # Lower cost
@@ -167,7 +168,7 @@ indexd:
 
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.11
+    tag: 2026.05
 
 portal:
   # # Lower cost
@@ -179,7 +180,7 @@ portal:
   replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2024.11
+    tag: 2026.05
 
   # GitOps config for portal
   gitops:
@@ -247,7 +248,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.11
+    tag: 2026.05
 
 sheepdog:
   # Lower cost
@@ -270,10 +271,13 @@ metadata:
     requests:
       memory: "105Mi"
       cpu: "15m"
+  # Needs more ram/ cpu
   resources:
+    limits:
+      memory: 2Gi
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: "512Mi"
+      cpu: "500m"
 
   externalSecrets:
     createK8sMetadataSecret: true
@@ -281,7 +285,7 @@ metadata:
 
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 2024.11
+    tag: 2026.05
 
 # Disabled services
 

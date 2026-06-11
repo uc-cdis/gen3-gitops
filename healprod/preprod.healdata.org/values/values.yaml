@@ -115,7 +115,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.2.9
+    tag: 1.3.1
 global:
   pdb: true
   aws:
@@ -1404,7 +1404,7 @@ metadata:
     metadataG3auto: healpreprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '4.3.0'
   useAggMds: true
   schedule: 30 8 * * *
   suspendCronjob: false
@@ -1427,12 +1427,12 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.04'
+    tag: '5.41.1'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.04'
+    tag: '1.10.0'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -1473,7 +1473,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: preprod-healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2026.04
+        image: quay.io/cdis/batch-export:6.1.0
         labels:
           internet: 'yes'
         memory-limit: 1Gi

@@ -176,3 +176,14 @@ tspan.special-number,
 .submission-header {
   display: none;
 }
+
+
+/* MIDRC Explorer table row height fix */
+
+.explorer-table .ReactTable .rt-tr-group {
+  overflow: hidden;
+}
+.explorer-table .ReactTable .rt-tr-group {
+  max-height: 100px;
+  text-overflow: ellipsis;
+}
