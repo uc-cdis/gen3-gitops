@@ -119,7 +119,7 @@ karpenter-crds:
       name: jupyter
     amiFamily: AL2023
     consolidationPolicy: "WhenEmpty"
-    consolidateAfter: "5m"    
+    consolidateAfter: "5m"
     volumeSize: 80Gi
   gpu:
     enabled: true
