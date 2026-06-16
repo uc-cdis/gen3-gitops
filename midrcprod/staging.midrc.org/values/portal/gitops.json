@@ -55,7 +55,7 @@
                 "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
                 "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
                 "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
-            },            
+            },
             {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
@@ -1703,6 +1703,7 @@
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",
