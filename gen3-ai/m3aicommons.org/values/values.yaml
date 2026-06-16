@@ -131,7 +131,7 @@ frontend-framework:
   enabled: true
   image:
     repository: "quay.io/cdis/cac-data-commons"
-    tag: "chore_migration"
+    tag: "main"
 
 grafana:
   enabled: false

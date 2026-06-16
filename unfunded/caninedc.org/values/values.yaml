@@ -222,9 +222,9 @@ frontend-framework:
   enabled: true
   customConfig:
     enabled: true
-    repo: https://github.com/uc-cdis/cdis-manifest.git
-    branch: spike/canine_test
-    dir: caninedc.org/frontend
+    repo: https://github.com/uc-cdis/gen3-gitops.git
+    branch: master
+    dir: caninedc.org/values/frontend
   image:
     repository: quay.io/cdis/commons-frontend-app
     tag: main
