@@ -64,6 +64,7 @@ grafana-alloy:
 karpenter:
   enabled: true
   targetRevision: "1.9.0"
+  interruptionQueue: "karpenter-sqs-devplanetv2"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-35-x86-x64-AL23*"
@@ -103,7 +104,7 @@ karpenter-crds:
         values: ["xen"]
       - key: karpenter.k8s.aws/instance-generation
         operator: Gt
-        values: ["2"]        
+        values: ["2"]
   workflow:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
@@ -175,7 +176,7 @@ karpenter-crds:
         values: ["xen"]
       - key: karpenter.k8s.aws/instance-generation
         operator: Gt
-        values: ["2"]        
+        values: ["2"]
 
 
 metrics-server:
