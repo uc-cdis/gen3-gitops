@@ -220,6 +220,10 @@ audit:
   enabled: false
 frontend-framework:
   enabled: true
+  env:
+    DATADOG_APPLICATION_ID: "ab71a12a-753f-45ab-a8e1-a79d76d98095"
+    DATADOG_CLIENT_TOKEN: "pub2cd76ce70d32ef5a0d2f3da3badda91e"
+    DATACOMMONS: "CANINE"
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
