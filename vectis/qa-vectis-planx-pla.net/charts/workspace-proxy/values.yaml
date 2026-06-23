@@ -1,0 +1,32 @@
+# workspace-proxy default values.
+# Override via qa-vectis-planx-pla.net/values/workspace-proxy-values.yaml
+
+# Namespace where the workspace-proxy pod runs (same as gen3 helm release).
+deploymentNamespace: vectis-qa-helm
+
+# Namespace where Hatchery creates user workspace pods and services.
+# CRITICAL: must match hatchery user-namespace and jeg EG_NAMESPACE exactly.
+workspaceNamespace: jupyter-pods-vectis-qa-helm
+
+replicaCount: 2
+
+image:
+  # Fill in your registry after implementation.
+  repository: PLACEHOLDER_REGISTRY/workspace-proxy
+  tag: latest
+  pullPolicy: Always
+
+listenAddr: ":8080"
+
+resources:
+  requests:
+    cpu: "50m"
+    memory: "64Mi"
+  limits:
+    cpu: "500m"
+    memory: "256Mi"
+
+# NetworkPolicy: restrict ingress to revproxy only.
+# Requires a CNI that enforces NetworkPolicy (Calico is enabled in cluster-values).
+networkPolicy:
+  enabled: true

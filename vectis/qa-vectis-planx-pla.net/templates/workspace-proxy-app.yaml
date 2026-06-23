@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vectis-qa-workspace-proxy
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    # Deploy workspace-proxy after gen3 core services are up.
+    argocd.argoproj.io/sync-wave: "1"
+spec:
+  project: default
+  sources:
+    - path: vectis/qa-vectis-planx-pla.net/charts/workspace-proxy
+      repoURL: https://github.com/uc-cdis/gen3-gitops.git
+      targetRevision: master
+      helm:
+        releaseName: workspace-proxy
+        valueFiles:
+          - $values/vectis/qa-vectis-planx-pla.net/values/workspace-proxy-values.yaml
+    - repoURL: https://github.com/uc-cdis/gen3-gitops.git
+      targetRevision: master
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    # ArgoCD uses vectis-qa-helm as default namespace; templates with
+    # explicit namespace metadata target jupyter-pods-vectis-qa-helm.
+    namespace: vectis-qa-helm
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
