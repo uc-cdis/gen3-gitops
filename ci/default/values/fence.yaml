@@ -81,8 +81,6 @@ fence:
       - "google_service_account"
       - "google_link"
       - "ga4gh_passport_v1"
-      - "profile"
-      - "email"
 
     # -- (list) these are the scopes that CAN be included in a user's own access_token
     USER_ALLOWED_SCOPES:
@@ -95,8 +93,6 @@ fence:
       - "google_service_account"
       - "google_link"
       - "ga4gh_passport_v1"
-      - "profile"
-      - "email"
 
     # -- (list) these are the scopes that a browser session can create for a user (very similar to USER_ALLOWED_SCOPES, as the session will actually create access_tokens for an actively logged in user)
     SESSION_ALLOWED_SCOPES:
@@ -109,8 +105,6 @@ fence:
       - "google_service_account"
       - "google_link"
       - "ga4gh_passport_v1"
-      - "profile"
-      - "email"
 
     # //////////////////////////////////////////////////////////////////////////////////////
     # LOGIN
