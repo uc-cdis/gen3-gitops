@@ -3331,7 +3331,7 @@ metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: '2025.07'
+    tag: '2026.07'
 peregrine:
   autoscaling:
     enabled: false
@@ -3510,15 +3510,15 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: '2025.07'
+    tag: '2026.07'
 ssjdispatcher:
   externalSecrets:
     credsFile: bdcatprod-ssjdispatcher-creds
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2026.07
 tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: '2025.07'
+    tag: '2026.07'
 wts:
   enabled: false
