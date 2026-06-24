@@ -10,10 +10,10 @@ portal:
       memory: 6Gi
     limits:
       memory: 6Gi
-  extraImages:
-    - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/lit.jpeg
-    - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/chordstk.jpg
-    - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/ospcortf_logo.jpg
+  #extraImages:
+  #  - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/lit.jpeg
+  #  - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/chordstk.jpg
+  #  - url: https://raw.githubusercontent.com/NIEHS/pcor_gen3_artifacts/develop/custom_configs/images/ospcortf_logo.jpg
   gitops:
     css: |
       :root {
