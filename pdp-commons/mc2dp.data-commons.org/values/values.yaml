@@ -568,7 +568,7 @@ metadata:
          }
      }
   aggMdsNamespace: pdp-commons
-  enabled: true
+  enabled: false
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: pdp-commons-metadata-g3auto
