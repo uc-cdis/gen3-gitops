@@ -69,7 +69,7 @@ gen3-user-data-library:
       value: "50000"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.02'
+    tag: '2026.07'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
