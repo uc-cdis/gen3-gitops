@@ -81,6 +81,9 @@ etl:
             props:
               - name: ICDOSite
               - name: Stagegroupclinical
+              - name: Texthistologytitle
+              - name: Gradedifferentiation
+              - name: Stagegroupbest
           - name: somatic_mutations
             path: somatic_mutations
             props:
