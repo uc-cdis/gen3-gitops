@@ -16,7 +16,7 @@ global:
   dev: false
   postgres:
     dbCreate: false
-    externalSecret: "externalgen3_aurora-master-password"
+    externalSecret: "externalgen3-aurora-master-password"
   environment: "externalgen3"
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
