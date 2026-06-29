@@ -62,8 +62,8 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - name: etl_mickey
-        doc_type: patients
+      - name: etl_mickey_case
+        doc_type: case
         type: aggregator
         root: case
         props:
@@ -222,8 +222,8 @@ guppy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
     tag: "2026.06"
   indices:
-    - index: etl_mickey
-      type: patients
+    - index: etl_mickey_case
+      type: case
     - index: etl_mickey_file
       type: file
     - index: omop_etl_index_cohortb_20251119
