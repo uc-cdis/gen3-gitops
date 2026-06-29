@@ -102,6 +102,12 @@ etl:
               - name: data_category
                 src: data_category
                 fn: set
+              - name: modality
+                src: modality
+                fn: set
+              - name: body_part_examined
+                src: body_part_examined
+                fn: set
       - name: etl_mickey_file
         doc_type: file
         type: collector
