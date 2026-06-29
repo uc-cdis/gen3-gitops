@@ -142,6 +142,23 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  nginxSidecar:
+    enabled: true
+    image: nginx:1.27-alpine
+    listenPort: 8443
+
+    metrics:
+      enabled: true
+      image: nginx/nginx-prometheus-exporter:1.4.2
+      stubStatusPort: 8081
+      port: 9113
+
+    tls:
+      enabled: true
+      issuerRef:
+        name: gen3-internal-ca
+        kind: ClusterIssuer
+
   netPolicy:
     # -- (bool) Whether network policies are enabled
     enabled: true
