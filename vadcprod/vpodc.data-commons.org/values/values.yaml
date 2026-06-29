@@ -62,6 +62,46 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
+      - name: etl_mickey
+        doc_type: patients
+        type: aggregator
+        root: case
+        props:
+          - name: project_id
+          - name: submitter_id
+        nested_props:
+          - name: clinical_demographics
+            path: clinical_demographics
+            props:
+              - name: Ethnicity
+              - name: Gender
+              - name: Race
+          - name: oncology_primaries
+            path: oncology_primaries
+            props:
+              - name: ICDOSite
+              - name: Stagegroupclinical
+          - name: somatic_mutations
+            path: somatic_mutations
+            props:
+              - name: Gene
+              - name: Mutation
+        joining_props:
+          - index: data_file
+            join_on: _case_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
       - name: etl_mickey_file
         doc_type: file
         type: collector
@@ -139,7 +179,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
   dispatcherJobNum: "10"
   environment: vadcprod
   frontendRoot: gen3ff
