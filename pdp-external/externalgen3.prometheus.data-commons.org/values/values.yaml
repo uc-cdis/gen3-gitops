@@ -55,7 +55,8 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
   externalSecrets:
     dbcreds: "externalgen3_default-audit-creds"
-    createK8sAuditSecret: true
+    auditG3auto: externalgen3-audit-g3auto
+    #createK8sAuditSecret: true
 
 aws-sigv4-proxy:
   # Disabled. We don't use this service in this environment.
@@ -78,6 +79,10 @@ frontend-framework:
 
 
 fence:
+
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-fence-sa
   # Lower cost
   resources:
     requests:
@@ -184,7 +189,6 @@ portal:
 
   # GitOps config for portal
   gitops:
-    gen3Bundle: workspace
     json: |
       {
         "graphql": {
@@ -260,10 +264,13 @@ sheepdog:
     dbcreds: "externalgen3_default-sheepdog-creds"
   enabled: true
   replicaCount: 2
+  image:
+    repository: quay.io/cdis/sheepdog
+    tag: 2026.05
 
 metadata:
   useAggMds: false
-  enabled: true
+  enabled: false
   replicaCount: 2
 
   # Lower cost

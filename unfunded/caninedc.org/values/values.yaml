@@ -228,7 +228,7 @@ frontend-framework:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
-    dir: caninedc.org/values/frontend
+    dir: unfunded/caninedc.org/values/frontend
   image:
     repository: quay.io/cdis/commons-frontend-app
     tag: main
