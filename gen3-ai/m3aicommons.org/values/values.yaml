@@ -131,7 +131,7 @@ frontend-framework:
   enabled: true
   image:
     repository: "quay.io/cdis/cac-data-commons"
-    tag: "main"
+    tag: "chore_migration"
 
 grafana:
   enabled: false
@@ -284,22 +284,22 @@ revproxy:
   - name: "cohort-copilot"
     path: /cohort-copilot
     serviceName: cohort-copilot-gradio
-    authzPolicy: "workspace"
-    authzService: "jupyterhub"
+    authzPolicy: "aiapps"
+    authzService: "ai"
     csrfCheck: false
     rewritePath: false
   - name: "cohort-copilot-chat"
     path: /cohort-copilot-chat
     serviceName: cohort-copilot-agent
-    authzPolicy: "workspace"
-    authzService: "jupyterhub"
+    authzPolicy: "aiapps"
+    authzService: "ai"
     csrfCheck: false
     rewritePath: false
   - name: "agent"
     path: /qag
     serviceName: qag-agent
-    authzPolicy: "workspace"
-    authzService: "jupyterhub"
+    authzPolicy: "aiapps"
+    authzService: "ai"
     csrfCheck: false
     rewritePath: false
 
