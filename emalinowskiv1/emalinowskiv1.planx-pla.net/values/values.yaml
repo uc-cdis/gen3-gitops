@@ -161,7 +161,7 @@ global:
 
   netPolicy:
     # -- (bool) Whether network policies are enabled
-    enabled: true
+    enabled: false
 
     # -- (array) A CIDR range representing a database subnet, that services with a database need access to
     dbSubnets: ["172.26.34.0/23"]
