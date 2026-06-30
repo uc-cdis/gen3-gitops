@@ -199,7 +199,7 @@ guppy:
   authFilterField: auth_resource_path
   configIndex: dev_case-array-config
   enabled: true
-  esEndpoint: http://elasticsearch:9200
+  esEndpoint: https://elasticsearch:9200
   image:
     repository: quay.io/cdis/guppy
     tag: feat_es7
