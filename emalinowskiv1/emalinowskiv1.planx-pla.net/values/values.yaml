@@ -200,6 +200,7 @@ guppy:
   configIndex: dev_case-array-config
   enabled: true
   esEndpoint: https://elasticsearch:9200
+  arboristUrl: https://arborist-service
   image:
     repository: quay.io/cdis/guppy
     tag: feat_es7
