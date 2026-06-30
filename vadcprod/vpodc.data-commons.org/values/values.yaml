@@ -111,8 +111,8 @@ etl:
               - name: body_part_examined
                 src: body_part_examined
                 fn: set
-      - name: etl_mickey_file
-        doc_type: file
+      - name: etl_mickey_data_file
+        doc_type: data_file
         type: collector
         category: data_file
         root: None
@@ -226,8 +226,8 @@ guppy:
       type: patients
     - index: etl_mickey_case
       type: case
-    - index: etl_mickey_file
-      type: file
+    - index: etl_mickey_data_file
+      type: data_file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
     - index: omop_etl_index_cohorta_20260311
