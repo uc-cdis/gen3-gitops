@@ -195,6 +195,9 @@ global:
     topologyKey: "topology.kubernetes.io/zone"
     # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
     maxSkew: 1
+  indexdURL: https://indexd-service
+  fenceUrl: https://fence-service
+  arboristUrl: https://arborist-service
 guppy:
   authFilterField: auth_resource_path
   configIndex: dev_case-array-config
