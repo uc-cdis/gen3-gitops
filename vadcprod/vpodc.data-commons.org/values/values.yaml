@@ -90,7 +90,7 @@ etl:
               - name: Gene
               - name: Mutation
         joining_props:
-          - index: data_file
+          - index: file
             join_on: _case_id
             props:
               - name: object_id
@@ -111,11 +111,11 @@ etl:
               - name: body_part_examined
                 src: body_part_examined
                 fn: set
-      - name: etl_mickey_data_file
-        doc_type: data_file
+      - name: etl_mickey_file
+        doc_type: file
         type: collector
-        category: data_file
         root: None
+        category: data_file
         props:
           - name: source_node
           - name: project_id
@@ -226,8 +226,8 @@ guppy:
       type: patients
     - index: etl_mickey_case
       type: case
-    - index: etl_mickey_data_file
-      type: data_file
+    - index: etl_mickey_file
+      type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
     - index: omop_etl_index_cohorta_20260311
