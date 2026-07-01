@@ -178,6 +178,18 @@ etl:
               - fn: count
                 name: file_count
                 src: _file_id
+          - index: index_file
+            join_on: _subject_id
+            props:
+              - fn: set
+                name: data_format
+                src: data_format
+              - fn: set
+                name: data_type
+                src: data_type
+              - fn: count
+                name: file_count
+                src: _file_id
       - name: gen3.biodatacatalyst.nhlbi.nih.gov_file
         doc_type: file
         type: collector
