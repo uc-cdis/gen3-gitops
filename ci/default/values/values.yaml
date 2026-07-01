@@ -44,6 +44,9 @@ postgresql:
   primary:
     containerSecurityContext:
       runAsUser: 0
+    persistence:
+      enabled: true
+      size: 1Gi
   pdb:
     create: true
     minAvailable: "1"
