@@ -3213,7 +3213,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
         cred: fence-bot
-        region: us-east-1  
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -3285,6 +3285,8 @@ guppy:
       type: subject
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_file
       type: file
+    - index: gen3.biodatacatalyst.nhlbi.nih.gov_index_file
+      type: index_file
 hatchery:
   enabled: false
 indexd:
