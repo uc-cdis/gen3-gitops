@@ -64,44 +64,44 @@ etl:
           - name: consent_codes
           - name: geographic_site
         aggregated_props:
-          - fn: set
-            name: annotated_sex
+          - name: annotated_sex
             path: demographics
             src: annotated_sex
-          - fn: set
-            name: race
+            fn: set
+          - name: race
             path: demographics
             src: race
-          - fn: set
-            name: ethnicity
+            fn: set
+          - name: ethnicity
             path: demographics
             src: ethnicity
-          - fn: count
-            name: _samples_count
+            fn: set
+          - name: _samples_count
             path: samples
-          - fn: count
-            name: _aliquots_count
+            fn: count
+          - name: _aliquots_count
             path: samples.aliquots
-          - fn: count
-            name: _read_groups_count
+            fn: count
+          - name: _read_groups_count
             path: samples.aliquots.read_groups
-          - fn: count
-            name: _submitted_unaligned_reads_files_count
+            fn: count
+          - name: _submitted_unaligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_unaligned_reads_files
-          - fn: count
-            name: _submitted_aligned_reads_files_count
+            fn: count
+          - name: _submitted_aligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_aligned_reads_files
-          - fn: count
-            name: _simple_germline_variations_count
+            fn: count
+          - name: _simple_germline_variations_count
             path: samples.aliquots.read_groups.simple_germline_variations
-          - fn: set
-            name: current_smoker_baseline
+            fn: count
+          - name: current_smoker_baseline
             path: exposures
             src: current_smoker_baseline
-          - fn: set
-            name: ever_smoker_baseline
+            fn: set
+          - name: ever_smoker_baseline
             path: exposures
             src: ever_smoker_baseline
+            fn: set
         parent_props:
           - path: studies[studies_submitter_id:submitter_id].projects[code]
           - path: studies[studies_submitter_id:submitter_id].projects[code].programs[programs_name:name]
@@ -169,33 +169,40 @@ etl:
           - index: file
             join_on: _subject_id
             props:
-              - fn: set
-                name: data_format
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
                 src: data_format
-              - fn: set
-                name: data_type
+                fn: set
+              - name: data_type
                 src: data_type
-              - fn: count
-                name: file_count
+                fn: set
+              - name: file_count
                 src: _file_id
+                fn: count
           - index: index_file
             join_on: _subject_id
             props:
-              - fn: set
-                name: data_format
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
                 src: data_format
-              - fn: set
-                name: data_type
+                fn: set
+              - name: data_type
                 src: data_type
-              - fn: count
-                name: file_count
+                fn: set
+              - name: file_count
                 src: _file_id
+                fn: count
       - name: gen3.biodatacatalyst.nhlbi.nih.gov_file
         doc_type: file
         type: collector
         root: None
         category: data_file
         props:
+          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -210,26 +217,26 @@ etl:
         injecting_props:
           program:
             props:
-              - fn: set
-                name: programs_name
+              - name: programs_name
                 src: name
+                fn: set
           project:
             props:
-              - fn: set
-                name: dbgap_accession_number
+              - name: dbgap_accession_number
                 src: dbgap_accession_number
+                fn: set
           subject:
             props:
-              - fn: set
-                name: _subject_id
+              - name: _subject_id
                 src: id
-              - name: project_id
+                fn: set
       - name: gen3.biodatacatalyst.nhlbi.nih.gov_index_file
         doc_type: index_file
-        root: None
         type: collector
+        root: None
         category: index_file
         props:
+          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -244,20 +251,19 @@ etl:
         injecting_props:
           program:
             props:
-              - fn: set
-                name: programs_name
+              - name: programs_name
                 src: name
+                fn: set
           project:
             props:
-              - fn: set
-                name: dbgap_accession_number
+              - name: dbgap_accession_number
                 src: dbgap_accession_number
+                fn: set
           subject:
             props:
-              - fn: set
-                name: _subject_id
+              - name: _subject_id
                 src: id
-              - name: project_id
+                fn: set
   image:
     tube:
       tag: '2026.04'
