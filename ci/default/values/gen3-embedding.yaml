@@ -5,3 +5,5 @@ gen3-embeddings:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
     tag: feat_embedding
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
