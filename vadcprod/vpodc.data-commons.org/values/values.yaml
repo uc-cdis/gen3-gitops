@@ -356,6 +356,38 @@ hatchery:
                 "use-tls": "false",
                 "user-uid": 1010,
                 "user-volume-location": "/home/jovyan/pd"
+              },
+              {
+                  "target-port": 8888,
+                  "cpu-limit": "4.0",
+                  "memory-limit": "16Gi",
+                  "name": "RCC pilot",
+                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+                  "pull_policy": "Always",
+                  "env": {
+                      "FRAME_ANCESTORS": "https://vpodc.data-commons.org/"
+                  },
+                  "args": [
+                      "--ip=0.0.0.0",
+                      "--port=8888",
+                      "--no-browser",
+                      "--ServerApp.base_url=/lw-workspace/proxy/",
+                      "--ServerApp.default_url=/lab",
+                      "--ServerApp.password=",
+                      "--ServerApp.token=",
+                      "--ServerApp.shutdown_no_activity_timeout=5400",
+                      "--ServerApp.quit_button=false"
+                  ],
+                  "command": [
+                      "start-notebook.sh"
+                  ],
+                  "path-rewrite": "/lw-workspace/proxy/",
+                  "use-tls": "false",
+                  "ready-probe": "/lw-workspace/proxy/",
+                  "user-uid": 1010,
+                  "fs-gid": 101,
+                  "user-volume-location": "/home/jovyan/pd",
+                  "gen3-volume-location": "/home/jovyan/.gen3"
               }
           ]
       }
