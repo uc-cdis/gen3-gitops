@@ -169,13 +169,13 @@ etl:
           - index: file
             join_on: _subject_id
             props:
-              - name: object_id
+              - name: file_object_id
                 src: object_id
                 fn: set
-              - name: data_format
+              - name: file_data_format
                 src: data_format
                 fn: set
-              - name: data_type
+              - name: file_data_type
                 src: data_type
                 fn: set
               - name: file_count
@@ -184,13 +184,13 @@ etl:
           - index: index_file
             join_on: _subject_id
             props:
-              - name: object_id
+              - name: index_file_object_id
                 src: object_id
                 fn: set
-              - name: data_format
+              - name: index_file_data_format
                 src: data_format
                 fn: set
-              - name: data_type
+              - name: index_file_data_type
                 src: data_type
                 fn: set
               - name: index_file_count
