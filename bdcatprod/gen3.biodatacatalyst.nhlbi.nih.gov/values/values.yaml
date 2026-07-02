@@ -193,8 +193,8 @@ etl:
               - name: data_type
                 src: data_type
                 fn: set
-              - name: file_count
-                src: _file_id
+              - name: index_file_count
+                src: _index_file_id
                 fn: count
       - name: gen3.biodatacatalyst.nhlbi.nih.gov_file
         doc_type: file
