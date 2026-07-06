@@ -41,7 +41,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.8.6"
+  targetRevision: "1.9.0"
   configuration:
     enabled: false
 
@@ -76,6 +76,10 @@ karpenter-crds:
         operator: In
         values:
           - r
+      - key: karpenter.k8s.aws/instance-cpu
+        operator: Gt
+        values:
+          - "2"
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:

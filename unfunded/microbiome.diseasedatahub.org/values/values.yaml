@@ -48,15 +48,12 @@ arborist:
     repository: quay.io/cdis/arborist
     tag: master
 
-aws-es-proxy:
+aws-sigv4-proxy:
 
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: "microbiome-aws-es-proxy-creds"
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 
 indexd:
 

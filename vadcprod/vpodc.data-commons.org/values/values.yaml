@@ -19,12 +19,9 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--audit-sqs-receiver
   image:
     tag: "2025.12"
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-vadcprod-gen3-metadata-2-vqrbyt4omluv7b2uqw5idjdwua.us-east-1.es.amazonaws.com
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
-    tag: v1.3.1
 argo-wrapper:
   replicaCount: 2
   enabled: true
@@ -65,29 +62,89 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - category: data_file
+      - name: etl_mickey_case
+        doc_type: case
+        type: aggregator
+        root: case
+        props:
+          - name: project_id
+          - name: submitter_id
+        nested_props:
+          - name: clinical_demographics
+            path: clinical_demographics
+            props:
+              - name: Ethnicity
+              - name: Gender
+              - name: Race
+          - name: oncology_primaries
+            path: oncology_primaries
+            props:
+              - name: ICDOSite
+              - name: Stagegroupclinical
+              - name: Texthistologytitle
+              - name: Gradedifferentiation
+              - name: Stagegroupbest
+          - name: somatic_mutations
+            path: somatic_mutations
+            props:
+              - name: Gene
+              - name: Mutation
+        joining_props:
+          - index: file
+            join_on: _case_id
+            props:
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
+                src: data_format
+                fn: set
+              - name: data_type
+                src: data_type
+                fn: set
+              - name: data_category
+                src: data_category
+                fn: set
+              - name: modality
+                src: modality
+                fn: set
+              - name: body_part_examined
+                src: body_part_examined
+                fn: set
+      - name: etl_mickey_file
         doc_type: file
+        type: collector
+        root: None
+        category: data_file
+        props:
+          - name: source_node
+          - name: project_id
+          - name: submitter_id
+          - name: case_submitter_id
+          - name: data_category
+          - name: data_format
+          - name: data_type
+          - name: file_name
+          - name: file_size
+          - name: md5sum
+          - name: object_id
+          - name: modality
+          - name: body_part_examined
+          - name: study_instance_uid
+          - name: series_instance_uid
+          - name: study_description
+          - name: state
         injecting_props:
           case:
             props:
-              - name: submitter_id
-              - name: project_id
-        name: file_tube_etl_mickey
-        props:
-          - name: object_id
-          - name: md5sum
-          - name: file_name
-          - name: file_size
-          - name: data_format
-          - name: data_type
-          - name: state
-        root: None
-        type: collector
+              - name: _case_id
+                src: id
+                fn: set
   image:
     tube:
-      tag: "2025.12"
+      tag: "2026.06"
     spark:
-      tag: "2025.12"
+      tag: "2026.06"
 fence:
   usersync:
     usersync: true
@@ -116,7 +173,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.15
+    tag: main
 global:
   pdb: true
   aws:
@@ -131,7 +188,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.4/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.5/schema.json
   dispatcherJobNum: "10"
   environment: vadcprod
   frontendRoot: gen3ff
@@ -163,11 +220,13 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2026.02"
+    tag: "2026.06"
   indices:
     - index: etl_mickey
       type: patients
-    - index: file_etl_mickey
+    - index: etl_mickey_case
+      type: case
+    - index: etl_mickey_file
       type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
@@ -179,9 +238,16 @@ guppy:
       type: vpodc_patients
 hatchery:
   enabled: true
+  hotNode:
+    enabled: true
+    availabilityZones:
+      - us-east-1c
+    workspaceCapacityReservation:
+      memory: "17Gi"
+      cpu: 5
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: "2.7.2"
+    tag: "master"
   hatchery:
     json: |
       {
@@ -290,6 +356,38 @@ hatchery:
                 "use-tls": "false",
                 "user-uid": 1010,
                 "user-volume-location": "/home/jovyan/pd"
+              },
+              {
+                  "target-port": 8888,
+                  "cpu-limit": "4.0",
+                  "memory-limit": "16Gi",
+                  "name": "RCC pilot",
+                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+                  "pull_policy": "Always",
+                  "env": {
+                      "FRAME_ANCESTORS": "https://vpodc.data-commons.org/"
+                  },
+                  "args": [
+                      "--ip=0.0.0.0",
+                      "--port=8888",
+                      "--no-browser",
+                      "--ServerApp.base_url=/lw-workspace/proxy/",
+                      "--ServerApp.default_url=/lab",
+                      "--ServerApp.password=",
+                      "--ServerApp.token=",
+                      "--ServerApp.shutdown_no_activity_timeout=5400",
+                      "--ServerApp.quit_button=false"
+                  ],
+                  "command": [
+                      "start-notebook.sh"
+                  ],
+                  "path-rewrite": "/lw-workspace/proxy/",
+                  "use-tls": "false",
+                  "ready-probe": "/lw-workspace/proxy/",
+                  "user-uid": 1010,
+                  "fs-gid": 101,
+                  "user-volume-location": "/home/jovyan/pd",
+                  "gen3-volume-location": "/home/jovyan/.gen3"
               }
           ]
       }
@@ -381,7 +479,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2025.12"
+    tag: "2026.06"
 sower:
   enabled: true
   externalSecrets:

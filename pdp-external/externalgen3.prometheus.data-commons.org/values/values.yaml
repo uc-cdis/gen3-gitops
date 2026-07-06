@@ -1,4 +1,5 @@
 global:
+  pdb: true
   aws:
     enabled: true
     account: 637423560817
@@ -15,7 +16,7 @@ global:
   dev: false
   postgres:
     dbCreate: false
-    externalSecret: "externalgen3_aurora-master-password"
+    externalSecret: "externalgen3-aurora-master-password"
   environment: "externalgen3"
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
@@ -43,7 +44,7 @@ arborist:
     dbcreds: "externalgen3_default-arborist-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.11
+    tag: 2026.05
 
 audit:
   # Enabled. We do want to track audit events in this environment.
@@ -54,9 +55,10 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
   externalSecrets:
     dbcreds: "externalgen3_default-audit-creds"
-    createK8sAuditSecret: true
+    auditG3auto: externalgen3-audit-g3auto
+    #createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   # Disabled. We don't use this service in this environment.
   enabled: false
   # Lower cost
@@ -77,6 +79,10 @@ frontend-framework:
 
 
 fence:
+
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-fence-sa
   # Lower cost
   resources:
     requests:
@@ -167,7 +173,7 @@ indexd:
 
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.11
+    tag: 2026.05
 
 portal:
   # # Lower cost
@@ -179,11 +185,10 @@ portal:
   replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2024.11
+    tag: 2026.05
 
   # GitOps config for portal
   gitops:
-    gen3Bundle: workspace
     json: |
       {
         "graphql": {
@@ -247,7 +252,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.11
+    tag: 2026.05
 
 sheepdog:
   # Lower cost
@@ -259,10 +264,13 @@ sheepdog:
     dbcreds: "externalgen3_default-sheepdog-creds"
   enabled: true
   replicaCount: 2
+  image:
+    repository: quay.io/cdis/sheepdog
+    tag: 2026.05
 
 metadata:
   useAggMds: false
-  enabled: true
+  enabled: false
   replicaCount: 2
 
   # Lower cost
@@ -270,10 +278,13 @@ metadata:
     requests:
       memory: "105Mi"
       cpu: "15m"
+  # Needs more ram/ cpu
   resources:
+    limits:
+      memory: 2Gi
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: "512Mi"
+      cpu: "500m"
 
   externalSecrets:
     createK8sMetadataSecret: true
@@ -281,7 +292,7 @@ metadata:
 
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 2024.11
+    tag: 2026.05
 
 # Disabled services
 
