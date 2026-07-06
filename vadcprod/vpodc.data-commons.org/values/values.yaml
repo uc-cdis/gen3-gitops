@@ -175,8 +175,6 @@ guppy:
   indices:
     - index: etl_mickey
       type: patients
-    - index: etl_mickey_case
-      type: case
     - index: etl_mickey_file
       type: file
     - index: omop_etl_index_cohortb_20251119
