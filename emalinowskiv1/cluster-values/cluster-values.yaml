@@ -48,7 +48,7 @@ kube-state-metrics:
     enabled: false
 
 grafana-alloy:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
