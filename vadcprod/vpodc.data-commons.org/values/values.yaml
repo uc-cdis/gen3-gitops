@@ -89,33 +89,11 @@ etl:
             props:
               - name: Gene
               - name: Mutation
-        joining_props:
-          - index: data_file
-            join_on: _case_id
-            props:
-              - name: object_id
-                src: object_id
-                fn: set
-              - name: data_format
-                src: data_format
-                fn: set
-              - name: data_type
-                src: data_type
-                fn: set
-              - name: data_category
-                src: data_category
-                fn: set
-              - name: modality
-                src: modality
-                fn: set
-              - name: body_part_examined
-                src: body_part_examined
-                fn: set
-      - name: etl_mickey_data_file
-        doc_type: data_file
+      - name: etl_mickey_file
+        doc_type: file
         type: collector
-        category: data_file
         root: None
+        category: data_file
         props:
           - name: source_node
           - name: project_id
@@ -226,8 +204,8 @@ guppy:
       type: patients
     - index: etl_mickey_case
       type: case
-    - index: etl_mickey_data_file
-      type: data_file
+    - index: etl_mickey_file
+      type: file
     - index: omop_etl_index_cohortb_20251119
       type: cohort_b_patients
     - index: omop_etl_index_cohorta_20260311
@@ -356,6 +334,38 @@ hatchery:
                 "use-tls": "false",
                 "user-uid": 1010,
                 "user-volume-location": "/home/jovyan/pd"
+              },
+              {
+                  "target-port": 8888,
+                  "cpu-limit": "4.0",
+                  "memory-limit": "16Gi",
+                  "name": "RCC pilot",
+                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+                  "pull_policy": "Always",
+                  "env": {
+                      "FRAME_ANCESTORS": "https://vpodc.data-commons.org/"
+                  },
+                  "args": [
+                      "--ip=0.0.0.0",
+                      "--port=8888",
+                      "--no-browser",
+                      "--ServerApp.base_url=/lw-workspace/proxy/",
+                      "--ServerApp.default_url=/lab",
+                      "--ServerApp.password=",
+                      "--ServerApp.token=",
+                      "--ServerApp.shutdown_no_activity_timeout=5400",
+                      "--ServerApp.quit_button=false"
+                  ],
+                  "command": [
+                      "start-notebook.sh"
+                  ],
+                  "path-rewrite": "/lw-workspace/proxy/",
+                  "use-tls": "false",
+                  "ready-probe": "/lw-workspace/proxy/",
+                  "user-uid": 1010,
+                  "fs-gid": 101,
+                  "user-volume-location": "/home/jovyan/pd",
+                  "gen3-volume-location": "/home/jovyan/.gen3"
               }
           ]
       }
