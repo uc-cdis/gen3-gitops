@@ -386,6 +386,7 @@
                             "race_ethnicity",
                             "race_ethnicity_detail",
                             "race_ethnicity_write_in",
+                            "race",
                             "ethnicity",
                             "age_at_index",
                             "index_event",
