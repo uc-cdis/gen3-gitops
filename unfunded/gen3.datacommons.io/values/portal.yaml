@@ -4,6 +4,8 @@ portal:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.04'
+  datadogApplicationId: "3bba1e38-982c-4b87-a8d4-f451be35658d"
+  datadogClientToken: "pub92ea11cda0db5b5ed55af62058b18803"
   resources:
     requests:
       memory: 2Gi

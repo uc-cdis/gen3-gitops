@@ -47,7 +47,7 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.8.6"
+  targetRevision: "1.9.0"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-35-x86-x64-AL23*"
@@ -77,7 +77,6 @@ karpenter-crds:
       - key: karpenter.k8s.aws/instance-category
         operator: In
         values:
-          - c
           - m
           - r
       - key: karpenter.k8s.aws/instance-generation

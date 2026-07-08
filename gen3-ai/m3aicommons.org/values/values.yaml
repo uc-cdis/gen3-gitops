@@ -61,10 +61,9 @@ audit:
     dbcreds: "gen3-ai-default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   replicaCount: 2
   enabled: true
-  esEndpoint: ""
   externalSecrets:
     awsCreds: "gen3-ai-default-aws-es-proxy-creds"
   esEndpoint: vpc-gen3-ai-gen3-metadata-wcqwdpwxzoz3fpseni55ugqq6u.us-east-1.es.amazonaws.com
@@ -130,9 +129,14 @@ fence:
 frontend-framework:
   replicaCount: 2
   enabled: true
+  env:
+    DATADOG_APPLICATION_ID: "c4c25361-631e-4060-a25a-c6bfb33649af"
+    DATADOG_CLIENT_TOKEN: "pub4694a081d6427ac70a0188eae7a6fbba"
+    DATADOG_SITE: "ddog-gov.com"
+    DATACOMMONS: "M3AI"
   image:
     repository: "quay.io/cdis/cac-data-commons"
-    tag: "main"
+    tag: "chore_migration"
 
 grafana:
   enabled: false
@@ -148,7 +152,7 @@ hatchery:
     tag: feat_gpu-support
 
   hotNode:
-    enabled: true
+    enabled: false
     gpu: true
     jupyter: false
 
@@ -281,6 +285,28 @@ requestor:
 revproxy:
   replicaCount: 3
   enabled: true
+  extraServices:
+  - name: "cohort-copilot"
+    path: /cohort-copilot
+    serviceName: cohort-copilot-gradio
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+  - name: "cohort-copilot-chat"
+    path: /cohort-copilot-chat
+    serviceName: cohort-copilot-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+  - name: "agent"
+    path: /qag
+    serviceName: qag-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
 
 sheepdog:
   replicaCount: 2

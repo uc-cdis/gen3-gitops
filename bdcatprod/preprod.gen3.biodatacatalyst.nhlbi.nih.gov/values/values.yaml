@@ -31,12 +31,9 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-bdcatprod-gen3-metadata-2-pcd35dshhorfobahqwfnugnovq.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
@@ -56,46 +53,57 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - aggregated_props:
-          - fn: set
-            name: annotated_sex
+      - name: internalstaging_subject
+        doc_type: subject
+        type: aggregator
+        root: subject
+        props:
+          - name: submitter_id
+          - name: project_id
+          - name: consent_codes
+          - name: geographic_site
+        aggregated_props:
+          - name: annotated_sex
             path: demographics
             src: annotated_sex
-          - fn: set
-            name: race
+            fn: set
+          - name: race
             path: demographics
             src: race
-          - fn: set
-            name: ethnicity
+            fn: set
+          - name: ethnicity
             path: demographics
             src: ethnicity
-          - fn: count
-            name: _samples_count
+            fn: set
+          - name: _samples_count
             path: samples
-          - fn: count
-            name: _aliquots_count
+            fn: count
+          - name: _aliquots_count
             path: samples.aliquots
-          - fn: count
-            name: _read_groups_count
+            fn: count
+          - name: _read_groups_count
             path: samples.aliquots.read_groups
-          - fn: count
-            name: _submitted_unaligned_reads_files_count
+            fn: count
+          - name: _submitted_unaligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_unaligned_reads_files
-          - fn: count
-            name: _submitted_aligned_reads_files_count
+            fn: count
+          - name: _submitted_aligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_aligned_reads_files
-          - fn: count
-            name: _simple_germline_variations_count
+            fn: count
+          - name: _simple_germline_variations_count
             path: samples.aliquots.read_groups.simple_germline_variations
-          - fn: set
-            name: current_smoker_baseline
+            fn: count
+          - name: current_smoker_baseline
             path: exposures
             src: current_smoker_baseline
-          - fn: set
-            name: ever_smoker_baseline
+            fn: set
+          - name: ever_smoker_baseline
             path: exposures
             src: ever_smoker_baseline
-        doc_type: subject
+            fn: set
+        parent_props:
+          - path: studies[studies_submitter_id:submitter_id].projects[code]
+          - path: studies[studies_submitter_id:submitter_id].projects[code].programs[programs_name:name]
         flatten_props:
           - path: demographics
             props:
@@ -160,47 +168,40 @@ etl:
           - index: file
             join_on: _subject_id
             props:
-              - fn: set
-                name: data_format
+              - name: file_object_id
+                src: object_id
+                fn: set
+              - name: file_data_format
                 src: data_format
-              - fn: set
-                name: data_type
+                fn: set
+              - name: file_data_type
                 src: data_type
-              - fn: count
-                name: file_count
+                fn: set
+              - name: file_count
                 src: _file_id
-        name: internalstaging_subject
-        parent_props:
-          - path: studies[studies_submitter_id:submitter_id].projects[code]
-          - path: studies[studies_submitter_id:submitter_id].projects[code].programs[programs_name:name]
-        props:
-          - name: submitter_id
-          - name: project_id
-          - name: consent_codes
-          - name: geographic_site
-        root: subject
-        type: aggregator
-      - category: data_file
+                fn: count
+          - index: index_file
+            join_on: _subject_id
+            props:
+              - name: index_file_object_id
+                src: object_id
+                fn: set
+              - name: index_file_data_format
+                src: data_format
+                fn: set
+              - name: inde_file_data_type
+                src: data_type
+                fn: set
+              - name: index_file_count
+                src: _index_file_id
+                fn: count
+      - name: internalstaging_file
         doc_type: file
-        injecting_props:
-          program:
-            props:
-              - fn: set
-                name: programs_name
-                src: name
-          project:
-            props:
-              - fn: set
-                name: dbgap_accession_number
-                src: dbgap_accession_number
-          subject:
-            props:
-              - fn: set
-                name: _subject_id
-                src: id
-              - name: project_id
-        name: internalstaging_file
+        type: collector
+        root: None
+        category: data_file
         props:
+          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -212,29 +213,29 @@ etl:
           - name: callset
           - name: bucket_path
           - name: source_node
-        root: None
-        type: collector
-      - category: index_file
+        injecting_props:
+          program:
+            props:
+              - name: programs_name
+                src: name
+                fn: set
+          project:
+            props:
+              - name: dbgap_accession_number
+                src: dbgap_accession_number
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+      - name: internalstaging_index_file
         doc_type: index_file
-        injecting_props:
-          program:
-            props:
-              - fn: set
-                name: programs_name
-                src: name
-          project:
-            props:
-              - fn: set
-                name: dbgap_accession_number
-                src: dbgap_accession_number
-          subject:
-            props:
-              - fn: set
-                name: _subject_id
-                src: id
-              - name: project_id
-        name: internalstaging_index_file
+        type: collector
+        root: None
+        category: index_file
         props:
+          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -246,8 +247,22 @@ etl:
           - name: callset
           - name: bucket_path
           - name: source_node
-        root: None
-        type: collector
+        injecting_props:
+          program:
+            props:
+              - name: programs_name
+                src: name
+                fn: set
+          project:
+            props:
+              - name: dbgap_accession_number
+                src: dbgap_accession_number
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
   image:
     tube:
       tag: '2026.04'
@@ -273,7 +288,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 13.0.4
+    tag: 13.1.1
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -3008,7 +3023,205 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
+      nih-nhlbi-bdc-aps-phs004492-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-affirm-phs004639-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-siena-phs004606-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-stics-phs004607-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-2d-phs004600-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-phs004599-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0201-phs004601-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0402-phs004629-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0801-phs004641-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1204-phs004642-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cabg-phs004643-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cass-phs004647-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coag-phs004634-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coblt-phs004602-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-compare-voe-phs004630-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-dash-sodium-phs004635-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-hhl-phs004603-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-idea-phs004604-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ipf-survival-pr-phs004591-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-lung-hiv-phs004323-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-mrfit-phs004609-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-omni-heart-phs004610-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-p2c2-phs004322-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-paths-phs004564-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-premier-phs004617-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-quartet-usa-phs004618-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-ih-phs004645-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-oh-phs004646-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-va2-tah-phs004633-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-wlm-phs004636-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-btk-sars-cov-2-phs003319-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccdg-penn-phs001502-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-familial-phs000582-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-isgs-phs000546-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-swiss-phs000327-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-munic-mi-phs000916-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-procardis-phs000883-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-niddm-athero-phs001130-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-reds-rbc-omics-phs001955-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-rehab-ph-phs004597-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-amish-phs000956-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-care-pact-phs001730-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-safhs-phs001215-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-sarcoidosis-phs001207-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
+        cred: fence-bot
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true

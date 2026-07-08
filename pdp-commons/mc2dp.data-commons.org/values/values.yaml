@@ -16,13 +16,10 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
   image:
     tag: '2026.02'
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   replicaCount: 2
   esEndpoint: vpc-pdp-commons-gen3-metadata-2-uxeiendqin66xtsv6p4h3upv5u.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 dashboard:
   dashboardConfig:
     bucket: dashboard-851725307933-pdp-commons-gen3
@@ -104,7 +101,7 @@ global:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-  publicDataSets: true
+  publicDataSets: false
   tierAccessLevel: libre
   tierAccessLimit: 50
   portalApp: gitops
@@ -151,13 +148,17 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.7.0'
+    tag: '2.7.2'
   hatchery:
     json: |
       {
           "user-namespace": "jupyter-pods",
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
+          "shared-workspace": {
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+          },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
@@ -567,7 +568,7 @@ metadata:
          }
      }
   aggMdsNamespace: pdp-commons
-  enabled: true
+  enabled: false
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: pdp-commons-metadata-g3auto
