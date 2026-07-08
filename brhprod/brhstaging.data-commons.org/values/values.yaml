@@ -61,6 +61,11 @@ fence:
   FENCE_CONFIG_PUBLIC:
     # 2h - temporary to unblock TES testing
     ACCESS_TOKEN_EXPIRES_IN: 7200
+    ALLOWED_TASK_TOKEN_TYPES:
+    - WORKFLOW
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 86400
+
 fluentd:
   enabled: true
   image:
