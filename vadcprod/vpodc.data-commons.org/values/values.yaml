@@ -193,7 +193,7 @@ guppy:
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
-  configIndex: etl_mickey_array-config
+  configIndex: etl_array-config
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
