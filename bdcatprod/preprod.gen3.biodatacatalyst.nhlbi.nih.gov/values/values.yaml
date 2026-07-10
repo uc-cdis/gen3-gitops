@@ -3399,7 +3399,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: 'feat_add-annotation-priorityclass-config'
   sowerConfig:
     - action: export
       container:
@@ -3453,6 +3453,9 @@ sower:
             subPath: config.json
       name: pelican-export
       restart_policy: Never
+      priorityClassName: "etl-high-priority"
+      annotations:
+        karpenter.sh/do-not-disrupt: "true"
       volumes:
         - name: pelican-creds-volume
           secret:
