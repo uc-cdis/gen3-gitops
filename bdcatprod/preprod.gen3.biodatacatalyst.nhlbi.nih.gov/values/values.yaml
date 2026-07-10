@@ -189,7 +189,7 @@ etl:
               - name: index_file_data_format
                 src: data_format
                 fn: set
-              - name: inde_file_data_type
+              - name: index_file_data_type
                 src: data_type
                 fn: set
               - name: index_file_count
