@@ -3404,6 +3404,9 @@ sower:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3453,9 +3456,6 @@ sower:
             subPath: config.json
       name: pelican-export
       restart_policy: Never
-      priorityClassName: "etl-high-priority"
-      annotations:
-        karpenter.sh/do-not-disrupt: "true"
       volumes:
         - name: pelican-creds-volume
           secret:
