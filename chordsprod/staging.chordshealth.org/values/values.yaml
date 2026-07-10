@@ -25,7 +25,7 @@ arborist:
     dbcreds: chords_staging-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.04'
+    tag: '2026.06'
 aws-sigv4-proxy:
   esEndpoint: vpc-chords-gen3-metadata-2-lbdmlev6ocn5pneieeympkp6vy.us-east-1.es.amazonaws.com
   externalSecrets:
@@ -39,7 +39,7 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.04'
+    tag: '2026.06'
 peregrine:
   replicaCount: 3
   externalSecrets:
@@ -47,7 +47,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: '2026.06'
     pullPolicy: Always
 pidgin:
   enabled: false
@@ -56,30 +56,30 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.04'
+    tag: '2026.06'
 sheepdog:
   externalSecrets:
     dbcreds: chords_staging-sheepdog-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.04'
+    tag: '2026.06'
   fenceUrl: https://staging.chordshealth.org/user
 manifestservice:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.04'
+    tag: '2026.06'
   externalSecrets:
     manifestserviceG3auto: chords_staging-manifestservice-g3auto
 ssjdispatcher:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.04'
+    tag: '2026.06'
   externalSecrets:
     createK8sSsjdispatcherSecret: true
-  indexing: quay.io/cdis/indexs3client:2026.04
+  indexing: quay.io/cdis/indexs3client:2026.06
 metadata:
   useAggMds: false
   externalSecrets:
@@ -88,7 +88,7 @@ metadata:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '2026.06'
     esEndpoint: http://elasticsearch:9200
 ambassador:
   enabled: false
