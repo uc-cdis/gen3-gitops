@@ -3213,7 +3213,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
         cred: fence-bot
-        region: us-east-1  
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -3395,11 +3395,14 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: '0.8.0'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3451,6 +3454,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
