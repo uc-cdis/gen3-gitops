@@ -168,32 +168,17 @@ etl:
           - index: file
             join_on: _subject_id
             props:
-              - name: file_object_id
+              - name: object_id
                 src: object_id
                 fn: set
-              - name: file_data_format
+              - name: data_format
                 src: data_format
                 fn: set
-              - name: file_data_type
+              - name: data_type
                 src: data_type
                 fn: set
               - name: file_count
                 src: _file_id
-                fn: count
-          - index: index_file
-            join_on: _subject_id
-            props:
-              - name: index_file_object_id
-                src: object_id
-                fn: set
-              - name: index_file_data_format
-                src: data_format
-                fn: set
-              - name: index_file_data_type
-                src: data_type
-                fn: set
-              - name: index_file_count
-                src: _index_file_id
                 fn: count
       - name: internalstaging_file
         doc_type: file
@@ -201,7 +186,6 @@ etl:
         root: None
         category: data_file
         props:
-          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -229,13 +213,13 @@ etl:
               - name: _subject_id
                 src: id
                 fn: set
+              - name: project_id
       - name: internalstaging_index_file
         doc_type: index_file
         type: collector
         root: None
         category: index_file
         props:
-          - name: project_id
           - name: object_id
           - name: md5sum
           - name: file_name
@@ -263,6 +247,7 @@ etl:
               - name: _subject_id
                 src: id
                 fn: set
+              - name: project_id
   image:
     tube:
       tag: '2026.04'
