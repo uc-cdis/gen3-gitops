@@ -1,5 +1,5 @@
 awshelper:
   enabled: true
   image:
-    repository: "quay.io/cdis/awshelper"
-    tag: "master"
+    repository: quay.io/cdis/awshelper
+    tag: integration202608
