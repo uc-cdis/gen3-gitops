@@ -3399,14 +3399,11 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '0.8.0'
+    tag: '2026.04'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
-        annotations:
-          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3463,9 +3460,6 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
-        annotations:
-          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
