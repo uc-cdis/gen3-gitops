@@ -330,6 +330,9 @@ fence:
       cds-614-phs004222:
         cred: fence_bot
         region: us-east-1
+      cds-724-phs004748-leukemia-clonal-evolution:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
