@@ -3400,6 +3400,9 @@ sower:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3451,6 +3454,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
