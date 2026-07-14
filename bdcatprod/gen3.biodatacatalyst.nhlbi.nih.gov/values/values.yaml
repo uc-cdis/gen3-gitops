@@ -3520,7 +3520,7 @@ spark:
 ssjdispatcher:
   externalSecrets:
     credsFile: bdcatprod-ssjdispatcher-creds
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.07
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:integration202608
 tube:
   enabled: true
   image:
