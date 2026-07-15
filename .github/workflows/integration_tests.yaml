@@ -11,7 +11,7 @@ permissions:
 jobs:
   integration_tests:
     name: Integration tests
-    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
+    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@chore/use_gen3_gitops_ref
     with:
       HELM_BRANCH: copy/pr-635
 
