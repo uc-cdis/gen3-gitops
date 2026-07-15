@@ -3207,6 +3207,168 @@ fence:
       nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-biolincc-act-phs004661-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-aim-high-phs004693-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-an-microbiome-phs004660-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0702-phs004692-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0903-phs004697-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1101-phs004698-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1202-phs004701-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1203-phs004709-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1301-phs004703-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1302-phs004705-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1401-phs004718-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1501-phs004704-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1502-phs004710-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1503-phs004720-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1703-phs004711-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cast-phs004651-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-focus-phs004652-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-seneca-phs004712-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-time-phs004668-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cpap-phs004676-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-cctrn-lvad-phs004714-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-np-phs004707-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-delta-phs004695-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-icu-resus-phs004721-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-medfocus-phs004680-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-reds-iii-phs004687-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-roc-proppr-phs004685-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-rosters-phs004681-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-snap-phs004682-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-soya-phs004683-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-tact-phs004684-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-tmh-ctn-recess-phs004690-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c5:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c6:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c7:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c8:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-atypical-cf-phs000556-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-family-aortic-phs000347-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-family-hem-phs000632-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-ninds-arcadia-phs004653-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-adult-phs003463-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c2:
+        cred: fence-bot
+        region: us-east-1        
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
