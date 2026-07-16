@@ -6,7 +6,7 @@ fence:
   enabled: true
   image:
     repository: quay.io/cdis/fence
-    tag: '2026.04'
+    tag: '2026.07'
   podAnnotations:
     prometheus.io/path: /metrics
     prometheus.io/scrape: 'true'
