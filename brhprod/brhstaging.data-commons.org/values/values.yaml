@@ -57,10 +57,20 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'feat_scoped-token'
+    tag: 'master'
   FENCE_CONFIG_PUBLIC:
     # 2h - temporary to unblock TES testing
     ACCESS_TOKEN_EXPIRES_IN: 7200
+    # Task token types that can be requested by users.
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 172800 # 2 days
+
 fluentd:
   enabled: true
   image:

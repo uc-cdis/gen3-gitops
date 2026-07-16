@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.04'
+    tag: '2026.06'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healpreprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.04'
+    tag: '2026.06'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-receiver
@@ -28,7 +28,7 @@ cedar:
   enabled: true
   image:
     repository: quay.io/cdis/cedar-wrapper-service
-    tag: "0.7.0"
+    tag: 0.7.0
   cedar_client_job_enabled: false
   externalSecrets:
     createCedarClientSecret: false
@@ -42,7 +42,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.04'
+    tag: '2026.06'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--dashboard-access
@@ -69,7 +69,7 @@ fence:
     fenceJwtKeys: healpreprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.04'
+    tag: '2026.06'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-healpreprod-205252583234-upload:
@@ -157,7 +157,7 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.04'
+    tag: '2.9.0'
   hatchery:
     json: |-
       {
@@ -208,13 +208,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "JupyterLab with Python and R Kernels",
-            "image": "quay.io/cdis/jupyter-superslim-heal:feat_heal-superslim",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__latest",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.ipynb",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",
@@ -367,14 +367,14 @@ indexd:
     serviceCreds: healpreprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.04'
+    tag: '2026.06'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healpreprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.04'
+    tag: '2026.06'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--manifest-service-sa
@@ -1414,7 +1414,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: '2026.06'
 portal:
   enabled: true
   dataUploadBucket: healprod-healpreprod-205252583234-upload
@@ -1427,12 +1427,12 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.41.1'
+    tag: '5.42.0'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '1.10.0'
+    tag: '2026.06'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -1443,7 +1443,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.04'
+    tag: '2026.06'
   ingress:
     aws:
       group: healprod
@@ -1451,7 +1451,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.04'
+    tag: '2026.06'
 sower:
   enabled: true
   externalSecrets:
@@ -1459,7 +1459,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: '2026.06'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1495,8 +1495,8 @@ ssjdispatcher:
     credsFile: healpreprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.04'
-  indexing: quay.io/cdis/indexs3client:2026.04
+    tag: '2026.06'
+  indexing: quay.io/cdis/indexs3client:2026.06
 wts:
   enabled: true
   externalSecrets:
@@ -1505,4 +1505,4 @@ wts:
     wtsOidcClient: healpreprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.04'
+    tag: '2026.06'

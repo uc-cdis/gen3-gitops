@@ -55,7 +55,7 @@
                 "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
                 "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
                 "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
-            },            
+            },
             {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
@@ -109,6 +109,18 @@
                 "description": "This notebook briefly demonstrates how to use the MIDRC open APIs to build a cohort of MIDRC imaging studies using patient clinical data and AI-research-based annotations in the MIDRC data commons and then access and view the X-ray image files associated with those imaging studies.",
                 "imageUrl": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.png",
                 "link": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.html"
+            },
+            {
+                "title": "Creating a Flat File Version of the MIDRC Data Dictionary",
+                "description": "This notebook will walk you through converting MIDRC's data node-based dictionary into a flat-file version.",
+                "imageUrl": "/dashboard/Public/notebooks/flat_file_dictionary.png",
+                "link": "/dashboard/Public/notebooks/flat_file_dictionary.html"
+            },
+            {
+                "title": "Adding External Standards to MIDRC's Standards",
+                "description": "This notebook will be used to add standards that are external to MIDRC's dictionary. The added standard can then be used to process data provided by the user.",
+                "imageUrl": "/dashboard/Public/notebooks/midrc_add_external_standard.png",
+                "link": "/dashboard/Public/notebooks/midrc_add_external_standard.html"
             }
         ]
     },
@@ -383,6 +395,9 @@
                         ],
                         "fields": [
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "age_at_index",
@@ -475,6 +490,9 @@
                     "sex",
                     "age_at_index",
                     "index_event",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -1079,6 +1097,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "zip",
@@ -1129,6 +1150,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -1157,6 +1181,7 @@
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",
@@ -1369,6 +1394,9 @@
                         ],
                         "fields": [
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "age_at_index",
                             "index_event",
@@ -1414,6 +1442,9 @@
                     "image_data_modified",
                     "case_submitter_id",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "age_at_index",
                     "index_event",
@@ -1602,6 +1633,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "zip",
                             "index_event"
@@ -1681,6 +1715,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "zip",
                     "data_format",
@@ -1703,6 +1740,7 @@
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",

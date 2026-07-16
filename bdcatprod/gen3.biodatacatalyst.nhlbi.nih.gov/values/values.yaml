@@ -3016,6 +3016,204 @@ fence:
       nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-aps-phs004492-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-affirm-phs004639-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-siena-phs004606-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-stics-phs004607-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-2d-phs004600-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-phs004599-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0201-phs004601-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0402-phs004629-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0801-phs004641-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1204-phs004642-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cabg-phs004643-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cass-phs004647-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coag-phs004634-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coblt-phs004602-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-compare-voe-phs004630-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-dash-sodium-phs004635-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-hhl-phs004603-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-idea-phs004604-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ipf-survival-pr-phs004591-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-lung-hiv-phs004323-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-mrfit-phs004609-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-omni-heart-phs004610-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-p2c2-phs004322-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-paths-phs004564-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-premier-phs004617-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-quartet-usa-phs004618-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-ih-phs004645-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-oh-phs004646-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-va2-tah-phs004633-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-wlm-phs004636-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-btk-sars-cov-2-phs003319-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccdg-penn-phs001502-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-familial-phs000582-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-isgs-phs000546-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-swiss-phs000327-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-munic-mi-phs000916-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-procardis-phs000883-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-niddm-athero-phs001130-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-reds-rbc-omics-phs001955-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-rehab-ph-phs004597-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-amish-phs000956-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-care-pact-phs001730-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-safhs-phs001215-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-sarcoidosis-phs001207-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
+        cred: fence-bot
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -3148,10 +3346,10 @@ peregrine:
 portal:
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 2
     minReplicas: 2
     targetCPUUtilizationPercentage: 90
-  replicaCount: 4
+  replicaCount: 2
   enabled: true
   customConfig:
     enabled: true
@@ -3197,11 +3395,14 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: '0.8.0'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3253,6 +3454,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
