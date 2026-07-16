@@ -208,13 +208,13 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "JupyterLab with Python and R Kernels",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__latest",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__3085a14fdf10fbdc56e6c0dad0a2463e54e3ed16",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
             "args": [
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
+              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.ipynb",
               "--JupyterNotebookApp.password=''",
               "--JupyterNotebookApp.token=''",
               "--JupyterNotebookApp.ip='*'",

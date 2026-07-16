@@ -84,6 +84,7 @@ etl:
               - name: Texthistologytitle
               - name: Gradedifferentiation
               - name: Stagegroupbest
+              - name: PrimarysiteX
           - name: somatic_mutations
             path: somatic_mutations
             props:
