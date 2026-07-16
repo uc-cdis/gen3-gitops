@@ -109,6 +109,18 @@
                 "description": "This notebook briefly demonstrates how to use the MIDRC open APIs to build a cohort of MIDRC imaging studies using patient clinical data and AI-research-based annotations in the MIDRC data commons and then access and view the X-ray image files associated with those imaging studies.",
                 "imageUrl": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.png",
                 "link": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.html"
+            },
+            {
+                "title": "Creating a Flat File Version of the MIDRC Data Dictionary",
+                "description": "This notebook will walk you through converting MIDRC's data node-based dictionary into a flat-file version.",
+                "imageUrl": "/dashboard/Public/notebooks/flat_file_dictionary.png",
+                "link": "/dashboard/Public/notebooks/flat_file_dictionary.html"
+            },
+            {
+                "title": "Adding External Standards to MIDRC's Standards",
+                "description": "This notebook will be used to add standards that are external to MIDRC's dictionary. The added standard can then be used to process data provided by the user.",
+                "imageUrl": "/dashboard/Public/notebooks/midrc_add_external_standard.png",
+                "link": "/dashboard/Public/notebooks/midrc_add_external_standard.html"
             }
         ]
     },
