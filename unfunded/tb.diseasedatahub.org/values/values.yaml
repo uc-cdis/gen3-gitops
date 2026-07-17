@@ -37,7 +37,7 @@ arborist:
     dbcreds: tb-arborist-db-creds
   image:
     repository: quay.io/cdis/arborist
-    tag: '2026.04'
+    tag: '2026.07'
 aws-sigv4-proxy:
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
@@ -50,32 +50,32 @@ indexd:
   enabled: true
   image:
     repository: quay.io/cdis/indexd
-    tag: '2026.04'
+    tag: '2026.07'
 peregrine:
   externalSecrets:
     dbcreds: tb-peregrine-db-creds
   enabled: true
   image:
     repository: quay.io/cdis/peregrine
-    tag: '2026.04'
+    tag: '2026.07'
     pullPolicy: Always
 revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: '2026.04'
+    tag: '2026.07'
 sheepdog:
   externalSecrets:
     dbcreds: tb-sheepdog-db-creds
   enabled: true
   image:
     repository: quay.io/cdis/sheepdog
-    tag: '2026.04'
+    tag: '2026.07'
 manifestservice:
   enabled: true
   image:
     repository: quay.io/cdis/manifestservice
-    tag: '2026.04'
+    tag: '2026.07'
   externalSecrets:
     manifestserviceG3auto: tb-manifestservice-g3auto
 wts:
@@ -84,7 +84,7 @@ wts:
   enabled: true
   image:
     repository: quay.io/cdis/workspace-token-service
-    tag: '2026.04'
+    tag: '2026.07'
 ambassador:
   enabled: false
 hatchery:
