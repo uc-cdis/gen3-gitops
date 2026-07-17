@@ -1,0 +1,53 @@
+{{- if .Values.networkPolicy.enabled }}
+# Ingress: only allow traffic from revproxy pods in the gen3 namespace.
+# Egress: DNS (kube-system:53) + workspace pod services (workspaceNamespace:80).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: workspace-proxy
+  namespace: {{ .Values.deploymentNamespace }}
+  labels:
+    app: workspace-proxy
+spec:
+  podSelector:
+    matchLabels:
+      app: workspace-proxy
+  policyTypes:
+    - Ingress
+    - Egress
+
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.deploymentNamespace }}
+          podSelector:
+            matchLabels:
+              app: revproxy
+      ports:
+        - protocol: TCP
+          port: 8080
+
+  egress:
+    # DNS resolution via kube-dns (kube-system namespace)
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+    # Workspace pod services in the workspace namespace
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.workspaceNamespace }}
+      ports:
+        - protocol: TCP
+          port: 80
+        # JEG listens on 8888 — workspace-proxy proxies /jeg-proxy/* to it
+        - protocol: TCP
+          port: 8888
+{{- end }}
