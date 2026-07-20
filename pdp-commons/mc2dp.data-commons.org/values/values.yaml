@@ -207,7 +207,7 @@ hatchery:
                 "--ServerApp.token=''",
                 "--ServerApp.ip='*'",
                 "--ServerApp.disable_check_xsrf=True",
-                "--ServerApp.allow_origin='https://qa-prometheus.planx-pla.net'",
+                "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
                 "--ServerApp.root_dir='/home/jovyan'",
                 "--ServerApp.shutdown_no_activity_timeout=5400",
                 "--ServerApp.quit_button=False",
