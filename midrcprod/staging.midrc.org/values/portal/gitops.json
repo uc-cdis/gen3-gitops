@@ -113,8 +113,8 @@
             {
                 "title": "Creating a Flat File Version of the MIDRC Data Dictionary",
                 "description": "This notebook will walk you through converting MIDRC's data node-based dictionary into a flat-file version.",
-                "imageUrl": "/dashboard/Public/notebooks/flat_file_dictionary.png",
-                "link": "/dashboard/Public/notebooks/flat_file_dictionary.html"
+                "imageUrl": "/dashboard/Public/notebooks/flat_file_midrc_dictionary.png",
+                "link": "/dashboard/Public/notebooks/flat_file_midrc_dictionary.html"
             },
             {
                 "title": "Adding External Standards to MIDRC's Standards",
