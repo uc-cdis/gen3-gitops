@@ -513,6 +513,9 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '6.3.0'
+  trustedIssuers:
+    defaultPassportIssuer: 'https://stsstg.nih.gov'
+
 manifestservice:
   enabled: false
   externalSecrets:
