@@ -826,7 +826,7 @@ workspace-proxy:
       memory: "256Mi"
 
   networkPolicy:
-    enabled: true
+    enabled: false
 
 jeg:
   enabled: true
