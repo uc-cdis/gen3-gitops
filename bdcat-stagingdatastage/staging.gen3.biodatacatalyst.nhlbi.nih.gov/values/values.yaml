@@ -258,7 +258,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bdc-data-commons
-    tag: 1.3.0
+    tag: 1.2.0
 gen3-user-data-library:
   enabled: true
   image:
@@ -513,6 +513,9 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '6.3.0'
+  trustedIssuers:
+    defaultPassportIssuer: 'https://stsstg.nih.gov'
+
 manifestservice:
   enabled: false
   externalSecrets:
