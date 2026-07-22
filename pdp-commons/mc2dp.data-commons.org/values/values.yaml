@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.22'
+    tag: '0.23'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -137,21 +137,21 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
-    gpu: true
-    jupyter: false
+    enabled: true
+    gpu: false
+    jupyter: true
 
     availabilityZones:
       - us-east-1d
 
     # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
     workspaceCapacityReservation:
-      cpu: 4
-      memory: 9Gi
+      memory: "17Gi"
+      cpu: 5
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.7.2'
+    tag: '2.9.2'
   hatchery:
     json: |
       {
@@ -726,6 +726,45 @@ revproxy:
           client_max_body_size 0;
           proxy_read_timeout 600s;
       }
+    ambassador-service.conf: |-
+      location = /lw-workspace/proxy {
+        return 308 $scheme://$http_host/lw-workspace/proxy/;
+      }
+
+      location /lw-workspace/proxy/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+          auth_request /gen3-authz;
+
+          if ($saved_set_cookie != "") {
+              add_header Set-Cookie $saved_set_cookie always;
+          }
+          add_header Cache-Control "no-store";
+
+          proxy_set_header REMOTE_USER $remoteUser;
+          error_page 403 = @errorworkspace;
+
+          set $proxy_service  "workspace-proxy";
+          set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+          rewrite ^/lw-workspace/proxy/$ /lab break;
+          rewrite ^/lw-workspace/proxy/(.*) /$1 break;
+          proxy_pass $upstream;
+          proxy_redirect http://$host/ https://$host/lw-workspace/proxy/;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 36000s;
+      }
+
 
 sheepdog:
   enabled: true
@@ -787,7 +826,7 @@ workspace-proxy:
       memory: "256Mi"
 
   networkPolicy:
-    enabled: true
+    enabled: false
 
 jeg:
   enabled: true
