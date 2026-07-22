@@ -151,7 +151,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.1'
+    tag: '2.9.2'
   hatchery:
     json: |
       {
