@@ -7,7 +7,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.06'
+    tag: '2026.07'
 audit:
   enabled: true
   replicaCount: 2
@@ -15,7 +15,7 @@ audit:
     auditG3auto: bihstaging-cloudauto-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.06'
+    tag: '2026.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--audit-sqs-receiver
@@ -36,7 +36,7 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::533267425233:role/bihprod--bihstaging-helm--dashboard-access
   image:
-    tag: '2026.06'
+    tag: '2026.07'
 etl:
   esEndpoint: elasticsearch
   etlMapping:
@@ -109,9 +109,9 @@ etl:
         type: aggregator
   image:
     tube:
-      tag: '2026.06'
+      tag: '2026.07'
     spark:
-      tag: '2026.06'
+      tag: '2026.07'
 fence:
   replicaCount: 2
   usersync:
@@ -128,7 +128,7 @@ fence:
     fenceJwtKeys: bihstaging-cloudauto-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.06'
+    tag: '2026.07'
 fluentd:
   enabled: true
   replicaCount: 2
@@ -183,7 +183,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.06'
+    tag: '2026.07'
   hatchery:
     json: |-
       {
@@ -193,7 +193,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.06",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.07",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "bihstaging.data-commons.org",
@@ -294,7 +294,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.06'
+    tag: '2026.07'
   indices:
     - index: bih_dataset
       type: dataset
@@ -312,7 +312,7 @@ indexd:
     serviceCreds: bihstaging-cloudauto-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.06'
+    tag: '2026.07'
 metadata:
   enabled: true
   replicaCount: 2
@@ -321,13 +321,13 @@ metadata:
     metadataG3auto: bihstaging-cloudauto-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.06'
+    tag: '2026.07'
 peregrine:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.06'
+    tag: '2026.07'
 portal:
   enabled: true
   replicaCount: 2
@@ -338,19 +338,19 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.06'
+    tag: '2026.07'
 requestor:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.06'
+    tag: '2026.07'
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.06'
+    tag: '2026.07'
   ingress:
     aws:
       group: bihprod
@@ -359,7 +359,7 @@ sheepdog:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.06'
+    tag: '2026.07'
 ssjdispatcher:
   serviceAccount:
     annotations:
@@ -373,8 +373,8 @@ ssjdispatcher:
     credsFile: bihstaging-cloudauto-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.06'
-  indexing: quay.io/cdis/indexs3client:2026.06
+    tag: '2026.07'
+  indexing: quay.io/cdis/indexs3client:2026.07
 wts:
   enabled: true
   replicaCount: 2
@@ -384,4 +384,4 @@ wts:
     wtsOidcClient: bihstaging-cloudauto-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.06'
+    tag: '2026.07'

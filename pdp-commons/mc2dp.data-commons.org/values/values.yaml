@@ -1,4 +1,5 @@
 ambassador:
+  enabled: false
   jupyterNamespace: jupyter-pods
   replicaCount: 2
 arborist:
@@ -60,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.21'
+    tag: '0.23'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -117,6 +118,8 @@ embedding-management-service:
     {
       "expr": 256
     }
+  service:
+    targetPort: 8000
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
     tag: feat_service
@@ -134,21 +137,21 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
-    gpu: true
-    jupyter: false
+    enabled: true
+    gpu: false
+    jupyter: true
 
     availabilityZones:
       - us-east-1d
 
     # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
     workspaceCapacityReservation:
-      cpu: 4
-      memory: 9Gi
+      memory: "17Gi"
+      cpu: 5
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.7.2'
+    tag: '2.9.2'
   hatchery:
     json: |
       {
@@ -186,78 +189,41 @@ hatchery:
               ]
           },
           "containers": [
-              {
-                  "target-port": 8888,
-                  "cpu-limit": "1.0",
-                  "memory-limit": "4Gi",
-                  "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-                  "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
-                  "env": {
-                      "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
-                  },
-                  "args": [
-                      "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-                      "--JupyterNotebookApp.default_url=/lab",
-                      "--JupyterNotebookApp.password=''",
-                      "--JupyterNotebookApp.token=''",
-                      "--JupyterNotebookApp.ip='*'",
-                      "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-                      "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-                      "--JupyterNotebookApp.quit_button=False"
-                  ],
-                  "command": [
-                      "start-notebook.sh"
-                  ],
-                  "path-rewrite": "/lw-workspace/proxy/",
-                  "use-tls": "false",
-                  "ready-probe": "/lw-workspace/proxy/",
-                  "lifecycle-post-start": [
-                      "/bin/sh",
-                      "-c",
-                      "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                  ],
-                  "user-uid": 1010,
-                  "fs-gid": 101,
-                  "user-volume-location": "/home/jovyan/pd",
-                  "gen3-volume-location": "/home/jovyan/.gen3"
+            {
+              "target-port": 8888,
+              "cpu-limit": "4.0",
+              "memory-limit": "16Gi",
+              "name": "RCC pilot",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-feat_rcc-r-packages",
+              "pull_policy": "Always",
+              "env": {
+                "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+                "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
               },
-              {
-                "args": [
-                  "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-                  "--JupyterNotebookApp.default_url=/lab",
-                  "--JupyterNotebookApp.password=''",
-                  "--JupyterNotebookApp.token=''",
-                  "--JupyterNotebookApp.ip='*'",
-                  "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-                  "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
-                  "--JupyterNotebookApp.quit_button=False"
-                ],
-                "command": [
-                  "start-notebook.sh"
-                ],
-                "gpu": true,
-                "cpu-limit": "3.0",
-                "env": {
-                  "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
-                },
-                "fs-gid": 100,
-                "gen3-volume-location": "/home/jovyan/.gen3",
-                "image": "quay.io/cdis/jupyter-prometheus:prometheus-master",
-                "pull_policy": "Always",
-                "lifecycle-post-start": [
-                  "/bin/sh",
-                  "-c",
-                  "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                ],
-                "memory-limit": "8Gi",
-                "name": "(GPU) MC2DP Embedding Demos",
-                "path-rewrite": "/lw-workspace/proxy/",
-                "ready-probe": "/lw-workspace/proxy/",
-                "target-port": 8888,
-                "use-tls": "false",
-                "user-uid": 1010,
-                "user-volume-location": "/home/jovyan/pd"
-              }
+              "command": [
+                "start-notebook.sh"
+              ],
+              "args": [
+                "--ServerApp.base_url=/lw-workspace/proxy/",
+                "--ServerApp.default_url=/lab",
+                "--ServerApp.password=''",
+                "--ServerApp.token=''",
+                "--ServerApp.ip='*'",
+                "--ServerApp.disable_check_xsrf=True",
+                "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+                "--ServerApp.root_dir='/home/jovyan'",
+                "--ServerApp.shutdown_no_activity_timeout=5400",
+                "--ServerApp.quit_button=False",
+                "--FileContentsManager.always_delete_dir=True"
+              ],
+              "path-rewrite": "/lw-workspace/proxy/",
+              "use-tls": "false",
+              "ready-probe": "/lw-workspace/proxy/lab",
+              "user-uid": 1010,
+              "fs-gid": 101,
+              "user-volume-location": "/home/jovyan/pd",
+              "gen3-volume-location": "/home/jovyan/.gen3"
+            }
           ]
       }
 indexd:
@@ -601,6 +567,205 @@ revproxy:
   ingress:
     aws:
       group: pdp-commons
+  additionalConfigs:
+    # NOTE: /search/* is not exposed directly by nginx; /guppy/* rewrites to
+    # /search/* on API Gateway, where the custom authorizer enforces access.
+    workspace-api.conf: |-
+      # Free tier is static JupyterLite assets rendered in-browser (WASM only).
+      # Do not gate these files on workspace launch authz checks.
+      location ^~ /api/workspace-assets/free/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-URL-SCHEME https;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+        client_max_body_size 0;
+        proxy_read_timeout 600s;
+      }
+
+      location ^~ /workspace-api/workspace-assets/free/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # Remote JupyterLite assets served by workspace-proxy (no auth gate — static files).
+      location ^~ /api/workspace-assets/remote/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-URL-SCHEME https;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+        client_max_body_size 0;
+        proxy_read_timeout 600s;
+      }
+
+      location ^~ /workspace-api/workspace-assets/remote/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # Workspace API routes (hatchery options/status/launch, gateway, kernel) are
+      # handled by the vectis Next.js app API routes — NOT workspace-proxy.
+      # Next.js rewrites /workspace-api/:path* → /api/:path* internally.
+      location ^~ /workspace-api/workspace/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request /gen3-authz;
+          error_page 403 = @errorworkspace;
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # JupyterLab kernel tunnel (workspace-proxy handles per-user routing).
+      location ^~ /workspace-api/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request /gen3-authz;
+          error_page 403 = @errorworkspace;
+          set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+    ambassador-service.conf: |-
+      location = /lw-workspace/proxy {
+        return 308 $scheme://$http_host/lw-workspace/proxy/;
+      }
+
+      location /lw-workspace/proxy/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+          auth_request /gen3-authz;
+
+          if ($saved_set_cookie != "") {
+              add_header Set-Cookie $saved_set_cookie always;
+          }
+          add_header Cache-Control "no-store";
+
+          proxy_set_header REMOTE_USER $remoteUser;
+          error_page 403 = @errorworkspace;
+
+          set $proxy_service  "workspace-proxy";
+          set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+          rewrite ^/lw-workspace/proxy/$ /lab break;
+          rewrite ^/lw-workspace/proxy/(.*) /$1 break;
+          proxy_pass $upstream;
+          proxy_redirect http://$host/ https://$host/lw-workspace/proxy/;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 36000s;
+      }
+
+
 sheepdog:
   enabled: true
   image:
@@ -625,3 +790,118 @@ wts:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: '2026.02'
+workspace-proxy:
+  enabled: true
+  deploymentNamespace: pdp-commons-helm
+  workspaceNamespace: jupyter-pods
+  kubernetesApiServerCIDRs:
+    - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
+    - "172.27.140.0/22"     # EKS private subnet (DHCP)
+    - "172.27.136.0/22"     # EKS private subnet (DHCP)
+    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: 0.0.1
+    pullPolicy: Always
+
+  listenAddr: ":8080"
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+        "python_kubernetes",
+        "python_tensorflow_kubernetes",
+        "python_tensorflow_gpu_kubernetes"
+      ]
+    }
+
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  networkPolicy:
+    enabled: false
+
+jeg:
+  enabled: true
+  workspaceNamespace: jupyter-pods
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/gen3-vectis
+    tag: "qa-jegv2"
+    pullPolicy: Always
+
+  env:
+    # CRITICAL: must match hatchery user-namespace and workspace-proxy WORKSPACE_NAMESPACE.
+    EG_NAMESPACE: jupyter-pods
+    EG_KERNEL_LAUNCH_TIMEOUT: "120"
+    EG_MAX_KERNELS_PER_USER: "2"
+    EG_CULL_IDLE_TIMEOUT: "14400"
+    EG_CULL_CONNECTED: "True"
+    EG_AUTH_TOKEN: ""
+    EG_DEFAULT_KERNEL_NAME: python3
+    EG_LIST_KERNELS: "True"
+    EG_KERNEL_IMAGE_PULL_POLICY: IfNotPresent
+    EG_SHARED_NAMESPACE: "True"
+    EG_MIRROR_WORKING_DIRS: "False"
+    EG_KERNEL_SPEC_POLICY: |
+      {
+        "default_kernel_name": "python3",
+        "kernel_specs": {
+          "python3": {
+            "display_name": "Python (Micro — Local)",
+            "language": "python"
+          },
+          "python_kubernetes": {
+            "display_name": "Python on Kubernetes (4Gi, 2 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow (4Gi, 1 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "1",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_gpu_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow with GPUs (8Gi, 2 cpu, gpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "8Gi",
+              "gpu_type": "NVIDIA"
+            }
+          },
+          "r_kubernetes": {
+            "display_name": "R on Kubernetes",
+            "language": "r",
+            "image_name": "elyra/kernel-r:latest"
+          }
+        }
+      }
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"

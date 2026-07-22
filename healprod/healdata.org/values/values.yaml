@@ -115,7 +115,7 @@ frontend-framework:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.3.1
+    tag: 1.3.2
 global:
   pdb: true
   aws:
@@ -219,13 +219,13 @@ hatchery:
           "cpu-limit": "1.0",
           "memory-limit": "2Gi",
           "name": "JupyterLab with Python and R Kernels",
-          "image": "quay.io/cdis/jupyter-superslim-heal:feat_heal-superslim",
+          "image": "quay.io/cdis/heal-notebooks:generic_rkernel__c63bf283668d8c027432757285a7f0324297b11b",
           "env": {
           "FRAME_ANCESTORS": "https://healdata.org"
           },
           "args": [
           "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-          "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.md",
+          "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.ipynb",
           "--JupyterNotebookApp.password=''",
           "--JupyterNotebookApp.token=''",
           "--JupyterNotebookApp.ip='*'",
@@ -1456,7 +1456,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.41.1'
+    tag: '5.42.0'
 requestor:
   enabled: true
   image:

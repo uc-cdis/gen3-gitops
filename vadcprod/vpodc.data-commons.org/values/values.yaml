@@ -40,7 +40,7 @@ cohort-middleware:
     cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
-    tag: VA-2026.03.18
+    tag: 0.5.1
 dashboard:
   replicaCount: 4
   autoscaling:
@@ -84,6 +84,7 @@ etl:
               - name: Texthistologytitle
               - name: Gradedifferentiation
               - name: Stagegroupbest
+              - name: PrimarysiteX
           - name: somatic_mutations
             path: somatic_mutations
             props:
@@ -151,7 +152,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: main
+    tag: 0.19
 global:
   pdb: true
   aws:
@@ -416,7 +417,7 @@ ohdsi-webapi:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
-    tag: VA-2025.10.24
+    tag: VA-2026.07.20
   externalSecrets:
     dbcreds: vadcprod-ohdsi-webapi-creds
 peregrine:
