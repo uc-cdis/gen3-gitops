@@ -1,0 +1,10 @@
+zendesk-wrapper:
+  enabled: false
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/zendesk-wrapper-service
+    tag: "master"
+  env:
+    - name: GEN3_ZENDESK_URL
+      value: "https://gen3support.zendesk.com"
+  externalSecrets:
+    name: "ci-zendesk-wrapper-secret"
