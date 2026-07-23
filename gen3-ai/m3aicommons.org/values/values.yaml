@@ -293,6 +293,11 @@ revproxy:
     authzService: "ai"
     csrfCheck: false
     rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
   - name: "cohort-copilot-chat"
     path: /cohort-copilot-chat
     serviceName: cohort-copilot-agent
@@ -300,6 +305,11 @@ revproxy:
     authzService: "ai"
     csrfCheck: false
     rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
   - name: "agent"
     path: /qag
     serviceName: qag-agent
@@ -307,6 +317,11 @@ revproxy:
     authzService: "ai"
     csrfCheck: false
     rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
 
 sheepdog:
   replicaCount: 2
