@@ -662,7 +662,7 @@
             }
         },
         "zendeskConfig": {
-            "zendeskSubdomainName": "heal-support"
+            "useZendeskWrapper": true
         }
     }
 }
