@@ -243,6 +243,9 @@ fence:
       cds-260-phs002790-sequencefiles-ccdi-ctsmc:
         cred: fence_bot
         region: us-east-1
+      cds-261-phs002823:
+        cred: fence_bot
+        region: us-east-1
       cds-262-phs002431-sequencefiles-p30-fy20:
         cred: fence_bot
         region: us-east-1
@@ -256,6 +259,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       cds-296-phs001287:
+        cred: fence_bot
+        region: us-east-1
+      cds-302-phs002827-xo1:
         cred: fence_bot
         region: us-east-1
       cds-303-phs002637:
@@ -283,6 +289,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       cds-427-phs003432:
+        cred: fence_bot
+        region: us-east-1
+      cds-434-phs002430-imaging-p30-fy20:
         cred: fence_bot
         region: us-east-1
       cds-447-target-c3dc:
@@ -328,6 +337,15 @@ fence:
         cred: fence_bot
         region: us-east-1
       cds-614-phs004222:
+        cred: fence_bot
+        region: us-east-1
+      cds-642-phs003162-pivot-chchicago:
+        cred: fence_bot
+        region: us-east-1
+      cds-645-phs004490-mos-snmulti:
+        cred: fence_bot
+        region: us-east-1
+      cds-707-phs004232-pivot-mdanderson:
         cred: fence_bot
         region: us-east-1
       cds-724-phs004748-leukemia-clonal-evolution:
@@ -706,6 +724,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-nrglu004-phs003572:
+        cred: fence_bot
+        region: us-east-1
+      kfstaging-cds-701-phs004691-sd-2hv0pm3s-bd:
+        cred: fence_bot
+        region: us-east-1
+      kfstaging-cds-705-phs004689-sd-q86p901z-bd:
         cred: fence_bot
         region: us-east-1
       kf-seq-data-bam:

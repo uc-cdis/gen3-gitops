@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 'main'
+    tag: '0.24'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -139,7 +139,7 @@ hatchery:
   hotNode:
     enabled: true
     gpu: false
-    jupyter: false
+    jupyter: true
 
     availabilityZones:
       - us-east-1d
@@ -151,7 +151,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.1'
+    tag: '2.9.2'
   hatchery:
     json: |
       {
