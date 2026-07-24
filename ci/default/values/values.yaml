@@ -35,10 +35,15 @@ global:
     topologyKey: "topology.kubernetes.io/zone"
     # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
     maxSkew: 1
-
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.27.128.128/25
+        - 172.27.128.0/25
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
   enabled: false
+
 
 postgresql:
   primary:
