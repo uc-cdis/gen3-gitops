@@ -208,7 +208,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "JupyterLab with Python and R Kernels",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__3085a14fdf10fbdc56e6c0dad0a2463e54e3ed16",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__c63bf283668d8c027432757285a7f0324297b11b",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -1506,3 +1506,13 @@ wts:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: '2026.06'
+zendesk-wrapper:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/zendesk-wrapper-service
+    tag: "0.1.0"
+  env:
+    - name: GEN3_ZENDESK_URL
+      value: "https://heal-support.zendesk.com"
+  externalSecrets:
+    name: "heal-preprod-zendesk-wrapper-secret"
