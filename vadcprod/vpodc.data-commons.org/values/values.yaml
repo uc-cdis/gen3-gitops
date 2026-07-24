@@ -152,7 +152,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.19
+    tag: "0.20"
 global:
   pdb: true
   aws:
