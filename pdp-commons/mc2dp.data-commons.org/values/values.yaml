@@ -125,6 +125,7 @@ embedding-management-service:
     tag: feat_service
     pullPolicy: Always
 guppy:
+  replicas: 4
   configIndex: pdp-commons-commons-config-index
   enabled: true
   esEndpoint: http://elasticsearch:9200
