@@ -42,6 +42,8 @@ mutatingWebhook:
 
 postgresql:
   primary:
+    containerSecurityContext:
+      runAsUser: 0
     persistence:
       enabled: true
       size: 1Gi
@@ -51,8 +53,8 @@ postgresql:
     maxUnavailable: "0"
   image:
     registry: quay.io
-    repository: cdis/postgresql
-    tag: 14.5.0-debian-11-r35
+    repository: cdis/docker-bitnami-pgvector
+    tag: master
 
 elasticsearch:
   pdb:
