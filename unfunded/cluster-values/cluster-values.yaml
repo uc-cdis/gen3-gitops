@@ -19,6 +19,9 @@ calico:
   configuration:
     enabled: false
 
+cert-manager:
+  enabled: true
+
 coreDNS:
   enabled: true
   configuration:
@@ -89,6 +92,7 @@ vpc-cni:
   enabled: false
   configuration:
     enabled: false
+
 kube-proxy:
   enabled: false
 
