@@ -450,16 +450,18 @@ fluentd:
 global:
   pdb: true
   aws:
-    account: '236714345101'
-    awsEsProxyRole: covid19prod--covid19prod-helm--es-access
+    awsEsProxyRoleArn: aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
     enabled: true
-    hatchery_role: covid19prod--covid19prod-helm--hatchery-sa
+    useLocalSecret:
+      enable: false
+      localSecretName: external-secrets-covid19-secret
     secretStoreServiceAccount:
       enabled: true
       roleArn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--external-secrets-sa
     wafv2:
       enabled: true
-      wafAclArn: arn:aws:wafv2:us-east-1:236714345101:regional/webacl/covid19prod-waf/0ca854eb-0058-49ee-86b5-749c6630ea99
+      wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
+    hatchery_role: covid19prod--covid19prod-helm--hatchery-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/covid19-datadictionary/3.9.2/schema.json
   dispatcherJobNum: '10'
