@@ -100,6 +100,7 @@ vpc-cni:
   enabled: false
   configuration:
     enabled: false
+
 kube-proxy:
   enabled: false
 
