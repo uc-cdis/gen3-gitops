@@ -1,5 +1,5 @@
 gen3-workflow:
-  enabled: true
+  enabled: false
   replicaCount: 2
   image:
     repository: quay.io/cdis/gen3-workflow
