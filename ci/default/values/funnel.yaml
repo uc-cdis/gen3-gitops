@@ -22,3 +22,7 @@ funnel:
       restartPolicy: OnFailure
       backoffLimit: 0
       PriorityClassName: "system-cluster-critical"
+  resources:
+    requests:
+      # lower worker pods request to avoid running out of memory in Kind CI
+      memory: "512Mi"
