@@ -10,13 +10,13 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: master
       helm:
         releaseName: gen3-covid19prod
         valueFiles:
-          - $values/covid19prod/chicagoland.pandemicresponsecommons.org/values/values.yaml
+          - $values/unfunded/chicagoland.pandemicresponsecommons.org/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: feat/prc_unfunded
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
