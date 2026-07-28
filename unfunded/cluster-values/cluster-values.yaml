@@ -94,6 +94,6 @@ kube-proxy:
 
 external-secrets:
   enabled: true
-  targetRevision: "0.16.2"
+  targetRevision: "2.8.0"
   configuration:
     enabled: false
