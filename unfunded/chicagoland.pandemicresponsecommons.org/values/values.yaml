@@ -27,6 +27,8 @@ aws-sigv4-proxy:
   replicaCount: 2
   enabled: true
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
+  externalSecrets:
+    awsCreds: covid19-aws-es-proxy-creds
 awshelper:
   enabled: true
   image:
