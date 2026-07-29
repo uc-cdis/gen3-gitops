@@ -13,7 +13,7 @@ fence:
   replicaCount: 2
   image:
     repository: quay.io/cdis/fence
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     tag: "feat_download-content"
   usersync:
     usersync: true
