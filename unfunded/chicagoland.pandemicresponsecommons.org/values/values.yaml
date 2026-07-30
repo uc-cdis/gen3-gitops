@@ -452,7 +452,7 @@ fluentd:
 global:
   pdb: true
   aws:
-    awsEsProxyRoleArn: aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--es-access
     enabled: true
     useLocalSecret:
       enable: false
