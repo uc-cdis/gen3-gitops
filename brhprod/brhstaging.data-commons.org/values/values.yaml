@@ -88,7 +88,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.3.0
+    tag: 0.3.1
   resources:
     limits:
       cpu: 2
