@@ -44,7 +44,7 @@ arborist:
     dbcreds: "externalgen3_default-arborist-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2026.05
+    tag: 2026.07
 
 audit:
   # Enabled. We do want to track audit events in this environment.
@@ -173,7 +173,7 @@ indexd:
 
   image:
     repository: quay.io/cdis/indexd
-    tag: 2026.05
+    tag: 2026.07
 
 portal:
   # # Lower cost
@@ -185,7 +185,7 @@ portal:
   replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2026.05
+    tag: 2026.07
 
   # GitOps config for portal
   gitops:
@@ -252,7 +252,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2026.05
+    tag: 2026.07
 
 sheepdog:
   # Lower cost
@@ -266,7 +266,7 @@ sheepdog:
   replicaCount: 2
   image:
     repository: quay.io/cdis/sheepdog
-    tag: 2026.05
+    tag: 2026.07
 
 metadata:
   useAggMds: false
@@ -292,7 +292,7 @@ metadata:
 
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 2026.05
+    tag: 2026.07
 
 # Disabled services
 
