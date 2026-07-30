@@ -307,7 +307,7 @@ manifestservice:
   enabled: false
 
 peregrine:
-  enabled: false
+  enabled: true
   externalSecrets:
     dbcreds: "externalgen3_default-sheepdg-creds"
 
