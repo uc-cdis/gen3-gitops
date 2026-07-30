@@ -345,6 +345,12 @@ fence:
       cds-645-phs004490-mos-snmulti:
         cred: fence_bot
         region: us-east-1
+      cds-701-phs004691:
+        cred: fence_bot
+        region: us-east-1
+      cds-705-phs004689:
+        cred: fence_bot
+        region: us-east-1
       cds-707-phs004232-pivot-mdanderson:
         cred: fence_bot
         region: us-east-1
@@ -724,12 +730,6 @@ fence:
         cred: fence_bot
         region: us-east-1
       iodc-cimac-nrglu004-phs003572:
-        cred: fence_bot
-        region: us-east-1
-      kfstaging-cds-701-phs004691-sd-2hv0pm3s-bd:
-        cred: fence_bot
-        region: us-east-1
-      kfstaging-cds-705-phs004689-sd-q86p901z-bd:
         cred: fence_bot
         region: us-east-1
       kf-seq-data-bam:
