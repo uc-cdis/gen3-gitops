@@ -105,8 +105,6 @@ fence:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/externalgen3-pdp/user.yaml
 
-  USER_YAML:
-
   # -- (map) External Secrets settings.
   externalSecrets:
     fenceJwtKeys: externalgen3_default-fence-jwt-keys
