@@ -270,7 +270,7 @@ sheepdog:
 
 metadata:
   useAggMds: false
-  enabled: false
+  enabled: true
   replicaCount: 2
 
   # Lower cost
