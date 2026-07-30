@@ -104,7 +104,7 @@ gen3-workflow:
     debug: true
     nWorkers: 4
     enableS3Files: true
-    EKS_SECURITY_GROUP_NAMES: ["TODO"]
+    eksSecurityGroupNames: ["brhprod_EKS_workers_sg", "brhprod_EKS_nodepool_jupyter_sg"]
     taskImageWhitelist:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
