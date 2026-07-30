@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 'main'
+    tag: '0.25'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -125,6 +125,7 @@ embedding-management-service:
     tag: feat_service
     pullPolicy: Always
 guppy:
+  replicaCount: 4
   configIndex: pdp-commons-commons-config-index
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -138,20 +139,20 @@ hatchery:
   enabled: true
   hotNode:
     enabled: false
-    gpu: true
-    jupyter: false
+    gpu: false
+    jupyter: true
 
     availabilityZones:
       - us-east-1d
 
     # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
     workspaceCapacityReservation:
-      cpu: 4
-      memory: 9Gi
+      memory: "17Gi"
+      cpu: 5
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.1'
+    tag: '2.9.2'
   hatchery:
     json: |
       {
