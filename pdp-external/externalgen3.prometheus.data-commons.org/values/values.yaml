@@ -140,8 +140,8 @@ fence:
         cred: 'fence-bot'
         region: us-east-1
 
-    dbGaP:
-      parent_to_child_studies_mapping: {}
+    # dbGaP:
+    #   parent_to_child_studies_mapping: {}
 
     # `DATA_UPLOAD_BUCKET` specifies an S3 bucket to which data files are uploaded,
     # using the `/data/upload` endpoint. This must be one of the first keys under
