@@ -140,6 +140,8 @@ funnel:
     DisableJobCleanup: false
     ReconcileRate: 120s
     ReplicaCount: 2
+    Storage:
+      type: "s3files"
     Executor:
       restartPolicy: Never
       backoffLimit: 0
