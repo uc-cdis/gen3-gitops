@@ -156,4 +156,4 @@ hatchery:
       fs-gid: 100
       user-volume-location: /home/jovyan/pd
   image:
-    tag: '2026.04'
+    tag: '2026.06'
