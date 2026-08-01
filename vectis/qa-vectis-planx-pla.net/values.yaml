@@ -1,0 +1,1 @@
+# ArgoCD umbrella chart — values are passed via per-app valueFiles in templates/

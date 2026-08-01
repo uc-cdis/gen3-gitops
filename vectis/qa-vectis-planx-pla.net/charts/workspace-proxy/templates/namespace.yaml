@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.workspaceNamespace }}
+  labels:
+    app: workspace
+    # Allows NetworkPolicy selectors to target this namespace.
+    kubernetes.io/metadata.name: {{ .Values.workspaceNamespace }}
