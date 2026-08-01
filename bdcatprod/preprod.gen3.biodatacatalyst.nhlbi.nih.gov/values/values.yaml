@@ -3368,7 +3368,7 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c2:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
@@ -3496,6 +3496,41 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.07'
 portal:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-bdcatprod
+      pvName: portal-pv-bdcatprod
+      createPV: true
+      #volumeHandle: ""
+      bucketName: "bdcatprod-portal-build-bucket"
+      mountOptions:
+      - allow-delete
+      - allow-other
+      - region us-east-1
+      - sse aws:kms
+      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+    images:
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+    extraction:
+      stripComponents: true
+  resources:
+    requests:
+      memory: 128Mi
   autoscaling:
     enabled: false
     maxReplicas: 2
