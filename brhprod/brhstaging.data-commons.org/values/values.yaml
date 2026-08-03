@@ -88,7 +88,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: misc-improvements
+    tag: 0.3.1
   resources:
     limits:
       cpu: 2
@@ -103,6 +103,8 @@ gen3-workflow:
   gen3WorkflowConfig:
     debug: true
     nWorkers: 4
+    enableS3Files: true
+    eksSecurityGroupNames: ["brhprod_EKS_workers_sg", "brhprod_EKS_nodepool_jupyter_sg"]
     taskImageWhitelist:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
@@ -129,7 +131,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: test-rename_temp_volume
+    tag: v0.12.0-gen3
   Logger:
     Level: debug
   Kubernetes:
@@ -138,6 +140,8 @@ funnel:
     DisableJobCleanup: false
     ReconcileRate: 120s
     ReplicaCount: 2
+    Storage:
+      type: "s3files"
     Executor:
       restartPolicy: Never
       backoffLimit: 0
