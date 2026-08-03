@@ -42,6 +42,8 @@ mutatingWebhook:
 
 postgresql:
   primary:
+    extendedConfiguration: |-
+      max_connections = 200
     containerSecurityContext:
       runAsUser: 0
     persistence:
