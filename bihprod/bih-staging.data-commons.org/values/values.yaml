@@ -138,9 +138,9 @@ fluentd:
 frontend-framework:
   replicaCount: 2
   customConfig:
-    branch: main
+    branch: staging
     enabled: true
-    repo: https://github.com/uc-cdis/bih-data-commons/tree/staging
+    repo: https://github.com/uc-cdis/bih-data-commons.git
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
