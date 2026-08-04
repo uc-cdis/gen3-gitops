@@ -140,7 +140,7 @@ frontend-framework:
   customConfig:
     branch: main
     enabled: true
-    repo: https://github.com/uc-cdis/bih-data-commons.git
+    repo: https://github.com/uc-cdis/bih-data-commons/tree/staging
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
