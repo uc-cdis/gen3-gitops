@@ -192,8 +192,8 @@ hatchery:
           "containers": [
             {
               "target-port": 8888,
-              "cpu-limit": "4.0",
-              "memory-limit": "16Gi",
+              "cpu-limit": "1.0",
+              "memory-limit": "1Gi",
               "name": "RCC pilot",
               "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-feat_rcc-r-packages",
               "pull_policy": "Always",
