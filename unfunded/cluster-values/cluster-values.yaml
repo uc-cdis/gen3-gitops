@@ -23,7 +23,9 @@ cert-manager:
   enabled: true
   configuration:
     enabled: true
-    hostNetwork: true
+    webhook:
+      hostNetwork: true
+      securePort: 10259
 
 coreDNS:
   enabled: true
