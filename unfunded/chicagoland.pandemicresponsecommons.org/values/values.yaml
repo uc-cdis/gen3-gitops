@@ -485,7 +485,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
-  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/86eca425-c2c3-4911-a49f-20beca8c7e99
+  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/843a0993-4bea-4cf1-87b2-49d7c2d75a80
 guppy:
   replicaCount: 2
   authFilterField: auth_resource_path
