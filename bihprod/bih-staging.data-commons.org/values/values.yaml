@@ -138,7 +138,7 @@ fluentd:
 frontend-framework:
   replicaCount: 2
   customConfig:
-    branch: main
+    branch: staging
     enabled: true
     repo: https://github.com/uc-cdis/bih-data-commons.git
   enabled: true
