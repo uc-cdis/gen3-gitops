@@ -1,5 +1,5 @@
 ambassador:
-  jupyterNamespace: jupyter-pods
+  jupyterNamespace: jupyter-pods-covid19prod-helm
 arborist:
   replicaCount: 2
   enabled: true
@@ -515,7 +515,7 @@ hatchery:
   hatchery:
     json: |-
       {
-        "user-namespace": "jupyter-pods",
+        "user-namespace": "jupyter-pods-covid19prod-helm",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "sidecar": {
