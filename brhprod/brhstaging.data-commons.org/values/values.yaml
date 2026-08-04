@@ -114,6 +114,8 @@ gen3-workflow:
       - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
       - "python:3.9*"
       - "pytorch/pytorch:latest" # nf-canary TEST_GPU
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # CI test_multiple_executors_and_pv_features
+      - "public.ecr.aws/docker/library/alpine:latest" # CI test_multiple_executors_and_pv_features
       - "quay.io/ncigdc/samtools:1.9"
       - "quay.io/ncigdc/star2:2.7.5c"
       - "quay.io/ncigdc/bio-alpine"
