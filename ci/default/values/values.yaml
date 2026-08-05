@@ -46,9 +46,9 @@ postgresql:
       max_connections = 200
     containerSecurityContext:
       runAsUser: 0
-    persistence:
-      enabled: true
-      size: 1Gi
+    # persistence:
+    #   enabled: true
+    #   size: 1Gi
   pdb:
     create: true
     minAvailable: "1"
