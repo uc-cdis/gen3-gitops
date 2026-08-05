@@ -1,13 +1,13 @@
 ambassador:
   jupyterNamespace: jupyter-pods-covid19prod-helm
 arborist:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.08'
 audit:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     auditG3auto: covid19prod-audit-g3auto
@@ -18,13 +18,13 @@ audit:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--audit-sqs-receiver
 auspice:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-auspice
     tag: v2.25.gen3.2.15
 aws-sigv4-proxy:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
@@ -50,7 +50,7 @@ covid19-notebook-etl:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-notebook-etl
     tag: 5.1.6
 dashboard:
-  replicaCount: 2
+  replicaCount: 1
   dashboardConfig:
     bucket: dashboard-236714345101-covid19-prod-gen3
     prefix: chicagoland.pandemicresponsecommons.org
@@ -429,7 +429,7 @@ etl:
     spark:
       tag: '2026.08'
 fence:
-  replicaCount: 2
+  replicaCount: 1
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/covid19/user.yaml
@@ -487,7 +487,7 @@ global:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/843a0993-4bea-4cf1-87b2-49d7c2d75a80
 guppy:
-  replicaCount: 2
+  replicaCount: 1
   authFilterField: auth_resource_path
   configIndex: covid19_array-config
   enabled: true
@@ -507,7 +507,7 @@ guppy:
     - index: covid19_dataset
       type: dataset
 hatchery:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -621,7 +621,7 @@ hatchery:
         ]
       }
 indexd:
-  replicaCount: 2
+  replicaCount: 1
   defaultPrefix: dg.63D5/
   enabled: true
   externalSecrets:
@@ -630,7 +630,7 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.08'
 manifestservice:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     manifestserviceG3auto: covid19prod-manifestservice-g3auto
@@ -641,7 +641,7 @@ manifestservice:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--manifest-service-sa
 metadata:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -652,13 +652,13 @@ metadata:
 mutatingWebhook:
   enabled: true
 peregrine:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.08'
 portal:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   resources:
     requests:
@@ -674,7 +674,7 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.08'
 revproxy:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -683,13 +683,13 @@ revproxy:
     aws:
       group: covid19prod
 sheepdog:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.08'
 sower:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     createK8sPelicanServiceSecret: true
@@ -760,7 +760,7 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2026.05'
 ssjdispatcher:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     credsFile: covid19prod-ssjdispatcher-creds
@@ -774,7 +774,7 @@ tube:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2026.05'
 wts:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     createWtsOidcClientSecret: false
