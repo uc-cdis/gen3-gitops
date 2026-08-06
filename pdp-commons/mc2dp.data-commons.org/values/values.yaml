@@ -535,13 +535,13 @@ metadata:
          }
      }
   aggMdsNamespace: pdp-commons
-  enabled: false
+  enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '4.3.0'
+    tag: master
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:
