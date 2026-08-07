@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: agent
-          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-agent:master
+          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-agent:chore_subagent
           imagePullPolicy: Always
           envFrom:
             - secretRef:
@@ -95,7 +95,7 @@ spec:
     spec:
       containers:
         - name: mcp
-          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-mcp:master
+          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-mcp:chore_subagent
           imagePullPolicy: IfNotPresent
           env:
             - name: MCP_PORT
