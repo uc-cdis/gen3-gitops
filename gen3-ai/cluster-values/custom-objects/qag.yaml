@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: qag-agent-model-config
+  namespace: default
 data:
   model-config.yaml: |
     backends:
@@ -22,6 +23,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qag-agent
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -70,6 +72,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: qag-agent
+  namespace: default
 spec:
   type: NodePort
   selector:
@@ -83,6 +86,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qag-mcp
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -113,6 +117,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: qag-mcp
+  namespace: default
 spec:
   type: ClusterIP
   selector:
