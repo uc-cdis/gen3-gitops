@@ -123,6 +123,12 @@ gen3-workflow:
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
+      - "mgibio/samtools:1.9"
+      - "mgibio/star:2.7.0f"
+      - "amazonlinux"
+      - "mgibio/picard:2.27.4"
+      - "staphb/trimmomatic:0.38"
+      - "mgibio/fastqc"
 funnel:
   postgres:
     dbCreate: true
