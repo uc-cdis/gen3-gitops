@@ -141,7 +141,7 @@ metadata:
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig":
       { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:837801696852:certificate/3dc72278-1dd1-4451-848e-bc1cd3f21d13
-    alb.ingress.kubernetes.io/group.name: gen3-ai
+    alb.ingress.kubernetes.io/group.name: gen3-ai-dev
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
