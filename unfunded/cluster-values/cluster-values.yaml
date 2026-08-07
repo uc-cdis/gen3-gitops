@@ -15,7 +15,7 @@ aws-s3-mountpoint:
     enabled: false
 
 calico:
-  enabled: true
+  enabled: false
   configuration:
     enabled: false
 
@@ -97,6 +97,7 @@ vpc-cni:
   enabled: false
   configuration:
     enabled: false
+
 kube-proxy:
   enabled: false
 

@@ -1,13 +1,13 @@
 ambassador:
-  jupyterNamespace: jupyter-pods
+  jupyterNamespace: jupyter-pods-covid19prod-helm
 arborist:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.08'
 audit:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     auditG3auto: covid19prod-audit-g3auto
@@ -16,17 +16,19 @@ audit:
     tag: '2026.08'
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-receiver
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--audit-sqs-receiver
 auspice:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-auspice
     tag: v2.25.gen3.2.15
 aws-sigv4-proxy:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
-  esEndpoint: vpc-covid19prod-gen3-metadata-2-kd46ogc4c4lcwpmvkxwsprqgn4.us-east-1.es.amazonaws.com
+  esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
+  externalSecrets:
+    externalSecretAwsCreds: covid19-aws-es-proxy-creds
 awshelper:
   enabled: true
   image:
@@ -48,17 +50,17 @@ covid19-notebook-etl:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-notebook-etl
     tag: 5.1.6
 dashboard:
-  replicaCount: 2
+  replicaCount: 1
   dashboardConfig:
     bucket: dashboard-236714345101-covid19-prod-gen3
     prefix: chicagoland.pandemicresponsecommons.org
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
     tag: '2026.08'
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--dashboard-access
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--dashboard-access
 etl:
   esEndpoint: elasticsearch
   etlMapping:
@@ -427,13 +429,13 @@ etl:
     spark:
       tag: '2026.08'
 fence:
-  replicaCount: 2
+  replicaCount: 1
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/covid19/user.yaml
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-sender
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--audit-sqs-sender
   enabled: true
   externalSecrets:
     createK8sGoogleAppSecrets: true
@@ -448,18 +450,20 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
-  pdb: true
+  pdb: false
   aws:
-    account: '236714345101'
-    awsEsProxyRole: covid19prod--covid19prod-helm--es-access
+    awsEsProxyRoleArn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--es-access
     enabled: true
-    hatchery_role: covid19prod--covid19prod-helm--hatchery-sa
+    useLocalSecret:
+      enable: false
+      localSecretName: external-secrets-covid19-secret
     secretStoreServiceAccount:
       enabled: true
-      roleArn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--external-secrets-sa
+      roleArn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--external-secrets-sa
     wafv2:
       enabled: true
-      wafAclArn: arn:aws:wafv2:us-east-1:236714345101:regional/webacl/covid19prod-waf/0ca854eb-0058-49ee-86b5-749c6630ea99
+      wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
+    hatchery_role: unfunded--covid19prod-helm--hatchery-sa
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/covid19-datadictionary/3.9.2/schema.json
   dispatcherJobNum: '10'
@@ -468,6 +472,7 @@ global:
     deploy: true
     createSlackWebhookSecret: true
     slackWebhookSecretName: covid19prod-slack-webhook
+    mapBoxTokenSecretName: covid19prod-mapbox-token
   hostname: chicagoland.pandemicresponsecommons.org
   fenceURL: https://chicagoland.pandemicresponsecommons.org/user
   publicDataSets: true
@@ -481,9 +486,9 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
-  revproxyArn: arn:aws:acm:us-east-1:236714345101:certificate/e5edf56f-4003-4ee3-9ecd-162aaf19c058
+  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/843a0993-4bea-4cf1-87b2-49d7c2d75a80
 guppy:
-  replicaCount: 2
+  replicaCount: 1
   authFilterField: auth_resource_path
   configIndex: covid19_array-config
   enabled: true
@@ -503,7 +508,7 @@ guppy:
     - index: covid19_dataset
       type: dataset
 hatchery:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
@@ -511,7 +516,7 @@ hatchery:
   hatchery:
     json: |-
       {
-        "user-namespace": "jupyter-pods",
+        "user-namespace": "jupyter-pods-covid19prod-helm",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
         "sidecar": {
@@ -617,7 +622,7 @@ hatchery:
         ]
       }
 indexd:
-  replicaCount: 2
+  replicaCount: 1
   defaultPrefix: dg.63D5/
   enabled: true
   externalSecrets:
@@ -626,7 +631,7 @@ indexd:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.08'
 manifestservice:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     manifestserviceG3auto: covid19prod-manifestservice-g3auto
@@ -635,9 +640,9 @@ manifestservice:
     tag: '2026.08'
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--manifest-service-sa
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/unfunded--covid19prod-helm--manifest-service-sa
 metadata:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
@@ -646,15 +651,15 @@ metadata:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2026.08'
 mutatingWebhook:
-  enabled: false
+  enabled: true
 peregrine:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.08'
 portal:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   resources:
     requests:
@@ -670,7 +675,7 @@ portal:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.08'
 revproxy:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
@@ -679,13 +684,13 @@ revproxy:
     aws:
       group: covid19prod
 sheepdog:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.08'
 sower:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     createK8sPelicanServiceSecret: true
@@ -756,7 +761,7 @@ spark:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2026.05'
 ssjdispatcher:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     credsFile: covid19prod-ssjdispatcher-creds
@@ -770,7 +775,7 @@ tube:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2026.05'
 wts:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     createWtsOidcClientSecret: false
