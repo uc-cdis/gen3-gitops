@@ -145,7 +145,7 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
-    alb.ingress.kubernetes.io/tags: Environment=gen3-ai
+    alb.ingress.kubernetes.io/tags: Environment=gen3-ai-dev
     alb.ingress.kubernetes.io/wafv2-acl-arn: ""
     alb.ingress.kubernetes.io/inbound-cidrs: 205.208.120.0/22
 spec:
