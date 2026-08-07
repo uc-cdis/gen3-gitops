@@ -1,0 +1,5 @@
+cluster:
+  name: "qaplanetv1"
+
+ami:
+  id: ami-0fbd0256117848e04
