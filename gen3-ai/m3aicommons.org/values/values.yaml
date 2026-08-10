@@ -141,6 +141,8 @@ frontend-framework:
 gen3-embeddings:
   enabled: true
   replicaCount: 2
+  postgres:
+    host: "gen3-ai-aurora-cluster.cluster-c6v4qw428r0b.us-east-1.rds.amazonaws.com"
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
