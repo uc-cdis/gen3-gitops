@@ -16,7 +16,7 @@ global:
   externalSecrets:
     deploy: true
   postgres:
-    dbCreate: true
+    dbCreate: false
     externalSecret: "gen3-ai-aurora-master-password"
   environment: "gen3-ai"
   hostname: "m3aicommons.org"
@@ -142,6 +142,7 @@ gen3-embeddings:
   enabled: true
   replicaCount: 2
   postgres:
+    dbCreate: true
     host: "gen3-ai-aurora-cluster.cluster-c6v4qw428r0b.us-east-1.rds.amazonaws.com"
   image:
     repository: quay.io/cdis/gen3_embeddings
