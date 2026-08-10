@@ -133,6 +133,103 @@ funnel:
   image:
     repository: quay.io/cdis/funnel
     tag: v0.12.1-gen3
+    # copied from gen3-helm to be able to update the tag
+    initContainers:
+      - name: plugin
+        image: quay.io/cdis/funnel-gen3-plugin
+        tag: rm-kms_key_arn
+        pullPolicy: Always
+        command:
+          - cp
+          - /app/build/plugins/authorizer
+          - /opt/funnel/plugin-binaries/auth-plugin
+        volumeMounts:
+          - name: plugin-volume
+            mountPath: /opt/funnel/plugin-binaries
+      - name: config-updater
+        image: quay.io/cdis/awshelper
+        tag: master
+        env:
+          - name: FUNNEL_OIDC_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: funnel-oidc-client
+                key: client_id
+                optional: false
+          - name: FUNNEL_OIDC_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: funnel-oidc-client
+                key: client_secret
+                optional: false
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: funnel-dbcreds
+                key: host
+                optional: false
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: funnel-dbcreds
+                key: username
+                optional: false
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: funnel-dbcreds
+                key: password
+                optional: false
+          - name: DB_DATABASE
+            valueFrom:
+              secretKeyRef:
+                name: funnel-dbcreds
+                key: database
+                optional: false
+        volumeMounts:
+          - name: funnel-patched-config-volume
+            mountPath: /tmp
+          - name: funnel-config-volume
+            mountPath: /etc/config/funnel.conf
+            subPath: funnel-server.yaml
+        command: ["/bin/bash"]
+        args:
+          - "-c"
+          - |
+            # Create a funnel-patched.conf since /etc/config/funnel.conf is readonly
+            CONFIG=/tmp/funnel-patched.conf
+            cp /etc/config/funnel.conf $CONFIG
+  
+            namespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
+            JOBS_NAMESPACE=workflow-pods-$namespace
+            S3_URL=gen3-workflow-service.$namespace.svc.cluster.local
+            DB_HOST=$DB_HOST:5432
+  
+            # `Kubernetes.JobsNamespace` has to be configured manually because of templating
+            # limitations. This ensures it is configured to the value that is hardcoded elsewhere.
+            configured=$(yq -r '.Kubernetes.JobsNamespace' "$CONFIG")
+            if [[ "$configured" != "$JOBS_NAMESPACE" ]]; then
+              echo "ERROR: funnel.Kubernetes.JobsNamespace is set to '$configured' instead of '$JOBS_NAMESPACE'. Please fix the configuration" >&2
+              exit 1
+            fi
+  
+            echo "======= Funnel configuration ======="
+            echo "  Kubernetes.JobsNamespace   : $JOBS_NAMESPACE"
+            echo "  Plugins.Params.OidcClientId: $FUNNEL_OIDC_CLIENT_ID"
+            echo "  Plugins.Params.S3Url       : $S3_URL"
+            echo "  Postgres.Host              : $DB_HOST"
+            echo "  Postgres.Database          : $DB_DATABASE"
+            echo "  Postgres.User              : $DB_USER"
+            echo "===================================="
+  
+            # Replace placeholders with actual values (in-place)
+            sed -i "s|FUNNEL_PLUGIN_OIDC_CLIENT_ID_PLACEHOLDER|${FUNNEL_OIDC_CLIENT_ID}|g" $CONFIG
+            sed -i "s|FUNNEL_PLUGIN_OIDC_CLIENT_SECRET_PLACEHOLDER|${FUNNEL_OIDC_CLIENT_SECRET}|g" $CONFIG
+            sed -i "s|FUNNEL_PLUGIN_S3URL_PLACEHOLDER|${S3_URL}|g" $CONFIG
+            sed -i "s/FUNNEL_POSTGRES_HOST_PLACEHOLDER/${DB_HOST}/g" $CONFIG
+            sed -i "s/FUNNEL_POSTGRES_DATABASE_PLACEHOLDER/${DB_DATABASE}/g" $CONFIG
+            sed -i "s/FUNNEL_POSTGRES_USER_PLACEHOLDER/${DB_USER}/g" $CONFIG
+            sed -i "s/FUNNEL_POSTGRES_PASSWORD_PLACEHOLDER/${DB_PASSWORD}/g" $CONFIG
   Logger:
     Level: debug
   Kubernetes:
@@ -160,105 +257,6 @@ funnel:
         Cpus: 8000m
         RamGb: 32Gi
         DiskGb: 60Gi
-
-  # copied from gen3-helm to be able to update the tag
-  initContainers:
-    - name: plugin
-      image: quay.io/cdis/funnel-gen3-plugin
-      tag: rm-kms_key_arn
-      pullPolicy: Always
-      command:
-        - cp
-        - /app/build/plugins/authorizer
-        - /opt/funnel/plugin-binaries/auth-plugin
-      volumeMounts:
-        - name: plugin-volume
-          mountPath: /opt/funnel/plugin-binaries
-    - name: config-updater
-      image: quay.io/cdis/awshelper
-      tag: master
-      env:
-        - name: FUNNEL_OIDC_CLIENT_ID
-          valueFrom:
-            secretKeyRef:
-              name: funnel-oidc-client
-              key: client_id
-              optional: false
-        - name: FUNNEL_OIDC_CLIENT_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: funnel-oidc-client
-              key: client_secret
-              optional: false
-        - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: funnel-dbcreds
-              key: host
-              optional: false
-        - name: DB_USER
-          valueFrom:
-            secretKeyRef:
-              name: funnel-dbcreds
-              key: username
-              optional: false
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: funnel-dbcreds
-              key: password
-              optional: false
-        - name: DB_DATABASE
-          valueFrom:
-            secretKeyRef:
-              name: funnel-dbcreds
-              key: database
-              optional: false
-      volumeMounts:
-        - name: funnel-patched-config-volume
-          mountPath: /tmp
-        - name: funnel-config-volume
-          mountPath: /etc/config/funnel.conf
-          subPath: funnel-server.yaml
-      command: ["/bin/bash"]
-      args:
-        - "-c"
-        - |
-          # Create a funnel-patched.conf since /etc/config/funnel.conf is readonly
-          CONFIG=/tmp/funnel-patched.conf
-          cp /etc/config/funnel.conf $CONFIG
-
-          namespace=$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace)
-          JOBS_NAMESPACE=workflow-pods-$namespace
-          S3_URL=gen3-workflow-service.$namespace.svc.cluster.local
-          DB_HOST=$DB_HOST:5432
-
-          # `Kubernetes.JobsNamespace` has to be configured manually because of templating
-          # limitations. This ensures it is configured to the value that is hardcoded elsewhere.
-          configured=$(yq -r '.Kubernetes.JobsNamespace' "$CONFIG")
-          if [[ "$configured" != "$JOBS_NAMESPACE" ]]; then
-            echo "ERROR: funnel.Kubernetes.JobsNamespace is set to '$configured' instead of '$JOBS_NAMESPACE'. Please fix the configuration" >&2
-            exit 1
-          fi
-
-          echo "======= Funnel configuration ======="
-          echo "  Kubernetes.JobsNamespace   : $JOBS_NAMESPACE"
-          echo "  Plugins.Params.OidcClientId: $FUNNEL_OIDC_CLIENT_ID"
-          echo "  Plugins.Params.S3Url       : $S3_URL"
-          echo "  Postgres.Host              : $DB_HOST"
-          echo "  Postgres.Database          : $DB_DATABASE"
-          echo "  Postgres.User              : $DB_USER"
-          echo "===================================="
-
-          # Replace placeholders with actual values (in-place)
-          sed -i "s|FUNNEL_PLUGIN_OIDC_CLIENT_ID_PLACEHOLDER|${FUNNEL_OIDC_CLIENT_ID}|g" $CONFIG
-          sed -i "s|FUNNEL_PLUGIN_OIDC_CLIENT_SECRET_PLACEHOLDER|${FUNNEL_OIDC_CLIENT_SECRET}|g" $CONFIG
-          sed -i "s|FUNNEL_PLUGIN_S3URL_PLACEHOLDER|${S3_URL}|g" $CONFIG
-          sed -i "s/FUNNEL_POSTGRES_HOST_PLACEHOLDER/${DB_HOST}/g" $CONFIG
-          sed -i "s/FUNNEL_POSTGRES_DATABASE_PLACEHOLDER/${DB_DATABASE}/g" $CONFIG
-          sed -i "s/FUNNEL_POSTGRES_USER_PLACEHOLDER/${DB_USER}/g" $CONFIG
-          sed -i "s/FUNNEL_POSTGRES_PASSWORD_PLACEHOLDER/${DB_PASSWORD}/g" $CONFIG
-
 global:
   pdb: true
   netPolicy:
