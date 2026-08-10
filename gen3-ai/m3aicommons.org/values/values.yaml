@@ -143,7 +143,6 @@ gen3-embeddings:
   replicaCount: 2
   postgres:
     dbCreate: true
-    host: "gen3-ai-aurora-cluster.cluster-c6v4qw428r0b.us-east-1.rds.amazonaws.com"
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
