@@ -1,4 +1,4 @@
-gen3-embeddings:
+gen3-embedding:
   env:
     - name: PGPOOL_MIN_SIZE
       value: "1"
