@@ -568,7 +568,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: fix_PPS-3847_override_linkify_only
+    tag: feature_data_library
     pullPolicy: Always
 revproxy:
   replicaCount: 4
