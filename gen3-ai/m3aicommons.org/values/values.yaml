@@ -138,6 +138,18 @@ frontend-framework:
     repository: "quay.io/cdis/cac-data-commons"
     tag: "chore_migration"
 
+gen3-embeddings:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: main
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
+    dbcreds: "gen3-ai-default-gen3-embeddings-creds"
+
 grafana:
   enabled: false
 
