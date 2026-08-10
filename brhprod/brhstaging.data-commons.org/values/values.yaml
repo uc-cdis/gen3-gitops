@@ -86,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.3.2
+    tag: fix-x-amz-server-side-encryption
   resources:
     limits:
       cpu: 2
