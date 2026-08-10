@@ -85,6 +85,7 @@ etl:
               - name: Gradedifferentiation
               - name: Stagegroupbest
               - name: PrimarysiteX
+              - name: Histologyicdo3X‎
           - name: somatic_mutations
             path: somatic_mutations
             props:
