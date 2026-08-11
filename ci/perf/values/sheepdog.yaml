@@ -12,7 +12,7 @@ sheepdog:
   # This will be dynamically replaced by env_setup.sh script.
   fenceUrl: https://hostname/user
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-sheepdog-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false

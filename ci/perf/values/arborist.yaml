@@ -9,7 +9,7 @@ arborist:
     repository: "quay.io/cdis/arborist"
     tag: "master"
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-arborist-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false

@@ -10,7 +10,7 @@ peregrine:
     tag: "master"
     pullPolicy: Always
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-peregrine-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false

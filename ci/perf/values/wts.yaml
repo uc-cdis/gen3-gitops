@@ -7,7 +7,7 @@ wts:
   externalSecrets:
     createWtsOidcClientSecret: true
     createK8sWtsSecret: true
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-wts-creds"
   postgres:
     dbCreate: false

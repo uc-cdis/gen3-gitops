@@ -5,7 +5,7 @@ requestor:
     repository: "quay.io/cdis/requestor"
     tag: "master"
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-requestor-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false

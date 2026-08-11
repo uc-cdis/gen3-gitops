@@ -8,10 +8,10 @@ fence:
     createK8sGoogleAppSecrets: false
     fenceConfig: ci-fence-config-priv
     fenceSshKeys: ci-fence-ssh-keys
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-fence-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false
   fenceDeleteExpiredClients:
     schedule: "0 0 * * *"
   replicaCount: 2

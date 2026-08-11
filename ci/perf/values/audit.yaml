@@ -9,10 +9,10 @@ audit:
           optional: true
   externalSecrets:
     createK8sAuditSecret: true
-    pushSecret: true
+    pushSecret: false
     dbcreds: "ci-perf-audit-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false
   image:
     repository: quay.io/cdis/audit-service
     tag: 'master'
