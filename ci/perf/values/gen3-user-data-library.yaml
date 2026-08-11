@@ -1,0 +1,8 @@
+gen3-user-data-library:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/gen3-user-data-library"
+    tag: "main"
+  externalSecrets:
+    createK8sGen3UserDataLibrarySecret: true

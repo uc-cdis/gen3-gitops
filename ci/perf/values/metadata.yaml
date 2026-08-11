@@ -1,0 +1,24 @@
+metadata:
+  replicaCount: 2
+  image:
+    repository: quay.io/cdis/metadata-service
+    tag: 'master'
+  resources:
+    # -- (map) The amount of resources that the container requests
+    requests:
+      memory: 25Mi
+  enabled: true
+  externalSecrets:
+    createK8sMetadataSecret: true
+  useAggMds: "True"
+  aggMdsNamespace: default
+  aggMdsConfig: |
+    {
+      "gen3_commons": {
+        "HEAL": {
+          "mds_url": "http://revproxy-service",
+          "commons_url": "http://revproxy-service"
+        }
+      },
+      "adapter_commons": {}
+    }
