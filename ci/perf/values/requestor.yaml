@@ -4,3 +4,8 @@ requestor:
   image:
     repository: "quay.io/cdis/requestor"
     tag: "master"
+  externalSecrets:
+    pushSecret: true
+    dbcreds: "ci-perf-requestor-creds"
+  postgres:
+    dbCreate: true

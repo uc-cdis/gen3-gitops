@@ -10,4 +10,4 @@ wts:
     pushSecret: true
     dbcreds: "ci-perf-wts-creds"
   postgres:
-    dbCreate: true
+    dbCreate: false

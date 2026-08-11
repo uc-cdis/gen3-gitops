@@ -8,3 +8,8 @@ arborist:
   image:
     repository: "quay.io/cdis/arborist"
     tag: "master"
+  externalSecrets:
+    pushSecret: true
+    dbcreds: "ci-perf-arborist-creds"
+  postgres:
+    dbCreate: true

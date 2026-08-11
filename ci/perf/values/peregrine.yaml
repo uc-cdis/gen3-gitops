@@ -9,3 +9,8 @@ peregrine:
     repository: "quay.io/cdis/peregrine"
     tag: "master"
     pullPolicy: Always
+  externalSecrets:
+    pushSecret: true
+    dbcreds: "ci-perf-peregrine-creds"
+  postgres:
+    dbCreate: true

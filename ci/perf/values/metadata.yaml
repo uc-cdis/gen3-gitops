@@ -10,6 +10,10 @@ metadata:
   enabled: true
   externalSecrets:
     createK8sMetadataSecret: true
+    pushSecret: true
+    dbcreds: "ci-perf-metadata-creds"
+  postgres:
+    dbCreate: true
   useAggMds: "True"
   aggMdsNamespace: default
   aggMdsConfig: |

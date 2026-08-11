@@ -12,6 +12,10 @@ indexd:
     tag: "master"
   externalSecrets:
     createK8sServiceCredsSecret: true
+    pushSecret: true
+    dbcreds: "ci-perf-indexd-creds"
+  postgres:
+    dbCreate: true
   secrets:
     userdb:
       # This will be dynamically replaced by env_setup.sh script.

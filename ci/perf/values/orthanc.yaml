@@ -8,3 +8,7 @@ orthanc:
   externalSecrets:
     # -- (string) Will override the name of the aws secrets manager secret. Default is "orthanc-s3-g3auto"
     orthancS3G3Auto: ci-orthanc-s3-g3auto
+    pushSecret: true
+    dbcreds: "ci-perf-orthanc-creds"
+  postgres:
+    dbCreate: true
