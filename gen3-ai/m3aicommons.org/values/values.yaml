@@ -85,7 +85,7 @@ dicom-viewer:
 fence:
   replicaCount: 3
   image:
-    tag: '2026.07'
+    tag: 13.2.0
   enabled: true
   serviceAccount:
     annotations:
