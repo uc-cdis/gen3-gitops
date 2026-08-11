@@ -7,3 +7,4 @@ wts:
   externalSecrets:
     createWtsOidcClientSecret: true
     createK8sWtsSecret: true
+    dbcreds: "ci-perf-wts-creds"
