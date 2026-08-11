@@ -25,7 +25,6 @@ global:
   environment: devplanetv2
   externalSecrets:
     deploy: true
-    createLocalK8sSecret: true
     pushFunnelOidcClientToExternalSecrets: false
   # This will be dynamically replaced by env_setup.sh script.
   fenceURL: https://hostname/user
