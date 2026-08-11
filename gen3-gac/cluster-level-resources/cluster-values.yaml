@@ -68,7 +68,7 @@ karpenter:
 karpenter-crds:
   amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
-  selectorTag: gen3-ai
+  selectorTag: gen3-gac
   migration: true
   default:
     disruptionBudget: "80%"
