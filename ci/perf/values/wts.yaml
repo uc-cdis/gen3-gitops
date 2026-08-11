@@ -9,3 +9,5 @@ wts:
     createK8sWtsSecret: true
     pushSecret: true
     dbcreds: "ci-perf-wts-creds"
+  postgres:
+    dbCreate: true
