@@ -16,7 +16,7 @@ global:
   externalSecrets:
     deploy: true
   postgres:
-    dbCreate: true
+    dbCreate: false
     externalSecret: "gen3-ai-aurora-master-password"
   environment: "gen3-ai"
   hostname: "m3aicommons.org"
@@ -109,6 +109,11 @@ fence:
 
   FENCE_CONFIG_PUBLIC:
     OVERRIDE_NGINX_RATE_LIMIT: 36
+    ALLOWED_GEN3_EMBEDDINGS_BULK_URL_PREFIXES:
+      - https://m3aicommons.org/ai/
+    GEN3_EMBEDDINGS_API_REGEX: '/vectorstore/collections/(?P<collection_name>[^/]+)/embeddings/(?P<embedding_uuid>[^/]+)'
+    MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+  
 
   externalSecrets:
     fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
@@ -137,6 +142,20 @@ frontend-framework:
   image:
     repository: "quay.io/cdis/cac-data-commons"
     tag: "chore_migration"
+
+gen3-embeddings:
+  enabled: true
+  replicaCount: 2
+  postgres:
+    dbCreate: false
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: main
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
+    dbcreds: "gen3-ai-default-gen3-embeddings-creds"
 
 grafana:
   enabled: false

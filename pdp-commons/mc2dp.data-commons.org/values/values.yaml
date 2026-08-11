@@ -138,7 +138,7 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
+    enabled: true
     gpu: false
     jupyter: true
 
