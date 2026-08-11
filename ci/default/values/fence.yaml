@@ -14,7 +14,7 @@ fence:
   image:
     repository: quay.io/cdis/fence
     pullPolicy: Always
-    tag: "feat_download-content"
+    tag: "master"
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml
