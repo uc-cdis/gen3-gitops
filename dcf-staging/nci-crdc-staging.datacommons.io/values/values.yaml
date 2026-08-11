@@ -161,6 +161,7 @@ global:
 indexd:
   defaultPrefix: dg.4DFC/
   useSingleTable: 'true'
+  defaultPassportIssuer: 'https://stsstg.nih.gov'
   replicaCount: 4
   enabled: true
   externalSecrets:
