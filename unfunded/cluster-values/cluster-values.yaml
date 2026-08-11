@@ -19,6 +19,14 @@ calico:
   configuration:
     enabled: false
 
+cert-manager:
+  enabled: true
+  configuration:
+    enabled: true
+    webhook:
+      hostNetwork: true
+      securePort: 10259
+
 coreDNS:
   enabled: true
   configuration:
