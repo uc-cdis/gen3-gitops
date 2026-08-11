@@ -113,6 +113,8 @@ fence:
       - https://m3aicommons.org/ai/
     GEN3_EMBEDDINGS_API_REGEX: '/vectorstore/collections/(?P<collection_name>[^/]+)/embeddings/(?P<embedding_uuid>[^/]+)'
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+    LOGIN_REDIRECT_WHITELIST: 
+    - https://genomicaicommons.org
   
 
   externalSecrets:
