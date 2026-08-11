@@ -45,6 +45,8 @@ ambassador:
 arborist:
   replicaCount: 3
   enabled: true
+  image:
+    tag: '2026.07'
   externalSecrets:
     dbcreds: "gen3-ai-default-arborist-creds"
 
@@ -80,28 +82,10 @@ dicom-viewer:
   externalSecrets:
     dbcreds: "gen3-ai-default-dicom-viewer-creds"
 
-embedding-management-service:
-  replicaCount: 2
-  enabled: true
-  embeddingsConfig: |
-    {
-      "expr": 256,
-      "hist": 1536,
-      "summ": 4096,
-      "text": 4096,
-      "img_embed": 512,
-      "img_proj": 128
-    }
-
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
-    tag: feat_service
-    pullPolicy: Always
-
 fence:
   replicaCount: 3
   image:
-    tag: feat_embedding-vectors
+    tag: '2026.07'
   enabled: true
   serviceAccount:
     annotations:
@@ -113,9 +97,9 @@ fence:
       - https://m3aicommons.org/ai/
     GEN3_EMBEDDINGS_API_REGEX: '/vectorstore/collections/(?P<collection_name>[^/]+)/embeddings/(?P<embedding_uuid>[^/]+)'
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
-    LOGIN_REDIRECT_WHITELIST: 
+    LOGIN_REDIRECT_WHITELIST:
     - https://genomicaicommons.org
-  
+
 
   externalSecrets:
     fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
