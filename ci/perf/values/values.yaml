@@ -22,7 +22,7 @@ global:
     dbCreate: true
     externalSecret: "devplanetv2-ciperf-aurora-master-password"
   clusterName: devplanetv2
-  environment: devplanetv2
+  environment: ci-perf
   externalSecrets:
     deploy: true
     pushFunnelOidcClientToExternalSecrets: false
