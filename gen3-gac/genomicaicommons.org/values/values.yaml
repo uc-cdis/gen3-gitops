@@ -113,15 +113,15 @@ gen3-embeddings:
   enabled: true
   replicaCount: 2
   postgres:
-    dbCreate: false
+    dbCreate: true
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
     tag: main
   externalSecrets:
-    createK8sGen3EmbeddingsSecret: true
-    pushSecret: true
-    dbcreds: "gen3-ai-default-gen3-embeddings-creds"
+    createK8sGen3EmbeddingsSecret: false
+    pushSecret: false
+    dbcreds: "gen3-gac-default-gen3-embeddings-creds"
 
 grafana:
   enabled: false
