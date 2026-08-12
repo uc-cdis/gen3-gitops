@@ -102,7 +102,7 @@ frontend-framework:
   replicaCount: 2
   enabled: true
   env:
-    DATADOG_APPLICATION_ID: "a5df0a65-92a5-4c51-9923-25f6a85e5fdb"    
+    DATADOG_APPLICATION_ID: "a5df0a65-92a5-4c51-9923-25f6a85e5fdb"
     DATADOG_CLIENT_TOKEN: "puba8c843b5af57cc0ffba79932014bb5de"
     DATADOG_SITE: "ddog-gov.com"
     DATACOMMONS: "GAC"
@@ -112,13 +112,14 @@ frontend-framework:
 
 gen3-embeddings:
   enabled: true
+  debug: true
   replicaCount: 2
   postgres:
     dbCreate: true
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
-    tag: main
+    tag: fix_paging
   externalSecrets:
     createK8sGen3EmbeddingsSecret: false
     pushSecret: false
