@@ -125,6 +125,7 @@ gen3-workflow:
       - "docker.io/sairamkova/tes-flow:*"
       - "quay.io/cdis/containers:*"
 funnel:
+  replicaCount: 2
   postgres:
     dbCreate: true
   externalSecrets:
@@ -140,7 +141,6 @@ funnel:
     DisableReconciler: false
     DisableJobCleanup: false
     ReconcileRate: 120s
-    ReplicaCount: 2
     Storage:
       type: "s3files"
     Executor:
