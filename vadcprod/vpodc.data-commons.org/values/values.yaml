@@ -79,6 +79,7 @@ etl:
           - name: oncology_primaries
             path: oncology_primaries
             props:
+              - name: Histologyicdo3X
               - name: ICDOSite
               - name: Stagegroupclinical
               - name: Texthistologytitle
