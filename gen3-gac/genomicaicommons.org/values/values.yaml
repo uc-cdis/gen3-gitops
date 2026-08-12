@@ -119,7 +119,7 @@ gen3-embeddings:
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
-    tag: fix_paging
+    tag: 0.1.1
   externalSecrets:
     createK8sGen3EmbeddingsSecret: false
     pushSecret: false
