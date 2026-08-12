@@ -14,3 +14,7 @@ gen3-embedding:
     tag: feat_embedding
   externalSecrets:
     createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
+    dbcreds: "ci-perf-gen3embedding-creds"
+  postgres:
+    dbCreate: true
