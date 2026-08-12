@@ -105,7 +105,7 @@ frontend-framework:
     DATADOG_APPLICATION_ID: "c4c25361-631e-4060-a25a-c6bfb33649af"
     DATADOG_CLIENT_TOKEN: "pub4694a081d6427ac70a0188eae7a6fbba"
     DATADOG_SITE: "ddog-gov.com"
-    DATACOMMONS: "M3AI"
+    DATACOMMONS: "GAC"
   image:
     repository: "quay.io/cdis/cac-data-commons"
     tag: "feat_gac_commons_initial"
@@ -165,7 +165,7 @@ hatchery:
           ],
           "cpu-limit": "0.1",
           "env": {
-            "HOSTNAME": "m3aicommons.org",
+            "HOSTNAME": "genomicaicommons.org",
             "NAMESPACE": "default"
           },
           "image": "quay.io/cdis/ecs-ws-sidecar:master",
@@ -197,7 +197,7 @@ hatchery:
             "gpu": true,
             "cpu-limit": "3.0",
             "env": {
-              "FRAME_ANCESTORS": "https://m3aicommons.org"
+              "FRAME_ANCESTORS": "https://genomicaicommons.org"
             },
             "fs-gid": 100,
             "gen3-volume-location": "/home/jovyan/.gen3",
