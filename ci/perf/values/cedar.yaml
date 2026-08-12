@@ -1,5 +1,6 @@
 cedar:
   enabled: true
+  cedar_client_job_enabled: false
   externalSecrets:
     cedarG3auto: ci-cedar-g3auto
     cedarAPIKey: ci-cedar-directory-id

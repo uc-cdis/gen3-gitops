@@ -7,6 +7,6 @@ gen3-user-data-library:
   externalSecrets:
     createK8sGen3UserDataLibrarySecret: true
     pushSecret: false
-    dbcreds: "ci-perf-gen3userdatalibrary-creds"
+    dbcreds: "gen3userdatalibrary-g3auto"
   postgres:
     dbCreate: false

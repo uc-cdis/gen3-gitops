@@ -16,6 +16,7 @@ metadata:
     dbCreate: false
   useAggMds: "True"
   aggMdsNamespace: default
+  esEndpoint: http://elasticsearch:9200
   aggMdsConfig: |
     {
       "gen3_commons": {
