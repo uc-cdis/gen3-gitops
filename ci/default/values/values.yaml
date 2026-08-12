@@ -42,6 +42,8 @@ mutatingWebhook:
 
 postgresql:
   primary:
+    extendedConfiguration: |-
+      max_connections = 200
     persistence:
       enabled: true
       size: 1Gi
@@ -52,7 +54,7 @@ postgresql:
   image:
     registry: quay.io
     repository: "cdis/docker-bitnami-pgvector"
-    tag: 16
+    tag: master
 
 elasticsearch:
   pdb:
