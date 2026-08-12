@@ -79,13 +79,13 @@ etl:
           - name: oncology_primaries
             path: oncology_primaries
             props:
+              - name: Histologyicdo3X
               - name: ICDOSite
               - name: Stagegroupclinical
               - name: Texthistologytitle
               - name: Gradedifferentiation
               - name: Stagegroupbest
-              - name: PrimarysiteX
-              - name: Histologyicdo3X‎
+              - name: PrimarysiteX‎
           - name: somatic_mutations
             path: somatic_mutations
             props:
