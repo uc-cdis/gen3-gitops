@@ -158,8 +158,8 @@ funnel:
       Limits:
         # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
         Cpus: 8000m
-        RamGb: 32Gi
-        DiskGb: 60Gi
+        RamGb: 60Gi
+        DiskGb: 100Gi
 global:
   pdb: true
   netPolicy:
