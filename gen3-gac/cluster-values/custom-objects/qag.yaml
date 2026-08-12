@@ -46,6 +46,8 @@ spec:
               value: "8000"
             - name: MCP_PORT
               value: "8001"
+            - name: COMMONS_URL
+              value: "genomicaicommons.org"
           args:
             - "--port"
             - "$(AGENT_PORT)"
