@@ -22,7 +22,7 @@ global:
     dbCreate: true
     externalSecret: "devplanetv2-ciperf-aurora-master-password"
     master:
-      host: devplanetv2-aurora-cluster-new.cluster-cwvizkxhzjt8.us-east-1.rds.amazonaws.com
+      host: devplanetv2-perf-aurora-cluster.cluster-cwvizkxhzjt8.us-east-1.rds.amazonaws.com
   clusterName: devplanetv2
   environment: ci-perf
   externalSecrets:
