@@ -35,6 +35,7 @@ global:
 ambassador:
   replicaCount: 2
   enabled: true
+  jupyterNamespace: jupyter-pods-default
 
 arborist:
   replicaCount: 3
