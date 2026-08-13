@@ -4,7 +4,14 @@ global:
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
   pdb: true
+  crossplane:
+    enabled: true
+    oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/F057519C0E32B7DE2580904C4007BB21"
+    accountId: "707767160287"
   aws:
+    account: "707767160287"
+    awsEsProxyRole: devplanetv2--ci-perf--es-access
+    enabled: true    
     externalSecrets:
       # -- (bool) Whether to use External Secrets for aws config.
       enabled: true
@@ -45,28 +52,6 @@ mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
   enabled: false
 
-# postgresql:
-#   primary:
-#     extendedConfiguration: |-
-#       max_connections = 200
-#     containerSecurityContext:
-#       runAsUser: 0
-#     persistence:
-#       enabled: true
-#       size: 1Gi
-#   pdb:
-#     create: true
-#     minAvailable: "1"
-#     maxUnavailable: "0"
-#   image:
-#     registry: quay.io
-#     repository: cdis/docker-bitnami-pgvector
-#     tag: master
-
-elasticsearch:
-  pdb:
-    create: true
-    minAvailable: "1"
-    maxUnavailable: "0"
-  image: "quay.io/cdis/elasticsearch"
-  imageTag: "7.10.2"
+aws-sigv4-proxy:
+  enabled: true
+  esEndpoint: vpc-devplanetv2-gen3-metadata-2-xkwr2f3gbxua5mqqi7rhnat4la.us-east-1.es.amazonaws.com
