@@ -5,7 +5,7 @@ global:
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.6.4/schema.json
   pdb: true
   crossplane:
-    enabled: true
+    enabled: false
     oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/F057519C0E32B7DE2580904C4007BB21"
     accountId: "707767160287"
   aws:
