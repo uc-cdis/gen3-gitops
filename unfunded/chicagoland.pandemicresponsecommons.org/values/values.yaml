@@ -472,7 +472,7 @@ global:
     deploy: true
     createSlackWebhookSecret: true
     slackWebhookSecretName: covid19prod-slack-webhook
-    mapBoxTokenSecretName: covid19prod-mapbox-token
+    mapboxTokenSecretName: covid19prod-mapbox-token
   hostname: chicagoland.pandemicresponsecommons.org
   fenceURL: https://chicagoland.pandemicresponsecommons.org/user
   publicDataSets: true
