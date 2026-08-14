@@ -86,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: master
+    tag: debug-empty-output
   resources:
     limits:
       cpu: 2
