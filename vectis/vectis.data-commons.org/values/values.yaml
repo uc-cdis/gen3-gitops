@@ -69,7 +69,6 @@ dicom-viewer:
     dbcreds: "vectis-default-dicom-viewer-creds"
 
 etl:
-  # Replaced by the production Lambda ingestion pipeline.
   enabled: false
 
 
