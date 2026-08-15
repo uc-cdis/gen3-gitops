@@ -15,9 +15,16 @@ spec:
         releaseName: vectis
         valueFiles:
           - $values/vectis/vectis.data-commons.org/values/values.yaml
+          - $values/vectis/vectis.data-commons.org/values/vectis-overlays-values.yaml
+          - $values/vectis/vectis.data-commons.org/values/workspace-values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: master
+      targetRevision: feat/vectis
       ref: values
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      path: vectis/vectis.data-commons.org/manifests
+      directory:
+        recurse: false
   destination:
     server: "https://kubernetes.default.svc"
     namespace: default
