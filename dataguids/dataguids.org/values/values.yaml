@@ -27,7 +27,19 @@ indexd:
   image:
     repository: quay.io/cdis/indexd
     pullPolicy: Always
-    tag: "2026.02"
+    tag: "2026.02"     
+  env:
+    - name: "ARBORIST"
+      value: "true"
+    - name: "GEN3_DEBUG"
+      value: "False"
+    - name: "DIST"
+      valueFrom:
+        configMapKeyRef:
+          key: dist
+          name: manifest-indexd
+          optional: true
+    
 metadata:
   enabled: true
   replicaCount: 2
