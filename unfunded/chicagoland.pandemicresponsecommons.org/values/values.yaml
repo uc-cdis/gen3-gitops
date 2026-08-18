@@ -513,7 +513,7 @@ hatchery:
   hotNode:
     enabled: false
     availabilityZones:
-      - us-east-1c  
+      - us-east-1c
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2026.08'
@@ -551,7 +551,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "1024Mi",
             "name": "R Studio-3.5",
-            "image": "quay.io/cdis/rstudio:master",
+            "image": "quay.io/cdis/rstudio:4.4.0",
             "env": {
               "DISABLE_AUTH": "true"
             },
