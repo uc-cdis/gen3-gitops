@@ -553,7 +553,8 @@ hatchery:
             "name": "R Studio-3.5",
             "image": "quay.io/cdis/rstudio:4.4.0",
             "env": {
-              "DISABLE_AUTH": "true"
+              "DISABLE_AUTH": "true",
+              "FRAME_ANCESTORS": "https://chicagoland.pandemicresponsecommons.org"
             },
             "args": [],
             "path-rewrite": "/",
@@ -598,7 +599,8 @@ hatchery:
             "name": "R Studio-3.6",
             "image": "quay.io/cdis/rstudio3.6:rstudio3.6-1.0.0",
             "env": {
-              "DISABLE_AUTH": "true"
+              "DISABLE_AUTH": "true",
+              "FRAME_ANCESTORS": "https://chicagoland.pandemicresponsecommons.org"
             },
             "args": [],
             "path-rewrite": "/",
@@ -614,7 +616,8 @@ hatchery:
             "name": "R Studio JHU map",
             "image": "quay.io/cdis/rstudio-jhumap:jhumap-1.0.0",
             "env": {
-              "DISABLE_AUTH": "true"
+              "DISABLE_AUTH": "true",
+              "FRAME_ANCESTORS": "https://chicagoland.pandemicresponsecommons.org"
             },
             "args": [],
             "path-rewrite": "/",
