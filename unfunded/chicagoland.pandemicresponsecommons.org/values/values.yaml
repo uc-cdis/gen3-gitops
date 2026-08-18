@@ -663,7 +663,7 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.08'
 portal:
-  replicaCount: 1
+  replicaCount: 2
   enabled: true
   resources:
     requests:
