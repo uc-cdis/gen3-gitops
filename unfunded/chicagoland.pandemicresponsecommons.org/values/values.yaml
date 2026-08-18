@@ -510,6 +510,10 @@ guppy:
 hatchery:
   replicaCount: 1
   enabled: true
+  hotNode:
+    enabled: false
+    availabilityZones:
+      - us-east-1c  
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2026.08'
