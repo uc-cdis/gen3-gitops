@@ -18,3 +18,4 @@ gen3-workflow:
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
       - "pytorch/pytorch:latest" # for test_nf_canary TEST_GPU
     enableS3Files: true
+    eksSecurityGroupNames: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]
