@@ -52,7 +52,7 @@ covid19-notebook-etl:
 dashboard:
   replicaCount: 1
   dashboardConfig:
-    bucket: dashboard-236714345101-covid19-prod-gen3
+    bucket: dashboard-662843554732-unfunded-gen3
     prefix: chicagoland.pandemicresponsecommons.org
   enabled: true
   image:
