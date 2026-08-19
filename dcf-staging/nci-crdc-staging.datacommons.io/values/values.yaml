@@ -3,7 +3,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.06'
+    tag: '2026.08'
 manifestservice:
   enabled: false
 wts:
@@ -15,7 +15,7 @@ audit:
     auditG3auto: dcf-staging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.06'
+    tag: '2026.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-receiver
@@ -29,7 +29,7 @@ dashboard:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.06'
+    tag: '2026.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--dashboard-access
@@ -113,7 +113,7 @@ fence:
     fenceSshKeys: dcf-staging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.06'
+    tag: '2026.08'
   usersync:
     usersync: true
     syncFromDbgap: true
@@ -161,13 +161,14 @@ global:
 indexd:
   defaultPrefix: dg.4DFC/
   useSingleTable: 'true'
+  defaultPassportIssuer: 'https://stsstg.nih.gov'
   replicaCount: 4
   enabled: true
   externalSecrets:
     serviceCreds: dcf-staging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '6.2.0'
+    tag: '2026.08'
 metadata:
   replicaCount: 4
   enabled: true
@@ -176,7 +177,7 @@ metadata:
     metadataG3auto: dcf-staging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.06'
+    tag: '2026.08'
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -184,7 +185,7 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.06'
+    tag: '2026.08'
 portal:
   enabled: true
   replicaCount: 2
@@ -471,13 +472,13 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.06'
+    tag: '2026.08'
 revproxy:
   replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.06'
+    tag: '2026.08'
   ingress:
     aws:
       group: dcf-staging
@@ -486,7 +487,7 @@ sheepdog:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.06'
+    tag: '2026.08'
 sower:
   enabled: true
   replicaCount: 2
@@ -496,7 +497,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.06'
+    tag: '2026.08'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -508,7 +509,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.06
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.08
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -534,7 +535,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.06
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.08
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -557,5 +558,5 @@ ssjdispatcher:
     credsFile: dcf-staging-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.06'
-  indexing: quay.io/cdis/indexs3client:2026.06
+    tag: '2026.08'
+  indexing: quay.io/cdis/indexs3client:2026.08
