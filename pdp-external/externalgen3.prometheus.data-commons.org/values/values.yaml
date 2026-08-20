@@ -23,7 +23,7 @@ global:
     deploy: true
   hostname: "externalgen3.prometheus.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/1.1.0/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -44,7 +44,7 @@ arborist:
     dbcreds: "externalgen3_default-arborist-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2026.05
+    tag: 2026.07
 
 audit:
   # Enabled. We do want to track audit events in this environment.
@@ -105,8 +105,6 @@ fence:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/externalgen3-pdp/user.yaml
 
-  USER_YAML:
-
   # -- (map) External Secrets settings.
   externalSecrets:
     fenceJwtKeys: externalgen3_default-fence-jwt-keys
@@ -142,8 +140,8 @@ fence:
         cred: 'fence-bot'
         region: us-east-1
 
-    dbGaP:
-      parent_to_child_studies_mapping: {}
+    # dbGaP:
+    #   parent_to_child_studies_mapping: {}
 
     # `DATA_UPLOAD_BUCKET` specifies an S3 bucket to which data files are uploaded,
     # using the `/data/upload` endpoint. This must be one of the first keys under
@@ -173,7 +171,7 @@ indexd:
 
   image:
     repository: quay.io/cdis/indexd
-    tag: 2026.05
+    tag: 2026.07
 
 portal:
   # # Lower cost
@@ -185,7 +183,7 @@ portal:
   replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2026.05
+    tag: 2026.07
 
   # GitOps config for portal
   gitops:
@@ -252,7 +250,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2026.05
+    tag: 2026.07
 
 sheepdog:
   # Lower cost
@@ -266,11 +264,11 @@ sheepdog:
   replicaCount: 2
   image:
     repository: quay.io/cdis/sheepdog
-    tag: 2026.05
+    tag: 2026.07
 
 metadata:
   useAggMds: false
-  enabled: false
+  enabled: true
   replicaCount: 2
 
   # Lower cost
@@ -292,7 +290,7 @@ metadata:
 
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 2026.05
+    tag: 2026.07
 
 # Disabled services
 
@@ -309,9 +307,17 @@ manifestservice:
   enabled: false
 
 peregrine:
-  enabled: false
+# Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
   externalSecrets:
     dbcreds: "externalgen3_default-sheepdg-creds"
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: 2026.07
 
 requestor:
   enabled: false
