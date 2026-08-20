@@ -1032,6 +1032,7 @@ indexd:
   metricsEnabled: false
   defaultPrefix: dg.4DFC/
   useSingleTable: 'true'
+  defaultPassportIssuer: 'https://sts.nih.gov'
   replicaCount: 20
   autoscaling:
     enabled: false
