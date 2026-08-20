@@ -1,0 +1,16 @@
+gen3-embeddings:
+  env:
+    - name: PGPOOL_MIN_SIZE
+      value: "1"
+    - name: PGPOOL_MAX_SIZE
+      value: "5"
+    - name: GUNICORN_WORKERS
+      value: "2"
+  enabled: true
+  debug: true
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: main
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true

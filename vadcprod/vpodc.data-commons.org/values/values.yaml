@@ -76,9 +76,50 @@ etl:
               - name: Ethnicity
               - name: Gender
               - name: Race
+          - name: exposures
+            path: exposures
+            props:
+              - name: DRINK_CURRENT
+              - name: DRINK_MIN_12
+              - name: DRINK_BEER_FREQ
+              - name: DRINK_WINE_FREQ
+              - name: DRINK_LIQUOR_FREQ
+              - name: DRINK_START_AGE
+              - name: DRINK_STOP_AGE
+              - name: DRINK_TOTAL_YEARS
+              - name: SMOKE_CURRENT
+              - name: SMOKE_MIN_100
+              - name: SMOKE_DAILY_AMT
+              - name: SMOKE_CIGAR_PIPE
+              - name: SMOKE_SMOKELESS
+              - name: SMOKE_START_AGE
+              - name: SMOKE_STOP_AGE
+              - name: SMOKE_TOTAL_YEARS
+              - name: XP_AGENTORANGE
+              - name: XP_ANTHRAX
+              - name: XP_ASBESTOS
+              - name: XP_BURNPIT
+              - name: XP_CHROMIUM
+              - name: XP_CONSTRUCT
+              - name: XP_MICROWAVE
+              - name: XP_MUSTARD
+              - name: XP_NUCLEAR
+              - name: XP_PAINT
+              - name: XP_PERCHLORATE
+              - name: XP_PESTICIDE
+              - name: XP_PETROLEUM
+              - name: XP_RADIATION
+              - name: XP_RESP
+              - name: XP_URANIUM
+              - name: XP_WARFARE
+              - name: XP_WOUNDS
+              - name: XP_XRAY
+              - name: XP_OTHER
+              - name: MILITARY_ASSOCIATION
           - name: oncology_primaries
             path: oncology_primaries
             props:
+              - name: Histologyicdo3X
               - name: ICDOSite
               - name: Stagegroupclinical
               - name: Texthistologytitle
@@ -144,7 +185,7 @@ fence:
     fenceJwtKeys: vadcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "2025.12"
+    tag: "13.3.0"
 portal:
   enabled: false
 frontend-framework:
@@ -152,7 +193,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: "0.20"
+    tag: "0.22"
 global:
   pdb: true
   aws:
@@ -167,7 +208,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:663707118480:regional/webacl/vadcprod-waf/144cec8b-dab0-4bec-809f-79b787add403
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.5.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.6.2/schema.json
   dispatcherJobNum: "10"
   environment: vadcprod
   frontendRoot: gen3ff
@@ -218,7 +259,7 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: true
+    enabled: false
     availabilityZones:
       - us-east-1c
     workspaceCapacityReservation:

@@ -208,7 +208,7 @@ hatchery:
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
             "name": "JupyterLab with Python and R Kernels",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__c63bf283668d8c027432757285a7f0324297b11b",
+            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__11812321abdc323c0653401b79cc73818c2de3d9",
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org"
             },
@@ -1427,7 +1427,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.42.0'
+    tag: '5.42.1'
 requestor:
   enabled: true
   image:

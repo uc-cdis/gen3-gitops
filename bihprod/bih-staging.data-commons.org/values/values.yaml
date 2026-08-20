@@ -138,7 +138,7 @@ fluentd:
 frontend-framework:
   replicaCount: 2
   customConfig:
-    branch: main
+    branch: staging
     enabled: true
     repo: https://github.com/uc-cdis/bih-data-commons.git
   enabled: true
@@ -331,11 +331,6 @@ peregrine:
 portal:
   enabled: true
   replicaCount: 2
-  customConfig:
-    enabled: true
-    dir: bihprod/bih-staging.data-commons.org/values/portal/
-    repo: https://github.com/uc-cdis/gen3-gitops.git
-    branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
     tag: '2026.07'
