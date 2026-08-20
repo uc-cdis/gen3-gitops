@@ -2,13 +2,13 @@ ambassador:
   jupyterNamespace: jupyter-pods
 arborist:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.08'
 audit:
   replicaCount: 2
-  enabled: true
+  enabled: false
   externalSecrets:
     auditG3auto: covid19prod-audit-g3auto
   image:
@@ -19,31 +19,31 @@ audit:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-receiver
 auspice:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-auspice
     tag: v2.25.gen3.2.15
 aws-sigv4-proxy:
   replicaCount: 2
-  enabled: true
+  enabled: false
   esEndpoint: vpc-covid19prod-gen3-metadata-2-kd46ogc4c4lcwpmvkxwsprqgn4.us-east-1.es.amazonaws.com
 awshelper:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
     tag: '2026.08'
 covid19-bayes:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-bayes
     tag: 5.1.4
 covid19-etl:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-etl
     tag: 5.2.4
 covid19-notebook-etl:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/covid19-notebook-etl
     tag: 5.1.6
@@ -52,7 +52,7 @@ dashboard:
   dashboardConfig:
     bucket: dashboard-236714345101-covid19-prod-gen3
     prefix: chicagoland.pandemicresponsecommons.org
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
     tag: '2026.08'
@@ -434,7 +434,7 @@ fence:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--audit-sqs-sender
-  enabled: true
+  enabled: false
   externalSecrets:
     createK8sGoogleAppSecrets: true
     fenceConfig: covid19prod-fence-config
@@ -443,7 +443,7 @@ fence:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2026.08'
 fluentd:
-  enabled: true
+  enabled: false
   image:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
@@ -452,13 +452,13 @@ global:
   aws:
     account: '236714345101'
     awsEsProxyRole: covid19prod--covid19prod-helm--es-access
-    enabled: true
+    enabled: false
     hatchery_role: covid19prod--covid19prod-helm--hatchery-sa
     secretStoreServiceAccount:
-      enabled: true
+      enabled: false
       roleArn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--external-secrets-sa
     wafv2:
-      enabled: true
+      enabled: false
       wafAclArn: arn:aws:wafv2:us-east-1:236714345101:regional/webacl/covid19prod-waf/0ca854eb-0058-49ee-86b5-749c6630ea99
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/covid19-datadictionary/3.9.2/schema.json
@@ -486,7 +486,7 @@ guppy:
   replicaCount: 2
   authFilterField: auth_resource_path
   configIndex: covid19_array-config
-  enabled: true
+  enabled: false
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
@@ -504,7 +504,7 @@ guppy:
       type: dataset
 hatchery:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2026.08'
@@ -619,7 +619,7 @@ hatchery:
 indexd:
   replicaCount: 2
   defaultPrefix: dg.63D5/
-  enabled: true
+  enabled: false
   externalSecrets:
     serviceCreds: covid19prod-indexd-service-creds
   image:
@@ -627,7 +627,7 @@ indexd:
     tag: '2026.08'
 manifestservice:
   replicaCount: 2
-  enabled: true
+  enabled: false
   externalSecrets:
     manifestserviceG3auto: covid19prod-manifestservice-g3auto
   image:
@@ -638,7 +638,7 @@ manifestservice:
       eks.amazonaws.com/role-arn: arn:aws:iam::236714345101:role/covid19prod--covid19prod-helm--manifest-service-sa
 metadata:
   replicaCount: 2
-  enabled: true
+  enabled: false
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: covid19prod-metadata-g3auto
@@ -649,18 +649,18 @@ mutatingWebhook:
   enabled: false
 peregrine:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.08'
 portal:
   replicaCount: 2
-  enabled: true
+  enabled: false
   resources:
     requests:
       memory: 2Gi
   customConfig:
-    enabled: true
+    enabled: false
     dir: covid19prod/chicagoland.pandemicresponsecommons.org/values/portal/
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
@@ -671,7 +671,7 @@ portal:
     tag: '2026.08'
 revproxy:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
     tag: '2026.08'
@@ -680,13 +680,13 @@ revproxy:
       group: covid19prod
 sheepdog:
   replicaCount: 2
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.08'
 sower:
   replicaCount: 2
-  enabled: true
+  enabled: false
   externalSecrets:
     createK8sPelicanServiceSecret: true
     createK8sSowerJobsSecret: true
@@ -751,13 +751,13 @@ sower:
           secret:
             secretName: pelicanservice-g3auto
 spark:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
     tag: '2026.05'
 ssjdispatcher:
   replicaCount: 2
-  enabled: true
+  enabled: false
   externalSecrets:
     credsFile: covid19prod-ssjdispatcher-creds
   image:
@@ -765,13 +765,13 @@ ssjdispatcher:
     tag: '2026.08'
   indexing: quay.io/cdis/indexs3client:2026.08
 tube:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
     tag: '2026.05'
 wts:
   replicaCount: 2
-  enabled: true
+  enabled: false
   externalSecrets:
     createWtsOidcClientSecret: false
     wtsG3auto: covid19prod-wts-g3auto
