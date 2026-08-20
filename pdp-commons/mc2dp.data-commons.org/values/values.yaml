@@ -88,7 +88,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:851725307933:regional/webacl/pdp-commons-waf/9609720f-857d-4033-bf1f-2e9e9665a638
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
   environment: pdp-commons
   externalSecrets:
