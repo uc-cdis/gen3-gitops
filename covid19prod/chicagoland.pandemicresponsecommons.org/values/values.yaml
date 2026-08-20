@@ -1,5 +1,6 @@
 ambassador:
   jupyterNamespace: jupyter-pods
+  replicaCount: 0
 arborist:
   replicaCount: 2
   enabled: false
