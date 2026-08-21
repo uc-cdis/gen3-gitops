@@ -451,6 +451,69 @@ alloy-configmap-data: |
     forward_to = [prometheus.relabel.metrics_service.receiver]
   }
 
+  // cAdvisor -- per-container CPU/memory.
+  //
+  // cAdvisor is a node-level endpoint: one scrape per node returns every
+  // container on that node, so there is no way to scrape a single pod. Series
+  // are filtered by namespace after the scrape; only the namespaces in the
+  // keep rule below are forwarded to Mimir.
+  //
+  // Currently scoped to qa-midrc-test for performance testing of the
+  // gen3-workflow deployments. Remove the namespace from the keep rule (or
+  // delete these three components) when that testing is finished.
+  discovery.relabel "cadvisor" {
+    targets = discovery.kubernetes.nodes.targets
+    rule {
+      target_label = "__address__"
+      replacement  = "kubernetes.default.svc.cluster.local:443"
+    }
+    rule {
+      source_labels = ["__meta_kubernetes_node_name"]
+      regex         = "(.+)"
+      replacement   = "/api/v1/nodes/${1}/proxy/metrics/cadvisor"
+      target_label  = "__metrics_path__"
+    }
+  }
+
+  prometheus.scrape "cadvisor" {
+    job_name   = "integrations/kubernetes/cadvisor"
+    targets    = discovery.relabel.cadvisor.output
+    scheme     = "https"
+    // 30s rather than the usual 60s: at 60s a short spike during a perf test
+    // can be smoothed away almost entirely.
+    scrape_interval = "30s"
+    bearer_token_file = "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    tls_config {
+      insecure_skip_verify = true
+    }
+    clustering {
+      enabled = true
+    }
+    forward_to = [prometheus.relabel.cadvisor.receiver]
+  }
+
+  prometheus.relabel "cadvisor" {
+    // Namespace allowlist. Anything outside these namespaces is dropped here
+    // and never reaches remote_write.
+    rule {
+      source_labels = ["namespace"]
+      regex = "qa-midrc-test"
+      action = "keep"
+    }
+    rule {
+      source_labels = ["__name__"]
+      regex = "up|container_cpu_cfs_periods_total|container_cpu_cfs_throttled_periods_total|container_cpu_usage_seconds_total|container_cpu_load_average_10s|container_fs_reads_bytes_total|container_fs_reads_total|container_fs_writes_bytes_total|container_fs_writes_total|container_memory_cache|container_memory_rss|container_memory_swap|container_memory_working_set_bytes|container_network_receive_bytes_total|container_network_receive_packets_dropped_total|container_network_receive_packets_total|container_network_transmit_bytes_total|container_network_transmit_packets_dropped_total|container_network_transmit_packets_total|machine_memory_bytes"
+      action = "keep"
+    }
+    // drop the per-node cgroup rollups; only real containers are of interest
+    rule {
+      source_labels = ["container"]
+      regex = ""
+      action = "drop"
+    }
+    forward_to = [prometheus.relabel.metrics_service.receiver]
+  }
+
   // Logs from all pods
   discovery.relabel "all_pods" {
     targets = discovery.kubernetes.pods.targets
