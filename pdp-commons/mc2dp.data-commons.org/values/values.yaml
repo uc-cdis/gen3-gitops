@@ -117,6 +117,7 @@ gen3-embeddings:
   replicaCount: 2
   postgres:
     dbCreate: false
+    host: "pdp-commons-aurora-cluster-new.cluster-cpac8qe82rup.us-east-1.rds.amazonaws.com"
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
