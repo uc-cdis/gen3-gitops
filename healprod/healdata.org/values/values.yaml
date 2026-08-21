@@ -1544,9 +1544,9 @@ zendesk-wrapper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/zendesk-wrapper-service
-    tag: "0.1.0"
+    tag: "0.2.0"
   env:
-    - name: GEN3_ZENDESK_URL
-      value: "https://heal-support.zendesk.com"
+    - name: GEN3_ZENDESK_BRAND_ID
+      value: "32557712682643"
   externalSecrets:
     name: "heal-prod-zendesk-wrapper-secret"
