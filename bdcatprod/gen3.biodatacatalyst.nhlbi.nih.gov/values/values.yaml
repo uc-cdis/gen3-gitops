@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.07'
+    tag: '2026.09'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -22,14 +22,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.07'
+    tag: '2026.09'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.07'
+    tag: '2026.09'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -40,7 +40,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.07'
+    tag: '2026.09'
 etl:
   resources:
     tube:
@@ -248,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.07'
+      tag: '2026.09'
     spark:
-      tag: '2026.07'
+      tag: '2026.09'
 fence:
   resources:
     requests:
@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.07'
+    tag: '2026.09'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -3367,9 +3367,6 @@ fence:
       nih-nhlbi-bdc-ninds-arcadia-phs004653-v1-r1-c1:
         cred: fence-bot
         region: us-east-1
-      nih-nhlbi-bdc-recover-adult-phs003463-v6-r1-c1:
-        cred: fence-bot
-        region: us-east-1
       nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c1:
         cred: fence-bot
         region: us-east-1
@@ -3541,7 +3538,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.07'
+    tag: '2026.09'
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -3591,7 +3588,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.07'
+    tag: '2026.09'
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -3618,13 +3615,13 @@ indexd:
     serviceCreds: bdcatprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.07'
+    tag: '2026.09'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.07'
+    tag: '2026.09'
 metadata:
   autoscaling:
     enabled: false
@@ -3638,7 +3635,7 @@ metadata:
     metadataG3auto: bdcatprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.07'
+    tag: '2026.09'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -3654,7 +3651,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.07'
+    tag: '2026.09'
 portal:
   serviceAccount:
     annotations:
@@ -3668,19 +3665,18 @@ portal:
       pvcName: portal-pvc-bdcatprod-prod
       pvName: portal-pv-bdcatprod-prod
       createPV: true
-      #volumeHandle: ""
-      bucketName: "bdcatprod-portal-build-bucket"
+      bucketName: bdcatprod-portal-build-bucket
       mountOptions:
-      - allow-delete
-      - allow-other
-      - region us-east-1
-      - sse aws:kms
-      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+        - allow-delete
+        - allow-other
+        - region us-east-1
+        - sse aws:kms
+        - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
       size: 1Gi
       cache:
         emptyDirSizeLimit: 500Mi
     images:
-      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:2026.09
       kubectl: bitnami/kubectl:latest
       alpine: alpine:3.20
     job:
@@ -3705,7 +3701,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
+    tag: '2026.09'
     pullPolicy: Always
 revproxy:
   autoscaling:
@@ -3717,7 +3713,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '2026.09'
   ingress:
     aws:
       group: bdcatprod
@@ -3732,7 +3728,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.07'
+    tag: '2026.09'
 sower:
   enabled: true
   replicaCount: 2
@@ -3742,14 +3738,14 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '0.8.0'
+    tag: '2026.09'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
+        priorityClassName: etl-high-priority
         annotations:
-          karpenter.sh/do-not-disrupt: "true"
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3783,7 +3779,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.09
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3801,9 +3797,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
+        priorityClassName: etl-high-priority
         annotations:
-          karpenter.sh/do-not-disrupt: "true"
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3844,7 +3840,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.09
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3875,19 +3871,18 @@ tube:
     tag: '2025.07'
 wts:
   enabled: false
-# AuroraRDSCopy Job configuration
-auroraRdsCopyJob:
-  enabled: true
-  auroraMasterSecret: aurora-creds
-  sourceNamespace: bdcat-internalstaging-helm
-  targetNamespace: bdcatprod-helm
-  services:
-    - serviceName: indexd
-      sourceSecret: indexd-dbcreds
-      targetSecret: indexd-dbcreds
-    - serviceName: metadata
-      sourceSecret: metadata-dbcreds
-      targetSecret: metadata-dbcreds
-    - serviceName: sheepdog
-      sourceSecret: sheepdog-dbcreds
-      targetSecret: sheepdog-dbcreds      
+# auroraRdsCopyJob:
+#   enabled: true
+#   auroraMasterSecret: aurora-creds
+#   sourceNamespace: bdcat-internalstaging-helm
+#   targetNamespace: bdcatprod-helm
+#   services:
+#     - serviceName: indexd
+#       sourceSecret: indexd-dbcreds
+#       targetSecret: indexd-dbcreds
+#     - serviceName: metadata
+#       sourceSecret: metadata-dbcreds
+#       targetSecret: metadata-dbcreds
+#     - serviceName: sheepdog
+#       sourceSecret: sheepdog-dbcreds
+#       targetSecret: sheepdog-dbcreds
