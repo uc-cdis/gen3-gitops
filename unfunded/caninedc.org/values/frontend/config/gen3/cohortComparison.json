@@ -1,0 +1,24 @@
+{
+  "index": "subject",
+  "uniqueIdField": "_subject_id",
+  "dataTypename": "Subject",
+      "facets": [
+        {
+          "field": "gender",
+          "label": "Sex",
+          "description": "Text designations that identify sex."
+        },
+        {
+          "field": "breed",
+          "description": "A stock of animals or plants within a species having a distinctive appearance and typically having been developed by deliberate selection."
+        },
+        {
+          "field": "primary_site",
+          "description": "Text designations that identify sex."
+        },
+        {
+          "field": "disease_type",
+          "description": "A stock of animals or plants within a species having a distinctive appearance and typically having been developed by deliberate selection."
+        }
+      ]
+}

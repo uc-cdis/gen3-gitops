@@ -13,13 +13,16 @@ ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
 grafana-alloy:
   enabled: true
   configuration:
     enabled: false
 karpenter:
   enabled: true
-  targetRevision: "1.8.6"
+  targetRevision: "1.9.0"
   configuration:
     enabled: false
 karpenter-crds:

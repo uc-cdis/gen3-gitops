@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.04'
+    tag: '2026.07'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -22,14 +22,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.04'
+    tag: '2026.07'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.04'
+    tag: '2026.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -40,7 +40,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.04'
+    tag: '2026.07'
 etl:
   resources:
     tube:
@@ -248,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.04'
+      tag: '2026.07'
     spark:
-      tag: '2026.04'
+      tag: '2026.07'
 fence:
   resources:
     requests:
@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 13.1.1
+    tag: '2026.07'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -3016,6 +3016,516 @@ fence:
       nih-nhlbi-topmed-freeze10-unid-cm-phs002382-v1-r1-c1:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-bdc-aps-phs004492-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-affirm-phs004639-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-siena-phs004606-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-asthmanet-stics-phs004607-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-2d-phs004600-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bari-phs004599-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0201-phs004601-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0402-phs004629-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0801-phs004641-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1204-phs004642-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cabg-phs004643-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cass-phs004647-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coag-phs004634-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-coblt-phs004602-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-compare-voe-phs004630-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-dash-sodium-phs004635-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-disc-phs004554-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-hhl-phs004603-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-idea-phs004604-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ipf-survival-pr-phs004591-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-lung-hiv-phs004323-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-mrfit-phs004609-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-omni-heart-phs004610-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-p2c2-phs004322-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-paths-phs004564-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-premier-phs004617-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-quartet-usa-phs004618-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-spiromics-phs004568-v1-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-ih-phs004645-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-thapca-oh-phs004646-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-va2-tah-phs004633-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-wlm-phs004636-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-btk-sars-cov-2-phs003319-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-ccdg-penn-phs001502-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-cystic-fibrosis-phs000254-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-familial-phs000582-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-isgs-phs000546-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-swiss-phs000327-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-leicester-phs001000-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-munic-mi-phs000916-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-migen-exs-procardis-phs000883-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-wgs-phs001325-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-niddm-athero-phs001130-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-reds-rbc-omics-phs001955-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-rehab-ph-phs004597-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-aric-phs000280-v9-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-amish-phs000956-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-care-pact-phs001730-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-dhs-phs001412-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-jhs-phs000964-v6-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-safhs-phs001215-v5-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-sarcoidosis-phs001207-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-sumstats-phs001974-r1-v9-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-act-phs004661-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-aim-high-phs004693-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-an-microbiome-phs004660-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0702-phs004692-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0903-phs004697-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1101-phs004698-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1202-phs004701-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1203-phs004709-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1301-phs004703-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1302-phs004705-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1401-phs004718-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1501-phs004704-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1502-phs004710-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1503-phs004720-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1703-phs004711-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cast-phs004651-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-focus-phs004652-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-seneca-phs004712-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-time-phs004668-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cpap-phs004676-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-cctrn-lvad-phs004714-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-np-phs004707-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-delta-phs004695-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-icu-resus-phs004721-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-medfocus-phs004680-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-reds-iii-phs004687-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-roc-proppr-phs004685-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-rosters-phs004681-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-snap-phs004682-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-soya-phs004683-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-tact-phs004684-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-tmh-ctn-recess-phs004690-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-jhs-phs002907-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c5:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c6:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c7:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-c4r-spiromics-phs002909-v2-r1-c8:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-atypical-cf-phs000556-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-family-aortic-phs000347-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-go-esp-family-hem-phs000632-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-nextgen-ipscore-phs000924-v6-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-ninds-arcadia-phs004653-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-recover-adult-phs003463-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-a-treat-phs004724-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-achieve-phs004756-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-achieve-phs004756-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bhat-phs004717-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0102-phs004672-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1102-phs004700-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cabana-phs004731-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-camp-phs004733-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-care-peak-phs004734-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-latetime-phs004663-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-pace-phs004667-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cdp-phs004674-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-colcorona-phs004735-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-afb-phs004713-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-poaf-phs004678-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-smr-phs004664-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-icare-phs004679-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ischemia-ckd-phs004706-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-nghs-phs004467-v2-r2-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-revival-phs004738-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-romicat-ii-phs004665-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-taag-phs004741-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-top-phs004723-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-trim-phs004732-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-aloft-phs002182-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c5:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c6:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c7:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caf-pint-phs003016-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caregiver-phs001747-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-castleman-phs001706-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-cite-seq-phs003277-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crucial-phs003403-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-eqtl-lung-phs003521-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-eqtl-lung-phs003521-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-hematopoietic-stem-cells-phs000549-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-human-hearts-phs003473-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-rna-seq-lung-phs002484-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-single-cell-multiome-phs004650-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hvh-phs000993-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hvh-phs000993-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hypergen-phs001293-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hypergen-phs001293-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-pcgc-phs001735-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-pcgc-phs001735-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-vu-af-phs001032-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1  
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -3031,7 +3541,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.04'
+    tag: '2026.07'
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -3081,7 +3591,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.04'
+    tag: '2026.07'
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -3108,13 +3618,13 @@ indexd:
     serviceCreds: bdcatprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.04'
+    tag: '2026.07'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.04'
+    tag: '2026.07'
 metadata:
   autoscaling:
     enabled: false
@@ -3128,7 +3638,7 @@ metadata:
     metadataG3auto: bdcatprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '2026.07'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -3144,14 +3654,49 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: '2026.07'
 portal:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-bdcatprod-prod
+      pvName: portal-pv-bdcatprod-prod
+      createPV: true
+      #volumeHandle: ""
+      bucketName: "bdcatprod-portal-build-bucket"
+      mountOptions:
+      - allow-delete
+      - allow-other
+      - region us-east-1
+      - sse aws:kms
+      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+    images:
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+    extraction:
+      stripComponents: true
+  resources:
+    requests:
+      memory: 128Mi
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 2
     minReplicas: 2
     targetCPUUtilizationPercentage: 90
-  replicaCount: 4
+  replicaCount: 2
   enabled: true
   customConfig:
     enabled: true
@@ -3172,7 +3717,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.04'
+    tag: '2026.07'
   ingress:
     aws:
       group: bdcatprod
@@ -3187,7 +3732,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.04'
+    tag: '2026.07'
 sower:
   enabled: true
   replicaCount: 2
@@ -3197,11 +3742,14 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: '0.8.0'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3235,7 +3783,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3253,6 +3801,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
+        priorityClassName: "etl-high-priority"
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -3293,7 +3844,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.04
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -3324,3 +3875,19 @@ tube:
     tag: '2025.07'
 wts:
   enabled: false
+# AuroraRDSCopy Job configuration
+auroraRdsCopyJob:
+  enabled: true
+  auroraMasterSecret: aurora-creds
+  sourceNamespace: bdcat-internalstaging-helm
+  targetNamespace: bdcatprod-helm
+  services:
+    - serviceName: indexd
+      sourceSecret: indexd-dbcreds
+      targetSecret: indexd-dbcreds
+    - serviceName: metadata
+      sourceSecret: metadata-dbcreds
+      targetSecret: metadata-dbcreds
+    - serviceName: sheepdog
+      sourceSecret: sheepdog-dbcreds
+      targetSecret: sheepdog-dbcreds      

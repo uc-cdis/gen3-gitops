@@ -30,6 +30,9 @@ coreDNS:
   configuration:
     enabled: false
 
+custom-objects:
+  enabled: true
+
 ebs-csi-driver:
   enabled: true
   configuration:

@@ -57,10 +57,18 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'feat_scoped-token'
+    tag: 'fix-task-token-authz'
   FENCE_CONFIG_PUBLIC:
-    # 2h - temporary to unblock TES testing
-    ACCESS_TOKEN_EXPIRES_IN: 7200
+    DEBUG: true
+    # Task token types that can be requested by users.
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 172800 # 2 days
+
 fluentd:
   enabled: true
   image:
@@ -78,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: misc-improvements
+    tag: no-funnel-s3-calls
   resources:
     limits:
       cpu: 2
@@ -92,6 +100,9 @@ gen3-workflow:
     gen3workflowG3auto: brhstaging-helm-gen3workflow-g3auto
   gen3WorkflowConfig:
     debug: true
+    nWorkers: 4
+    enableS3Files: true
+    eksSecurityGroupNames: ["brhprod_EKS_workers_sg", "brhprod_EKS_nodepool_jupyter_sg"]
     taskImageWhitelist:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
@@ -101,6 +112,8 @@ gen3-workflow:
       - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
       - "python:3.9*"
       - "pytorch/pytorch:latest" # nf-canary TEST_GPU
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # CI test_multiple_executors_and_pv_features
+      - "public.ecr.aws/docker/library/alpine:latest" # CI test_multiple_executors_and_pv_features
       - "quay.io/ncigdc/samtools:1.9"
       - "quay.io/ncigdc/star2:2.7.5c"
       - "quay.io/ncigdc/bio-alpine"
@@ -110,41 +123,43 @@ gen3-workflow:
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
+      - "quay.io/cdis/containers:*"
 funnel:
+  replicaCount: 2
   postgres:
     dbCreate: true
   externalSecrets:
     dbcreds: brhstaging-helm-funnel-creds
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
-  funnel:
-    image:
-      repository: quay.io/cdis/funnel
-      tag: test-rename_temp_volume
-    Logger:
-      Level: debug
-    Kubernetes:
-      JobsNamespace: "workflow-pods-brhstaging-helm"
-      DisableReconciler: false
-      DisableJobCleanup: false
-      ReconcileRate: 120s
-      ReplicaCount: 2
-      Executor:
-        restartPolicy: Never
-        backoffLimit: 0
-        # Annotations:
-        #   karpenter.sh/do-not-disrupt: "true"
-      Worker:
-        restartPolicy: Never
-        backoffLimit: 1
-        # Annotations:
-        #   karpenter.sh/do-not-disrupt: "true"
-        # PriorityClassName: "system-cluster-critical"
-      Resources:
-        Limits:
-          # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
-          Cpus: 8000m
-          RamGb: 32Gi
-          DiskGb: 60Gi
+  image:
+    repository: quay.io/cdis/funnel
+    tag: use-mounted-bucket
+  Logger:
+    Level: debug
+  Kubernetes:
+    JobsNamespace: "workflow-pods-brhstaging-helm"
+    DisableReconciler: false
+    DisableJobCleanup: false
+    ReconcileRate: 120s
+    Storage:
+      type: "s3files"
+    Executor:
+      restartPolicy: Never
+      backoffLimit: 0
+      # Annotations:
+      #   karpenter.sh/do-not-disrupt: "true"
+    Worker:
+      restartPolicy: Never
+      backoffLimit: 1
+      # Annotations:
+      #   karpenter.sh/do-not-disrupt: "true"
+      # PriorityClassName: "system-cluster-critical"
+    Resources:
+      Limits:
+        # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 8000m
+        RamGb: 60Gi
+        DiskGb: 100Gi
 global:
   pdb: true
   netPolicy:
