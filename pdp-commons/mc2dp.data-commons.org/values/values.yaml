@@ -116,7 +116,7 @@ gen3-embeddings:
   debug: true
   replicaCount: 2
   postgres:
-    dbCreate: true
+    dbCreate: false
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
