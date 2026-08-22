@@ -1,0 +1,143 @@
+
+hatchery:
+  jupyterNamespace: jupyter-pods-vectis
+  hatchery:
+    json: |-
+      {
+        "user-namespace": "jupyter-pods-vectis",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "shared-workspace": {
+          "enabled": true,
+          "oidc-provider-arn": "arn:aws:iam::172585802910:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9649CF76244A05C43B4ECA7C01E29706"
+        },
+        "jeg-gateway-proxy-url": "http://workspace-proxy-service.default.svc.cluster.local:8080/jeg-proxy",
+        "s3-config": {
+          "bucketName": "vectis-sharedworkspace",
+          "prefixBase": "vectis",
+          "region": "us-east-1"
+        },
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "quay.io/cdis/ecs-ws-sidecar:master",
+          "env": {"NAMESPACE": "default", "HOSTNAME": "vectis.data-commons.org"},
+          "args": [],
+          "command": ["/bin/bash", "./sidecar.sh"]
+        },
+        "containers": [{
+          "target-port": 8888,
+          "cpu-limit": "500m",
+          "memory-limit": "2Gi",
+          "name": "Jupyter Notebook (Python 3)",
+          "image": "quay.io/cdis/jupyterlab-generic:master",
+          "env": {
+            "FRAME_ANCESTORS": "https://vectis.data-commons.org",
+            "HOME": "/home/jovyan",
+            "JUPYTER_RUNTIME_DIR": "/home/jovyan/.local/share/jupyter/runtime"
+          },
+          "command": ["/jupyterlab-start.sh"],
+          "args": ["--ServerApp.base_url=/lw-workspace/proxy/", "--ServerApp.default_url=/lab", "--ServerApp.password=''", "--ServerApp.token=''", "--ServerApp.allow_origin='https://vectis.data-commons.org'", "--ServerApp.root_dir='/home/jovyan'", "--ServerApp.runtime_dir='/home/jovyan/.local/share/jupyter/runtime'", "--ServerApp.shutdown_no_activity_timeout=5400"],
+          "path-rewrite": "/lw-workspace/proxy/",
+          "use-tls": "false",
+          "ready-probe": "/lw-workspace/proxy/",
+          "lifecycle-post-start": ["/bin/sh", "-c", "ln -sfn /data /home/jovyan/data; true"],
+          "user-uid": 1010,
+          "fs-gid": 100,
+          "user-volume-location": "/home/jovyan/pd",
+          "gen3-volume-location": "/home/jovyan/.gen3"
+        }]
+      }
+
+jeg:
+  enabled: true
+  workspaceNamespace: jupyter-pods-vectis
+  image:
+    repository: quay.io/cdis/gen3-vectis
+    tag: qa-jegv2
+    pullPolicy: Always
+  env:
+    EG_NAMESPACE: jupyter-pods-vectis
+    EG_KERNEL_LAUNCH_TIMEOUT: "120"
+    EG_MAX_KERNELS_PER_USER: "2"
+    EG_CULL_IDLE_TIMEOUT: "14400"
+    EG_CULL_CONNECTED: "True"
+    EG_DEFAULT_KERNEL_NAME: python_kubernetes
+    EG_LIST_KERNELS: "True"
+    EG_KERNEL_IMAGE_PULL_POLICY: IfNotPresent
+    EG_KERNEL_WHITELIST_ENVS: ACCESS_TOKEN,API_KEY_ID,API_KEY,GEN3_API_KEY_ID,GEN3_API_KEY_SECRET,GEN3_ENDPOINT,NAMESPACE
+    EG_SHARED_NAMESPACE: "True"
+    EG_MIRROR_WORKING_DIRS: "False"
+workspace-proxy:
+  enabled: true
+  deploymentNamespace: default
+  workspaceNamespace: jupyter-pods-vectis
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: feat_init-jeg-user-ownership-fix
+    pullPolicy: Always
+  networkPolicy:
+    enabled: false
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+        "python_kubernetes",
+        "python_tf_kubernetes",
+        "python_tf_gpu_kubernetes"
+      ],
+      "displayNames": {
+        "python_kubernetes": "Python on Kubernetes",
+        "python_tf_kubernetes": "Python + TensorFlow",
+        "python_tf_gpu_kubernetes": "Python + TensorFlow + GPU"
+      }
+    }
+
+revproxy:
+  additionalConfigs:
+    workspace-proxy.conf: |-
+      location = /lw-workspace/proxy { return 308 $scheme://$http_host/lw-workspace/proxy/; }
+      location /lw-workspace/proxy/ {
+        set $authz_resource "/workspace";
+        set $authz_method "access";
+        set $authz_service "jupyterhub";
+        auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+        auth_request /gen3-authz;
+        proxy_set_header REMOTE_USER $remoteUser;
+        error_page 403 = @errorworkspace;
+        set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+        rewrite ^/lw-workspace/proxy/$ /lab break;
+        rewrite ^/lw-workspace/proxy/(.*) /$1 break;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_read_timeout 36000s;
+      }
+    workspace-api.conf: |-
+      location ^~ /workspace-api/workspace/ {
+        set $authz_resource "/workspace";
+        set $authz_method "access";
+        set $authz_service "jupyterhub";
+        auth_request /gen3-authz;
+        error_page 403 = @errorworkspace;
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+      }
+      location ^~ /workspace-api/ {
+        set $authz_resource "/workspace";
+        set $authz_method "access";
+        set $authz_service "jupyterhub";
+        auth_request /gen3-authz;
+        error_page 403 = @errorworkspace;
+        set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+        rewrite ^/workspace-api/(.*) /api/$1 break;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_read_timeout 600s;
+      }

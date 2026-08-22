@@ -1,0 +1,38 @@
+# Production overrides for the vectis-overlays subchart in gen3-helm.
+# Lambda API routes are intentionally not configured here until the production
+# CDK deployment provides its API Gateway endpoint.
+vectis-overlays:
+  enabled: true
+
+  guppyCompat:
+    enabled: false
+
+  searchAuthProxy:
+    enabled: false
+
+  s3Monitor:
+    enabled: false
+
+  migrations:
+    enabled: false
+
+  siemService:
+    enabled: true
+    serviceAccount:
+      create: true
+      name: siem-service
+    image:
+      repository: quay.io/cdis/gen3-vectis
+      tag: siem-service-v6
+      pullPolicy: Always
+    env:
+      DB_SCHEMA: vectis
+      SIEM_DEFAULT_LIMIT: "251"
+      SIEM_MAX_LIMIT: "2000"
+      SIEM_VIEWS_S3_ENABLED: "false"
+
+  rds:
+    secretName: vectis-aurora-master-password
+    endpoint: vectis-aurora-cluster-new.cluster-cm1siekw0ufl.us-east-1.rds.amazonaws.com
+    port: "5432"
+    database: postgres
