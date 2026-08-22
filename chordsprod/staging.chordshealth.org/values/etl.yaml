@@ -95,6 +95,6 @@ etl:
               domain, keywords, access_type].projects[project_sponsor, project_sponsor_type]
   image:
     tube:
-      tag: '2026.04'
+      tag: '2026.06'
     spark:
-      tag: '2026.04'
+      tag: '2026.06'
