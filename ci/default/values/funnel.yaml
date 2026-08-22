@@ -22,6 +22,8 @@ funnel:
       restartPolicy: OnFailure
       backoffLimit: 0
       PriorityClassName: "system-cluster-critical"
+    Storage:
+      type: "s3files"
   resources:
     requests:
       # lower worker pods request to avoid running out of memory in Kind CI
