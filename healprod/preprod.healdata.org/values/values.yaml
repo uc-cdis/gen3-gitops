@@ -227,7 +227,7 @@ hatchery:
               "source_sqsh": "/image/apps-2026-08-20.sqsh"
             },
             "env": {
-              "FRAME_ANCESTORS": ""https://preprod.healdata.org",
+              "FRAME_ANCESTORS": "https://preprod.healdata.org",
               "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
             },
             "args": [
