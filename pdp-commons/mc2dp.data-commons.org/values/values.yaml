@@ -47,7 +47,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'feat_embedding-vectors'
+    tag: '13.3.0'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
@@ -110,20 +110,22 @@ global:
     dbCreate: false
     externalSecret: pdp-commons-aurora-master-password
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
-embedding-management-service:
+
+gen3-embeddings:
   enabled: true
+  debug: true
+  replicaCount: 2
   postgres:
     dbCreate: true
-  embeddingsConfig: |
-    {
-      "expr": 256
-    }
-  service:
-    targetPort: 8000
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
-    tag: feat_service
+    repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
+    tag: 0.1.1
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
+    dbcreds: "pdp-commons-embedding-management-service-creds"
+
 guppy:
   replicaCount: 4
   configIndex: pdp-commons-commons-config-index
