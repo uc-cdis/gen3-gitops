@@ -86,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: debug-empty-output
+    tag: no-funnel-s3-calls
   resources:
     limits:
       cpu: 2
@@ -133,7 +133,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: v0.12.1-gen3
+    tag: use-mounted-bucket
   Logger:
     Level: debug
   Kubernetes:
@@ -156,9 +156,9 @@ funnel:
       # PriorityClassName: "system-cluster-critical"
     Resources:
       Limits:
-        # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
-        Cpus: 8000m
-        RamGb: 60Gi
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 12000m
+        RamGb: 64Gi
         DiskGb: 100Gi
 global:
   pdb: true
