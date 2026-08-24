@@ -123,7 +123,7 @@ gen3-embeddings:
     tag: 0.1.1
   externalSecrets:
     createK8sGen3EmbeddingsSecret: false
-    pushSecret: true
+    pushSecret: false
     dbcreds: "pdp-commons-embedding-management-service-creds"
 
 guppy:
