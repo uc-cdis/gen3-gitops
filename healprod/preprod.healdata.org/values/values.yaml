@@ -188,7 +188,7 @@ hatchery:
         "license-user-maps-global-secondary-index": "activeUsersIndex",
         "s3-config": {
           "bucketName": "software-library-bucket-new",
-          "prefixBase": "qa-heal",
+          "prefixBase": "heal-preprod",
           "region": "us-east-1"
         },
         "sidecar": {
