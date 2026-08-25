@@ -19,7 +19,7 @@ global:
   environment: "vectis"
   hostname: "vectis.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:172585802910:certificate/d9a98702-17a2-4207-b212-30c043caccdb"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  dictionaryUrl: "https://vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com/config/dd/current.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -90,7 +90,7 @@ fence:
     usersync: true
     schedule: "*/30 * * * *"
     syncFromDbgap: false
-    userYamlS3Path: "s3://cdis-gen3-users/dev/user.yaml"
+    userYamlS3Path: "s3://vectis-ctds-172585802910-us-east-1/config/user.yaml"
     slack_webhook: ""
     slack_send_dbgap: false
 
@@ -224,7 +224,7 @@ requestor:
 revproxy:
   enabled: true
   additionalConfigs:
-    vectis-lambda.conf: |-
+    guppy-service.conf: |-
       location /guppy/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
@@ -234,14 +234,14 @@ revproxy:
         proxy_pass $upstream;
         client_max_body_size 0;
       }
-
+    siem-service.conf: |-
       location /siem/ {
         if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
         set $upstream http://siem-service.default.svc.cluster.local:8000;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
-
+    metadata-service.conf: |-
       location /mds/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
@@ -250,17 +250,7 @@ revproxy:
         proxy_pass $upstream;
         client_max_body_size 0;
       }
-
-      location = /graphql {
-        proxy_set_header Authorization "$access_token";
-        proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        rewrite ^/graphql$ /query/vectis/graphql break;
-        proxy_pass $upstream;
-        client_max_body_size 0;
-      }
-
+    lambda-indexd.conf: |-
       location /api/v0/indexd/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
@@ -270,7 +260,17 @@ revproxy:
         proxy_pass $upstream;
         client_max_body_size 0;
       }
-
+    lambda-drs.conf: |-
+      location ^~ /user/ga4gh/drs/v1/ {
+        if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/user/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
       location ^~ /ga4gh/drs/v1/ {
         if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
         proxy_set_header Authorization "$access_token";
@@ -278,6 +278,135 @@ revproxy:
         set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
         proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
         rewrite ^/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    lambda-dictionary.conf: |-
+      location ~* ^/api/v0/submission/_dictionary/_all/?$ {
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com;
+        proxy_set_header Host vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com;
+        rewrite ^ /config/dd/current.json break;
+        proxy_pass $upstream;
+      }
+    lambda-query.conf: |-
+      location ~* ^/graphql/?$ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/graphql/?$ /query/vectis/graphql break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+
+      location ~* ^/api/v0/submission/vectis/graphql/?$ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+      location /api/v0/submission/vectis/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/api/v0/submission/vectis/(.*) /query/vectis/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location = /api/v0/submission/graphql {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/api/v0/submission/graphql$ /query/graphql break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+      location = /api/v0/submission/getschema {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/api/v0/submission/getschema$ /query/getschema break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location /api/v0/submission/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/api/v0/submission/(.*) /query/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location /v0/submission/ {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        rewrite ^/v0/submission/(.*) /query/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
