@@ -333,6 +333,9 @@ fence:
       cds-596-phs004081-nctn-aml-ds:
         cred: fence_bot
         region: us-east-1
+      cds-602-phs002276-kf-pediatric-t-all:
+        cred: fence_bot
+        region: us-east-1
       cds-612-phs003987:
         cred: fence_bot
         region: us-east-1
