@@ -1,0 +1,29 @@
+funnel:
+  postgres:
+    dbCreate: false
+  externalSecrets:
+    dbcreds: "ci-perf-funnel-creds"
+    pushSecret: false
+    funnelOidcClient: "ci-perf-funnel-oidc-client"
+  Kubernetes:
+    JobsNamespace: "workflow-pods-ci-perf"
+    ReplicaCount: 2
+    NodeSelector: {"role": "workflow"}
+    Tolerations:
+    - Key: "role"
+      Operator: "Equal"
+      Value: "workflow"
+      Effect: "NoSchedule"
+    Executor:
+      restartPolicy: OnFailure
+      backoffLimit: 0
+      Annotations:
+        karpenter.sh/do-not-disrupt: "true"
+    Worker:
+      restartPolicy: OnFailure
+      backoffLimit: 0
+      PriorityClassName: "system-cluster-critical"
+  resources:
+    requests:
+      # lower worker pods request to avoid running out of memory in Kind CI
+      memory: "512Mi"
