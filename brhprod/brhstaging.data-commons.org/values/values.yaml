@@ -57,13 +57,17 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.08'
+    tag: 'fix-task-token-authz'
   FENCE_CONFIG_PUBLIC:
     DEBUG: true
-    ALLOWED_TASK_TOKEN_TYPES:
-      - WORKFLOW
+     # Task token types that can be requested by users.
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
     MAX_TASK_TOKEN_TTL:
-      WORKFLOW: 172800
+      WORKFLOW: 172800 # 2 days
 fluentd:
   enabled: true
   image:
@@ -81,7 +85,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: '2026.08'
+    tag: 'no-funnel-s3-calls'
   resources:
     limits:
       cpu: 2
@@ -101,26 +105,26 @@ gen3-workflow:
       - brhprod_EKS_workers_sg
       - brhprod_EKS_nodepool_jupyter_sg
     taskImageWhitelist:
-      - public.ecr.aws/u5x5h6w3/nextflow-approved/public:*
-      - 654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*
-      - quay.io/nextflow/bash:*
-      - quay.io/curl/curl:latest
-      - quay.io/cdis/nginx:*
-      - quay.io/cdis/amazonlinux-base:3.13-pythonnginx
-      - python:3.9*
-      - pytorch/pytorch:latest
-      - quay.io/cdis/gen3-workflow:integration_tests_dicom_image
-      - public.ecr.aws/docker/library/alpine:latest
-      - quay.io/ncigdc/samtools:1.9
-      - quay.io/ncigdc/star2:2.7.5c
-      - quay.io/ncigdc/bio-alpine
-      - quay.io/ncigdc/picard:2.26.10
-      - quay.io/ncigdc/gdc-vendorfail:1.1.0
-      - quay.io/ncigdc/trimmomatic:0.38
-      - quay.io/ncigdc/fastqc:0.11.7-e7d5a43
-      - quay.io/cdis/cadc-plp:*
-      - docker.io/sairamkova/tes-flow:*
-      - quay.io/cdis/containers:*
+      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
+      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
+      - "quay.io/nextflow/bash:*"
+      - "quay.io/curl/curl:latest"
+      - "quay.io/cdis/nginx:*"
+      - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
+      - "python:3.9*"
+      - "pytorch/pytorch:latest" # nf-canary TEST_GPU
+      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # CI test_multiple_executors_and_pv_features
+      - "public.ecr.aws/docker/library/alpine:latest" # CI test_multiple_executors_and_pv_features
+      - "quay.io/ncigdc/samtools:1.9"
+      - "quay.io/ncigdc/star2:2.7.5c"
+      - "quay.io/ncigdc/bio-alpine"
+      - "quay.io/ncigdc/picard:2.26.10"
+      - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
+      - "quay.io/ncigdc/trimmomatic:0.38"
+      - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
+      - "quay.io/cdis/cadc-plp:*"
+      - "docker.io/sairamkova/tes-flow:*"
+      - "quay.io/cdis/containers:*"
 funnel:
   replicaCount: 2
   postgres:
@@ -143,11 +147,17 @@ funnel:
     Executor:
       restartPolicy: Never
       backoffLimit: 0
+      # Annotations:
+      #   karpenter.sh/do-not-disrupt: "true"
     Worker:
       restartPolicy: Never
       backoffLimit: 1
+      # Annotations:
+      #   karpenter.sh/do-not-disrupt: "true"
+      # PriorityClassName: "system-cluster-critical"
     Resources:
       Limits:
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
         Cpus: 12000m
         RamGb: 64Gi
         DiskGb: 100Gi
@@ -182,8 +192,12 @@ global:
     pushSecret: true
   hostname: brhstaging.data-commons.org
   kubeapi_endpoints:
+    # Enable for Argo CD based deployments.
+    # This lets funnel worker pods access the kube api to create executor jobs.
+    # If disabled, an automatic lookup will be performed to get the IPs.
     enabled: true
     ip:
+    # -- <list of ip ranges of kubeapi> can be fetched by running `kubectl get endpoints --namespace default kubernetes` in your cluster.
       - 172.27.103.241
       - 172.27.104.147
   publicDataSets: true
