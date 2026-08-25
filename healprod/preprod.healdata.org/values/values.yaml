@@ -157,7 +157,7 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.10.0'
+    tag: 'feat_squashfs-pvc-provisioning'
   hatchery:
     json: |-
       {
@@ -168,13 +168,6 @@ hatchery:
         "user-namespace": "jupyter-pods-healpreprod",
         "sub-dir": "/lw-workspace",
         "user-volume-size": "10Gi",
-        "fsxConfig": {
-          "fsxId": "fs-0db570e0cb6e6f5af",
-          "dnsName": "fs-0db570e0cb6e6f5af.fsx.us-east-1.amazonaws.com",
-          "mountName": "nyj6tamv",
-          "storage": "1200Gi",
-          "mountPath": "/apps"
-        },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-1SZM8FA8IP6F-preprod",
         "default-pay-model": {
           "bmh_workspace_id": "blanket_billing_eks",
