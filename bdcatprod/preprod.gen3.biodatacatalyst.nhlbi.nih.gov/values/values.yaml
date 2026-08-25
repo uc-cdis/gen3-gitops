@@ -3368,7 +3368,157 @@ fence:
         region: us-east-1
       nih-nhlbi-topmed-dbgap-copdgene-phs000179-v7-r1-c2:
         cred: fence-bot
-        region: us-east-1        
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-a-treat-phs004724-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-achieve-phs004756-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-achieve-phs004756-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bhat-phs004717-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-0102-phs004672-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-bmt-ctn-1102-phs004700-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cabana-phs004731-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-camp-phs004733-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-care-peak-phs004734-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-latetime-phs004663-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cctrn-pace-phs004667-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-cdp-phs004674-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-colcorona-phs004735-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-afb-phs004713-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-poaf-phs004678-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ctsn-smr-phs004664-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-icare-phs004679-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-ischemia-ckd-phs004706-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-nghs-phs004467-v2-r2-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-revival-phs004738-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-romicat-ii-phs004665-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-taag-phs004741-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-top-phs004723-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-biolincc-trim-phs004732-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-aloft-phs002182-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c3:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c4:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c5:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c6:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caapa-phs001123-v2-r1-c7:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caf-pint-phs003016-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-caregiver-phs001747-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-castleman-phs001706-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-cite-seq-phs003277-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-crucial-phs003403-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-eqtl-lung-phs003521-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-eqtl-lung-phs003521-v1-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-hematopoietic-stem-cells-phs000549-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-human-hearts-phs003473-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-dbgap-rna-seq-lung-phs002484-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-bdc-single-cell-multiome-phs004650-v1-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hvh-phs000993-v6-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hvh-phs000993-v6-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hypergen-phs001293-v4-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-hypergen-phs001293-v4-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-pcgc-phs001735-v3-r1-c1:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-pcgc-phs001735-v3-r1-c2:
+        cred: fence-bot
+        region: us-east-1
+      nih-nhlbi-topmed-freeze10-vu-af-phs001032-v7-r1-c1:
+        cred: fence-bot
+        region: us-east-1      
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
@@ -3496,6 +3646,41 @@ peregrine:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: '2026.07'
 portal:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-bdcatprod
+      pvName: portal-pv-bdcatprod
+      createPV: true
+      #volumeHandle: ""
+      bucketName: "bdcatprod-portal-build-bucket"
+      mountOptions:
+      - allow-delete
+      - allow-other
+      - region us-east-1
+      - sse aws:kms
+      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+    images:
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+    extraction:
+      stripComponents: true
+  resources:
+    requests:
+      memory: 128Mi
   autoscaling:
     enabled: false
     maxReplicas: 2

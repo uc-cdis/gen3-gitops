@@ -86,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.3.1
+    tag: no-funnel-s3-calls
   resources:
     limits:
       cpu: 2
@@ -123,7 +123,9 @@ gen3-workflow:
       - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
+      - "quay.io/cdis/containers:*"
 funnel:
+  replicaCount: 2
   postgres:
     dbCreate: true
   externalSecrets:
@@ -131,7 +133,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: v0.12.0-gen3
+    tag: use-mounted-bucket
   Logger:
     Level: debug
   Kubernetes:
@@ -139,7 +141,6 @@ funnel:
     DisableReconciler: false
     DisableJobCleanup: false
     ReconcileRate: 120s
-    ReplicaCount: 2
     Storage:
       type: "s3files"
     Executor:
@@ -155,10 +156,10 @@ funnel:
       # PriorityClassName: "system-cluster-critical"
     Resources:
       Limits:
-        # Note: using `Cpus: "8"` triggers error `invalid value for string field Cpus: 8`
-        Cpus: 8000m
-        RamGb: 32Gi
-        DiskGb: 60Gi
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 12000m
+        RamGb: 64Gi
+        DiskGb: 100Gi
 global:
   pdb: true
   netPolicy:
