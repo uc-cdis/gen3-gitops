@@ -184,6 +184,7 @@ hatchery:
           "prefixBase": "heal-preprod",
           "region": "us-east-1"
         },
+        "oidc-provider-arn": "arn:aws:iam::205252583234:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0EA19C0BEE24756EE321F5E5675D9933",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
