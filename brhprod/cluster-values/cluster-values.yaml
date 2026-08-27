@@ -12,8 +12,9 @@ alb-controller:
 
 aws-s3-mountpoint:
   enabled: true
+  targetRevision: "1.11.0"
   configuration:
-    enabled: false
+    enabled: true
 
 calico:
   enabled: true
