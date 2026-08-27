@@ -238,8 +238,10 @@ hatchery:
         "s3-config": {
           "bucketName": "software-library-bucket-new",
           "prefixBase": "brhstaging",
-          "region": "us-east-1"
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
         },
+        "oidc-provider-arn": "arn:aws:iam::885078588865:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/BC81152B3C2AF2143ED47AD2CB1203C0",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
