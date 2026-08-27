@@ -110,8 +110,8 @@ frontend-framework:
     HATCHERY_URL: "http://hatchery-service.default.svc.cluster.local"
     GEN3_FENCE_SERVICE: "http://fence-service.default.svc.cluster.local"
     GEN3_ARBORIST_SERVICE: "http://arborist-service.default.svc.cluster.local"
-    GEN3_SEARCH_SERVICE: "https://s6fftu5704.execute-api.us-east-1.amazonaws.com"
-    GEN3_LAMBDA_API_URL: "https://s6fftu5704.execute-api.us-east-1.amazonaws.com"
+    GEN3_SEARCH_SERVICE: "https://vectis-api.data-commons.org"
+    GEN3_LAMBDA_API_URL: "https://vectis-api.data-commons.org"
     GEN3_INDEXD_SERVICE: "https://vectis.data-commons.org"
     SIEM_SERVICE_DNS: "siem-service.default.svc.cluster.local"
     JUPYTER_GATEWAY_URL: "http://jupyter-enterprise-gateway.jupyter-pods-vectis.svc.cluster.local:8888"
@@ -228,8 +228,8 @@ revproxy:
       location /guppy/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/guppy/(.*) /search/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -245,8 +245,8 @@ revproxy:
       location /mds/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -254,8 +254,8 @@ revproxy:
       location /api/v0/indexd/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/indexd/(.*) /indexd/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -265,8 +265,8 @@ revproxy:
         if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/user/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -275,8 +275,8 @@ revproxy:
         if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -303,8 +303,8 @@ revproxy:
         }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/graphql/?$ /query/vectis/graphql break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
@@ -325,8 +325,8 @@ revproxy:
         }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
@@ -346,8 +346,8 @@ revproxy:
         }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/submission/vectis/(.*) /query/vectis/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -365,8 +365,8 @@ revproxy:
         }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/submission/graphql$ /query/graphql break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
@@ -376,8 +376,8 @@ revproxy:
       location = /api/v0/submission/getschema {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/submission/getschema$ /query/getschema break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -395,8 +395,8 @@ revproxy:
         }
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/api/v0/submission/(.*) /query/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
@@ -404,8 +404,8 @@ revproxy:
       location /v0/submission/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
-        set $upstream https://s6fftu5704.execute-api.us-east-1.amazonaws.com;
-        proxy_set_header Host s6fftu5704.execute-api.us-east-1.amazonaws.com;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
         rewrite ^/v0/submission/(.*) /query/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;

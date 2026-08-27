@@ -26,7 +26,7 @@ vectis-overlays:
       tag: vectis-siem-service-v1
       pullPolicy: Always
     env:
-      SEARCH_BASE: "https://s6fftu5704.execute-api.us-east-1.amazonaws.com/search"
+      SEARCH_BASE: "https://vectis-api.data-commons.org/search"
       ARBORIST_URL: "http://arborist-service.default.svc.cluster.local"
       SIEM_DEFAULT_LIMIT: "251"
       SIEM_MAX_LIMIT: "2000"
