@@ -1,6 +1,15 @@
 gen3-workflow:
   enabled: false
-  replicaCount: 2
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 6
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 2
+      memory: 850Mi
   image:
     repository: quay.io/cdis/gen3-workflow
     tag: master
