@@ -182,8 +182,10 @@ hatchery:
         "s3-config": {
           "bucketName": "software-library-bucket-new",
           "prefixBase": "heal-preprod",
-          "region": "us-east-1"
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
         },
+        "oidc-provider-arn": "arn:aws:iam::205252583234:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/0EA19C0BEE24756EE321F5E5675D9933",
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
