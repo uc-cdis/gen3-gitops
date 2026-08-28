@@ -216,7 +216,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: 'feat_squashfs-pvc-provisioning'
+    tag: '2.11.0'
   vpcId: brhprod
   hatchery:
     json: |-
