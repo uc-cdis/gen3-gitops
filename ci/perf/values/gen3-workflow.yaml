@@ -12,7 +12,7 @@ gen3-workflow:
       memory: 850Mi
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: master
+    tag: s3-list-buckets-support
   serviceAccount:
     create: true
     annotations:
