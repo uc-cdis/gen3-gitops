@@ -1,5 +1,5 @@
 ambassador:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: "quay.io/datawire/ambassador"
