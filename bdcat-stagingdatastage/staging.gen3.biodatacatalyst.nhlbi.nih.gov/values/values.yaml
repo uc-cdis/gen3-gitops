@@ -579,7 +579,7 @@ portal:
       cache:
         emptyDirSizeLimit: 500Mi
     images:
-      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:chore_rebase-data-library
       kubectl: bitnami/kubectl:latest
       alpine: alpine:3.20
     job:
