@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ebs-csi
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - chart: aws-ebs-csi-driver
+      repoURL: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+      targetRevision: "2.29.1"
+      helm:
+        releaseName: ebs-csi
+        # valueFiles:
+        #   - $values/eks-resources/values/ebs-csi.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: master
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: kube-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=false
+    automated:
+      selfHeal: true
