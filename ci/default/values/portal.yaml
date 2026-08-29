@@ -1,5 +1,6 @@
 portal:
   # replicaCount: 2
+  enabled: false
   resources:
     limits:
       memory: 6Gi
