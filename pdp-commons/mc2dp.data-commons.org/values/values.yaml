@@ -64,7 +64,7 @@ frontend-framework:
     tag: '0.25'
 gen3-user-data-library:
   enabled: true
-  replicaCount: 2
+  replicaCount: 1
   env:
     - name: MAX_LIST_ITEMS
       value: "50000"
