@@ -23,14 +23,6 @@ fence:
     schedule: "0 0 31 2 *"
     syncFromDbgap: true
   FENCE_CONFIG_PUBLIC:
-    # Prefix to namespace Google Groups on a single Cloud Identity
-    # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_GROUP_PREFIX:
-
-    # Prefix to namespace Google Service Accounts in a single Google Cloud Platform Project.
-    # This will be dynamically replaced by env_setup.sh script.
-    GOOGLE_SERVICE_ACCOUNT_PREFIX:
-
     # This will be dynamically replaced by env_setup.sh script.
     BASE_URL: https://HOSTNAME/user
 
