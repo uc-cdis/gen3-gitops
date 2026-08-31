@@ -58,6 +58,11 @@ kube-state-metrics:
 
 grafana-alloy:
   enabled: true
+  # The chart defaults to 0.4.0, which ships Alloy v1.2.0 - older than the v1.5.0 that added
+  # pyroscope.receive_http. On v1.2.0 Alloy refuses the whole config with "cannot find the
+  # definition of component name" and crashloops, taking metrics, logs and traces down with it.
+  # Chart 1.6.2 ships Alloy v1.14.0.
+  targetRevision: "1.6.2"
   # Reads cluster-values/grafana-alloy.yaml instead of the chart's inline values, so the
   # Pyroscope receive port can be published alongside the OTLP ones. The values file is
   # pulled from configuration.configurationRepo at configurationRevision below, NOT from
