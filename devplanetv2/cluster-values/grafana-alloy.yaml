@@ -1,0 +1,50 @@
+# Values for the upstream grafana/alloy chart, used instead of the inline values in
+# gen3-helm's helm/cluster-level-resources/templates/grafana-alloy.yaml. That inline block is
+# replaced wholesale when grafana-alloy.configuration.enabled is true, so everything it set has
+# to be restated here - controller, stabilityLevel, uiPathPrefix, clustering, configMap and
+# resources are all copied verbatim from it. The only intentional difference is the pyroscope
+# port below.
+#
+# The Alloy configuration itself is not here: it comes from alloy-configmap-data in
+# cluster-values.yaml, rendered into the alloy-gen3 ConfigMap referenced under alloy.configMap.
+controller:
+  priorityClassName: 'alloy-high-priority'
+  type: "deployment"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/zone
+            operator: In
+            values:
+            - us-east-1a
+
+alloy:
+  stabilityLevel: "public-preview"
+  uiPathPrefix: /alloy
+  # -- Extra ports to expose on the Alloy container.
+  extraPorts:
+    - name: "otel-grpc"
+      port: 4317
+      targetPort: 4317
+      protocol: "TCP"
+    - name: "otel-http"
+      port: 4318
+      targetPort: 4318
+      protocol: "TCP"
+    # Profiles pushed by Pyroscope SDKs. Must match the listen_port of
+    # pyroscope.receive_http in alloy-configmap-data.
+    - name: "pyroscope"
+      port: 4040
+      targetPort: 4040
+      protocol: "TCP"
+  clustering:
+    enabled: true
+  configMap:
+    name: alloy-gen3
+    key: config
+  resources:
+    requests:
+      cpu: 1000m
+      memory: 1Gi

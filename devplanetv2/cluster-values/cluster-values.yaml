@@ -58,8 +58,17 @@ kube-state-metrics:
 
 grafana-alloy:
   enabled: true
+  # Reads cluster-values/grafana-alloy.yaml instead of the chart's inline values, so the
+  # Pyroscope receive port can be published alongside the OTLP ones. The values file is
+  # pulled from configuration.configurationRepo at configurationRevision below, NOT from
+  # the revision this file is on, so that has to be pinned explicitly while testing.
   configuration:
-    enabled: false
+    enabled: true
+
+configuration:
+  configurationRepo: https://github.com/uc-cdis/gen3-gitops
+  # TODO: back to master once feat/devplanetv2-alloy-pyroscope is merged.
+  configurationRevision: feat/devplanetv2-alloy-pyroscope
 
 karpenter:
   enabled: true
@@ -237,6 +246,27 @@ alloy-configmap-data: |
 
 
   /////////////////////// OTLP END ///////////////////////
+
+  /////////////////////// PROFILES START ///////////////////////
+
+  // Receives profiles pushed by Pyroscope SDKs embedded in services, so a
+  // service pushes to Alloy in-cluster rather than to the profiling backend
+  // directly. Authentication, tenant headers, and the cluster/project labels
+  // are applied here instead of in each application.
+  //
+  // Services point PYROSCOPE_SERVER_ADDRESS at this listener, which resolves
+  // to http://alloy.monitoring:4040 in-cluster. The port is published through
+  // alloy.extraPorts in cluster-values/grafana-alloy.yaml; changing one
+  // requires changing the other.
+  pyroscope.receive_http "default" {
+    http {
+      listen_address = "0.0.0.0"
+      listen_port    = 4040
+    }
+    forward_to = [pyroscope.write.default.receiver]
+  }
+
+  /////////////////////// PROFILES END ///////////////////////
 
   // discover all pods, to be used later in this config
   discovery.kubernetes "pods" {
@@ -655,5 +685,19 @@ alloy-configmap-data: |
     endpoint {
       url       = "https://loki3.planx-pla.net/loki/api/v1/push"
       tenant_id = "{{ .Values.cluster }}"
+    }
+  }
+
+  // pyroscope write endpoint
+  // The Pyroscope in csoc_main, reachable cross-VPC from here. Unlike Loki and
+  // Mimir it is a single replica backed by a PVC rather than S3, so treat what
+  // lands there as dev-grade and not durable.
+  pyroscope.write "default" {
+    external_labels = {
+      cluster = "{{ .Values.cluster }}",
+      project = "{{ .Values.project }}",
+    }
+    endpoint {
+      url = "https://pyroscope.planx-pla.net"
     }
   }
