@@ -42,6 +42,12 @@ alloy:
   clustering:
     enabled: true
   configMap:
+    # cluster-level-resources renders alloy-gen3 itself, from alloy-configmap-data in
+    # cluster-values.yaml. The subchart defaults to create: true and would render its own
+    # ConfigMap of the same name, silently replacing ours with a stub - and it keys that on
+    # config.alloy while the pod is started with `run /etc/alloy/config`, so the mount then
+    # resolves to nothing and Alloy exits with "no such file or directory".
+    create: false
     name: alloy-gen3
     key: config
   resources:
