@@ -1,0 +1,280 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default
+data:
+  AGENT_PORT: "8000"
+  GRADIO_PORT: "7860"
+  EMBED_PORT: "8000"
+  VLLM_PORT: "8000"
+  EMBED_MAX_CONCURRENCY: "4"
+  EMBED_BATCH_SIZE: "16"
+  VLLM_RPC_TIMEOUT: "300"
+  VLLM_USE_V1: "0"
+  LOCAL_API_URL: "http://conduit-server.default.svc.cluster.local:8080/a/m3ai/v1/"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agent-model-config
+  namespace: default
+data:
+  model-config.yaml: |
+    backends:
+      - provider: local
+        name: openai/gpt-oss-120b
+        alias: (On-Prem) GPT OSS 120B
+      # - provider: anthropic
+      #   name: claude-sonnet-4-6
+      #   alias: Claude Sonnet 4.6
+      # - provider: anthropic
+      #   name: claude-opus-4-7
+      #   alias: Claude Opus 4.7
+      # - provider: google
+      #   name: gemini-3.1-pro-preview
+      #   alias: Gemini 3.1 Pro
+      # - provider: openai
+      #   name: gpt-5.5
+      #   alias: GPT 5.5
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: embed-sapbert
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: embed-sapbert
+  template:
+    metadata:
+      labels:
+        app: embed-sapbert
+    spec:
+      imagePullSecrets:
+      - name: cdis-gen3-pull-secret
+      containers:
+        - name: embed
+          image: quay.io/cdis/cohort-copilot-vllm:cpu
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--model"
+            - "cambridgeltl/SapBERT-from-PubMedBERT-fulltext"
+            - "--port"
+            - "$(EMBED_PORT)"
+            - "--gpu-memory-utilization"
+            - "0.5"
+            - "--dtype"
+            - "float32"
+            - "--enforce-eager"
+            - "--max-num-seqs"
+            - "8"
+            - "--max-num-batched-tokens"
+            - "512"
+          envFrom:
+            - configMapRef:
+                name: app-config
+          ports:
+            - name: http
+              containerPort: 8000
+          resources:
+            requests:
+              cpu: "4"
+              memory: 6Gi
+            limits:
+              cpu: "8"
+              memory: 8Gi
+          startupProbe:
+            httpGet:
+              path: /v1/models
+              port: http
+              httpHeaders:
+                - name: Authorization
+                  value: NONE
+            periodSeconds: 5
+            failureThreshold: 120
+          readinessProbe:
+            httpGet:
+              path: /v1/models
+              port: http
+              httpHeaders:
+                - name: Authorization
+                  value: NONE
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: embed-sapbert
+  namespace: default
+spec:
+  selector:
+    app: embed-sapbert
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cohort-copilot-agent
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cohort-copilot-agent
+  template:
+    metadata:
+      labels:
+        app: cohort-copilot-agent
+    spec:
+      imagePullSecrets:
+      - name: cdis-gen3-pull-secret
+      volumes:
+        - name: model-config
+          configMap:
+            name: agent-model-config
+      initContainers:
+        - name: wait-for-embed
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              until wget -q -O /dev/null http://embed-sapbert/v1/models 2>/dev/null; do
+                sleep 2
+              done
+
+      containers:
+        - name: cohort-copilot-agent
+          image: quay.io/cdis/cohort-copilot-agent:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--port"
+            - "$(AGENT_PORT)"
+            - "--embed-api-url"
+            - "http://embed-sapbert/v1"
+            - "--model-config"
+            - "model-config.yaml"
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          volumeMounts:
+            - name: model-config
+              mountPath: /agent/src/model-config.yaml
+              subPath: model-config.yaml
+              readOnly: true
+          ports:
+            - name: http
+              containerPort: 8000
+          startupProbe:
+            httpGet:
+              path: /cohort-copilot-chat/endpoint/health
+              port: http
+              httpHeaders:
+                - name: Authorization
+                  value: NONE
+            periodSeconds: 5
+            failureThreshold: 120
+          readinessProbe:
+            httpGet:
+              path: /cohort-copilot-chat/endpoint/health
+              port: http
+              httpHeaders:
+                - name: Authorization
+                  value: NONE
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cohort-copilot-agent
+  namespace: default
+spec:
+  selector:
+    app: cohort-copilot-agent
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cohort-copilot-gradio
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cohort-copilot-gradio
+  template:
+    metadata:
+      labels:
+        app: cohort-copilot-gradio
+    spec:
+      imagePullSecrets:
+      - name: cdis-gen3-pull-secret
+      initContainers:
+        - name: wait-for-agent
+          image: busybox
+          command:
+            - sh
+            - -c
+            - |
+              until wget -q -O /dev/null http://cohort-copilot-agent/cohort-copilot-chat/endpoint/health 2>/dev/null; do
+                sleep 2
+              done
+
+      containers:
+        - name: cohort-copilot-gradio
+          image: quay.io/cdis/cohort-copilot-gradio:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--port"
+            - "$(GRADIO_PORT)"
+            - "--agent-endpoint"
+            - "http://cohort-copilot-agent/cohort-copilot-chat/endpoint"
+          envFrom:
+            - configMapRef:
+                name: app-config
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+          ports:
+            - name: http
+              containerPort: 7860
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cohort-copilot-gradio
+  namespace: default
+spec:
+  selector:
+    app: cohort-copilot-gradio
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  type: ClusterIP
