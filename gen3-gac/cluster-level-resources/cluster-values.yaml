@@ -1,17 +1,21 @@
-cluster: healprod
-project: heal
-accountNumber: "205252583234"
+cluster: "gen3-gac"
+
+accountNumber: "467765330347"
 
 alb-controller:
   enabled: true
   configuration:
     enabled: false
 
+grafana-alloy:
+  enabled: true
+  configuration:
+    enabled: false
+
 aws-s3-mountpoint:
   enabled: true
-  targetRevision: "1.11.0"
   configuration:
-    enabled: true
+    enabled: false
 
 calico:
   enabled: true
@@ -26,6 +30,9 @@ coreDNS:
   configuration:
     enabled: false
 
+custom-objects:
+  enabled: true
+
 ebs-csi-driver:
   enabled: true
   configuration:
@@ -38,7 +45,7 @@ external-secrets:
     enabled: false
 
 fluentd:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 
@@ -47,19 +54,21 @@ kube-state-metrics:
   configuration:
     enabled: false
 
-grafana-alloy:
+metrics-server:
   enabled: true
+  targetRevision: "3.13.0"
+  hostNetworkEnabled: false
   configuration:
     enabled: false
 
 karpenter:
   enabled: true
-  targetRevision: "1.9.0"
+  targetRevision: "1.8.6"
 
 karpenter-crds:
   amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
-  selectorTag: healprod
+  selectorTag: gen3-gac
   migration: true
   default:
     disruptionBudget: "80%"
@@ -72,7 +81,7 @@ karpenter-crds:
       memory: 1100Gi
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "1m"
-    expireAfter: "72h"
+    expireAfter: "96h"
     volumeSize: 80Gi
     requirements:
       - key: karpenter.sh/capacity-type
@@ -84,27 +93,42 @@ karpenter-crds:
         values:
           - amd64
       - key: karpenter.k8s.aws/instance-memory
-        operator: Gt
-        values:
-          - "7000"
-      - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:
           - "32500"
+  gpu:
+    enabled: true
+    consolidation: true
+    consolidateAfter: "30s"
+    consolidationPolicy: "WhenEmpty"
+    expireAfter: "168h"
+    volumeSize: 50Gi
+    additionalTags: {}
   workflow:
+    enabled: false
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
-    volumeSize: 80Gi
+    volumeSize: 50Gi
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "10m"
   jupyter:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
       kind: EC2NodeClass
       name: jupyter
     amiFamily: AL2023
-    volumeSize: 80Gi
+    volumeSize: 50Gi
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
+    consolidateAfter: "10m"
+
+nvidia-device-plugin:
+  enabled: true
+  configuration:
+    enabled: false
+  targetRevision: v0.18.0
 
 vpc-cni:
   enabled: true
