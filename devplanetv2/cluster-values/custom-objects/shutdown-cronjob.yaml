@@ -66,6 +66,7 @@ spec:
                 name: shutdown-blacklist
               name: shutdown-blacklist
       ttlSecondsAfterFinished: 3600
-  schedule: 0 23 * * *
+  timeZone: America/Chicago
+  schedule: "0 20 * * *"
   successfulJobsHistoryLimit: 3
   suspend: false

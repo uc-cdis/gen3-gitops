@@ -1,0 +1,31 @@
+{
+  "tools": [
+    {
+      "title": "Canine Data Commons Data Visualization Notebook",
+      "type": "notebook",
+      "icon": "/images/apps/icons/jupyter.svg",
+      "image": "/images/apps/canineDataCommons.png",
+      "description": "Download node files, show/select data, and plot with this notebook using data hosted on the Canine Data Commons (https://caninedc.org) stored under the NHGRI project.",
+      "loginRequired": false,
+      "href": "/notebook/notebook_canine.ipynb"
+    },
+    {
+      "title": "Clinical Data Analysis",
+      "type": "application",
+      "icon": "/images/apps/icons/gen3_app.png",
+      "image": "/images/apps/ClinicalData.png",
+      "description": "Use clinical variables to perform basic statistical analysis of your cohort.",
+      "loginRequired": false,
+      "href": "ClinicalDataAnalysis"
+    },
+    {
+      "title": "IGV BAM Viewer",
+      "type": "application",
+      "icon": "/images/apps/icons/gen3_app.png",
+      "image": "/images/apps/igv_logo.png",
+      "description": "Select and view data commons BAM files in the IGV browser.",
+      "loginRequired": false,
+      "href": "app/IGVBamViewer?mode=app"
+    }
+  ]
+}

@@ -1,12 +1,13 @@
 ambassador:
-  jupyterNamespace: "jupyter-pods"
+  enabled: false
+  jupyterNamespace: jupyter-pods
   replicaCount: 2
 arborist:
   replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.04'
+    tag: '2026.07'
 audit:
   replicaCount: 2
   externalSecrets:
@@ -14,13 +15,12 @@ audit:
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--audit-sqs-receiver
-aws-es-proxy:
+  image:
+    tag: '2026.07'
+aws-sigv4-proxy:
   enabled: true
   replicaCount: 2
   esEndpoint: vpc-pdp-commons-gen3-metadata-2-uxeiendqin66xtsv6p4h3upv5u.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 dashboard:
   dashboardConfig:
     bucket: dashboard-851725307933-pdp-commons-gen3
@@ -28,11 +28,10 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.04'
+    tag: '2026.07'
   podSecurityContext:
     fsGroup: 1001
-  securityContext:
-    {}
+  securityContext: {}
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--dashboard-access
@@ -48,10 +47,10 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.07'
+    tag: '13.3.0'
   usersync:
     usersync: true
-    userYamlS3Path: s3://cdis-gen3-users/pdp/user.yaml
+    userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
 fluentd:
   enabled: true
   image:
@@ -62,13 +61,16 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: 0.07
+    tag: '0.25'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
+  env:
+    - name: MAX_LIST_ITEMS
+      value: "50000"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: main
+    tag: '2026.07'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
@@ -83,126 +85,150 @@ global:
       enabled: true
       roleArn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--external-secrets-sa
     wafv2:
-      # -- (bool) Set to true if using AWS WAFv2
       enabled: true
-      # -- (string) ARN for the WAFv2 ACL.
       wafAclArn: arn:aws:wafv2:us-east-1:851725307933:regional/webacl/pdp-commons-waf/9609720f-857d-4033-bf1f-2e9e9665a638
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
   environment: pdp-commons
   externalSecrets:
     deploy: true
     createSlackWebhookSecret: true
-    slackWebhookSecretName: "pdp-commons-slack-webhook"
+    slackWebhookSecretName: pdp-commons-slack-webhook
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
   fenceURL: https://mc2dp.data-commons.org/user
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
-  publicDataSets: true
+  publicDataSets: false
   tierAccessLevel: libre
   tierAccessLimit: 50
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: pdp-commons-aurora-master-password
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
 
+gen3-embeddings:
+  enabled: true
+  debug: true
+  replicaCount: 2
+  postgres:
+    dbCreate: true
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: 0.1.1
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: false
+    pushSecret: false
+    dbcreds: "pdp-commons-embedding-management-service-creds"
+
 guppy:
+  replicaCount: 4
   configIndex: pdp-commons-commons-config-index
   enabled: true
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2025.04'
+    tag: '2026.07'
   indices:
-  - index: pdp-commons-commons-index
-    type: metadata
+    - index: pdp-commons-commons-index
+      type: metadata
 hatchery:
   enabled: true
-  # Enable hot nodes for workspaces
   hotNode:
     enabled: false
+    gpu: false
+    jupyter: true
 
+    availabilityZones:
+      - us-east-1d
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      memory: "17Gi"
+      cpu: 5
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2025.04'
+    tag: '2.9.2'
   hatchery:
     json: |
-        {
-            "user-namespace": "jupyter-pods",
-            "sub-dir": "/lw-workspace",
-            "user-volume-size": "10Gi",
-            "default-pay-model": {
-                "workspace_type": "Trial Workspace",
-                "local": true
-            },
-            "sidecar": {
-                "cpu-limit": "1.0",
-                "memory-limit": "256Mi",
-                "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2025.03",
-                "env": {
-                    "NAMESPACE": "default",
-                    "HOSTNAME": "mc2dp.data-commons.org"
-                },
-                "args": [],
-                "command": [
-                    "/bin/bash",
-                    "./sidecar.sh"
-                ],
-                "lifecycle-pre-stop": [
-                    "su",
-                    "-c",
-                    "echo test",
-                    "-s",
-                    "/bin/sh",
-                    "root"
-                ]
-            },
-            "containers": [
-                {
-                    "target-port": 8888,
-                    "cpu-limit": "1.0",
-                    "memory-limit": "4Gi",
-                    "name": "(Generic) Jupyter Lab Notebook with R Kernel",
-                    "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
-                    "env": {
-                        "FRAME_ANCESTORS": "https://mc2dp.data-commons.org"
-                    },
-                    "args": [
-                        "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-                        "--JupyterNotebookApp.default_url=/lab",
-                        "--JupyterNotebookApp.password=''",
-                        "--JupyterNotebookApp.token=''",
-                        "--JupyterNotebookApp.ip='*'",
-                        "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-                        "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-                        "--JupyterNotebookApp.quit_button=False"
-                    ],
-                    "command": [
-                        "start-notebook.sh"
-                    ],
-                    "path-rewrite": "/lw-workspace/proxy/",
-                    "use-tls": "false",
-                    "ready-probe": "/lw-workspace/proxy/",
-                    "lifecycle-post-start": [
-                        "/bin/sh",
-                        "-c",
-                        "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
-                    ],
-                    "user-uid": 1010,
-                    "fs-gid": 101,
-                    "user-volume-location": "/home/jovyan/pd",
-                    "gen3-volume-location": "/home/jovyan/.gen3"
-                }
-            ]
-        }
+      {
+          "user-namespace": "jupyter-pods",
+          "sub-dir": "/lw-workspace",
+          "user-volume-size": "10Gi",
+          "shared-workspace": {
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+          },
+          "default-pay-model": {
+              "workspace_type": "Trial Workspace",
+              "local": true
+          },
+          "sidecar": {
+              "cpu-limit": "1.0",
+              "memory-limit": "256Mi",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.03",
+              "env": {
+                  "NAMESPACE": "default",
+                  "HOSTNAME": "mc2dp.data-commons.org"
+              },
+              "args": [],
+              "command": [
+                  "/bin/bash",
+                  "./sidecar.sh"
+              ],
+              "lifecycle-pre-stop": [
+                  "su",
+                  "-c",
+                  "echo test",
+                  "-s",
+                  "/bin/sh",
+                  "root"
+              ]
+          },
+          "containers": [
+            {
+              "target-port": 8888,
+              "cpu-limit": "1.0",
+              "memory-limit": "1Gi",
+              "name": "RCC pilot",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-feat_rcc-r-packages",
+              "pull_policy": "Always",
+              "env": {
+                "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+                "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+              },
+              "command": [
+                "start-notebook.sh"
+              ],
+              "args": [
+                "--ServerApp.base_url=/lw-workspace/proxy/",
+                "--ServerApp.default_url=/lab",
+                "--ServerApp.password=''",
+                "--ServerApp.token=''",
+                "--ServerApp.ip='*'",
+                "--ServerApp.disable_check_xsrf=True",
+                "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+                "--ServerApp.root_dir='/home/jovyan'",
+                "--ServerApp.shutdown_no_activity_timeout=5400",
+                "--ServerApp.quit_button=False",
+                "--FileContentsManager.always_delete_dir=True"
+              ],
+              "path-rewrite": "/lw-workspace/proxy/",
+              "use-tls": "false",
+              "ready-probe": "/lw-workspace/proxy/lab",
+              "user-uid": 1010,
+              "fs-gid": 101,
+              "user-volume-location": "/home/jovyan/pd",
+              "gen3-volume-location": "/home/jovyan/.gen3"
+            }
+          ]
+      }
 indexd:
   replicaCount: 2
   enabled: true
@@ -210,7 +236,7 @@ indexd:
     serviceCreds: pdp-commons-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.04'
+    tag: '2026.07'
 manifestservice:
   replicaCount: 2
   enabled: true
@@ -218,291 +244,297 @@ manifestservice:
     manifestserviceG3auto: pdp-commons-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.04'
+    tag: '2026.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::851725307933:role/pdp-commons--pdp-commons-helm--manifest-service-sa
 metadata:
   aggMdsConfig: |-
-   {
-        "configuration": {
-            "schema": {
-                "_subjects_count": {
-                    "type": "integer"
-                },
-                "_manifest": {
-                    "type": "array",
-                    "properties": {
-                        "file_name": {
-                            "type": "string"
-                        },
-                        "file_size": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "tags": {
-                    "type": "array"
-                },
-                "advSearchFilters": {
-                    "type": "array",
-                "properties": {
-                        "key": {
-                            "type": "string"
-                        },
-                        "value": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "_unique_id": {},
-                "study_description": {},
-                "study_id": {},
-                "study_url": {},
-                "project_id": {},
-                "short_name": {},
-                "full_name": {},
-                "commons_url": {},
-                "commons": {},
-                "data_source": {},
-                "disease_type": {},
-                "primary_site": {},
-                "authz": {},
-                "subject_id": {},
-                "subject_id_list": {},
-                "subject_apollo_id": {},
-                "subject_race": {},
-                "subject_gender": {},
-                "subject_ethnicity": {},
-                "subject_metastasis": {},
-                "subject_cancer_type": {},
-                "subject_cancer_grade": {},
-                "subject_cancer_stage": {},
-                "subject_year_of_birth": {},
-                "subject_primary_disease": {},
-                "subject_type_of_exposure": {},
-                "subject_type_of_exposures": {},
-                "subject_chemical_agents_of_exposure": {},
-                "subject_run_id": {},
-                "subject_class": {},
-                "subject_group": {},
-                "subject_project": {},
-                "subject_rundate": {},
-                "subject_exp_target": {},
-                "subject_ionization": {},
-                "subject_chromatography": {},
-                "subject_plate": {},
-                "subject_injection": {},
-                "subject_plate_position": {},
-                "mc2dp_global_id": {},
-                "data_source_project" : {},
-                 "data_files": {
+    {
+         "configuration": {
+             "schema": {
+                 "_subjects_count": {
+                     "type": "integer"
+                 },
+                 "_manifest": {
                      "type": "array",
-                     "properties" : {
-                       "file_data_size": {
-                         "type": "integer"
-                       }
+                     "properties": {
+                         "file_name": {
+                             "type": "string"
+                         },
+                         "file_size": {
+                             "type": "integer"
+                         }
                      }
                  },
-                "filesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
+                 "tags": {
+                     "type": "array"
+                 },
+                 "advSearchFilters": {
+                     "type": "array",
+                 "properties": {
+                         "key": {
+                             "type": "string"
+                         },
+                         "value": {
+                             "type": "string"
+                         }
+                     }
+                 },
+                 "_unique_id": {},
+                 "study_description": {},
+                 "study_id": {},
+                 "study_url": {},
+                 "project_id": {},
+                 "short_name": {},
+                 "full_name": {},
+                 "commons_url": {},
+                 "commons": {},
+                 "data_source": {},
+                 "disease_type": {},
+                 "primary_site": {},
+                 "authz": {},
+                 "subject_id": {},
+                 "subject_id_list": {},
+                 "subject_apollo_id": {},
+                 "subject_race": {},
+                 "subject_gender": {},
+                 "subject_ethnicity": {},
+                 "subject_metastasis": {},
+                 "subject_cancer_type": {},
+                 "subject_cancer_grade": {},
+                 "subject_cancer_stage": {},
+                 "subject_year_of_birth": {},
+                 "subject_primary_disease": {},
+                 "subject_type_of_exposure": {},
+                 "subject_type_of_exposures": {},
+                 "subject_chemical_agents_of_exposure": {},
+                 "subject_run_id": {},
+                 "subject_class": {},
+                 "subject_group": {},
+                 "subject_project": {},
+                 "subject_rundate": {},
+                 "subject_exp_target": {},
+                 "subject_ionization": {},
+                 "subject_chromatography": {},
+                 "subject_plate": {},
+                 "subject_injection": {},
+                 "subject_plate_position": {},
+                 "mc2dp_global_id": {},
+                 "data_source_project" : {},
+                 "is_synthetic" : {},
+                 "is_data_files" : {},
+                  "data_files": {
+                      "type": "array",
+                      "properties" : {
+                        "file_data_size": {
+                          "type": "integer"
                         }
-                    }
-                },
-                "versions": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "number": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "supplementaryFilesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
-                        }
-                    }
-                },
-                "nonSupplementaryFilesCount": {
-                    "type": "array",
-                    "properties": {
-                        "_typename": {
-                            "type": "string"
-                        },
-                        "data_category": {
-                            "type": "string"
-                        },
-                        "file_type": {
-                            "type": "string"
-                        },
-                        "files_count": {
-                            "type": "integer"
-                        }
-                    }
-                }
-            },
-            "settings": {
-                "cache_drs": true,
-                "array_config_prefix": "gen3_discovery"
-            }
-        },
-        "adapter_commons": {
-            "aggregated-subject-level-metadata": {
-                "mds_url": "https://externalgen3.prometheus.data-commons.org/",
-                "commons_url": "externalgen3.prometheus.data-commons.org",
-                "adapter": "gen3",
-                "config": {
-                    "guid_type": "aggmds_metadata_entry",
-                    "study_field": "gen3_discovery"
-                },
-                "keep_original_fields": false,
-                "field_mappings": {
-                    "authz": "",
-                    "tags": "path:tags",
-                    "_unique_id": "path:mc2dp_global_id",
-                    "commons": "path:data_source",
-                    "subject_id_list": "path:values_of_data_source_ids",
-                    "subject_metastasis": "path:metastasis",
-                    "subject_cancer_type": "path:cancer_type",
-                    "data_source_project" : "path:data_source_project",
-                    "subject_cancer_grade": {
-                        "path": "cancer_grade",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                                "grade i": "I",
-                                "grade ii": "II",
-                                "grade iii": "III",
-                                "grade iv": "IV",
-                                "unknown" : "Unknown"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_cancer_stage" :  {
-                        "path": "cancer_stage",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "ia": "IA",
-                              "ib": "IB",
-                              "iia": "IIA",
-                              "iib": "IIB",
-                              "iiia": "IIIA",
-                              "iiib": "IIIB",
-                              "iiic": "IIIC",
-                              "iva": "IVA",
-                              "ivc": "IVC",
-                              "i": "I",
-                              "ii": "II",
-                              "iii": "III",
-                              "iv": "IV",
-                              "0": "0",
-                              "0a": "0A",
-                              "unknown": "Unknown"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_primary_disease": "path:primary_disease",
-                    "subject_type_of_exposures": "path:values_of_exposures",
-                    "subject_ethnicity": {
-                        "path": "ethnicity",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "spanish/hispanic/latino (of any race)": "Hispanic or Latino",
-                              "not hispanic or latino": "Not Hispanic or Latino",
-                              "hispanic or latino": "Hispanic or Latino",
-                              "unknown": "Unknown",
-                              "not available": "Declined to Answer",
-                              "declined to answer": "Declined to Answer",
-                              "not hispanic or latino, declined to answer": "Not Hispanic or Latino / Declined to Answer",
-                              "not reported / unknown": "Unknown"
-                          }
-                        },
-                        "default": ""
-                    },
-                    "subject_gender": {
-                        "path": "biological_sex",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                                "male": "Male",
-                                "female": "Female",
-                                "female, male" : "Female, Male",
-                                "male, female" : "Male, Female",
-                                "not reported": "Not Reported",
-                                "Not Reported": "Not Reported"
-                            }
-                        },
-                        "default": ""
-                    },
-                    "subject_race": {
-                        "path": "race",
-                        "filters": [
-                            "normalize_value"
-                        ],
-                        "filterParams": {
-                            "normalize_value": {
-                              "black or african american": "Black or African American",
-                              "american indian / alaskan native": "American Indian / Alaskan Native",
-                              "black or african american; white": "Black or African American / White",
-                              "black or african american; white; other(mixed)": "Black or African American / White / Other",
-                              "not available": "Not Reported",
-                              "native hawaiian or other pacific islander": "Native Hawaiian or Other Pacific Islander",
-                              "asian": "Asian",
-                              "not reported, white": "Declined to Answer, White",
-                              "declined to answer": "Declined to Answer",
-                              "asian; black or african american": "Asian / Black or African American",
-                              "white": "White"
-                          }
-                        },
-                        "default": ""
-                    },
-                    "data_source": "path:data_source",
-                    "commons_url": "",
-                    "mc2dp_global_id": "path:mc2dp_global_id",
-                    "is_synthetic": "path:is_synthetic",
-                    "data_files": "path:data_type"
-                }
-            }
-        }
-    }
+                      }
+                  },
+                 "filesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 },
+                 "versions": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "number": {
+                             "type": "string"
+                         }
+                     }
+                 },
+                 "supplementaryFilesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 },
+                 "nonSupplementaryFilesCount": {
+                     "type": "array",
+                     "properties": {
+                         "_typename": {
+                             "type": "string"
+                         },
+                         "data_category": {
+                             "type": "string"
+                         },
+                         "file_type": {
+                             "type": "string"
+                         },
+                         "files_count": {
+                             "type": "integer"
+                         }
+                     }
+                 }
+             },
+             "settings": {
+                 "cache_drs": true,
+                 "array_config_prefix": "gen3_discovery"
+             }
+         },
+         "adapter_commons": {
+             "aggregated-subject-level-metadata": {
+                 "mds_url": "https://externalgen3.prometheus.data-commons.org/",
+                 "commons_url": "externalgen3.prometheus.data-commons.org",
+                 "adapter": "gen3",
+                 "config": {
+                     "guid_type": "aggmds_metadata_entry",
+                     "study_field": "gen3_discovery",
+                     "batchSize": 100
+                 },
+                 "keep_original_fields": false,
+                 "field_mappings": {
+                     "authz": {
+                        "type": "string",
+                        "default" : "/open"
+                     },
+                     "tags": "path:tags",
+                     "_unique_id": "path:mc2dp_global_id",
+                     "commons": "path:data_source",
+                     "subject_id_list": "path:values_of_data_source_ids",
+                     "subject_metastasis": "path:metastasis",
+                     "subject_cancer_type": "path:cancer_type",
+                     "data_source_project" : "path:data_source_project",
+                     "subject_cancer_grade": {
+                         "path": "cancer_grade",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                                 "grade i": "I",
+                                 "grade ii": "II",
+                                 "grade iii": "III",
+                                 "grade iv": "IV",
+                                 "unknown" : "Unknown"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_cancer_stage" :  {
+                         "path": "cancer_stage",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "ia": "IA",
+                               "ib": "IB",
+                               "iia": "IIA",
+                               "iib": "IIB",
+                               "iiia": "IIIA",
+                               "iiib": "IIIB",
+                               "iiic": "IIIC",
+                               "iva": "IVA",
+                               "ivc": "IVC",
+                               "i": "I",
+                               "ii": "II",
+                               "iii": "III",
+                               "iv": "IV",
+                               "0": "0",
+                               "0a": "0A",
+                               "unknown": "Unknown"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_primary_disease": "path:primary_disease",
+                     "subject_type_of_exposures": "path:values_of_exposures",
+                     "subject_ethnicity": {
+                         "path": "ethnicity",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "spanish/hispanic/latino (of any race)": "Hispanic or Latino",
+                               "not hispanic or latino": "Not Hispanic or Latino",
+                               "hispanic or latino": "Hispanic or Latino",
+                               "unknown": "Unknown",
+                               "not available": "Declined to Answer",
+                               "declined to answer": "Declined to Answer",
+                               "not hispanic or latino, declined to answer": "Not Hispanic or Latino / Declined to Answer",
+                               "not reported / unknown": "Unknown"
+                           }
+                         },
+                         "default": ""
+                     },
+                     "subject_gender": {
+                         "path": "biological_sex",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                                 "male": "Male",
+                                 "female": "Female",
+                                 "female, male" : "Female, Male",
+                                 "male, female" : "Male, Female",
+                                 "not reported": "Not Reported",
+                                 "Not Reported": "Not Reported"
+                             }
+                         },
+                         "default": ""
+                     },
+                     "subject_race": {
+                         "path": "race",
+                         "filters": [
+                             "normalize_value"
+                         ],
+                         "filterParams": {
+                             "normalize_value": {
+                               "black or african american": "Black or African American",
+                               "american indian / alaskan native": "American Indian / Alaskan Native",
+                               "black or african american; white": "Black or African American / White",
+                               "black or african american; white; other(mixed)": "Black or African American / White / Other",
+                               "not available": "Not Reported",
+                               "native hawaiian or other pacific islander": "Native Hawaiian or Other Pacific Islander",
+                               "asian": "Asian",
+                               "not reported, white": "Declined to Answer, White",
+                               "declined to answer": "Declined to Answer",
+                               "asian; black or african american": "Asian / Black or African American",
+                               "white": "White"
+                           }
+                         },
+                         "default": ""
+                     },
+                     "data_source": "path:data_source",
+                     "commons_url": "",
+                     "mc2dp_global_id": "path:mc2dp_global_id",
+                     "is_synthetic": "path:is_synthetic",
+                     "is_data_files" : "path:is_data_files"
+                 }
+             }
+         }
+     }
   aggMdsNamespace: pdp-commons
   enabled: true
   esEndpoint: http://elasticsearch:9200
@@ -520,29 +552,227 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.04'
+    tag: '2026.07'
 portal:
   enabled: false
-
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2025.04'
+    tag: '2026.07'
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2025.04'
+    tag: '2026.07'
   ingress:
     aws:
       group: pdp-commons
+  additionalConfigs:
+    # NOTE: /search/* is not exposed directly by nginx; /guppy/* rewrites to
+    # /search/* on API Gateway, where the custom authorizer enforces access.
+    workspace-api.conf: |-
+      # Free tier is static JupyterLite assets rendered in-browser (WASM only).
+      # Do not gate these files on workspace launch authz checks.
+      location ^~ /api/workspace-assets/free/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-URL-SCHEME https;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+        client_max_body_size 0;
+        proxy_read_timeout 600s;
+      }
+
+      location ^~ /workspace-api/workspace-assets/free/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # Remote JupyterLite assets served by workspace-proxy (no auth gate — static files).
+      location ^~ /api/workspace-assets/remote/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-URL-SCHEME https;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+        client_max_body_size 0;
+        proxy_read_timeout 600s;
+      }
+
+      location ^~ /workspace-api/workspace-assets/remote/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # Workspace API routes (hatchery options/status/launch, gateway, kernel) are
+      # handled by the vectis Next.js app API routes — NOT workspace-proxy.
+      # Next.js rewrites /workspace-api/:path* → /api/:path* internally.
+      location ^~ /workspace-api/workspace/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request /gen3-authz;
+          error_page 403 = @errorworkspace;
+          set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+
+      # JupyterLab kernel tunnel (workspace-proxy handles per-user routing).
+      location ^~ /workspace-api/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request /gen3-authz;
+          error_page 403 = @errorworkspace;
+          set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+          rewrite ^/workspace-api/(.*) /api/$1 break;
+          proxy_pass $upstream;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Host $host;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 600s;
+      }
+    ambassador-service.conf: |-
+      location = /lw-workspace/proxy {
+        return 308 $scheme://$http_host/lw-workspace/proxy/;
+      }
+
+      location /lw-workspace/proxy/ {
+          set $authz_resource "/workspace";
+          set $authz_method "access";
+          set $authz_service "jupyterhub";
+          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+          auth_request /gen3-authz;
+
+          if ($saved_set_cookie != "") {
+              add_header Set-Cookie $saved_set_cookie always;
+          }
+          add_header Cache-Control "no-store";
+
+          proxy_set_header REMOTE_USER $remoteUser;
+          error_page 403 = @errorworkspace;
+
+          set $proxy_service  "workspace-proxy";
+          set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+          rewrite ^/lw-workspace/proxy/$ /lab break;
+          rewrite ^/lw-workspace/proxy/(.*) /$1 break;
+          proxy_pass $upstream;
+          proxy_redirect http://$host/ https://$host/lw-workspace/proxy/;
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection $connection_upgrade;
+          proxy_set_header X-URL-SCHEME https;
+          client_max_body_size 0;
+          proxy_read_timeout 36000s;
+      }
+
+
 sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.04'
+    tag: '2026.07'
   replicaCount: 2
 ssjdispatcher:
   enabled: false
@@ -550,8 +780,8 @@ ssjdispatcher:
     credsFile: pdp-commons-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.04'
-  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2025.04
+    tag: '2026.07'
+  indexing: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexs3client:2026.07
 wts:
   enabled: true
   replicaCount: 2
@@ -561,4 +791,119 @@ wts:
     wtsOidcClient: pdp-commons-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.04'
+    tag: '2026.07'
+workspace-proxy:
+  enabled: true
+  deploymentNamespace: pdp-commons-helm
+  workspaceNamespace: jupyter-pods
+  kubernetesApiServerCIDRs:
+    - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
+    - "172.27.140.0/22"     # EKS private subnet (DHCP)
+    - "172.27.136.0/22"     # EKS private subnet (DHCP)
+    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: 0.0.1
+    pullPolicy: Always
+
+  listenAddr: ":8080"
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+        "python_kubernetes",
+        "python_tensorflow_kubernetes",
+        "python_tensorflow_gpu_kubernetes"
+      ]
+    }
+
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  networkPolicy:
+    enabled: false
+
+jeg:
+  enabled: true
+  workspaceNamespace: jupyter-pods
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/gen3-vectis
+    tag: "qa-jegv2"
+    pullPolicy: Always
+
+  env:
+    # CRITICAL: must match hatchery user-namespace and workspace-proxy WORKSPACE_NAMESPACE.
+    EG_NAMESPACE: jupyter-pods
+    EG_KERNEL_LAUNCH_TIMEOUT: "120"
+    EG_MAX_KERNELS_PER_USER: "2"
+    EG_CULL_IDLE_TIMEOUT: "14400"
+    EG_CULL_CONNECTED: "True"
+    EG_AUTH_TOKEN: ""
+    EG_DEFAULT_KERNEL_NAME: python3
+    EG_LIST_KERNELS: "True"
+    EG_KERNEL_IMAGE_PULL_POLICY: IfNotPresent
+    EG_SHARED_NAMESPACE: "True"
+    EG_MIRROR_WORKING_DIRS: "False"
+    EG_KERNEL_SPEC_POLICY: |
+      {
+        "default_kernel_name": "python3",
+        "kernel_specs": {
+          "python3": {
+            "display_name": "Python (Micro — Local)",
+            "language": "python"
+          },
+          "python_kubernetes": {
+            "display_name": "Python on Kubernetes (4Gi, 2 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow (4Gi, 1 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "1",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_gpu_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow with GPUs (8Gi, 2 cpu, gpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "8Gi",
+              "gpu_type": "NVIDIA"
+            }
+          },
+          "r_kubernetes": {
+            "display_name": "R on Kubernetes",
+            "language": "r",
+            "image_name": "elyra/kernel-r:latest"
+          }
+        }
+      }
+
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
