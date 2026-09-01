@@ -15,7 +15,11 @@ aws-s3-mountpoint:
   enabled: true
   configuration:
     enabled: false
-
+    
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
+  
 calico:
   enabled: true
   configuration:

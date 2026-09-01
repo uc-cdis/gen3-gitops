@@ -1,7 +1,9 @@
 global:
+  pdb: true
   aws:
     enabled: true
     account: "837801696852"
+    awsEsProxyRole: gen3-service/gen3-ai-esproxy-sa
     hatchery_role: "arn:aws:iam::837801696852:role/gen3-service/gen3-ai-default-hatchery-sa"
     secretStoreServiceAccount:
       enabled: true
@@ -9,12 +11,12 @@ global:
       roleArn: "arn:aws:iam::837801696852:role/gen3_service/gen3-ai-default-external-secrets-sa"
     wafv2:
       enabled: true
-      wafAclArn: ""
+      wafAclArn: "arn:aws:wafv2:us-east-1:837801696852:regional/webacl/gen3-ai-waf/5a4e71a9-a34e-45a8-9e05-b60e873424b9"
   dev: false
   externalSecrets:
     deploy: true
   postgres:
-    dbCreate: true
+    dbCreate: false
     externalSecret: "gen3-ai-aurora-master-password"
   environment: "gen3-ai"
   hostname: "m3aicommons.org"
@@ -36,12 +38,15 @@ global:
   ddEnabled: false
 
 ambassador:
+  replicaCount: 2
   enabled: true
   jupyterNamespace: jupyter-pods-default
 
 arborist:
   replicaCount: 3
   enabled: true
+  image:
+    tag: '2026.07'
   externalSecrets:
     dbcreds: "gen3-ai-default-arborist-creds"
 
@@ -49,6 +54,7 @@ argo-wrapper:
   enabled: false
 
 audit:
+  replicaCount: 2
   enabled: true
   serviceAccount:
     annotations:
@@ -57,43 +63,29 @@ audit:
     dbcreds: "gen3-ai-default-audit-creds"
     createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
+  replicaCount: 2
   enabled: true
-  esEndpoint: ""
   externalSecrets:
     awsCreds: "gen3-ai-default-aws-es-proxy-creds"
+  esEndpoint: vpc-gen3-ai-gen3-metadata-wcqwdpwxzoz3fpseni55ugqq6u.us-east-1.es.amazonaws.com
 
 dicom-server:
+  replicaCount: 2
   enabled: false
   externalSecrets:
     dbcreds: "gen3-ai-default-dicom-server-creds"
 
 dicom-viewer:
+  replicaCount: 2
   enabled: false
   externalSecrets:
     dbcreds: "gen3-ai-default-dicom-viewer-creds"
 
-embedding-management-service:
-  enabled: true
-  embeddingsConfig: |
-    {
-      "expr": 256,
-      "hist": 1536,
-      "summ": 4096,
-      "text": 4096,
-      "img_embed": 512,
-      "img_proj": 128
-    }
-
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
-    tag: feat_service
-    pullPolicy: Always
-
 fence:
   replicaCount: 3
   image:
-    tag: feat_embedding-vectors
+    tag: 13.2.0
   enabled: true
   serviceAccount:
     annotations:
@@ -101,6 +93,13 @@ fence:
 
   FENCE_CONFIG_PUBLIC:
     OVERRIDE_NGINX_RATE_LIMIT: 36
+    ALLOWED_GEN3_EMBEDDINGS_BULK_URL_PREFIXES:
+      - https://m3aicommons.org/ai/
+    GEN3_EMBEDDINGS_API_REGEX: '/vectorstore/collections/(?P<collection_name>[^/]+)/embeddings/(?P<embedding_uuid>[^/]+)'
+    MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+    LOGIN_REDIRECT_WHITELIST:
+    - https://genomicaicommons.org
+
 
   externalSecrets:
     fenceJwtKeys: "gen3-ai-default-fence-jwt-keys"
@@ -119,18 +118,40 @@ fence:
     slack_send_dbgap: false
 
 frontend-framework:
+  replicaCount: 2
   enabled: true
+  env:
+    DATADOG_APPLICATION_ID: "c4c25361-631e-4060-a25a-c6bfb33649af"
+    DATADOG_CLIENT_TOKEN: "pub4694a081d6427ac70a0188eae7a6fbba"
+    DATADOG_SITE: "ddog-gov.com"
+    DATACOMMONS: "M3AI"
   image:
     repository: "quay.io/cdis/cac-data-commons"
-    tag: "main"
+    tag: "chore_migration"
+
+gen3-embeddings:
+  enabled: true
+  replicaCount: 2
+  postgres:
+    dbCreate: false
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: main
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
+    dbcreds: "gen3-ai-default-gen3-embeddings-creds"
 
 grafana:
   enabled: false
 
 guppy:
+  replicaCount: 2
   enabled: false
 
 hatchery:
+  replicaCount: 2
   enabled: true
   image:
     tag: feat_gpu-support
@@ -200,7 +221,7 @@ hatchery:
             },
             "fs-gid": 100,
             "gen3-volume-location": "/home/jovyan/.gen3",
-            "image": "quay.io/cdis/label-boosted-rag-for-rrg:jupyter-docker",
+            "image": "quay.io/cdis/m3ai-demos:master",
             "pull_policy": "Always",
             "lifecycle-post-start": [
               "/bin/sh",
@@ -220,6 +241,7 @@ hatchery:
       }
 
 indexd:
+  replicaCount: 2
   enabled: true
   defaultPrefix: "dg.XXXX/"
   externalSecrets:
@@ -227,6 +249,7 @@ indexd:
     createK8sServiceCredsSecret: true
 
 manifestservice:
+  replicaCount: 2
   enabled: true
   manifestserviceG3auto:
     hostname: m3aicommons.org
@@ -241,12 +264,14 @@ manifestservice:
     createK8sManifestServiceSecret: true
 
 metadata:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: "gen3-ai-default-metadata-creds"
     createK8sMetadataSecret: true
 
 peregrine:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: "gen3-ai-default-sheepdg-creds"
@@ -263,10 +288,48 @@ requestor:
     dbcreds: "gen3-ai-default-requestor-creds"
 
 revproxy:
-  replicas: 3
+  replicaCount: 3
   enabled: true
+  extraServices:
+  - name: "cohort-copilot"
+    path: /cohort-copilot
+    serviceName: cohort-copilot-gradio
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
+  - name: "cohort-copilot-chat"
+    path: /cohort-copilot-chat
+    serviceName: cohort-copilot-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
+  - name: "agent"
+    path: /qag
+    serviceName: qag-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
 
 sheepdog:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: "gen3-ai-default-sheepdog-creds"
@@ -278,6 +341,7 @@ sower:
   enabled: false
 
 wts:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: "gen3-ai-default-wts-creds"

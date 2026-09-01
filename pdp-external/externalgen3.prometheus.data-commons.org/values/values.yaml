@@ -1,4 +1,5 @@
 global:
+  pdb: true
   aws:
     enabled: true
     account: 637423560817
@@ -15,14 +16,14 @@ global:
   dev: false
   postgres:
     dbCreate: false
-    externalSecret: "externalgen3_aurora-master-password"
+    externalSecret: "externalgen3-aurora-master-password"
   environment: "externalgen3"
   externalSecrets:
     # -- (bool) Will use ExternalSecret resources to pull secrets from Secrets Manager instead of creating them locally. Be cautious as this will override secrets you have deployed.
     deploy: true
   hostname: "externalgen3.prometheus.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:637423560817:certificate/772d6fec-b277-4b7c-b432-b89769370949"
-  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/1.1.0/schema.json"
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: "private"
@@ -33,6 +34,7 @@ global:
 
 arborist:
   enabled: true
+  replicaCount: 2
   # Lower cost
   resources:
     requests:
@@ -42,19 +44,21 @@ arborist:
     dbcreds: "externalgen3_default-arborist-creds"
   image:
     repository: quay.io/cdis/arborist
-    tag: 2024.11
+    tag: 2026.07
 
 audit:
   # Enabled. We do want to track audit events in this environment.
   enabled: true
+  replicaCount: 2
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-audit-sa
   externalSecrets:
     dbcreds: "externalgen3_default-audit-creds"
-    createK8sAuditSecret: true
+    auditG3auto: externalgen3-audit-g3auto
+    #createK8sAuditSecret: true
 
-aws-es-proxy:
+aws-sigv4-proxy:
   # Disabled. We don't use this service in this environment.
   enabled: false
   # Lower cost
@@ -75,6 +79,10 @@ frontend-framework:
 
 
 fence:
+
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::637423560817:role/gen3-service/externalgen3-default-fence-sa
   # Lower cost
   resources:
     requests:
@@ -82,7 +90,7 @@ fence:
       cpu: "15m"
 
   enabled: true
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/cdis/fence
     tag: master
@@ -96,8 +104,6 @@ fence:
     # -- (bool) Whether to run Fence usersync or not.
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/externalgen3-pdp/user.yaml
-
-  USER_YAML:
 
   # -- (map) External Secrets settings.
   externalSecrets:
@@ -134,8 +140,8 @@ fence:
         cred: 'fence-bot'
         region: us-east-1
 
-    dbGaP:
-      parent_to_child_studies_mapping: {}
+    # dbGaP:
+    #   parent_to_child_studies_mapping: {}
 
     # `DATA_UPLOAD_BUCKET` specifies an S3 bucket to which data files are uploaded,
     # using the `/data/upload` endpoint. This must be one of the first keys under
@@ -150,6 +156,7 @@ fence:
 
 indexd:
   enabled: true
+  replicaCount: 2
   # Lower cost
   resources:
     requests:
@@ -164,7 +171,7 @@ indexd:
 
   image:
     repository: quay.io/cdis/indexd
-    tag: 2024.11
+    tag: 2026.07
 
 portal:
   # # Lower cost
@@ -173,14 +180,13 @@ portal:
       memory: "1000Mi"
       cpu: "500m"
   enabled: true
-  replicaCount: 1
+  replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2024.11
+    tag: 2026.07
 
   # GitOps config for portal
   gitops:
-    gen3Bundle: workspace
     json: |
       {
         "graphql": {
@@ -244,7 +250,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2024.11
+    tag: 2026.07
 
 sheepdog:
   # Lower cost
@@ -255,20 +261,28 @@ sheepdog:
   externalSecrets:
     dbcreds: "externalgen3_default-sheepdog-creds"
   enabled: true
+  replicaCount: 2
+  image:
+    repository: quay.io/cdis/sheepdog
+    tag: 2026.07
 
 metadata:
   useAggMds: false
   enabled: true
+  replicaCount: 2
 
   # Lower cost
   initResources:
     requests:
       memory: "105Mi"
       cpu: "15m"
+  # Needs more ram/ cpu
   resources:
+    limits:
+      memory: 2Gi
     requests:
-      memory: "105Mi"
-      cpu: "15m"
+      memory: "512Mi"
+      cpu: "500m"
 
   externalSecrets:
     createK8sMetadataSecret: true
@@ -276,7 +290,7 @@ metadata:
 
   image:
     repository: quay.io/cdis/metadata-service
-    tag: 2024.11
+    tag: 2026.07
 
 # Disabled services
 
@@ -293,9 +307,17 @@ manifestservice:
   enabled: false
 
 peregrine:
-  enabled: false
+# Lower cost
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "15m"
+  enabled: true
   externalSecrets:
     dbcreds: "externalgen3_default-sheepdg-creds"
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
+    tag: 2026.07
 
 requestor:
   enabled: false

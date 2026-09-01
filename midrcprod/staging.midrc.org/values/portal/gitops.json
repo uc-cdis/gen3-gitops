@@ -51,6 +51,12 @@
         "description": "The Jupyter notebooks contained in this notebook viewer pull data from various sources to generate and output useful tables, charts, graphs, and models. Each notebook is static, meaning the data being used by the notebooks is not updated in real time. Executable versions of these notebooks can be downloaded from <a href='https://github.com/MIDRC/tutorial_notebooks'> MIDRC's GitHub Repository</a>. If you’d like to browse the machine learning-related algorithms and code being developed by MIDRC, please visit <a href='https://midrc.org/algorithms'>the algorithms page</a> on our website.",
         "resources": [
             {
+                "title": "Representativeness In Interoperable Databases",
+                "description": "This notebook is intended to demonstrate how interoperating systems can help improve representativeness of subsets in a dataset (e.g., demographics, disease distribution).",
+                "imageUrl": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.PNG",
+                "link": "/dashboard/Public/notebooks/Representativeness_In_Interoperable_Databases.html"
+            },
+            {
                 "title": "Cohort Building Using LOINC Terms",
                 "description": "This notebook demonstrates how to build a cohort of patients based on LOINC terms derived by harmonizing original DICOM study descriptions, modalities, and body parts examined using the LOINC playbook. Imaging study DICOM data element harmonization using the LOINC playbook is the result of an effort by MIDRC's Technology and Development Project 3b (TDP3b) and the Collaborative Research Project 12 (CRP-12). Links to the GitHub repository where the code for performing LOINC harmonization is maintained is included in the notebook.",
                 "imageUrl": "/dashboard/Public/notebooks/Cohort_Building_Using_LOINC_Terms.png",
@@ -103,6 +109,18 @@
                 "description": "This notebook briefly demonstrates how to use the MIDRC open APIs to build a cohort of MIDRC imaging studies using patient clinical data and AI-research-based annotations in the MIDRC data commons and then access and view the X-ray image files associated with those imaging studies.",
                 "imageUrl": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.png",
                 "link": "/dashboard/Public/notebooks/MIDRC_Cohort_Building-DLL_RSNA_2023.html"
+            },
+            {
+                "title": "Creating a Flat File Version of the MIDRC Data Dictionary",
+                "description": "This notebook will walk you through converting MIDRC's data node-based dictionary into a flat-file version.",
+                "imageUrl": "/dashboard/Public/notebooks/flat_file_midrc_dictionary.png",
+                "link": "/dashboard/Public/notebooks/flat_file_midrc_dictionary.html"
+            },
+            {
+                "title": "Adding External Standards to MIDRC's Standards",
+                "description": "This notebook will be used to add standards that are external to MIDRC's dictionary. The added standard can then be used to process data provided by the user.",
+                "imageUrl": "/dashboard/Public/notebooks/midrc_add_external_standard.png",
+                "link": "/dashboard/Public/notebooks/midrc_add_external_standard.html"
             }
         ]
     },
@@ -235,6 +253,12 @@
         "navigation": {
             "items": [
                 {
+                    "name": "Datasets",
+                    "link": "/discovery",
+                    "icon": "query",
+                    "tooltip": "The Datasets page provides free-text and tag-based search over published datasets in MIDRC along with links to publications and data download buttons."
+                },
+                {
                     "name": "Exploration",
                     "link": "/explorer",
                     "icon": "exploration",
@@ -290,6 +314,10 @@
                 {
                     "link": "https://www.midrc.org/resources",
                     "name": "Resources"
+                },
+                {
+                    "link": "https://staging.midrc.org/dashboard/Public/documentation/Release_notes_final.pdf",
+                    "name": "Release Notes"
                 },
                 {
                     "link": "https://docs.gen3.org/gen3-resources/user-guide/",
@@ -367,6 +395,9 @@
                         ],
                         "fields": [
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "age_at_index",
@@ -459,6 +490,9 @@
                     "sex",
                     "age_at_index",
                     "index_event",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -888,7 +922,7 @@
                 },
                 "test_result_text": {
                     "chartType": "fullPie",
-                    "title": "COVID-19 Test Result"
+                    "title": "Test Result"
                 },
                 "test_name": {
                     "chartType": "fullPie",
@@ -898,7 +932,7 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "COVID-19 Tests",
+                        "title": "Measurements",
                         "fields": [
                             "test_method",
                             "test_result_text",
@@ -1000,7 +1034,22 @@
         },
         {
             "tabTitle": "Imaging Studies",
-            "charts": {},
+            "charts": {
+                "loinc_system": {
+                    "chartType": "fullPie",
+                    "title": "LOINC System",
+                    "maximumDisplayItem": 5
+                },
+                "study_modality": {
+                    "chartType": "fullPie",
+                    "title": "Study Modality",
+                    "maximumDisplayItem": 5
+                },
+                "loinc_contrast": {
+                    "chartType": "fullPie",
+                    "title": "LOINC Contrast"
+                }
+            },
             "filters": {
                 "tabs": [
                     {
@@ -1048,6 +1097,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "zip",
@@ -1098,6 +1150,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -1120,11 +1175,13 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "project_id",
                     "_radiology_report_count"
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",
@@ -1297,17 +1354,66 @@
             "filters": {
                 "tabs": [
                     {
-                        "title": "Radiology Reports Filters",
+                        "title": "Report Properties",
                         "searchFields": [
                             "submitter_id"
                         ],
                         "fields": [
                             "modality",
                             "body_part_examined",
-                            "report_generation_method",
                             "study_description",
-                            "project_id",
-                            "report_modification_method"
+                            "report_generation_method",
+                            "report_modification_method",
+                            "project_id"
+                        ]
+                    },
+                    {
+                        "title": "Imaging Study Properties",
+                        "searchFields": [
+                            "imaging_study_submitter_id"
+                        ],
+                        "fields": [
+                            "loinc_long_common_name",
+                            "loinc_method",
+                            "loinc_system",
+                            "loinc_contrast",
+                            "age_at_imaging",
+                            "imaging_study_description",
+                            "study_modality",
+                            "imaging_study_body_part_examined",
+                            "days_to_study",
+                            "days_from_study_to_neg_covid_test",
+                            "days_from_study_to_pos_covid_test",
+                            "image_data_modified"
+                        ]
+                    },
+                    {
+                        "title": "Case Properties",
+                        "searchFields": [
+                            "case_submitter_id"
+                        ],
+                        "fields": [
+                            "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
+                            "race",
+                            "age_at_index",
+                            "index_event",
+                            "zip",
+                            "covid19_positive",
+                            "ethnicity"
+                        ]
+                    },
+                    {
+                        "title": "Dataset Properties",
+                        "searchFields": [
+                            "dataset_submitter_id"
+                        ],
+                        "fields": [
+                            "license",
+                            "data_url_doi",
+                            "data_contributor"
                         ]
                     }
                 ]
@@ -1318,10 +1424,39 @@
                     "submitter_id",
                     "modality",
                     "body_part_examined",
-                    "report_generation_method",
                     "study_description",
-                    "project_id",
-                    "report_modification_method"
+                    "report_generation_method",
+                    "report_modification_method",
+                    "imaging_study_submitter_id",
+                    "loinc_long_common_name",
+                    "loinc_method",
+                    "loinc_system",
+                    "loinc_contrast",
+                    "age_at_imaging",
+                    "study_modality",
+                    "imaging_study_body_part_examined",
+                    "imaging_study_description",
+                    "days_to_study",
+                    "days_from_study_to_neg_covid_test",
+                    "days_from_study_to_pos_covid_test",
+                    "image_data_modified",
+                    "case_submitter_id",
+                    "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
+                    "race",
+                    "age_at_index",
+                    "index_event",
+                    "zip",
+                    "covid19_positive",
+                    "ethnicity",
+                    "license",
+                    "dataset_submitter_id",
+                    "data_url_doi",
+                    "data_contributor",
+                    "object_id",
+                    "project_id"
                 ]
             },
              "dropdowns": {
@@ -1356,6 +1491,14 @@
                     "leftIcon": "datafile",
                     "rightIcon": "download",
                     "fileName": "MIDRC_radiology_reports_table.csv"
+                },
+                {
+                    "enabled": true,
+                    "type": "file-manifest",
+                    "title": "Download File Manifest",
+                    "leftIcon": "datafile",
+                    "rightIcon": "download",
+                    "fileName": "MIDRC_radiology_reports_manifest.json"
                 }
             ],
             "loginForDownload": true,
@@ -1369,13 +1512,32 @@
                     },
                     {
                         "field": "submitter_id",
-                        "name": "Annotation ID"
+                        "name": "Report ID"
+                    },
+                    {
+                        "field": "dataset_submitter_id",
+                        "name": "Dataset ID"
+                    },
+                    {
+                        "field": "case_submitter_id",
+                        "name": "Case ID"
+                    },
+                    {
+                        "field": "imaging_study_submitter_id",
+                        "name": "Imaging Study ID"
                     },
                     {
                         "field": "case_ids",
-                        "name": "Case ID"
+                        "name": "Case IDs"
                     }
                 ],
+                "manifestMapping": {
+                    "resourceIndexType": "radiology_report",
+                    "resourceIdField": "object_id",
+                    "referenceIdFieldInResourceIndex": "object_id",
+                    "referenceIdFieldInDataIndex": "object_id",
+                    "useFilterForCounts": false
+                },
                 "accessibleFieldCheckList": [
                     "project_id"
                 ],
@@ -1471,6 +1633,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "zip",
                             "index_event"
@@ -1550,6 +1715,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "zip",
                     "data_format",
@@ -1566,13 +1734,13 @@
                     "study_uid",
                     "case_ids",
                     "object_id",
+                    "dicom_header_file_guid",
                     "submitter_id",
                     "project_id"
                 ],
-                "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
-                    "submitter_id",
                     "license",
                     "data_url_doi"
                 ]
@@ -1744,9 +1912,26 @@
             },
             {
                 "name": "Publication URL",
-                "field": "data_url",
+                "field": "doi_publication",
                 "contentType": "link",
-                "width": 300,
+                "length": 25,
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Cases",
+                "field": "cases_count",
+                "contentType": "string",
+                "width": 100,
+                "errorIfNotAvailable": false,
+                "valueIfNotAvailable": "n/a"
+            },
+            {
+                "name": "Publication Year",
+                "field": "doi_publication_year",
+                "contentType": "string",
+                "width": 100,
                 "errorIfNotAvailable": false,
                 "valueIfNotAvailable": "n/a"
             }
@@ -1805,6 +1990,12 @@
                             "name": "Data Description",
                             "field": "data_description",
                             "contentType": "string",
+                            "includeIfNotAvailable": false
+                        },
+                        {
+                            "name": "Data DOI",
+                            "field": "data_doi",
+                            "contentType": "link",
                             "includeIfNotAvailable": false
                         },
                         {
@@ -1886,6 +2077,12 @@
                             "includeIfNotAvailable": false
                         },
                         {
+                            "name": "Publication DOI",
+                            "field": "doi_publication",
+                            "contentType": "link",
+                            "includeIfNotAvailable": false
+                        },
+                        {
                             "name": "Primary Site",
                             "field": "primary_site",
                             "contentType": "string",
@@ -1941,6 +2138,12 @@
                 "name": "primary_site",
                 "displayName": "Primary Site",
                 "color": "#981f32",
+                "display": true
+            },
+            {
+                "name": "study_modality",
+                "displayName": "Study Modality",
+                "color": "#c4521d",
                 "display": true
             }
         ]

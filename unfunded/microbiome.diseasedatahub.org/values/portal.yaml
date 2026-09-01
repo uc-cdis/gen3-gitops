@@ -6,7 +6,7 @@ portal:
   enabled: true
   image:
     repository: quay.io/cdis/data-portal
-    tag: 2.24.1
+    tag: master
     # repository: quay.io/cdis/data-portal-prebuilt
     # tag: microbiome.diseasedatahub.org-prebuilt-prc
 
