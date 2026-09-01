@@ -27,7 +27,7 @@ global:
   netPolicy:
     enabled: false
   dispatcherJobNum: "10"
-  frontendRoot: "portal"
+  frontendRoot: gen3ff
   ddEnabled: false
 
 ambassador:
