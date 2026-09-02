@@ -242,11 +242,17 @@ revproxy:
         client_max_body_size 0;
       }
     metadata-service.conf: |-
+      # MDS is served by the search Lambda, whose FastAPI app has root_path=/search, so
+      # its router lives at /search/mds/*. That is also the upstream gen3-api-poc shape.
+      # The separate /mds mount on API Gateway has been removed (two paths to one handler
+      # meant any path-scoped control written for /search/* silently missed /mds/*), so
+      # this location has to rewrite rather than pass /mds/ through unchanged.
       location /mds/ {
         proxy_set_header Authorization "$access_token";
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/mds/(.*) /search/mds/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
