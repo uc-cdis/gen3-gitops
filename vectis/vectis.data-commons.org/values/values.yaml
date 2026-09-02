@@ -1,0 +1,441 @@
+global:
+  aws:
+    enabled: true
+    account: "172585802910"
+    hatchery_role: "arn:aws:iam::172585802910:role/gen3-service/vectis-default-hatchery-sa"
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-external-secrets-sa"
+    wafv2:
+      enabled: true
+      wafAclArn: "arn:aws:wafv2:us-east-1:172585802910:regional/webacl/vectis-waf/b91e7abb-d3eb-4733-b2ea-4fea96c6ed5e"
+  dev: false
+  externalSecrets:
+    deploy: true
+  postgres:
+    dbCreate: true
+    externalSecret: "vectis-aurora-master-password"
+  environment: "vectis"
+  hostname: "vectis.data-commons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:172585802910:certificate/d9a98702-17a2-4207-b212-30c043caccdb"
+  dictionaryUrl: "https://vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com/config/dd/current.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: "100"
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: gen3ff
+  ddEnabled: false
+
+ambassador:
+  enabled: true
+
+arborist:
+  enabled: true
+  externalSecrets:
+    dbcreds: "vectis-default-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-audit-sa"
+  externalSecrets:
+    dbcreds: "vectis-default-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-es-proxy:
+  # Replaced by the production Lambda search/query services.
+  enabled: false
+  esEndpoint: ""
+  externalSecrets:
+    awsCreds: "vectis-default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-dicom-viewer-creds"
+
+etl:
+  enabled: false
+
+
+fence:
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-fence-sa"
+
+  externalSecrets:
+    fenceJwtKeys: "vectis-default-fence-jwt-keys"
+    fenceConfig: "vectis-default-fence-config"
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sGoogleAppSecrets: true
+    dbcreds: "vectis-default-fence-creds"
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://vectis-ctds-172585802910-us-east-1/config/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  enabled: true
+  image:
+    repository: "quay.io/cdis/gen3-vectis"
+    # Build and push this production image before merging GitOps.
+    tag: "vectisprodv1"
+    pullPolicy: Always
+  env:
+    NODE_ENV: production
+    HOSTNAME: "0.0.0.0"
+    PORT: "3000"
+    NEXT_PUBLIC_GEN3_COMMONS_NAME: vectis
+    NEXT_PUBLIC_DATACOMMONS: commons_frontend_app
+    HATCHERY_URL: "http://hatchery-service.default.svc.cluster.local"
+    GEN3_FENCE_SERVICE: "http://fence-service.default.svc.cluster.local"
+    GEN3_ARBORIST_SERVICE: "http://arborist-service.default.svc.cluster.local"
+    GEN3_SEARCH_SERVICE: "https://vectis-api.data-commons.org"
+    GEN3_LAMBDA_API_URL: "https://vectis-api.data-commons.org"
+    GEN3_INDEXD_SERVICE: "https://vectis.data-commons.org"
+    SIEM_SERVICE_DNS: "siem-service.default.svc.cluster.local"
+    JUPYTER_GATEWAY_URL: "http://jupyter-enterprise-gateway.jupyter-pods-vectis.svc.cluster.local:8888"
+    GEN3_ENDPOINT: "https://vectis.data-commons.org"
+    FENCE_URL: "http://fence-service.default.svc.cluster.local"
+    KERNEL_SPEC_POLICY: "{}"
+    ENABLE_JEG: "true"
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  enabled: true
+
+  hatchery:
+    sidecarContainer:
+      cpu-limit: '0.1'
+      memory-limit: 256Mi
+      image: quay.io/cdis/ecs-ws-sidecar:master
+      env:
+        NAMESPACE: "{{ .Release.Namespace }}"
+        HOSTNAME: "{{ .Values.global.hostname }}"
+      args: []
+      command:
+      - "/bin/bash"
+      - "./sidecar.sh"
+      lifecycle-pre-stop:
+      - su
+      - "-c"
+      - echo test
+      - "-s"
+      - "/bin/sh"
+      - root
+    containers:
+      -
+        target-port: 8888
+        cpu-limit: '1.0'
+        memory-limit: 2Gi
+        name: "(Tutorials) Example Analysis Jupyter Lab Notebooks"
+        image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
+        env:
+          FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
+        args:
+        - "--NotebookApp.base_url=/lw-workspace/proxy/"
+        - "--NotebookApp.default_url=/lab"
+        - "--NotebookApp.password=''" #pragma: allowlist secret
+        - "--NotebookApp.token=''"
+        - "--NotebookApp.shutdown_no_activity_timeout=5400"
+        - "--NotebookApp.quit_button=False"
+        command:
+        - start-notebook.sh
+        path-rewrite: "/lw-workspace/proxy/"
+        use-tls: 'false'
+        ready-probe: "/lw-workspace/proxy/"
+        lifecycle-post-start:
+        - "/bin/sh"
+        - "-c"
+        - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found;
+          ln -s /data /home/$IAM/pd/; true
+        user-uid: 1000
+        fs-gid: 100
+        user-volume-location: "/home/jovyan/pd"
+        gen3-volume-location: "/home/jovyan/.gen3"
+
+
+indexd:
+  enabled: true
+  defaultPrefix: "dg.vectis/"
+  externalSecrets:
+    dbcreds: "vectis-default-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  # Served by the production Lambda-backed APIs.
+  enabled: false
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-manifestservice-sa"
+  externalSecrets:
+    createK8sManifestServiceSecret: true
+
+metadata:
+  # /mds is served by the production search Lambda.
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  # Replaced by the production Lambda query service.
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-sheepdog-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: false
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-requestor-creds"
+
+revproxy:
+  enabled: true
+  additionalConfigs:
+    guppy-service.conf: |-
+      location /guppy/ {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/guppy/(.*) /search/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    siem-service.conf: |-
+      location /siem/ {
+        if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
+        set $upstream http://siem-service.default.svc.cluster.local:8000;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    metadata-service.conf: |-
+      # MDS is served by the search Lambda, whose FastAPI app has root_path=/search, so
+      # its router lives at /search/mds/*. That is also the upstream gen3-api-poc shape.
+      # The separate /mds mount on API Gateway has been removed (two paths to one handler
+      # meant any path-scoped control written for /search/* silently missed /mds/*), so
+      # this location has to rewrite rather than pass /mds/ through unchanged.
+      location /mds/ {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/mds/(.*) /search/mds/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    lambda-indexd.conf: |-
+      location /api/v0/indexd/ {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/indexd/(.*) /indexd/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    lambda-drs.conf: |-
+      location ^~ /user/ga4gh/drs/v1/ {
+        if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/user/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location ^~ /ga4gh/drs/v1/ {
+        if ($csrf_check !~ ^ok-\S+$) { return 403 "failed csrf check"; }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/ga4gh/drs/v1/(.*) /drs/v1/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+    lambda-dictionary.conf: |-
+      location ~* ^/api/v0/submission/_dictionary/_all/?$ {
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com;
+        proxy_set_header Host vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com;
+        rewrite ^ /config/dd/current.json break;
+        proxy_pass $upstream;
+      }
+    lambda-query.conf: |-
+      location ~* ^/graphql/?$ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/graphql/?$ /query/vectis/graphql/ break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+
+      location ~* ^/api/v0/submission/vectis/graphql/?$ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql/ break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+      location /api/v0/submission/vectis/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/submission/vectis/(.*) /query/vectis/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      # Legacy tenant-less Gen3 submission graphql path. The query service mounts one
+      # sub-app per dictionary at /{dictionary}, each exposing /graphql, so /query/graphql
+      # has no route and 404s — it must carry the dictionary segment. Regex rather than
+      # `location =` so the trailing-slash variant is caught here too; otherwise it falls
+      # through to the /api/v0/submission/ prefix block, which rewrites it tenant-less.
+      location ~* ^/api/v0/submission/graphql/?$ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/submission/graphql/?$ /query/vectis/graphql/ break;
+        proxy_pass $upstream;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        client_max_body_size 0;
+      }
+      location = /api/v0/submission/getschema {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/submission/getschema$ /query/getschema break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location /api/v0/submission/ {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type, Accept, X-CSRFToken, X-Requested-With" always;
+          add_header Access-Control-Max-Age 86400 always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/api/v0/submission/(.*) /query/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+      location /v0/submission/ {
+        proxy_set_header Authorization "$access_token";
+        proxy_ssl_server_name on;
+        set $upstream https://vectis-api.data-commons.org;
+        proxy_set_header Host vectis-api.data-commons.org;
+        rewrite ^/v0/submission/(.*) /query/$1 break;
+        proxy_pass $upstream;
+        client_max_body_size 0;
+      }
+
+sheepdog:
+  # Replaced by the production Lambda query service.
+  enabled: false
+  externalSecrets:
+    dbcreds: "vectis-default-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  enabled: true
+  externalSecrets:
+    dbcreds: "vectis-default-wts-creds"
+    createK8sWtsSecret: true
