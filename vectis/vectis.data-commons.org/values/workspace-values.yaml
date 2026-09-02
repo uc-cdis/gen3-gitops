@@ -114,6 +114,12 @@ revproxy:
         proxy_set_header X-Forwarded-Proto https;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection $connection_upgrade;
+        # The two rewrites above strip /lw-workspace/proxy/ before the request reaches
+        # JupyterLab, so any Location header it returns is relative to the root it thinks
+        # it is serving. Without rewriting those back, a redirect (e.g. /lab -> /lab/)
+        # sends the browser to http://host/ -- outside the proxy prefix and downgraded to
+        # plaintext. Matches the working MC2DP deployment.
+        proxy_redirect http://$host/ https://$host/lw-workspace/proxy/;
         proxy_read_timeout 36000s;
       }
     workspace-api.conf: |-
@@ -136,6 +142,21 @@ revproxy:
       location ^~ /workspace-api/workspace-assets/ {
         set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
         rewrite ^/workspace-api/(.*) /api/$1 break;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_read_timeout 600s;
+      }
+      # The same assets are also fetched at /api/workspace-assets/* directly, because
+      # RemoteComputeWorkspace defaults assetBaseUrl to '/api/workspace-assets/remote'
+      # and FreeWorkspace to the 'free' sibling. There is no /api/ location otherwise, so
+      # these fell through to the default upstream and returned 502 -- which is why the
+      # Pyodide WASM never loaded. Same target and same no-auth reasoning as above; no
+      # rewrite needed since the path is already what the Next.js route expects.
+      location ^~ /api/workspace-assets/ {
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
         proxy_pass $upstream;
         proxy_http_version 1.1;
         proxy_set_header Host $host;
