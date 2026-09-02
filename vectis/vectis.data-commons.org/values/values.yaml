@@ -230,7 +230,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/guppy/(.*) /t/ctds/search/$1 break;
+        rewrite ^/guppy/(.*) /search/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -252,7 +252,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/mds/(.*) /t/ctds/search/mds/$1 break;
+        rewrite ^/mds/(.*) /search/mds/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -311,7 +311,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/graphql/?$ /t/ctds/query/vectis/graphql/ break;
+        rewrite ^/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
@@ -333,7 +333,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/vectis/graphql/?$ /t/ctds/query/vectis/graphql/ break;
+        rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
@@ -354,7 +354,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/vectis/(.*) /t/ctds/query/vectis/$1 break;
+        rewrite ^/api/v0/submission/vectis/(.*) /query/vectis/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -378,7 +378,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/graphql/?$ /t/ctds/query/vectis/graphql/ break;
+        rewrite ^/api/v0/submission/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
@@ -389,7 +389,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/getschema$ /t/ctds/query/getschema break;
+        rewrite ^/api/v0/submission/getschema$ /query/getschema break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -408,7 +408,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/(.*) /t/ctds/query/$1 break;
+        rewrite ^/api/v0/submission/(.*) /query/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
@@ -417,7 +417,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/v0/submission/(.*) /t/ctds/query/$1 break;
+        rewrite ^/v0/submission/(.*) /query/$1 break;
         proxy_pass $upstream;
         client_max_body_size 0;
       }
