@@ -311,7 +311,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/graphql/?$ /query/vectis/graphql break;
+        rewrite ^/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
@@ -333,7 +333,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql break;
+        rewrite ^/api/v0/submission/vectis/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
