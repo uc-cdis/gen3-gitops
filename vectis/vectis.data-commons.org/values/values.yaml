@@ -358,7 +358,12 @@ revproxy:
         proxy_pass $upstream;
         client_max_body_size 0;
       }
-      location = /api/v0/submission/graphql {
+      # Legacy tenant-less Gen3 submission graphql path. The query service mounts one
+      # sub-app per dictionary at /{dictionary}, each exposing /graphql, so /query/graphql
+      # has no route and 404s — it must carry the dictionary segment. Regex rather than
+      # `location =` so the trailing-slash variant is caught here too; otherwise it falls
+      # through to the /api/v0/submission/ prefix block, which rewrites it tenant-less.
+      location ~* ^/api/v0/submission/graphql/?$ {
         if ($request_method = 'OPTIONS') {
           add_header Access-Control-Allow-Origin $http_origin always;
           add_header Access-Control-Allow-Credentials true always;
@@ -373,7 +378,7 @@ revproxy:
         proxy_ssl_server_name on;
         set $upstream https://vectis-api.data-commons.org;
         proxy_set_header Host vectis-api.data-commons.org;
-        rewrite ^/api/v0/submission/graphql$ /query/graphql break;
+        rewrite ^/api/v0/submission/graphql/?$ /query/vectis/graphql/ break;
         proxy_pass $upstream;
         add_header Access-Control-Allow-Origin $http_origin always;
         add_header Access-Control-Allow-Credentials true always;
