@@ -86,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: no-funnel-s3-calls
+    tag: test_memory_spikes
   resources:
     limits:
       cpu: 2
