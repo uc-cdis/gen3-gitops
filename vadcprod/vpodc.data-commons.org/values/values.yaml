@@ -313,7 +313,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "Genomics (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-master",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
@@ -349,7 +349,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "4Gi",
             "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-master",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
