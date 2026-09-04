@@ -140,8 +140,8 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
-    gpu: false
+    enabled: true
+    gpu: true
     jupyter: true
 
     availabilityZones:
