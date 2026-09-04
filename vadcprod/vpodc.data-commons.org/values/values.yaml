@@ -277,19 +277,13 @@ hatchery:
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
           "shared-workspace": {
-            "enabled": true
+            "enabled": true,
+            "oidc-provider-arn": "arn:aws:iam::663707118480:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/274F67985C56EBE1E628BA749BAE9222"
           },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
           },
-          "s3-config": {
-            "bucketName": "software-library-bucket-new",
-            "prefixBase": "qa-vpodc",
-            "region": "us-east-1",
-            "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
-          },
-          "oidc-provider-arn": "arn:aws:iam::663707118480:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/274F67985C56EBE1E628BA749BAE9222",
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
@@ -324,10 +318,6 @@ hatchery:
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-            },
-            "squashfs_mount": {
-              "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
             },
             "command": [
               "start-notebook.sh"
@@ -365,10 +355,6 @@ hatchery:
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
-            "squashfs_mount": {
-              "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
-            },
             "command": [
               "start-notebook.sh"
             ],
@@ -405,10 +391,6 @@ hatchery:
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
-            "squashfs_mount": {
-              "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
-            },
             "command": [
               "start-notebook.sh"
             ],
@@ -444,10 +426,6 @@ hatchery:
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-            },
-            "squashfs_mount": {
-              "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
             },
             "command": [
               "start-notebook.sh"
