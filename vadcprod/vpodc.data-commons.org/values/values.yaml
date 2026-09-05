@@ -775,9 +775,9 @@ workspace-proxy:
   workspaceNamespace: jupyter-pods
   kubernetesApiServerCIDRs:
     - "10.100.0.1/32"
-    - "172.27.140.0/22"
-    - "172.27.136.0/22"
-    - "172.27.132.0/22"
+    - "172.25.55.0/24"
+    - "172.25.56.0/24"
+    - "172.25.57.0/24"
   replicaCount: 1
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
