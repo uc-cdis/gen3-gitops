@@ -198,6 +198,8 @@ hatchery:
     tag: '2025.10'
 indexd:
   enabled: true
+  postgres:
+    dbCreate: true  
   externalSecrets:
     serviceCreds: emalinowskiv1-indexd-service-creds
     pushSecret: true
