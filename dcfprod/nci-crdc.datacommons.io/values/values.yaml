@@ -144,6 +144,9 @@ fence:
       cds-229-phs001905:
         cred: fence_bot
         region: us-east-1
+      cds-230-phs001687:
+        cred: fence_bot
+        region: us-east-1
       cds-233-phs002050:
         cred: fence_bot
         region: us-east-1
