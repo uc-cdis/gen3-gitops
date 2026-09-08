@@ -64,6 +64,17 @@ karpenter-crds:
   enabled: true
   selectorTag: emalinowskiv1
   migration: true
+  default:
+   fastImagePull:
+      enabled: true
+      iops: 3000
+      throughput: 600  
+  jupyter:
+   fastImagePull:
+      enabled: true
+      iops: 3000
+      throughput: 600  
+
 
 vpc-cni:
   enabled: true
