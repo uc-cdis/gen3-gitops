@@ -200,6 +200,7 @@ indexd:
   enabled: true
   externalSecrets:
     serviceCreds: emalinowskiv1-indexd-service-creds
+    pushSecret: true
   image:
     repository: quay.io/cdis/indexd
     tag: feat_GPE-788
