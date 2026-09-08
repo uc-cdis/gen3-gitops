@@ -214,8 +214,8 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "2.0",
             "memory-limit": "8Gi",
-            "name": "JupyterLab Software Library Testing",
-            "image": "quay.io/cdis/jupyterlab-generic:master",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__8f9daf80d2ff38e218afc349ed1160704c81e5cc",
             "pull_policy": "Always",
             "squashfs_mount": {
               "enabled": true,
