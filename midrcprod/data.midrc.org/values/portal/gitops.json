@@ -2162,5 +2162,6 @@
         "zendeskConfig": {
             "zendeskSubdomainName": "midrc-support"
         }
-    }
+    },
+    "ddUrl": "ddog-gov.com"
 }
