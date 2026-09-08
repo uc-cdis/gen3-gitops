@@ -395,6 +395,9 @@
                         ],
                         "fields": [
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "age_at_index",
@@ -487,6 +490,9 @@
                     "sex",
                     "age_at_index",
                     "index_event",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -1091,6 +1097,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "ethnicity",
                             "zip",
@@ -1141,6 +1150,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "ethnicity",
                     "zip",
@@ -1169,6 +1181,7 @@
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",
@@ -1381,6 +1394,9 @@
                         ],
                         "fields": [
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "age_at_index",
                             "index_event",
@@ -1426,6 +1442,9 @@
                     "image_data_modified",
                     "case_submitter_id",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "age_at_index",
                     "index_event",
@@ -1614,6 +1633,9 @@
                             "covid19_positive",
                             "age_at_index",
                             "sex",
+                            "race_ethnicity",
+                            "race_ethnicity_detail",
+                            "race_ethnicity_write_in",
                             "race",
                             "zip",
                             "index_event"
@@ -1693,6 +1715,9 @@
                     "age_at_index",
                     "index_event",
                     "sex",
+                    "race_ethnicity",
+                    "race_ethnicity_detail",
+                    "race_ethnicity_write_in",
                     "race",
                     "zip",
                     "data_format",
@@ -1713,10 +1738,9 @@
                     "submitter_id",
                     "project_id"
                 ],
-                "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
+                "dicomServerURL": "orthanc",
                 "linkFields": [
-                    "submitter_id",
                     "license",
                     "data_url_doi"
                 ]
@@ -2138,6 +2162,5 @@
         "zendeskConfig": {
             "zendeskSubdomainName": "midrc-support"
         }
-    },
-    "ddUrl": "ddog-gov.com"
+    }
 }
