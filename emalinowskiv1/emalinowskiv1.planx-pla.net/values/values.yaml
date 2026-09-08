@@ -170,6 +170,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: emalinowskiv1-aurora-master-password
   revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
   topologySpread:
     # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
