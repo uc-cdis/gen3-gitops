@@ -159,7 +159,7 @@ spec:
             - "--port"
             - "$(AGENT_PORT)"
             - "--embed-api-url"
-            - http://conduit-server.default.svc.cluster.local:8080/sapbert/v1"
+            - "http://conduit-server.default.svc.cluster.local:8080/sapbert/v1"
             - "--model-config"
             - "model-config.yaml"
           envFrom:
