@@ -122,8 +122,8 @@ gen3-embeddings:
     pullPolicy: Always
     tag: 0.1.1
   externalSecrets:
-    createK8sGen3EmbeddingsSecret: false
-    pushSecret: false
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: true
     dbcreds: "pdp-commons-embedding-management-service-creds"
 
 guppy:
