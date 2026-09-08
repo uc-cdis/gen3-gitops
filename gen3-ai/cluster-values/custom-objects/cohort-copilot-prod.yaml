@@ -146,7 +146,7 @@ spec:
             - sh
             - -c
             - |
-              until wget -q -O /dev/null http://embed-sapbert/v1/models 2>/dev/null; do
+              until wget -q -O /dev/null http://conduit-server.default.svc.cluster.local:8080/sapbert/v1/models 2>/dev/null; do
                 sleep 2
               done
 
@@ -158,7 +158,7 @@ spec:
             - "--port"
             - "$(AGENT_PORT)"
             - "--embed-api-url"
-            - "http://embed-sapbert/v1"
+            - http://conduit-server.default.svc.cluster.local:8080/sapbert/v1"
             - "--model-config"
             - "model-config.yaml"
           envFrom:
