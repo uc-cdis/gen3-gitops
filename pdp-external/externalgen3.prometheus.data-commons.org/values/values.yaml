@@ -230,9 +230,11 @@ portal:
             "email": "support@gen3.org"
           }
         },
+        "homepageURL": "/files",
         "featureFlags": {
           "explorer": false,
-          "explorerPublic": false
+          "explorerPublic": false,
+          "workspace": false
         },
         "showArboristAuthzOnProfile": true,
         "showFenceAuthzOnProfile": true
