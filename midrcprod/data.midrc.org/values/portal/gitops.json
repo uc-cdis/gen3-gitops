@@ -1181,7 +1181,6 @@
                 ],
                 "dicomViewerId": "submitter_id",
                 "dicomViewerUrl": "ohif-viewer",
-                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "submitter_id",
                     "license",
@@ -1739,7 +1738,6 @@
                     "project_id"
                 ],
                 "dicomViewerUrl": "ohif-viewer",
-                "dicomServerURL": "orthanc",
                 "linkFields": [
                     "license",
                     "data_url_doi"
