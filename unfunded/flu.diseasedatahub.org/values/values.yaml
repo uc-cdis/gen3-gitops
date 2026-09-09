@@ -38,14 +38,11 @@ arborist:
   image:
     repository: quay.io/cdis/arborist
     tag: '2026.04'
-aws-es-proxy:
+aws-sigv4-proxy:
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: flu-aws-es-proxy-creds
   enabled: true
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 indexd:
   externalSecrets:
     dbcreds: flu-indexd-db-creds

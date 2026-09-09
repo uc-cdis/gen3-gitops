@@ -1,0 +1,8 @@
+ohdsi-webapi:
+  enabled: true
+  externalSecrets:
+    createK8sOhdsiWebApiConfigSecret: true
+    pushSecret: false
+    dbcreds: "ci-perf-ohdsiwebapi-creds"
+  postgres:
+    dbCreate: false

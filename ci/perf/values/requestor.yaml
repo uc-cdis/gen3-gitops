@@ -1,0 +1,11 @@
+requestor:
+  replicaCount: 2
+  enabled: true
+  image:
+    repository: "quay.io/cdis/requestor"
+    tag: "master"
+  externalSecrets:
+    pushSecret: false
+    dbcreds: "ci-perf-requestor-creds"
+  postgres:
+    dbCreate: false

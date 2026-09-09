@@ -15,6 +15,7 @@ data:
     calico-system
     cert-manager
     ci-perf
+    ci-perf-embedding
     cortex-xdr
     crossplane-system
     csoc

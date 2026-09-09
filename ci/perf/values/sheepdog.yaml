@@ -1,0 +1,18 @@
+sheepdog:
+  replicaCount: 2
+  resources:
+    requests:
+      memory: "105Mi"
+      cpu: "50m"
+  enabled: true
+  authNamespace: ''
+  image:
+    repository: "quay.io/cdis/sheepdog"
+    tag: "master"
+  # This will be dynamically replaced by env_setup.sh script.
+  fenceUrl: https://hostname/user
+  externalSecrets:
+    pushSecret: false
+    dbcreds: "ci-perf-sheepdog-creds"
+  postgres:
+    dbCreate: false
