@@ -191,8 +191,7 @@ portal:
       {
         "graphql": {
           "boardCounts": [],
-          "chartCounts": [
-          ],
+          "chartCounts": [],
           "projectDetails": "boardCounts"
         },
         "components": {
@@ -203,8 +202,7 @@ portal:
               "text": "Prometheus External Data Commons",
               "link": "/submission"
             },
-            "buttons": [
-            ]
+            "buttons": []
           },
           "navigation": {
             "items": [
@@ -235,7 +233,14 @@ portal:
           "explorerPublic": false
         },
         "showArboristAuthzOnProfile": true,
-        "showFenceAuthzOnProfile": true
+        "showFenceAuthzOnProfile": true,
+        "componentToResourceMapping": {
+          "Workspace": {
+            "resource": "/workspace",
+            "method": "access",
+            "service": "noAccess"
+          }
+        }
       }
 
 
