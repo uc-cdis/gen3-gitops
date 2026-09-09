@@ -101,6 +101,12 @@ karpenter-crds:
       name: jupyter
     amiFamily: AL2023
     volumeSize: 200Gi
+
+nvidia-device-plugin:
+  enabled: true
+  configuration:
+    enabled: false
+  targetRevision: v0.20.0
 vpc-cni:
   enabled: true
   configuration:
