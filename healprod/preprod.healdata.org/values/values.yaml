@@ -28,7 +28,7 @@ cedar:
   enabled: true
   image:
     repository: quay.io/cdis/cedar-wrapper-service
-    tag: 0.7.0
+    tag: '0.8.0'
   cedar_client_job_enabled: false
   externalSecrets:
     createCedarClientSecret: false
