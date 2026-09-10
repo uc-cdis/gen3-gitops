@@ -2,6 +2,9 @@ cluster: loginbionimbus
 project: genomel
 accountNumber: "446046036926"
 
+configuration:
+  configurationRevision: fix/usersync_genomel
+
 alb-controller:
   enabled: true
   configuration:
