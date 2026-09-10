@@ -11,9 +11,9 @@ alb-controller:
     enabled: false
 
 aws-s3-mountpoint:
-  enabled: true
+  enabled: false
   configuration:
-    enabled: true
+    enabled: false
 
 calico:
   enabled: true
