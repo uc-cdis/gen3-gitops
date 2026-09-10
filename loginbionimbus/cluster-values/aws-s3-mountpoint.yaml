@@ -1,5 +1,7 @@
 node:
   tolerateAllTaints: true
+  podLabels:
+    admission.datadoghq.com/enabled: "false"
   serviceAccount:
     annotations:
       "eks.amazonaws.com/role-arn": "arn:aws:iam::446046036926:role/AmazonEKS_S3_CSI_DriverRole-loginbionimbus"
