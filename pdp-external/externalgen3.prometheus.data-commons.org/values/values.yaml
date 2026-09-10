@@ -234,14 +234,7 @@ portal:
           "explorerPublic": false
         },
         "showArboristAuthzOnProfile": true,
-        "showFenceAuthzOnProfile": true,
-        "componentToResourceMapping": {
-          "Workspace": {
-            "resource": "/workspace",
-            "method": "access",
-            "service": "noAccess"
-          }
-        }
+        "showFenceAuthzOnProfile": true
       }
 
 
