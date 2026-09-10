@@ -227,10 +227,9 @@ hatchery:
             },
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
-              "--ServerApp.default_url=/lab",
+              "--ServerApp.default_url=/lab/tree/heal-welcome-wsl.ipynb",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.notebook_dir='/home/jovyan'",
+              "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=3600"
             ],
             "command": [
