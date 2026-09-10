@@ -187,6 +187,7 @@ portal:
 
   # GitOps config for portal
   gitops:
+    gen3Bundle: common
     json: |
       {
         "graphql": {
