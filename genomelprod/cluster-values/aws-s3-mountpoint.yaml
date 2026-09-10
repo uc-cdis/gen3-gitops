@@ -1,8 +1,8 @@
-  node:
-    tolerateAllTaints: true
-    serviceAccount:
-      annotations:
-        "eks.amazonaws.com/role-arn": "arn:aws:iam::446046036926:role/AmazonEKS_S3_CSI_DriverRole-genomelprod"
-    securityContext:
-      privileged: true
-      allowPrivilegeEscalation: true   # must match privileged: true
+node:
+  tolerateAllTaints: true
+  serviceAccount:
+    annotations:
+      "eks.amazonaws.com/role-arn": "arn:aws:iam::446046036926:role/AmazonEKS_S3_CSI_DriverRole-genomelprod"
+  securityContext:
+    privileged: true
+    allowPrivilegeEscalation: true   # must match privileged: true
