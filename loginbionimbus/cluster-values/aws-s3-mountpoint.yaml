@@ -1,3 +1,5 @@
+supportLegacySystemDMounts: false
+
 node:
   tolerateAllTaints: true
   podLabels:
