@@ -8,11 +8,16 @@ gen3-workflow:
     create: true
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
-  gen3WorkflowConfig:
-    debug: true
-    taskImageWhitelist:
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
       - "pytorch/pytorch:latest" # for test_nf_canary TEST_GPU
+    DPOP_ENABLED: true
+    DPOP_REQUIRED: true
+    DPOP_SHARED_SECRET: dummy-value-not-a-secret
+    # TODO remove once funnel workers do not use OIDC client anymore:
+    DPOP_EXEMPT_CLIENT_IDS: ["*"]
