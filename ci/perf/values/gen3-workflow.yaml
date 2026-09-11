@@ -17,4 +17,4 @@ gen3-workflow:
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
     # TODO remove once funnel workers do not use OIDC client anymore:
-    DPOP_EXEMPT_CLIENT_IDS: ['gCSTEDHzd8R4VJ6zffpgGqWHx30kzgicJJDhddoy']
+    DPOP_EXEMPT_CLIENT_IDS: ["*"]
