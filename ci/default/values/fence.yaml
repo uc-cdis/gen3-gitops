@@ -415,3 +415,7 @@ fence:
     ALLOWED_GEN3_EMBEDDINGS_BULK_URL_PREFIXES: []  # IMPORTANT: REMEMBER TO REMOVE [] WHEN YOU ADD ITEMS
     GEN3_EMBEDDINGS_API_REGEX: '/vectorstore/collections/(?P<collection_name>[^/]+)/embeddings/(?P<embedding_uuid>[^/]+)'
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+
+    MAX_TASK_TOKEN_TTL: {"WORKFLOW": 4000}
+    ALLOWED_TASK_TOKEN_TYPES: ["WORKFLOW", "FOO"]
+    DPOP_ENABLED: true
