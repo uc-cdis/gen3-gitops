@@ -8,6 +8,22 @@ configuration:
 
 storageclass:
   enabled: true
+  name: gp3
+  default: true
+
+  provisioner: ebs.csi.aws.com
+
+  reclaimPolicy: Retain
+  volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: true
+
+  parameters:
+    type: gp3
+    encrypted: "true"
+
+  previousDefault:
+    removeDefault: true
+    name: standard
 
 alb-controller:
   enabled: true
