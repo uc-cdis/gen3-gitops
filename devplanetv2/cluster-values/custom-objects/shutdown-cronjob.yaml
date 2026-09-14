@@ -37,8 +37,12 @@ spec:
                 - -c
                 - |
                   #!/usr/bin/env bash
-
-                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers  |  grep -vFxf /blacklist  | xargs -r -n1 kubectl scale deployments --all --replicas=0 -n
+                  kubectl get ns -o custom-columns=NAME:.metadata.name --no-headers \
+                    | grep -vFxf /blacklist \
+                    | xargs -r -n1 sh -c '
+                        kubectl scale deployments --all --replicas=0 -n "$1"
+                        kubectl get cronjobs -n "$1" -o name \
+                          | xargs -r -n1 kubectl patch -n "$1" --type=merge -p '{"spec":{"suspend":true}}'
               command:
                 - /bin/bash
               image: quay.io/cdis/awshelper:master
