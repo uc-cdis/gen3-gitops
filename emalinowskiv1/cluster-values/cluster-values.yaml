@@ -14,7 +14,7 @@ storageclass:
   provisioner: ebs.csi.aws.com
 
   reclaimPolicy: Retain
-  volumeBindingMode: Immediate
+  volumeBindingMode: WaitForFirstConsumer
   allowVolumeExpansion: true
 
   parameters:
@@ -22,7 +22,7 @@ storageclass:
     encrypted: "true"
 
   previousDefault:
-    removeDefault: true
+    removeDefault: false
     name: standard
 
 alb-controller:
