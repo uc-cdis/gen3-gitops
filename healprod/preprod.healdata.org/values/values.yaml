@@ -28,7 +28,7 @@ cedar:
   enabled: true
   image:
     repository: quay.io/cdis/cedar-wrapper-service
-    tag: 0.7.0
+    tag: '0.8.0'
   cedar_client_job_enabled: false
   externalSecrets:
     createCedarClientSecret: false
@@ -214,8 +214,8 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "2.0",
             "memory-limit": "8Gi",
-            "name": "JupyterLab Software Library Testing",
-            "image": "quay.io/cdis/jupyterlab-generic:master",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__8f9daf80d2ff38e218afc349ed1160704c81e5cc",
             "pull_policy": "Always",
             "squashfs_mount": {
               "enabled": true,
@@ -227,10 +227,9 @@ hatchery:
             },
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
-              "--ServerApp.default_url=/lab",
+              "--LabApp.default_url=/lab/tree/heal-welcome-wsl.ipynb",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.notebook_dir='/home/jovyan'",
+              "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=3600"
             ],
             "command": [
