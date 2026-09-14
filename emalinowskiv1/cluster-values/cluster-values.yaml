@@ -6,6 +6,9 @@ accountNumber: "707767160287"
 configuration:
   configurationRevision: master
 
+storageclass:
+  enabled: true
+
 alb-controller:
   enabled: true
   configuration:
