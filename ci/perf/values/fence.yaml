@@ -433,3 +433,4 @@ fence:
     #       e.g. if the Gen3 Embeddings service is configured to allow max 1000, then this
     #            can't be more than that for embeddings content resolutions
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+    MAX_BULK_DRS_REQUESTS: 100
