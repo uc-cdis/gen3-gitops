@@ -14,7 +14,7 @@ storageclass:
   provisioner: ebs.csi.aws.com
 
   reclaimPolicy: Retain
-  volumeBindingMode: WaitForFirstConsumer
+  volumeBindingMode: Immediate
   allowVolumeExpansion: true
 
   parameters:
