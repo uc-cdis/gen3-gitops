@@ -169,6 +169,9 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.09'
+  trustedIssuers:
+    defaultPassportIssuer: 'https://stsstg.nih.gov'
+    defaultPreferredType: 'PassportAuth'
 metadata:
   replicaCount: 4
   enabled: true
