@@ -517,9 +517,6 @@ indexd:
     defaultPassportIssuer: "https://stsstg.nih.gov"
     defaultPreferredType: "PassportAuth"
     "/open":
-      supported_types:
-        - BearerAuth
-        - PassportAuth
       bearer_auth_issuers:
         - "https://staging.gen3.biodatacatalyst.nhlbi.nih.gov/user"
       passport_auth_issuers:
