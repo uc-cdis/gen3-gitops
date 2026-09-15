@@ -3,6 +3,9 @@ project: unfunded
 
 accountNumber: "662843554732"
 
+argo-workflows:
+  enabled: true
+
 alb-controller:
   enabled: true
   configuration:
