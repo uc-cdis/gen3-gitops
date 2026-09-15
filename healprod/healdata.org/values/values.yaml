@@ -1476,7 +1476,6 @@ sheepdog:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.08'
-  replicaCount: 2
 sower:
   serviceAccount:
     create: true
@@ -1542,6 +1541,7 @@ wts:
     tag: '2026.08'
 zendesk-wrapper:
   enabled: true
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/zendesk-wrapper-service
     tag: 0.2.0
