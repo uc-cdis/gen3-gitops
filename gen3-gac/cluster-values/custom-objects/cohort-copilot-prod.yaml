@@ -12,7 +12,7 @@ data:
   EMBED_BATCH_SIZE: "16"
   VLLM_RPC_TIMEOUT: "300"
   VLLM_USE_V1: "0"
-  LOCAL_API_URL: "http://conduit-server.default.svc.cluster.local:8080/a/m3ai/v1/"
+  LOCAL_API_URL: "http://conduit-server.default.svc.cluster.local:8080/a/genomic-ai-commons/v1/"
 ---
 apiVersion: v1
 kind: ConfigMap

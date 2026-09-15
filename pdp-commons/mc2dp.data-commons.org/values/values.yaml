@@ -122,7 +122,7 @@ gen3-embeddings:
     pullPolicy: Always
     tag: 0.1.1
   externalSecrets:
-    createK8sGen3EmbeddingsSecret: false
+    createK8sGen3EmbeddingsSecret: true
     pushSecret: false
     dbcreds: "pdp-commons-embedding-management-service-creds"
 
@@ -140,10 +140,10 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: true
-    gpu: true
-    jupyter: true
-
+    enabled: false
+    gpu: false
+    jupyter: false
+    # FIXME
     availabilityZones:
       - us-east-1d
 
@@ -270,7 +270,7 @@ hatchery:
             "gpu": true,
             "memory-limit": "8Gi",
             "name": "AI/ML (2CPU/8GB RAM, GPU)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-master",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-drb-mc2dp-data-addition",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
