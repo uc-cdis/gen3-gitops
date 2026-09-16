@@ -45,10 +45,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 8Gi
+        memory: 16Gi
     spark:
       requests:
-        memory: 4Gi
+        memory: 8Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -1058,7 +1058,6 @@ sower:
     - action: export
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
           karpenter.sh/do-not-disrupt: "true"
         env:
@@ -1112,7 +1111,6 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
           karpenter.sh/do-not-disrupt: "true"
         env:
