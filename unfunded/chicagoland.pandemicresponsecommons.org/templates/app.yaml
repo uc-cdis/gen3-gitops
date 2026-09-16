@@ -16,7 +16,7 @@ spec:
         valueFiles:
           - $values/unfunded/chicagoland.pandemicresponsecommons.org/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: feat/prc_unfunded
+      targetRevision: mastet
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
