@@ -30,7 +30,7 @@ data:
     logging
     monitoring
     qabot
-    qa-prometheus
+    qa-mc2dp-helm
     qa-vpodc
     qa-vpodc-helm
     qaplanetv2
