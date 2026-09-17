@@ -58,10 +58,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 1.5Gi
+        memory: 2Gi
     spark:
       requests:
-        memory: 1Gi
+        memory: 10Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -1041,7 +1041,7 @@ wts:
     wtsOidcClient: midrcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.08'    
+    tag: '2026.08'
 # AuroraRDSCopy Job configuration
 auroraRdsCopyJob:
   enabled: true
