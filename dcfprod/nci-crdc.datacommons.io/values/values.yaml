@@ -366,6 +366,9 @@ fence:
       cds-730-phs004947-tcr:
         cred: fence_bot
         region: us-east-1
+      cds-733-phs004965-bet-inhibitors:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
