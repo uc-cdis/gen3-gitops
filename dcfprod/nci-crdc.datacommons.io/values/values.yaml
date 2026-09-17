@@ -1462,3 +1462,4 @@ ssjdispatcher:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
     tag: '2026.08'
   indexing: quay.io/cdis/indexs3client:2026.08
+
