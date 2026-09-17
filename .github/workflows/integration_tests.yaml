@@ -11,9 +11,7 @@ permissions:
 jobs:
   integration_tests:
     name: Integration tests
-    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@chore/cleanup_failure_analysis
-    with:
-      TEST_REPO_BRANCH: chore/enable_pytest_test_failure_using_conduit
+    uses: uc-cdis/.github/.github/workflows/integration_tests.yaml@master
     secrets:
       CI_TEST_ORCID_USERID: ${{ secrets.CI_TEST_ORCID_USERID }}
       CI_TEST_ORCID_PASSWORD: ${{ secrets.CI_TEST_ORCID_PASSWORD }}
