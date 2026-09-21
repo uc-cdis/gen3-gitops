@@ -58,12 +58,12 @@ etl:
   resources:
     tube:
       requests:
-        cpu: 500m
-        memory: 8Gi
+        cpu: 600m
+        memory: 10Gi
     spark:
       requests:
-        cpu: 300m
-        memory: 3Gi
+        cpu: 400m
+        memory: 4Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
