@@ -1,0 +1,166 @@
+global:
+  pdb: true
+  aws:
+    account: "895962626746"
+    enabled: true
+    secretStoreServiceAccount:
+      enabled: true
+      roleArn: arn:aws:iam::895962626746:role/bdcatprod-external-secrets-sa
+    wafv2:
+      enabled: true
+      wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
+  dev: false
+  environment: dataguids
+  externalSecrets:
+    createSlackWebhookSecret: true
+    slackWebhookSecretName: bdcatprod-slack-webhook
+    deploy: true
+  hostname: dataguids.org
+  portalApp: gitops
+  postgres:
+    dbCreate: false
+  revproxyArn: arn:aws:acm:us-east-1:895962626746:certificate/742b0502-bcd6-45b9-8a18-921560be4432
+
+indexd:
+  enabled: true
+  replicaCount: 8
+  image:
+    repository: quay.io/cdis/indexd
+    pullPolicy: Always
+    tag: "2026.02"     
+  env:
+    - name: "ARBORIST"
+      value: "true"
+    - name: "GEN3_DEBUG"
+      value: "False"
+    - name: "DIST"
+      valueFrom:
+        configMapKeyRef:
+          key: dist
+          name: manifest-indexd
+          optional: true
+    
+metadata:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
+    pullPolicy: Always
+    tag: "2026.02"
+  externalSecrets:
+    metadataG3auto: dataguids-metadata-g3auto
+portal:
+  enabled: true
+  replicaCount: 2
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/dataguids
+    pullPolicy: Always
+    tag: "1.0.2"
+  nginxConf:
+    serverBlock: |
+      ##
+      # Logging Settings
+      ##
+      log_format json '{"gen3log": "nginx", '
+              '"date_access": "$time_iso8601", '
+              '"user_id": "$http_x_userid", '
+              '"request_id": "$http_x_reqid", '
+              '"session_id": "$http_x_sessionid", '
+              '"visitor_id": "$http_x_visitorid", '
+              '"network_client_ip": "$http_x_forwarded_for", '
+              '"network_bytes_write": $body_bytes_sent, '
+              '"http_response_time": "$request_time", '
+              '"http_status_code": $status, '
+              '"http_request": "$request_uri", '
+              '"http_verb": "$request_method", '
+              '"http_referer": "$http_referer", '
+              '"http_useragent": "$http_user_agent", '
+              '"message": "$request"}';
+
+      access_log /dev/stdout json;
+
+      server {
+          listen {{ .Values.service.targetPort }} default_server;
+          server_tokens off;
+
+          root /usr/share/nginx/html;
+          index index.html index.htm;
+
+          location ~ /\. {
+              deny all;
+          }
+
+          location ~ package.json$ {
+              deny all;
+          }
+
+          location ~ package-lock.json$ {
+              deny all;
+          }
+
+          location ^~ /npm-debug.log {
+              deny all;
+          }
+
+          location ^~ /tsconfig.json {
+              deny all;
+          }
+
+          location ^~ /webpack.config.js {
+              deny all;
+          }
+
+          location ^~ /yarn.lock {
+              deny all;
+          }
+
+          location ^~ /nginx.conf {
+              deny all;
+          }
+
+          location ~* \.(?:manifest|appcache|html?|xml|json)$ {
+              expires -1;
+          }
+
+          location ~* \.(?:css|js)$ {
+              try_files $uri =404;
+              expires 1y;
+              access_log off;
+              add_header Cache-Control "public";
+          }
+
+          location / {
+              try_files $uri /index.html;
+          }
+      }
+
+    
+revproxy:
+  enabled: true
+  replicaCount: 4
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
+    pullPolicy: Always
+    tag: "2026.02"
+
+
+ambdassador:
+  enabled: false
+arborist:
+  enabled: false
+audit:
+  enabled: false
+etl:
+  enabled: false
+fence:
+  enabled: false
+hatchery:
+  enabled: false
+manifestservice:
+  enabled: false
+peregrine:
+  enabled: false
+sheepdog:
+  enabled: false
+wts:
+  enabled: false
