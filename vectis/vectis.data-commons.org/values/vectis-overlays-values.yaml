@@ -1,0 +1,36 @@
+# Production overrides for the vectis-overlays subchart in gen3-helm.
+vectis-overlays:
+  enabled: true
+
+  guppyCompat:
+    enabled: false
+
+  searchAuthProxy:
+    enabled: false
+
+  s3Monitor:
+    enabled: false
+
+  migrations:
+    enabled: false
+
+  siemService:
+    enabled: true
+    serviceAccount:
+      create: true
+      name: siem-service
+      annotations:
+        eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-siem-service-sa"
+    image:
+      repository: quay.io/cdis/gen3-vectis
+      tag: vectis-siem-service-v1
+      pullPolicy: Always
+    env:
+      SEARCH_BASE: "https://vectis-api.data-commons.org/search"
+      ARBORIST_URL: "http://arborist-service.default.svc.cluster.local"
+      SIEM_DEFAULT_LIMIT: "251"
+      SIEM_MAX_LIMIT: "2000"
+      SIEM_VIEWS_S3_BUCKET: "vectis-ctds-172585802910-us-east-1"
+      SIEM_VIEWS_S3_KEY: "config/siem/views.json"
+      SIEM_DEFAULT_VIEWS_S3_KEY: "config/siem/default-views.json"
+      SIEM_VIEWS_S3_ENABLED: "true"
