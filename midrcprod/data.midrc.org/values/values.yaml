@@ -60,10 +60,12 @@ etl:
       requests:
         cpu: 600m
         memory: 10Gi
+        ephemeral-storage: 40Gi
     spark:
       requests:
         cpu: 400m
         memory: 4Gi
+        ephemeral-storage: 5Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
