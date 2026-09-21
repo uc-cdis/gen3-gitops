@@ -296,9 +296,16 @@ hatchery:
             "enabled": true,
             "oidc-provider-arn": "arn:aws:iam::663707118480:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/274F67985C56EBE1E628BA749BAE9222"
           },
+          "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-16P8L55B0Q5UX",
+          "priciing": {
+              "cpu": 0.04048,
+              "memory": 0.004445
+           },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
-              "local": true
+              "local": true,
+              "hard-limit": 5,
+              "soft-limit": 4
           },
           "sidecar": {
               "cpu-limit": "1.0",
@@ -401,7 +408,7 @@ hatchery:
             "gpu": true,
             "memory-limit": "8Gi",
             "name": "AI/ML (2CPU/8GB RAM, GPU)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-drb-mc2dp-data-addition",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-drb-update-mc2dp-mmcancer",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",

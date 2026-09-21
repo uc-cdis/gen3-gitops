@@ -45,10 +45,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 8Gi
+        memory: 16Gi
     spark:
       requests:
-        memory: 4Gi
+        memory: 8Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -923,6 +923,7 @@ indexd:
   enabled: true
   externalSecrets:
     serviceCreds: bdcatprod-indexd-service-creds
+    dbcreds: bdcatprod-helm-indexd-creds-260915-184715
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.07'
@@ -943,6 +944,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: bdcatprod-metadata-g3auto
+    dbcreds: bdcatprod-helm-metadata-creds-260915-183534
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2026.07'
@@ -1037,6 +1039,8 @@ sheepdog:
     targetCPUUtilizationPercentage: 90
   replicaCount: 4
   enabled: true
+  externalSecrets:
+    dbcreds: bdcatprod-helm-sheepdog-creds-260915-184707
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.07'
@@ -1054,7 +1058,6 @@ sower:
     - action: export
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
           karpenter.sh/do-not-disrupt: "true"
         env:
@@ -1108,7 +1111,6 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
           karpenter.sh/do-not-disrupt: "true"
         env:
