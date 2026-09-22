@@ -36,7 +36,7 @@ global:
     # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
     maxSkew: 1
   netPolicy:
-      enabled: true
+      enabled: false
       dbSubnets:
         - 172.27.128.128/25
         - 172.27.128.0/25
