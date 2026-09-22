@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.28'
+    tag: 'main'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -154,7 +154,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.2'
+    tag: '2.11.0'
   hatchery:
     json: |
       {
@@ -163,12 +163,17 @@ hatchery:
           "user-volume-size": "10Gi",
           "shared-workspace": {
             "enabled": true,
-            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
           },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
           },
+          "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
+        "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32,
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
@@ -234,33 +239,34 @@ hatchery:
             "gpu": false,
             "memory-limit": "4Gi",
             "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "image": "quay.io/cdis/jupyterlab-generic:master",
             "pull_policy": "Always",
             "env": {
-              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+              "FRAME_ANCESTORS": "https://qa-prometheus.planx-pla.net",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-08-20.sqsh"
+            },
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.ip='*'",
               "--ServerApp.disable_check_xsrf=True",
-              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+              "--ServerApp.allow_origin='https://qa-prometheus.planx-pla.net'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
-              "--ServerApp.quit_button=False",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--FileContentsManager.always_delete_dir=True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
             "ready-probe": "/lw-workspace/proxy/lab",
             "user-uid": 1010,
-            "fs-gid": 101,
+            "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3"
           },
