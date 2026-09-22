@@ -59,6 +59,17 @@ dashboard:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
 etl:
+  resources:
+    tube:
+      requests:
+        cpu: 500m
+        memory: 10Gi
+        ephemeral-storage: 60Gi
+    spark:
+      requests:
+        cpu: 500m
+        memory: 6Gi
+        ephemeral-storage: 5Gi
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
