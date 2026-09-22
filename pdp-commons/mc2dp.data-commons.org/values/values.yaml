@@ -242,7 +242,7 @@ hatchery:
             "image": "quay.io/cdis/jupyterlab-generic:master",
             "pull_policy": "Always",
             "env": {
-              "FRAME_ANCESTORS": "https://qa-prometheus.planx-pla.net",
+              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
             "squashfs_mount": {
@@ -257,9 +257,9 @@ hatchery:
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
               "--ServerApp.disable_check_xsrf=True",
-              "--ServerApp.allow_origin='https://qa-prometheus.planx-pla.net'",
+              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
               "--FileContentsManager.always_delete_dir=True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
