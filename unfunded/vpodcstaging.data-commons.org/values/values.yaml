@@ -5,6 +5,7 @@
 # cohort-middleware secret, ohdsi-webapi secret, ssjdispatcher secret, and sower/pelican secret.
 
 global:
+  argoHost: http://argo-workflows-server.argo.svc.cluster.local:2746
   aws:
     enabled: true
     account: '662843554732'
