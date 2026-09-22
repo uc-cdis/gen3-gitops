@@ -106,7 +106,7 @@ hatchery:
       memory: 4Gi
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.08'
+    tag: '2.11.0'
   hatchery:
     json: |-
       {
@@ -124,6 +124,12 @@ hatchery:
           "soft-limit": 4
         },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-34AAJOR7A5AG",
+        "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "prefixBase": "brhprod",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
@@ -152,6 +158,43 @@ hatchery:
           "imagebuilder-reader-role-arn": "arn:aws:iam::143731057154:role/nextflow-imagebuilder-reader"
         },
         "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "memory-limit": "8Gi",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/brh-notebooks:software_library_brh__2c20cae3e0597e3b932aa5017b62155d0eb70cfa",
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "env": {
+              "FRAME_ANCESTORS": "https://brh.data-commons.org",
+              "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
+            },
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--LabApp.default_url=/lab/tree/brh-welcome-wsl.ipynb",
+              "--ServerApp.password=''",
+              "--ServerApp.notebook_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=3600"
+            ],
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
           {
             "target-port": 8888,
             "cpu-limit": "1.0",
