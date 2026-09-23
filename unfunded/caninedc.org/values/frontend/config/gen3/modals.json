@@ -1,0 +1,18 @@
+{
+  "systemUseModal": {
+    "title": "Data Use Agreement for Academic and Institutional Users",
+    "content": {
+      "text": [
+        "The Canine Data Commons (\"Platform\") provides access to genomic and research data for the canine research community, supporting the sharing of data to accelerate discovery and development of treatments and prevention strategies for canine cancer.",
+        "Access to the Platform is granted based on approved authorization and need-to-know principles. Users agree to access only data for which they are authorized and must maintain the confidentiality of their authentication credentials. Users may not share access or attempt to bypass security mechanisms.",
+        "All data must be used in accordance with applicable regulatory, contractual, and platform requirements. Redistribution of data to external systems or repositories without explicit authorization is prohibited.",
+        "All user activity on the Platform may be logged, monitored, and reviewed to ensure compliance with platform requirements.",
+        "The Platform must be used only for lawful purposes consistent with applicable Federal, State, Local, and institutional requirements. Users may not attempt to disrupt, intercept, or misuse system resources.",
+        "All data are provided \"as is\" without warranties of any kind. Failure to comply with these Terms of Use may result in suspension or termination of access.",
+        "By selecting \"Accept,\" the user certifies that they have read, understand, and agree to comply with these Terms of Use and any applicable Data Use Agreements."
+      ]
+    },
+    "expireDays": 365,
+    "showOnlyOnLogin": true
+  }
+}

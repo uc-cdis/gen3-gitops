@@ -1,0 +1,332 @@
+global:
+  pdb: true
+  aws:
+    enabled: true
+    account: "467765330347"
+    hatchery_role: "arn:aws:iam::467765330347:role/gen3-service/gen3-gac-default-hatchery-sa"
+    secretStoreServiceAccount:
+      enabled: true
+      name: external-secrets
+      roleArn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-external-secrets-sa"
+    wafv2:
+      enabled: true
+      wafAclArn: "arn:aws:wafv2:us-east-1:467765330347:regional/webacl/gen3-gac-waf/83f03e63-2b95-4350-8ea0-31c8e2149721"
+  dev: false
+  externalSecrets:
+    deploy: true
+    apiVersion: "external-secrets.io/v1"
+  postgres:
+    dbCreate: true
+    externalSecret: "gen3-gac-aurora-master-password"
+  environment: "gen3-gac"
+  hostname: "genomicaicommons.org"
+  revproxyArn: "arn:aws:acm:us-east-1:467765330347:certificate/bf2b6741-9d9d-4a58-9d7c-2c4118d4698c"
+  dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
+  portalApp: gitops
+  publicDataSets: false
+  tierAccessLevel: "private"
+  tierAccessLimit: "100"
+  netPolicy:
+    enabled: false
+  dispatcherJobNum: "10"
+  frontendRoot: "gen3ff"
+  ddEnabled: false
+
+ambassador:
+  replicaCount: 2
+  enabled: true
+  jupyterNamespace: jupyter-pods-default
+
+arborist:
+  replicaCount: 3
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-gac-default-arborist-creds"
+
+argo-wrapper:
+  enabled: false
+
+audit:
+  replicaCount: 2
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-audit-sa"
+  externalSecrets:
+    dbcreds: "gen3-gac-default-audit-creds"
+    createK8sAuditSecret: true
+
+
+aws-sigv4-proxy:
+  replicaCount: 2
+  enabled: true
+  esEndpoint: ""
+  externalSecrets:
+    awsCreds: "gen3-gac-default-aws-es-proxy-creds"
+
+dicom-server:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-gac-default-dicom-server-creds"
+
+dicom-viewer:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-gac-default-dicom-viewer-creds"
+
+
+fence:
+  replicaCount: 2
+  enabled: true
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-fence-sa"
+
+  externalSecrets:
+    fenceJwtKeys: "gen3-gac-default-fence-jwt-keys"
+    fenceConfig: "gen3-gac-default-fence-config"
+    fenceGoogleAppCredsSecret: ""
+    fenceGoogleStorageCredsSecret: ""
+    createK8sGoogleAppSecrets: true
+    dbcreds: "gen3-gac-default-fence-creds"
+
+  usersync:
+    usersync: true
+    schedule: "*/30 * * * *"
+    syncFromDbgap: false
+    userYamlS3Path: "s3://cdis-gen3-users/m3ai/user.yaml"
+    slack_webhook: ""
+    slack_send_dbgap: false
+
+frontend-framework:
+  replicaCount: 2
+  enabled: true
+  env:
+    DATADOG_APPLICATION_ID: "a5df0a65-92a5-4c51-9923-25f6a85e5fdb"
+    DATADOG_CLIENT_TOKEN: "puba8c843b5af57cc0ffba79932014bb5de"
+    DATADOG_SITE: "ddog-gov.com"
+    DATACOMMONS: "GAC"
+  image:
+    repository: "quay.io/cdis/cac-data-commons"
+    tag: "feat_gac_commons_initial"
+
+gen3-embeddings:
+  enabled: true
+  debug: true
+  replicaCount: 2
+  postgres:
+    dbCreate: true
+  image:
+    repository: quay.io/cdis/gen3_embeddings
+    pullPolicy: Always
+    tag: 0.1.1
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: false
+    pushSecret: false
+    dbcreds: "gen3-gac-default-gen3-embeddings-creds"
+
+grafana:
+  enabled: false
+
+guppy:
+  enabled: false
+
+hatchery:
+  replicaCount: 2
+  enabled: true
+  image:
+    tag: feat_gpu-support
+
+  hotNode:
+    enabled: false
+    gpu: true
+    jupyter: false
+
+    availabilityZones:
+      - us-east-1c
+
+    # This should be AT LEAST the total amount of CPU and memory to reserve, per availability zone
+    workspaceCapacityReservation:
+      cpu: 3
+      memory: 8Gi
+
+  hatchery:
+    json: |
+      {
+        "user-namespace": "jupyter-pods-default",
+        "skip-node-selector": false,
+        "use-internal-services-url": false,
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "sidecar": {
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "cpu-limit": "0.1",
+          "env": {
+            "HOSTNAME": "genomicaicommons.org",
+            "NAMESPACE": "default"
+          },
+          "image": "quay.io/cdis/ecs-ws-sidecar:master",
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ],
+          "memory-limit": "256Mi"
+        },
+        "containers": [
+          {
+            "args": [
+              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
+              "--JupyterNotebookApp.default_url=/lab",
+              "--JupyterNotebookApp.password=''",
+              "--JupyterNotebookApp.token=''",
+              "--JupyterNotebookApp.ip='*'",
+              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
+              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
+              "--JupyterNotebookApp.quit_button=False"
+            ],
+            "command": [
+              "start-notebook.sh"
+            ],
+            "gpu": true,
+            "cpu-limit": "3.0",
+            "env": {
+              "FRAME_ANCESTORS": "https://genomicaicommons.org"
+            },
+            "fs-gid": 100,
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "image": "quay.io/cdis/m3ai-demos:master",
+            "pull_policy": "Always",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true"
+            ],
+            "memory-limit": "8Gi",
+            "name": "(GPU) Embedding Demos - Jupyter Lab Notebooks",
+            "path-rewrite": "/lw-workspace/proxy/",
+            "ready-probe": "/lw-workspace/proxy/",
+            "target-port": 8888,
+            "use-tls": "false",
+            "user-uid": 1010,
+            "user-volume-location": "/home/jovyan/pd"
+          }
+        ]
+      }
+
+indexd:
+  replicaCount: 2
+  enabled: true
+  defaultPrefix: "dg.XXXX/"
+  externalSecrets:
+    dbcreds: "gen3-gac-default-indexd-creds"
+    createK8sServiceCredsSecret: true
+
+
+manifestservice:
+  replicaCount: 2
+  enabled: true
+  manifestserviceG3auto:
+    hostname: genomicaicommons.org
+    # -- (string) Bucket for the manifestservice to read and write to.
+    bucketName: manifestservice-gen3-gac-default
+    # -- (string) Directory name to use within the s3 bucket.
+    prefix: default
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-manifestservice-sa"
+  externalSecrets:
+    createK8sManifestServiceSecret: true
+
+metadata:
+  replicaCount: 2
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-gac-default-metadata-creds"
+    createK8sMetadataSecret: true
+
+peregrine:
+  replicaCount: 2
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-gac-default-sheepdg-creds"
+
+pidgin:
+  enabled: false
+
+portal:
+  enabled: false
+
+requestor:
+  enabled: false
+  externalSecrets:
+    dbcreds: "gen3-gac-default-requestor-creds"
+
+revproxy:
+  replicaCount: 3
+  enabled: true
+  extraServices:
+  - name: "cohort-copilot"
+    path: /cohort-copilot
+    serviceName: cohort-copilot-gradio
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
+  - name: "cohort-copilot-chat"
+    path: /cohort-copilot-chat
+    serviceName: cohort-copilot-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
+  - name: "agent"
+    path: /qag
+    serviceName: qag-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: false
+    rewritePath: false
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
+
+
+sheepdog:
+  replicaCount: 2
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-gac-default-sheepdog-creds"
+
+ssjdispatcher:
+  enabled: false
+
+sower:
+  enabled: false
+
+wts:
+  replicaCount: 2
+  enabled: true
+  externalSecrets:
+    dbcreds: "gen3-gac-default-wts-creds"
+    createK8sWtsSecret: true
+    createWtsOidcClientSecret: true

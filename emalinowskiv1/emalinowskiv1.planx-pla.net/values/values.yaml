@@ -170,6 +170,7 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    externalSecret: emalinowskiv1-aurora-master-password
   revproxyArn: arn:aws:acm:us-east-1:707767160287:certificate/c676c81c-9546-4e9a-9a72-725dd3912bc8
   topologySpread:
     # -- (bool) Whether to enable topology spread constraints for all subcharts that support it.
@@ -198,8 +199,11 @@ hatchery:
     tag: '2025.10'
 indexd:
   enabled: true
+  postgres:
+    dbCreate: true  
   externalSecrets:
     serviceCreds: emalinowskiv1-indexd-service-creds
+    pushSecret: true
   image:
     repository: quay.io/cdis/indexd
     tag: feat_GPE-788
