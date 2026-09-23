@@ -136,7 +136,7 @@ hatchery:
           "memory-limit": "256Mi",
           "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
-            "NAMESPACE": "default",
+            "NAMESPACE": "brhprod-helm",
             "HOSTNAME": "brh.data-commons.org"
           },
           "args": [],
