@@ -125,6 +125,7 @@ gen3-workflow:
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
       - "quay.io/cdis/containers:*"
+      - "docker.io/wangfan860/tes-gdc-maf:*"
 funnel:
   replicaCount: 2
   postgres:
