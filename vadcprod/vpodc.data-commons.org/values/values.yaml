@@ -297,10 +297,10 @@ hatchery:
             "oidc-provider-arn": "arn:aws:iam::663707118480:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/274F67985C56EBE1E628BA749BAE9222"
           },
           "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-16P8L55B0Q5UX",
-          "priciing": {
+          "pricing": {
               "cpu": 0.04048,
               "memory": 0.004445
-           },
+          },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true,
