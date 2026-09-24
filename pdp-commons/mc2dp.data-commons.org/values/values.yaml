@@ -1,7 +1,7 @@
 ambassador:
   enabled: false
   jupyterNamespace: jupyter-pods
-  replicaCount: 2
+  replicaCount: 3
 arborist:
   replicaCount: 2
   enabled: true
