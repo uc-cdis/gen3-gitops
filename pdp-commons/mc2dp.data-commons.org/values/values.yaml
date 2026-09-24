@@ -177,7 +177,7 @@ hatchery:
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
-              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.03",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.07",
               "env": {
                   "NAMESPACE": "default",
                   "HOSTNAME": "mc2dp.data-commons.org"
@@ -239,7 +239,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "4Gi",
             "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "quay.io/cdis/jupyterlab-generic:master",
+            "image": "quay.io/cdis/jupyterlab-generic:3.3.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
