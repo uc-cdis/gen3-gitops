@@ -1,9 +1,9 @@
 funnel:
   postgres:
-    dbCreate: false
+    dbCreate: true
   externalSecrets:
     dbcreds: "ci-perf-funnel-creds"
-    pushSecret: false
+    pushSecret: true
     funnelOidcClient: "ci-perf-funnel-oidc-client"
   Kubernetes:
     JobsNamespace: "workflow-pods-ci-perf"
