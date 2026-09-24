@@ -238,7 +238,7 @@ hatchery:
             "cpu-limit": "2.0",
             "gpu": false,
             "memory-limit": "4Gi",
-            "name": "Standard (2CPU/4GB RAM, CPU only)",
+            "name": "Standard (2CPU/4GB RAM, CPU only) - WSL",
             "image": "quay.io/cdis/jupyterlab-generic:3.3.0",
             "pull_policy": "Always",
             "env": {
