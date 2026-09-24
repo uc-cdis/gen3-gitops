@@ -1385,7 +1385,7 @@ revproxy:
   ingress:
     aws:
       group: dcfprod
-      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   enabled: true
   replicaCount: 2
