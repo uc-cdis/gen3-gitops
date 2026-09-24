@@ -162,7 +162,7 @@ hatchery:
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
           "shared-workspace": {
-            "enabled": true,
+            "enabled": true
           },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
