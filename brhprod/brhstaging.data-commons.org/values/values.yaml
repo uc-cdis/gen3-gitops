@@ -135,7 +135,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: use-mounted-bucket
+    tag: v0.13.0-gen3
 
     # copy the `initContainers` section to pin the plugin to a branch
     initContainers:
