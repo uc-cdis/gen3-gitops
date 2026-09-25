@@ -125,6 +125,7 @@ gen3-workflow:
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
       - "quay.io/cdis/containers:*"
+      - "docker.io/wangfan860/tes-gdc-maf:*"
 funnel:
   replicaCount: 2
   postgres:
@@ -134,7 +135,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: use-mounted-bucket
+    tag: v0.13.0-gen3
 
     # copy the `initContainers` section to pin the plugin to a branch
     initContainers:
