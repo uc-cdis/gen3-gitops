@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.07'
+    tag: '2026.08'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: midrcprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.07'
+    tag: '2026.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcprod-helm--audit-sqs-receiver
@@ -34,7 +34,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.07'
+    tag: '2026.08'
 dashboard:
   dashboardConfig:
     bucket: dashboard-813684607867-midrcprod-gen3
@@ -42,7 +42,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.07'
+    tag: '2026.08'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::813684607867:role/midrcprod--midrcprod-helm--dashboard-access
@@ -58,10 +58,14 @@ etl:
   resources:
     tube:
       requests:
-        memory: 1.5Gi
+        cpu: 600m
+        memory: 10Gi
+        ephemeral-storage: 40Gi
     spark:
       requests:
-        memory: 1Gi
+        cpu: 400m
+        memory: 4Gi
+        ephemeral-storage: 5Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -76,6 +80,9 @@ etl:
           - name: submitter_id
           - name: sex
           - name: race
+          - name: race_ethnicity
+          - name: race_ethnicity_detail
+          - name: race_ethnicity_write_in
           - name: age_at_index
           - name: index_event
           - name: zip
@@ -244,7 +251,7 @@ etl:
           - name: study_description
         parent_props:
           - path: imaging_studies[imaging_study_submitter_id:submitter_id,age_at_imaging,imaging_study_body_part_examined:body_part_examined,days_from_study_to_neg_covid_test,days_from_study_to_pos_covid_test,days_to_study,image_data_modified,loinc_code,loinc_contrast,loinc_long_common_name,loinc_method,loinc_system,imaging_study_description:study_description,study_modality]
-          - path: cases[case_submitter_id:submitter_id,sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+          - path: cases[case_submitter_id:submitter_id,sex,race,race_ethnicity,race_ethnicity_detail,race_ethnicity_write_in,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
       - name: midrc_imaging_study
         doc_type: imaging_study
         type: aggregator
@@ -297,7 +304,7 @@ etl:
             path: radiology_reports
             fn: count
         parent_props:
-          - path: cases[sex,race,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
+          - path: cases[sex,race,race_ethnicity,race_ethnicity_detail,race_ethnicity_write_in,age_at_index,index_event,zip,covid19_positive,ethnicity].datasets[dataset_submitter_id:submitter_id,license,data_url_doi,data_contributor]
         joining_props:
           - index: data_file
             join_on: _imaging_study_id
@@ -438,6 +445,15 @@ etl:
               - name: race
                 src: race
                 fn: set
+              - name: race_ethnicity
+                src: race_ethnicity
+                fn: set
+              - name: race_ethnicity_detail
+                src: race_ethnicity_detail
+                fn: set
+              - name: race_ethnicity_write_in
+                src: race_ethnicity_write_in
+                fn: set
               - name: sex
                 src: sex
                 fn: set
@@ -496,9 +512,9 @@ etl:
                 fn: set
   image:
     tube:
-      tag: '2026.07'
+      tag: '2026.08'
     spark:
-      tag: '2026.07'
+      tag: '2026.08'
 fence:
   autoscaling:
     enabled: false
@@ -513,7 +529,7 @@ fence:
     fenceJwtKeys: midrcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.07'
+    tag: '2026.08'
   metricsEnabled: true
   serviceAccount:
     annotations:
@@ -541,7 +557,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:813684607867:regional/webacl/midrcprod-waf/6dae1fe2-287d-4cec-9537-0b8fa1f7d93c
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.2/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/midrc_dictionary/1.4.4/schema.json
   dispatcherJobNum: '10'
   environment: midrcprod
   externalSecrets:
@@ -575,7 +591,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.07'
+    tag: '2026.08'
   indices:
     - index: midrc_case
       type: case
@@ -594,7 +610,7 @@ hatchery:
   jupyterNamespace: jupyter-pods
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.07'
+    tag: '2026.08'
   hotNode:
     enabled: true
   hatchery:
@@ -606,7 +622,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.07",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.08",
           "env": {
             "NAMESPACE": "default",
             "GEN3_ENDPOINT": "data.midrc.org",
@@ -713,7 +729,7 @@ indexd:
     serviceCreds: midrcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.07'
+    tag: '2026.08'
 manifestservice:
   enabled: false
 metadata:
@@ -729,7 +745,7 @@ metadata:
     metadataG3auto: midrcprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.07'
+    tag: '2026.08'
 mutatingWebhook:
   enabled: false
 ohif-viewer:
@@ -958,7 +974,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.07'
+    tag: '2026.08'
 portal:
   autoscaling:
     enabled: false
@@ -974,7 +990,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.07'
+    tag: '2026.08'
 revproxy:
   autoscaling:
     enabled: false
@@ -985,7 +1001,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '2026.08'
   ingress:
     aws:
       group: midrcprod
@@ -995,7 +1011,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.07'
+    tag: '2026.08'
 sheepdog:
   autoscaling:
     enabled: false
@@ -1006,7 +1022,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.07'
+    tag: '2026.08'
 ssjdispatcher:
   enabled: true
   serviceAccount:
@@ -1019,8 +1035,8 @@ ssjdispatcher:
     credsFile: midrcprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.07'
-  indexing: quay.io/cdis/indexs3client:2026.07
+    tag: '2026.08'
+  indexing: quay.io/cdis/indexs3client:2026.08
 wts:
   enabled: true
   externalSecrets:
@@ -1029,4 +1045,22 @@ wts:
     wtsOidcClient: midrcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.07'
+    tag: '2026.08'    
+# AuroraRDSCopy Job configuration
+auroraRdsCopyJob:
+  enabled: true
+  auroraMasterSecret: aurora-creds
+  sourceNamespace: midrcstaging-helm
+  targetNamespace: midrcprod-helm
+  writeToK8sSecret: false
+  writeToAwsSecret: false
+  services:
+    - serviceName: indexd
+      sourceSecret: indexd-dbcreds
+      targetSecret: indexd-dbcreds
+    - serviceName: metadata
+      sourceSecret: metadata-dbcreds
+      targetSecret: metadata-dbcreds
+    - serviceName: sheepdog
+      sourceSecret: sheepdog-dbcreds
+      targetSecret: sheepdog-dbcreds

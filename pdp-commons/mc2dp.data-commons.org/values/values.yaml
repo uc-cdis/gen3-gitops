@@ -47,7 +47,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 'feat_embedding-vectors'
+    tag: '13.3.0'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.25'
+    tag: '0.28'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -88,7 +88,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:851725307933:regional/webacl/pdp-commons-waf/9609720f-857d-4033-bf1f-2e9e9665a638
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/0.0.5/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/pdp_dictionary/1.1.0/schema.json
   dispatcherJobNum: '10'
   environment: pdp-commons
   externalSecrets:
@@ -110,20 +110,22 @@ global:
     dbCreate: false
     externalSecret: pdp-commons-aurora-master-password
   revproxyArn: arn:aws:acm:us-east-1:851725307933:certificate/cc4b5ee2-be5a-4772-9b1c-66b7dae46abf
-embedding-management-service:
+
+gen3-embeddings:
   enabled: true
+  debug: true
+  replicaCount: 2
   postgres:
     dbCreate: true
-  embeddingsConfig: |
-    {
-      "expr": 256
-    }
-  service:
-    targetPort: 8000
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/embedding-management-service
-    tag: feat_service
+    repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
+    tag: 0.1.1
+  externalSecrets:
+    createK8sGen3EmbeddingsSecret: true
+    pushSecret: false
+    dbcreds: "pdp-commons-embedding-management-service-creds"
+
 guppy:
   replicaCount: 4
   configIndex: pdp-commons-commons-config-index
@@ -140,8 +142,8 @@ hatchery:
   hotNode:
     enabled: false
     gpu: false
-    jupyter: true
-
+    jupyter: false
+    # FIXME
     availabilityZones:
       - us-east-1d
 
@@ -189,43 +191,152 @@ hatchery:
                   "root"
               ]
           },
-          "containers": [
-            {
-              "target-port": 8888,
-              "cpu-limit": "1.0",
-              "memory-limit": "1Gi",
-              "name": "RCC pilot",
-              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-feat_rcc-r-packages",
-              "pull_policy": "Always",
-              "env": {
-                "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
-                "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-              },
-              "command": [
-                "start-notebook.sh"
-              ],
-              "args": [
-                "--ServerApp.base_url=/lw-workspace/proxy/",
-                "--ServerApp.default_url=/lab",
-                "--ServerApp.password=''",
-                "--ServerApp.token=''",
-                "--ServerApp.ip='*'",
-                "--ServerApp.disable_check_xsrf=True",
-                "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
-                "--ServerApp.root_dir='/home/jovyan'",
-                "--ServerApp.shutdown_no_activity_timeout=5400",
-                "--ServerApp.quit_button=False",
-                "--FileContentsManager.always_delete_dir=True"
-              ],
-              "path-rewrite": "/lw-workspace/proxy/",
-              "use-tls": "false",
-              "ready-probe": "/lw-workspace/proxy/lab",
-              "user-uid": 1010,
-              "fs-gid": 101,
-              "user-volume-location": "/home/jovyan/pd",
-              "gen3-volume-location": "/home/jovyan/.gen3"
-            }
-          ]
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "gpu": false,
+            "memory-limit": "16Gi",
+            "name": "Genomics (4CPU/16GB RAM, CPU only)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "command": [
+              "start-notebook.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False",
+              "--FileContentsManager.always_delete_dir=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "gpu": false,
+            "memory-limit": "4Gi",
+            "name": "Standard (2CPU/4GB RAM, CPU only)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "command": [
+              "start-notebook.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False",
+              "--FileContentsManager.always_delete_dir=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "gpu": true,
+            "memory-limit": "8Gi",
+            "name": "AI/ML (2CPU/8GB RAM, GPU)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-drb-update-mc2dp-mmcancer",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "command": [
+              "start-notebook.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False",
+              "--FileContentsManager.always_delete_dir=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "gpu": false,
+            "memory-limit": "16Gi",
+            "name": "RCC pilot (4CPU/16GB RAM, CPU only)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "command": [
+              "start-notebook.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip='*'",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.quit_button=False",
+              "--FileContentsManager.always_delete_dir=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
+        ]
       }
 indexd:
   replicaCount: 2
@@ -528,8 +639,7 @@ metadata:
                      "commons_url": "",
                      "mc2dp_global_id": "path:mc2dp_global_id",
                      "is_synthetic": "path:is_synthetic",
-                     "is_data_files" : "path:is_data_files",
-                     "data_files": "path:data_type"
+                     "is_data_files" : "path:is_data_files"
                  }
              }
          }

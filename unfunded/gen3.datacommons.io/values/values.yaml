@@ -33,13 +33,15 @@ arborist:
     dbcreds: oadc-arborist-db-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.04'
+    tag: '2026.08'
 aws-sigv4-proxy:
+  replicaCount: 2
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: oadc-aws-es-proxy-creds
   enabled: true
 indexd:
+  replicaCount: 2
   defaultPrefix: dg.C78ne/
   externalSecrets:
     dbcreds: oadc-indexd-db-creds
@@ -47,50 +49,55 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.04'
+    tag: '2026.08'
 peregrine:
+  replicaCount: 2
   externalSecrets:
     dbcreds: oadc-peregrine-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.04'
+    tag: '2026.08'
     pullPolicy: Always
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.04'
+    tag: '2026.08'
 sheepdog:
+  replicaCount: 2
   externalSecrets:
     dbcreds: oadc-sheepdog-db-creds
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.04'
+    tag: '2026.08'
 manifestservice:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.04'
+    tag: '2026.08'
   externalSecrets:
     manifestserviceG3auto: oadc-manifestservice-g3auto
 sower:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.04'
+    tag: '2026.08'
   externalSecrets:
     pelicanserviceG3auto: oadc-pelicanservice-g3auto
 ssjdispatcher:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.04'
+    tag: '2026.08'
   externalSecrets:
     credsFile: oadc-ssjdispatcher-creds
-  indexing: quay.io/cdis/indexs3client:2026.04
+  indexing: quay.io/cdis/indexs3client:2026.08
   serviceAccount:
     create: true
     annotations:
@@ -101,6 +108,7 @@ ssjdispatcher:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded--oadc--ssj-job
   gen3Namespace: oadchelm
 metadata:
+  replicaCount: 2
   externalSecrets:
     dbcreds: oadc-metadata-db-creds
     metadataG3auto: oadc-metadata-g3auto
@@ -108,7 +116,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.04'
+    tag: '2026.08'
 ambassador:
   enabled: false
 wts:

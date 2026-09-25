@@ -6,6 +6,25 @@ accountNumber: "707767160287"
 configuration:
   configurationRevision: master
 
+storageclass:
+  enabled: true
+  name: gp3
+  default: true
+
+  provisioner: ebs.csi.aws.com
+
+  reclaimPolicy: Retain
+  volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: true
+
+  parameters:
+    type: gp3
+    encrypted: "true"
+
+  previousDefault:
+    removeDefault: false
+    name: standard
+
 alb-controller:
   enabled: true
   configuration:
@@ -15,7 +34,11 @@ aws-s3-mountpoint:
   enabled: true
   configuration:
     enabled: false
-
+    
+external-secrets:
+  enabled: true
+  targetRevision: "0.16.2"
+  
 calico:
   enabled: true
   configuration:
@@ -60,6 +83,17 @@ karpenter-crds:
   enabled: true
   selectorTag: emalinowskiv1
   migration: true
+  default:
+   fastImagePull:
+      enabled: true
+      iops: 3000
+      throughput: 600  
+  jupyter:
+   fastImagePull:
+      enabled: true
+      iops: 3000
+      throughput: 600  
+
 
 vpc-cni:
   enabled: true
