@@ -369,6 +369,9 @@ fence:
       cds-733-phs004965-bet-inhibitors:
         cred: fence_bot
         region: us-east-1
+      cds-735-phs004970-pbtc-glioma:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
