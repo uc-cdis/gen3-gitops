@@ -433,3 +433,8 @@ fence:
     #       e.g. if the Gen3 Embeddings service is configured to allow max 1000, then this
     #            can't be more than that for embeddings content resolutions
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
+
+    MAX_TASK_TOKEN_TTL: {"WORKFLOW": 4000}
+    ALLOWED_TASK_TOKEN_TYPES: ["WORKFLOW", "FOO"]
+    DPOP_SHARED_SECRET: dummy-value-not-a-secret
+    DPOP_ENABLED: true
