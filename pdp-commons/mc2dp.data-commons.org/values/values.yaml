@@ -47,7 +47,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.0'
+    tag: '13.3.2'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
@@ -159,7 +159,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.2'
+    tag: '2.11.0'
   hatchery:
     json: |
       {
@@ -231,7 +231,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -267,7 +270,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -303,7 +309,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -339,7 +348,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           }
         ]
       }
