@@ -36,13 +36,15 @@ arborist:
     dbcreds: canineprod-arborist
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.06'
+    tag: '2026.09'
 aws-sigv4-proxy:
+  replicaCount: 2
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
   externalSecrets:
     awsCreds: canineprod-aws-es-proxy-creds
   enabled: true
 indexd:
+  replicaCount: 2
   defaultPrefix: dg.C78ne/
   externalSecrets:
     createK8sServiceCredsSecret: true
@@ -51,33 +53,36 @@ indexd:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.06'
+    tag: '2026.09'
 peregrine:
+  replicaCount: 2
   externalSecrets:
     dbcreds: canineprod-peregrine
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.06'
+    tag: '2026.09'
     pullPolicy: Always
 revproxy:
   enabled: true
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.06'
+    tag: '2026.09'
 sheepdog:
+  replicaCount: 2
   externalSecrets:
     dbcreds: canineprod-sheepdog
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.06'
+    tag: '2026.09'
 manifestservice:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.06'
+    tag: '2026.09'
   externalSecrets:
     manifestserviceG3auto: canine-manifestservice-g3auto
 etl:
@@ -91,18 +96,20 @@ etl:
       repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
       tag: master
 sower:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.06'
+    tag: '2026.09'
   externalSecrets:
     pelicanserviceG3auto: canine-pelicanservice-g3auto
 ssjdispatcher:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.06'
-  indexing: quay.io/cdis/indexs3client:2026.06
+    tag: '2026.09'
+  indexing: quay.io/cdis/indexs3client:2026.09
   externalSecrets:
     credsFile: canineprod-ssjdispatcher-creds
   serviceAccountName: ssjdispatcher-service-account
@@ -114,6 +121,7 @@ ssjdispatcher:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/canineprod--default--ssj-job
 metadata:
+  replicaCount: 2
   externalSecrets:
     dbcreds: canineprod-metadata
     metadataG3auto: canine-metadata-g3auto
@@ -121,10 +129,11 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.06'
+    tag: '2026.09'
 ambassador:
   jupyterNamespace: jupyter-pods-canine
 wts:
+  replicaCount: 2
   enabled: true
   externalSecrets:
     dbcreds: canineprod-wts
@@ -134,12 +143,13 @@ wts:
     wtsOidcClient: caninedc-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.06'
+    tag: '2026.09'
 hatchery:
+  replicaCount: 2
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2026.06'
+    tag: '2026.09'
   hatchery:
     json: |-
       {
@@ -219,16 +229,18 @@ hatchery:
 audit:
   enabled: false
 frontend-framework:
+  replicaCount: 2
   enabled: true
   env:
-    DATADOG_APPLICATION_ID: "ab71a12a-753f-45ab-a8e1-a79d76d98095"
-    DATADOG_CLIENT_TOKEN: "pub2cd76ce70d32ef5a0d2f3da3badda91e"
-    DATACOMMONS: "CANINE"
+    DATADOG_APPLICATION_ID: ab71a12a-753f-45ab-a8e1-a79d76d98095
+    DATADOG_CLIENT_TOKEN: pub2cd76ce70d32ef5a0d2f3da3badda91e
+    DATADOG_SITE: ddog-gov.com
+    DATACOMMONS: CANINE
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
     branch: master
-    dir: caninedc.org/values/frontend
+    dir: unfunded/caninedc.org/values/frontend
   image:
     repository: quay.io/cdis/commons-frontend-app
     tag: main

@@ -35,13 +35,20 @@ global:
     topologyKey: "topology.kubernetes.io/zone"
     # -- (int) The maxSkew to use for topology spread constraints. Defaults to 1.
     maxSkew: 1
-
+  netPolicy:
+      enabled: false
+      dbSubnets:
+        - 172.27.128.128/25
+        - 172.27.128.0/25
 mutatingWebhook:
   # -- (bool) Whether to deploy the mutating webhook service.
   enabled: false
 
+
 postgresql:
   primary:
+    extendedConfiguration: |-
+      max_connections = 200
     persistence:
       enabled: true
       size: 1Gi
@@ -51,8 +58,8 @@ postgresql:
     maxUnavailable: "0"
   image:
     registry: quay.io
-    repository: cdis/postgresql
-    tag: 14.5.0-debian-11-r35
+    repository: "cdis/docker-bitnami-pgvector"
+    tag: master
 
 elasticsearch:
   pdb:

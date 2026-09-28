@@ -15,6 +15,7 @@ data:
     calico-system
     cert-manager
     ci-perf
+    ci-perf-embedding
     cortex-xdr
     crossplane-system
     csoc
@@ -29,7 +30,7 @@ data:
     logging
     monitoring
     qabot
-    qa-prometheus
+    qa-mc2dp-helm
     qa-vpodc
     qa-vpodc-helm
     qaplanetv2
