@@ -98,11 +98,7 @@ global:
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
   fenceURL: https://mc2dp.data-commons.org/user
-  # Ported from qa-mc2dp-helm. Spreads each service's pods across AZs
-  topologySpread:
-    enabled: true
-    topologyKey: "topology.kubernetes.io/zone"
-    maxSkew: 1
+
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
@@ -1001,9 +997,8 @@ workspace-proxy:
       cpu: "500m"
       memory: "256Mi"
 
-  #enable workspace-proxy NetworkPolicy like qa
   networkPolicy:
-    enabled: true
+    enabled: false
 
 jeg:
   enabled: true
