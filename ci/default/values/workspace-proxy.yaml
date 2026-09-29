@@ -1,12 +1,8 @@
 workspace-proxy:
   enabled: true
-  deploymentNamespace: default
-  workspaceNamespace: jupyter-pods
-  kubernetesApiServerCIDRs:
-    - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
-    - "172.27.140.0/22"     # EKS private subnet (DHCP)
-    - "172.27.136.0/22"     # EKS private subnet (DHCP)
-    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+  # The following two values will be dynamically replaced by setup_ci_env.sh script.
+  deploymentNamespace:
+  workspaceNamespace:
 
   replicaCount: 1
 

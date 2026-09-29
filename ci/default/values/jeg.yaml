@@ -1,6 +1,7 @@
 jeg:
   enabled: true
-  workspaceNamespace: jupyter-pods
+  # The workspaceNamespace value will be dynamically replaced by setup_ci_env.sh script.
+  workspaceNamespace:
 
   replicaCount: 1
 
@@ -10,8 +11,8 @@ jeg:
     pullPolicy: Always
 
   env:
-    # CRITICAL: must match hatchery user-namespace and workspace-proxy WORKSPACE_NAMESPACE.
-    EG_NAMESPACE: jupyter-pods
+    # The EG_NAMESPACE value will be dynamically replaced by setup_ci_env.sh script.
+    EG_NAMESPACE:
     EG_KERNEL_LAUNCH_TIMEOUT: "120"
     EG_MAX_KERNELS_PER_USER: "2"
     EG_CULL_IDLE_TIMEOUT: "14400"
