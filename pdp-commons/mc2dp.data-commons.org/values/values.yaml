@@ -68,6 +68,8 @@ gen3-user-data-library:
   env:
     - name: MAX_LIST_ITEMS
       value: "50000"
+    - name: DEBUG
+      value: True
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: '2026.07'
