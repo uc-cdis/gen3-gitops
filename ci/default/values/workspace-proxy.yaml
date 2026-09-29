@@ -1,0 +1,37 @@
+workspace-proxy:
+  enabled: true
+  deploymentNamespace: default
+  workspaceNamespace: jupyter-pods
+  kubernetesApiServerCIDRs:
+    - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
+    - "172.27.140.0/22"     # EKS private subnet (DHCP)
+    - "172.27.136.0/22"     # EKS private subnet (DHCP)
+    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: 0.0.1
+    pullPolicy: Always
+
+  listenAddr: ":8080"
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+        "python_kubernetes",
+        "python_tensorflow_kubernetes",
+        "python_tensorflow_gpu_kubernetes"
+      ]
+    }
+
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  networkPolicy:
+    enabled: false
