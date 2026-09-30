@@ -1,7 +1,7 @@
 ambassador:
   enabled: false
   jupyterNamespace: jupyter-pods
-  replicaCount: 2
+  replicaCount: 3
 arborist:
   replicaCount: 2
   enabled: true
@@ -61,13 +61,15 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.28'
+    tag: 'chore_test_udl_issue'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
   env:
     - name: MAX_LIST_ITEMS
       value: "50000"
+    - name: DEBUG
+      value: True
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: '2026.07'
