@@ -34,7 +34,7 @@ argo-wrapper:
   internalS3Bucket: vadcprod-argo-bucket
   environment: vadcprod-helm
 cohort-middleware:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   externalSecrets:
     cohortMiddlewareG3Auto: vadcprod-cohort-middleware-g3auto
