@@ -9,7 +9,7 @@ arborist:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
     tag: '2026.07'
 audit:
-  replicaCount: 2
+  replicaCount: 1
   externalSecrets:
     auditG3auto: pdp-commons-audit-g3auto
   serviceAccount:
