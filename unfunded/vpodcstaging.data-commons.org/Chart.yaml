@@ -1,6 +1,6 @@
 apiVersion: v2
-name: data.kidsfirstdrc.org
-description: data.kidsfirstdrc.org argo application
+name: vpodcstaging.data-commons.org
+description: vpodcstaging.data-commons.org argo application
 
 # A chart can be either an 'application' or a 'library' chart.
 #

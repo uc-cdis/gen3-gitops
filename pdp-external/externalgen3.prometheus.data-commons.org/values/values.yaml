@@ -187,12 +187,12 @@ portal:
 
   # GitOps config for portal
   gitops:
+    gen3Bundle: common
     json: |
       {
         "graphql": {
           "boardCounts": [],
-          "chartCounts": [
-          ],
+          "chartCounts": [],
           "projectDetails": "boardCounts"
         },
         "components": {
@@ -203,8 +203,7 @@ portal:
               "text": "Prometheus External Data Commons",
               "link": "/submission"
             },
-            "buttons": [
-            ]
+            "buttons": []
           },
           "navigation": {
             "items": [

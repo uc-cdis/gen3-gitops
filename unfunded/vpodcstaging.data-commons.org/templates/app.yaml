@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gen3-kfqa2
+  name: gen3-vpodcstaging
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,17 +10,17 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
-      helm:
-        releaseName: gen3-kfqa2
-        valueFiles:
-          - $values/kidsfirst-kfqa2/gen3qa.kidsfirstdrc.org/values/values.yaml
-    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
       targetRevision: master
+      helm:
+        releaseName: gen3-vpodcstaging
+        valueFiles:
+          - $values/unfunded/vpodcstaging.data-commons.org/values/values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vpodcstaging
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: kfqa2-helm
+    namespace: vpodc-staging
   syncPolicy:
     managedNamespaceMetadata:
       labels:

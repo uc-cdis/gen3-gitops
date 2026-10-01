@@ -3,6 +3,12 @@ project: unfunded
 
 accountNumber: "662843554732"
 
+argo-workflows:
+  enabled: true
+  GEN3_ARGO_DB_HOST: "unfunded-aurora-cluster-instance-new.c2qpsmgsoq5z.us-east-1.rds.amazonaws.com"
+  GEN3_ARGO_DB_NAME: "argo_vpodc-staging"
+  GEN3_ARGO_BUCKET: ""
+
 alb-controller:
   enabled: true
   configuration:
