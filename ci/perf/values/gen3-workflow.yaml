@@ -20,6 +20,8 @@ gen3-workflow:
   gen3WorkflowConfig:
     debug: true
     nWorkers: 4
+    enableS3Files: true
+    eksSecurityGroupNames: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]
     taskImageWhitelist:
       - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
