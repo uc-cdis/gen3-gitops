@@ -1,0 +1,33 @@
+workspace-proxy:
+  enabled: true
+  # The following two values will be dynamically replaced by setup_ci_env.sh script.
+  deploymentNamespace:
+  workspaceNamespace:
+
+  replicaCount: 1
+
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: 0.0.1
+    pullPolicy: Always
+
+  listenAddr: ":8080"
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+        "python_kubernetes",
+        "python_tensorflow_kubernetes",
+        "python_tensorflow_gpu_kubernetes"
+      ]
+    }
+
+  resources:
+    requests:
+      cpu: "50m"
+      memory: "64Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+  networkPolicy:
+    enabled: false
