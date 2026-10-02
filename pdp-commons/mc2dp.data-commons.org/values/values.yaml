@@ -837,6 +837,35 @@ revproxy:
           client_max_body_size 0;
           proxy_read_timeout 600s;
       }
+      # gen3.auth (Python SDK) POSTs here from JupyterLite (Pyodide) to exchange an
+      # API key for a bearer token. The browser sends the access_token session cookie,
+      # which triggers the revproxy CSRF gate — but this endpoint authenticates via
+      # the API key in the JSON body; the cookie carries no auth value here.
+      # Stripping it bypasses both the nginx CSRF gate and Fence's own check_csrf()
+      # (which exits early when no session username is present).
+      # Safe: an attacker exploiting CSRF still needs to know the user's API key.
+      # See also: /user/register in fence-service.conf for the established precedent.
+      location = /user/credentials/cdis/access_token {
+          proxy_set_header Cookie "";
+          set $proxy_service  "fence";
+          proxy_read_timeout          400;
+          proxy_send_timeout          400;
+          proxy_connect_timeout       400;
+          set $upstream http://fence-service$des_domain;
+          rewrite ^/user/(.*) /$1 break;
+          proxy_pass $upstream;
+      }
+
+      location = /user/credentials/api/access_token {
+          proxy_set_header Cookie "";
+          set $proxy_service  "fence";
+          proxy_read_timeout          400;
+          proxy_send_timeout          400;
+          proxy_connect_timeout       400;
+          set $upstream http://fence-service$des_domain;
+          rewrite ^/user/(.*) /$1 break;
+          proxy_pass $upstream;
+      }
     ambassador-service.conf: |-
       location = /lw-workspace/proxy {
         return 308 $scheme://$http_host/lw-workspace/proxy/;
