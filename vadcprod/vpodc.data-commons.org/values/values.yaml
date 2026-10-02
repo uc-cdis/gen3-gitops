@@ -202,6 +202,8 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: "13.3.0"
+  FENCE_CONFIG_PUBLIC:
+    ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 portal:
   enabled: false
 frontend-framework:
