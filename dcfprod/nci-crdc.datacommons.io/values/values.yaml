@@ -363,6 +363,15 @@ fence:
       cds-724-phs004748-leukemia-clonal-evolution:
         cred: fence_bot
         region: us-east-1
+      cds-730-phs004947-tcr:
+        cred: fence_bot
+        region: us-east-1
+      cds-733-phs004965-bet-inhibitors:
+        cred: fence_bot
+        region: us-east-1
+      cds-735-phs004970-pbtc-glioma:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
@@ -1379,7 +1388,7 @@ revproxy:
   ingress:
     aws:
       group: dcfprod
-      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   enabled: true
   replicaCount: 2

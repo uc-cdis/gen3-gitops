@@ -68,7 +68,7 @@ karpenter-crds:
     consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "1m"
     expireAfter: "72h"
-    volumeSize: 80Gi
+    volumeSize: 120Gi
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
