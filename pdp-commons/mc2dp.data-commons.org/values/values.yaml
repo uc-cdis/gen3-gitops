@@ -140,9 +140,9 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
-    gpu: false
-    jupyter: false
+    enabled: true
+    gpu: true
+    jupyter: true
     # FIXME
     availabilityZones:
       - us-east-1d
