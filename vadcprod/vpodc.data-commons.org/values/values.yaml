@@ -202,6 +202,8 @@ fence:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: "13.3.0"
+  FENCE_CONFIG_PUBLIC:
+    ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 portal:
   enabled: false
 frontend-framework:
@@ -357,7 +359,10 @@ hatchery:
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=5400",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -393,7 +398,10 @@ hatchery:
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=5400",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -429,7 +437,10 @@ hatchery:
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=5400",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -465,7 +476,10 @@ hatchery:
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=5400",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
