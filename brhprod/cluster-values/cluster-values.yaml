@@ -100,7 +100,7 @@ karpenter-crds:
       kind: EC2NodeClass
       name: workflow
     amiFamily: AL2023
-    volumeSize: 80Gi
+    volumeSize: 160Gi
   jupyter:
     nodeClassRef:
       apiVersion: karpenter.k8s.aws/v1
