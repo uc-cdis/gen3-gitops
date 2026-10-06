@@ -3,7 +3,7 @@ gen3-workflow:
   replicaCount: 2
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: feat_dpop_pauline
+    tag: feat_dpop
   serviceAccount:
     create: true
     annotations:
@@ -16,7 +16,6 @@ gen3-workflow:
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
       - "pytorch/pytorch:latest" # for test_nf_canary TEST_GPU
-    DPOP_ENABLED: true
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
     # TODO remove once funnel workers do not use OIDC client anymore:
