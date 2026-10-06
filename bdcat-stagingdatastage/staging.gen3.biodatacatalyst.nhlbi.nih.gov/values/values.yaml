@@ -607,7 +607,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.10'
+    tag: feature_data_library
     pullPolicy: Always
 revproxy:
   replicaCount: 4
@@ -619,7 +619,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: feature_data_library
+    tag: '2026.10'
   ingress:
     aws:
       group: stagingdatastage
