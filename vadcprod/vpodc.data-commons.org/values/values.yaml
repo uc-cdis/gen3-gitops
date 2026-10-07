@@ -289,6 +289,8 @@ hatchery:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: "feat_auto-select-single-paymodel"
   hatchery:
+    reaper:
+      enabled: false
     json: |
       {
           "user-namespace": "jupyter-pods",
@@ -357,7 +359,7 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://vpodc.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
@@ -396,7 +398,7 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://vpodc.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
@@ -435,7 +437,7 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://vpodc.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
@@ -474,7 +476,7 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://vpodc.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
