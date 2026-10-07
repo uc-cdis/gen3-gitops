@@ -118,6 +118,7 @@ karpenter-crds:
     additionalTags: {}
     instanceTypes:
       - g6.xlarge
+      - g6.2xlarge
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
