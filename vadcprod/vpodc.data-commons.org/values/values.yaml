@@ -204,6 +204,8 @@ fence:
     tag: "13.3.0"
   FENCE_CONFIG_PUBLIC:
     ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
+  FENCE_CONFIG:
+    ALLOW_NEW_USER_ON_LOGIN: false
 portal:
   enabled: false
 frontend-framework:
