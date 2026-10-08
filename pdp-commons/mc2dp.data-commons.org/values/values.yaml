@@ -47,7 +47,7 @@ fence:
     fenceJwtKeys: pdp-commons-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.0'
+    tag: '13.3.2'
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
@@ -70,7 +70,7 @@ gen3-user-data-library:
       value: "50000"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.07'
+    tag: '2026.08'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
@@ -98,6 +98,7 @@ global:
   frontendRoot: gen3ff
   hostname: mc2dp.data-commons.org
   fenceURL: https://mc2dp.data-commons.org/user
+
   manifestGlobalExtraValues:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
@@ -154,8 +155,10 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.9.2'
+    tag: '2.11.0'
   hatchery:
+    reaper:
+      enabled: false
     json: |
       {
           "user-namespace": "jupyter-pods",
@@ -172,7 +175,7 @@ hatchery:
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
-              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.03",
+              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.07",
               "env": {
                   "NAMESPACE": "default",
                   "HOSTNAME": "mc2dp.data-commons.org"
@@ -216,9 +219,12 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -226,7 +232,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -252,9 +261,12 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -262,7 +274,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -288,9 +303,12 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -298,7 +316,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           },
           {
             "target-port": 8888,
@@ -324,9 +345,12 @@ hatchery:
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
-              "--ServerApp.shutdown_no_activity_timeout=5400",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
               "--ServerApp.quit_button=False",
-              "--FileContentsManager.always_delete_dir=True"
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -334,7 +358,10 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "squashfs_mount": {
+              "enabled": false
+            }
           }
         ]
       }
@@ -739,6 +766,48 @@ revproxy:
           proxy_read_timeout 600s;
       }
 
+      # workspace-assets/remote/lmod routing
+      location ^~ /api/workspace-assets/remote/lmod {
+        if ($request_method = 'OPTIONS') {
+          add_header Access-Control-Allow-Origin $http_origin always;
+          add_header Access-Control-Allow-Credentials true always;
+          add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+          add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+          add_header Content-Length 0;
+          add_header Content-Type text/plain;
+          return 204;
+        }
+        set $authz_resource "/workspace";
+        set $authz_method "access";
+        set $authz_service "jupyterhub";
+        auth_request_set $remoteUser $upstream_http_REMOTE_USER;
+        auth_request_set $saved_set_cookie $upstream_http_set_cookie;
+        auth_request /gen3-authz;
+        if ($saved_set_cookie != "") {
+          add_header Set-Cookie $saved_set_cookie always;
+        }
+        add_header Cache-Control "no-store";
+        proxy_set_header REMOTE_USER $remoteUser;
+        error_page 403 = @errorworkspace;
+
+        set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
+        rewrite ^/api/workspace-assets/remote/(lmod.*) /$1 break;
+        proxy_pass $upstream;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-URL-SCHEME https;
+        add_header Access-Control-Allow-Origin $http_origin always;
+        add_header Access-Control-Allow-Credentials true always;
+        add_header Access-Control-Allow-Methods "GET, POST, DELETE, OPTIONS" always;
+        add_header Access-Control-Allow-Headers "Authorization, Content-Type" always;
+        client_max_body_size 0;
+        proxy_read_timeout 600s;
+      }
+
       # Remote JupyterLite assets served by workspace-proxy (no auth gate — static files).
       location ^~ /api/workspace-assets/remote/ {
         if ($request_method = 'OPTIONS') {
@@ -837,6 +906,35 @@ revproxy:
           client_max_body_size 0;
           proxy_read_timeout 600s;
       }
+      # gen3.auth (Python SDK) POSTs here from JupyterLite (Pyodide) to exchange an
+      # API key for a bearer token. The browser sends the access_token session cookie,
+      # which triggers the revproxy CSRF gate — but this endpoint authenticates via
+      # the API key in the JSON body; the cookie carries no auth value here.
+      # Stripping it bypasses both the nginx CSRF gate and Fence's own check_csrf()
+      # (which exits early when no session username is present).
+      # Safe: an attacker exploiting CSRF still needs to know the user's API key.
+      # See also: /user/register in fence-service.conf for the established precedent.
+      location = /user/credentials/cdis/access_token {
+          proxy_set_header Cookie "";
+          set $proxy_service  "fence";
+          proxy_read_timeout          400;
+          proxy_send_timeout          400;
+          proxy_connect_timeout       400;
+          set $upstream http://fence-service$des_domain;
+          rewrite ^/user/(.*) /$1 break;
+          proxy_pass $upstream;
+      }
+
+      location = /user/credentials/api/access_token {
+          proxy_set_header Cookie "";
+          set $proxy_service  "fence";
+          proxy_read_timeout          400;
+          proxy_send_timeout          400;
+          proxy_connect_timeout       400;
+          set $upstream http://fence-service$des_domain;
+          rewrite ^/user/(.*) /$1 break;
+          proxy_pass $upstream;
+      }
     ambassador-service.conf: |-
       location = /lw-workspace/proxy {
         return 308 $scheme://$http_host/lw-workspace/proxy/;
@@ -919,13 +1017,19 @@ workspace-proxy:
     pullPolicy: Always
 
   listenAddr: ":8080"
+  # Add display names like qa-mc2dp-helm
   jegKernelSpecPolicy: |
     {
       "allowedSpecs": [
         "python_kubernetes",
         "python_tensorflow_kubernetes",
         "python_tensorflow_gpu_kubernetes"
-      ]
+      ],
+      "displayNames": {
+        "python_kubernetes": "Python on Kubernetes",
+        "python_tensorflow_kubernetes": "Python + TensorFlow",
+        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+      }
     }
 
   resources:
@@ -955,7 +1059,7 @@ jeg:
     EG_NAMESPACE: jupyter-pods
     EG_KERNEL_LAUNCH_TIMEOUT: "120"
     EG_MAX_KERNELS_PER_USER: "2"
-    EG_CULL_IDLE_TIMEOUT: "14400"
+    EG_CULL_IDLE_TIMEOUT: "90000"
     EG_CULL_CONNECTED: "True"
     EG_AUTH_TOKEN: ""
     EG_DEFAULT_KERNEL_NAME: python3
