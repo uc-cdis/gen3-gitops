@@ -16,5 +16,6 @@ gen3-workflow:
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
       - "pytorch/pytorch:latest" # for test_nf_canary TEST_GPU
+      - "python:3.13-slim" # for test_dpop_task_token_within_tes_task
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
