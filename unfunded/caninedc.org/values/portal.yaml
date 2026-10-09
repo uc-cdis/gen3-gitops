@@ -37,7 +37,7 @@ portal:
   replicaCount: 2
   image:
     repository: quay.io/cdis/data-portal
-    tag: '2026.09'
+    tag: '2026.10'
   gitops:
     json: |
       {
