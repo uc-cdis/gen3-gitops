@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.28'
+    tag: '0.29'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -155,7 +155,7 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.11.0'
+    tag: '2.12.0'
   hatchery:
     reaper:
       enabled: false
@@ -165,13 +165,18 @@ hatchery:
           "sub-dir": "/lw-workspace",
           "user-volume-size": "10Gi",
           "shared-workspace": {
-            "enabled": true,
-            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+            "enabled": true
           },
           "default-pay-model": {
               "workspace_type": "Trial Workspace",
               "local": true
           },
+          "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
+        "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32",
           "sidecar": {
               "cpu-limit": "1.0",
               "memory-limit": "256Mi",
@@ -242,22 +247,24 @@ hatchery:
             "cpu-limit": "2.0",
             "gpu": false,
             "memory-limit": "4Gi",
-            "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "name": "Standard (2CPU/4GB RAM, CPU only) - WSL",
+            "image": "quay.io/cdis/jupyterlab-generic:3.3.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-08-20.sqsh"
+            },
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.ip='*'",
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
@@ -272,7 +279,7 @@ hatchery:
             "use-tls": "false",
             "ready-probe": "/lw-workspace/proxy/lab",
             "user-uid": 1010,
-            "fs-gid": 101,
+            "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
             "gen3-volume-location": "/home/jovyan/.gen3",
             "squashfs_mount": {
@@ -777,18 +784,7 @@ revproxy:
           add_header Content-Type text/plain;
           return 204;
         }
-        set $authz_resource "/workspace";
-        set $authz_method "access";
-        set $authz_service "jupyterhub";
-        auth_request_set $remoteUser $upstream_http_REMOTE_USER;
-        auth_request_set $saved_set_cookie $upstream_http_set_cookie;
-        auth_request /gen3-authz;
-        if ($saved_set_cookie != "") {
-          add_header Set-Cookie $saved_set_cookie always;
-        }
         add_header Cache-Control "no-store";
-        proxy_set_header REMOTE_USER $remoteUser;
-        error_page 403 = @errorworkspace;
 
         set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
         rewrite ^/api/workspace-assets/remote/(lmod.*) /$1 break;
@@ -888,11 +884,7 @@ revproxy:
 
       # JupyterLab kernel tunnel (workspace-proxy handles per-user routing).
       location ^~ /workspace-api/ {
-          set $authz_resource "/workspace";
-          set $authz_method "access";
-          set $authz_service "jupyterhub";
-          auth_request /gen3-authz;
-          error_page 403 = @errorworkspace;
+          add_header Cache-Control "no-store";
           set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
           rewrite ^/workspace-api/(.*) /api/$1 break;
           proxy_pass $upstream;
@@ -941,20 +933,7 @@ revproxy:
       }
 
       location /lw-workspace/proxy/ {
-          set $authz_resource "/workspace";
-          set $authz_method "access";
-          set $authz_service "jupyterhub";
-          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
-          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
-          auth_request /gen3-authz;
-
-          if ($saved_set_cookie != "") {
-              add_header Set-Cookie $saved_set_cookie always;
-          }
           add_header Cache-Control "no-store";
-
-          proxy_set_header REMOTE_USER $remoteUser;
-          error_page 403 = @errorworkspace;
 
           set $proxy_service  "workspace-proxy";
           set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
@@ -1013,7 +992,7 @@ workspace-proxy:
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.1
+    tag: 0.0.2
     pullPolicy: Always
 
   listenAddr: ":8080"
