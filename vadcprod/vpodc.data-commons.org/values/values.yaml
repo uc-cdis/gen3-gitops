@@ -23,7 +23,7 @@ aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-vadcprod-gen3-metadata-2-vqrbyt4omluv7b2uqw5idjdwua.us-east-1.es.amazonaws.com
 argo-wrapper:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
@@ -208,7 +208,7 @@ fence:
 portal:
   enabled: false
 frontend-framework:
-  replicaCount: 2
+  replicaCount: 1
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
