@@ -261,6 +261,20 @@ revproxy:
         proxy_pass $upstream;
         client_max_body_size 0;
       }
+    # The portal's own server routes (Next.js pages/api). Without these, /api/* is taken by the sheepdog catch-all
+    # (location /api/, shipped in the chart even with sheepdog disabled) or the CSRF gate on "/" (the portal sends no
+    # X-CSRF-Token). The portal checks login, Arborist and same-origin itself before it calls any backend.
+    portal-api.conf: |-
+      location ^~ /api/siem/ {
+        set $proxy_service "frontend-framework";
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+      }
+      location ^~ /api/jobs/ {
+        set $proxy_service "frontend-framework";
+        set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_pass $upstream;
+      }
     metadata-service.conf: |-
       # MDS is served by the search Lambda, whose FastAPI app has root_path=/search, so
       # its router lives at /search/mds/*. That is also the upstream gen3-api-poc shape.
