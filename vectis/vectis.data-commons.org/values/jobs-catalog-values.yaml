@@ -1,0 +1,9 @@
+# Values for the jobs-catalog chart (vectis/charts/jobs-catalog in this repo).
+image:
+  tag: jobs-catalog-v1
+allowedSubjects:
+  - system:serviceaccount:default:portal
+catalog:
+  repo: uc-cdis/iso-data-platform
+  path: jobs
+  ref: main

@@ -1,0 +1,208 @@
+{{- $env := .Values.env }}
+{{- $ns := .Release.Namespace }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.serviceAccount.name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: siem-service
+  {{- if .Values.crossplane.enabled }}
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::{{ .Values.crossplane.accountId }}:role/{{ .Values.environment }}-{{ .Release.Namespace }}-{{ .Values.serviceAccount.name }}
+  {{- else }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: siem-service
+  namespace: {{ $ns }}
+  labels:
+    app: siem-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: siem-service
+  template:
+    metadata:
+      labels:
+        app: siem-service
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: siem-service
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: siem-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            # --- authorization: required, the pod refuses to start without it ---
+            - name: SIEM_AUTH_MODE
+              value: "arborist"
+            - name: SIEM_ENV
+              value: {{ required "env.SIEM_ENV must be set (production)" $env.SIEM_ENV | quote }}
+            - name: ARBORIST_URL
+              value: {{ .Values.arboristUrl | default (printf "http://arborist-service.%s.svc.cluster.local" $ns) | quote }}
+            - name: FENCE_URL
+              value: {{ .Values.fenceUrl | default (printf "http://fence-service.%s.svc.cluster.local" $ns) | quote }}
+            - name: SIEM_ARBORIST_SERVICE
+              value: {{ $env.SIEM_ARBORIST_SERVICE | default "siem" | quote }}
+            - name: SIEM_AUTH_CACHE_TTL
+              value: {{ $env.SIEM_AUTH_CACHE_TTL | default "30" | quote }}
+            - name: SIEM_TENANTS
+              value: {{ required "env.SIEM_TENANTS must be set" $env.SIEM_TENANTS | quote }}
+            - name: SIEM_SHARED_TENANTS
+              value: {{ $env.SIEM_SHARED_TENANTS | default "" | quote }}
+            # --- data source ---
+            - name: AWS_REGION
+              value: {{ $env.AWS_REGION | default "us-east-1" | quote }}
+            - name: AWS_DEFAULT_REGION
+              value: {{ $env.AWS_REGION | default "us-east-1" | quote }}
+            - name: AWS_USE_FIPS_ENDPOINT            # required by the S3 reader
+              value: "true"
+            - name: GRAPH_DUCKDB_S3_ENDPOINT         # documented FIPS exception for the delta extension
+              value: {{ $env.GRAPH_DUCKDB_S3_ENDPOINT | default "regional" | quote }}
+            - name: GRAPH_BUCKET
+              value: {{ required "env.GRAPH_BUCKET must be set" $env.GRAPH_BUCKET | quote }}
+            - name: GRAPH_TENANT
+              value: {{ required "env.GRAPH_TENANT must be set" $env.GRAPH_TENANT | quote }}
+            - name: GRAPH_NAMESPACES
+              value: {{ $env.GRAPH_NAMESPACES | default "" | quote }}
+            - name: GRAPH_DUCKDB_THREADS
+              value: {{ $env.GRAPH_DUCKDB_THREADS | default "3" | quote }}
+            - name: GRAPH_DUCKDB_MEMORY_LIMIT
+              value: {{ $env.GRAPH_DUCKDB_MEMORY_LIMIT | default "1GB" | quote }}
+            - name: GRAPH_DUCKDB_MAX_TEMP_SIZE
+              value: {{ $env.GRAPH_DUCKDB_MAX_TEMP_SIZE | default "4GB" | quote }}
+            - name: SIEM_THREAT_INDICATOR_LABELS
+              value: {{ $env.SIEM_THREAT_INDICATOR_LABELS | default "Indicator" | quote }}
+            - name: SIEM_HOT_WINDOW_DAYS
+              value: {{ $env.SIEM_HOT_WINDOW_DAYS | default "7" | quote }}
+            - name: GRAPH_SOURCE_CACHE_TTL_SECONDS
+              value: {{ $env.GRAPH_SOURCE_CACHE_TTL_SECONDS | default "300" | quote }}
+            # --- the data dictionary: the allowlist of columns a query may name ---
+            - name: SIEM_DICTIONARY_S3_BUCKET
+              value: {{ $env.SIEM_DICTIONARY_S3_BUCKET | default $env.GRAPH_BUCKET | quote }}
+            - name: SIEM_DICTIONARY_S3_KEY
+              value: {{ $env.SIEM_DICTIONARY_S3_KEY | default "config/dd/current.json" | quote }}
+            # --- other buckets / optional pipeline view ---
+            - name: SIEM_RAW_BUCKET
+              value: {{ $env.SIEM_RAW_BUCKET | default $env.GRAPH_BUCKET | quote }}
+            - name: SIEM_QUARANTINE_BUCKET
+              value: {{ $env.SIEM_QUARANTINE_BUCKET | default $env.GRAPH_BUCKET | quote }}
+            {{- if $env.SIEM_MQ_QUEUES }}
+            - name: SIEM_MQ_QUEUES
+              value: {{ $env.SIEM_MQ_QUEUES | quote }}
+            {{- end }}
+            - name: SIEM_SOURCE_EXPECTATIONS
+              value: {{ $env.SIEM_SOURCE_EXPECTATIONS | default "{}" | quote }}
+            # --- SOC router ---
+            - name: SIEM_REFRESH_SECONDS
+              value: {{ $env.SIEM_REFRESH_SECONDS | default "30" | quote }}
+            - name: SIEM_HOT_EVENTS_HOURS
+              value: {{ $env.SIEM_HOT_EVENTS_HOURS | default "168" | quote }}
+            - name: SIEM_HOT_MAX_ROWS
+              value: {{ $env.SIEM_HOT_MAX_ROWS | default "3000000" | quote }}
+            - name: SIEM_TENANT_DUCKDB_MEMORY_LIMIT
+              value: {{ $env.SIEM_TENANT_DUCKDB_MEMORY_LIMIT | default "2GB" | quote }}
+            - name: SIEM_PII_COLUMNS
+              value: {{ $env.SIEM_PII_COLUMNS | default "user_hash,principal_arn,user_id" | quote }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+          readinessProbe:
+            httpGet:
+              path: /siem/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /siem/health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: {{ .Values.tmpSizeLimit | default "5Gi" }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: siem-service
+  namespace: {{ $ns }}
+  labels:
+    app: siem-service
+spec:
+  type: ClusterIP
+  selector:
+    app: siem-service
+  ports:
+    - name: http
+      port: 8000
+      targetPort: 8000
+{{- if gt (int .Values.replicaCount) 1 }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: siem-service
+  namespace: {{ $ns }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: siem-service
+{{- end }}
+{{- if .Values.networkPolicy.enabled }}
+---
+# The service enforces authorization itself; this additionally limits who can even connect (the portal and the revproxy).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: siem-service-from-portal
+  namespace: {{ $ns }}
+spec:
+  podSelector:
+    matchLabels:
+      app: siem-service
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        {{- range .Values.networkPolicy.allowedPodLabels }}
+        - podSelector:
+            matchLabels:
+              {{- toYaml . | nindent 14 }}
+        {{- end }}
+      ports:
+        - port: 8000
+{{- end }}

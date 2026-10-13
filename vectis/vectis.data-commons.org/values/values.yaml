@@ -31,7 +31,7 @@ global:
   ddEnabled: false
 
 ambassador:
-  enabled: true
+  enabled: false
 
 arborist:
   enabled: true
@@ -98,9 +98,14 @@ frontend-framework:
   enabled: true
   image:
     repository: "quay.io/cdis/gen3-vectis"
-    # Build and push this production image before merging GitOps.
-    tag: "vectisprodv1"
+    tag: "vectisprodv6"
     pullPolicy: Always
+  # The Jobs runner presents this pod's own service-account identity to Dagu's gate, so the token is mounted. The portal holds no secret:
+  # the gate holds Dagu's credential and the key behind the run-ownership labels.
+  automountServiceAccountToken: true
+  serviceAccount:
+    create: true
+    name: portal
   env:
     NODE_ENV: production
     HOSTNAME: "0.0.0.0"
@@ -119,6 +124,20 @@ frontend-framework:
     FENCE_URL: "http://fence-service.default.svc.cluster.local"
     KERNEL_SPEC_POLICY: "{}"
     ENABLE_JEG: "true"
+    # Jobs: the Dagu runner. It calls Dagu through the gate with this pod's service-account token; steps run as Kubernetes Jobs
+    # in the dagu-jobs namespace under a service account with no permissions.
+    JOBS_RUNNER: "dagu"
+    DAGU_URL: "http://dagu-ui.default.svc.cluster.local:8080"
+    DAGU_ALLOW_CLUSTER_HTTP: "yes"
+    DAGU_AUTH: "serviceaccount"
+    DAGU_ALLOWED_EXECUTORS: "kubernetes,http,jq,mail"
+    DAGU_K8S_NAMESPACE: "dagu-jobs"
+    DAGU_K8S_SERVICE_ACCOUNT: "dagu-runner"
+    JOBS_ALLOWED_IMAGE_PREFIXES: "quay.io/cdis/,busybox"
+    # The catalog comes from the jobs-catalog service (it holds the GitHub token and reads the private repository), not from GitHub:
+    # the portal holds no token. TES_CATALOG_REPO is only the label shown for it.
+    JOBS_CATALOG_URL: "http://jobs-catalog.default.svc.cluster.local:8080"
+    TES_CATALOG_REPO: "uc-cdis/iso-data-platform"
 
 grafana:
   enabled: false
@@ -133,7 +152,7 @@ hatchery:
     sidecarContainer:
       cpu-limit: '0.1'
       memory-limit: 256Mi
-      image: quay.io/cdis/ecs-ws-sidecar:master
+      image: quay.io/cdis/ecs-ws-sidecar:2026.07
       env:
         NAMESPACE: "{{ .Release.Namespace }}"
         HOSTNAME: "{{ .Values.global.hostname }}"
@@ -223,6 +242,7 @@ requestor:
 
 revproxy:
   enabled: true
+  replicaCount: 2
   additionalConfigs:
     guppy-service.conf: |-
       location /guppy/ {

@@ -1,0 +1,60 @@
+# Defaults for the siem-service chart. The vectis values are in ../../vectis.data-commons.org/values/siem-service-values.yaml.
+environment: ""           # prefix of the Crossplane-managed IAM role name: <environment>-<namespace>-<serviceAccount.name>
+replicaCount: 2
+serviceAccount:
+  name: siem-service
+  annotations: {}         # ignored when crossplane.enabled (the role annotation is set from the Crossplane role)
+image:
+  repository: quay.io/cdis/gen3-vectis
+  tag: ""                 # REQUIRED: set in the vectis values
+  pullPolicy: Always
+resources:
+  requests:
+    cpu: "1"
+    memory: "2Gi"
+  limits:
+    cpu: "3"
+    memory: "4Gi"
+# Crossplane manages this service's IAM role and policy (assumed by the service account through IRSA).
+crossplane:
+  enabled: false
+  accountId: ""
+  oidcProviderUrl: ""     # e.g. oidc.eks.<region>.amazonaws.com/id/<id>
+  providerConfigName: provider-aws
+kmsKeyArn: ""             # KMS key of the graph bucket; required when Crossplane manages the role
+tmpSizeLimit: 5Gi         # emptyDir at /tmp: DuckDB spill and home (the root filesystem is read-only)
+arboristUrl: ""           # default: http://arborist-service.<namespace>.svc.cluster.local
+fenceUrl: ""              # default: http://fence-service.<namespace>.svc.cluster.local
+networkPolicy:            # limit who can connect: the pods listed here (the portal and the revproxy)
+  enabled: false
+  allowedPodLabels:
+    - app.kubernetes.io/name: frontend-framework
+    - app.kubernetes.io/name: revproxy
+env:
+  SIEM_ENV: "production"
+  SIEM_ARBORIST_SERVICE: "siem"
+  SIEM_AUTH_CACHE_TTL: "30"
+  SIEM_TENANTS: ""        # REQUIRED. Arborist: /programs/vectis/projects/<tenant>/siem[_pii|_writer|_admin]
+  SIEM_SHARED_TENANTS: ""
+  AWS_REGION: "us-east-1"
+  GRAPH_BUCKET: ""        # REQUIRED
+  GRAPH_TENANT: ""        # REQUIRED
+  GRAPH_NAMESPACES: ""
+  GRAPH_DUCKDB_S3_ENDPOINT: "regional"
+  GRAPH_DUCKDB_THREADS: "3"
+  GRAPH_DUCKDB_MEMORY_LIMIT: "1GB"
+  GRAPH_DUCKDB_MAX_TEMP_SIZE: "4GB"
+  GRAPH_SOURCE_CACHE_TTL_SECONDS: "300"
+  SIEM_THREAT_INDICATOR_LABELS: "Indicator"
+  SIEM_HOT_WINDOW_DAYS: "7"
+  SIEM_DICTIONARY_S3_BUCKET: ""
+  SIEM_DICTIONARY_S3_KEY: "config/dd/current.json"
+  SIEM_RAW_BUCKET: ""
+  SIEM_QUARANTINE_BUCKET: ""
+  SIEM_MQ_QUEUES: ""
+  SIEM_SOURCE_EXPECTATIONS: "{}"
+  SIEM_REFRESH_SECONDS: "30"
+  SIEM_HOT_EVENTS_HOURS: "168"
+  SIEM_HOT_MAX_ROWS: "3000000"
+  SIEM_TENANT_DUCKDB_MEMORY_LIMIT: "2GB"
+  SIEM_PII_COLUMNS: "user_hash,principal_arn,user_id"

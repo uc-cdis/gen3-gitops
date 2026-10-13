@@ -1,0 +1,18 @@
+replicaCount: 2
+image:
+  repository: quay.io/cdis/gen3-vectis
+  tag: ""                      # REQUIRED: set in the vectis values
+  pullPolicy: Always
+# the only callers served: service accounts, as system:serviceaccount:<namespace>:<name>
+allowedSubjects: []
+catalog:
+  repo: ""                     # REQUIRED: owner/name of the catalog repository
+  path: jobs
+  ref: main
+  tokenSecret: jobs-catalog-github   # a Secret with key "token": a read-only GitHub token (optional: without it only public repositories work)
+resources:
+  requests: {cpu: 50m, memory: 32Mi}
+  limits: {cpu: 500m, memory: 128Mi}
+# limit who can connect to the pods labelled here (the portal)
+allowedPodLabels:
+  - app.kubernetes.io/name: frontend-framework

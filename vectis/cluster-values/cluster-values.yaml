@@ -70,3 +70,13 @@ external-secrets:
   targetRevision: "0.16.2"
   configuration:
     enabled: false
+
+# Crossplane manages AWS IAM for the siem service (see vectis-overlays siemService.crossplane). iamRoleName is the IAM role the
+# Crossplane AWS provider assumes (IRSA); it must exist and be allowed to create IAM roles and policies.
+crossplane:
+  enabled: true
+
+crossplane-crds:
+  enable: true
+  useIRSA: true
+  iamRoleName: "crossplane-vectis"
