@@ -1166,12 +1166,19 @@
               ]
             },
             {
-              "header": "Study Access",
+              "header": "How to Access the Data",
               "fields": [
                 {
-                  "type": "text",
-                  "sourceField": "study_data_requires_access_request",
-                  "label": "Study Data Requires Access Request"
+                  "type": "block",
+                  "label": "How to access the data:",
+                  "sourceField": "doi_access_information",
+                  "default": "Not specified"
+                },
+                {
+                  "type": "link",
+                  "label": "Data and access information:",
+                  "sourceField": "doi_access_information_link",
+                  "default": "Not specified"
                 }
               ]
             }
