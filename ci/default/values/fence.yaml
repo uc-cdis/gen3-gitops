@@ -13,8 +13,8 @@ fence:
   replicaCount: 2
   image:
     repository: quay.io/cdis/fence
-    pullPolicy: Always
-    tag: "master"
+    pullPolicy: IfNotPresent
+    tag: "master_dummy"
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/ci/user.yaml
