@@ -838,8 +838,8 @@ fluentd:
 frontend-framework:
   enabled: true
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: 1.2.0
+    repository: quay.io/cdis/bdc-data-commons
+    tag: 1.4.0
 gen3-user-data-library:
   enabled: true
   image:
@@ -1154,6 +1154,25 @@ sower:
             subPath: config.json
       name: pelican-export-files
       restart_policy: Never
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto
+    - name: export-user-data-library
+      action: export-user-data-library
+      container:
+        name: job-task
+        image: quay.io/cdis/export-user-data-library:2026.10
+        pull_policy: Always
+        cpu-limit: '1'
+        memory-limit: 100Mi
+        volumeMounts:
+          - mountPath: /export-user-data-library-creds.json
+            name: pelican-creds-volume
+            readOnly: true
+            subPath: config.json
+      restart_policy: Never
+      serviceAccountName: default
       volumes:
         - name: pelican-creds-volume
           secret:
