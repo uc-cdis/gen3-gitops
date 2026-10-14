@@ -5,6 +5,7 @@
 # cohort-middleware secret, ohdsi-webapi secret, ssjdispatcher secret, and sower/pelican secret.
 
 global:
+  argoHost: http://argo-workflows-server.argo.svc.cluster.local:2746
   aws:
     enabled: true
     account: '662843554732'
@@ -54,7 +55,8 @@ argo-wrapper:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/argo-wrapper
-    tag: VA-2025.10.28
+    # tag: VA-2025.10.28
+    tag: feat_make_argo_url_configurable_by_env
   scalingGroups:
     default: '{{workflow.name}}'
   s3Bucket: unfunded-vpodc-staging-argo-user-artifacts-downloadable
