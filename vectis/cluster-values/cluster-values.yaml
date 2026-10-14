@@ -38,7 +38,9 @@ karpenter-crds:
     amiFamily: AL2023
     limits:
       memory: 1100Gi
-    consolidationPolicy: "WhenUnderutilized"
+    # Karpenter 1.x only accepts WhenEmpty or WhenEmptyOrUnderutilized (WhenUnderutilized was the v1beta1 name for the latter);
+    # the old value made the NodePool apply fail and blocked the whole cluster-level-resources sync.
+    consolidationPolicy: "WhenEmptyOrUnderutilized"
     consolidateAfter: "1m"
     expireAfter: "72h"
     volumeSize: 80Gi
