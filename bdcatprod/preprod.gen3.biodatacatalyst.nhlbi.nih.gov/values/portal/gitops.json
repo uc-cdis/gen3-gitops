@@ -203,7 +203,8 @@
   "requiredCerts": [],
   "featureFlags": {
     "explorer": true,
-    "discovery": true
+    "discovery": true,
+    "explorerPublic": true
   },
   "dataExplorerConfig": {
     "charts": {
