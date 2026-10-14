@@ -11,6 +11,6 @@ etl:
   esEndpoint: elasticsearch
   image:
     tube:
-      tag: '2026.04'
+      tag: '2026.06'
     spark:
-      tag: '2026.04'
+      tag: '2026.06'
