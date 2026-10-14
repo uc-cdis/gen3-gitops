@@ -189,6 +189,12 @@ hatchery:
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",
+        "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "prefixBase": "heal-prod",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
         "sidecar": {
             "cpu-limit": "1.0",
             "memory-limit": "256Mi",
@@ -363,7 +369,44 @@ hatchery:
           "fs-gid": 100,
           "user-volume-location": "/home/jovyan/pd",
           "gen3-volume-location": "/home/jovyan/.gen3"
-        }
+        },
+                  {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "memory-limit": "8Gi",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__8f9daf80d2ff38e218afc349ed1160704c81e5cc",
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "env": {
+              "FRAME_ANCESTORS": "https://healdata.org",
+              "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
+            },
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--LabApp.default_url=/lab/tree/heal-welcome-wsl.ipynb",
+              "--ServerApp.password=''",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=3600"
+            ],
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/",
+            "lifecycle-post-start": [
+              "/bin/sh",
+              "-c",
+              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
+            ],
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
         ]
       }
   workspaceLaunchTest:
