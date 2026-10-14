@@ -45,6 +45,9 @@ ebs-csi-driver:
   enabled: true
   configuration:
     enabled: false
+    
+efs-csi-driver:
+  enabled: true
 
 fluentd:
   enabled: false

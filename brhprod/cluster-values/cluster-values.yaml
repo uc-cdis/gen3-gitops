@@ -37,6 +37,9 @@ external-secrets:
   configuration:
     enabled: false
 
+efs-csi-driver:
+  enabled: true
+
 fluentd:
   enabled: false
   configuration:
