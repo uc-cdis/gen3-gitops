@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.10'
+    tag: integration202611
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -22,14 +22,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.10'
+    tag: integration202611
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.10'
+    tag: integration202611
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -40,7 +40,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.10'
+    tag: integration202611
 etl:
   resources:
     tube:
@@ -248,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.10'
+      tag: integration202611
     spark:
-      tag: '2026.10'
+      tag: integration202611
 fence:
   resources:
     requests:
@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.2'
+    tag: integration202611
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -847,7 +847,7 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.10'
+    tag: integration202611
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -897,7 +897,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.10'
+    tag: integration202611
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -925,13 +925,13 @@ indexd:
     dbcreds: bdcatprod-helm-indexd-creds-261012-180150
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.10'
+    tag: integration202611
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.10'
+    tag: integration202611
 metadata:
   autoscaling:
     enabled: false
@@ -946,7 +946,7 @@ metadata:
     dbcreds: bdcatprod-helm-metadata-creds-261012-180202
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.10'
+    tag: integration202611
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -962,7 +962,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.10'
+    tag: integration202611
 portal:
   serviceAccount:
     annotations:
@@ -1012,7 +1012,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feature_data_library'
+    tag: integration202611
     pullPolicy: Always
 revproxy:
   autoscaling:
@@ -1024,7 +1024,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: integration202611
   ingress:
     aws:
       group: bdcatprod
@@ -1041,7 +1041,7 @@ sheepdog:
     dbcreds: bdcatprod-helm-sheepdog-creds-261009-174802
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.10'
+    tag: integration202611
 sower:
   enabled: true
   replicaCount: 2
@@ -1051,7 +1051,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.10'
+    tag: integration202611
   sowerConfig:
     - action: export
       container:
@@ -1091,7 +1091,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202611
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -1151,7 +1151,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:integration202611
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -1170,7 +1170,7 @@ sower:
       action: export-user-data-library
       container:
         name: job-task
-        image: quay.io/cdis/export-user-data-library:2026.10
+        image: quay.io/cdis/export-user-data-library:integration202611
         pull_policy: Always
         cpu-limit: '1'
         memory-limit: 100Mi
