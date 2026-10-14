@@ -3,7 +3,7 @@ gen3-workflow:
   replicaCount: 2
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: master
+    tag: test_memory_spikes
   serviceAccount:
     create: true
     annotations:
