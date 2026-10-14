@@ -250,7 +250,8 @@ hatchery:
           "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "brhstaging-helm",
-            "HOSTNAME": "brhstaging.data-commons.org"
+            "HOSTNAME": "brhstaging.data-commons.org",
+            "USER_UID": "1010"
           },
           "args": [],
           "command": [
