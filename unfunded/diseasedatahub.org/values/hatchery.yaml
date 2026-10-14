@@ -2,7 +2,7 @@ hatchery:
   enabled: true
   sidecarContainer:
     cpu-limit: '1.0'
-    image: quay.io/cdis/gen3fuse-sidecar:master
+    image: quay.io/cdis/ecs-ws-sidecar:2026.10
     command:
       - /bin/bash
       - /sidecarDockerrun.sh
