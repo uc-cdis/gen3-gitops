@@ -9,7 +9,7 @@ indexd:
   enabled: true
   image:
     repository: "quay.io/cdis/indexd"
-    tag: "authutils-9.0.0"
+    tag: "master"
   externalSecrets:
     createK8sServiceCredsSecret: true
   secrets:
