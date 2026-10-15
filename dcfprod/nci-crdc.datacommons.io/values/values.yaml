@@ -1072,7 +1072,7 @@ indexd:
     limits:
       memory: 1024Mi
   trustedIssuers:
-    defaultPassportIssuer: https://stsstg.nih.gov
+    defaultPassportIssuer: https://sts.nih.gov
 metadata:
   replicaCount: 4
   autoscaling:
