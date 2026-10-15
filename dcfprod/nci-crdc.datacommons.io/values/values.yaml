@@ -119,6 +119,9 @@ datareplicate:
     FORCE_CREATE_MANIFEST: true
     VALIDATE_PLATFORM: AWS
 fence:
+  FENCE_CONFIG:
+    ENABLE_VISA_UPDATE_CRON: true
+    GA4GH_PASSPORTS_TO_DRS_ENABLED: true
   FENCE_CONFIG_PUBLIC:
     dbGaP:
       parse_consent_code: true
@@ -1068,6 +1071,8 @@ indexd:
       memory: 256Mi
     limits:
       memory: 1024Mi
+  trustedIssuers:
+    defaultPassportIssuer: https://sts.nih.gov
 metadata:
   replicaCount: 4
   autoscaling:
