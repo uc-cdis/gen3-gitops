@@ -45,10 +45,10 @@ etl:
   resources:
     tube:
       requests:
-        memory: 8Gi
+        memory: 16Gi
     spark:
       requests:
-        memory: 4Gi
+        memory: 8Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -832,7 +832,6 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
-
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -923,6 +922,7 @@ indexd:
   enabled: true
   externalSecrets:
     serviceCreds: bdcatprod-indexd-service-creds
+    dbcreds: bdcatprod-helm-indexd-creds-261012-180150
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.07'
@@ -943,6 +943,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: bdcatprod-metadata-g3auto
+    dbcreds: bdcatprod-helm-metadata-creds-261012-180202
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2026.07'
@@ -975,14 +976,13 @@ portal:
       pvcName: portal-pvc-bdcatprod-prod
       pvName: portal-pv-bdcatprod-prod
       createPV: true
-      #volumeHandle: ""
-      bucketName: "bdcatprod-portal-build-bucket"
+      bucketName: bdcatprod-portal-build-bucket
       mountOptions:
-      - allow-delete
-      - allow-other
-      - region us-east-1
-      - sse aws:kms
-      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+        - allow-delete
+        - allow-other
+        - region us-east-1
+        - sse aws:kms
+        - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
       size: 1Gi
       cache:
         emptyDirSizeLimit: 500Mi
@@ -1028,7 +1028,7 @@ revproxy:
   ingress:
     aws:
       group: bdcatprod
-      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   autoscaling:
     enabled: false
@@ -1037,6 +1037,8 @@ sheepdog:
     targetCPUUtilizationPercentage: 90
   replicaCount: 4
   enabled: true
+  externalSecrets:
+    dbcreds: bdcatprod-helm-sheepdog-creds-261009-174802
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.07'
@@ -1054,9 +1056,8 @@ sower:
     - action: export
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
-          karpenter.sh/do-not-disrupt: "true"
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -1108,7 +1109,6 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
-        priorityClassName: "etl-high-priority"
         annotations:
           karpenter.sh/do-not-disrupt: "true"
         env:
@@ -1182,7 +1182,6 @@ tube:
     tag: '2025.07'
 wts:
   enabled: false
-# AuroraRDSCopy Job configuration
 auroraRdsCopyJob:
   enabled: true
   auroraMasterSecret: aurora-creds

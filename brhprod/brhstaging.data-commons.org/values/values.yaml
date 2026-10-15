@@ -57,7 +57,7 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.08'
+    tag: '13.3.2'
   FENCE_CONFIG_PUBLIC:
     DEBUG: true
      # Task token types that can be requested by users.
@@ -85,7 +85,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 'no-funnel-s3-calls'
+    tag: 0.4.0
   resources:
     limits:
       cpu: 2
@@ -125,6 +125,7 @@ gen3-workflow:
       - "quay.io/cdis/cadc-plp:*"
       - "docker.io/sairamkova/tes-flow:*"
       - "quay.io/cdis/containers:*"
+      - "docker.io/wangfan860/tes-gdc-maf:*"
 funnel:
   replicaCount: 2
   postgres:
@@ -134,7 +135,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: use-mounted-bucket
+    tag: v0.13.0-gen3
   Logger:
     Level: debug
   Kubernetes:
@@ -249,7 +250,8 @@ hatchery:
           "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
           "env": {
             "NAMESPACE": "brhstaging-helm",
-            "HOSTNAME": "brhstaging.data-commons.org"
+            "HOSTNAME": "brhstaging.data-commons.org",
+            "USER_UID": "1010"
           },
           "args": [],
           "command": [
@@ -276,11 +278,10 @@ hatchery:
             "cpu-limit": "2.0",
             "memory-limit": "8Gi",
             "name": "Jupyter Notebook with Software Library",
-            "image": "quay.io/cdis/jupyterlab-generic:master",
-            "pull_policy": "Always",
+            "image": "quay.io/cdis/brh-notebooks:software_library_brh__2c20cae3e0597e3b932aa5017b62155d0eb70cfa",
             "squashfs_mount": {
               "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
             },
             "env": {
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org",
@@ -288,9 +289,8 @@ hatchery:
             },
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
-              "--ServerApp.default_url=/lab",
+              "--LabApp.default_url=/lab/tree/brh-welcome-wsl.ipynb",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
               "--ServerApp.notebook_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=3600"
             ],
