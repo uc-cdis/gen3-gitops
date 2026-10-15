@@ -64,9 +64,6 @@ datareplicate:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--aws-batch-replicate-job
 fence:
-  FENCE_CONFIG:
-    ENABLE_VISA_UPDATE_CRON: true
-    GA4GH_PASSPORTS_TO_DRS_ENABLED: true
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       multi-consent-test-bucket-kf:
