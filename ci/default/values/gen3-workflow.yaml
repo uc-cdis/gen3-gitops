@@ -3,7 +3,7 @@ gen3-workflow:
   replicaCount: 2
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: feat_dpop
+    tag: master
   serviceAccount:
     create: true
     annotations:
