@@ -138,7 +138,7 @@ spec:
               mountPath: /tmp
           readinessProbe:
             httpGet:
-              path: /siem/health
+              path: /siem/ready
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 10
