@@ -3,6 +3,22 @@ project: vectis
 accountNumber: "172585802910"
 configuration:
   configurationRevision: master
+# Default StorageClass for PVCs that don't set one
+storageclass:
+  enabled: true
+  name: gp3
+  default: true
+  provisioner: ebs.csi.aws.com
+  reclaimPolicy: Retain
+  volumeBindingMode: WaitForFirstConsumer
+  allowVolumeExpansion: true
+  parameters:
+    type: gp3
+    encrypted: "true"
+  previousDefault:
+    removeDefault: false
+    name: gp2
+  
 alb-controller:
   enabled: true
   configuration:
