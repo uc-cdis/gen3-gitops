@@ -57,9 +57,10 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.2'
+    tag: '2026.11'
   FENCE_CONFIG_PUBLIC:
     DEBUG: true
+    DPOP_ENABLED: true
      # Task token types that can be requested by users.
     ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
     # The number of seconds after a task access token is issued until it expires.
@@ -85,7 +86,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.4.0
+    tag: 1.0.0
   resources:
     limits:
       cpu: 2
@@ -97,14 +98,14 @@ gen3-workflow:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow
   externalSecrets:
     gen3workflowG3auto: brhstaging-helm-gen3workflow-g3auto
-  gen3WorkflowConfig:
-    debug: true
-    nWorkers: 4
-    enableS3Files: true
-    eksSecurityGroupNames:
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    ENABLE_S3_FILES: true
+    EKS_SECURITY_GROUP_NAMES:
       - brhprod_EKS_workers_sg
       - brhprod_EKS_nodepool_jupyter_sg
-    taskImageWhitelist:
+    DPOP_REQUIRED: true
+    TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
