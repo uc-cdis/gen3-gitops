@@ -1,0 +1,26 @@
+# Values for the siem-service chart (vectis/charts/siem-service in this repo).
+environment: vectis
+replicaCount: 2
+image:
+  tag: vectis-siem-service-v7
+# Crossplane is not installed on this cluster, and its kinds make Argo reject the whole sync. The IAM role vectis-default-siem-service is
+# created outside Argo (with the cluster's other service roles) and the service account is annotated with it. To go back to Crossplane,
+# set enabled: true and remove the annotation (the chart then sets it from the Crossplane role).
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-siem-service
+crossplane:
+  enabled: false
+  accountId: "172585802910"
+  oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/9649CF76244A05C43B4ECA7C01E29706"
+  providerConfigName: provider-aws
+kmsKeyArn: "arn:aws:kms:us-east-1:172585802910:key/54ce879e-492e-448b-9f5a-222b13189a03"
+env:
+  SIEM_TENANTS: "ctds"
+  # The portal gates its pages on the shared Arborist path /programs/vectis/projects/siem (see config/gen3/authz.json). With this set, the
+  # same grant (and siem_pii, siem_writer, siem_admin) also gives the service access to ctds, so one resource path works for both.
+  SIEM_SHARED_TENANTS: "ctds"
+  GRAPH_BUCKET: "vectis-ctds-172585802910-us-east-1"
+  GRAPH_TENANT: "ctds"
+  GRAPH_NAMESPACES: "ctds-events,ctds-intel"
+  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600}'

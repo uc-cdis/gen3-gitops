@@ -1,0 +1,106 @@
+{{- if .Values.crossplane.enabled }}
+{{- $env := .Values.env }}
+{{- $graphBucket := required "env.GRAPH_BUCKET must be set" $env.GRAPH_BUCKET }}
+{{- $rawBucket := $env.SIEM_RAW_BUCKET | default $graphBucket }}
+{{- $dictBucket := $env.SIEM_DICTIONARY_S3_BUCKET | default $graphBucket }}
+{{- $dictKey := $env.SIEM_DICTIONARY_S3_KEY | default "config/dd/current.json" }}
+{{- $tenant := required "env.GRAPH_TENANT must be set" $env.GRAPH_TENANT }}
+{{- $quarantineBucket := $env.SIEM_QUARANTINE_BUCKET | default $graphBucket }}
+{{- $kms := required "kmsKeyArn must be set when crossplane is enabled" .Values.kmsKeyArn }}
+apiVersion: iam.aws.crossplane.io/v1beta1
+kind: Role
+metadata:
+  name: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service"
+spec:
+  providerConfigRef:
+    name: {{ .Values.crossplane.providerConfigName }}
+  forProvider:
+    name: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service"
+    description: "IRSA role for siem-service in {{ .Release.Namespace }}: reads the graph tables, writes analyst state"
+    assumeRolePolicyDocument: |
+      {
+        "Version":"2012-10-17",
+        "Statement":[
+          {
+            "Effect":"Allow",
+            "Principal":{"Federated":"arn:aws:iam::{{ .Values.crossplane.accountId }}:oidc-provider/{{ .Values.crossplane.oidcProviderUrl }}"},
+            "Action":"sts:AssumeRoleWithWebIdentity",
+            "Condition":{
+              "StringEquals":{
+                "{{ .Values.crossplane.oidcProviderUrl }}:sub":"system:serviceaccount:{{ .Release.Namespace }}:{{ .Values.serviceAccount.name }}",
+                "{{ .Values.crossplane.oidcProviderUrl }}:aud":"sts.amazonaws.com"
+              }
+            }
+          }
+        ]
+      }
+---
+apiVersion: iam.aws.crossplane.io/v1beta1
+kind: Policy
+metadata:
+  name: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service-role-policy"
+spec:
+  providerConfigRef:
+    name: {{ .Values.crossplane.providerConfigName }}
+  forProvider:
+    name: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service-role-policy"
+    document: |
+      {
+        "Version":"2012-10-17",
+        "Statement":[
+          {
+            "Sid":"ListTheTablesStateQuarantineAndConfig",
+            "Effect":"Allow",
+            "Action":"s3:ListBucket",
+            "Resource":["arn:aws:s3:::{{ $graphBucket }}"{{ if ne $quarantineBucket $graphBucket }},"arn:aws:s3:::{{ $quarantineBucket }}"{{ end }}{{ if and (ne $dictBucket $graphBucket) (ne $dictBucket $quarantineBucket) }},"arn:aws:s3:::{{ $dictBucket }}"{{ end }}],
+            "Condition":{"StringLike":{"s3:prefix":["graph/*","quarantine/*","config/dd/*"]}}
+          },
+          {
+            "Sid":"ReadTablesQuarantineAndDictionary",
+            "Effect":"Allow",
+            "Action":"s3:GetObject",
+            "Resource":[
+              "arn:aws:s3:::{{ $graphBucket }}/graph/*",
+              "arn:aws:s3:::{{ $quarantineBucket }}/quarantine/*",
+              "arn:aws:s3:::{{ $dictBucket }}/{{ $dictKey }}"
+            ]
+          },
+          {
+            "Sid":"WriteAnalystStateOnly",
+            "Effect":"Allow",
+            "Action":"s3:PutObject",
+            "Resource":"arn:aws:s3:::{{ $graphBucket }}/graph/{{ $tenant }}-alerts/_state/*"
+          },
+          {
+            "Sid":"PublishWatchlistBundlesOnly",
+            "Effect":"Allow",
+            "Action":"s3:PutObject",
+            "Resource":"arn:aws:s3:::{{ $rawBucket }}/raw/stix/*"
+          },
+          {
+            "Sid":"DecryptGraphBucket",
+            "Effect":"Allow",
+            "Action":["kms:Decrypt","kms:GenerateDataKey","kms:DescribeKey"],
+            "Resource":"{{ $kms }}"
+          },
+          {
+            "Sid":"ReadQueueMetrics",
+            "Effect":"Allow",
+            "Action":"cloudwatch:GetMetricData",
+            "Resource":"*"
+          }
+        ]
+      }
+---
+apiVersion: iam.aws.crossplane.io/v1beta1
+kind: RolePolicyAttachment
+metadata:
+  name: "siem-service-{{ .Release.Namespace }}-managed-policy-attachment"
+spec:
+  providerConfigRef:
+    name: {{ .Values.crossplane.providerConfigName }}
+  forProvider:
+    roleName: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service"
+    policyArnRef:
+      name: "{{ .Values.environment }}-{{ .Release.Namespace }}-siem-service-role-policy"
+{{- end }}
