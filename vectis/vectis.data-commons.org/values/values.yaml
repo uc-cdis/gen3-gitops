@@ -136,7 +136,8 @@ frontend-framework:
     # What a reviewed catalog workflow may run AS (catalog entry field `profile:`). Starting a profile's jobs also needs the permission named
     # for /Jobs/profile/<name> in the portal's authz.json. aws-audit: the job-aws-audit service account (an IAM role, see dagu-cluster.yaml).
     # as-user: the job pod is annotated with the submitting user so the Gen3 workspace token service gives it that user's own token.
-    DAGU_K8S_PROFILES: '{"aws-audit":{"service_account":"job-aws-audit"},"as-user":{"service_account":"dagu-runner","user_token":true}}'
+    # notebook: as-user plus an IAM role (job-notebook) that reads published notebooks and writes results, and RUNNER_* settings for the runner image.
+    DAGU_K8S_PROFILES: '{"aws-audit":{"service_account":"job-aws-audit"},"as-user":{"service_account":"dagu-runner","user_token":true},"notebook":{"service_account":"job-notebook","user_token":true,"env":{"RUNNER_SOURCE":"s3://vectis-ctds-172585802910-us-east-1/config/jobs-catalog","RUNNER_RESULTS":"s3://vectis-ctds-172585802910-us-east-1/jobs/results"}}}'
     JOBS_ALLOWED_IMAGE_PREFIXES: "quay.io/cdis/,busybox"
     # The catalog comes from the jobs-catalog service (it holds the GitHub token and reads the private repository), not from GitHub:
     # the portal holds no token. TES_CATALOG_REPO is only the label shown for it.

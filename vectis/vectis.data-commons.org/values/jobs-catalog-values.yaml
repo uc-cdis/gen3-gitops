@@ -1,6 +1,6 @@
 # Values for the jobs-catalog chart (vectis/charts/jobs-catalog in this repo).
 image:
-  tag: jobs-catalog-v2
+  tag: jobs-catalog-v3
 allowedSubjects:
   - system:serviceaccount:default:portal
 # AWS identity for reading the catalog bucket. The role is created by hand (Crossplane is not installed): see the notes in the notebooks
@@ -13,3 +13,5 @@ catalog:
   s3:
     bucket: vectis-ctds-172585802910-us-east-1
     prefix: config/jobs-catalog
+    # job runs write reports and data here (s3://<bucket>/jobs/results/<run id>/); the Runs page lists and renders them
+    resultsPrefix: jobs/results

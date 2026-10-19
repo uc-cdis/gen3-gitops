@@ -33,6 +33,16 @@ metadata:
     eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-job-aws-audit
 automountServiceAccountToken: true
 ---
+# A service account for the notebook profile: its IAM role can read the published notebooks and write job results, nothing else.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-notebook
+  namespace: dagu-jobs
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-job-notebook
+automountServiceAccountToken: true
+---
 # Dagu may create and watch Jobs in that namespace and read their pods and logs, and nothing else.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role

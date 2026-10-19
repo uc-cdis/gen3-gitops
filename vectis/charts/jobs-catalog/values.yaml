@@ -13,6 +13,7 @@ catalog:
   s3:
     bucket: ""
     prefix: catalog            # <bucket>/<prefix>/LATEST names the commit; its files are under <prefix>/<commit>/
+    resultsPrefix: ""          # where job runs write their files (<resultsPrefix>/<run id>/...); set to let the Runs page show results
   # Source 2: a private GitHub repository read with a token. Used only when s3.bucket is empty.
   repo: ""                     # owner/name of the catalog repository
   path: jobs
