@@ -225,6 +225,7 @@ global:
   tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops
+  frontendRoot: gen3ff
   postgres:
     dbCreate: false
     externalSecret: brhprod-aurora-master-password
