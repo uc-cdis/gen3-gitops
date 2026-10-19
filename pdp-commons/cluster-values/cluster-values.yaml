@@ -116,8 +116,6 @@ karpenter-crds:
     expireAfter: "168h"
     volumeSize: 80Gi
     additionalTags: {}
-    instanceTypes:
-      - g4dn.xlarge
     requirements:
       - key: karpenter.sh/capacity-type
         operator: In
