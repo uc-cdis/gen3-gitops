@@ -10,7 +10,7 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: feat/helm_workspace_additional_configs_and_csrf
       helm:
         releaseName: gen3-brhprod
         valueFiles:
