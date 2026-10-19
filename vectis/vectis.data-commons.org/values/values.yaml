@@ -264,15 +264,19 @@ revproxy:
     # The portal's own server routes (Next.js pages/api). Without these, /api/* is taken by the sheepdog catch-all
     # (location /api/, shipped in the chart even with sheepdog disabled) or the CSRF gate on "/" (the portal sends no
     # X-CSRF-Token). The portal checks login, Arborist and same-origin itself before it calls any backend.
+    # proxy_intercept_errors off: the revproxy otherwise replaces every upstream 5xx with {"error":"service failure - try again later"},
+    # which hid the portal's own (already public, sanitised) reason from the page. These routes answer with their own message.
     portal-api.conf: |-
       location ^~ /api/siem/ {
         set $proxy_service "frontend-framework";
         set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_intercept_errors off;
         proxy_pass $upstream;
       }
       location ^~ /api/jobs/ {
         set $proxy_service "frontend-framework";
         set $upstream http://frontend-framework-service.$namespace.svc.cluster.local;
+        proxy_intercept_errors off;
         proxy_pass $upstream;
       }
     metadata-service.conf: |-
