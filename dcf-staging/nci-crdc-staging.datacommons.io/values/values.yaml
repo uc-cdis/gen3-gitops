@@ -149,6 +149,11 @@ global:
     slackWebhookSecretName: dcf-staging-slack-webhook
   hostname: nci-crdc-staging.datacommons.io
   fenceURL: https://nci-crdc-staging.datacommons.io/user
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.24.147.0/24
+        - 172.24.146.0/24
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
     kube_bucket: kube-dcf-staging-gen3
