@@ -992,7 +992,7 @@ workspace-proxy:
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.2
+    tag: 0.0.3
     pullPolicy: Always
 
   listenAddr: ":8080"
