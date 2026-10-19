@@ -84,7 +84,7 @@ frontend-framework:
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
-    branch: master
+    branch: chore/update-brhstaging
     dir: brhprod/brhstaging.data-commons.org/values/frontend
   env:
     DATACOMMONS: BRHSTAGING
