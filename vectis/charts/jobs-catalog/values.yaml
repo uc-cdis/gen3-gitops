@@ -5,8 +5,16 @@ image:
   pullPolicy: Always
 # the only callers served: service accounts, as system:serviceaccount:<namespace>:<name>
 allowedSubjects: []
+# The pod's AWS identity (IRSA), needed only for the bucket source: an IAM role that can read the catalog prefix.
+serviceAccount:
+  annotations: {}              # eks.amazonaws.com/role-arn: arn:aws:iam::<account>:role/<name>
 catalog:
-  repo: ""                     # REQUIRED: owner/name of the catalog repository
+  # Source 1 (preferred): a bucket a pipeline publishes to. Set s3.bucket and no repo. No GitHub credential is needed anywhere.
+  s3:
+    bucket: ""
+    prefix: catalog            # <bucket>/<prefix>/LATEST names the commit; its files are under <prefix>/<commit>/
+  # Source 2: a private GitHub repository read with a token. Used only when s3.bucket is empty.
+  repo: ""                     # owner/name of the catalog repository
   path: jobs
   ref: main
   tokenSecret: jobs-catalog-github   # a Secret with key "token": a read-only GitHub token (optional: without it only public repositories work)

@@ -1,9 +1,15 @@
 # Values for the jobs-catalog chart (vectis/charts/jobs-catalog in this repo).
 image:
-  tag: jobs-catalog-v1
+  tag: jobs-catalog-v2
 allowedSubjects:
   - system:serviceaccount:default:portal
+# AWS identity for reading the catalog bucket. The role is created by hand (Crossplane is not installed): see the notes in the notebooks
+# repo, scripts/publish-catalog.sh. Trust: this cluster's OIDC provider, subject system:serviceaccount:default:jobs-catalog.
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-jobs-catalog
 catalog:
-  repo: uc-cdis/iso-data-platform
-  path: jobs
-  ref: main
+  # A pipeline (or scripts/publish-catalog.sh) copies the notebooks repo's jobs/ folder to this prefix; no GitHub credential is used here.
+  s3:
+    bucket: vectis-ctds-172585802910-us-east-1
+    prefix: config/jobs-catalog

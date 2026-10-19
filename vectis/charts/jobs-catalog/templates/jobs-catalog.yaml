@@ -5,6 +5,10 @@ kind: ServiceAccount
 metadata:
   name: jobs-catalog
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 ---
 # The service checks callers with TokenReview, which needs the system:auth-delegator role.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -45,12 +49,22 @@ spec:
           ports: [{name: http, containerPort: 8080}]
           env:
             - {name: CATALOG_ALLOWED_SUBJECTS, value: {{ join "," $subjects | quote }}}
-            - {name: CATALOG_REPO, value: {{ required "catalog.repo must be set" .Values.catalog.repo | quote }}}
+            {{- if .Values.catalog.s3.bucket }}
+            - {name: CATALOG_S3_BUCKET, value: {{ .Values.catalog.s3.bucket | quote }}}
+            - {name: CATALOG_S3_PREFIX, value: {{ .Values.catalog.s3.prefix | quote }}}
+            # IRSA only: no instance-metadata probing, FIPS endpoints, regional STS
+            - {name: AWS_REGION, value: "us-east-1"}
+            - {name: AWS_USE_FIPS_ENDPOINT, value: "true"}
+            - {name: AWS_EC2_METADATA_DISABLED, value: "true"}
+            - {name: AWS_STS_REGIONAL_ENDPOINTS, value: "regional"}
+            {{- else }}
+            - {name: CATALOG_REPO, value: {{ required "catalog.repo (or catalog.s3.bucket) must be set" .Values.catalog.repo | quote }}}
             - {name: CATALOG_PATH, value: {{ .Values.catalog.path | quote }}}
             - {name: CATALOG_REF, value: {{ .Values.catalog.ref | quote }}}
             - name: CATALOG_GITHUB_TOKEN
               valueFrom:
                 secretKeyRef: {name: {{ .Values.catalog.tokenSecret }}, key: token, optional: true}
+            {{- end }}
           readinessProbe: {httpGet: {path: /healthz, port: http}, periodSeconds: 10}
           livenessProbe: {httpGet: {path: /healthz, port: http}, initialDelaySeconds: 5, periodSeconds: 20}
           resources:
