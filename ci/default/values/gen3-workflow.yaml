@@ -20,5 +20,5 @@ gen3-workflow:
       - "python:3.13-slim" # for test_dpop_task_token_within_tes_task
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
-    enableS3Files: true
-    eksSecurityGroupNames: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]
+    ENABLE_S3_FILES: true
+    EKS_SECURITY_GROUP_NAMES: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]
