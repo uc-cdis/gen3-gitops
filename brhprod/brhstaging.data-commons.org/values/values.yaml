@@ -13,14 +13,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.08'
+    tag: '2026.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: brhstaging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--audit-sqs-receiver
@@ -34,7 +34,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--dashboard-access
@@ -58,17 +58,13 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.2'
+    tag: '2026.10'
   FENCE_CONFIG_PUBLIC:
     DEBUG: true
-     # Task token types that can be requested by users.
-    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
-    # The number of seconds after a task access token is issued until it expires.
-    # This max is applied even if the requesting user has access to request a
-    # longer-lived token in Arborist. This is configured per task token type,
-    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    ALLOWED_TASK_TOKEN_TYPES:
+      - WORKFLOW
     MAX_TASK_TOKEN_TTL:
-      WORKFLOW: 172800 # 2 days
+      WORKFLOW: 172800
 fluentd:
   enabled: true
   image:
@@ -100,7 +96,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.4.0
+    tag: '2026.10'
   resources:
     limits:
       cpu: 2
@@ -120,27 +116,27 @@ gen3-workflow:
       - brhprod_EKS_workers_sg
       - brhprod_EKS_nodepool_jupyter_sg
     taskImageWhitelist:
-      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
-      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
-      - "quay.io/nextflow/bash:*"
-      - "quay.io/curl/curl:latest"
-      - "quay.io/cdis/nginx:*"
-      - "quay.io/cdis/amazonlinux-base:3.13-pythonnginx"
-      - "python:3.9*"
-      - "pytorch/pytorch:latest" # nf-canary TEST_GPU
-      - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # CI test_multiple_executors_and_pv_features
-      - "public.ecr.aws/docker/library/alpine:latest" # CI test_multiple_executors_and_pv_features
-      - "quay.io/ncigdc/samtools:1.9"
-      - "quay.io/ncigdc/star2:2.7.5c"
-      - "quay.io/ncigdc/bio-alpine"
-      - "quay.io/ncigdc/picard:2.26.10"
-      - "quay.io/ncigdc/gdc-vendorfail:1.1.0"
-      - "quay.io/ncigdc/trimmomatic:0.38"
-      - "quay.io/ncigdc/fastqc:0.11.7-e7d5a43"
-      - "quay.io/cdis/cadc-plp:*"
-      - "docker.io/sairamkova/tes-flow:*"
-      - "quay.io/cdis/containers:*"
-      - "docker.io/wangfan860/tes-gdc-maf:*"
+      - public.ecr.aws/u5x5h6w3/nextflow-approved/public:*
+      - 654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*
+      - quay.io/nextflow/bash:*
+      - quay.io/curl/curl:latest
+      - quay.io/cdis/nginx:*
+      - quay.io/cdis/amazonlinux-base:3.13-pythonnginx
+      - python:3.9*
+      - pytorch/pytorch:latest
+      - quay.io/cdis/gen3-workflow:integration_tests_dicom_image
+      - public.ecr.aws/docker/library/alpine:latest
+      - quay.io/ncigdc/samtools:1.9
+      - quay.io/ncigdc/star2:2.7.5c
+      - quay.io/ncigdc/bio-alpine
+      - quay.io/ncigdc/picard:2.26.10
+      - quay.io/ncigdc/gdc-vendorfail:1.1.0
+      - quay.io/ncigdc/trimmomatic:0.38
+      - quay.io/ncigdc/fastqc:0.11.7-e7d5a43
+      - quay.io/cdis/cadc-plp:*
+      - docker.io/sairamkova/tes-flow:*
+      - quay.io/cdis/containers:*
+      - docker.io/wangfan860/tes-gdc-maf:*
 funnel:
   replicaCount: 2
   postgres:
@@ -163,17 +159,11 @@ funnel:
     Executor:
       restartPolicy: Never
       backoffLimit: 0
-      # Annotations:
-      #   karpenter.sh/do-not-disrupt: "true"
     Worker:
       restartPolicy: Never
       backoffLimit: 1
-      # Annotations:
-      #   karpenter.sh/do-not-disrupt: "true"
-      # PriorityClassName: "system-cluster-critical"
     Resources:
       Limits:
-        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
         Cpus: 12000m
         RamGb: 64Gi
         DiskGb: 100Gi
@@ -208,12 +198,8 @@ global:
     pushSecret: true
   hostname: brhstaging.data-commons.org
   kubeapi_endpoints:
-    # Enable for Argo CD based deployments.
-    # This lets funnel worker pods access the kube api to create executor jobs.
-    # If disabled, an automatic lookup will be performed to get the IPs.
     enabled: true
     ip:
-    # -- <list of ip ranges of kubeapi> can be fetched by running `kubectl get endpoints --namespace default kubernetes` in your cluster.
       - 172.27.103.241
       - 172.27.104.147
   publicDataSets: true
@@ -234,7 +220,7 @@ hatchery:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.11.0'
+    tag: '2026.10'
   vpcId: brhprod
   hatchery:
     json: |-
@@ -263,7 +249,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.10",
           "env": {
             "NAMESPACE": "brhstaging-helm",
             "HOSTNAME": "brhstaging.data-commons.org",
@@ -592,14 +578,14 @@ indexd:
     serviceCreds: brhstaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.08'
+    tag: '2026.10'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: brhstaging-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--manifest-service-sa
@@ -729,7 +715,7 @@ metadata:
     metadataG3auto: brhstaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.08'
+    tag: '2026.10'
   useAggMds: true
 mutatingWebhook:
   enabled: false
@@ -737,14 +723,14 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.08'
+    tag: '2026.10'
 portal:
   enabled: false
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.08'
+    tag: '2026.10'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -755,7 +741,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.08'
+    tag: '2026.10'
   ingress:
     aws:
       group: brhprod
@@ -764,7 +750,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.08'
+    tag: '2026.10'
 wts:
   enabled: true
   externalSecrets:
@@ -773,7 +759,7 @@ wts:
     wtsOidcClient: brhstaging-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.08'
+    tag: '2026.10'
 
 workspace-proxy:
   enabled: true
