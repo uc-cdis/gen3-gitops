@@ -1,6 +1,6 @@
 # Values for the jobs-catalog chart (vectis/charts/jobs-catalog in this repo).
 image:
-  tag: jobs-catalog-v3
+  tag: jobs-catalog-v4
 allowedSubjects:
   - system:serviceaccount:default:portal
 # AWS identity for reading the catalog bucket. The role is created by hand (Crossplane is not installed): see the notes in the notebooks
@@ -15,3 +15,5 @@ catalog:
     prefix: config/jobs-catalog
     # job runs write reports and data here (s3://<bucket>/jobs/results/<run id>/); the Runs page lists and renders them
     resultsPrefix: jobs/results
+    # the durable run history: one small record per run, owned by a person or a group (see runs.go in the siem-app jobs service)
+    runsPrefix: jobs/runs

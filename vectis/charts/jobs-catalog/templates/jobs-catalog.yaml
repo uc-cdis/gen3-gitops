@@ -55,6 +55,9 @@ spec:
             {{- if .Values.catalog.s3.resultsPrefix }}
             - {name: CATALOG_S3_RESULTS_PREFIX, value: {{ .Values.catalog.s3.resultsPrefix | quote }}}
             {{- end }}
+            {{- if .Values.catalog.s3.runsPrefix }}
+            - {name: CATALOG_S3_RUNS_PREFIX, value: {{ .Values.catalog.s3.runsPrefix | quote }}}
+            {{- end }}
             # IRSA only: no instance-metadata probing, FIPS endpoints, regional STS
             - {name: AWS_REGION, value: "us-east-1"}
             - {name: AWS_USE_FIPS_ENDPOINT, value: "true"}

@@ -14,6 +14,7 @@ catalog:
     bucket: ""
     prefix: catalog            # <bucket>/<prefix>/LATEST names the commit; its files are under <prefix>/<commit>/
     resultsPrefix: ""          # where job runs write their files (<resultsPrefix>/<run id>/...); set to let the Runs page show results
+    runsPrefix: ""             # where the durable run history is kept (<runsPrefix>/...); set to keep runs, and their owners, when the workflow server forgets them
   # Source 2: a private GitHub repository read with a token. Used only when s3.bucket is empty.
   repo: ""                     # owner/name of the catalog repository
   path: jobs
