@@ -98,7 +98,7 @@ frontend-framework:
   enabled: true
   image:
     repository: "quay.io/cdis/gen3-vectis"
-    tag: "vectisprodv12"
+    tag: "vectisprodv13"
     pullPolicy: Always
   # The Jobs runner presents this pod's own service-account identity to Dagu's gate, so the token is mounted. The portal holds no secret:
   # the gate holds Dagu's credential and the key behind the run-ownership labels.
