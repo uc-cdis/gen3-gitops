@@ -2,7 +2,7 @@
 environment: vectis
 replicaCount: 2
 image:
-  tag: vectis-siem-service-v10
+  tag: vectis-siem-service-v11
 # Crossplane is not installed on this cluster, and its kinds make Argo reject the whole sync. The IAM role vectis-default-siem-service is
 # created outside Argo (with the cluster's other service roles) and the service account is annotated with it. To go back to Crossplane,
 # set enabled: true and remove the annotation (the chart then sets it from the Crossplane role).
