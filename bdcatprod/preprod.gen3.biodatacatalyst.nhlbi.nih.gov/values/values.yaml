@@ -825,6 +825,49 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
+    GS_BUCKETS:
+      # Prefix wildcards (indexd: exact match first, then "<prefix>.*" startswith).
+      # Prefixes must not overlap; put region exceptions in exact entries below.
+      idc-tcia-.*:
+        region: us-east4
+      nih-nhlbi-.*:
+        region: us-east1
+      test-nih-nhlbi-bdc-recover-.*:
+        region: us-east1
+      # Exceptions to nih-nhlbi-.* (us-east4)
+      nih-nhlbi-biodata-catalyst-1000-genomes:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002348-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002362-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-tutorial-genome-data:
+        region: us-east4
+      nih-nhlbi-covid19-phs002299-c1:
+        region: us-east4
+      nih-nhlbi-topmed-combined-exchange-area:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001542-c2:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001601-c1:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001661-c1:
+        region: us-east4
+      # Buckets not covered by a prefix
+      biolincc-training-datasets-open-access:
+        region: us-east1
+      gcf-sources-427307591354-us-east1:
+        region: us-east1
+      gcf-sources-427307591354-us-east4:
+        region: us-east4
+      nhlbi-cloud-test-bkt:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east1:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east4:
+        region: us-east4
+      us.artifacts.nih-nhlbi-biodatacatalyst-data.appspot.com:
+        region: us
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
