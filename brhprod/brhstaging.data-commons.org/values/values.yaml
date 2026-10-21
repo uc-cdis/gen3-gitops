@@ -799,7 +799,12 @@ workspace-proxy:
         "python_kubernetes",
         "python_tensorflow_kubernetes",
         "python_tensorflow_gpu_kubernetes"
-      ]
+      ],
+      "displayNames": {
+        "python_kubernetes": "Python on Kubernetes",
+        "python_tensorflow_kubernetes": "Python + TensorFlow",
+        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+      }
     }
 
   resources:
