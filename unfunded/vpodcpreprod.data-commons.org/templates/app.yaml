@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gen3-vpodcstaging
+  name: gen3-vpodcpreprod
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -12,15 +12,15 @@ spec:
       repoURL: https://github.com/uc-cdis/gen3-helm
       targetRevision: master
       helm:
-        releaseName: gen3-vpodcstaging
+        releaseName: gen3-vpodcpreprod
         valueFiles:
-          - $values/unfunded/vpodcstaging.data-commons.org/values/values.yaml
+          - $values/unfunded/vpodcpreprod.data-commons.org/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: feat/vpodcstaging
+      targetRevision: feat/vpodcpreprod
       ref: values
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: vpodc-staging
+    namespace: vpodc-preprod
   syncPolicy:
     managedNamespaceMetadata:
       labels:
