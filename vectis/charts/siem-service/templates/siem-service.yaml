@@ -33,6 +33,10 @@ spec:
     metadata:
       labels:
         app: siem-service
+      annotations:
+        # The warm and hot caches live on this node's disk and take minutes to build (readiness is 503 meanwhile, and reads fall back to slow
+        # S3 scans). Karpenter's "Underutilized" consolidation moved both pods within five minutes of a rollout, so every move was a cold start.
+        karpenter.sh/do-not-disrupt: "true"
     spec:
       serviceAccountName: {{ .Values.serviceAccount.name }}
       topologySpreadConstraints:
