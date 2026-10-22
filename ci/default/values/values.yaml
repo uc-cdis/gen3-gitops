@@ -68,6 +68,3 @@ elasticsearch:
     maxUnavailable: "0"
   image: "quay.io/cdis/elasticsearch"
   imageTag: "7.10.2"
-revproxy:
-  image:
-    tag: '1.30.6'
