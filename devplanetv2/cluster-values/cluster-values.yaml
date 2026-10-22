@@ -189,7 +189,7 @@ nvidia-device-plugin:
   enabled: true
   configuration:
     enabled: false
-  targetRevision: v0.18.0
+  targetRevision: v0.20.0
 
 vpc-cni:
   enabled: false
