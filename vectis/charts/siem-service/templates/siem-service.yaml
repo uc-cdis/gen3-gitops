@@ -94,12 +94,27 @@ spec:
               value: {{ required "env.GRAPH_TENANT must be set" $env.GRAPH_TENANT | quote }}
             - name: GRAPH_NAMESPACES
               value: {{ $env.GRAPH_NAMESPACES | default "" | quote }}
+            # Sizes follow the container: "4x" is four times its CPU limit (S3 scans wait on reads, so the S3 reader
+            # oversubscribes on purpose), "35%" is a share of its memory, "15%" of the cache volume. Fixed values still work.
             - name: GRAPH_DUCKDB_THREADS
-              value: {{ $env.GRAPH_DUCKDB_THREADS | default "3" | quote }}
+              value: {{ $env.GRAPH_DUCKDB_THREADS | default "4x" | quote }}
             - name: GRAPH_DUCKDB_MEMORY_LIMIT
-              value: {{ $env.GRAPH_DUCKDB_MEMORY_LIMIT | default "1GB" | quote }}
+              value: {{ $env.GRAPH_DUCKDB_MEMORY_LIMIT | default "35%" | quote }}
             - name: GRAPH_DUCKDB_MAX_TEMP_SIZE
-              value: {{ $env.GRAPH_DUCKDB_MAX_TEMP_SIZE | default "4GB" | quote }}
+              value: {{ $env.GRAPH_DUCKDB_MAX_TEMP_SIZE | default "15%" | quote }}
+            # --- the cache volume: warm and hot tables live in DuckDB files here, not in RAM ---
+            - name: SIEM_CACHE_DIR
+              value: "/cache"
+            - name: SIEM_CACHE_VOLUME_BYTES
+              value: {{ mul (int64 .Values.cache.sizeGi) 1073741824 | quote }}
+            - name: GRAPH_DUCKDB_TEMP_DIR
+              value: "/cache/tmp"
+            {{- range $name := list "SIEM_CACHE_DISK_PERCENT" "SIEM_CACHE_ROW_BYTES" "SIEM_WARM_DAYS" "SIEM_WARM_MAX_ROWS" "SIEM_WARM_RETRY_SECONDS" "SIEM_WARM_EXCLUDE_LABELS" "SIEM_WARM_FRESH_SECONDS" "SIEM_HOT_EXCLUDE_SOURCES" "SIEM_STATE_MAX_AGE_SECONDS" "SIEM_FULL_RELOAD_SECONDS" "SIEM_CREDENTIALS_UNHEALTHY_SECONDS" "SIEM_WARM_FULL_RELOAD_SECONDS" "SIEM_CACHE_EDGE_ROW_BYTES" "SIEM_TENANT_DUCKDB_MAX_TEMP_SIZE" "SIEM_WARM_READY_TIMEOUT_SECONDS" "SIEM_WARM_LOAD_THREADS" "SIEM_WARM_MAX_AGE_SECONDS" "SIEM_WARM_REFRESH_SECONDS" "SIEM_HOT_ON_DISK" }}
+            {{- if hasKey $env $name }}
+            - name: {{ $name }}
+              value: {{ get $env $name | quote }}
+            {{- end }}
+            {{- end }}
             - name: SIEM_THREAT_INDICATOR_LABELS
               value: {{ $env.SIEM_THREAT_INDICATOR_LABELS | default "Indicator" | quote }}
             - name: SIEM_HOT_WINDOW_DAYS
@@ -124,36 +139,62 @@ spec:
               value: {{ $env.SIEM_SOURCE_EXPECTATIONS | default "{}" | quote }}
             # --- SOC router ---
             - name: SIEM_REFRESH_SECONDS
-              value: {{ $env.SIEM_REFRESH_SECONDS | default "30" | quote }}
+              value: {{ $env.SIEM_REFRESH_SECONDS | default "10" | quote }}
             - name: SIEM_HOT_EVENTS_HOURS
               value: {{ $env.SIEM_HOT_EVENTS_HOURS | default "168" | quote }}
             - name: SIEM_HOT_MAX_ROWS
               value: {{ $env.SIEM_HOT_MAX_ROWS | default "3000000" | quote }}
             - name: SIEM_TENANT_DUCKDB_MEMORY_LIMIT
-              value: {{ $env.SIEM_TENANT_DUCKDB_MEMORY_LIMIT | default "2GB" | quote }}
+              value: {{ $env.SIEM_TENANT_DUCKDB_MEMORY_LIMIT | default "20%" | quote }}
             - name: SIEM_PII_COLUMNS
               value: {{ $env.SIEM_PII_COLUMNS | default "user_hash,principal_arn,user_id" | quote }}
           volumeMounts:
             - name: tmp
               mountPath: /tmp
+            - name: cache
+              mountPath: /cache
+          # The startup probe only covers a slow Python start: /siem/health answers as soon as the service is up and does NOT wait for
+          # the cache. Readiness is what waits for the first cache load (up to SIEM_WARM_READY_TIMEOUT_SECONDS) and keeps traffic away.
+          startupProbe:
+            httpGet:
+              path: /siem/health
+              port: 8000
+            periodSeconds: 10
+            failureThreshold: 30
+            timeoutSeconds: 5
           readinessProbe:
             httpGet:
               path: /siem/ready
               port: 8000
             initialDelaySeconds: 5
             periodSeconds: 10
+            timeoutSeconds: 5
           livenessProbe:
             httpGet:
               path: /siem/health
               port: 8000
-            initialDelaySeconds: 10
             periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 6
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- /* The kubelet evicts a pod that writes more than its ephemeral-storage LIMIT: the cache volume, /tmp and a margin.
+                   It is a limit only (no request), so it can never make the pod unschedulable on a small node disk. */}}
+            {{- $res := deepCopy .Values.resources }}
+            {{- $limits := default (dict) $res.limits }}
+            {{- if not (hasKey $limits "ephemeral-storage") }}
+            {{- $_ := set $limits "ephemeral-storage" (printf "%dGi" (add (int .Values.cache.sizeGi) 6)) }}
+            {{- end }}
+            {{- $_ := set $res "limits" $limits }}
+            {{- toYaml $res | nindent 12 }}
       volumes:
         - name: tmp
           emptyDir:
             sizeLimit: {{ .Values.tmpSizeLimit | default "5Gi" }}
+        # The cache lives on the node's disk, so the node volume must be larger than this (see cache.sizeGi in values.yaml). It is
+        # rebuilt from S3 on every start; nothing is trusted from a previous run.
+        - name: cache
+          emptyDir:
+            sizeLimit: {{ .Values.cache.sizeGi }}Gi
 ---
 apiVersion: v1
 kind: Service

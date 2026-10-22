@@ -2,7 +2,7 @@
 environment: vectis
 replicaCount: 2
 image:
-  tag: vectis-siem-service-v10
+  tag: vectis-siem-service-v12
 # Crossplane is not installed on this cluster, and its kinds make Argo reject the whole sync. The IAM role vectis-default-siem-service is
 # created outside Argo (with the cluster's other service roles) and the service account is annotated with it. To go back to Crossplane,
 # set enabled: true and remove the annotation (the chart then sets it from the Crossplane role).
@@ -23,4 +23,8 @@ env:
   GRAPH_BUCKET: "vectis-ctds-172585802910-us-east-1"
   GRAPH_TENANT: "ctds"
   GRAPH_NAMESPACES: "ctds-events,ctds-intel"
-  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600}'
+  # Seconds without an event before a source shows as stale on the Health tab. The streams are continuous, so these are tight.
+  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600, "f5": 600, "revproxy": 3600, "squid": 600, "bifrost": 86400}'
+  # Queues the Health tab reads from CloudWatch (the role already has cloudwatch:GetMetricData). "broker" is the CloudWatch
+  # Broker dimension of the ACTIVE node (gen3-mq-2 today; after a broker failover it becomes gen3-mq-1: update it then).
+  SIEM_MQ_QUEUES: '[{"name":"graph.ingest.ctds","role":"ingest","broker":"gen3-mq-2"},{"name":"graph.cleanup.ctds","role":"cleanup","broker":"gen3-mq-2"},{"name":"graph.ingest.ctds.failures","role":"failures","broker":"gen3-mq-2"}]'
