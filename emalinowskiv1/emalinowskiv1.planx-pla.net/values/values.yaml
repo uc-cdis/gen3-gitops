@@ -371,7 +371,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: 1.30.6
+    tag: '1.30.6'
   ingress:
     aws:
       group: emalinowskiv1-helm

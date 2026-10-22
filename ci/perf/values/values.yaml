@@ -57,4 +57,4 @@ aws-sigv4-proxy:
   esEndpoint: vpc-devplanetv2-gen3-metadata-2-xkwr2f3gbxua5mqqi7rhnat4la.us-east-1.es.amazonaws.com
 revproxy:
   image:
-    tag: 1.30.6
+    tag: '1.30.6'

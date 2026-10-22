@@ -244,7 +244,7 @@ revproxy:
   replicaCount: 2
 
   image:
-    tag: 1.30.6
+    tag: '1.30.6'
 sower:
   enabled: false
 
