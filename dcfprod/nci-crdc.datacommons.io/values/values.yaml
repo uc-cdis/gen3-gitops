@@ -393,6 +393,12 @@ fence:
       gdc-alchemist-alch-phs001140-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-apollo-brca-phs003636-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-brca-phs003636-controlled:
+        cred:  fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
         cred: fence_bot
         region: us-east-1
@@ -634,6 +640,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-organoid-pancreatic-phs001611-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-pecgs-copecc-phs003985-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-pecgs-copecc-phs003985-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-rc-ptcl-phs002097-controlled:
