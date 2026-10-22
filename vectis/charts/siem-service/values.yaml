@@ -24,6 +24,12 @@ crossplane:
 kmsKeyArn: ""             # KMS key of the graph bucket; required when Crossplane manages the role
 tmpSizeLimit: 5Gi         # emptyDir at /tmp: DuckDB home (the root filesystem is read-only)
 cache:
+  persistent: true        # true: a StatefulSet with one EBS volume per replica, kept across restarts, spot reclaims and moves (the service
+                          # reuses what is on it and tops it up from the Delta log). false: a Deployment with an emptyDir, rebuilt from S3.
+  storageClass: siem-cache   # gp3, encrypted, reclaimPolicy Delete, WaitForFirstConsumer: apply it once (see createStorageClass)
+  createStorageClass: false  # true: this chart creates the (cluster-scoped) StorageClass; needs the Argo project to allow cluster resources
+  iops: ""                # gp3 baseline is 3000 iops and 125 MiB/s: raise only if the cache rebuild or hunts show the disk is the limit
+  throughput: ""
   sizeGi: 20              # emptyDir at /cache: the warm and hot DuckDB files and the spill directories. It uses the NODE's disk, so the
                           # node volume must be bigger than this plus /tmp (5Gi) plus the other pods. Budgets are percentages of it:
                           # warm tables 50% (each table half its share, for the reload swap), reader spill 15%, each hot store's spill

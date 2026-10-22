@@ -17,8 +17,9 @@ metadata:
   {{- end }}
   {{- end }}
 ---
+{{- $persist := .Values.cache.persistent }}
 apiVersion: apps/v1
-kind: Deployment
+kind: {{ if $persist }}StatefulSet{{ else }}Deployment{{ end }}
 metadata:
   name: siem-service
   namespace: {{ $ns }}
@@ -26,6 +27,18 @@ metadata:
     app: siem-service
 spec:
   replicas: {{ .Values.replicaCount }}
+  {{- if $persist }}
+  # Each replica keeps its own cache volume across restarts, spot reclaims and reschedules (an EBS volume belongs to one replica and one
+  # zone). Both replicas start together: the cache is rebuilt in parallel the first time, and reused after that.
+  serviceName: siem-service
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  # A volume is deleted with the StatefulSet or when it is scaled down: a cache is never worth keeping (and would cost money, unread).
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Delete
+    whenScaled: Delete
+  {{- end }}
   selector:
     matchLabels:
       app: siem-service
@@ -46,6 +59,15 @@ spec:
           labelSelector:
             matchLabels:
               app: siem-service
+        {{- if $persist }}
+        # Replicas in different zones: a cache volume stays in its zone, so one zone short of spot capacity must not hold both replicas down.
+        - maxSkew: 1
+          topologyKey: topology.kubernetes.io/zone
+          whenUnsatisfiable: ScheduleAnyway
+          labelSelector:
+            matchLabels:
+              app: siem-service
+        {{- end }}
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
@@ -109,6 +131,10 @@ spec:
             # --- the cache volume: warm and hot tables live in DuckDB files here, not in RAM ---
             - name: SIEM_CACHE_DIR
               value: "/cache"
+            {{- if $persist }}
+            - name: SIEM_CACHE_PERSIST          # the volume outlives the pod: reuse the cache files after a restart, top them up from the log
+              value: "true"
+            {{- end }}
             - name: SIEM_CACHE_VOLUME_BYTES
               value: {{ mul (int64 .Values.cache.sizeGi) 1073741824 | quote }}
             - name: GRAPH_DUCKDB_TEMP_DIR
@@ -186,7 +212,8 @@ spec:
             {{- $res := deepCopy .Values.resources }}
             {{- $limits := default (dict) $res.limits }}
             {{- if not (hasKey $limits "ephemeral-storage") }}
-            {{- $_ := set $limits "ephemeral-storage" (printf "%dGi" (add (int .Values.cache.sizeGi) 6)) }}
+            {{- /* With a persistent volume the cache is not ephemeral storage: only /tmp and the container's own layer count. */}}
+            {{- $_ := set $limits "ephemeral-storage" (ternary "8Gi" (printf "%dGi" (add (int .Values.cache.sizeGi) 6)) $persist) }}
             {{- end }}
             {{- $_ := set $res "limits" $limits }}
             {{- toYaml $res | nindent 12 }}
@@ -194,11 +221,26 @@ spec:
         - name: tmp
           emptyDir:
             sizeLimit: {{ .Values.tmpSizeLimit | default "5Gi" }}
+        {{- if not $persist }}
         # The cache lives on the node's disk, so the node volume must be larger than this (see cache.sizeGi in values.yaml). It is
         # rebuilt from S3 on every start; nothing is trusted from a previous run.
         - name: cache
           emptyDir:
             sizeLimit: {{ .Values.cache.sizeGi }}Gi
+        {{- end }}
+  {{- if $persist }}
+  volumeClaimTemplates:
+    - metadata:
+        name: cache
+        labels:
+          app: siem-service
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: {{ .Values.cache.storageClass | quote }}
+        resources:
+          requests:
+            storage: {{ .Values.cache.sizeGi }}Gi
+  {{- end }}
 ---
 apiVersion: v1
 kind: Service
@@ -250,4 +292,26 @@ spec:
         {{- end }}
       ports:
         - port: 8000
+{{- end }}
+{{- if and .Values.cache.persistent .Values.cache.createStorageClass }}
+---
+# Cluster-scoped. Off by default: if the Argo project may not manage cluster resources, apply this once by hand instead (the same manifest).
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: {{ .Values.cache.storageClass }}
+provisioner: ebs.csi.aws.com
+parameters:
+  type: gp3
+  encrypted: "true"
+  fsType: ext4
+  {{- with .Values.cache.iops }}
+  iops: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.cache.throughput }}
+  throughput: {{ . | quote }}
+  {{- end }}
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
 {{- end }}
