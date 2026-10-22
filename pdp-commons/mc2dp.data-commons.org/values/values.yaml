@@ -978,9 +978,9 @@ workspace-proxy:
   workspaceNamespace: jupyter-pods
   kubernetesApiServerCIDRs:
     - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
-    - "172.27.140.0/22"     # EKS private subnet (DHCP)
-    - "172.27.136.0/22"     # EKS private subnet (DHCP)
-    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+    - "172.27.151.0/24"     # EKS private subnet (DHCP)
+    - "172.27.152.0/24"     # EKS private subnet (DHCP)
+    - "172.27.153.0/24"     # EKS private subnet (DHCP)
 
   replicaCount: 1
 
@@ -1013,7 +1013,7 @@ workspace-proxy:
       memory: "256Mi"
 
   networkPolicy:
-    enabled: false
+    enabled: true
 
 jeg:
   enabled: true
