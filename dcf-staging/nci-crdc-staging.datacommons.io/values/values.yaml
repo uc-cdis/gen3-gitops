@@ -3,7 +3,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.09'
+    tag: '2026.10'
 manifestservice:
   enabled: false
 wts:
@@ -15,7 +15,7 @@ audit:
     auditG3auto: dcf-staging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.09'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--audit-sqs-receiver
@@ -29,7 +29,7 @@ dashboard:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.09'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::584476192960:role/dcf-staging--dcf-staging-helm--dashboard-access
@@ -113,7 +113,7 @@ fence:
     fenceSshKeys: dcf-staging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.09'
+    tag: '2026.10'
   usersync:
     usersync: true
     syncFromDbgap: true
@@ -149,6 +149,11 @@ global:
     slackWebhookSecretName: dcf-staging-slack-webhook
   hostname: nci-crdc-staging.datacommons.io
   fenceURL: https://nci-crdc-staging.datacommons.io/user
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.24.147.0/24
+        - 172.24.146.0/24
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
     kube_bucket: kube-dcf-staging-gen3
@@ -168,10 +173,10 @@ indexd:
     serviceCreds: dcf-staging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '6.4.2'
+    tag: '2026.10'
   trustedIssuers:
-    defaultPassportIssuer: 'https://stsstg.nih.gov'
-    defaultPreferredType: 'PassportAuth'
+    defaultPassportIssuer: https://stsstg.nih.gov
+    defaultPreferredType: PassportAuth
 metadata:
   replicaCount: 4
   enabled: true
@@ -180,7 +185,7 @@ metadata:
     metadataG3auto: dcf-staging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.09'
+    tag: '2026.10'
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -188,7 +193,7 @@ peregrine:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.09'
+    tag: '2026.10'
 portal:
   enabled: true
   replicaCount: 2
@@ -475,13 +480,13 @@ portal:
       }
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '2026.09'
+    tag: '2026.10'
 revproxy:
   replicaCount: 4
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.09'
+    tag: '2026.10'
   ingress:
     aws:
       group: dcf-staging
@@ -490,7 +495,7 @@ sheepdog:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.09'
+    tag: '2026.10'
 sower:
   enabled: true
   replicaCount: 2
@@ -500,7 +505,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.09'
+    tag: '2026.10'
   sowerConfig:
     - action: index-object-manifest
       activeDeadlineSeconds: 86400
@@ -512,7 +517,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifest-indexing:2026.10
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -538,7 +543,7 @@ sower:
               configMapKeyRef:
                 key: hostname
                 name: manifest-global
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.09
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/download-indexd-manifest:2026.10
         memory-limit: 1Gi
         name: job-task
         pull_policy: Always
@@ -561,5 +566,5 @@ ssjdispatcher:
     credsFile: dcf-staging-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.09'
-  indexing: quay.io/cdis/indexs3client:2026.09
+    tag: '2026.10'
+  indexing: quay.io/cdis/indexs3client:2026.10

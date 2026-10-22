@@ -61,19 +61,19 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.28'
+    tag: '0.29.2'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
-  env:
-    - name: MAX_LIST_ITEMS
-      value: "50000"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
     tag: '2026.08'
   externalSecrets:
     dbcreds: pdp-commons-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: pdp-commons-gen3userdatalibrary-g3auto
+  env:
+    - name: MAX_LIST_ITEMS
+      value: "50000"
 global:
   pdb: true
   aws:
@@ -155,45 +155,50 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.11.0'
+    tag: '2.12.0'
   hatchery:
     reaper:
       enabled: false
     json: |
       {
-          "user-namespace": "jupyter-pods",
-          "sub-dir": "/lw-workspace",
-          "user-volume-size": "10Gi",
-          "shared-workspace": {
-            "enabled": true,
-            "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32"
+        "user-namespace": "jupyter-pods",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "shared-workspace": {
+          "enabled": true
+        },
+        "default-pay-model": {
+          "workspace_type": "Trial Workspace",
+          "local": true
+        },
+        "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
+        "oidc-provider-arn": "arn:aws:iam::851725307933:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/9E22EEF86AFB2DCF64671C5D66373B32",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.07",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "mc2dp.data-commons.org"
           },
-          "default-pay-model": {
-              "workspace_type": "Trial Workspace",
-              "local": true
-          },
-          "sidecar": {
-              "cpu-limit": "1.0",
-              "memory-limit": "256Mi",
-              "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.07",
-              "env": {
-                  "NAMESPACE": "default",
-                  "HOSTNAME": "mc2dp.data-commons.org"
-              },
-              "args": [],
-              "command": [
-                  "/bin/bash",
-                  "./sidecar.sh"
-              ],
-              "lifecycle-pre-stop": [
-                  "su",
-                  "-c",
-                  "echo test",
-                  "-s",
-                  "/bin/sh",
-                  "root"
-              ]
-          },
+          "args": [],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
         "containers": [
           {
             "target-port": 8888,
@@ -201,26 +206,27 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "Genomics (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-3.4.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.ip='*'",
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=90000",
-              "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
@@ -232,10 +238,7 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3",
-            "squashfs_mount": {
-              "enabled": false
-            }
+            "gen3-volume-location": "/home/jovyan/.gen3"
           },
           {
             "target-port": 8888,
@@ -243,26 +246,27 @@ hatchery:
             "gpu": false,
             "memory-limit": "4Gi",
             "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_jupyter-genomics",
+            "image": "quay.io/cdis/jupyterlab-generic:3.4.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.ip='*'",
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=90000",
-              "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
@@ -272,12 +276,9 @@ hatchery:
             "use-tls": "false",
             "ready-probe": "/lw-workspace/proxy/lab",
             "user-uid": 1010,
-            "fs-gid": 101,
+            "fs-gid": 100,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3",
-            "squashfs_mount": {
-              "enabled": false
-            }
+            "gen3-volume-location": "/home/jovyan/.gen3"
           },
           {
             "target-port": 8888,
@@ -285,26 +286,27 @@ hatchery:
             "gpu": true,
             "memory-limit": "8Gi",
             "name": "AI/ML (2CPU/8GB RAM, GPU)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-drb-update-mc2dp-mmcancer",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-3.4.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--ServerApp.default_url=/lab",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.ip='*'",
               "--ServerApp.disable_check_xsrf=True",
               "--ServerApp.allow_origin='https://mc2dp.data-commons.org'",
               "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=90000",
-              "--ServerApp.quit_button=False",
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
@@ -316,10 +318,7 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3",
-            "squashfs_mount": {
-              "enabled": false
-            }
+            "gen3-volume-location": "/home/jovyan/.gen3"
           },
           {
             "target-port": 8888,
@@ -327,11 +326,15 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "RCC pilot (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-3.4.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
               "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
             },
             "command": [
               "start-notebook.sh"
@@ -358,10 +361,7 @@ hatchery:
             "user-uid": 1010,
             "fs-gid": 101,
             "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3",
-            "squashfs_mount": {
-              "enabled": false
-            }
+            "gen3-volume-location": "/home/jovyan/.gen3"
           }
         ]
       }
@@ -678,7 +678,7 @@ metadata:
     metadataG3auto: pdp-commons-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: master
+    tag: 2026.11
   useAggMds: true
   replicaCount: 2
 mutatingWebhook:
@@ -706,6 +706,7 @@ revproxy:
     aws:
       group: pdp-commons
   additionalConfigs:
+    # TODO - remove all, like in QA, given gen3-helm has this now? see https://github.com/uc-cdis/gen3-helm/pull/720
     # NOTE: /search/* is not exposed directly by nginx; /guppy/* rewrites to
     # /search/* on API Gateway, where the custom authorizer enforces access.
     workspace-api.conf: |-
@@ -777,18 +778,7 @@ revproxy:
           add_header Content-Type text/plain;
           return 204;
         }
-        set $authz_resource "/workspace";
-        set $authz_method "access";
-        set $authz_service "jupyterhub";
-        auth_request_set $remoteUser $upstream_http_REMOTE_USER;
-        auth_request_set $saved_set_cookie $upstream_http_set_cookie;
-        auth_request /gen3-authz;
-        if ($saved_set_cookie != "") {
-          add_header Set-Cookie $saved_set_cookie always;
-        }
         add_header Cache-Control "no-store";
-        proxy_set_header REMOTE_USER $remoteUser;
-        error_page 403 = @errorworkspace;
 
         set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
         rewrite ^/api/workspace-assets/remote/(lmod.*) /$1 break;
@@ -888,11 +878,7 @@ revproxy:
 
       # JupyterLab kernel tunnel (workspace-proxy handles per-user routing).
       location ^~ /workspace-api/ {
-          set $authz_resource "/workspace";
-          set $authz_method "access";
-          set $authz_service "jupyterhub";
-          auth_request /gen3-authz;
-          error_page 403 = @errorworkspace;
+          add_header Cache-Control "no-store";
           set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
           rewrite ^/workspace-api/(.*) /api/$1 break;
           proxy_pass $upstream;
@@ -941,20 +927,7 @@ revproxy:
       }
 
       location /lw-workspace/proxy/ {
-          set $authz_resource "/workspace";
-          set $authz_method "access";
-          set $authz_service "jupyterhub";
-          auth_request_set $remoteUser $upstream_http_REMOTE_USER;
-          auth_request_set $saved_set_cookie $upstream_http_set_cookie;
-          auth_request /gen3-authz;
-
-          if ($saved_set_cookie != "") {
-              add_header Set-Cookie $saved_set_cookie always;
-          }
           add_header Cache-Control "no-store";
-
-          proxy_set_header REMOTE_USER $remoteUser;
-          error_page 403 = @errorworkspace;
 
           set $proxy_service  "workspace-proxy";
           set $upstream http://workspace-proxy-service.$namespace.svc.cluster.local:8080;
@@ -1005,30 +978,26 @@ workspace-proxy:
   workspaceNamespace: jupyter-pods
   kubernetesApiServerCIDRs:
     - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
-    - "172.27.140.0/22"     # EKS private subnet (DHCP)
-    - "172.27.136.0/22"     # EKS private subnet (DHCP)
-    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+    - "172.27.151.0/24"     # EKS private subnet (DHCP)
+    - "172.27.152.0/24"     # EKS private subnet (DHCP)
+    - "172.27.153.0/24"     # EKS private subnet (DHCP)
 
   replicaCount: 1
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.1
+    tag: 0.0.4
     pullPolicy: Always
 
   listenAddr: ":8080"
-  # Add display names like qa-mc2dp-helm
   jegKernelSpecPolicy: |
     {
       "allowedSpecs": [
-        "python_kubernetes",
-        "python_tensorflow_kubernetes",
-        "python_tensorflow_gpu_kubernetes"
       ],
       "displayNames": {
         "python_kubernetes": "Python on Kubernetes",
-        "python_tensorflow_kubernetes": "Python + TensorFlow",
-        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+        "python_tf_kubernetes": "Python + TensorFlow",
+        "python_tf_gpu_kubernetes": "Python + TensorFlow + GPU"
       }
     }
 
@@ -1041,7 +1010,7 @@ workspace-proxy:
       memory: "256Mi"
 
   networkPolicy:
-    enabled: false
+    enabled: true
 
 jeg:
   enabled: true

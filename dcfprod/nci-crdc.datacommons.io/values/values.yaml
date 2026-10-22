@@ -91,7 +91,7 @@ datareplicate:
     REGION: us-east-1
     THREAD_COUNT: 100
     MAX_RETRIES: 10
-    MANIFEST_PATH: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
+    MANIFEST_PATH: s3://log-bucket-june2/GDC_full_sync_active_manifest_20260910_post_DR46.0_consented_consented.tsv
     JOB_QUEUE: nci-crdc-datacommons-io-bucket-replicate-19lv_queue_job
     JOB_DEFINITION: nci-crdc-datacommons-io-bucket-replicate-19lv-batch_job_definition
     OUTPUT_MANIFEST_BUCKET: log-bucket-june2
@@ -104,7 +104,7 @@ datareplicate:
     DRY_RUN: 'False'
     LOG_BUCKET: data-refresh-output
     RELEASE: DR44
-    MANIFEST_FILE: s3://data-refresh-manifest/GDC_full_sync_obsolete_manifest_20250507_post_DR43.0.tsv
+    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_obsolete_manifest_20251029_post_DR44.0.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
     ONLY_REDACT: all
   replicateValidationJob:
@@ -112,13 +112,16 @@ datareplicate:
     suspendCronjob: true
     schedule: '*/30 * * * *'
     LOG_BUCKET: data-refresh-output
-    RELEASE: DR44
-    MANIFEST_FILE: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
+    RELEASE: DR46
+    MANIFEST_FILE: s3://log-bucket-june2/GDC_full_sync_active_manifest_20260910_post_DR46.0_consented_consented.tsv
     IGNORED_FILE: s3://data-refresh-manifest/ignored_files_manifest.csv
-    OUT_FILES: GDC_full_sync_active_manifest_20251029_post_DR44.0_DCF.tsv
+    OUT_FILES: GDC_full_sync_active_manifest_20260910_post_DR46.0_DCF.tsv
     FORCE_CREATE_MANIFEST: true
     VALIDATE_PLATFORM: AWS
 fence:
+  FENCE_CONFIG:
+    ENABLE_VISA_UPDATE_CRON: true
+    GA4GH_PASSPORTS_TO_DRS_ENABLED: true
   FENCE_CONFIG_PUBLIC:
     dbGaP:
       parse_consent_code: true
@@ -390,6 +393,12 @@ fence:
       gdc-alchemist-alch-phs001140-2-open:
         cred: fence_bot
         region: us-east-1
+      gdc-apollo-brca-phs003636-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-apollo-brca-phs003636-controlled:
+        cred:  fence_bot
+        region: us-east-1
       gdc-apollo-luad-phs003011-controlled:
         cred: fence_bot
         region: us-east-1
@@ -631,6 +640,12 @@ fence:
         cred: fence_bot
         region: us-east-1
       gdc-organoid-pancreatic-phs001611-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-pecgs-copecc-phs003985-2-open:
+        cred: fence_bot
+        region: us-east-1
+      gdc-pecgs-copecc-phs003985-controlled:
         cred: fence_bot
         region: us-east-1
       gdc-rc-ptcl-phs002097-controlled:
@@ -1068,6 +1083,8 @@ indexd:
       memory: 256Mi
     limits:
       memory: 1024Mi
+  trustedIssuers:
+    defaultPassportIssuer: https://sts.nih.gov
 metadata:
   replicaCount: 4
   autoscaling:
