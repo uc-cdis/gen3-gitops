@@ -200,7 +200,7 @@ hatchery:
 indexd:
   enabled: true
   postgres:
-    dbCreate: true  
+    dbCreate: true
   externalSecrets:
     serviceCreds: emalinowskiv1-indexd-service-creds
     pushSecret: true
@@ -371,7 +371,7 @@ revproxy:
   enabled: true
   image:
     repository: quay.io/cdis/nginx
-    tag: '2024.12'
+    tag: master
   ingress:
     aws:
       group: emalinowskiv1-helm
