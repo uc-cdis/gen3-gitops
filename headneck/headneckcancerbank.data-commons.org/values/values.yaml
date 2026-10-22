@@ -844,6 +844,8 @@ revproxy:
   enabled: true
   replicaCount: 2
 
+  image:
+    tag: 1.30.6
 s3-mountpoint:
   enabled: false
 

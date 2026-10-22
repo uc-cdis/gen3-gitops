@@ -249,7 +249,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: master
+    tag: 1.30.6
 
 sheepdog:
   # Lower cost
