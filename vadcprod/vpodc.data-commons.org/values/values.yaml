@@ -547,7 +547,7 @@ requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: "2026.08"
+    tag: "2026.09"
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -854,14 +854,11 @@ workspace-proxy:
   jegKernelSpecPolicy: |
     {
       "allowedSpecs": [
-        "python_kubernetes",
-        "python_tensorflow_kubernetes",
-        "python_tensorflow_gpu_kubernetes"
       ],
       "displayNames": {
         "python_kubernetes": "Python on Kubernetes",
-        "python_tensorflow_kubernetes": "Python + TensorFlow",
-        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+        "python_tf_kubernetes": "Python + TensorFlow",
+        "python_tf_gpu_kubernetes": "Python + TensorFlow + GPU"
       }
     }
 
