@@ -153,6 +153,11 @@ global:
     indexd_single_table: 'true'
     kube_bucket: kube-dcf-staging-gen3
     logs_bucket: logs-dcf-staging-gen3
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.24.146.0/24
+        - 172.24.147.0/24    
   portalApp: gitops
   pdb: true
   postgres:
