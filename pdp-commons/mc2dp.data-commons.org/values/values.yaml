@@ -701,7 +701,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '1.30.6'
   ingress:
     aws:
       group: pdp-commons

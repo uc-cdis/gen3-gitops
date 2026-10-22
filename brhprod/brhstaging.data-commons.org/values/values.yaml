@@ -232,6 +232,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/930ddba3-1e49-4194-8bb8-4ff970dd45a0
 hatchery:
   enabled: true
+  jupyterNamespace: jupyter-pods-brhstaging
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2.11.0'
@@ -304,6 +305,8 @@ hatchery:
               "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/brh-welcome-wsl.ipynb",
               "--ServerApp.password=''",
@@ -336,6 +339,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab",
               "--JupyterNotebookApp.password=''",
@@ -371,6 +376,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -406,6 +413,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -441,6 +450,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brhstaging.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
@@ -497,6 +508,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brhstaging.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
@@ -553,6 +566,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab",
               "--JupyterNotebookApp.password=''",
@@ -755,7 +770,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.08'
+    tag: '1.30.6'
   ingress:
     aws:
       group: brhprod
