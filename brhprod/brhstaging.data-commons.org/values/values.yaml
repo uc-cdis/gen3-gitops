@@ -789,7 +789,7 @@ workspace-proxy:
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.4
+    tag: fix_restore-ambassador-annotation-upstream
     pullPolicy: Always
 
   listenAddr: ":8080"
