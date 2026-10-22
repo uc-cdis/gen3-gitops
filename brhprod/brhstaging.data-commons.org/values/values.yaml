@@ -232,6 +232,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/930ddba3-1e49-4194-8bb8-4ff970dd45a0
 hatchery:
   enabled: true
+  jupyterNamespace: jupyter-pods-brhstaging
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2.11.0'
