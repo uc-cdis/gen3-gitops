@@ -207,6 +207,7 @@ global:
     slackWebhookSecretName: brhstaging-slack-webhook
     createLocalK8sSecret: false
     pushSecret: true
+  createDpopSecret: true
   hostname: brhstaging.data-commons.org
   kubeapi_endpoints:
     # Enable for Argo CD based deployments.
