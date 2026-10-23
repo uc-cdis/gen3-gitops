@@ -2,7 +2,7 @@
 environment: vectis
 replicaCount: 2
 image:
-  tag: vectis-siem-service-v16
+  tag: vectis-siem-service-v17
 # CPU. The pods had a request of 1 and a limit of 4 and were being placed on 2-vCPU nodes: `nproc` printed 2, `cpu.pressure` sat near 20% and the pod
 # used a flat 1.4 cores, with no throttling and no disk wait. A request is what the scheduler reserves, so asking for 3 puts each pod on a node that really
 # has the CPUs (Karpenter adds a larger node when none has room). The limit stays 4: it only caps.
