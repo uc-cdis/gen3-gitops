@@ -532,6 +532,11 @@ global:
     kube_bucket: kube-midrcvalidate-gen3
     logs_bucket: logs-midrcprod-gen3
   maintenanceMode: 'off'
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.27.2.0/24
+        - 172.27.3.0/24
   publicDataSets: false
   tierAccessLevel: private
   tierAccessLimit: 50
