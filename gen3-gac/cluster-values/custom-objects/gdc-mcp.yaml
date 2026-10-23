@@ -6,10 +6,10 @@ metadata:
 data:
   model-config.yaml: |
     backends:
-      - provider: openai
+      - provider: local
         name: meta-models/Muse-Glimmer-30B
         alias: (On-Prem) Meta Muse Glimmer 30B
-        env_prefix: ONPREM_API
+        env_prefix: MUSE_API
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -95,19 +95,38 @@ spec:
         - name: mcp
           image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp:agent
           imagePullPolicy: IfNotPresent
+          env_from:
+            - secretRef:
+                name: agent-api-keys
           env:
             - name: MCP_PORT
               value: "8001"
+            - name: EMBED_API_URL
+              value: "$(ONPREAM_API_URL)"
+            - name: EMBED_API_KEY
+              value: "$(ONPREM_API_KEY)"
+            - name: EMBED_MODEL
+              value: "sapbert"
           args:
             - "-t"
             - "streamable-http"
             - "-p"
             - "$(MCP_PORT)"
-            - "--embed-api-url"
-            - "$(EMBED_API_URL)"
           ports:
             - name: http
               containerPort: 8001
+          startupProbe:
+            tcpSocket: { port: http }
+            periodSeconds: 5
+            failureThreshold: 120
+          readinessProbe:
+            tcpSocket: { port: http }
+          volumeMounts:
+            - name: cache
+              mountPath: /cache
+    volumes:
+      - name: cache
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
