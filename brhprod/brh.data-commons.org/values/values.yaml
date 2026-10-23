@@ -1218,8 +1218,8 @@ wts:
 
 workspace-proxy:
   enabled: true
-  deploymentNamespace: brhstaging-helm
-  workspaceNamespace: jupyter-pods-brhstaging
+  deploymentNamespace: brhprod-helm
+  workspaceNamespace: jupyter-pods
   kubernetesApiServerCIDRs:
     - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
     - "172.27.100.0/23"     # EKS private subnet (DHCP)
@@ -1230,7 +1230,7 @@ workspace-proxy:
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.2
+    tag: fix_restore-ambassador-annotation-upstream
     pullPolicy: Always
 
   listenAddr: ":8080"
@@ -1253,7 +1253,7 @@ workspace-proxy:
 
 jeg:
   enabled: true
-  workspaceNamespace: jupyter-pods-brhstaging
+  workspaceNamespace: jupyter-pods
 
   replicaCount: 1
 
@@ -1264,7 +1264,7 @@ jeg:
 
   env:
     # CRITICAL: must match hatchery user-namespace and workspace-proxy WORKSPACE_NAMESPACE.
-    EG_NAMESPACE: jupyter-pods-brhstaging
+    EG_NAMESPACE: jupyter-pods
     EG_KERNEL_LAUNCH_TIMEOUT: "120"
     EG_MAX_KERNELS_PER_USER: "2"
     EG_CULL_IDLE_TIMEOUT: "14400"
