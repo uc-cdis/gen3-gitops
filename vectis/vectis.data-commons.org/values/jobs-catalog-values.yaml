@@ -1,0 +1,19 @@
+# Values for the jobs-catalog chart (vectis/charts/jobs-catalog in this repo).
+image:
+  tag: jobs-catalog-v4
+allowedSubjects:
+  - system:serviceaccount:default:portal
+# AWS identity for reading the catalog bucket. The role is created by hand (Crossplane is not installed): see the notes in the notebooks
+# repo, scripts/publish-catalog.sh. Trust: this cluster's OIDC provider, subject system:serviceaccount:default:jobs-catalog.
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-jobs-catalog
+catalog:
+  # A pipeline (or scripts/publish-catalog.sh) copies the notebooks repo's jobs/ folder to this prefix; no GitHub credential is used here.
+  s3:
+    bucket: vectis-ctds-172585802910-us-east-1
+    prefix: config/jobs-catalog
+    # job runs write reports and data here (s3://<bucket>/jobs/results/<run id>/); the Runs page lists and renders them
+    resultsPrefix: jobs/results
+    # the durable run history: one small record per run, owned by a person or a group (see runs.go in the siem-app jobs service)
+    runsPrefix: jobs/runs

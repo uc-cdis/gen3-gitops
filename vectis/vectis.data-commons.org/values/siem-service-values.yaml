@@ -1,0 +1,49 @@
+# Values for the siem-service chart (vectis/charts/siem-service in this repo).
+environment: vectis
+replicaCount: 2
+image:
+  tag: vectis-siem-service-v17
+# CPU. The pods had a request of 1 and a limit of 4 and were being placed on 2-vCPU nodes: `nproc` printed 2, `cpu.pressure` sat near 20% and the pod
+# used a flat 1.4 cores, with no throttling and no disk wait. A request is what the scheduler reserves, so asking for 3 puts each pod on a node that really
+# has the CPUs (Karpenter adds a larger node when none has room). The limit stays 4: it only caps.
+resources:
+  requests:
+    cpu: "3"
+    memory: "4Gi"
+  limits:
+    cpu: "4"
+    memory: "6Gi"
+# One EBS volume per replica (a StatefulSet), kept across restarts and spot reclaims. 100 Gi holds about three days of web requests in the warm
+# cache at today's volume; the storage class is applied once by hand (see the rollout notes), so the chart does not create it.
+cache:
+  persistent: true
+  storageClass: siem-cache
+  sizeGi: 100
+# Crossplane is not installed on this cluster, and its kinds make Argo reject the whole sync. The IAM role vectis-default-siem-service is
+# created outside Argo (with the cluster's other service roles) and the service account is annotated with it. To go back to Crossplane,
+# set enabled: true and remove the annotation (the chart then sets it from the Crossplane role).
+serviceAccount:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-siem-service
+crossplane:
+  enabled: false
+  accountId: "172585802910"
+  oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/9649CF76244A05C43B4ECA7C01E29706"
+  providerConfigName: provider-aws
+kmsKeyArn: "arn:aws:kms:us-east-1:172585802910:key/54ce879e-492e-448b-9f5a-222b13189a03"
+env:
+  # DuckDB threads for the shared reader: 2 per CPU. It was 4 per CPU (16 threads on a 2-vCPU node) so S3 scans could overlap their waits; the S3 scans
+  # now run in their own single lane (SIEM_COLD_CONCURRENCY) and warm reads should not fight each other for CPUs.
+  GRAPH_DUCKDB_THREADS: "2x"
+  SIEM_TENANTS: "ctds"
+  # The portal gates its pages on the shared Arborist path /programs/vectis/projects/siem (see config/gen3/authz.json). With this set, the
+  # same grant (and siem_pii, siem_writer, siem_admin) also gives the service access to ctds, so one resource path works for both.
+  SIEM_SHARED_TENANTS: "ctds"
+  GRAPH_BUCKET: "vectis-ctds-172585802910-us-east-1"
+  GRAPH_TENANT: "ctds"
+  GRAPH_NAMESPACES: "ctds-events,ctds-intel"
+  # Seconds without an event before a source shows as stale on the Health tab. The streams are continuous, so these are tight.
+  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600, "f5": 600, "revproxy": 3600, "squid": 600, "bifrost": 86400}'
+  # Queues the Health tab reads from CloudWatch (the role already has cloudwatch:GetMetricData). "broker" is the CloudWatch
+  # Broker dimension of the ACTIVE node (gen3-mq-2 today; after a broker failover it becomes gen3-mq-1: update it then).
+  SIEM_MQ_QUEUES: '[{"name":"graph.ingest.ctds","role":"ingest","broker":"gen3-mq-2"},{"name":"graph.cleanup.ctds","role":"cleanup","broker":"gen3-mq-2"},{"name":"graph.ingest.ctds.failures","role":"failures","broker":"gen3-mq-2"}]'

@@ -1,0 +1,71 @@
+# Defaults for the siem-service chart. The vectis values are in ../../vectis.data-commons.org/values/siem-service-values.yaml.
+environment: ""           # prefix of the Crossplane-managed IAM role name: <environment>-<namespace>-<serviceAccount.name>
+replicaCount: 2
+serviceAccount:
+  name: siem-service
+  annotations: {}         # ignored when crossplane.enabled (the role annotation is set from the Crossplane role)
+image:
+  repository: quay.io/cdis/gen3-vectis
+  tag: ""                 # REQUIRED: set in the vectis values
+  pullPolicy: Always
+resources:
+  requests:
+    cpu: "1"
+    memory: "3Gi"
+  limits:
+    cpu: "4"                # a t3.large has 2 vCPUs: this only caps; raise the node size to use more
+    memory: "6Gi"
+# Crossplane manages this service's IAM role and policy (assumed by the service account through IRSA).
+crossplane:
+  enabled: false
+  accountId: ""
+  oidcProviderUrl: ""     # e.g. oidc.eks.<region>.amazonaws.com/id/<id>
+  providerConfigName: provider-aws
+kmsKeyArn: ""             # KMS key of the graph bucket; required when Crossplane manages the role
+tmpSizeLimit: 5Gi         # emptyDir at /tmp: DuckDB home (the root filesystem is read-only)
+cache:
+  persistent: true        # true: a StatefulSet with one EBS volume per replica, kept across restarts, spot reclaims and moves (the service
+                          # reuses what is on it and tops it up from the Delta log). false: a Deployment with an emptyDir, rebuilt from S3.
+  storageClass: siem-cache   # gp3, encrypted, reclaimPolicy Delete, WaitForFirstConsumer: apply it once (see createStorageClass)
+  createStorageClass: false  # true: this chart creates the (cluster-scoped) StorageClass; needs the Argo project to allow cluster resources
+  iops: ""                # gp3 baseline is 3000 iops and 125 MiB/s: raise only if the cache rebuild or hunts show the disk is the limit
+  throughput: ""
+  sizeGi: 20              # emptyDir at /cache: the warm and hot DuckDB files and the spill directories. It uses the NODE's disk, so the
+                          # node volume must be bigger than this plus /tmp (5Gi) plus the other pods. Budgets are percentages of it:
+                          # warm tables 50% (each table half its share, for the reload swap), reader spill 15%, each hot store's spill
+                          # 10%. A pod's ephemeral-storage limit is sizeGi + 6Gi (set in the template).
+arboristUrl: ""           # default: http://arborist-service.<namespace>.svc.cluster.local
+fenceUrl: ""              # default: http://fence-service.<namespace>.svc.cluster.local
+networkPolicy:            # limit who can connect: the pods listed here (the portal and the revproxy)
+  enabled: false
+  allowedPodLabels:
+    - app.kubernetes.io/name: frontend-framework
+    - app.kubernetes.io/name: revproxy
+env:
+  SIEM_ENV: "production"
+  SIEM_ARBORIST_SERVICE: "siem"
+  SIEM_AUTH_CACHE_TTL: "30"
+  SIEM_TENANTS: ""        # REQUIRED. Arborist: /programs/vectis/projects/<tenant>/siem[_pii|_writer|_admin]
+  SIEM_SHARED_TENANTS: ""
+  AWS_REGION: "us-east-1"
+  GRAPH_BUCKET: ""        # REQUIRED
+  GRAPH_TENANT: ""        # REQUIRED
+  GRAPH_NAMESPACES: ""
+  GRAPH_DUCKDB_S3_ENDPOINT: "regional"
+  GRAPH_DUCKDB_THREADS: "4x"          # four times the CPU limit; a plain number also works
+  GRAPH_DUCKDB_MEMORY_LIMIT: "35%"    # of the container memory limit
+  GRAPH_DUCKDB_MAX_TEMP_SIZE: "15%"   # of cache.sizeGi (the hot store gets 10%, the warm cache files up to 50%)
+  GRAPH_SOURCE_CACHE_TTL_SECONDS: "300"
+  SIEM_THREAT_INDICATOR_LABELS: "Indicator"
+  SIEM_HOT_WINDOW_DAYS: "7"
+  SIEM_DICTIONARY_S3_BUCKET: ""
+  SIEM_DICTIONARY_S3_KEY: "config/dd/current.json"
+  SIEM_RAW_BUCKET: ""
+  SIEM_QUARANTINE_BUCKET: ""
+  SIEM_MQ_QUEUES: ""
+  SIEM_SOURCE_EXPECTATIONS: "{}"
+  SIEM_REFRESH_SECONDS: "10"
+  SIEM_HOT_EVENTS_HOURS: "168"
+  SIEM_HOT_MAX_ROWS: "3000000"
+  SIEM_TENANT_DUCKDB_MEMORY_LIMIT: "20%"
+  SIEM_PII_COLUMNS: "user_hash,principal_arn,user_id"

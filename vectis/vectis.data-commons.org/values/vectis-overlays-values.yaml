@@ -1,0 +1,19 @@
+# Production overrides for the vectis-overlays subchart in gen3-helm.
+vectis-overlays:
+  enabled: true
+
+  guppyCompat:
+    enabled: false
+
+  searchAuthProxy:
+    enabled: false
+
+  s3Monitor:
+    enabled: false
+
+  migrations:
+    enabled: false
+
+  # The SIEM service is deployed by its own chart in this repo (vectis/charts/siem-service), not by this subchart.
+  siemService:
+    enabled: false

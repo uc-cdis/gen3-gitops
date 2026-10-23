@@ -1,0 +1,22 @@
+# Root application for vectis.data-commons.org. Apply it ONCE by hand (kubectl apply -n argocd -f this file).
+# After that it renders the parent chart in vectis/vectis.data-commons.org, whose templates are the Argo Applications
+# (gen3-vectis, gen3-vectis-dagu, gen3-vectis-jobs-catalog, gen3-vectis-siem-service), so a push to this branch
+# reaches the cluster. It lives outside the chart directory so the chart does not render itself.
+# Same idea as the dev-environments ApplicationSet in gen3-gitops-dev, which is what creates qa-vectis.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vectis-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+    targetRevision: feat/vectis
+    path: vectis/vectis.data-commons.org
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true
