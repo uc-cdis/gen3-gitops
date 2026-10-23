@@ -1,0 +1,92 @@
+# Values for the s3-monitor chart (gen3-helm helm/s3-monitor, branch feat-s3monitor_v3), deployed by templates/s3-monitor.yaml.
+# Same settings as qa-vectis (gen3-gitops-dev, AIS-106), with the production cluster, namespace and account. The chart is deployed on its own
+# here, not as a gen3 subchart, so the keys are top level (no "s3-monitor:" wrapper) and the globals it reads are set below.
+global:
+  # Prefix of the AWS names the chart derives: <environment>-<namespace>-... => vectis-default-...
+  environment: "vectis"
+  crossplane:
+    # Crossplane is not installed on this cluster (see cluster-values and siem-service-values.yaml), so the chart creates no IAM resources.
+    # accountId is still required: the chart validates it and writes it into the job's config.
+    enabled: false
+    accountId: "172585802910"
+    oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/9649CF76244A05C43B4ECA7C01E29706"
+    providerConfigName: provider-aws
+
+enabled: true
+
+schedule: "*/15 * * * *"
+concurrencyPolicy: Forbid
+
+# The IAM role vectis-default-s3-monitor-activemq-sa is created outside Argo, like vectis-default-siem-service, and the service account is
+# annotated with it. Its name matches what the chart writes into the job config (<environment>-<namespace>-<serviceAccount.name>).
+# Trust: this cluster's OIDC provider, subject system:serviceaccount:default:s3-monitor-activemq-sa.
+# Permissions: s3:ListBucket/GetBucketLocation + s3:GetObject/PutObject/AbortMultipartUpload on <lake bucket>/<lake prefix>/*,
+# secretsmanager:GetSecretValue/DescribeSecret on the MQ secret (+ kms:Decrypt on its key if customer managed),
+# s3:ListBucket/GetBucketLocation/GetObject on each tenant bucket (+ kms:Decrypt on the tenant's key).
+serviceAccount:
+  create: true
+  name: s3-monitor-activemq-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-s3-monitor-activemq-sa
+
+# Single image with all the Python and shell code, built and pushed by the s3-monitor-activemq repo.
+image:
+  repository: quay.io/cdis/s3-monitor
+  tag: ActiveMQDuckDB
+  # Pin the build validated in qa-vectis for reproducible rollouts: digest: "sha256:..." (then set pullPolicy: IfNotPresent).
+  digest: ""
+  # The tag is mutable, so always pull to pick up new pushes (same as the other vectis images).
+  pullPolicy: Always
+
+aws:
+  region: "us-east-1"
+
+# The EKS cluster of this environment (cluster-values: cluster: vectis).
+eksClusterName: vectis
+
+config:
+  # Dry run first: scan and log only, nothing written to the lake or MQ. Flip to true once the logs look right.
+  apply: false
+  lookbackDays: 3
+  useFipsAwsEndpoints: true
+  assumeRoleArn: ""
+
+  # The lake lives in the ctds tenant bucket under vectis/, encrypted with that bucket's key. The ctds tenant below scans the same bucket,
+  # so the lake files under vectis/ are in its scan range too (no scan_prefix is set).
+  lake:
+    bucket: "vectis-ctds-172585802910-us-east-1"
+    prefix: "vectis"
+    kmsKeyArn: "arn:aws:kms:us-east-1:172585802910:key/54ce879e-492e-448b-9f5a-222b13189a03"
+
+  # Production broker gen3-mq (ACTIVE_STANDBY_MULTI_AZ, broker id b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5): one endpoint per node.
+  # From the prod-vectis CDK config (existing_mq_stomp_endpoints, existing_mq_secret_arn).
+  mq:
+    stompEndpoints:
+      - "stomp+ssl://b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5-1.mq.us-east-1.amazonaws.com:61614"
+      - "stomp+ssl://b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5-2.mq.us-east-1.amazonaws.com:61614"
+    secretArn: "arn:aws:secretsmanager:us-east-1:172585802910:secret:MqAdminSecret32A8A6D8-3WQ5f9y8bVw6-KEuEfo"
+    # Empty = the secret uses the AWS managed key. Set it only if the secret is encrypted with a customer managed key.
+    secretKmsKeyArn: ""
+    destinationPrefix: "/queue/s3monitor.ingest"
+    resolveIpv4: false
+
+  # Each tenant needs an id and an existing_bucket_name (optional: scan_prefix, kms_key_arn). The tenant queues are
+  # <destinationPrefix>.<id> and <destinationPrefix>.<id>.failures.
+  # From the prod-vectis CDK config (tenants). kms_key_arn is the chart's name for the tenant's existing_key_arn.
+  tenants:
+    - id: ctds
+      existing_bucket_name: vectis-ctds-172585802910-us-east-1
+      kms_key_arn: "arn:aws:kms:us-east-1:172585802910:key/54ce879e-492e-448b-9f5a-222b13189a03"
+
+# The recorder Lambda is a Crossplane resource, so it stays off on this cluster.
+eventRecorder:
+  enabled: false
+  architecture: arm64
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"

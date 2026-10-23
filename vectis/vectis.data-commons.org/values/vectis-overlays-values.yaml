@@ -8,6 +8,7 @@ vectis-overlays:
   searchAuthProxy:
     enabled: false
 
+  # Legacy s3-monitor of this subchart. Replaced by the s3-monitor chart (templates/s3-monitor.yaml), keep it off.
   s3Monitor:
     enabled: false
 
