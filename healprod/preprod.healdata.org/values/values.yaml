@@ -115,7 +115,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.3.1
+    tag: "feat_heal-explorer"
 global:
   pdb: true
   aws:
@@ -150,6 +150,18 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
+guppy:
+  esEndpoint: http://elasticsearch:9200
+  autoscaling:
+    enabled: true
+  enabled: true
+  authFilterField: auth_resource_path
+  indices:
+    - index: preprod-heal_etl_file
+      type: file
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: "2026.10"
 hatchery:
   enabled: true
   replicaCount: 2
