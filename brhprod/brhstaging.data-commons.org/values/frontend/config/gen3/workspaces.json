@@ -1,0 +1,61 @@
+{
+  "workspaces": {
+    "free": {
+      "label": "Jupyter Lite",
+      "tier": "free",
+      "description": "Instant startup and lightweight notebooks directly in your browser.",
+      "features": ["Instant startup", "Lightweight notebooks", "Browser-based"],
+      "buttonLabel": "Launch Local Workspace",
+      "runningLabel": {
+        "label": "Local Browser Environment",
+        "description": "Running via JupyterLite"
+      }
+    },
+    "remote": {
+      "label": "Remote Kernel Runtime",
+      "tier": "remote",
+      "description": " Attach to remote compute for longer sessions and larger workloads.",
+      "features": [
+        "Persistent sessions and gateway routing",
+        "Designed for heavier workloads"
+      ],
+      "buttonLabel": "Launch Remote Workspace",
+      "baseColor": "#42f5d422",
+      "runningLabel": {
+        "label": "Remote Browser Environment",
+        "description": "Running via Remote Kernels (Paid Tier)"
+      }
+    }
+  },
+  "tierConfiguration": {
+    "free": {
+      "dataAndTools": {
+        "enabled": false,
+        "width": 340
+      },
+      "settings": {
+        "enabled": false
+      },
+      "toolbar": {
+        "tierLabel": "lite"
+      }
+    },
+    "remote": {
+      "enableOptions": true,
+      "dataAndTools": {
+        "enabled": false,
+        "width": 300
+      },
+      "toolbar": {
+        "tierLabel": "remote",
+        "label": "Trusted Research Environment",
+        "description": "Running with Remote Kernels",
+        "requirePayModel": true,
+        "workspaceAccountManagerTarget": "https://brh-test.planx-pla.net"
+      },
+      "settings": {
+        "enabled": false
+      }
+    }
+  }
+}

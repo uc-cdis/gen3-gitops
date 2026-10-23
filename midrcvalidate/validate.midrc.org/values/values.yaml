@@ -532,6 +532,11 @@ global:
     kube_bucket: kube-midrcvalidate-gen3
     logs_bucket: logs-midrcprod-gen3
   maintenanceMode: 'off'
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.27.2.0/24
+        - 172.27.3.0/24
   publicDataSets: false
   tierAccessLevel: private
   tierAccessLimit: 50
@@ -635,7 +640,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: '1.30.6'
   ingress:
     aws:
       group: midrcvalidate
