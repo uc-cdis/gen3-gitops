@@ -3,6 +3,12 @@ project: unfunded
 
 accountNumber: "662843554732"
 
+argo-workflows:
+  enabled: true
+  GEN3_ARGO_DB_HOST: "unfunded-aurora-cluster-instance-new.c2qpsmgsoq5z.us-east-1.rds.amazonaws.com"
+  GEN3_ARGO_DB_NAME: "argo_vpodc-staging"
+  GEN3_ARGO_BUCKET: ""
+
 alb-controller:
   enabled: true
   configuration:
@@ -18,6 +24,14 @@ calico:
   enabled: true
   configuration:
     enabled: false
+
+cert-manager:
+  enabled: true
+  configuration:
+    enabled: true
+    webhook:
+      hostNetwork: true
+      securePort: 10259
 
 coreDNS:
   enabled: true
@@ -41,12 +55,12 @@ grafana-alloy:
 
 karpenter:
   enabled: true
-  targetRevision: "1.8.6"
+  targetRevision: "1.9.0"
   configuration:
     enabled: false
 
 karpenter-crds:
-  amiSelectorName: "EKS-1-33-al23*"
+  amiSelectorName: "EKS-1-35-x86-x64-AL23*"
   enabled: true
   selectorTag: unfunded
   migration: true
@@ -76,6 +90,10 @@ karpenter-crds:
         operator: In
         values:
           - r
+      - key: karpenter.k8s.aws/instance-cpu
+        operator: Gt
+        values:
+          - "2"
       - key: karpenter.k8s.aws/instance-memory
         operator: Lt
         values:

@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.02'
+    tag: '2026.10'
   externalSecrets:
     accessBackendG3auto: bdcat-internalstaging-access-backend-g3auto-3
     accessBackendKv: bdcat-internalstaging-access-backend-kv
@@ -20,28 +20,25 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.02'
+    tag: '2026.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcat-internalstaging-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.02'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcat-internalstaging-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-bdcatprod-gen3-metadata-2-pcd35dshhorfobahqwfnugnovq.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.02'
+    tag: '2026.10'
 etl:
   esGarbageCollect:
     enabled: true
@@ -56,46 +53,57 @@ etl:
   esEndpoint: elasticsearch
   etlMapping:
     mappings:
-      - aggregated_props:
-          - fn: set
-            name: annotated_sex
+      - name: internalstaging_subject
+        doc_type: subject
+        type: aggregator
+        root: subject
+        props:
+          - name: submitter_id
+          - name: project_id
+          - name: consent_codes
+          - name: geographic_site
+        aggregated_props:
+          - name: annotated_sex
             path: demographics
             src: annotated_sex
-          - fn: set
-            name: race
+            fn: set
+          - name: race
             path: demographics
             src: race
-          - fn: set
-            name: ethnicity
+            fn: set
+          - name: ethnicity
             path: demographics
             src: ethnicity
-          - fn: count
-            name: _samples_count
+            fn: set
+          - name: _samples_count
             path: samples
-          - fn: count
-            name: _aliquots_count
+            fn: count
+          - name: _aliquots_count
             path: samples.aliquots
-          - fn: count
-            name: _read_groups_count
+            fn: count
+          - name: _read_groups_count
             path: samples.aliquots.read_groups
-          - fn: count
-            name: _submitted_unaligned_reads_files_count
+            fn: count
+          - name: _submitted_unaligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_unaligned_reads_files
-          - fn: count
-            name: _submitted_aligned_reads_files_count
+            fn: count
+          - name: _submitted_aligned_reads_files_count
             path: samples.aliquots.read_groups.submitted_aligned_reads_files
-          - fn: count
-            name: _simple_germline_variations_count
+            fn: count
+          - name: _simple_germline_variations_count
             path: samples.aliquots.read_groups.simple_germline_variations
-          - fn: set
-            name: current_smoker_baseline
+            fn: count
+          - name: current_smoker_baseline
             path: exposures
             src: current_smoker_baseline
-          - fn: set
-            name: ever_smoker_baseline
+            fn: set
+          - name: ever_smoker_baseline
             path: exposures
             src: ever_smoker_baseline
-        doc_type: subject
+            fn: set
+        parent_props:
+          - path: studies[studies_submitter_id:submitter_id].projects[code]
+          - path: studies[studies_submitter_id:submitter_id].projects[code].programs[programs_name:name]
         flatten_props:
           - path: demographics
             props:
@@ -160,46 +168,23 @@ etl:
           - index: file
             join_on: _subject_id
             props:
-              - fn: set
-                name: data_format
+              - name: object_id
+                src: object_id
+                fn: set
+              - name: data_format
                 src: data_format
-              - fn: set
-                name: data_type
+                fn: set
+              - name: data_type
                 src: data_type
-              - fn: count
-                name: file_count
+                fn: set
+              - name: file_count
                 src: _file_id
-        name: internalstaging_subject
-        parent_props:
-          - path: studies[studies_submitter_id:submitter_id].projects[code]
-          - path: studies[studies_submitter_id:submitter_id].projects[code].programs[programs_name:name]
-        props:
-          - name: submitter_id
-          - name: project_id
-          - name: consent_codes
-          - name: geographic_site
-        root: subject
-        type: aggregator
-      - category: data_file
+                fn: count
+      - name: internalstaging_file
         doc_type: file
-        injecting_props:
-          program:
-            props:
-              - fn: set
-                name: programs_name
-                src: name
-          project:
-            props:
-              - fn: set
-                name: dbgap_accession_number
-                src: dbgap_accession_number
-          subject:
-            props:
-              - fn: set
-                name: _subject_id
-                src: id
-              - name: project_id
-        name: internalstaging_file
+        type: collector
+        root: None
+        category: data_file
         props:
           - name: object_id
           - name: md5sum
@@ -212,28 +197,28 @@ etl:
           - name: callset
           - name: bucket_path
           - name: source_node
-        root: None
-        type: collector
-      - category: index_file
+        injecting_props:
+          program:
+            props:
+              - name: programs_name
+                src: name
+                fn: set
+          project:
+            props:
+              - name: dbgap_accession_number
+                src: dbgap_accession_number
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+              - name: project_id
+      - name: internalstaging_index_file
         doc_type: index_file
-        injecting_props:
-          program:
-            props:
-              - fn: set
-                name: programs_name
-                src: name
-          project:
-            props:
-              - fn: set
-                name: dbgap_accession_number
-                src: dbgap_accession_number
-          subject:
-            props:
-              - fn: set
-                name: _subject_id
-                src: id
-              - name: project_id
-        name: internalstaging_index_file
+        type: collector
+        root: None
+        category: index_file
         props:
           - name: object_id
           - name: md5sum
@@ -246,13 +231,28 @@ etl:
           - name: callset
           - name: bucket_path
           - name: source_node
-        root: None
-        type: collector
+        injecting_props:
+          program:
+            props:
+              - name: programs_name
+                src: name
+                fn: set
+          project:
+            props:
+              - name: dbgap_accession_number
+                src: dbgap_accession_number
+                fn: set
+          subject:
+            props:
+              - name: _subject_id
+                src: id
+                fn: set
+              - name: project_id
   image:
     tube:
-      tag: '2026.02'
+      tag: '2026.10'
     spark:
-      tag: '2026.02'
+      tag: '2026.10'
 fence:
   serviceAccount:
     annotations:
@@ -273,7 +273,7 @@ fence:
     fenceSshKeys: bdcat-internalstaging-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "13.0.3"
+    tag: '13.3.2'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -821,11 +821,58 @@ fence:
       nih-nhlbi-.*:
         cred: fence-bot
         region: us-east-1
+      nih-nhlbi-datacommons:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
+        region: us-east-1
+    GS_BUCKETS:
+      # Prefix wildcards (indexd: exact match first, then "<prefix>.*" startswith).
+      # Prefixes must not overlap; put region exceptions in exact entries below.
+      idc-tcia-.*:
+        region: us-east4
+      nih-nhlbi-.*:
+        region: us-east1
+      test-nih-nhlbi-bdc-recover-.*:
+        region: us-east1
+      # Exceptions to nih-nhlbi-.* (us-east4)
+      nih-nhlbi-biodata-catalyst-1000-genomes:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002348-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002362-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-tutorial-genome-data:
+        region: us-east4
+      nih-nhlbi-covid19-phs002299-c1:
+        region: us-east4
+      nih-nhlbi-topmed-combined-exchange-area:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001542-c2:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001601-c1:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001661-c1:
+        region: us-east4
+      # Buckets not covered by a prefix
+      biolincc-training-datasets-open-access:
+        region: us-east1
+      gcf-sources-427307591354-us-east1:
+        region: us-east1
+      gcf-sources-427307591354-us-east4:
+        region: us-east4
+      nhlbi-cloud-test-bkt:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east1:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east4:
+        region: us-east4
+      us.artifacts.nih-nhlbi-biodatacatalyst-data.appspot.com:
+        region: us
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/datastageinternalstaging/user.yaml
-    syncFromDbgap: true
+    syncFromDbgap: false
 fluentd:
   enabled: true
   image:
@@ -834,13 +881,13 @@ fluentd:
 frontend-framework:
   enabled: true
   image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: 1.2.0
+    repository: quay.io/cdis/bdc-data-commons
+    tag: 1.4.0
 gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.02'
+    tag: '2026.10'
   externalSecrets:
     dbcreds: bdcat-internalstaging-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcat-internalstaging-gen3userdatalibrary-g3auto
@@ -891,7 +938,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.02'
+    tag: '2026.10'
   indices:
     - index: internalstaging_subject
       type: subject
@@ -914,7 +961,7 @@ indexd:
     serviceCreds: bdcat-internalstaging-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.02'
+    tag: '2026.10'
 manifestservice:
   enabled: false
 metadata:
@@ -930,7 +977,7 @@ metadata:
     metadataG3auto: bdcat-internalstaging-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.02'
+    tag: '2026.10'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -946,14 +993,48 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.02'
+    tag: '2026.10'
 portal:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-bdcatprod
+      pvName: portal-pv-bdcatprod
+      createPV: true
+      bucketName: bdcatprod-portal-build-bucket
+      mountOptions:
+        - allow-delete
+        - allow-other
+        - region us-east-1
+        - sse aws:kms
+        - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+    images:
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+    extraction:
+      stripComponents: true
+  resources:
+    requests:
+      memory: 128Mi
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 2
     minReplicas: 2
     targetCPUUtilizationPercentage: 90
-  replicaCount: 4
+  replicaCount: 2
   enabled: true
   customConfig:
     enabled: true
@@ -974,11 +1055,11 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.02'
+    tag: '1.30.6'
   ingress:
     aws:
       group: bdcatprod
-      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   autoscaling:
     enabled: false
@@ -989,7 +1070,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.02'
+    tag: '2026.10'
 sower:
   enabled: true
   externalSecrets:
@@ -998,11 +1079,14 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.02'
+    tag: '2026.10'
   sowerConfig:
     - action: export
       container:
         cpu-limit: '1'
+        priorityClassName: etl-high-priority
+        annotations:
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -1041,7 +1125,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.02
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -1059,6 +1143,9 @@ sower:
     - action: export-files
       container:
         cpu-limit: '1'
+        priorityClassName: etl-high-priority
+        annotations:
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -1099,7 +1186,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.02
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -1110,6 +1197,25 @@ sower:
             subPath: config.json
       name: pelican-export-files
       restart_policy: Never
+      volumes:
+        - name: pelican-creds-volume
+          secret:
+            secretName: pelicanservice-g3auto
+    - name: export-user-data-library
+      action: export-user-data-library
+      container:
+        name: job-task
+        image: quay.io/cdis/export-user-data-library:2026.10
+        pull_policy: Always
+        cpu-limit: '1'
+        memory-limit: 100Mi
+        volumeMounts:
+          - mountPath: /export-user-data-library-creds.json
+            name: pelican-creds-volume
+            readOnly: true
+            subPath: config.json
+      restart_policy: Never
+      serviceAccountName: default
       volumes:
         - name: pelican-creds-volume
           secret:

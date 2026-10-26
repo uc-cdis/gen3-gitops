@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vpodcstaging
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: master
+      helm:
+        releaseName: gen3-vpodcstaging
+        valueFiles:
+          - $values/unfunded/vpodcstaging.data-commons.org/values/values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vpodcstaging
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: vpodc-staging
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true

@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: "2026.02"
+    tag: '2026.07'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -22,36 +22,33 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2026.02"
+    tag: '2026.07'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: "2026.02"
+    tag: '2026.07'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-bdcatprod-gen3-metadata-2-pcd35dshhorfobahqwfnugnovq.us-east-1.es.amazonaws.com
-  image:
-    repository: quay.io/cdis/aws-es-proxy
-    tag: v1.3.1
 awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: "2026.02"
+    tag: '2026.07'
 etl:
   resources:
     tube:
       requests:
-        memory: 4Gi
+        memory: 16Gi
     spark:
       requests:
-        memory: 2Gi
+        memory: 8Gi
   esGarbageCollect:
     enabled: true
   esEndpoint: elasticsearch
@@ -251,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: "2026.02"
+      tag: '2026.07'
     spark:
-      tag: "2026.02"
+      tag: '2026.07'
 fence:
   resources:
     requests:
@@ -288,25 +285,24 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "13.0.3"
+    tag: '2026.07'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: https://biodatacatalyst.nhlbi.nih.gov/privacy/
     ARBORIST_TIMEOUT: 60
     S3_BUCKETS:
-      bdcatpreprod-data-bucket:
+      bdcatprod-data-bucket:
         cred: bdcatprod_fence-bot
         region: us-east-1
-      bdcatprod-data-bucket:
+      bdcatpreprod-data-bucket:
         cred: bdcatprod_fence-bot
         region: us-east-1
       biolincc-training-datasets-open-access:
         cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
       cgp-commons-public:
-        cred: "*"
+        cred: '*'
         region: us-east-1
       dcp-ds-bagit-databucket-gen3:
         cred: fence-bot
@@ -314,9 +310,260 @@ fence:
       gen3-copdgene-imaging:
         cred: fence-bot
         region: us-east-1
+      topmed_workflow_testing:
+        cred: '*'
+        region: us-east-1
       nih-nhgri-datacommons:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_access_gtex
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000007-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000200-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000280-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000280-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000287-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000289-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000741-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000920-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000921-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000946-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000951-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000951-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000954-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000956-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000964-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000964-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000964-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000964-c4:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000972-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000974-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000974-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000988-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000993-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000993-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs000997-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001001-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001001-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001013-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001013-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001024-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001032-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001040-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001062-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001062-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001074-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001143-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001161-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001180-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001189-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001207-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001211-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001211-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001215-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001217-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001218-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001237-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001237-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001238-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001293-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001293-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001345-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001359-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001368-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001368-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001368-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001387-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001402-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001412-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001412-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001416-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001416-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001598-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
       nih-nhlbi-biodata-catalyst-1000-genomes-high-coverage:
         cred: fence-bot
@@ -324,8 +571,208 @@ fence:
         region: us-east-1
       nih-nhlbi-biodata-catalyst-tutorial-genome-data:
         cred: fence-bot
-        region: us-east-1
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-combined-exchange-area:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001012-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001194-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001194-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001252-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001368-c4:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001395-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001395-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001434-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001435-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001446-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001466-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001466-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001466-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001467-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001468-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001472-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001514-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001514-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001515-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001543-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001544-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001545-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001546-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001547-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001602-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001604-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001605-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001606-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001607-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001607-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001607-c3:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001607-c4:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001607-c5:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001608-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001612-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001612-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001624-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001644-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001662-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001682-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001725-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001726-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001727-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001728-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001729-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001730-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001732-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001735-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-topmed-released-phs001735-c2:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
       nih-nhlbi-biodata-catalyst-biolincc-phs002385-c1:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
@@ -342,38 +789,6 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
-      nih-nhlbi-biodata-catalyst-biolincc-phs002383-c1:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-        region: us-east-1
-      nih-nhlbi-biodata-catalyst-biolincc-phs2415-c1:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-        region: us-east-1
-      nih-nhlbi-covid19-phs002363-c1:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-        region: us-east-1
-      nih-nhlbi-covid19-phs002299-c1:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-        region: us-east-1
-      nih-nhlbi-datacommons:
-        cred: fence-bot
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
-        region: us-east-1
-      nih-nhlbi-topmed-released-phs001600-c1:
-        cred: fence-bot
-        region: us-east-1
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-      nih-nhlbi-topmed-combined-exchange-area:
-        cred: fence-bot
-        region: us-east-1
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
-      nih-nhlbi-topmed-released-phs001624-c1:
-        cred: fence-bot
-        region: us-east-1
-        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
       nih-nhlbi-topmed-released-phs001542-c2:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
@@ -383,6 +798,10 @@ fence:
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
       nih-nhlbi-topmed-released-phs001661-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-biodata-catalyst-biolincc-phs002383-c1:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
@@ -398,14 +817,20 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
         region: us-east-1
+      nih-nhlbi-biodata-catalyst-biolincc-phs2415-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
+      nih-nhlbi-covid19-phs002363-c1:
+        cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_imaging_copdgene
+        region: us-east-1
       nih-nhlbi-.*:
         cred: fence-bot
         region: us-east-1
-      topmed_workflow_testing:
-        cred: "*"
-        region: us-east-1
-      topmed-workflow-testing:
+      nih-nhlbi-datacommons:
         cred: fence-bot
+        role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
@@ -422,14 +847,14 @@ gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: "2026.02"
+    tag: '2026.07'
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
 global:
   pdb: true
   aws:
-    account: "895962626746"
+    account: '895962626746'
     awsEsProxyRole: bdcatprod--bdcatprod-helm--es-access
     enabled: true
     hatchery_role: bdcatprod--bdcatprod-helm--hatchery-sa
@@ -441,7 +866,7 @@ global:
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.2/schema.json
-  dispatcherJobNum: "10"
+  dispatcherJobNum: '10'
   environment: bdcatprod
   externalSecrets:
     createSlackWebhookSecret: true
@@ -472,7 +897,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: "2026.02"
+    tag: '2026.07'
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -488,27 +913,25 @@ indexd:
     minReplicas: 4
     targetCPUUtilizationPercentage: 90
   replicaCount: 10
-  # -- (map) Resource requests and limits for the containers in the pod
   resources:
     limits:
       memory: 2Gi
-    # -- (map) The amount of resources that the container requests
     requests:
-      # -- (string) The amount of memory requested
       memory: 512Mi
       cpu: 1
   enabled: true
   externalSecrets:
     serviceCreds: bdcatprod-indexd-service-creds
+    dbcreds: bdcatprod-helm-indexd-creds-261012-180150
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2026.02"
+    tag: '2026.07'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: "2026.02"
+    tag: '2026.07'
 metadata:
   autoscaling:
     enabled: false
@@ -520,14 +943,15 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: bdcatprod-metadata-g3auto
+    dbcreds: bdcatprod-helm-metadata-creds-261012-180202
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2026.02"
+    tag: '2026.07'
 metadata-delete-expired-objects:
   enabled: true
   image:
     repository: quay.io/cdis/metadata-delete-expired-objects
-    tag: "2025.07"
+    tag: '2025.07'
 peregrine:
   autoscaling:
     enabled: false
@@ -538,14 +962,48 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2026.02"
+    tag: '2026.07'
 portal:
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod-portal-sa
+  portalBuild:
+    enabled: true
+    rbac:
+      enabled: true
+    s3csi:
+      enabled: true
+      pvcName: portal-pvc-bdcatprod-prod
+      pvName: portal-pv-bdcatprod-prod
+      createPV: true
+      bucketName: bdcatprod-portal-build-bucket
+      mountOptions:
+        - allow-delete
+        - allow-other
+        - region us-east-1
+        - sse aws:kms
+        - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+      size: 1Gi
+      cache:
+        emptyDirSizeLimit: 500Mi
+    images:
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      kubectl: bitnami/kubectl:latest
+      alpine: alpine:3.20
+    job:
+      lockTtlSeconds: 1800
+      ttlSecondsAfterFinished: 600
+    extraction:
+      stripComponents: true
+  resources:
+    requests:
+      memory: 128Mi
   autoscaling:
     enabled: false
-    maxReplicas: 4
+    maxReplicas: 2
     minReplicas: 2
     targetCPUUtilizationPercentage: 90
-  replicaCount: 4
+  replicaCount: 2
   enabled: true
   customConfig:
     enabled: true
@@ -554,7 +1012,7 @@ portal:
     branch: master
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: "feature_data_library"
+    tag: 'feature_data_library'
     pullPolicy: Always
 revproxy:
   autoscaling:
@@ -566,11 +1024,11 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2026.02"
+    tag: '1.30.6'
   ingress:
     aws:
       group: bdcatprod
-      sslPolicy: ELBSecurityPolicy-TLS13-1-2-FIPS-2023-04
+      sslPolicy: ELBSecurityPolicy-TLS13-1-2-Res-FIPS-2023-04
 sheepdog:
   autoscaling:
     enabled: false
@@ -579,9 +1037,11 @@ sheepdog:
     targetCPUUtilizationPercentage: 90
   replicaCount: 4
   enabled: true
+  externalSecrets:
+    dbcreds: bdcatprod-helm-sheepdog-creds-261009-174802
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: "2026.02"
+    tag: '2026.07'
 sower:
   enabled: true
   replicaCount: 2
@@ -591,11 +1051,13 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: "2026.02"
+    tag: '0.8.0'
   sowerConfig:
     - action: export
       container:
-        cpu-limit: "1"
+        cpu-limit: '1'
+        annotations:
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -629,7 +1091,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.02
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -646,7 +1108,9 @@ sower:
             secretName: pelicanservice-g3auto
     - action: export-files
       container:
-        cpu-limit: "1"
+        cpu-limit: '1'
+        annotations:
+          karpenter.sh/do-not-disrupt: "true"
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -661,7 +1125,7 @@ sower:
           - name: ROOT_NODE
             value: file
           - name: EXTRA_NODES
-            value: ""
+            value: ''
           - name: DB_HOST
             valueFrom:
               secretKeyRef:
@@ -687,7 +1151,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.02
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -706,7 +1170,7 @@ spark:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-spark
-    tag: "2025.07"
+    tag: '2025.07'
 ssjdispatcher:
   externalSecrets:
     credsFile: bdcatprod-ssjdispatcher-creds
@@ -715,6 +1179,21 @@ tube:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/tube
-    tag: "2025.07"
+    tag: '2025.07'
 wts:
   enabled: false
+auroraRdsCopyJob:
+  enabled: true
+  auroraMasterSecret: aurora-creds
+  sourceNamespace: bdcat-internalstaging-helm
+  targetNamespace: bdcatprod-helm
+  services:
+    - serviceName: indexd
+      sourceSecret: indexd-dbcreds
+      targetSecret: indexd-dbcreds
+    - serviceName: metadata
+      sourceSecret: metadata-dbcreds
+      targetSecret: metadata-dbcreds
+    - serviceName: sheepdog
+      sourceSecret: sheepdog-dbcreds
+      targetSecret: sheepdog-dbcreds

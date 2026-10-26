@@ -36,13 +36,13 @@
   },
   "components": {
     "appName": "NHLBI BioData Catalyst®",
-    "banner": [
+     "banner": [
       {
         "type": "info",
-        "message": "Data transfers from Gen3 to Seven Bridges may fail or be incomplete, resulting in errors on either or both platforms. Teams are actively working to resolve the issue. If you experience issues, please report it to the BDC Help Desk: https://biodatacatalyst.nhlbi.nih.gov/help-and-support/contact-us/",
+        "message": "Per Executive Order 14434, federal agencies are now using \"Super Intelligence\" (SI) in place of \"Artificial Intelligence\" (AI). You may see both terms across NIH content during this transition.",
         "resetMsgDays": 1
       }
-    ], 
+    ],
     "index": {
       "introduction": {
         "heading": "",
@@ -121,6 +121,10 @@
         {
           "link": "https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/explore_data/gen3-discovering-data",
           "name": "Documentation"
+        },
+        {
+          "link":"https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement",
+          "name": "Cite BDC"
         }
       ]
     },

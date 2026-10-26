@@ -141,7 +141,7 @@ revproxy:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
     pullPolicy: Always
-    tag: "2026.02"
+    tag: "1.30.6"
 
 
 ambdassador:

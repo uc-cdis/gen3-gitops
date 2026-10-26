@@ -1,0 +1,70 @@
+{
+  "navigation": {
+    "classNames": {
+      "root": "pl-1 bg-base-max text-primary opacity-100 hover:opacity-100",
+      "item": "py-2 px-4 hover:bg-base-lightest hover:text-base-contrast",
+      "navigationPanel": "bg-base-max text-primary-darker",
+      "icon": "data-disabled:opacity-50"
+    },
+    "logo": {
+      "src": "/images/brh/logo.png",
+      "width": 300,
+      "height": 66,
+      "href": "/Discovery"
+    },
+    "items": [
+      {
+        "icon": "gen3:query",
+        "href": "/Discovery",
+        "name": "Discovery",
+        "tooltip": "Use free-text search and tags to rapidly find relevant studies, discover new datasets across multiple resources, and easily export selected data files to the analysis workspace."
+      },
+      {
+        "name": "Workspaces",
+        "href": "/Workspaces",
+        "icon": "gen3:workspace",
+        "tooltip": "Gen3 workspaces are secure data analysis environments in the cloud that can access data from one or more data resources."
+      },
+      {
+        "name": "Example Analysis",
+        "href": "/Analysis",
+        "icon": "gen3:analysis",
+        "tooltip": "Analysis Tools"
+      },
+      {
+        "icon": "gen3:profile",
+        "href": "/Profile",
+        "name": "Profile",
+        "tooltip": "Create API keys for programmatic data access, and review your authorization privileges to datasets and services."
+      }
+    ]
+  },
+  "topBar": {
+    "items": [
+      {
+        "href": "https://uc-cdis.github.io/BRH-documentation/",
+        "name": "Documentation",
+        "newWindow": true
+      },
+      {
+        "href": "mailto:brhsupport@gen3.org",
+        "name": "Email Support"
+      },
+      {
+        "href": "https://uc-cdis.github.io/platform-citation/brh-cite/",
+        "name": "Cite BRH",
+        "newWindow": true
+      }
+    ],
+    "loginButtonVisibility": "visible",
+    "classNames": {
+      "divider": "border-accent-dark"
+    },
+    "itemClassnames": {
+      "login": "font-content hover:border-base-max",
+      "button": "flex flex-nowrap items-center align-middle border-b-2 hover:border-base-max border-transparent text-base-contrast-max",
+      "label": "text-base-contrast-min",
+      "rightIcon": "text-base-contrast-min"
+    }
+  }
+}
