@@ -850,9 +850,9 @@ workspace-proxy:
   workspaceNamespace: jupyter-pods
   kubernetesApiServerCIDRs:
     - "10.100.0.1/32"       # kubernetes ClusterIP (pre-DNAT)
-    - "172.27.140.0/22"     # EKS private subnet (DHCP)
-    - "172.27.136.0/22"     # EKS private subnet (DHCP)
-    - "172.27.132.0/22"     # EKS private subnet (DHCP)
+    - "172.25.55.0/24"     # EKS private subnet (DHCP)
+    - "172.25.56.0/24"     # EKS private subnet (DHCP)
+    - "172.25.57.0/24"     # EKS private subnet (DHCP)
 
   replicaCount: 1
 
