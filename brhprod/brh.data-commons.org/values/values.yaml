@@ -193,6 +193,8 @@ hatchery:
               "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brh.data-commons.org'",
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/brh-welcome-wsl.ipynb",
               "--ServerApp.password=''",
@@ -225,6 +227,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brh.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -260,6 +264,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brh.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -295,6 +301,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brh.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
@@ -349,6 +357,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brh.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brh.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
