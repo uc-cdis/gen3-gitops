@@ -102,9 +102,9 @@ spec:
             - name: MCP_PORT
               value: "8001"
             - name: EMBED_API_URL
-              value: "$(ONPREM_API_URL)"
+              value: "$(SAPBERT_API_URL)"
             - name: EMBED_API_KEY
-              value: "$(ONPREM_API_KEY)"
+              value: "$(SAPBERT_API_KEY)"
             - name: EMBED_MODEL
               value: "sapbert"
           args:

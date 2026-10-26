@@ -188,7 +188,6 @@ fence:
     tag: "13.3.2"
   FENCE_CONFIG_PUBLIC:
     ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
-    ALLOW_NEW_USER_ON_LOGIN: false
 portal:
   enabled: false
 frontend-framework:
@@ -196,7 +195,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: "0.27.2"
+    tag: "0.28"
 global:
   pdb: true
   aws:
