@@ -150,10 +150,10 @@ global:
   hostname: nci-crdc-staging.datacommons.io
   fenceURL: https://nci-crdc-staging.datacommons.io/user
   netPolicy:
-      enabled: true
-      dbSubnets:
-        - 172.24.147.0/24
-        - 172.24.146.0/24
+    enabled: true
+    dbSubnets:
+      - 172.24.147.0/24
+      - 172.24.146.0/24
   manifestGlobalExtraValues:
     indexd_single_table: 'true'
     kube_bucket: kube-dcf-staging-gen3
@@ -486,7 +486,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '1.30.6'
+    tag: '2026.10'
   ingress:
     aws:
       group: dcf-staging
