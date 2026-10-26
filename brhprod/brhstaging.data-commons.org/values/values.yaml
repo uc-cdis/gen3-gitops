@@ -88,6 +88,7 @@ frontend-framework:
     dir: brhprod/brhstaging.data-commons.org/values/frontend
   env:
     DATACOMMONS: BRHSTAGING
+    NEXT_PUBLIC_GEN3_MANIFEST_API: https://brhstaging.data-commons.org/manifests/
 gen3-discovery-ai:
   enabled: true
   image:
