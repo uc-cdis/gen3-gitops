@@ -102,11 +102,7 @@ spec:
             - name: MCP_PORT
               value: "8001"
             - name: EMBED_API_URL
-              value: "$(SAPBERT_API_URL)"
-            - name: EMBED_API_KEY
-              value: "$(SAPBERT_API_KEY)"
-            - name: EMBED_MODEL
-              value: "sapbert"
+              value: http://conduit-server.default.svc.cluster.local:8080/sapbert/v1/
           args:
             - "-t"
             - "streamable-http"
