@@ -179,6 +179,8 @@ funnel:
         RamGb: 64Gi
         DiskGb: 100Gi
 global:
+  jeg:
+    enabled: true
   pdb: true
   netPolicy:
     enabled: true
