@@ -41,7 +41,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: "v0.13.2"
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
