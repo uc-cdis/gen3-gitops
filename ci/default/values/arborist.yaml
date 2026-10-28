@@ -8,3 +8,4 @@ arborist:
   image:
     repository: "quay.io/cdis/arborist"
     tag: "fix-validate-aud"
+    pullPolicy: Always
