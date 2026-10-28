@@ -51,8 +51,6 @@ fence:
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/mc2dp/user.yaml
-  FENCE_CONFIG_PUBLIC:
-    ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 fluentd:
   enabled: true
   image:
