@@ -70,6 +70,7 @@ fence:
     # and falls back to MAX_ACCESS_TOKEN_TTL.
     MAX_TASK_TOKEN_TTL:
       WORKFLOW: 172800 # 2 days
+    ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 fluentd:
   enabled: true
   image:
