@@ -905,7 +905,7 @@ global:
       enabled: true
       wafAclArn: arn:aws:wafv2:us-east-1:895962626746:regional/webacl/bdcatprod-waf/41bc2f16-1aa1-41b3-bc63-a82875f5f57d
   dev: false
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.2/schema.json
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/gtexdictionary/4.8.3/schema.json
   dispatcherJobNum: '10'
   environment: bdcat-internalstaging
   externalSecrets:
@@ -1055,7 +1055,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: '1.30.6'
   ingress:
     aws:
       group: bdcatprod

@@ -61,7 +61,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/mc2dp-data-platform
-    tag: '0.29.2'
+    tag: '0.30'
 gen3-user-data-library:
   enabled: true
   replicaCount: 2
@@ -326,7 +326,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "RCC pilot (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-master",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-3.4.0",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://mc2dp.data-commons.org",
@@ -701,7 +701,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '1.30.6'
   ingress:
     aws:
       group: pdp-commons
@@ -993,14 +993,11 @@ workspace-proxy:
   jegKernelSpecPolicy: |
     {
       "allowedSpecs": [
-        "python_kubernetes",
-        "python_tensorflow_kubernetes",
-        "python_tensorflow_gpu_kubernetes"
       ],
       "displayNames": {
         "python_kubernetes": "Python on Kubernetes",
-        "python_tensorflow_kubernetes": "Python + TensorFlow",
-        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+        "python_tf_kubernetes": "Python + TensorFlow",
+        "python_tf_gpu_kubernetes": "Python + TensorFlow + GPU"
       }
     }
 

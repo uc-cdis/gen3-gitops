@@ -1,4 +1,5 @@
 {
+  "allowedHosts": ["brhstaging.data-commons.org"],
   "pageTitle": "Gen3 Workspaces",
   "faviconUrl": "/icons/gen3.png",
   "gatewayBaseUrl": "/lw-workspace/proxy/",

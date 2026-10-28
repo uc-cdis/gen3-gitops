@@ -188,7 +188,6 @@ fence:
     tag: "13.3.0"
   FENCE_CONFIG_PUBLIC:
     ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
-    ALLOW_NEW_USER_ON_LOGIN: false
 portal:
   enabled: false
 frontend-framework:
@@ -196,7 +195,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: "0.27.2"
+    tag: "0.28"
 global:
   pdb: true
   aws:
@@ -558,7 +557,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2026.09"
+    tag: '1.30.6'
   ingress:
     aws:
       group: vadcprod

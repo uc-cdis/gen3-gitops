@@ -58,9 +58,10 @@ fence:
     fenceJwtKeys: brhstaging-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.2'
+    tag: '15.0.2'
   FENCE_CONFIG_PUBLIC:
     DEBUG: true
+    DPOP_ENABLED: true
      # Task token types that can be requested by users.
     ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
     # The number of seconds after a task access token is issued until it expires.
@@ -80,7 +81,7 @@ frontend-framework:
   # -- (map) Docker image information.
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: "v0.13.2"
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
@@ -88,6 +89,7 @@ frontend-framework:
     dir: brhprod/brhstaging.data-commons.org/values/frontend
   env:
     DATACOMMONS: BRHSTAGING
+    NEXT_PUBLIC_GEN3_MANIFEST_API: https://brhstaging.data-commons.org/manifests/
 gen3-discovery-ai:
   enabled: true
   image:
@@ -100,7 +102,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 0.4.0
+    tag: 1.0.1
   resources:
     limits:
       cpu: 2
@@ -112,14 +114,14 @@ gen3-workflow:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhstaging-helm--gen3-workflow
   externalSecrets:
     gen3workflowG3auto: brhstaging-helm-gen3workflow-g3auto
-  gen3WorkflowConfig:
-    debug: true
-    nWorkers: 4
-    enableS3Files: true
-    eksSecurityGroupNames:
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    ENABLE_S3_FILES: true
+    EKS_SECURITY_GROUP_NAMES:
       - brhprod_EKS_workers_sg
       - brhprod_EKS_nodepool_jupyter_sg
-    taskImageWhitelist:
+    DPOP_REQUIRED: true
+    TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
       - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
       - "quay.io/nextflow/bash:*"
@@ -206,6 +208,7 @@ global:
     slackWebhookSecretName: brhstaging-slack-webhook
     createLocalK8sSecret: false
     pushSecret: true
+  createDpopSecret: true
   hostname: brhstaging.data-commons.org
   kubeapi_endpoints:
     # Enable for Argo CD based deployments.
@@ -232,6 +235,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/930ddba3-1e49-4194-8bb8-4ff970dd45a0
 hatchery:
   enabled: true
+  jupyterNamespace: jupyter-pods-brhstaging
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
     tag: '2.11.0'
@@ -304,6 +308,8 @@ hatchery:
               "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--ServerApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/brh-welcome-wsl.ipynb",
               "--ServerApp.password=''",
@@ -336,6 +342,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab",
               "--JupyterNotebookApp.password=''",
@@ -371,6 +379,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -406,6 +416,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab/tree/brh-welcome.html",
               "--JupyterNotebookApp.password=''",
@@ -441,6 +453,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brhstaging.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
@@ -497,6 +511,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--NotebookApp.disable_check_xsrf=True",
+              "--NotebookApp.allow_origin='https://brhstaging.data-commons.org'",
               "--NotebookApp.base_url=/lw-workspace/proxy/",
               "--LabApp.default_url=/lab/tree/nextflow-welcome.html",
               "--NotebookApp.password=''",
@@ -553,6 +569,8 @@ hatchery:
               "FRAME_ANCESTORS": "https://brhstaging.data-commons.org"
             },
             "args": [
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://brhstaging.data-commons.org'",
               "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
               "--JupyterNotebookApp.default_url=/lab",
               "--JupyterNotebookApp.password=''",
@@ -755,7 +773,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.08'
+    tag: '1.30.6'
   ingress:
     aws:
       group: brhprod
@@ -789,21 +807,18 @@ workspace-proxy:
 
   image:
     repository: quay.io/cdis/multihead-workspace-proxy
-    tag: 0.0.4
+    tag: fix_restore-ambassador-annotation-upstream
     pullPolicy: Always
 
   listenAddr: ":8080"
   jegKernelSpecPolicy: |
     {
       "allowedSpecs": [
-        "python_kubernetes",
-        "python_tensorflow_kubernetes",
-        "python_tensorflow_gpu_kubernetes"
       ],
       "displayNames": {
         "python_kubernetes": "Python on Kubernetes",
-        "python_tensorflow_kubernetes": "Python + TensorFlow",
-        "python_tensorflow_gpu_kubernetes": "Python + TensorFlow + GPU"
+        "python_tf_kubernetes": "Python + TensorFlow",
+        "python_tf_gpu_kubernetes": "Python + TensorFlow + GPU"
       }
     }
 

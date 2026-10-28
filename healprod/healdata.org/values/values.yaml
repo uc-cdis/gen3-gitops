@@ -115,7 +115,7 @@ frontend-framework:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.3.2
+    tag: "1.4.0"
 global:
   pdb: true
   aws:
@@ -151,6 +151,19 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/f87abeee-47ce-47cd-a3ca-b3f76b34c845
+guppy:
+  esEndpoint: http://elasticsearch:9200
+  autoscaling:
+    enabled: true
+  enabled: true
+  authFilterField: auth_resource_path
+  configIndex: healprod_array-config
+  indices:
+    - index: healprod_etl_file
+      type: file
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: "2026.10"
 hatchery:
   hotNode:
     enabled: true
@@ -1466,7 +1479,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: '1.30.6'
   ingress:
     aws:
       group: healprod
