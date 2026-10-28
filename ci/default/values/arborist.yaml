@@ -7,4 +7,4 @@ arborist:
   enabled: true
   image:
     repository: "quay.io/cdis/arborist"
-    tag: "feat_validate-aud"
+    tag: "fix-validate-aud"
