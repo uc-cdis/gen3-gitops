@@ -2,5 +2,6 @@
   "updateSessionTime": 5,
   "inactiveTimeLimit": 20,
   "logoutInactiveUsers": false,
-  "enableWTS": true
+  "enableWTS": true,
+  "renewAccessTokenEarlyMilliseconds": 20000
 }
