@@ -354,6 +354,9 @@ fence:
       cds-645-phs004490-mos-snmulti:
         cred: fence_bot
         region: us-east-1
+      cds-691-phs004306-sd-zam36hkm-ca:
+        cred: fence_bot
+        region: use-east-1
       cds-701-phs004691:
         cred: fence_bot
         region: us-east-1
