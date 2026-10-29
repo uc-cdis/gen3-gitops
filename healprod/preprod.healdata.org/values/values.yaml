@@ -10,14 +10,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.08'
+    tag: '2026.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: healpreprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--audit-sqs-receiver
@@ -28,7 +28,7 @@ cedar:
   enabled: true
   image:
     repository: quay.io/cdis/cedar-wrapper-service
-    tag: '0.8.0'
+    tag: 0.9.0
   cedar_client_job_enabled: false
   externalSecrets:
     createCedarClientSecret: false
@@ -42,7 +42,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--dashboard-access
@@ -69,7 +69,7 @@ fence:
     fenceJwtKeys: healpreprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.08'
+    tag: '2026.10'
   FENCE_CONFIG_PUBLIC:
     S3_BUCKETS:
       healprod-healpreprod-205252583234-upload:
@@ -115,7 +115,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: 1.3.1
+    tag: "1.4.0"
 global:
   pdb: true
   aws:
@@ -150,6 +150,19 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:205252583234:certificate/8bb3d424-be34-493c-a43b-e2c686c9dc6c
+guppy:
+  esEndpoint: http://elasticsearch:9200
+  autoscaling:
+    enabled: true
+  enabled: true
+  authFilterField: auth_resource_path
+  configIndex: preprod-heal_array-config
+  indices:
+    - index: preprod-heal_etl_file
+      type: file
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
+    tag: "2026.10"
 hatchery:
   enabled: true
   replicaCount: 2
@@ -157,7 +170,7 @@ hatchery:
     stataG3auto: stata-workspace-gen3-license-preprod-heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.11.0'
+    tag: '2026.10'
   hatchery:
     json: |-
       {
@@ -189,7 +202,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:2026.08",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.10",
           "env": {
             "NAMESPACE": "healpreprod-helm",
             "GEN3_ENDPOINT": "preprod.healdata.org",
@@ -214,12 +227,12 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "2.0",
             "memory-limit": "8Gi",
-            "name": "JupyterLab Software Library Testing",
-            "image": "quay.io/cdis/jupyterlab-generic:master",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__2970d5bcab3baf13326b472350b5d8663ea259a4",
             "pull_policy": "Always",
             "squashfs_mount": {
               "enabled": true,
-              "source_sqsh": "/image/apps-2026-08-20.sqsh"
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
             },
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org",
@@ -227,10 +240,9 @@ hatchery:
             },
             "args": [
               "--ServerApp.base_url=/lw-workspace/proxy/",
-              "--ServerApp.default_url=/lab",
+              "--LabApp.default_url=/lab/tree/heal-welcome-wsl.ipynb",
               "--ServerApp.password=''",
-              "--ServerApp.token=''",
-              "--ServerApp.notebook_dir='/home/jovyan'",
+              "--ServerApp.root_dir='/home/jovyan'",
               "--ServerApp.shutdown_no_activity_timeout=3600"
             ],
             "command": [
@@ -413,14 +425,14 @@ indexd:
     serviceCreds: healpreprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.08'
+    tag: '2026.10'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: healpreprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::205252583234:role/healprod--healpreprod-helm--manifest-service-sa
@@ -1450,7 +1462,7 @@ metadata:
     metadataG3auto: healpreprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.08'
+    tag: '2026.10'
   useAggMds: true
   schedule: 30 8 * * *
   suspendCronjob: false
@@ -1460,7 +1472,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.08'
+    tag: '2026.10'
 portal:
   enabled: true
   dataUploadBucket: healprod-healpreprod-205252583234-upload
@@ -1473,12 +1485,12 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.42.1'
+    tag: 'chore_discovery-details'
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.08'
+    tag: '2026.10'
 revproxy:
   replicaCount: 2
   autoscaling:
@@ -1489,7 +1501,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.08'
+    tag: '1.30.6'
   ingress:
     aws:
       group: healprod
@@ -1497,7 +1509,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.08'
+    tag: '2026.10'
 sower:
   enabled: true
   externalSecrets:
@@ -1505,7 +1517,7 @@ sower:
     createK8sSowerJobsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2026.08'
+    tag: '2026.10'
   sowerConfig:
     - action: batch-export
       activeDeadlineSeconds: 600
@@ -1519,7 +1531,7 @@ sower:
                 name: manifest-global
           - name: BUCKET
             value: preprod-healdata-org-batch-export-bucket
-        image: quay.io/cdis/batch-export:2026.08
+        image: quay.io/cdis/batch-export:2026.10
         labels:
           internet: 'yes'
         memory-limit: 1Gi
@@ -1541,8 +1553,8 @@ ssjdispatcher:
     credsFile: healpreprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2026.08'
-  indexing: quay.io/cdis/indexs3client:2026.08
+    tag: '2026.10'
+  indexing: quay.io/cdis/indexs3client:2026.10
 wts:
   enabled: true
   externalSecrets:
@@ -1551,7 +1563,7 @@ wts:
     wtsOidcClient: healpreprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.08'
+    tag: '2026.10'
 zendesk-wrapper:
   enabled: true
   image:

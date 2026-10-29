@@ -127,7 +127,7 @@ frontend-framework:
     DATACOMMONS: "M3AI"
   image:
     repository: "quay.io/cdis/cac-data-commons"
-    tag: "chore_migration"
+    tag: "main"
 
 gen3-embeddings:
   enabled: true
@@ -327,6 +327,8 @@ revproxy:
       proxy_read_timeout 1h;
       proxy_send_timeout 1h;
 
+  image:
+    tag: '1.30.6'
 sheepdog:
   replicaCount: 2
   enabled: true
