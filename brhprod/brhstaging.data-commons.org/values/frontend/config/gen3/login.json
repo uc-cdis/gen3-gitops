@@ -1,0 +1,26 @@
+{
+  "topContent": [
+    {
+      "text": "Biomedical Research Hub",
+      "className": "text-center text-3xl font-bold"
+    },
+    {
+      "text": "Discover, Analyze, and Share Data",
+      "className": "text-center text-xl font-medium"
+    },
+    {
+      "text": "The Biomedical Research Hub (BRH) is a standard-based data ecosystem for securely managing, analyzing and sharing biomedical data to support research communities and collaborations.",
+      "className": "text-center text-sm"
+    }
+  ],
+  "bottomContent": [
+    {
+      "type": "markdown",
+      "text": "If you have any questions about access or the registration process, please contact [support@gen3.org](mailto:support@gen3.org])",
+      "className": "text-center text-sm"
+    }
+  ],
+  "image": "images/brh/gene_bgy.png",
+  "email": "brhsupport@gen3.org",
+  "showCredentialsLogin" : true
+}
