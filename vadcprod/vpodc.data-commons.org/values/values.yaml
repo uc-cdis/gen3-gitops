@@ -10,7 +10,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: "2025.12"
+    tag: "2026.09"
 audit:
   externalSecrets:
     auditG3auto: vadcprod-audit-g3auto
@@ -54,7 +54,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: "2025.12"
+    tag: "2026.09"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--dashboard-access
@@ -502,14 +502,14 @@ indexd:
     serviceCreds: vadcprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: "2025.12"
+    tag: "2026.09"
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: vadcprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: "2025.12"
+    tag: "2026.09"
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::663707118480:role/vadcprod--vadcprod-helm--manifest-service-sa
@@ -526,7 +526,7 @@ metadata:
     metadataG3auto: vadcprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: "2025.12"
+    tag: "2026.09"
 ohdsi-atlas:
   enabled: true
   image:
@@ -551,7 +551,9 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: "2025.12"
+    tag: "2026.09"
+mutatingWebhook:
+  enabled: false
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -850,7 +852,7 @@ wts:
     wtsOidcClient: vadcprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: "2025.12"
+    tag: "2026.09"
 
 workspace-proxy:
   enabled: true
