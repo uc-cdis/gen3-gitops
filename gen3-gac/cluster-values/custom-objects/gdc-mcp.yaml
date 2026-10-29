@@ -95,18 +95,14 @@ spec:
         - name: mcp
           image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp:agent
           imagePullPolicy: IfNotPresent
-          env_from:
+          envFrom:
             - secretRef:
                 name: agent-api-keys
           env:
             - name: MCP_PORT
               value: "8001"
             - name: EMBED_API_URL
-              value: "$(ONPREAM_API_URL)"
-            - name: EMBED_API_KEY
-              value: "$(ONPREM_API_KEY)"
-            - name: EMBED_MODEL
-              value: "sapbert"
+              value: http://conduit-server.default.svc.cluster.local:8080/sapbert/v1/
           args:
             - "-t"
             - "streamable-http"
@@ -121,12 +117,6 @@ spec:
             failureThreshold: 120
           readinessProbe:
             tcpSocket: { port: http }
-          volumeMounts:
-            - name: cache
-              mountPath: /cache
-    volumes:
-      - name: cache
-        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

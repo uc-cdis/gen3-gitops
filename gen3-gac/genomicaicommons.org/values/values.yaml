@@ -309,6 +309,19 @@ revproxy:
       proxy_cache off;
       proxy_read_timeout 1h;
       proxy_send_timeout 1h;
+  # for local portal dev. the agent serves at its root, so strip /agent
+  - name: "gdc-agent"
+    path: /agent
+    serviceName: gdc-agent
+    authzPolicy: "aiapps"
+    authzService: "ai"
+    csrfCheck: true
+    rewritePath: true
+    customNginxConfigs: |
+      proxy_buffering off;
+      proxy_cache off;
+      proxy_read_timeout 1h;
+      proxy_send_timeout 1h;
 
 
   image:

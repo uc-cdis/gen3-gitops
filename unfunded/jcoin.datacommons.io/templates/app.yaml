@@ -10,13 +10,13 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: chore/icgc-nginx-test
+      targetRevision: master
       helm:
         releaseName: gen3-jcoin
         valueFiles:
           - $values/unfunded/jcoin.datacommons.io/values/values.yaml
     - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
-      targetRevision: feat/jcoin-unfunded
+      targetRevision: master
       ref: values
   destination:
     server: "https://kubernetes.default.svc"

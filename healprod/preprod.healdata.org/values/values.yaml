@@ -115,7 +115,7 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
-    tag: "feat_heal-explorer"
+    tag: "1.4.0"
 global:
   pdb: true
   aws:
