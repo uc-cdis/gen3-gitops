@@ -11,7 +11,7 @@ global:
   aws:
     account: "707767160287"
     awsEsProxyRole: devplanetv2--ci-perf--es-access
-    enabled: true    
+    enabled: true
     externalSecrets:
       # -- (bool) Whether to use External Secrets for aws config.
       enabled: true

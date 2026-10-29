@@ -17,6 +17,7 @@ global:
     dbCreate: true
     externalSecret: "vectis-aurora-master-password"
   environment: "vectis"
+  clusterName: vectis
   hostname: "vectis.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:172585802910:certificate/d9a98702-17a2-4207-b212-30c043caccdb"
   dictionaryUrl: "https://vectis-ctds-172585802910-us-east-1.s3.us-east-1.amazonaws.com/config/dd/current.json"
@@ -74,6 +75,9 @@ etl:
 
 fence:
   enabled: true
+  image:
+    tag: '15.0.2'
+
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-fence-sa"
@@ -93,6 +97,16 @@ fence:
     userYamlS3Path: "s3://vectis-ctds-172585802910-us-east-1/config/user.yaml"
     slack_webhook: ""
     slack_send_dbgap: false
+
+  FENCE_CONFIG_PUBLIC:
+    DPOP_ENABLED: true
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 3600 # 1h - to update as needed
 
 frontend-framework:
   enabled: true
@@ -143,6 +157,60 @@ frontend-framework:
     # the portal holds no token. TES_CATALOG_REPO is only the label shown for it.
     JOBS_CATALOG_URL: "http://jobs-catalog.default.svc.cluster.local:8080"
     TES_CATALOG_REPO: "uc-cdis/vectis-notebooks"
+
+funnel:
+  image:
+    repository: quay.io/cdis/funnel
+    tag: v0.13.0-gen3
+  replicaCount: 2
+  postgres:
+    dbCreate: true
+  externalSecrets:
+    dbcreds: vectis-default-funnel-creds
+    funnelOidcClient: vectis-default-funnel-oidc-client
+  Kubernetes:
+    JobsNamespace: workflow-pods-vectis-default
+    Storage:
+      # TODO: enable S3 Files once `EKS_SECURITY_GROUP_NAMES` is configured
+      type: mountpoint_s3
+      # type: s3files
+    Resources:
+      Limits:
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 8000m
+        RamGb: 4096Mi
+        DiskGb: 4096Mi
+
+gen3-workflow:
+  enabled: true
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+  image:
+    tag: 1.0.1
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 2
+      memory: 850Mi
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/vectis-default-gen3-workflow-sa"
+  externalSecrets:
+    gen3workflowG3auto: vectis-default-gen3workflow-g3auto
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    # TODO: enable S3 Files once `EKS_SECURITY_GROUP_NAMES` is configured
+    ENABLE_S3_FILES: false
+    # EKS_SECURITY_GROUP_NAMES:
+    #   - TODO
+    DPOP_REQUIRED: true
+    TASK_IMAGE_WHITELIST:
+      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
+      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
+      - "quay.io/nextflow/bash"
 
 grafana:
   enabled: false
