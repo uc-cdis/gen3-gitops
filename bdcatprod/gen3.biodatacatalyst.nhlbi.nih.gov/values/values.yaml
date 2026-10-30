@@ -296,7 +296,7 @@ fence:
         cred: bdcatprod_fence-bot
         region: us-east-1
       bdc-indexing-manifests:
-        cred: bdcatprod_fence-bot
+        cred: fence-bot
         region: us-east-1
       bdcatpreprod-data-bucket:
         cred: bdcatprod_fence-bot
