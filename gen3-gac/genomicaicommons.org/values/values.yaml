@@ -108,7 +108,7 @@ frontend-framework:
     DATACOMMONS: "GAC"
   image:
     repository: "quay.io/cdis/genomic-ai-commons"
-    tag: "v0.1.0"
+    tag: "v0.1.1"
 
 gen3-embeddings:
   enabled: true
