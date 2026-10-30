@@ -107,8 +107,8 @@ frontend-framework:
     DATADOG_SITE: "ddog-gov.com"
     DATACOMMONS: "GAC"
   image:
-    repository: "quay.io/cdis/cac-data-commons"
-    tag: "feat_gac_commons_initial"
+    repository: "quay.io/cdis/genomic-ai-commons"
+    tag: "v0.1.0"
 
 gen3-embeddings:
   enabled: true
@@ -273,43 +273,8 @@ revproxy:
   replicaCount: 3
   enabled: true
   extraServices:
-  - name: "cohort-copilot"
-    path: /cohort-copilot
-    serviceName: cohort-copilot-gradio
-    authzPolicy: "aiapps"
-    authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
-    customNginxConfigs: |
-      proxy_buffering off;
-      proxy_cache off;
-      proxy_read_timeout 1h;
-      proxy_send_timeout 1h;
-  - name: "cohort-copilot-chat"
-    path: /cohort-copilot-chat
-    serviceName: cohort-copilot-agent
-    authzPolicy: "aiapps"
-    authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
-    customNginxConfigs: |
-      proxy_buffering off;
-      proxy_cache off;
-      proxy_read_timeout 1h;
-      proxy_send_timeout 1h;
-  - name: "agent"
-    path: /qag
-    serviceName: qag-agent
-    authzPolicy: "aiapps"
-    authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
-    customNginxConfigs: |
-      proxy_buffering off;
-      proxy_cache off;
-      proxy_read_timeout 1h;
-      proxy_send_timeout 1h;
-  # for local portal dev. the agent serves at its root, so strip /agent
+  # for a portal running locally (npm run dev); the portal in the cluster calls http://gdc-agent directly.
+  # the agent serves its pages at its root, so strip /agent
   - name: "gdc-agent"
     path: /agent
     serviceName: gdc-agent
