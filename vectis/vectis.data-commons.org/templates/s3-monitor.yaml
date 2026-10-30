@@ -1,0 +1,31 @@
+# s3-monitor (ActiveMQ + DuckDB): a CronJob that drains the SQS queue of S3 ObjectCreated notifications, publishes each new or
+# changed object to Amazon MQ and records it in the Parquet lake (AIS-106).
+# The chart lives in gen3-helm (helm/s3-monitor) but is not on master yet, so it gets its own Application pinned to the s3-monitor
+# branch instead of moving the whole gen3-vectis release off master (which is what qa-vectis did with helmBranch).
+# Once the chart is merged, switch targetRevision to master (or fold it into gen3-vectis as the s3-monitor subchart).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vectis-s3-monitor
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/s3-monitor
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: feat-s3monitor_sqs
+      helm:
+        releaseName: s3-monitor
+        valueFiles:
+          - $values/vectis/vectis.data-commons.org/values/s3-monitor-values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true

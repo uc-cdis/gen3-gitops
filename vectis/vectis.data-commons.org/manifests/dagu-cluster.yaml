@@ -1,0 +1,98 @@
+# What Dagu needs from the cluster, kept as small as possible.
+#
+# 1. The gate checks callers with TokenReview, which needs the system:auth-delegator role on Dagu's service account.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dagu-gate-tokenreview
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: system:auth-delegator}
+subjects: [{kind: ServiceAccount, name: dagu, namespace: default}]
+---
+# 2. Jobs run as Kubernetes Jobs in their own namespace, as a service account that has NO permissions.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dagu-jobs
+  labels:
+    pod-security.kubernetes.io/enforce: baseline
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: dagu-runner, namespace: dagu-jobs}
+automountServiceAccountToken: false
+---
+# A service account for the aws-audit job profile: it carries an IAM role (IRSA) so a job can read specific Secrets Manager entries and
+# assume read-only audit roles in other accounts. Only a reviewed catalog entry with `profile: aws-audit` runs as it, and only for users
+# holding the portal permission for that profile. The role is created by hand (see jobs/README.md in the notebooks repo for the policy).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-aws-audit
+  namespace: dagu-jobs
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-job-aws-audit
+automountServiceAccountToken: true
+---
+# A service account for the notebook profile: its IAM role can read the published notebooks and write job results, nothing else.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: job-notebook
+  namespace: dagu-jobs
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-job-notebook
+automountServiceAccountToken: true
+---
+# Dagu may create and watch Jobs in that namespace and read their pods and logs, and nothing else.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata: {name: dagu-job-runner, namespace: dagu-jobs}
+rules:
+  - apiGroups: ["batch"]
+    resources: ["jobs"]
+    verbs: ["create", "get", "list", "watch", "delete"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata: {name: dagu-job-runner, namespace: dagu-jobs}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: Role, name: dagu-job-runner}
+subjects: [{kind: ServiceAccount, name: dagu, namespace: default}]
+---
+# A ceiling on what jobs can consume, whatever a definition asks for.
+apiVersion: v1
+kind: ResourceQuota
+metadata: {name: dagu-jobs, namespace: dagu-jobs}
+spec:
+  hard:
+    pods: "20"
+    limits.cpu: "40"
+    limits.memory: 80Gi
+---
+# Job pods serve nothing: no inbound connections.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: default-deny-ingress, namespace: dagu-jobs}
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress"]
+---
+# 3. Only the portal can connect to Dagu's gate.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata: {name: dagu-from-portal, namespace: default}
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/name: dagu}
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels: {app.kubernetes.io/name: frontend-framework}
+      ports:
+        - {port: 8080, protocol: TCP}

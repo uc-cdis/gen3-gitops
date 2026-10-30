@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vectis
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/gen3
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: master
+      helm:
+        releaseName: vectis
+        valueFiles:
+          - $values/vectis/vectis.data-commons.org/values/values.yaml
+          - $values/vectis/vectis.data-commons.org/values/vectis-overlays-values.yaml
+          - $values/vectis/vectis.data-commons.org/values/workspace-values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      ref: values
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      path: vectis/vectis.data-commons.org/manifests
+      directory:
+        recurse: false
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels:
+        role: gen3
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
