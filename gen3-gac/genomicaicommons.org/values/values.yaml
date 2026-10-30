@@ -19,6 +19,7 @@ global:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
   environment: "gen3-gac"
+  clusterName: gen3-gac
   hostname: "genomicaicommons.org"
   revproxyArn: "arn:aws:acm:us-east-1:467765330347:certificate/bf2b6741-9d9d-4a58-9d7c-2c4118d4698c"
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
@@ -98,6 +99,16 @@ fence:
     slack_webhook: ""
     slack_send_dbgap: false
 
+  FENCE_CONFIG_PUBLIC:
+    DPOP_ENABLED: true
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 3600 # 1h - to update as needed
+
 frontend-framework:
   replicaCount: 2
   enabled: true
@@ -109,6 +120,27 @@ frontend-framework:
   image:
     repository: "quay.io/cdis/genomic-ai-commons"
     tag: "v0.1.0"
+
+funnel:
+  image:
+    repository: quay.io/cdis/funnel
+    tag: v0.13.0-gen3
+  replicaCount: 2
+  postgres:
+    dbCreate: true
+  externalSecrets:
+    dbcreds: gen3-gac-default-funnel-creds
+    funnelOidcClient: gen3-gac-default-funnel-oidc-client
+  Kubernetes:
+    JobsNamespace: workflow-pods-gen3-gac-default
+    Storage:
+      type: mountpoint_s3
+    Resources:
+      Limits:
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 8000m
+        RamGb: 4096Mi
+        DiskGb: 4096Mi
 
 gen3-embeddings:
   enabled: true
@@ -124,6 +156,34 @@ gen3-embeddings:
     createK8sGen3EmbeddingsSecret: false
     pushSecret: false
     dbcreds: "gen3-gac-default-gen3-embeddings-creds"
+
+gen3-workflow:
+  enabled: true
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+  image:
+    tag: 1.1.0
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 2
+      memory: 850Mi
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
+  externalSecrets:
+    gen3workflowG3auto: gen3-gac-default-gen3workflow-g3auto
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    ENABLE_S3_FILES: false
+    DPOP_REQUIRED: true
+    TASK_IMAGE_WHITELIST:
+      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
+      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
+      - "quay.io/nextflow/bash"
 
 grafana:
   enabled: false
