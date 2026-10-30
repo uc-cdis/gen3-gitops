@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "markdown",
+      "text": "# 403: Not Authorized \n You are not authorized to access this page. If you believe this is an error, contact your administrator or support.",
+      "className": "text-center"
+    }
+  ]
+}

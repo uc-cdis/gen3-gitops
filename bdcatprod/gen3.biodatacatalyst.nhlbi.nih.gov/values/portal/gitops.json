@@ -36,6 +36,13 @@
   },
   "components": {
     "appName": "NHLBI BioData Catalyst®",
+     "banner": [
+      {
+        "type": "info",
+        "message": "Per Executive Order 14434, federal agencies are now using \"Super Intelligence\" (SI) in place of \"Artificial Intelligence\" (AI). You may see both terms across NIH content during this transition.",
+        "resetMsgDays": 1
+      }
+    ],
     "index": {
       "introduction": {
         "heading": "",
