@@ -94,7 +94,7 @@ spec:
       containers:
         - name: mcp
           image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp:agent
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: agent-api-keys
