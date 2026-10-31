@@ -2,7 +2,7 @@
 environment: vectis
 replicaCount: 2
 image:
-  tag: vectis-siem-service-v17
+  tag: vectis-siem-service-v1.0
 # CPU. The pods had a request of 1 and a limit of 4 and were being placed on 2-vCPU nodes: `nproc` printed 2, `cpu.pressure` sat near 20% and the pod
 # used a flat 1.4 cores, with no throttling and no disk wait. A request is what the scheduler reserves, so asking for 3 puts each pod on a node that really
 # has the CPUs (Karpenter adds a larger node when none has room). The limit stays 4: it only caps.
@@ -41,6 +41,7 @@ env:
   SIEM_SHARED_TENANTS: "ctds"
   GRAPH_BUCKET: "vectis-ctds-172585802910-us-east-1"
   GRAPH_TENANT: "ctds"
+  GRAPH_PREFIX: "graph-v2"                # top-level folder of the graph tables; "graph" is the pre-v1.0 rollback
   GRAPH_NAMESPACES: "ctds-events,ctds-intel"
   # Seconds without an event before a source shows as stale on the Health tab. The streams are continuous, so these are tight.
   SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600, "f5": 600, "revproxy": 3600, "squid": 600, "bifrost": 86400}'

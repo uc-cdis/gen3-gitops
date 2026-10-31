@@ -6,6 +6,8 @@
 {{- $dictKey := $env.SIEM_DICTIONARY_S3_KEY | default "config/dd/current.json" }}
 {{- $tenant := required "env.GRAPH_TENANT must be set" $env.GRAPH_TENANT }}
 {{- $quarantineBucket := $env.SIEM_QUARANTINE_BUCKET | default $graphBucket }}
+{{- /* The tables folder the siem is configured for, and "graph" (the pre-v1.0 folder) while it is kept for rollback. */ -}}
+{{- $prefixes := list "graph" ($env.GRAPH_PREFIX | default "graph") | uniq }}
 {{- $kms := required "kmsKeyArn must be set when crossplane is enabled" .Values.kmsKeyArn }}
 apiVersion: iam.aws.crossplane.io/v1beta1
 kind: Role
@@ -53,14 +55,16 @@ spec:
             "Effect":"Allow",
             "Action":"s3:ListBucket",
             "Resource":["arn:aws:s3:::{{ $graphBucket }}"{{ if ne $quarantineBucket $graphBucket }},"arn:aws:s3:::{{ $quarantineBucket }}"{{ end }}{{ if and (ne $dictBucket $graphBucket) (ne $dictBucket $quarantineBucket) }},"arn:aws:s3:::{{ $dictBucket }}"{{ end }}],
-            "Condition":{"StringLike":{"s3:prefix":["graph/*","quarantine/*","config/dd/*"]}}
+            "Condition":{"StringLike":{"s3:prefix":[{{ range $p := $prefixes }}"{{ $p }}/*",{{ end }}"quarantine/*","config/dd/*"]}}
           },
           {
             "Sid":"ReadTablesQuarantineAndDictionary",
             "Effect":"Allow",
             "Action":"s3:GetObject",
             "Resource":[
-              "arn:aws:s3:::{{ $graphBucket }}/graph/*",
+              {{- range $p := $prefixes }}
+              "arn:aws:s3:::{{ $graphBucket }}/{{ $p }}/*",
+              {{- end }}
               "arn:aws:s3:::{{ $quarantineBucket }}/quarantine/*",
               "arn:aws:s3:::{{ $dictBucket }}/{{ $dictKey }}"
             ]
@@ -69,7 +73,7 @@ spec:
             "Sid":"WriteAnalystStateOnly",
             "Effect":"Allow",
             "Action":"s3:PutObject",
-            "Resource":"arn:aws:s3:::{{ $graphBucket }}/graph/{{ $tenant }}-alerts/_state/*"
+            "Resource":[{{ range $i, $p := $prefixes }}{{ if $i }},{{ end }}"arn:aws:s3:::{{ $graphBucket }}/{{ $p }}/{{ $tenant }}-alerts/_state/*"{{ end }}]
           },
           {
             "Sid":"PublishWatchlistBundlesOnly",
