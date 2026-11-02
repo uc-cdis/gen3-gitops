@@ -1485,7 +1485,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'chore_discovery-details'
+    tag: '5.42.3'
 requestor:
   enabled: true
   image:
