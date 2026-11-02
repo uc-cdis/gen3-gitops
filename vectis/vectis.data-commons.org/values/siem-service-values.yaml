@@ -9,10 +9,10 @@ image:
 resources:
   requests:
     cpu: "3"
-    memory: "4Gi"
+    memory: "8Gi"
   limits:
     cpu: "4"
-    memory: "6Gi"
+    memory: "12Gi"
 # One EBS volume per replica (a StatefulSet), kept across restarts and spot reclaims. 100 Gi holds about three days of web requests in the warm
 # cache at today's volume; the storage class is applied once by hand (see the rollout notes), so the chart does not create it.
 cache:
