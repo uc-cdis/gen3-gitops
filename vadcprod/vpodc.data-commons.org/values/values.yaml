@@ -1,5 +1,6 @@
 ambassador:
   jupyterNamespace: jupyter-pods
+  enabled: false
 arborist:
   replicaCount: 4
   autoscaling:
