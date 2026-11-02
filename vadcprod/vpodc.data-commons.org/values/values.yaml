@@ -355,7 +355,8 @@ hatchery:
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
-              "--AsyncFileContentsManager.delete_to_trash=False"
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden = True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -395,7 +396,8 @@ hatchery:
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
-              "--AsyncFileContentsManager.delete_to_trash=False"
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden = True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -435,7 +437,8 @@ hatchery:
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
-              "--AsyncFileContentsManager.delete_to_trash=False"
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden = True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
@@ -478,7 +481,8 @@ hatchery:
               "--FileContentsManager.always_delete_dir=True",
               "--FileContentsManager.delete_to_trash=False",
               "--AsyncFileContentsManager.always_delete_dir=True",
-              "--AsyncFileContentsManager.delete_to_trash=False"
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden = True"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
