@@ -356,7 +356,7 @@ fence:
         region: us-east-1
       cds-691-phs004306-sd-zam36hkm-ca:
         cred: fence_bot
-        region: use-east-1
+        region: us-east-1
       cds-701-phs004691:
         cred: fence_bot
         region: us-east-1
@@ -376,6 +376,9 @@ fence:
         cred: fence_bot
         region: us-east-1
       cds-735-phs004970-pbtc-glioma:
+        cred: fence_bot
+        region: us-east-1
+      cds-746-phs005015-loc3car-sc:
         cred: fence_bot
         region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
