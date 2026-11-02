@@ -35,6 +35,13 @@ env:
   # DuckDB threads for the shared reader: 2 per CPU. It was 4 per CPU (16 threads on a 2-vCPU node) so S3 scans could overlap their waits; the S3 scans
   # now run in their own single lane (SIEM_COLD_CONCURRENCY) and warm reads should not fight each other for CPUs.
   GRAPH_DUCKDB_THREADS: "2x"
+  # The warm copy holds the last 24 hours of events without the egress log (SIEM_WARM_EXCLUDE_LABELS, EgressRequest, the squid log). The row budget
+  # worked out from the volume (~9M rows per table) held only ~12 h of what is left (~8.6M rows a day), so everything wider read S3 (the Overview
+  # totals took minutes). SIEM_WARM_DAYS=1 caps the span; SIEM_WARM_MAX_ROWS is the per-table limit it must fit under (the copy uses what the day
+  # takes, ~7 GB of the 100 Gi volume, twice while it swaps). The edges are ~18M a day: they fit about a day of it. If the logs show
+  # "warm: ... holds only the last N hour(s)", raise the limit.
+  SIEM_WARM_DAYS: "1"
+  SIEM_WARM_MAX_ROWS: "25000000"
   SIEM_TENANTS: "ctds"
   # The portal gates its pages on the shared Arborist path /programs/vectis/projects/siem (see config/gen3/authz.json). With this set, the
   # same grant (and siem_pii, siem_writer, siem_admin) also gives the service access to ctds, so one resource path works for both.
@@ -44,7 +51,12 @@ env:
   GRAPH_PREFIX: "graph-v2"                # top-level folder of the graph tables; "graph" is the pre-v1.0 rollback
   GRAPH_NAMESPACES: "ctds-events,ctds-intel"
   # Seconds without an event before a source shows as stale on the Health tab. The streams are continuous, so these are tight.
-  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600, "f5": 600, "revproxy": 3600, "squid": 600, "bifrost": 86400}'
+  # The Health tab says "unhealthy" when a CloudWatch alarm with one of these name prefixes is in ALARM (comma list). The service's role needs
+  # cloudwatch:DescribeAlarms; without it the page says so in its notes and shows no alarm.
+  SIEM_ALARM_PREFIXES: "gen3-prod-vectis-pipeline"
+  # squid is left out on purpose: its forwarders send only blocked connections and upstream failures, so silence is normal and a freshness
+  # expectation would raise "has gone quiet" whenever nothing was blocked. Its volume is judged by the event counts, not by recency.
+  SIEM_SOURCE_EXPECTATIONS: '{"waf": 3600, "f5": 600, "revproxy": 3600, "bifrost": 86400}'
   # Queues the Health tab reads from CloudWatch (the role already has cloudwatch:GetMetricData). "broker" is the CloudWatch
   # Broker dimension of the ACTIVE node (gen3-mq-2 today; after a broker failover it becomes gen3-mq-1: update it then).
   SIEM_MQ_QUEUES: '[{"name":"graph.ingest.ctds","role":"ingest","broker":"gen3-mq-2"},{"name":"graph.cleanup.ctds","role":"cleanup","broker":"gen3-mq-2"},{"name":"graph.ingest.ctds.failures","role":"failures","broker":"gen3-mq-2"}]'
