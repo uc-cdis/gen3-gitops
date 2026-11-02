@@ -12,7 +12,7 @@ gen3-workflow:
       memory: 850Mi
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: s3-list-buckets-support
+    tag: master
   serviceAccount:
     create: true
     annotations:
@@ -24,3 +24,5 @@ gen3-workflow:
       - "quay.io/biocontainers/ubuntu:24.04"
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
+    ENABLE_S3_FILES: true
+    EKS_SECURITY_GROUP_NAMES: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]
