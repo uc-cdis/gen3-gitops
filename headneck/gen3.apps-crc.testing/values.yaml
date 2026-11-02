@@ -14,7 +14,7 @@ arborist:
   service:
     targetPort: 8080
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 argo-wrapper:
   enabled: false
   service:
@@ -26,7 +26,7 @@ audit:
   image:
     tag: test_openshift-support
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 aws-es-proxy:
   enabled: false
   service:
@@ -78,7 +78,7 @@ fence:
   image:
     tag: test_openshift-support
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
     enabled: true
     createK8sGoogleAppSecrets: true
     createK8sJwtKeysSecret: true
@@ -111,11 +111,11 @@ global:
       localSecretName: "secret-store-user"
     externalSecrets:
       enabled: true
-      pushSecret: true
+      pushSecret: false
   externalSecrets:
     apiVersion: external-secrets.io/v1beta1
     deploy: true
-    pushSecret: true
+    pushSecret: false
   frontendRoot: gen3ff
   hostname: gen3.apps-crc.testing
   environment: openshift-test
@@ -159,7 +159,7 @@ indexd:
     user: ''
     group: ''
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 manifestservice:
   enabled: true
   service:
@@ -167,7 +167,7 @@ manifestservice:
   image:
     tag: test_openshift-support
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 metadata:
   enabled: true
   service:
@@ -177,7 +177,7 @@ metadata:
   postgres:
     lookupLocalSecret: false
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 ohdsi-atlas:
   enabled: false
   service:
@@ -201,7 +201,7 @@ peregrine:
   image:
     tag: test_openshift-support
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 portal:
   enabled: true
   service:
@@ -274,7 +274,7 @@ sheepdog:
     name: FENCE_URL
     value: http://fence-service
   externalSecrets:
-    pushSecret: true
+    pushSecret: false
 sower:
   enabled: false
   service:
