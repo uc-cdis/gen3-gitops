@@ -1,0 +1,214 @@
+name: Hatchery Config Validation
+
+# Advisory checks for hatchery workspace configs, separate from the
+# integration tests. Not a required check: problems are reported as inline
+# annotations and one PR comment, and only fail the run when ADVISORY is
+# "false". A red run means the checker itself broke.
+#
+#   validate            static checks + hatchery's own config loader, on every
+#                       values file whose hatchery config changed
+#   jupyter-smoke-test  boots each new or changed workspace container in Docker,
+#                       checks its Jupyter flags against the Jupyter in the
+#                       image, waits for the ready-probe and validates the
+#                       notebooks in the image
+#   report              combines the results into the PR comment
+#
+# GitHub path filters cannot look inside files, so this starts for any values
+# file change; validate stops after a few seconds when the hatchery section
+# itself did not change. See .github/hatchery/README.md.
+
+on:
+  pull_request:
+    paths:
+      - '**/values/*.yaml'
+      - '.github/hatchery/**'
+      - '.github/workflows/hatchery_config_validation.yaml'
+  workflow_dispatch:
+    inputs:
+      hatchery_ref:
+        description: uc-cdis/hatchery ref whose config types are used for validation
+        default: master
+
+env:
+  # Set to "false" to make problems fail the run (e.g. before making it required).
+  ADVISORY: "true"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hatchery-config-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate hatchery configs
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      configs: ${{ steps.static.outputs.configs }}
+      matrix: ${{ steps.static.outputs.matrix }}
+      has_containers: ${{ steps.static.outputs.has_containers }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Static checks
+        id: static
+        run: |
+          # Check (and boot) everything when run by hand or when the validator
+          # itself changes; otherwise only what this PR changed.
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            mode=(--all)
+          elif git diff --name-only "origin/${{ github.base_ref }}...HEAD" \
+              | grep -qE '^\.github/(hatchery/|workflows/hatchery_config_validation\.yaml)'; then
+            echo "The validator itself changed, so every hatchery config is checked."
+            mode=(--all)
+          else
+            mode=(--base "origin/${{ github.base_ref }}")
+          fi
+          python3 .github/hatchery/check_config.py "${mode[@]}" --out build
+
+      - name: Check out hatchery
+        if: steps.static.outputs.configs != '0'
+        uses: actions/checkout@v7
+        with:
+          repository: uc-cdis/hatchery
+          ref: ${{ inputs.hatchery_ref || 'master' }}
+          path: .hatchery-src
+
+      - uses: actions/setup-go@v6
+        if: steps.static.outputs.configs != '0'
+        with:
+          go-version-file: .hatchery-src/go.mod
+          cache-dependency-path: .hatchery-src/go.sum
+
+      - name: Load configs with hatchery's own code
+        if: steps.static.outputs.configs != '0'
+        working-directory: .github/hatchery/loader
+        run: |
+          go mod tidy
+          go run . "$GITHUB_WORKSPACE/build/manifest.json" "$GITHUB_WORKSPACE/build/findings/loader.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hatchery-build
+          path: build/
+          if-no-files-found: ignore
+
+  jupyter-smoke-test:
+    name: 'Jupyter: ${{ matrix.label }}'
+    needs: validate
+    if: ${{ !cancelled() && needs.validate.outputs.has_containers == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      id-token: write # only used to log in to ECR when HATCHERY_ECR_ROLE_ARN is set
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix: ${{ fromJSON(needs.validate.outputs.matrix) }}
+    env:
+      ECR_ROLE: ${{ vars.HATCHERY_ECR_ROLE_ARN }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: .github/hatchery
+
+      - name: Free disk space for large workspace images
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL &
+          docker system prune -af >/dev/null
+          wait
+          df -h /
+
+      - name: Configure AWS credentials for private ECR images
+        if: matrix.private && env.ECR_ROLE != ''
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: ${{ env.ECR_ROLE }}
+          aws-region: us-east-1
+
+      - name: Log in to ECR
+        if: matrix.private && env.ECR_ROLE != ''
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Boot workspace and check flags and notebooks
+        env:
+          ENTRY: ${{ toJSON(matrix) }}
+          REQUIRE_PRIVATE_IMAGES: ${{ env.ECR_ROLE != '' }}
+        run: |
+          printf '%s' "$ENTRY" > "$RUNNER_TEMP/entry.json"
+          python3 .github/hatchery/smoke_test.py "$RUNNER_TEMP/entry.json" "smoke/${{ matrix.id }}.json"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hatchery-smoke-${{ matrix.id }}
+          path: smoke/
+          if-no-files-found: ignore
+
+  report:
+    name: Report
+    needs: [validate, jupyter-smoke-test]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          sparse-checkout: .github/hatchery
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: hatchery-build
+          path: build
+
+      - uses: actions/download-artifact@v4
+        if: needs.validate.outputs.has_containers == 'true'
+        with:
+          pattern: hatchery-smoke-*
+          path: build/smoke
+          merge-multiple: true
+
+      - name: Build report
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: python3 .github/hatchery/report.py build report.md
+
+      - name: Post or update the PR comment
+        if: github.event_name == 'pull_request'
+        # Fork PRs get a read-only token; the job summary still has the report.
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          CONFIGS: ${{ needs.validate.outputs.configs }}
+        run: |
+          existing=$(gh api "repos/$REPO/issues/$PR/comments" --paginate \
+            --jq '.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- hatchery-config-validation -->"))) | .id' \
+            | head -n1)
+          if [[ -n "$existing" ]]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$existing" -F body=@report.md >/dev/null
+            echo "Updated comment $existing"
+          elif [[ "$CONFIGS" != "0" && -n "$CONFIGS" ]]; then
+            gh api -X POST "repos/$REPO/issues/$PR/comments" -F body=@report.md >/dev/null
+            echo "Posted a new comment"
+          else
+            echo "No hatchery config changed; not commenting."
+          fi
