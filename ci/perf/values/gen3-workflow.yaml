@@ -22,6 +22,7 @@ gen3-workflow:
     TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/docker/library/alpine:latest"
       - "quay.io/biocontainers/ubuntu:24.04"
+      - "python:3.13-slim"
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
     ENABLE_S3_FILES: true
