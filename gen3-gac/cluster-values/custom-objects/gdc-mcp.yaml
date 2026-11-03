@@ -10,7 +10,7 @@ data:
         name: meta-models/Muse-Glimmer-30B
         alias: (On-Prem) Meta Muse Glimmer 30B
         env_prefix: MUSE_API
-      - provider: openai
+      - provider: bedrock_mantle
         name: openai.gpt-6-luna
         alias: (Bedrock) GPT-6 Luna
         env_prefix: BEDROCK_API
@@ -28,7 +28,7 @@ spec:
   template:
     metadata:
       annotations:
-        kubectl.kubernetes.io/restartedAt: "2026-11-03T16:38:00-06:00"
+        kubectl.kubernetes.io/restartedAt: "2026-11-03T17:16:00-06:00"
       labels:
         app: gdc-agent
     spec:
