@@ -13,16 +13,15 @@ name: Hatchery Config Validation
 #                       notebooks in the image
 #   report              combines the results into the PR comment
 #
-# GitHub path filters cannot look inside files, so this starts for any values
-# file change; validate stops after a few seconds when the hatchery section
-# itself did not change. See .github/hatchery/README.md.
+# Only hatchery config changes are checked. GitHub path filters cannot look
+# inside files, so this starts for any values file change; validate stops
+# after a few seconds when the hatchery section itself did not change, and
+# only containers the PR changed are booted. See .github/hatchery/README.md.
 
 on:
   pull_request:
     paths:
       - '**/values/*.yaml'
-      - '.github/hatchery/**'
-      - '.github/workflows/hatchery_config_validation.yaml'
   workflow_dispatch:
     inputs:
       hatchery_ref:
@@ -64,16 +63,12 @@ jobs:
       - name: Static checks
         id: static
         run: |
-          # Check (and boot) everything when run by hand or when the validator
-          # itself changes; otherwise only what this PR changed.
-          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
-            mode=(--all)
-          elif git diff --name-only "origin/${{ github.base_ref }}...HEAD" \
-              | grep -qE '^\.github/(hatchery/|workflows/hatchery_config_validation\.yaml)'; then
-            echo "The validator itself changed, so every hatchery config is checked."
-            mode=(--all)
-          else
+          # PRs: only the hatchery configs (and containers) this PR changed.
+          # A manual run checks everything; that only happens if someone asks.
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             mode=(--base "origin/${{ github.base_ref }}")
+          else
+            mode=(--all)
           fi
           python3 .github/hatchery/check_config.py "${mode[@]}" --out build
 

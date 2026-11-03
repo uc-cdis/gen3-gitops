@@ -10,8 +10,9 @@ workflow starts on any PR touching a `values/*.yaml` file. It then compares
 each file's hatchery section with the base branch and stops after a few
 seconds if none changed. Only workspace containers whose boot-relevant fields
 (image, command, args, env, uid/gid, probe, hooks, volume locations) changed
-are booted. Changing anything under `.github/hatchery/` re-checks everything;
-so does running the workflow by hand.
+are booted. Changes to the validator itself do not trigger it. Running the
+workflow by hand (Actions → Run workflow) checks every config; that is the
+only way to get a full run.
 
 **Where results show up.**
 
