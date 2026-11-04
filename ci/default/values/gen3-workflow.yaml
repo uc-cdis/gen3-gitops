@@ -13,6 +13,7 @@ gen3-workflow:
     ENABLE_JSON_LOGS: false
     TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
+      - "quay.io/cdis/alpine:3.24.3" # for test_happy_path_create_tes_task
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary

@@ -1287,10 +1287,10 @@ ssjdispatcher:
   replicaCount: 2
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/gen3_service/jcoinprod--default--ssj
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/jcoinprod--default--ssj
   jobServiceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: arn:aws:iam::258867494168:role/gen3_service/jcoinprod--default--ssj-job
+      eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/jcoinprod--default--ssj-job
   enabled: true
   externalSecrets:
     credsFile: jcoinprod-ssjdispatcher-creds
@@ -1299,11 +1299,11 @@ ssjdispatcher:
     tag: '2026.10'
   indexing: quay.io/cdis/indexs3client:2026.10
 wts:
-  enabled: false
+  enabled: true
   externalSecrets:
     createWtsOidcClientSecret: false
     wtsG3auto: jcoinprod-wts-g3auto
     wtsOidcClient: jcoinprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.04'
+    tag: '2026.10'

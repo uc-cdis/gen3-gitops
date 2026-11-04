@@ -41,7 +41,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: "v0.13.2.1"
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
@@ -66,13 +66,15 @@ fence:
     fenceJwtKeys: brhprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.08'
+    tag: '13.3.2'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--audit-sqs-sender
   usersync:
     usersync: true
     userYamlS3Path: s3://cdis-gen3-users/brh/user.yaml
+  FENCE_CONFIG_PUBLIC:
+    ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 fluentd:
   enabled: true
   image:

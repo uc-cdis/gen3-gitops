@@ -10,6 +10,12 @@ data:
         name: meta-models/Muse-Glimmer-30B
         alias: (On-Prem) Meta Muse Glimmer 30B
         env_prefix: MUSE_API
+      - provider: bedrock_mantle
+        name: openai.gpt-6-luna
+        alias: (Bedrock) GPT-6 Luna
+        env_prefix: BEDROCK_API
+        settings:
+          openai_reasoning_summary: auto
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,6 +29,8 @@ spec:
       app: gdc-agent
   template:
     metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-11-03T21:56:00-06:00"
       labels:
         app: gdc-agent
     spec:
@@ -94,7 +102,7 @@ spec:
       containers:
         - name: mcp
           image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp:agent
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: agent-api-keys
@@ -102,11 +110,7 @@ spec:
             - name: MCP_PORT
               value: "8001"
             - name: EMBED_API_URL
-              value: "$(SAPBERT_API_URL)"
-            - name: EMBED_API_KEY
-              value: "$(SAPBERT_API_KEY)"
-            - name: EMBED_MODEL
-              value: "sapbert"
+              value: http://conduit-server.default.svc.cluster.local:8080/sapbert/v1/
           args:
             - "-t"
             - "streamable-http"
