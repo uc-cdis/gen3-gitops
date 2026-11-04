@@ -1,5 +1,5 @@
 guppy:
-  replicaCount: 2
+  replicaCount: 4
   resources:
     requests:
       memory: 105Mi
