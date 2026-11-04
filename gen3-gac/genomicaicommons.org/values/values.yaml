@@ -100,7 +100,7 @@ fence:
     slack_send_dbgap: false
 
   FENCE_CONFIG_PUBLIC:
-    DPOP_ENABLED: true
+    DPOP_ENABLED: false
     ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
     # The number of seconds after a task access token is issued until it expires.
     # This max is applied even if the requesting user has access to request a
@@ -316,7 +316,7 @@ peregrine:
   replicaCount: 2
   enabled: true
   externalSecrets:
-    dbcreds: "gen3-gac-default-sheepdg-creds"
+    dbcreds: "gen3-gac-default-sheepdog-creds"
 
 pidgin:
   enabled: false
