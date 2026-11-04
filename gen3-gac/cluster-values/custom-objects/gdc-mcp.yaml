@@ -14,6 +14,8 @@ data:
         name: openai.gpt-6-luna
         alias: (Bedrock) GPT-6 Luna
         env_prefix: BEDROCK_API
+        settings:
+          openai_reasoning_summary: auto
 ---
 apiVersion: apps/v1
 kind: Deployment
