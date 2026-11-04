@@ -30,7 +30,7 @@ spec:
   template:
     metadata:
       annotations:
-        kubectl.kubernetes.io/restartedAt: "2026-11-03T21:56:00-06:00"
+        kubectl.kubernetes.io/restartedAt: "2026-11-04T21:56:00-06:00"
       labels:
         app: gdc-agent
     spec:
