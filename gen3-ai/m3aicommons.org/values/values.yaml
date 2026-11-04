@@ -273,7 +273,7 @@ peregrine:
   replicaCount: 2
   enabled: true
   externalSecrets:
-    dbcreds: "gen3-ai-default-sheepdg-creds"
+    dbcreds: "gen3-ai-default-sheepdog-creds"
 
 pidgin:
   enabled: false
