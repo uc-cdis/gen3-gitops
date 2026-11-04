@@ -23,6 +23,7 @@ gen3-workflow:
       - "public.ecr.aws/docker/library/alpine:latest"
       - "quay.io/biocontainers/ubuntu:24.04"
       - "python:3.13-slim"
+      - "pytorch/pytorch:latest"
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
     ENABLE_S3_FILES: true
