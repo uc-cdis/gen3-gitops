@@ -11,8 +11,8 @@ data:
         alias: (On-Prem) Meta Muse Glimmer 30B
         env_prefix: MUSE_API
       - provider: bedrock_mantle
-        name: openai.gpt-6-luna
-        alias: (Bedrock) GPT-6 Luna
+        name: openai.gpt-5.6-luna
+        alias: (Bedrock) GPT-5.6 Luna
         env_prefix: BEDROCK_API
 ---
 apiVersion: apps/v1
