@@ -381,6 +381,15 @@ fence:
       cds-746-phs005015-loc3car-sc:
         cred: fence_bot
         region: us-east-1
+      cds-748-phs004122-nctn-medullo-pnet:
+        cred: fence_bot
+        region: us-east-1
+      cds-750-phs004136-nctn-sr-medullo:
+        cred: fence_bot
+        region: us-east-1
+      cds-752-phs005046-ctdna-sarcoma:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
