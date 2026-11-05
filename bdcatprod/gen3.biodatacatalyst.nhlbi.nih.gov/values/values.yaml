@@ -832,7 +832,6 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
-
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -977,14 +976,13 @@ portal:
       pvcName: portal-pvc-bdcatprod-prod
       pvName: portal-pv-bdcatprod-prod
       createPV: true
-      #volumeHandle: ""
-      bucketName: "bdcatprod-portal-build-bucket"
+      bucketName: bdcatprod-portal-build-bucket
       mountOptions:
-      - allow-delete
-      - allow-other
-      - region us-east-1
-      - sse aws:kms
-      - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
+        - allow-delete
+        - allow-other
+        - region us-east-1
+        - sse aws:kms
+        - sse-kms-key-id arn:aws:kms:us-east-1:895962626746:key/5a27ba71-564b-49b0-afdb-60de1ae3e1fd
       size: 1Gi
       cache:
         emptyDirSizeLimit: 500Mi
@@ -1026,7 +1024,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '1.30.6'
   ingress:
     aws:
       group: bdcatprod
@@ -1059,7 +1057,7 @@ sower:
       container:
         cpu-limit: '1'
         annotations:
-          karpenter.sh/do-not-disrupt: "true"
+          karpenter.sh/do-not-disrupt: 'true'
         env:
           - name: DICTIONARY_URL
             valueFrom:
@@ -1184,7 +1182,6 @@ tube:
     tag: '2025.07'
 wts:
   enabled: false
-# AuroraRDSCopy Job configuration
 auroraRdsCopyJob:
   enabled: true
   auroraMasterSecret: aurora-creds

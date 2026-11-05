@@ -131,22 +131,6 @@ etl:
             props:
               - name: Gene
               - name: Mutation
-        joining_props:
-          - index: file
-            join_on: _case_id
-            props:
-              - name: object_id
-                src: object_id
-                fn: set
-              - name: data_format
-                src: data_format
-                fn: set
-              - name: data_type
-                src: data_type
-                fn: set
-              - name: data_category
-                src: data_category
-                fn: set
       - name: etl_mickey_file
         doc_type: file
         type: collector
@@ -204,7 +188,6 @@ fence:
     tag: "13.3.0"
   FENCE_CONFIG_PUBLIC:
     ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
-    ALLOW_NEW_USER_ON_LOGIN: false
 portal:
   enabled: false
 frontend-framework:
@@ -212,7 +195,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: "0.27.2"
+    tag: "0.28"
 global:
   pdb: true
   aws:
@@ -567,7 +550,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: "2025.12"
+    tag: '1.30.6'
   ingress:
     aws:
       group: vadcprod

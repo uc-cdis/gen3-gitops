@@ -8,7 +8,7 @@ storageclass:
   enabled: true
   name: gp3
   default: true
-  
+
 alb-controller:
   enabled: true
   configuration:
@@ -24,7 +24,7 @@ coreDNS:
 ebs-csi-driver:
   enabled: true
   configuration:
-    enabled: false    
+    enabled: false
 grafana-alloy:
   enabled: true
   configuration:
@@ -71,6 +71,13 @@ karpenter-crds:
         operator: Lt
         values:
           - "32500"
+  workflow:
+    nodeClassRef:
+      apiVersion: karpenter.k8s.aws/v1
+      kind: EC2NodeClass
+      name: workflow
+    amiFamily: AL2023
+    volumeSize: 200Gi
 vpc-cni:
   enabled: true
   configuration:
