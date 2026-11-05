@@ -51,8 +51,13 @@ env:
   # totals took minutes). SIEM_WARM_DAYS=1 caps the span; SIEM_WARM_MAX_ROWS is the per-table limit it must fit under (the copy uses what the day
   # takes, ~7 GB of the 100 Gi volume, twice while it swaps). The edges are ~18M a day: they fit about a day of it. If the logs show
   # "warm: ... holds only the last N hour(s)", raise the limit.
+  # The UI asks for 24 hours on every page, so the copy has to hold MORE than 24 hours: one of exactly a day starts
+  # after a 24-hour request does, and every such read fell to S3 ("window starts before the copy does"). The budget
+  # was 25M rows while a day is ~33M, so the ladder halved the span to 12 h and NO 24-hour read was ever served.
+  # 28 h is ~39M rows; without the properties blob a row is ~139 B, so the copy is ~5.4 GB of the 6 GB DuckDB pool.
+  SIEM_WARM_HOURS: "28"
   SIEM_WARM_DAYS: "1"
-  SIEM_WARM_MAX_ROWS: "25000000"
+  SIEM_WARM_MAX_ROWS: "48000000"
   SIEM_TENANTS: "ctds"
   # The portal gates its pages on the shared Arborist path /programs/vectis/projects/siem (see config/gen3/authz.json). With this set, the
   # same grant (and siem_pii, siem_writer, siem_admin) also gives the service access to ctds, so one resource path works for both.
