@@ -15,10 +15,16 @@ resources:
     memory: "12Gi"
 # One EBS volume per replica (a StatefulSet), kept across restarts and spot reclaims. 100 Gi holds about three days of web requests in the warm
 # cache at today's volume; the storage class is applied once by hand (see the rollout notes), so the chart does not create it.
+# iops/throughput are what a NEW volume is given. A StorageClass is immutable and the existing volumes keep what they were made with, so
+# changing these means re-applying the class (delete and create) and running `aws ec2 modify-volume` on the volumes already attached.
+# 500 MiB/s is sized for the burst an xlarge node can take (t3 tops out at ~348, m7i-flex at ~1250); their SUSTAINED EBS bandwidth is only
+# ~80 MiB/s, so a volume faster than this is not reachable until the pods run on a node with more EBS bandwidth.
 cache:
   persistent: true
   storageClass: siem-cache
   sizeGi: 100
+  iops: "6000"
+  throughput: "500"
 # Crossplane is not installed on this cluster, and its kinds make Argo reject the whole sync. The IAM role vectis-default-siem-service is
 # created outside Argo (with the cluster's other service roles) and the service account is annotated with it. To go back to Crossplane,
 # set enabled: true and remove the annotation (the chart then sets it from the Crossplane role).
@@ -35,6 +41,11 @@ env:
   # DuckDB threads for the shared reader: 2 per CPU. It was 4 per CPU (16 threads on a 2-vCPU node) so S3 scans could overlap their waits; the S3 scans
   # now run in their own single lane (SIEM_COLD_CONCURRENCY) and warm reads should not fight each other for CPUs.
   GRAPH_DUCKDB_THREADS: "2x"
+  # Buffer pool of the shared reader, where the warm copy lives: 50% of the 12Gi limit is 6 GB. It was 35% (4.2 GB) while a row carried the
+  # properties blob, so the copy (~8.7 GB) was twice the pool and every catch-up paged it back off the volume. Without the blob the copy is
+  # ~2.4 GB, and 6 GB also covers a full reload, which builds the replacement beside the live one (2 x 2.4 GB). The hot store keeps its own
+  # 20%, so the two DuckDBs together ask for 70% of the pod.
+  GRAPH_DUCKDB_MEMORY_LIMIT: "50%"
   # The warm copy holds the last 24 hours of events without the egress log (SIEM_WARM_EXCLUDE_LABELS, EgressRequest, the squid log). The row budget
   # worked out from the volume (~9M rows per table) held only ~12 h of what is left (~8.6M rows a day), so everything wider read S3 (the Overview
   # totals took minutes). SIEM_WARM_DAYS=1 caps the span; SIEM_WARM_MAX_ROWS is the per-table limit it must fit under (the copy uses what the day
