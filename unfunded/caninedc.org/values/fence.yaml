@@ -3,7 +3,7 @@ fence:
     requests:
       memory: 105Mi
   enabled: true
-  replicaCount: 4
+  replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
     tag: '2026.10'
