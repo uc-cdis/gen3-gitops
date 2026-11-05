@@ -262,9 +262,9 @@ guppy:
 hatchery:
   enabled: true
   hotNode:
-    enabled: false
+    enabled: true
     gpu: false
-    jupyter: false
+    jupyter: true
     availabilityZones:
       - us-east-1c
     workspaceCapacityReservation:
@@ -331,7 +331,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "Genomics (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-3.5.0",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-3.5.1",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
@@ -417,7 +417,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "4Gi",
             "name": "Standard (2CPU/4GB RAM, CPU only)",
-            "image": "quay.io/cdis/jupyterlab-generic:3.5.0",
+            "image": "quay.io/cdis/jupyterlab-generic:3.5.1",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
@@ -458,7 +458,7 @@ hatchery:
             "gpu": true,
             "memory-limit": "8Gi",
             "name": "AI/ML (2CPU/8GB RAM, GPU)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-3.5.0",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-3.5.1",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
@@ -499,7 +499,7 @@ hatchery:
             "gpu": false,
             "memory-limit": "16Gi",
             "name": "RCC pilot (4CPU/16GB RAM, CPU only)",
-            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-3.5.0",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-3.5.1",
             "pull_policy": "Always",
             "env": {
               "FRAME_ANCESTORS": "https://vpodc.data-commons.org",
