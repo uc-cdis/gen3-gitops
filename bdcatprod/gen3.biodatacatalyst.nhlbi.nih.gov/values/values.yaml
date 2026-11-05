@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '13.3.2'
+    tag: '15.1.1'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
