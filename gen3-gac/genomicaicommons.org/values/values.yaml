@@ -173,7 +173,7 @@ gen3-workflow:
       memory: 850Mi
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
   externalSecrets:
     gen3workflowG3auto: gen3-gac-default-gen3workflow-g3auto
   GEN3_WORKFLOW_CONFIG:
