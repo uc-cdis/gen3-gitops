@@ -68,6 +68,15 @@ config:
     maxReceiveCount: 5
     maxRunSeconds: 240
 
+  # Hourly reconciliation (recon CronJob below): S3 objects created vs SQS sent vs lake vs ActiveMQ enqueued, one past hour.
+  # Broker names as CloudWatch shows them for gen3-mq (ACTIVE_STANDBY_MULTI_AZ: one per instance).
+  recon:
+    mqCloudwatchBrokers: ["gen3-mq-1", "gen3-mq-2"]
+    lagHours: 1
+    # Report only for now; set true to re-queue objects missing from the lake automatically (needs apply: true).
+    requeueMissing: false
+    maxRequeue: 10000
+
   # Production broker gen3-mq (ACTIVE_STANDBY_MULTI_AZ, broker id b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5): one endpoint per node.
   # From the prod-vectis CDK config (existing_mq_stomp_endpoints, existing_mq_secret_arn).
   mq:
@@ -88,6 +97,11 @@ config:
       display_name: "gen3-eventstorage STIX feeds"
       existing_bucket_name: gen3-eventstorage
       prefix: "raw/stix/"
+
+# Hourly recon CronJob (s3-monitor-activemq-recon). A failed Job = a count mismatch; the report is in <lake>/vectis/recon/.
+recon:
+  enabled: true
+  schedule: "15 * * * *"
 
 resources:
   requests:
