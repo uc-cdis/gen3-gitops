@@ -105,6 +105,11 @@ global:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.27.98.0/24
+      - 172.27.99.0/24
   fenceURL: https://brh.data-commons.org/user
   tierAccessLevel: regular
   tierAccessLimit: 50
