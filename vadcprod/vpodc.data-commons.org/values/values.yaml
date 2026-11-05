@@ -229,6 +229,8 @@ global:
   portalApp: gitops
   postgres:
     dbCreate: false
+    # Aurora master creds, used by per-service db-create jobs (e.g. requestor)
+    externalSecret: aurora-dbcreds
   revproxyArn: arn:aws:acm:us-east-1:663707118480:certificate/69ecb9e8-bcc8-4e91-9248-5eb3fcab5940
 guppy:
   authFilterField: auth_resource_path
@@ -604,6 +606,24 @@ peregrine:
     tag: "2026.09"
 mutatingWebhook:
   enabled: false
+requestor:
+  enabled: true
+  image:
+    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
+    tag: "2026.10"
+  postgres:
+    # One-time bootstrap: creates the DB/user and pushes creds to Secrets Manager.
+    # Set dbCreate and pushSecret back to false once vadcprod-requestor-creds exists.
+    dbCreate: true
+  externalSecrets:
+    pushSecret: true
+    dbcreds: vadcprod-requestor-creds
+    # Requestor runs on its built-in default config; the chart still mounts a
+    # requestor-g3auto volume, so create it locally instead of via Secrets Manager.
+    createK8sRequestorSecret: true
+  requestorConfig:
+    enabled: true
+    configYaml: ""
 revproxy:
   replicaCount: 4
   autoscaling:
