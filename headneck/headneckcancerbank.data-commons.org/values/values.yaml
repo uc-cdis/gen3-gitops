@@ -29,11 +29,11 @@ global:
   tierAccessLevel: "private"
   tierAccessLimit: 100
   fenceURL: https://headneckcancerbank.data-commons.org/user
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
-  #     - 172.24.192.128/25
-  #     - 172.24.192.0/25
+  netPolicy:
+    enabled: true
+    dbSubnet:
+      - 172.24.192.128/25
+      - 172.24.192.0/25
   dispatcherJobNum: "10"
   frontendRoot: "gen3ff"
   ddEnabled: false
