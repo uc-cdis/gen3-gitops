@@ -44,10 +44,12 @@ env:
   SIEM_COLD_QUEUE_SECONDS: "20"
   # set to the day after the ETL image that writes WAF labels etc. as columns first runs; until then those reads use S3
   # SIEM_LISTS_TYPED_FROM: "YYYY-MM-DD"
-  # The UI asks for 24 h, so the copy holds 28 h (~39M non-egress rows, ~5.4 GB); the row cap must stay above that
-  SIEM_WARM_HOURS: "28"
+  # The UI asks for 24 h: the copy holds 26 h (~46M rows, ~4.3 GB at 92 B/row); the row cap must stay above that
+  SIEM_WARM_HOURS: "26"
   SIEM_WARM_DAYS: "1"
-  SIEM_WARM_MAX_ROWS: "48000000"
+  SIEM_WARM_MAX_ROWS: "64000000"
+  # message is the raw log line (half of a WAF row, repeated in typed columns); reads that name it go to S3
+  SIEM_WARM_EXCLUDE_COLUMNS: "properties,search_text,message"
   SIEM_TENANTS: "ctds"
   # The portal gates its pages on the shared Arborist path /programs/vectis/projects/siem (see config/gen3/authz.json). With this set, the
   # same grant (and siem_pii, siem_writer, siem_admin) also gives the service access to ctds, so one resource path works for both.
