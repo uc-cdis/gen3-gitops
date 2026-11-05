@@ -1,0 +1,27 @@
+# The job catalog service (the Jobs page reads its catalog through it). Its chart is ours and lives in this repo (vectis/charts/jobs-catalog).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vectis-jobs-catalog
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: vectis/charts/jobs-catalog
+      repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      helm:
+        releaseName: jobs-catalog
+        valueFiles:
+          - $values/vectis/vectis.data-commons.org/values/jobs-catalog-values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true

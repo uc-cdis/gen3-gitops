@@ -1,0 +1,115 @@
+{{- if not .Values.allowedSubjects }}{{ fail "allowedSubjects must name at least one service account" }}{{ end }}
+{{- $subjects := .Values.allowedSubjects }}
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jobs-catalog
+  namespace: {{ .Release.Namespace }}
+  {{- with .Values.serviceAccount.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+---
+# The service checks callers with TokenReview, which needs the system:auth-delegator role.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jobs-catalog-tokenreview-{{ .Release.Namespace }}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: system:auth-delegator}
+subjects: [{kind: ServiceAccount, name: jobs-catalog, namespace: {{ .Release.Namespace }}}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobs-catalog
+  namespace: {{ .Release.Namespace }}
+  labels: {app: jobs-catalog}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {app: jobs-catalog}
+  template:
+    metadata:
+      labels: {app: jobs-catalog}
+    spec:
+      serviceAccountName: jobs-catalog
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: jobs-catalog
+          image: "{{ .Values.image.repository }}:{{ required "image.tag must be set" .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: ["ALL"]}
+          ports: [{name: http, containerPort: 8080}]
+          env:
+            - {name: CATALOG_ALLOWED_SUBJECTS, value: {{ join "," $subjects | quote }}}
+            {{- if .Values.catalog.s3.bucket }}
+            - {name: CATALOG_S3_BUCKET, value: {{ .Values.catalog.s3.bucket | quote }}}
+            - {name: CATALOG_S3_PREFIX, value: {{ .Values.catalog.s3.prefix | quote }}}
+            {{- if .Values.catalog.s3.resultsPrefix }}
+            - {name: CATALOG_S3_RESULTS_PREFIX, value: {{ .Values.catalog.s3.resultsPrefix | quote }}}
+            {{- end }}
+            {{- if .Values.catalog.s3.runsPrefix }}
+            - {name: CATALOG_S3_RUNS_PREFIX, value: {{ .Values.catalog.s3.runsPrefix | quote }}}
+            {{- end }}
+            # IRSA only: no instance-metadata probing, FIPS endpoints, regional STS
+            - {name: AWS_REGION, value: "us-east-1"}
+            - {name: AWS_USE_FIPS_ENDPOINT, value: "true"}
+            - {name: AWS_EC2_METADATA_DISABLED, value: "true"}
+            - {name: AWS_STS_REGIONAL_ENDPOINTS, value: "regional"}
+            {{- else }}
+            - {name: CATALOG_REPO, value: {{ required "catalog.repo (or catalog.s3.bucket) must be set" .Values.catalog.repo | quote }}}
+            - {name: CATALOG_PATH, value: {{ .Values.catalog.path | quote }}}
+            - {name: CATALOG_REF, value: {{ .Values.catalog.ref | quote }}}
+            - name: CATALOG_GITHUB_TOKEN
+              valueFrom:
+                secretKeyRef: {name: {{ .Values.catalog.tokenSecret }}, key: token, optional: true}
+            {{- end }}
+          readinessProbe: {httpGet: {path: /healthz, port: http}, periodSeconds: 10}
+          livenessProbe: {httpGet: {path: /healthz, port: http}, initialDelaySeconds: 5, periodSeconds: 20}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobs-catalog
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector: {app: jobs-catalog}
+  ports: [{name: http, port: 8080, targetPort: http}]
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: jobs-catalog
+  namespace: {{ .Release.Namespace }}
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels: {app: jobs-catalog}
+---
+# Only the portal can connect.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: jobs-catalog-from-portal
+  namespace: {{ .Release.Namespace }}
+spec:
+  podSelector:
+    matchLabels: {app: jobs-catalog}
+  policyTypes: ["Ingress"]
+  ingress:
+    - from:
+        {{- range .Values.allowedPodLabels }}
+        - podSelector:
+            matchLabels:
+              {{- toYaml . | nindent 14 }}
+        {{- end }}
+      ports: [{port: 8080, protocol: TCP}]

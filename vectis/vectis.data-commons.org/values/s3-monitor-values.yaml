@@ -1,0 +1,98 @@
+# Values for the s3-monitor chart (gen3-helm helm/s3-monitor, branch feat-s3monitor_sqs), deployed by templates/s3-monitor.yaml.
+# Same settings as qa-vectis (gen3-gitops-dev, AIS-106), with the production cluster, namespace and account. The chart is deployed on its own
+# here, not as a gen3 subchart, so the keys are top level (no "s3-monitor:" wrapper) and the globals it reads are set below.
+global:
+  # Prefix of the AWS names the chart derives: <environment>-<namespace>-... => vectis-default-...
+  environment: "vectis"
+  crossplane:
+    # Crossplane is not installed on this cluster (see cluster-values and siem-service-values.yaml), so the chart creates no IAM resources.
+    # accountId is still required: the chart validates it and writes it into the job's config.
+    enabled: false
+    accountId: "172585802910"
+    oidcProviderUrl: "oidc.eks.us-east-1.amazonaws.com/id/9649CF76244A05C43B4ECA7C01E29706"
+    providerConfigName: provider-aws
+
+enabled: true
+
+# Each run drains the SQS queue of S3 notifications (up to config.sqs.maxRunSeconds) and exits.
+schedule: "*/5 * * * *"
+concurrencyPolicy: Forbid
+
+# The IAM role vectis-default-s3-monitor-activemq-sa (CDK stack VectisS3MonitorIrsa) and the SQS queue + DLQ, the bucket notification
+# and the role's SQS/source policy (CDK stack VectisS3MonitorEvents) are created outside Argo, like vectis-default-siem-service.
+# Its name matches what the chart writes into the job config (<environment>-<namespace>-<serviceAccount.name>).
+# Trust: this cluster's OIDC provider, subject system:serviceaccount:default:s3-monitor-activemq-sa.
+# Permissions: lake read/write under vectis/ (+ KMS), the MQ secret, the SQS queue (consume + send for backfill),
+# list/read on gen3-eventstorage/raw/stix/.
+serviceAccount:
+  create: true
+  name: s3-monitor-activemq-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-s3-monitor-activemq-sa
+
+# Single image with all the Python and shell code, built by uc-cdis/s3-monitor's workflow on every push to the feature/sqs-consumer branch.
+image:
+  repository: quay.io/cdis/s3-monitor
+  tag: feature_sqs-consumer
+  # Pin the build you validated (sha256 from the workflow run or `crane digest`), then set pullPolicy: IfNotPresent.
+  digest: ""
+  # The tag is mutable, so always pull to pick up new pushes until the digest is pinned.
+  pullPolicy: Always
+
+aws:
+  region: "us-east-1"
+
+# The EKS cluster of this environment (cluster-values: cluster: vectis).
+eksClusterName: vectis
+
+config:
+  # Dry run first: peeks one batch from the queue without consuming it, classifies it against the lake and reads the MQ secret;
+  # nothing is published, written or deleted. Flip to true once the logs look right.
+  apply: false
+  useFipsAwsEndpoints: true
+  assumeRoleArn: ""
+
+  # The lake lives in the ctds bucket under vectis/, encrypted with that bucket's key. No notification is configured on that bucket,
+  # so lake writes never come back as events (s3-monitor also rejects a tenant prefix that includes the lake).
+  lake:
+    bucket: "vectis-ctds-172585802910-us-east-1"
+    prefix: "vectis"
+    kmsKeyArn: "arn:aws:kms:us-east-1:172585802910:key/54ce879e-492e-448b-9f5a-222b13189a03"
+
+  # Queue of gen3-eventstorage's ObjectCreated notifications under raw/stix/ (CDK stack VectisS3MonitorEvents, output QueueUrl).
+  # maxReceiveCount = the queue's redrive maxReceiveCount (CDK MAX_RECEIVE_COUNT).
+  sqs:
+    queueUrl: "https://sqs.us-east-1.amazonaws.com/172585802910/vectis-default-s3-monitor-events"
+    waitTimeSeconds: 10
+    batchSize: 10
+    maxReceiveCount: 5
+    maxRunSeconds: 240
+
+  # Production broker gen3-mq (ACTIVE_STANDBY_MULTI_AZ, broker id b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5): one endpoint per node.
+  # From the prod-vectis CDK config (existing_mq_stomp_endpoints, existing_mq_secret_arn).
+  mq:
+    stompEndpoints:
+      - "stomp+ssl://b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5-1.mq.us-east-1.amazonaws.com:61614"
+      - "stomp+ssl://b-b18e0e81-354e-4da2-aef9-74b03fa0a8d5-2.mq.us-east-1.amazonaws.com:61614"
+    secretArn: "arn:aws:secretsmanager:us-east-1:172585802910:secret:MqAdminSecret32A8A6D8-3WQ5f9y8bVw6-KEuEfo"
+    # Empty = the secret uses the AWS managed key. Set it only if the secret is encrypted with a customer managed key.
+    secretKmsKeyArn: ""
+    destinationPrefix: "/queue/s3monitor.ingest"
+    resolveIpv4: false
+
+  # Each tenant needs an id and an existing_bucket_name (optional: prefix, suffix, kms_key_arn). prefix/suffix must match the
+  # bucket notification's filter (CDK stack VectisS3MonitorEvents, SOURCES). The tenant queues are <destinationPrefix>.<id> and
+  # <destinationPrefix>.<id>.failures. gen3-eventstorage is SSE-S3 (AES256), so no kms_key_arn.
+  tenants:
+    - id: eventstorage
+      display_name: "gen3-eventstorage STIX feeds"
+      existing_bucket_name: gen3-eventstorage
+      prefix: "raw/stix/"
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "1"
+    memory: "1Gi"

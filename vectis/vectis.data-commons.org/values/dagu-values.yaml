@@ -1,0 +1,38 @@
+# Values for the upstream Dagu chart (charts/dagu in github.com/dagucloud/dagu, tag v2.19.1). The default standalone mode
+# deploys one dagu-ui Deployment and Service (port 8080) with a PVC.
+#
+# The image is Dagu 2.19.1 (the version the Jobs runner was tested with) plus a small gate in front of its API (dagu-gate in the
+# siem-app repo, jobs/). The gate checks the caller's Kubernetes service-account token, lets through only the calls the Jobs runner makes,
+# and adds Dagu's own credential, and makes the opaque label that marks which user owns a run (from GATE_OWNER_KEY), so both secrets exist
+# only in this pod and the portal holds none. Dagu itself listens on 127.0.0.1 inside the container.
+image:
+  repository: quay.io/cdis/gen3-vectis
+  tag: "dagu-gate-v3"
+  pullPolicy: IfNotPresent
+
+# Dagu's own basic-auth account, from the dagu-basic Secret (manifests/dagu-externalsecrets.yaml). Only this pod reads it.
+auth:
+  mode: basic
+  basic:
+    existingSecret: dagu-basic
+    usernameKey: username
+    passwordKey: password
+
+ingress:
+  enabled: false
+
+persistence:
+  enabled: true
+  retain: true
+  size: 10Gi
+
+extraEnv:
+  - name: DAGU_TERMINAL_ENABLED
+    value: "false"
+  # the only caller the gate lets through: the portal's service account (system:serviceaccount:<namespace>:<name>)
+  - name: GATE_ALLOWED_SUBJECTS
+    value: "system:serviceaccount:default:portal"
+  # the key behind the ownership labels, generated in-cluster (manifests/dagu-externalsecrets.yaml)
+  - name: GATE_OWNER_KEY
+    valueFrom:
+      secretKeyRef: {name: dagu-owner-key, key: key}
