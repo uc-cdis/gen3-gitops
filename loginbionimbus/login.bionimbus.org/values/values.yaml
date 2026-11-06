@@ -1,3 +1,9 @@
 revproxy:
   image:
     tag: '1.30.6'
+global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.26.50.0/24
+      - 172.26.51.0/24
