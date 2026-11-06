@@ -163,6 +163,11 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.160.0/25
+      - 172.25.160.128/25
   pdb: true
   aws:
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
