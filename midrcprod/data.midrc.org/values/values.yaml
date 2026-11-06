@@ -543,6 +543,11 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.34.0/24
+      - 172.25.35.0/24
   pdb: true
   awshelper_container_image: quay.io/cdis/awshelper:master
   aws:
