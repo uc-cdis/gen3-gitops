@@ -31,7 +31,7 @@ global:
   fenceURL: https://headneckcancerbank.data-commons.org/user
   netPolicy:
     enabled: true
-    dbSubnet:
+    dbSubnets:
       - 172.24.192.128/25
       - 172.24.192.0/25
   dispatcherJobNum: "10"
