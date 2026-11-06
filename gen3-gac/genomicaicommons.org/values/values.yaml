@@ -101,7 +101,7 @@ fence:
     slack_send_dbgap: false
 
   FENCE_CONFIG_PUBLIC:
-    DPOP_ENABLED: false
+    DPOP_ENABLED: true
     ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
     # The number of seconds after a task access token is issued until it expires.
     # This max is applied even if the requesting user has access to request a
