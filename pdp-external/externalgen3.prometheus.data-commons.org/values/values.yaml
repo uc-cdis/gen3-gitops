@@ -1,4 +1,9 @@
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.27.162.0/24
+      - 172.27.163.0/24
   pdb: true
   aws:
     enabled: true
