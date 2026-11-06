@@ -298,7 +298,7 @@ global:
       enabled: true
       dbSubnets:
         - 172.25.194.0/24
-        - 172.25.194.0/24
+        - 172.25.195.0/24
   tierAccessLevel: regular
   tierAccessLimit: 50
   fenceURL: https://staging.gen3.biodatacatalyst.nhlbi.nih.gov/user
