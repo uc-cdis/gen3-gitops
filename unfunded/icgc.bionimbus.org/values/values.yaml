@@ -138,6 +138,11 @@ fence:
 fluentd:
   enabled: false
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.160.0/25
+      - 172.25.160.128/25
   aws:
     account: '662843554732'
     awsEsProxyRoleArn: arn:aws:iam::662843554732:role/gen3-service/unfunded-esproxy-sa
