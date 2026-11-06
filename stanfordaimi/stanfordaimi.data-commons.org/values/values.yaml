@@ -12,7 +12,7 @@ global:
     deploy: true
   postgres:
     dbCreate: false
-    externalSecret: "stanfordaimi_aurora-master-password"
+    externalSecret: "stanfordaimi-aurora-master-password"
   environment: "stanfordaimi"
   hostname: "stanfordaimi.data-commons.org"
   revproxyArn: "arn:aws:acm:us-east-1:084375550014:certificate/d8ab66fd-7e9c-47eb-ae4a-ecf239ce66e5"
@@ -22,9 +22,11 @@ global:
   tierAccessLevel: "private"
   tierAccessLimit: 100
   fenceURL: https://stanfordaimi.data-commons.org/user
-  # netPolicy:
-  #   enabled: true
-  #   dbSubnet:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.26.2.0/24
+      - 172.26.3.0/24
   dispatcherJobNum: "10"
   frontendRoot: "gen3ff"
   ddEnabled: false
