@@ -132,6 +132,7 @@ funnel:
   externalSecrets:
     dbcreds: gen3-gac-default-funnel-creds
     funnelOidcClient: gen3-gac-default-funnel-oidc-client
+    pushSecret: true
   Kubernetes:
     JobsNamespace: workflow-pods-gen3-gac-default
     Storage:
