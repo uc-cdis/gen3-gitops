@@ -198,6 +198,11 @@ frontend-framework:
     repository: quay.io/cdis/vpodc-data-commons
     tag: "0.31"
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.50.0/24
+      - 172.25.51.0/24
   pdb: true
   aws:
     account: "663707118480"
