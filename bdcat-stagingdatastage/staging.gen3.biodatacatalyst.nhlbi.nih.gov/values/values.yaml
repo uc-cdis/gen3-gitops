@@ -298,7 +298,7 @@ global:
       enabled: true
       dbSubnets:
         - 172.25.194.0/24
-        - 172.25.194.0/24
+        - 172.25.195.0/24
   tierAccessLevel: regular
   tierAccessLimit: 50
   fenceURL: https://staging.gen3.biodatacatalyst.nhlbi.nih.gov/user
@@ -587,7 +587,7 @@ portal:
       cache:
         emptyDirSizeLimit: 500Mi
     images:
-      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:feature_data_library
+      builder: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal:chore_rebase-data-library
       kubectl: bitnami/kubectl:latest
       alpine: alpine:3.20
     job:
