@@ -413,13 +413,6 @@ hatchery:
           }
         ]
       }
-  workspaceLaunchTest:
-    enabled: true
-    schedule: 0 */4 * * *
-    workspaceImages: (Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example
-      Analysis Jupyter Lab Notebooks
-    operatorName: planxdemo@gmail.com
-    hostname: https://brh.data-commons.org
 indexd:
   replicaCount: 4
   autoscaling:
