@@ -20,6 +20,7 @@ global:
     externalSecret: "gen3-gac-aurora-master-password"
   environment: "gen3-gac"
   clusterName: gen3-gac
+  createDpopSecret: true
   hostname: "genomicaicommons.org"
   revproxyArn: "arn:aws:acm:us-east-1:467765330347:certificate/bf2b6741-9d9d-4a58-9d7c-2c4118d4698c"
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
@@ -173,7 +174,7 @@ gen3-workflow:
       memory: 850Mi
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::172585802910:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
   externalSecrets:
     gen3workflowG3auto: gen3-gac-default-gen3workflow-g3auto
   GEN3_WORKFLOW_CONFIG:
