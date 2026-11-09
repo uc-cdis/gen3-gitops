@@ -16,6 +16,8 @@ data:
     cert-manager
     ci-perf
     ci-perf-embedding
+    ci-perf-tes
+    workflow-pods-ci-perf-tes
     cortex-xdr
     crossplane-system
     csoc
