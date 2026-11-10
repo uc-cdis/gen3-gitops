@@ -381,6 +381,15 @@ fence:
       cds-746-phs005015-loc3car-sc:
         cred: fence_bot
         region: us-east-1
+      cds-748-phs004122-nctn-medullo-pnet:
+        cred: fence_bot
+        region: us-east-1
+      cds-750-phs004136-nctn-sr-medullo:
+        cred: fence_bot
+        region: us-east-1
+      cds-752-phs005046-ctdna-sarcoma:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
@@ -1062,6 +1071,11 @@ global:
     indexd_single_table: 'true'
     kube_bucket: kube-dcfprod-gen3
     logs_bucket: logs-dcfprod-gen3
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.24.242.0/24
+      - 172.24.243.0/24
   fenceURL: https://nci-crdc.datacommons.io/user
   portalApp: gitops
   postgres:

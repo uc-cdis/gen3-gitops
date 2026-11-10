@@ -105,6 +105,11 @@ global:
     ecr-access-job-role-arn: arn:aws:iam::654654631253:role/EcrRepoPolicyUpdateRole
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.27.98.0/24
+      - 172.27.99.0/24
   fenceURL: https://brh.data-commons.org/user
   tierAccessLevel: regular
   tierAccessLimit: 50
@@ -115,6 +120,7 @@ global:
   revproxyArn: arn:aws:acm:us-east-1:885078588865:certificate/11bc3b8f-b481-4f01-a9b1-760a674dbdc1
 hatchery:
   enabled: true
+  jupyterNamespace: jupyter-pods
   hotNode:
     enabled: true
     availabilityZones:
@@ -407,13 +413,6 @@ hatchery:
           }
         ]
       }
-  workspaceLaunchTest:
-    enabled: true
-    schedule: 0 */4 * * *
-    workspaceImages: (Generic) Jupyter Lab Notebook with R Kernel+(Tutorials) Example
-      Analysis Jupyter Lab Notebooks
-    operatorName: planxdemo@gmail.com
-    hostname: https://brh.data-commons.org
 indexd:
   replicaCount: 4
   autoscaling:
@@ -641,7 +640,7 @@ workspace-proxy:
       memory: "256Mi"
 
   networkPolicy:
-    enabled: false
+    enabled: true
 
 jeg:
   enabled: true
