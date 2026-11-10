@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qag-agent-model-config
+  namespace: default
+data:
+  model-config.yaml: |
+    backends:
+      - provider: openai
+        name: openai/gpt-oss-120b
+        alias: (On-Prem) GPT OSS 120B
+        env_prefix: LOCAL_API
+      - provider: openai
+        name: openai.gpt-oss-120b
+        alias: (Bedrock) GPT OSS 120B
+        env_prefix: BEDROCK_API
+      - provider: openai
+        name: Qwen/Qwen3.6-27B-FP8
+        alias: (On-Prem) Qwen3.6 27b
+        env_prefix: QWEN_API
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qag-agent
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qag-agent
+  template:
+    metadata:
+      labels:
+        app: qag-agent
+    spec:
+      containers:
+        - name: agent
+          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-agent:chore_subagent
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: agent-api-keys
+          env:
+            - name: AGENT_PORT
+              value: "8000"
+            - name: MCP_PORT
+              value: "8001"
+            - name: COMMONS_URL
+              value: "genomicaicommons.org"
+          args:
+            - "--port"
+            - "$(AGENT_PORT)"
+            - "--mcp-url"
+            - "http://qag-mcp:$(MCP_PORT)/mcp"
+            - "--model-config"
+            - "model-config.yaml"
+            - "--retries"
+            - "3"
+          ports:
+            - name: http
+              containerPort: 8000
+          volumeMounts:
+            - name: model-config
+              mountPath: /agent/src/model-config.yaml
+              subPath: model-config.yaml
+              readOnly: true
+      volumes:
+        - name: model-config
+          configMap:
+            name: qag-agent-model-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qag-agent
+  namespace: default
+spec:
+  type: NodePort
+  selector:
+    app: qag-agent
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qag-mcp
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qag-mcp
+  template:
+    metadata:
+      labels:
+        app: qag-mcp
+    spec:
+      containers:
+        - name: mcp
+          image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/qag-agent-demo-mcp:chore_subagent
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: MCP_PORT
+              value: "8001"
+          args:
+            - "-t"
+            - "streamable-http"
+            - "-p"
+            - "$(MCP_PORT)"
+          ports:
+            - name: http
+              containerPort: 8001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qag-mcp
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: qag-mcp
+  ports:
+    - name: http
+      port: 8001
+      targetPort: http
