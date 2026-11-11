@@ -27,7 +27,7 @@ indexd:
   image:
     repository: quay.io/cdis/indexd
     pullPolicy: Always
-    tag: "2026.10"     
+    tag: "2026.10"
   env:
     - name: "ARBORIST"
       value: "true"
@@ -39,7 +39,7 @@ indexd:
           key: dist
           name: manifest-indexd
           optional: true
-    
+
 metadata:
   enabled: true
   replicaCount: 2
@@ -134,7 +134,7 @@ portal:
           }
       }
 
-    
+
 revproxy:
   enabled: true
   replicaCount: 4
