@@ -430,6 +430,9 @@ fence:
     userYamlS3Path: s3://cdis-gen3-users/midrcvalidate/user.yaml
   FENCE_CONFIG_PUBLIC:
     LOGIN_OPTIONS:
+      - name: 'CILogon'
+        idp: cilogon
+        email_field: "email"
       - fence_idp: shibboleth
         idp: fence
         name: InCommon Login
