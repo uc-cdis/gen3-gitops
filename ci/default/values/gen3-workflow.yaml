@@ -10,8 +10,10 @@ gen3-workflow:
       eks.amazonaws.com/role-arn: arn:aws:iam::707767160287:role/ci-gen3-workflow
   GEN3_WORKFLOW_CONFIG:
     APP_DEBUG: true
+    ENABLE_JSON_LOGS: false
     TASK_IMAGE_WHITELIST:
       - "public.ecr.aws/docker/library/alpine:latest" # for test_happy_path_create_tes_task
+      - "quay.io/cdis/alpine:3.24.3" # for test_happy_path_create_tes_task
       - "quay.io/cdis/gen3-workflow:integration_tests_dicom_image" # for test_nextflow_workflow
       - "quay.io/curl/curl:latest" # for test_access_internal_endpoints
       - "quay.io/biocontainers/ubuntu:24.04" # for test_nf_canary
@@ -19,3 +21,5 @@ gen3-workflow:
       - "python:3.13-slim" # for test_dpop_task_token_within_tes_task
     DPOP_REQUIRED: true
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
+    ENABLE_S3_FILES: true
+    EKS_SECURITY_GROUP_NAMES: ["devplanetv2_EKS_workers_sg", "devplanetv2_EKS_nodepool_jupyter_sg"]

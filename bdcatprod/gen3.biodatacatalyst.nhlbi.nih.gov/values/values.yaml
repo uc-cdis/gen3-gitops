@@ -2,7 +2,7 @@ access-backend:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
-    tag: '2026.07'
+    tag: '2026.10'
   externalSecrets:
     accessBackendG3auto: bdcatprod-access-backend-g3auto
     accessBackendKv: bdcatprod-access-backend-kv
@@ -22,14 +22,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.07'
+    tag: '2026.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: bdcatprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.07'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::895962626746:role/bdcatprod--bdcatprod-helm--audit-sqs-receiver
@@ -40,7 +40,7 @@ awshelper:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/awshelper
-    tag: '2026.07'
+    tag: '2026.10'
 etl:
   resources:
     tube:
@@ -248,9 +248,9 @@ etl:
         type: collector
   image:
     tube:
-      tag: '2026.07'
+      tag: '2026.10'
     spark:
-      tag: '2026.07'
+      tag: '2026.10'
 fence:
   resources:
     requests:
@@ -285,7 +285,7 @@ fence:
     fenceSshKeys: bdcatprod-fence-ssh-keys
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2026.07'
+    tag: '15.1.1'
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
   FENCE_CONFIG_PUBLIC:
@@ -294,6 +294,9 @@ fence:
     S3_BUCKETS:
       bdcatprod-data-bucket:
         cred: bdcatprod_fence-bot
+        region: us-east-1
+      bdc-indexing-manifests:
+        cred: fence-bot
         region: us-east-1
       bdcatpreprod-data-bucket:
         cred: bdcatprod_fence-bot
@@ -832,6 +835,49 @@ fence:
         cred: fence-bot
         role-arn: arn:aws:iam::600168050588:role/developer_bucket_access_topmed
         region: us-east-1
+    GS_BUCKETS:
+      # Prefix wildcards (indexd: exact match first, then "<prefix>.*" startswith).
+      # Prefixes must not overlap; put region exceptions in exact entries below.
+      idc-tcia-.*:
+        region: us-east4
+      nih-nhlbi-.*:
+        region: us-east1
+      test-nih-nhlbi-bdc-recover-.*:
+        region: us-east1
+      # Exceptions to nih-nhlbi-.* (us-east4)
+      nih-nhlbi-biodata-catalyst-1000-genomes:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002348-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-biolincc-phs002362-c1:
+        region: us-east4
+      nih-nhlbi-biodata-catalyst-tutorial-genome-data:
+        region: us-east4
+      nih-nhlbi-covid19-phs002299-c1:
+        region: us-east4
+      nih-nhlbi-topmed-combined-exchange-area:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001542-c2:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001601-c1:
+        region: us-east4
+      nih-nhlbi-topmed-released-phs001661-c1:
+        region: us-east4
+      # Buckets not covered by a prefix
+      biolincc-training-datasets-open-access:
+        region: us-east1
+      gcf-sources-427307591354-us-east1:
+        region: us-east1
+      gcf-sources-427307591354-us-east4:
+        region: us-east4
+      nhlbi-cloud-test-bkt:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east1:
+        region: us-east1
+      nhlbi-cloudteam-storage-bucket-east4:
+        region: us-east4
+      us.artifacts.nih-nhlbi-biodatacatalyst-data.appspot.com:
+        region: us
     ENABLE_VISA_UPDATE_CRON: true
 fluentd:
   enabled: true
@@ -842,12 +888,12 @@ frontend-framework:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/bdc-data-commons
-    tag: 1.2.0
+    tag: 1.4.1
 gen3-user-data-library:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-user-data-library
-    tag: '2026.07'
+    tag: '2026.10'
   externalSecrets:
     dbcreds: bdcatprod-gen3userdatalibrary-creds
     gen3UserDataLibraryG3auto: bdcatprod-gen3userdatalibrary-g3auto
@@ -878,6 +924,11 @@ global:
   manifestGlobalExtraValues:
     kube_bucket: kube-stageprod-gen3
     logs_bucket: logs-stageprod-gen3
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.24.112.0/25
+      - 172.24.112.128/25
   tierAccessLevel: regular
   tierAccessLimit: 50
   portalApp: gitops
@@ -897,7 +948,7 @@ guppy:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
-    tag: '2026.07'
+    tag: '2026.10'
   indices:
     - index: gen3.biodatacatalyst.nhlbi.nih.gov_subject
       type: subject
@@ -925,13 +976,13 @@ indexd:
     dbcreds: bdcatprod-helm-indexd-creds-261012-180150
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.07'
+    tag: '2026.10'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: bdcatprod-manifestservice-g3auto
   image:
-    tag: '2026.07'
+    tag: '2026.10'
 metadata:
   autoscaling:
     enabled: false
@@ -946,7 +997,7 @@ metadata:
     dbcreds: bdcatprod-helm-metadata-creds-261012-180202
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.07'
+    tag: '2026.10'
 metadata-delete-expired-objects:
   enabled: true
   image:
@@ -962,7 +1013,7 @@ peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.07'
+    tag: '2026.10'
 portal:
   serviceAccount:
     annotations:
@@ -1024,7 +1075,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.07'
+    tag: '1.30.6'
   ingress:
     aws:
       group: bdcatprod
@@ -1041,7 +1092,7 @@ sheepdog:
     dbcreds: bdcatprod-helm-sheepdog-creds-261009-174802
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.07'
+    tag: '2026.10'
 sower:
   enabled: true
   replicaCount: 2
@@ -1091,7 +1142,7 @@ sower:
                 name: manifest-global
           - name: ROOT_NODE
             value: subject
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always
@@ -1151,7 +1202,7 @@ sower:
               secretKeyRef:
                 name: indexd-service-creds
                 key: sheepdog
-        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.07
+        image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/pelican-export:2026.10
         memory-limit: 12Gi
         name: job-task
         pull_policy: Always

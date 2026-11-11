@@ -1,5 +1,5 @@
 gen3-embeddings:
-  enabled: true
+  enabled: false
   debug: true
   image:
     repository: quay.io/cdis/gen3_embeddings

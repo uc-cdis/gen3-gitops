@@ -19,6 +19,8 @@ global:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
   environment: "gen3-gac"
+  clusterName: gen3-gac
+  createDpopSecret: true
   hostname: "genomicaicommons.org"
   revproxyArn: "arn:aws:acm:us-east-1:467765330347:certificate/bf2b6741-9d9d-4a58-9d7c-2c4118d4698c"
   dictionaryUrl: "https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json"
@@ -98,6 +100,16 @@ fence:
     slack_webhook: ""
     slack_send_dbgap: false
 
+  FENCE_CONFIG_PUBLIC:
+    DPOP_ENABLED: true
+    ALLOWED_TASK_TOKEN_TYPES: ['WORKFLOW']
+    # The number of seconds after a task access token is issued until it expires.
+    # This max is applied even if the requesting user has access to request a
+    # longer-lived token in Arborist. This is configured per task token type,
+    # and falls back to MAX_ACCESS_TOKEN_TTL.
+    MAX_TASK_TOKEN_TTL:
+      WORKFLOW: 3600 # 1h - to update as needed
+
 frontend-framework:
   replicaCount: 2
   enabled: true
@@ -107,8 +119,30 @@ frontend-framework:
     DATADOG_SITE: "ddog-gov.com"
     DATACOMMONS: "GAC"
   image:
-    repository: "quay.io/cdis/cac-data-commons"
-    tag: "feat_gac_commons_initial"
+    repository: "quay.io/cdis/genomic-ai-commons"
+    tag: "v0.2.3"
+
+funnel:
+  image:
+    repository: quay.io/cdis/funnel
+    tag: v0.13.0-gen3
+  replicaCount: 2
+  postgres:
+    dbCreate: true
+  externalSecrets:
+    dbcreds: gen3-gac-default-funnel-creds
+    funnelOidcClient: gen3-gac-default-funnel-oidc-client
+    pushSecret: true
+  Kubernetes:
+    JobsNamespace: workflow-pods-gen3-gac-default
+    Storage:
+      type: mountpoint_s3
+    Resources:
+      Limits:
+        # Note: using `Cpus: "8"` instead of `8000m` triggers error `invalid value for string field Cpus: 8`
+        Cpus: 8000m
+        RamGb: 4096Mi
+        DiskGb: 4096Mi
 
 gen3-embeddings:
   enabled: true
@@ -119,11 +153,39 @@ gen3-embeddings:
   image:
     repository: quay.io/cdis/gen3_embeddings
     pullPolicy: Always
-    tag: 0.1.1
+    tag: 1.0.0
   externalSecrets:
     createK8sGen3EmbeddingsSecret: false
     pushSecret: false
     dbcreds: "gen3-gac-default-gen3-embeddings-creds"
+
+gen3-workflow:
+  enabled: true
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 4
+  image:
+    tag: 1.1.0
+  resources:
+    limits:
+      cpu: 2
+    requests:
+      cpu: 2
+      memory: 850Mi
+  serviceAccount:
+    annotations:
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
+  externalSecrets:
+    gen3workflowG3auto: gen3-gac-default-gen3workflow-g3auto
+  GEN3_WORKFLOW_CONFIG:
+    APP_DEBUG: true
+    ENABLE_S3_FILES: false
+    DPOP_REQUIRED: true
+    TASK_IMAGE_WHITELIST:
+      - "public.ecr.aws/u5x5h6w3/nextflow-approved/public:*"
+      - "654654631253.dkr.ecr.us-east-1.amazonaws.com/nextflow-approved/{username}:*"
+      - "quay.io/nextflow/bash"
 
 grafana:
   enabled: false
@@ -256,7 +318,7 @@ peregrine:
   replicaCount: 2
   enabled: true
   externalSecrets:
-    dbcreds: "gen3-gac-default-sheepdg-creds"
+    dbcreds: "gen3-gac-default-sheepdog-creds"
 
 pidgin:
   enabled: false
@@ -273,37 +335,15 @@ revproxy:
   replicaCount: 3
   enabled: true
   extraServices:
-  - name: "cohort-copilot"
-    path: /cohort-copilot
-    serviceName: cohort-copilot-gradio
+  # for a portal running locally (npm run dev); the portal in the cluster calls http://gdc-agent directly.
+  # the agent serves its pages at its root, so strip /agent
+  - name: "gdc-agent"
+    path: /agent
+    serviceName: gdc-agent
     authzPolicy: "aiapps"
     authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
-    customNginxConfigs: |
-      proxy_buffering off;
-      proxy_cache off;
-      proxy_read_timeout 1h;
-      proxy_send_timeout 1h;
-  - name: "cohort-copilot-chat"
-    path: /cohort-copilot-chat
-    serviceName: cohort-copilot-agent
-    authzPolicy: "aiapps"
-    authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
-    customNginxConfigs: |
-      proxy_buffering off;
-      proxy_cache off;
-      proxy_read_timeout 1h;
-      proxy_send_timeout 1h;
-  - name: "agent"
-    path: /qag
-    serviceName: qag-agent
-    authzPolicy: "aiapps"
-    authzService: "ai"
-    csrfCheck: false
-    rewritePath: false
+    csrfCheck: true
+    rewritePath: true
     customNginxConfigs: |
       proxy_buffering off;
       proxy_cache off;
@@ -311,6 +351,8 @@ revproxy:
       proxy_send_timeout 1h;
 
 
+  image:
+    tag: '1.30.6'
 sheepdog:
   replicaCount: 2
   enabled: true

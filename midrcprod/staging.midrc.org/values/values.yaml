@@ -539,6 +539,11 @@ fluentd:
     repository: fluent/fluentd-kubernetes-daemonset
     tag: v1.15.3-debian-cloudwatch-1.0
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.34.0/24
+      - 172.25.35.0/24
   pdb: true
   aws:
     account: '813684607867'
@@ -792,7 +797,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: '1.30.6'
   ingress:
     aws:
       group: midrcprod

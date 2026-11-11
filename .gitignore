@@ -2,3 +2,7 @@ dev/
 .idea/
 .DS_Store
 .vscode/settings.json
+
+# hatchery config validation (.github/hatchery)
+.hatchery-src
+.github/hatchery/loader/go.sum
