@@ -1215,6 +1215,7 @@
     ]
   },
   "useArboristUI": true,
+  "showArboristAuthzOnProfile": true,
   "terraExportWarning": {
     "subjectThreshold": 120000,
     "title": "Warning: Data Transfer May Fail in Terra",
