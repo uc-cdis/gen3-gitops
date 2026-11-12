@@ -17,16 +17,15 @@ serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::172585802910:role/vectis-default-s3-monitor-activemq-sa
 
+# Always: the feature_sqs-consumer tag was rebuilt; switch to IfNotPresent once digest is pinned
 image:
   repository: quay.io/cdis/s3-monitor
   tag: feature_sqs-consumer
-  digest: ""
+  digest: ""                  # TODO: sha256 digest of this build
   pullPolicy: Always
 
 aws:
   region: "us-east-1"
-
-eksClusterName: vectis
 
 config:
   apply: false
@@ -42,7 +41,7 @@ config:
     queueUrl: "https://sqs.us-east-1.amazonaws.com/172585802910/vectis-default-s3-monitor-events"
     waitTimeSeconds: 10
     batchSize: 10
-    maxReceiveCount: 5
+    # queue VisibilityTimeout must be >= maxRunSeconds + 120
     maxRunSeconds: 240
 
   recon:
@@ -58,11 +57,9 @@ config:
     secretArn: "arn:aws:secretsmanager:us-east-1:172585802910:secret:MqAdminSecret32A8A6D8-3WQ5f9y8bVw6-KEuEfo"
     secretKmsKeyArn: ""
     destinationPrefix: "/queue/s3monitor.ingest"
-    resolveIpv4: false
 
   tenants:
     - id: eventstorage
-      display_name: "gen3-eventstorage STIX feeds"
       existing_bucket_name: gen3-eventstorage
       prefix: "raw/stix/"
 
