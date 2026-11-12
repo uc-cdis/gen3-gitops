@@ -102,7 +102,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 1.2.0
+    tag: feat_bucket-tags #1.2.0
   resources:
     limits:
       cpu: 2
