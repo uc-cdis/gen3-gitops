@@ -1500,7 +1500,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: 'feat_discovery-data-load'
+    tag: '5.43.0'
 requestor:
   enabled: true
   image:
