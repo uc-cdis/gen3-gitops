@@ -398,6 +398,7 @@ heal-cronjobs:
         repository: quay.io/cdis/awshelper
         tag: master
       vars:
+        ES_URL: "http://elasticsearch:9200"
         INDEX_NAME: "healprod-helm-commons-index"
 indexd:
   defaultPrefix: dg.H34L/
