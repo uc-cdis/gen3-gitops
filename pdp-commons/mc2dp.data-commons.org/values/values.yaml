@@ -109,7 +109,7 @@ global:
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
   publicDataSets: false
-  tierAccessLevel: libre
+  tierAccessLevel: private
   tierAccessLimit: 50
   portalApp: gitops
   postgres:
