@@ -10,7 +10,7 @@ spec:
   sources:
     - path: helm/gen3
       repoURL: https://github.com/uc-cdis/gen3-helm
-      targetRevision: feat/deployment-canary
+      targetRevision: feat/heal-cronjobs
       helm:
         releaseName: gen3-healpreprod
         valueFiles:
