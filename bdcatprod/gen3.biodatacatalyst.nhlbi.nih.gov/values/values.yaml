@@ -977,6 +977,14 @@ indexd:
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.10'
+  trustedIssuers:
+    defaultPassportIssuer: https://sts.nih.gov
+    defaultPreferredType: PassportAuth
+    /open:
+      bearer_auth_issuers:
+        - https://gen3.biodatacatalyst.nhlbi.nih.gov/user
+      passport_auth_issuers:
+        - https://sts.nih.gov
 manifestservice:
   enabled: true
   externalSecrets:
