@@ -22,7 +22,7 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.11'
+    tag: 'integration202611'
 audit:
   enabled: true
   externalSecrets:
