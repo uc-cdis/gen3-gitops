@@ -23,7 +23,7 @@
       },
       {
         "type": "markdown",
-        "text": "Workspace requires additional permission. Please complete the request form below. If you believe this is an error, contact your platform administrator at [brhsupport@gen3.org](mailto:mc2dp@occ-data.org).",
+        "text": "Workspace requires additional permission. Please complete the request form below. If you believe this is an error, contact your platform administrator at [brhsupport@gen3.org](mailto:brhsupport@gen3.org).",
         "className": "text-sm"
       },
       {
@@ -54,7 +54,7 @@
           "type": "markdown",
           "text": [
             "# Your access request is in progress.",
-            "You've already requested access to this workspace. Your request is being reviewed, and we'll let you know as soon as it's approved. If you believe this is an error, contact your platform administrator at [mc2dp@occ-data.org](mailto:mc2dp@occ-data.org)."
+            "You've already requested access to this workspace. Your request is being reviewed, and we'll let you know as soon as it's approved. If you believe this is an error, contact your platform administrator at [brhsupport@gen3.org](mailto:brhsupport@gen3.org)."
           ],
           "className": "text-center"
         }
