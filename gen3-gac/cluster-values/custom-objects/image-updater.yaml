@@ -1,0 +1,30 @@
+# Tracks the mutable `agent` tag by digest so a push to ECR rolls the pods.
+# Image Updater itself must already be running in the argocd namespace.
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
+metadata:
+  name: gdc-mcp
+  namespace: argocd
+spec:
+  writeBackConfig:
+    method: git
+    gitConfig:
+      branch: master
+      writeBackTarget: kustomization
+  applicationRefs:
+    - namePattern: custom-objects
+      images:
+        - alias: gdcagent
+          commonUpdateSettings:
+            updateStrategy: digest
+          imageName: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-agent:agent
+          manifestTargets:
+            kustomize:
+              name: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-agent
+        - alias: gdcmcp
+          commonUpdateSettings:
+            updateStrategy: digest
+          imageName: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp:agent
+          manifestTargets:
+            kustomize:
+              name: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gdc-mcp-demo-mcp
