@@ -172,6 +172,10 @@ hatchery:
         "shared-workspace": {
           "enabled": true
         },
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
         "default-pay-model": {
           "workspace_type": "Trial Workspace",
           "local": true
