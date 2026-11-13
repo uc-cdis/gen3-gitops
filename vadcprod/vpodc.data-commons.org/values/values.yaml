@@ -186,7 +186,7 @@ fence:
     fenceJwtKeys: vadcprod-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: "13.3.0"
+    tag: "15.1.1"
   FENCE_CONFIG_PUBLIC:
     ACCESS_TOKEN_RENEWAL_THRESHOLD: 300
 portal:
@@ -196,7 +196,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: "0.31"
+    tag: "0.32"
 global:
   pdb: true
   aws:
