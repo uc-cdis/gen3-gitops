@@ -42,7 +42,7 @@ config:
     waitTimeSeconds: 10
     batchSize: 10
     # queue VisibilityTimeout must be >= maxRunSeconds + 120
-    maxRunSeconds: 240
+    maxRunSeconds: 180
 
   recon:
     mqCloudwatchBrokers: ["gen3-mq-1", "gen3-mq-2"]
