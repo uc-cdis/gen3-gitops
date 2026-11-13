@@ -8,3 +8,4 @@ arborist:
   image:
     repository: quay.io/cdis/arborist
     tag: '2026.11'
+    pullPolicy: Always
