@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vectis-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+    targetRevision: feat/vectis
+    path: vectis/vectis.data-commons.org
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: argocd
+  syncPolicy:
+    automated:
+      selfHeal: true

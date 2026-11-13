@@ -1,0 +1,27 @@
+# The SIEM service. Its chart is ours and lives in this repo (vectis/charts/siem-service), not in gen3-helm.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vectis-siem-service
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: vectis/charts/siem-service
+      repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      helm:
+        releaseName: siem-service
+        valueFiles:
+          - $values/vectis/vectis.data-commons.org/values/siem-service-values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
