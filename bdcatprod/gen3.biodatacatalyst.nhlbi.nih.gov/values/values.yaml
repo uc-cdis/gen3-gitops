@@ -973,10 +973,18 @@ indexd:
   enabled: true
   externalSecrets:
     serviceCreds: bdcatprod-indexd-service-creds
-    dbcreds: bdcatprod-helm-indexd-creds-261012-180150
+    dbcreds: bdcatprod-helm-indexd-creds-261116-175713
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
     tag: '2026.10'
+  trustedIssuers:
+    defaultPassportIssuer: https://sts.nih.gov
+    defaultPreferredType: PassportAuth
+    /open:
+      bearer_auth_issuers:
+        - https://gen3.biodatacatalyst.nhlbi.nih.gov/user
+      passport_auth_issuers:
+        - https://sts.nih.gov
 manifestservice:
   enabled: true
   externalSecrets:
@@ -994,7 +1002,7 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   externalSecrets:
     metadataG3auto: bdcatprod-metadata-g3auto
-    dbcreds: bdcatprod-helm-metadata-creds-261012-180202
+    dbcreds: bdcatprod-helm-metadata-creds-261116-175704
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
     tag: '2026.10'
@@ -1089,7 +1097,7 @@ sheepdog:
   replicaCount: 4
   enabled: true
   externalSecrets:
-    dbcreds: bdcatprod-helm-sheepdog-creds-261009-174802
+    dbcreds: bdcatprod-helm-sheepdog-creds-261116-173624
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.10'

@@ -412,6 +412,21 @@ hatchery:
           }
         ]
       }
+heal-cronjobs:
+  enabled: true
+  cronjobs:
+    cedar-ingestion:
+      schedule: "0 8,15 * * *"
+    heal-aggmds-etl:
+      # 1 hour after each cedar-ingestion run.
+      schedule: "0 9,16 * * *"
+      # heal-aggmds-load.py is not in cloud-automation master yet.
+      image:
+        repository: quay.io/cdis/awshelper
+        tag: feat_heal-cronjobs
+      vars:
+        ES_URL: "http://elasticsearch:9200"
+        INDEX_NAME: "healpreprod-commons-index"
 indexd:
   defaultPrefix: dg.H34L/
   replicaCount: 2
@@ -1465,7 +1480,7 @@ metadata:
     tag: '2026.10'
   useAggMds: true
   schedule: 30 8 * * *
-  suspendCronjob: false
+  suspendCronjob: true
 mutatingWebhook:
   enabled: false
 peregrine:
@@ -1485,7 +1500,7 @@ portal:
     gen3Bundle: heal
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/data-portal
-    tag: '5.42.3'
+    tag: '5.43.0'
 requestor:
   enabled: true
   image:

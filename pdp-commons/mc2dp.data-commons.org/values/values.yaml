@@ -109,8 +109,7 @@ global:
     kube_bucket: kube_bucket.devplanetv1.gen3
     logs_bucket: logs-devplanetv1-gen3
   publicDataSets: false
-  tierAccessLevel: libre
-  tierAccessLimit: 50
+  tierAccessLevel: private
   portalApp: gitops
   postgres:
     dbCreate: false
@@ -137,6 +136,7 @@ guppy:
   configIndex: pdp-commons-commons-config-index
   enabled: true
   esEndpoint: http://elasticsearch:9200
+  authFilterField: "gen3_discovery.authz"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
     tag: '2026.07'

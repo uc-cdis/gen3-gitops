@@ -32,6 +32,8 @@ data:
     logging
     monitoring
     qabot
+    qa-brh-helm
+    jupyter-pods-qa-brh
     qa-mc2dp-helm
     qa-vpodc
     qa-vpodc-helm

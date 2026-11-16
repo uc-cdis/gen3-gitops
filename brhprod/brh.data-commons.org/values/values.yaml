@@ -11,14 +11,14 @@ arborist:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2026.08'
+    tag: '2026.10'
 audit:
   enabled: true
   externalSecrets:
     auditG3auto: brhprod-audit-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/audit-service
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--audit-sqs-receiver
@@ -32,7 +32,7 @@ dashboard:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--dashboard-access
@@ -132,7 +132,7 @@ hatchery:
       memory: 4Gi
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.11.0'
+    tag: '2026.10'
   hatchery:
     json: |-
       {
@@ -160,7 +160,7 @@ hatchery:
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
-          "image": "quay.io/cdis/ecs-ws-sidecar:0.3.2",
+          "image": "quay.io/cdis/ecs-ws-sidecar:2026.10",
           "env": {
             "NAMESPACE": "brhprod-helm",
             "HOSTNAME": "brh.data-commons.org",
@@ -332,7 +332,9 @@ hatchery:
               "version": 0.1,
               "or": [
                 {
-                  "pay_models": ["Do Not Show"]
+                  "pay_models": [
+                    "Do Not Show"
+                  ]
                 },
                 {
                   "resource_paths": [
@@ -388,7 +390,9 @@ hatchery:
               "version": 0.1,
               "or": [
                 {
-                  "pay_models": ["Do Not Show"]
+                  "pay_models": [
+                    "Do Not Show"
+                  ]
                 },
                 {
                   "resource_paths": [
@@ -425,14 +429,14 @@ indexd:
     serviceCreds: brhprod-indexd-service-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2026.08'
+    tag: '2026.10'
 manifestservice:
   enabled: true
   externalSecrets:
     manifestserviceG3auto: brhprod-manifestservice-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2026.08'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::885078588865:role/brhprod--brhprod-helm--manifest-service-sa
@@ -562,20 +566,20 @@ metadata:
     metadataG3auto: brhprod-metadata-g3auto
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2026.08'
+    tag: '2026.10'
   useAggMds: true
 peregrine:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2026.08'
+    tag: '2026.10'
 portal:
   enabled: false
 requestor:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/requestor
-    tag: '2026.08'
+    tag: '2026.10'
 revproxy:
   replicaCount: 4
   autoscaling:
@@ -595,7 +599,7 @@ sheepdog:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2026.08'
+    tag: '2026.10'
 wts:
   replicaCount: 3
   enabled: true
@@ -605,7 +609,7 @@ wts:
     wtsOidcClient: brhprod-wts-client-secret
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2026.08'
+    tag: '2026.10'
 
 workspace-proxy:
   enabled: true
