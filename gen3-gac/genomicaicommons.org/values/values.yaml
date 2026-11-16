@@ -15,6 +15,7 @@ global:
   externalSecrets:
     deploy: true
     apiVersion: "external-secrets.io/v1"
+    createLocalK8sSecret: true
   postgres:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
