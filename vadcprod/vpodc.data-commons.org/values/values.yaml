@@ -285,6 +285,7 @@ hatchery:
           "enabled": true
         },
         "pay-models-dynamodb-table": "bmh-admin-portal-backend-bmhworkspacetableD4D73E43-16P8L55B0Q5UX",
+        "pay-models-dynamodb-table-arn": "arn:aws:dynamodb:us-east-1:663707118480:table/bmh-admin-portal-backend-bmhworkspacetableD4D73E43-16P8L55B0Q5UX"
         "auto-select-single-paymodel": true,
         "pricing": {
           "cpu": 0.04048,
