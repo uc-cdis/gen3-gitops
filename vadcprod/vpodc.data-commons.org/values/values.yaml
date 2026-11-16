@@ -293,8 +293,8 @@ hatchery:
         "default-pay-model": {
           "workspace_type": "Trial Workspace",
           "local": true,
-          "hard-limit": 5,
-          "soft-limit": 4
+          "hard-limit": 50,
+          "soft-limit": 40
         },
         "s3-config": {
           "bucketName": "software-library-bucket-new",
