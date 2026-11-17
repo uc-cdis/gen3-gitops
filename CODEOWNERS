@@ -19,9 +19,6 @@ bihprod/bih-staging.data-commons.org @AJuehne-CTDS @cgmeyer
 bdcatprod/gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
 bdcatprod/preprod.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
 bdcat-stagingdatastage/staging.gen3.biodatacatalyst.nhlbi.nih.gov @radhrreddy
-kidsfirst-kfqa2/gen3qa.kidsfirstdrc.org @jeffrey-knight
-kidsfirst-skfqa/gen3staging.kidsfirstdrc.org @jeffrey-knight
-kidsfirst-prodv1/data.kidsfirstdrc.org @jeffrey-knight
 unfunded/jcoin.datacommons.io @briennal
 covid19prod/chicagoland.pandemicresponsecommons.org @michaelfitzo @beamcb @stephenocc
 unfunded/gen3.datacommons.io @trevars @beamcb @cgmeyer
