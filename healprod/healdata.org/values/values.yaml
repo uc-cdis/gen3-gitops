@@ -117,6 +117,11 @@ frontend-framework:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/heal-data-commons
     tag: "1.4.0"
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.25.130.0/24
+      - 172.25.131.0/24
   pdb: true
   aws:
     account: '205252583234'
