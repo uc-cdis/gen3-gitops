@@ -230,6 +230,7 @@ global:
   postgres:
     dbCreate: false
   revproxyArn: arn:aws:acm:us-east-1:663707118480:certificate/69ecb9e8-bcc8-4e91-9248-5eb3fcab5940
+  tierAccessLevel: "private"
 guppy:
   authFilterField: auth_resource_path
   replicaCount: 4
