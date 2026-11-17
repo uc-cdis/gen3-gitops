@@ -2,7 +2,7 @@
   "routes": {
     "/Workspace": {
       "loginRequired": true,
-      "authz": ["/pages/see-workspacee"],
+      "authz": ["/pages/see-workspace"],
       "redirect403": "/WorkspaceRequestAccess"
     },
     "/Workspaces": {
