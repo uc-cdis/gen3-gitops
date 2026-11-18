@@ -25,8 +25,7 @@ global:
     externalSecret: unfunded-aurora-master-password
   environment: unfunded
   hostname: vpodc-preprod.data-commons.org
-  # TODO(by-hand): replace with an ACM cert covering vpodc-preprod.data-commons.org (this one only covers the old hostname)
-  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/12c79298-0ff5-4c52-b63b-3302b7119e12
+  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/a3618b11-2180-4e42-b48c-6d2d959d661f
   dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
   portalApp: gitops
   publicDataSets: false
