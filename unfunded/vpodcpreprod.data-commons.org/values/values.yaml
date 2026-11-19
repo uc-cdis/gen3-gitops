@@ -48,7 +48,7 @@ arborist:
     dbcreds: unfunded-vpodc-preprod-arborist-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/arborist
-    tag: '2025.12'
+    tag: '2026.10'
 
 argo-wrapper:
   enabled: true
@@ -71,7 +71,7 @@ audit:
     dbcreds: unfunded-vpodc-preprod-audit-creds
     createK8sAuditSecret: true
   image:
-    tag: '2025.12'
+    tag: '2026.10'
 aws-es-proxy:
   enabled: true
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
@@ -109,7 +109,7 @@ fence:
     slack_send_dbgap: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: '2025.12'
+    tag: '2026.10'
 frontend-framework:
   enabled: true
   image:
@@ -205,7 +205,7 @@ indexd:
     createK8sServiceCredsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/indexd
-    tag: '2025.12'
+    tag: '2026.10'
 manifestservice:
   enabled: true
   serviceAccount:
@@ -215,7 +215,7 @@ manifestservice:
     createK8sManifestServiceSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/manifestservice
-    tag: '2025.12'
+    tag: '2026.10'
 metadata:
   enabled: true
   externalSecrets:
@@ -224,14 +224,14 @@ metadata:
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/metadata-service
-    tag: '2025.12'
+    tag: '2026.10'
 peregrine:
   enabled: true
   externalSecrets:
     dbcreds: unfunded-vpodc-preprod-sheepdog-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
-    tag: '2025.12'
+    tag: '2026.10'
 pidgin:
   enabled: false
 portal:
@@ -255,15 +255,15 @@ sheepdog:
     dbcreds: unfunded-vpodc-preprod-sheepdog-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
-    tag: '2025.12'
+    tag: '2026.10'
 ssjdispatcher:
   enabled: true
   externalSecrets:
     credsFile: unfunded-vpodc-preprod-ssjdispatcher-creds
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ssjdispatcher
-    tag: '2025.12'
-  indexing: quay.io/cdis/indexs3client:2025.12
+    tag: '2026.10'
+  indexing: quay.io/cdis/indexs3client:2026.10
 sower:
   enabled: true
   externalSecrets:
@@ -271,7 +271,7 @@ sower:
     createK8sSowerJobsSecret: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sower
-    tag: '2025.12'
+    tag: '2026.10'
   sowerConfig: []
 wts:
   enabled: true
@@ -280,7 +280,7 @@ wts:
     createK8sWtsSecret: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
-    tag: '2025.12'
+    tag: '2026.10'
 cohort-middleware:
   enabled: true
   replicaCount: 2
@@ -297,7 +297,7 @@ dashboard:
     prefix: vpodc-preprod.data-commons.org
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/gen3-statics
-    tag: '2025.12'
+    tag: '2026.10'
   serviceAccount:
     annotations:
       eks.amazonaws.com/role-arn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-preprod-dashboard-access
@@ -305,9 +305,9 @@ etl:
   esEndpoint: elasticsearch
   image:
     tube:
-      tag: '2025.12'
+      tag: '2026.10'
     spark:
-      tag: '2025.12'
+      tag: '2026.10'
 ohdsi-atlas:
   enabled: true
   image:
@@ -317,7 +317,7 @@ ohdsi-webapi:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ohdsi-webapi
-    tag: VA-2025.10.24
+    tag: VA-2026.07.20
   externalSecrets:
     dbcreds: unfunded-vpodc-preprod-ohdsi-creds
     createK8sOhdsiWebApiConfigSecret: true
