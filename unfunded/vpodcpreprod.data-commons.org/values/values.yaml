@@ -124,7 +124,8 @@ guppy:
     maxReplicas: 1
     minReplicas: 1
     targetCPUUtilizationPercentage: 40
-  configIndex: etl_mickey_array-config
+  # tube names the alias <first segment of mapping name>_array-config, so etl_mickey_case/_file -> etl_array-config
+  configIndex: etl_array-config
   esEndpoint: http://elasticsearch:9200
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
