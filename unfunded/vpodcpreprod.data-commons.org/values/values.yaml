@@ -130,20 +130,12 @@ guppy:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/guppy
     tag: '0.25.0'
   indices:
-  - index: etl_mickey
-    type: patients
   - index: etl_mickey_case
     type: case
   - index: etl_mickey_file
     type: file
-  - index: omop_etl_index_cohortb_20251119
-    type: cohort_b_patients
-  - index: omop_etl_index_cohorta_20260311
-    type: cohort_a_patients
-  - index: omop_etl_index_cohortf_20260408
-    type: cohort_f_patients
-  - index: vpodc_patients
-    type: vpodc_patients
+  # prod-pipeline indices not built in this ES domain yet; add back once they exist:
+  # etl_mickey (patients), omop_etl_index_cohort{b_20251119,a_20260311,f_20260408}, vpodc_patients
 hatchery:
   enabled: true
   hatchery:
