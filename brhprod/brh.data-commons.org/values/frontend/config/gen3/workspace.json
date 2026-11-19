@@ -6,13 +6,7 @@
     "remoteSupportService": {
       "service": "zenDesk",
       "configuration": {
-        "zendeskSubdomainName": "gen3support",
-        "custom_fields": [
-          {
-            "id": 32585806184851,
-            "value": "gen3_platform_brh"
-          }
-        ]
+        "zendeskSubdomainName": "brh-support"
       }
     },
     "label": "Workspace Request Access Form",
