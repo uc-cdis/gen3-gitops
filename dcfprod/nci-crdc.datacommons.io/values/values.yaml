@@ -390,6 +390,9 @@ fence:
       cds-752-phs005046-ctdna-sarcoma:
         cred: fence_bot
         region: us-east-1
+      cds-757-tcia:
+        cred: fence_bot
+        region: us-east-1
       cgci-htmcp-dlbcl-phs000235-controlled:
         cred: fence_bot
         region: us-east-1
