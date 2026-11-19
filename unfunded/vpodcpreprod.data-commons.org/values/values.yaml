@@ -40,6 +40,7 @@ global:
   ddEnabled: false
 
 ambassador:
+  jupyterNamespace: jupyter-pods-vpodc-preprod
   replicaCount: 2
   enabled: false
 
@@ -139,56 +140,290 @@ guppy:
   # etl_mickey (patients), omop_etl_index_cohort{b_20251119,a_20260311,f_20260408}, vpodc_patients
 hatchery:
   enabled: true
-  hatchery:
-    sidecarContainer:
-      cpu-limit: '0.1'
-      memory-limit: 256Mi
-      image: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.02
-      env:
-        NAMESPACE: '{{ .Release.Namespace }}'
-        HOSTNAME: '{{ .Values.global.hostname }}'
-      args: []
-      command:
-      - /bin/bash
-      - ./sidecar.sh
-      lifecycle-pre-stop:
-      - su
-      - -c
-      - echo test
-      - -s
-      - /bin/sh
-      - root
-    containers:
-    - target-port: 8888
-      cpu-limit: '1.0'
-      memory-limit: 2Gi
-      name: (Tutorials) Example Analysis Jupyter Lab Notebooks
-      image: quay.io/cdis/heal-notebooks:combined_tutorials__latest
-      env:
-        FRAME_ANCESTORS: https://{{ .Values.global.hostname }}
-      args:
-      - --NotebookApp.base_url=/lw-workspace/proxy/
-      - --NotebookApp.default_url=/lab
-      - --NotebookApp.password=''
-      - --NotebookApp.token=''
-      - --NotebookApp.shutdown_no_activity_timeout=5400
-      - --NotebookApp.quit_button=False
-      command:
-      - start-notebook.sh
-      path-rewrite: /lw-workspace/proxy/
-      use-tls: 'false'
-      ready-probe: /lw-workspace/proxy/
-      lifecycle-post-start:
-      - /bin/sh
-      - -c
-      - export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/pd/; true
-      user-uid: 1000
-      fs-gid: 100
-      user-volume-location: /home/jovyan/pd
-      gen3-volume-location: /home/jovyan/.gen3
+  # prod keeps a hot node reserved for fast workspace start; off here so preprod does not hold
+  # 5 CPU / 17Gi on the shared cluster
+  hotNode:
+    enabled: false
+    gpu: false
+    jupyter: true
+    availabilityZones:
+    - us-east-1c
+    workspaceCapacityReservation:
+      memory: 17Gi
+      cpu: 5
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: 2.7.2
+    tag: '2.12.1'
+  hatchery:
+    reaper:
+      enabled: false
+    # prod config minus pay-models-dynamodb-table (BMH pay-model table; hatchery falls back to default-pay-model). s3-config kept: its bucket/KMS policies allow this account
+    json: |
+      {
+        "user-namespace": "jupyter-pods-vpodc-preprod",
+        "sub-dir": "/lw-workspace",
+        "user-volume-size": "10Gi",
+        "shared-workspace": {
+          "enabled": true
+        },
+        "auto-select-single-paymodel": true,
+        "pricing": {
+          "cpu": 0.04048,
+          "memory": 0.004445
+        },
+        "default-pay-model": {
+          "workspace_type": "Trial Workspace",
+          "local": true,
+          "hard-limit": 50,
+          "soft-limit": 40
+        },
+        "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
+        "oidc-provider-arn": "arn:aws:iam::662843554732:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/6C2AE7CA3FD03E1BC0C2003FB597D5CC",
+        "sidecar": {
+          "cpu-limit": "1.0",
+          "memory-limit": "256Mi",
+          "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/ecs-ws-sidecar:2026.07",
+          "env": {
+            "NAMESPACE": "default",
+            "HOSTNAME": "vpodc-preprod.data-commons.org"
+          },
+          "args": [
+
+          ],
+          "command": [
+            "/bin/bash",
+            "./sidecar.sh"
+          ],
+          "lifecycle-pre-stop": [
+            "su",
+            "-c",
+            "echo test",
+            "-s",
+            "/bin/sh",
+            "root"
+          ]
+        },
+        "containers": [
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "gpu": false,
+            "memory-limit": "16Gi",
+            "name": "Genomics (4CPU/16GB RAM, CPU only)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-3.5.1",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://vpodc-preprod.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://vpodc-preprod.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "gpu": true,
+            "memory-limit": "16Gi",
+            "name": "Custom GPU (4CPU/16GB RAM, GPU)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:genomics-feat_custom-vpodc",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://vpodc-preprod.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://vpodc-preprod.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan/pd'",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3",
+            "authz": {
+              "version": 0.1,
+              "resource_paths": [
+                "/workspace/gpu-jupyter"
+              ]
+            }
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "gpu": false,
+            "memory-limit": "4Gi",
+            "name": "Standard (2CPU/4GB RAM, CPU only)",
+            "image": "quay.io/cdis/jupyterlab-generic:3.5.1",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://vpodc-preprod.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://vpodc-preprod.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 100,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "2.0",
+            "gpu": true,
+            "memory-limit": "8Gi",
+            "name": "AI/ML (2CPU/8GB RAM, GPU)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-prometheus:prometheus-3.5.1",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://vpodc-preprod.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "command": [
+              "/jupyterlab-start.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://vpodc-preprod.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          },
+          {
+            "target-port": 8888,
+            "cpu-limit": "4.0",
+            "gpu": false,
+            "memory-limit": "16Gi",
+            "name": "RCC pilot (4CPU/16GB RAM, CPU only)",
+            "image": "707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/jupyter-notebook:rcc-3.5.1",
+            "pull_policy": "Always",
+            "env": {
+              "FRAME_ANCESTORS": "https://vpodc-preprod.data-commons.org",
+              "PATH": "/opt/conda/bin:/home/jovyan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            },
+            "squashfs_mount": {
+              "enabled": false,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
+            "command": [
+              "start-notebook.sh"
+            ],
+            "args": [
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--ServerApp.default_url=/lab",
+              "--ServerApp.password=''",
+              "--ServerApp.token=''",
+              "--ServerApp.ip=0.0.0.0",
+              "--ServerApp.disable_check_xsrf=True",
+              "--ServerApp.allow_origin='https://vpodc-preprod.data-commons.org'",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=90000",
+              "--ServerApp.quit_button=False",
+              "--FileContentsManager.always_delete_dir=True",
+              "--FileContentsManager.delete_to_trash=False",
+              "--AsyncFileContentsManager.always_delete_dir=True",
+              "--AsyncFileContentsManager.delete_to_trash=False",
+              "--ContentsManager.allow_hidden=True"
+            ],
+            "path-rewrite": "/lw-workspace/proxy/",
+            "use-tls": "false",
+            "ready-probe": "/lw-workspace/proxy/lab",
+            "user-uid": 1010,
+            "fs-gid": 101,
+            "user-volume-location": "/home/jovyan/pd",
+            "gen3-volume-location": "/home/jovyan/.gen3"
+          }
+        ]
+      }
 indexd:
   enabled: true
   defaultPrefix: dg.XXXX/
@@ -416,3 +651,108 @@ ohdsi-webapi:
   externalSecrets:
     dbcreds: unfunded-vpodc-preprod-ohdsi-creds
     createK8sOhdsiWebApiConfigSecret: true
+workspace-proxy:
+  enabled: true
+  deploymentNamespace: vpodc-preprod
+  workspaceNamespace: jupyter-pods-vpodc-preprod
+  # kubernetes ClusterIP (pre-DNAT) and the three EKS subnets of the unfunded cluster
+  kubernetesApiServerCIDRs:
+  - 10.100.0.1/32
+  - 172.25.164.0/22
+  - 172.25.168.0/22
+  - 172.25.172.0/22
+  replicaCount: 1
+  image:
+    repository: quay.io/cdis/multihead-workspace-proxy
+    tag: 0.0.5
+    pullPolicy: Always
+  listenAddr: ":8080"
+  jegKernelSpecPolicy: |
+    {
+      "allowedSpecs": [
+      ],
+      "displayNames": [
+      ]
+    }
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  networkPolicy:
+    enabled: true
+jeg:
+  enabled: true
+  workspaceNamespace: jupyter-pods-vpodc-preprod
+  replicaCount: 1
+  image:
+    repository: quay.io/cdis/gen3-vectis
+    tag: qa-jegv2
+    pullPolicy: Always
+  env:
+    # must match hatchery user-namespace and workspace-proxy workspaceNamespace
+    EG_NAMESPACE: jupyter-pods-vpodc-preprod
+    EG_KERNEL_LAUNCH_TIMEOUT: '120'
+    EG_MAX_KERNELS_PER_USER: '2'
+    EG_CULL_IDLE_TIMEOUT: '14400'
+    EG_CULL_CONNECTED: 'True'
+    EG_AUTH_TOKEN: ''
+    EG_DEFAULT_KERNEL_NAME: python3
+    EG_LIST_KERNELS: 'True'
+    EG_KERNEL_IMAGE_PULL_POLICY: IfNotPresent
+    EG_SHARED_NAMESPACE: 'True'
+    EG_MIRROR_WORKING_DIRS: 'False'
+    EG_KERNEL_SPEC_POLICY: |
+      {
+        "default_kernel_name": "python3",
+        "kernel_specs": {
+          "python3": {
+            "display_name": "Python (Micro — Local)",
+            "language": "python"
+          },
+          "python_kubernetes": {
+            "display_name": "Python on Kubernetes (4Gi, 2 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow (4Gi, 1 cpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "1",
+              "memory": "4Gi",
+              "gpu_type": "none"
+            }
+          },
+          "python_tensorflow_gpu_kubernetes": {
+            "display_name": "Python on Kubernetes with TensorFlow with GPUs (8Gi, 2 cpu, gpu)",
+            "language": "python",
+            "image_name": "elyra/kernel-py-tensorflow:latest",
+            "resources": {
+              "cpu": "2",
+              "memory": "8Gi",
+              "gpu_type": "NVIDIA"
+            }
+          },
+          "r_kubernetes": {
+            "display_name": "R on Kubernetes",
+            "language": "r",
+            "image_name": "elyra/kernel-r:latest"
+          }
+        }
+      }
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
