@@ -257,7 +257,8 @@ sheepdog:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/sheepdog
     tag: '2026.10'
 ssjdispatcher:
-  enabled: true
+  # disabled until Secrets Manager unfunded-vpodc-preprod-ssjdispatcher-creds and the SQS queue exist
+  enabled: false
   externalSecrets:
     credsFile: unfunded-vpodc-preprod-ssjdispatcher-creds
   image:
@@ -282,7 +283,8 @@ wts:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/workspace-token-service
     tag: '2026.10'
 cohort-middleware:
-  enabled: true
+  # disabled until Secrets Manager unfunded-vpodc-preprod-cohort-middleware-g3auto exists
+  enabled: false
   replicaCount: 2
   externalSecrets:
     cohortMiddlewareG3Auto: unfunded-vpodc-preprod-cohort-middleware-g3auto
@@ -290,7 +292,8 @@ cohort-middleware:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/cohort-middleware
     tag: VA-2026.03.18
 dashboard:
-  enabled: true
+  # disabled until IAM role unfunded-vpodc-preprod-dashboard-access exists
+  enabled: false
   replicaCount: 4
   dashboardConfig:
     bucket: dashboard-662843554732-unfunded-gen3
