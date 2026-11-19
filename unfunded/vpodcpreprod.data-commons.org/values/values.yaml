@@ -39,7 +39,7 @@ global:
 
 ambassador:
   replicaCount: 2
-  enabled: true
+  enabled: false
 
 arborist:
   replicaCount: 2
@@ -305,9 +305,9 @@ etl:
   esEndpoint: elasticsearch
   image:
     tube:
-      tag: '2026.10'
+      tag: '2026.11'
     spark:
-      tag: '2026.10'
+      tag: '2026.11'
 ohdsi-atlas:
   enabled: true
   image:
