@@ -9,6 +9,7 @@ global:
   aws:
     enabled: true
     account: '662843554732'
+    awsEsProxyRole: gen3-service/unfunded-esproxy-sa
     hatchery_role: arn:aws:iam::662843554732:role/gen3-service/unfunded-vpodc-preprod-hatchery-sa
     secretStoreServiceAccount:
       enabled: true
@@ -72,14 +73,9 @@ audit:
     createK8sAuditSecret: true
   image:
     tag: '2026.10'
-aws-es-proxy:
+aws-sigv4-proxy:
   enabled: true
   esEndpoint: vpc-unfunded-gen3-metadata-2-tf3gyjftzrgm5asaxuvqxxwv2m.us-east-1.es.amazonaws.com
-  externalSecrets:
-    awsCreds: unfunded-vpodc-preprod-aws-es-proxy-creds
-  image:
-    repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/aws-es-proxy
-    tag: v1.3.1
 dicom-server:
   enabled: false
   externalSecrets:
