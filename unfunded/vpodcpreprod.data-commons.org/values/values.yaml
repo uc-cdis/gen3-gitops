@@ -10,7 +10,7 @@ global:
     enabled: true
     account: '662843554732'
     awsEsProxyRole: gen3-service/unfunded-esproxy-sa
-    hatchery_role: arn:aws:iam::662843554732:role/gen3-service/unfunded-vpodc-preprod-hatchery-sa
+    hatchery_role: gen3_service/unfunded-vpodc-preprod-hatchery-sa
     secretStoreServiceAccount:
       enabled: true
       name: external-secrets
