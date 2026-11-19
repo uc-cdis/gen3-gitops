@@ -17,7 +17,7 @@ global:
       roleArn: arn:aws:iam::662843554732:role/gen3_service/unfunded-vpodc-preprod-external-secrets-sa
     wafv2:
       enabled: true
-      wafAclArn: ''
+      wafAclArn: arn:aws:wafv2:us-east-1:662843554732:regional/webacl/unfunded-waf/e10ae423-8e4e-48ba-9a0e-52b43f28f6d4
   dev: false
   externalSecrets:
     deploy: true
@@ -26,8 +26,9 @@ global:
     externalSecret: unfunded-aurora-master-password
   environment: unfunded
   hostname: vpodc-preprod.data-commons.org
-  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/a3618b11-2180-4e42-b48c-6d2d959d661f
-  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/datadictionary/develop/schema.json
+  atlasUrl: https://atlas.vpodc-preprod.data-commons.org
+  revproxyArn: arn:aws:acm:us-east-1:662843554732:certificate/056abcf2-3252-44c6-9a84-91d42ce65087
+  dictionaryUrl: https://s3.amazonaws.com/dictionary-artifacts/vadictionary/0.6.2/schema.json
   portalApp: gitops
   publicDataSets: false
   tierAccessLevel: private
@@ -110,7 +111,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/vpodc-data-commons
-    tag: 0.15
+    tag: 0.32
   replicaCount: 2
 grafana:
   enabled: false
@@ -131,7 +132,9 @@ guppy:
   indices:
   - index: etl_mickey
     type: patients
-  - index: file_etl_mickey
+  - index: etl_mickey_case
+    type: case
+  - index: etl_mickey_file
     type: file
   - index: omop_etl_index_cohortb_20251119
     type: cohort_b_patients
