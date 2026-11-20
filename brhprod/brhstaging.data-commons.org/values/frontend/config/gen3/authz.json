@@ -2,12 +2,20 @@
   "routes": {
     "/Workspace": {
       "loginRequired": true,
-      "authz": ["/pages/see-workspacee"],
+      "authz": [{
+        "resource": "/workspace",
+        "service": "jupyterhub",
+        "method": "access"
+      }],
       "redirect403": "/WorkspaceRequestAccess"
     },
     "/Workspaces": {
       "loginRequired": true,
-      "authz": ["/pages/see-workspace"],
+      "authz": [{
+        "resource": "/workspace",
+        "service": "jupyterhub",
+        "method": "access"
+      }],
       "redirect403": "/WorkspaceRequestAccess"
     },
     "/WorkspaceRequestAccess": {
