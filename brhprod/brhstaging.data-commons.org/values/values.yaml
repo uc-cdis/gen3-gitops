@@ -102,7 +102,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 1.2.0
+    tag: 1.3.0
   resources:
     limits:
       cpu: 2
@@ -152,7 +152,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: v0.13.1-gen3
+    tag: fix_4mb_limit
   Logger:
     Level: debug
   Kubernetes:
