@@ -141,7 +141,7 @@ frontend-framework:
     repo: https://github.com/uc-cdis/bih-data-commons.git
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag:  0.13.8
 global:
   pdb: true
   aws:
