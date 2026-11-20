@@ -1179,6 +1179,11 @@
                   "label": "Data and access information:",
                   "sourceField": "doi_access_information_link",
                   "default": "Not specified"
+                },
+                {
+                  "type": "link",
+                  "label": "Request data access at:",
+                  "sourceField": "dbgap_url"
                 }
               ]
             }
