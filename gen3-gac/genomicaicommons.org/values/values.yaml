@@ -19,6 +19,8 @@ global:
   postgres:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
+    master:
+      host: "gen3-gac-aurora-cluster.cluster-cgxemm880xrg.us-east-1.rds.amazonaws.com"
   environment: "gen3-gac"
   clusterName: gen3-gac
   createDpopSecret: true
