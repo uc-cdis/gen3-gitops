@@ -152,7 +152,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: v0.13.1-gen3
+    tag: fix_4mb_limit
   Logger:
     Level: debug
   Kubernetes:
