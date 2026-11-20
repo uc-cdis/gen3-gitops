@@ -15,7 +15,7 @@ global:
   externalSecrets:
     deploy: true
     apiVersion: "external-secrets.io/v1"
-    createLocalK8sSecret: true
+    createLocalK8sSecret: false
   postgres:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
@@ -133,7 +133,7 @@ funnel:
   externalSecrets:
     dbcreds: gen3-gac-default-funnel-creds
     funnelOidcClient: gen3-gac-default-funnel-oidc-client
-    pushSecret: true
+    pushSecret: false
   Kubernetes:
     JobsNamespace: workflow-pods-gen3-gac-default
     Storage:
