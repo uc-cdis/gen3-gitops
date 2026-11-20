@@ -144,7 +144,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: v0.13.8
 global:
   aws:
     account: '533267425233'
