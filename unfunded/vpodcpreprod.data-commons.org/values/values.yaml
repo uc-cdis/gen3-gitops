@@ -145,7 +145,7 @@ hatchery:
   hotNode:
     enabled: false
     gpu: false
-    jupyter: true
+    jupyter: false
     availabilityZones:
     - us-east-1c
     workspaceCapacityReservation:
