@@ -144,7 +144,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: v0.13.8
 global:
   aws:
     account: '533267425233'
@@ -355,7 +355,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.11'
+    tag: '1.31.9'
   ingress:
     aws:
       group: bihprod

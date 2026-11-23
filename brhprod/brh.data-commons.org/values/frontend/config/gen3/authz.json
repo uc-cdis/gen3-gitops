@@ -6,7 +6,7 @@
         "resource": "/workspace",
         "service": "jupyterhub",
         "method": "access"
-      }],
+      }]
     },
     "/Workspaces": {
       "loginRequired": true,
