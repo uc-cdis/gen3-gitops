@@ -1,5 +1,5 @@
 access-backend:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
     tag: '2026.10'
