@@ -51,7 +51,7 @@
         "label": "Trusted Research Environment",
         "description": "Running with Remote Kernels",
         "requirePayModel": true,
-        "workspaceAccountManagerTarget": "https://brh-test.planx-pla.net"
+        "workspaceAccountManagerTarget": "https://brh-portal.org"
       },
       "settings": {
         "enabled": false
