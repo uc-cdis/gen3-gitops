@@ -23,7 +23,7 @@ global:
 
 indexd:
   enabled: true
-  replicaCount: 8
+  replicaCount: 7
   image:
     repository: quay.io/cdis/indexd
     pullPolicy: Always
