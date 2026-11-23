@@ -160,7 +160,8 @@ hatchery:
   replicaCount: 2
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/hatchery
-    tag: '2.12.0'
+    # tag: '2.12.0'
+    tag: feat_MC2DP-1181-native-sidecars
   hatchery:
     reaper:
       enabled: false
