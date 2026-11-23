@@ -141,7 +141,7 @@ frontend-framework:
     repo: https://github.com/uc-cdis/bih-data-commons.git
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: main
+    tag: v0.13.8
 global:
   pdb: true
   aws:
@@ -367,7 +367,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '1.30.6'
+    tag: '1.31.9'
   ingress:
     aws:
       group: bihprod

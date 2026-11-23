@@ -81,7 +81,7 @@ frontend-framework:
   # -- (map) Docker image information.
   image:
     repository: quay.io/cdis/commons-frontend-app
-    tag: "v0.13.2.1"
+    tag: "v0.13.7"
   customConfig:
     enabled: true
     repo: https://github.com/uc-cdis/gen3-gitops.git
@@ -102,7 +102,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 1.2.0
+    tag: 1.3.0
   resources:
     limits:
       cpu: 2
@@ -152,7 +152,7 @@ funnel:
     funnelOidcClient: brhstaging-helm-funnel-oidc-client
   image:
     repository: quay.io/cdis/funnel
-    tag: v0.13.1-gen3
+    tag: v0.13.2-gen3
   Logger:
     Level: debug
   Kubernetes:
@@ -763,7 +763,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '1.30.6'
+    tag: '1.31.9'
   ingress:
     aws:
       group: brhprod

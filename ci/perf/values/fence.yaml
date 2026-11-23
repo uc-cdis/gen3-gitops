@@ -434,7 +434,7 @@ fence:
     #            can't be more than that for embeddings content resolutions
     MAX_BULK_CONTENT_GUIDS_COUNT: 2000
 
-    MAX_TASK_TOKEN_TTL: {"WORKFLOW": 4000}
+    MAX_TASK_TOKEN_TTL: {"WORKFLOW": 606600}  # up to 1 week + buffer
     ALLOWED_TASK_TOKEN_TYPES: ["WORKFLOW"]
     DPOP_SHARED_SECRET: dummy-value-not-a-secret
     DPOP_ENABLED: true
