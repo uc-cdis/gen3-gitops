@@ -232,9 +232,7 @@ fence:
     LOGIN_OPTIONS:
       - name: NIH Login
         idp: ras
-      - name: BioData Catalyst Developer Login
-        idp: google
-      - name: BioData Catalyst Public Login
+      - name: Open Access
         idp: google
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
