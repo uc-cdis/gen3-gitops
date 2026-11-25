@@ -227,12 +227,12 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "2.0",
             "memory-limit": "8Gi",
-            "name": "JupyterLab with Software Library",
-            "image": "quay.io/cdis/heal-notebooks:software_library_heal__2970d5bcab3baf13326b472350b5d8663ea259a4",
+            "name": "JupyterLab with Python, R and Stata Kernels",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__b8d5d7b31e7ddb28b9abde4e87f0b6ade9db88df",
             "pull_policy": "Always",
             "squashfs_mount": {
               "enabled": true,
-              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+              "source_sqsh": "/image/apps-2026-11-19.sqsh"
             },
             "env": {
               "FRAME_ANCESTORS": "https://preprod.healdata.org",
@@ -265,75 +265,6 @@ hatchery:
             "target-port": 8888,
             "cpu-limit": "1.0",
             "memory-limit": "2Gi",
-            "name": "JupyterLab with Python and R Kernels",
-            "image": "quay.io/cdis/heal-notebooks:generic_rkernel__11812321abdc323c0653401b79cc73818c2de3d9",
-            "env": {
-              "FRAME_ANCESTORS": "https://preprod.healdata.org"
-            },
-            "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/heal-welcome.ipynb",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=5400",
-              "--JupyterNotebookApp.quit_button=False"
-            ],
-            "command": [
-              "start-notebook.sh"
-            ],
-            "path-rewrite": "/lw-workspace/proxy/",
-            "use-tls": "false",
-            "ready-probe": "/lw-workspace/proxy/",
-            "lifecycle-post-start": [
-              "/bin/sh",
-              "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; wget -O /data/external_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/external_data_download.ipynb; wget -O /data/NDA_data_package_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/NDA_data_package_download.ipynb; wget -O /data/NSRR_data_download.ipynb https://raw.githubusercontent.com/uc-cdis/heal-platform-sdk/refs/heads/master/notebooks/NSRR_data_download.ipynb; true"
-            ],
-            "user-uid": 1010,
-            "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
-          },
-          {
-            "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
-            "name": "JupyterLab with User-Licensed Stata",
-            "image": "quay.io/cdis/jupyter-pystata-user-licensed:3.1.1",
-            "env": {
-              "FRAME_ANCESTORS": "https://preprod.healdata.org"
-            },
-            "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/welcome.html",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
-              "--JupyterNotebookApp.quit_button=False"
-            ],
-            "command": [
-              "start-notebook.sh"
-            ],
-            "path-rewrite": "/lw-workspace/proxy/",
-            "use-tls": "false",
-            "ready-probe": "/lw-workspace/proxy/",
-            "lifecycle-post-start": [
-              "/bin/sh",
-              "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
-            ],
-            "user-uid": 1010,
-            "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd"
-          },
-          {
-            "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
             "name": "JupyterLab with Shared Stata License",
             "image": "quay.io/cdis/jupyter-pystata-gen3-licensed:3.1.1",
             "env": {
@@ -361,41 +292,6 @@ hatchery:
             "command": [
               "/bin/bash",
               "/tmp/wait_for_license.sh"
-            ],
-            "path-rewrite": "/lw-workspace/proxy/",
-            "use-tls": "false",
-            "ready-probe": "/lw-workspace/proxy/",
-            "lifecycle-post-start": [
-              "/bin/sh",
-              "-c",
-              "export IAM=`whoami`; rm -rf /home/$IAM/pd/dockerHome; rm -rf /home/$IAM/pd/lost+found; ln -s /data /home/$IAM/; rm /home/$IAM/pd/data; true"
-            ],
-            "user-uid": 1010,
-            "fs-gid": 100,
-            "user-volume-location": "/home/jovyan/pd",
-            "gen3-volume-location": "/home/jovyan/.gen3"
-          },
-          {
-            "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
-            "name": "Use JupyterLab with Example Analysis Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__9f5b41352050e2ce606eb2cef253984018574f81",
-            "env": {
-              "FRAME_ANCESTORS": "https://preprod.healdata.org"
-            },
-            "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
-              "--JupyterNotebookApp.quit_button=False"
-            ],
-            "command": [
-              "start-notebook.sh"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
