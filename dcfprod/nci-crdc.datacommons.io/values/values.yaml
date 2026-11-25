@@ -118,6 +118,9 @@ datareplicate:
     OUT_FILES: GDC_full_sync_active_manifest_20260910_post_DR46.0_DCF.tsv
     FORCE_CREATE_MANIFEST: true
     VALIDATE_PLATFORM: AWS
+    PREVIOUS_MANIFEST: s3://log-bucket-june2/GDC_active_manifest_only_DR45_consented.tsv
+    MAX_AWS_WORKERS: 100
+    BATCH_SIZE: 20
 fence:
   FENCE_CONFIG:
     ENABLE_VISA_UPDATE_CRON: true
