@@ -1,0 +1,31 @@
+{
+  "routes": {
+    "/Workspace": {
+      "loginRequired": true,
+      "authz": [{
+        "resource": "/workspace",
+        "service": "jupyterhub",
+        "method": "access"
+      }],
+      "redirect403": "/WorkspaceRequestAccess"
+    },
+    "/Workspaces": {
+      "loginRequired": true,
+      "authz": [{
+        "resource": "/workspace",
+        "service": "jupyterhub",
+        "method": "access"
+      }],
+      "redirect403": "/WorkspaceRequestAccess"
+    },
+    "/WorkspaceRequestAccess": {
+      "loginRequired": true
+    },
+    "/Profile": {
+      "loginRequired": true
+    },
+    "*": {
+      "loginRequired": false
+    }
+  }
+}

@@ -1,4 +1,9 @@
 global:
+  netPolicy:
+    enabled: true
+    dbSubnets:
+      - 172.27.162.0/24
+      - 172.27.163.0/24
   pdb: true
   aws:
     enabled: true
@@ -249,7 +254,7 @@ revproxy:
   replicaCount: 2
   image:
     repository: quay.io/cdis/nginx
-    tag: 2026.07
+    tag: '1.31.9'
 
 sheepdog:
   # Lower cost
@@ -313,7 +318,7 @@ peregrine:
       cpu: "15m"
   enabled: true
   externalSecrets:
-    dbcreds: "externalgen3_default-sheepdg-creds"
+    dbcreds: "externalgen3_default-sheepdog-creds"
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/peregrine
     tag: 2026.07

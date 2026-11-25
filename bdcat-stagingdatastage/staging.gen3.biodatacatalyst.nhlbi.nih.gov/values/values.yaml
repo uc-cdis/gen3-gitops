@@ -1,5 +1,5 @@
 access-backend:
-  enabled: true
+  enabled: false
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/access-backend
     tag: '2026.10'
@@ -226,15 +226,13 @@ fence:
     fenceJwtKeys: stagingdatastage-fence-jwt
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/fence
-    tag: 13.3.2
+    tag: 16.0.0
   FENCE_CONFIG_PUBLIC:
     PRIVACY_POLICY_URL: https://biodatacatalyst.nhlbi.nih.gov/privacy/
     LOGIN_OPTIONS:
       - name: NIH Login
         idp: ras
-      - name: BioData Catalyst Developer Login
-        idp: google
-      - name: BioData Catalyst Public Login
+      - name: Open Access
         idp: google
     ENABLE_VISA_UPDATE_CRON: true
   usersync:
@@ -258,7 +256,7 @@ frontend-framework:
   enabled: true
   image:
     repository: quay.io/cdis/bdc-data-commons
-    tag: 1.2.0
+    tag: 1.4.2
 gen3-user-data-library:
   enabled: true
   image:
@@ -294,6 +292,11 @@ global:
   manifestGlobalExtraValues:
     kube_bucket: kube-stageprod-gen3
     logs_bucket: logs-stageprod-gen3
+  netPolicy:
+      enabled: true
+      dbSubnets:
+        - 172.25.194.0/24
+        - 172.25.195.0/24
   tierAccessLevel: regular
   tierAccessLimit: 50
   fenceURL: https://staging.gen3.biodatacatalyst.nhlbi.nih.gov/user
@@ -619,7 +622,7 @@ revproxy:
   enabled: true
   image:
     repository: 707767160287.dkr.ecr.us-east-1.amazonaws.com/gen3/nginx
-    tag: '2026.10'
+    tag: '1.31.9'
   ingress:
     aws:
       group: stagingdatastage

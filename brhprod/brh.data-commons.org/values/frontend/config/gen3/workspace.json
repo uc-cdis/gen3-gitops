@@ -1,0 +1,58 @@
+{
+  "requirePayModel": false,
+  "requestAccessForm": {
+    "enabled": true,
+    "onPage": ["/Workspaces"],
+    "remoteSupportService": {
+      "service": "zenDesk",
+      "configuration": {
+        "zendeskSubdomainName": "brh-support"
+      }
+    },
+    "label": "Workspace Request Access Form",
+    "form": [
+      {
+        "type": "markdown",
+        "text": "## You don't have access to Workspace."
+      },
+      {
+        "type": "markdown",
+        "text": "Workspace requires additional permission. Please complete the request form below. If you believe this is an error, contact your platform administrator at [brhsupport@gen3.org](mailto:brhsupport@gen3.org).",
+        "className": "text-sm"
+      },
+      {
+        "type": "Email",
+        "label": "Login ID",
+        "description": "This field displays the unique identifier you used to log in to BRH (e.g., your email address, or another login method).",
+        "initialValue": "userEmail",
+        "disabled": true,
+        "required": true,
+        "variable": "email"
+      },
+      {
+        "type": "Textarea",
+        "label": "Reason for requesting access",
+        "placeholder": "-- Briefly explain what you will use this workspace for --",
+        "required": true,
+        "variable": "reason"
+      }
+    ],
+    "submitButtonText": "Apply for Workspace Access",
+    "success": {
+      "topIcon": {
+        "src": "/icons/iconoir_window-no-access.svg",
+        "alt": "No access"
+      },
+      "content": [
+        {
+          "type": "markdown",
+          "text": [
+            "# Your access request is in progress.",
+            "You've already requested access to this workspace. Your request is being reviewed, and we'll let you know as soon as it's approved. If you believe this is an error, contact your platform administrator at [brhsupport@gen3.org](mailto:brhsupport@gen3.org)."
+          ],
+          "className": "text-center"
+        }
+      ]
+    }
+  }
+}

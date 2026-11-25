@@ -72,6 +72,11 @@
           "tooltip": "Use free-text search and tags to rapidly find relevant studies, discover new datasets across multiple resources, and easily export selected data files to the analysis workspace."
         },
         {
+          "icon": "exploration",
+          "link": "https://healdata.org//Explorer",
+          "name": "Explorer"
+        },
+        {
           "icon": "workspace",
           "link": "/workspace",
           "name": "Workspace",

@@ -1,0 +1,32 @@
+{
+  "useAPI": true,
+  "actions": [
+    {
+      "id": "exportTerra",
+      "label": "Export to Terra",
+      "rules": [
+        {
+          "field": "type",
+          "operator": "equals",
+          "value": "terraform"
+        },
+        {
+          "field": "type",
+          "operator": "count",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "exportZip",
+      "label": "Export to ZIP",
+      "rules": [
+        {
+          "field": "type",
+          "operator": "equals",
+          "value": "csv"
+        }
+      ]
+    }
+  ]
+}
