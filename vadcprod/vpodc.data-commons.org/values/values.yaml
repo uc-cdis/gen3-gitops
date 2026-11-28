@@ -2,7 +2,7 @@ ambassador:
   jupyterNamespace: jupyter-pods
   enabled: false
 arborist:
-  replicaCount: 4
+  replicaCount: 3
   autoscaling:
     enabled: false
     maxReplicas: 1
