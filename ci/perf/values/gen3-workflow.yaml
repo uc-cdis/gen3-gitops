@@ -12,7 +12,7 @@ gen3-workflow:
       memory: 850Mi
   image:
     repository: quay.io/cdis/gen3-workflow
-    tag: master
+    tag: test_memory_spikes
   serviceAccount:
     create: true
     annotations:
