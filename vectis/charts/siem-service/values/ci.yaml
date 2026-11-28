@@ -1,0 +1,8 @@
+# Placeholder values so the pull-request lint (helm template of every chart with the files in its values/ folder) can render this chart. The chart
+# refuses to render without these on purpose: a pod must never start with a default tenant, bucket or tables folder. None of these name a real deployment.
+env:
+  SIEM_ENV: "production"
+  SIEM_TENANTS: "example"
+  GRAPH_BUCKET: "example-graph-bucket"
+  GRAPH_TENANT: "example"
+  GRAPH_PREFIX: "graph"

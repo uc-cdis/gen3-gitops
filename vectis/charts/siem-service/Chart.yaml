@@ -1,0 +1,6 @@
+apiVersion: v2
+name: siem-service
+description: The Vectis SIEM service (the API behind the Security console)
+type: application
+version: 0.1.0
+appVersion: "v7"

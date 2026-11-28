@@ -1,0 +1,9 @@
+apiVersion: v2
+name: vectis.data-commons.org
+description: vectis.data-commons.org argo application
+
+type: application
+
+version: 0.1.5
+
+appVersion: "1.0"

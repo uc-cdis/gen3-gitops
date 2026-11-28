@@ -1,0 +1,16 @@
+# Production overrides for the vectis-overlays subchart in gen3-helm.
+vectis-overlays:
+  enabled: true
+
+  guppyCompat:
+    enabled: false
+
+  searchAuthProxy:
+    enabled: false
+
+  migrations:
+    enabled: false
+
+  # deployed by vectis/charts/siem-service
+  siemService:
+    enabled: false

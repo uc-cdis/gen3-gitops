@@ -1,0 +1,6 @@
+apiVersion: v2
+name: jobs-catalog
+description: "The job catalog service behind the Jobs page. It reads a private GitHub repository and serves it to the portal."
+type: application
+version: 0.1.0
+appVersion: "v1"

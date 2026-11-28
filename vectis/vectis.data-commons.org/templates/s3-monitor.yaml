@@ -1,0 +1,27 @@
+# s3-monitor (AIS-106). Pinned to the chart branch until helm/s3-monitor is merged; then use master.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gen3-vectis-s3-monitor
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  sources:
+    - path: helm/s3-monitor
+      repoURL: https://github.com/uc-cdis/gen3-helm
+      targetRevision: feat-s3monitor_sqs
+      helm:
+        releaseName: s3-monitor
+        valueFiles:
+          - $values/vectis/vectis.data-commons.org/values/s3-monitor-values.yaml
+    - repoURL: 'https://github.com/uc-cdis/gen3-gitops.git'
+      targetRevision: feat/vectis
+      ref: values
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: default
+  syncPolicy:
+    automated:
+      selfHeal: true
