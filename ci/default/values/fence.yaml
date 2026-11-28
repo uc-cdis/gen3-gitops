@@ -1,4 +1,5 @@
 fence:
+  enabled: true
   # -- (map) External Secrets settings.
   externalSecrets:
     createK8sJwtKeysSecret: false
