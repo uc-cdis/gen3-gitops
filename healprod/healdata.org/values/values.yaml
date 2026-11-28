@@ -202,6 +202,12 @@ hatchery:
         },
         "license-user-maps-dynamodb-table": "gen3-license-user-maps-prod-heal",
         "license-user-maps-global-secondary-index": "activeUsersIndex",
+        "s3-config": {
+          "bucketName": "software-library-bucket-new",
+          "prefixBase": "heal-prod",
+          "region": "us-east-1",
+          "kmsKeyArn": "arn:aws:kms:us-east-1:707767160287:key/387b8ebf-c8b8-4887-9b2c-639aee77654c"
+        },
         "sidecar": {
           "cpu-limit": "1.0",
           "memory-limit": "256Mi",
@@ -344,25 +350,27 @@ hatchery:
           },
           {
             "target-port": 8888,
-            "cpu-limit": "1.0",
-            "memory-limit": "2Gi",
-            "name": "Use JupyterLab with Example Analysis Notebooks",
-            "image": "quay.io/cdis/heal-notebooks:combined_tutorials__9f5b41352050e2ce606eb2cef253984018574f81",
+            "cpu-limit": "2.0",
+            "memory-limit": "8Gi",
+            "name": "JupyterLab with Software Library",
+            "image": "quay.io/cdis/heal-notebooks:software_library_heal__8f9daf80d2ff38e218afc349ed1160704c81e5cc",
+            "squashfs_mount": {
+              "enabled": true,
+              "source_sqsh": "/image/apps-2026-09-08.sqsh"
+            },
             "env": {
-              "FRAME_ANCESTORS": "https://healdata.org"
+              "FRAME_ANCESTORS": "https://healdata.org",
+              "LMOD_SYSTEM_DEFAULT_MODULES": "py-numpy:py-pandas:py-matplotlib:py-scikit-learn:py-heal-sdk:py-gen3"
             },
             "args": [
-              "--JupyterNotebookApp.base_url=/lw-workspace/proxy/",
-              "--JupyterNotebookApp.default_url=/lab/tree/tutorial-welcome.md",
-              "--JupyterNotebookApp.password=''",
-              "--JupyterNotebookApp.token=''",
-              "--JupyterNotebookApp.ip='*'",
-              "--JupyterNotebookApp.notebook_dir='/home/jovyan'",
-              "--JupyterNotebookApp.shutdown_no_activity_timeout=3600",
-              "--JupyterNotebookApp.quit_button=False"
+              "--ServerApp.base_url=/lw-workspace/proxy/",
+              "--LabApp.default_url=/lab/tree/heal-welcome-wsl.ipynb",
+              "--ServerApp.password=''",
+              "--ServerApp.root_dir='/home/jovyan'",
+              "--ServerApp.shutdown_no_activity_timeout=3600"
             ],
             "command": [
-              "start-notebook.sh"
+              "/jupyterlab-start.sh"
             ],
             "path-rewrite": "/lw-workspace/proxy/",
             "use-tls": "false",
