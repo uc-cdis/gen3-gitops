@@ -15,10 +15,12 @@ global:
   externalSecrets:
     deploy: true
     apiVersion: "external-secrets.io/v1"
-    createLocalK8sSecret: true
+    createLocalK8sSecret: false
   postgres:
     dbCreate: true
     externalSecret: "gen3-gac-aurora-master-password"
+    master:
+      host: "gen3-gac-aurora-cluster.cluster-cgxemm880xrg.us-east-1.rds.amazonaws.com"
   environment: "gen3-gac"
   clusterName: gen3-gac
   createDpopSecret: true
@@ -133,7 +135,7 @@ funnel:
   externalSecrets:
     dbcreds: gen3-gac-default-funnel-creds
     funnelOidcClient: gen3-gac-default-funnel-oidc-client
-    pushSecret: true
+    pushSecret: false
   Kubernetes:
     JobsNamespace: workflow-pods-default
     Storage:
@@ -167,7 +169,7 @@ gen3-workflow:
     minReplicas: 2
     maxReplicas: 4
   image:
-    tag: 1.1.0
+    tag: 1.3.0
   resources:
     limits:
       cpu: 2
@@ -176,7 +178,7 @@ gen3-workflow:
       memory: 850Mi
   serviceAccount:
     annotations:
-      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3_service/gen3-gac-default-gen3-workflow-sa"
+      eks.amazonaws.com/role-arn: "arn:aws:iam::467765330347:role/gen3-gac-default-gen3-workflow"
   externalSecrets:
     gen3workflowG3auto: gen3-gac-default-gen3workflow-g3auto
   GEN3_WORKFLOW_CONFIG:
