@@ -37,7 +37,7 @@ external-secrets:
 
 
 fluentd:
-  enabled: false
+  enabled: true
   configuration:
     enabled: false
 kube-state-metrics:
